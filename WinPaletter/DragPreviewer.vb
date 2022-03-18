@@ -263,7 +263,7 @@ Public Class dragPreviewer
         End Select
 
 
-        MsgBox("X")
+        MsgBox("hhhhhh")
     End Sub
 
 End Class
