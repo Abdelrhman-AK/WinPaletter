@@ -103,6 +103,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Classes\Acrylism.vb" />
     <Compile Include="Classes\CP.vb" />
@@ -151,6 +157,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Updates.Designer.vb">
+      <DependentUpon>Updates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Updates.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
@@ -159,6 +171,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
     </EmbeddedResource>
@@ -176,6 +191,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Updates.resx">
+      <DependentUpon>Updates.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

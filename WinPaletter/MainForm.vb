@@ -990,6 +990,16 @@ Public Class MainForm
         ApplyCPValues(CP)
     End Sub
 
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        About.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        Updates.Show()
+    End Sub
+
+
+
 #End Region
 
 End Class
