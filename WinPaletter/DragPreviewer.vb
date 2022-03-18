@@ -261,9 +261,6 @@ Public Class dragPreviewer
                 MainForm.ReValidateLivePreview(pnl_preview)
 #End Region
         End Select
-
-
-        MsgBox("hello")
     End Sub
 
 End Class
