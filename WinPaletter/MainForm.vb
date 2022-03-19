@@ -998,6 +998,10 @@ Public Class MainForm
         Updates.Show()
     End Sub
 
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        SettingsX.ShowDialog()
+    End Sub
+
 
 
 #End Region

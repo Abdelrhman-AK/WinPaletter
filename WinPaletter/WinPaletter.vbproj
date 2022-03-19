@@ -157,6 +157,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SettingsX.Designer.vb">
+      <DependentUpon>SettingsX.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsX.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Updates.Designer.vb">
       <DependentUpon>Updates.vb</DependentUpon>
     </Compile>
@@ -176,6 +182,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ColorPicker1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
@@ -191,6 +199,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsX.resx">
+      <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>
