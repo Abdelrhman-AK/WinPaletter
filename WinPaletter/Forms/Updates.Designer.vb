@@ -44,7 +44,7 @@ Partial Class Updates
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(458, 154)
+        Me.XenonButton1.Location = New System.Drawing.Point(411, 154)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(182, 36)
         Me.XenonButton1.TabIndex = 0
@@ -60,7 +60,7 @@ Partial Class Updates
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(329, 154)
+        Me.XenonButton3.Location = New System.Drawing.Point(282, 154)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(123, 36)
         Me.XenonButton3.TabIndex = 2
@@ -116,7 +116,7 @@ Partial Class Updates
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 86)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(628, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(581, 1)
         Me.XenonSeparator1.TabIndex = 8
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -135,7 +135,7 @@ Partial Class Updates
         Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
         Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 96)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(628, 49)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(581, 49)
         Me.XenonAlertBox1.TabIndex = 11
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "Note: Checking depends on Dropbox Servers, While updating depends on Github Serve" &
@@ -152,7 +152,7 @@ Partial Class Updates
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(458, 28)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(411, 28)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(182, 32)
         Me.XenonAlertBox2.TabIndex = 12
@@ -165,7 +165,7 @@ Partial Class Updates
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(652, 202)
+        Me.ClientSize = New System.Drawing.Size(605, 202)
         Me.Controls.Add(Me.XenonAlertBox2)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonSeparator1)

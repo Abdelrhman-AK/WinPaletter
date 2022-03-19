@@ -103,10 +103,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.Designer.vb">
+    <Compile Include="Forms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
-    <Compile Include="About.vb">
+    <Compile Include="Forms\About.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
@@ -116,28 +116,28 @@
     <Compile Include="Classes\Visual.vb" />
     <Compile Include="Classes\XenonColorPalette.vb" />
     <Compile Include="Classes\XenonCore.vb" />
-    <Compile Include="ColorPicker.Designer.vb">
+    <Compile Include="Advanced Controls\ColorPicker.Designer.vb">
       <DependentUpon>ColorPicker.vb</DependentUpon>
     </Compile>
-    <Compile Include="ColorPicker.vb">
+    <Compile Include="Advanced Controls\ColorPicker.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DragPreviewer.Designer.vb">
+    <Compile Include="Advanced Controls\DragPreviewer.Designer.vb">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="DragPreviewer.vb">
+    <Compile Include="Advanced Controls\DragPreviewer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditInfo.Designer.vb">
       <DependentUpon>EditInfo.vb</DependentUpon>
     </Compile>
-    <Compile Include="EditInfo.vb">
+    <Compile Include="Main Forms\EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.vb">
+    <Compile Include="Main Forms\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.vb">
+    <Compile Include="Main Forms\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
@@ -157,10 +157,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Updates.Designer.vb">
+    <Compile Include="Forms\Updates.Designer.vb">
       <DependentUpon>Updates.vb</DependentUpon>
     </Compile>
-    <Compile Include="Updates.vb">
+    <Compile Include="Forms\Updates.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="XenonUI.Designer.vb">
@@ -171,19 +171,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="About.resx">
+    <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorPicker.resx">
+    <EmbeddedResource Include="Advanced Controls\ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DragPreviewer.resx">
+    <EmbeddedResource Include="Advanced Controls\DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditInfo.resx">
+    <EmbeddedResource Include="Main Forms\EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Main Forms\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -192,7 +192,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Updates.resx">
+    <EmbeddedResource Include="Forms\Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
