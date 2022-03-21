@@ -116,6 +116,7 @@
     <Compile Include="Classes\Visual.vb" />
     <Compile Include="Classes\XenonColorPalette.vb" />
     <Compile Include="Classes\XenonCore.vb" />
+    <Compile Include="Classes\XeSettings.vb" />
     <Compile Include="ColorPicker.Designer.vb">
       <DependentUpon>ColorPicker.vb</DependentUpon>
     </Compile>

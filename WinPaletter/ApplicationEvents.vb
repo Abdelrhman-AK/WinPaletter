@@ -15,6 +15,8 @@ Namespace My
     End Module
 
     Partial Friend Class MyApplication
+        Public _Settings As XeSettings
+
         Public Shared Event UserPreferenceChanged As Microsoft.Win32.UserPreferenceChangedEventHandler
         Public Wallpaper As Bitmap
         Public Font_CtrlBox As Font = New Font("Segoe MDL2 Assets", 6.5!, FontStyle.Regular)
@@ -85,14 +87,12 @@ Namespace My
     ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
         End Sub
 
-        ' Create the new file association
-        '
-        ' Extension is the extension to be registered (eg ".cad"
-        ' ClassName is the name of the associated class (eg "CADDoc")
-        ' Description is the textual description (eg "CAD Document"
-        ' ExeProgram is the app that manages that extension (eg "c:\Cad\MyCad.exe")
-
         Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, ByVal exeProgram As String) As Boolean
+            ' Extension is the extension to be registered (eg ".cad"
+            ' ClassName is the name of the associated class (eg "CADDoc")
+            ' Description is the textual description (eg "CAD Document"
+            ' ExeProgram is the app that manages that extension (eg "c:\Cad\MyCad.exe")
+
             Const SHCNE_ASSOCCHANGED = &H8000000
             Const SHCNF_IDLIST = 0
 
@@ -131,11 +131,10 @@ Namespace My
             Return True
         End Function
 
-        'My.Computer.Registry.ClassesRoot.CreateSubKey(".rtf").SetValue("", "Rich Text File", Microsoft.Win32.RegistryValueKind.String)
-        'My.Computer.Registry.ClassesRoot.CreateSubKey("Rich Text File\shell\open\command").SetValue("", Application.ExecutablePath & " ""%l"" ", Microsoft.Win32.RegistryValueKind.String)
-
         Private Sub MyApplication_Startup(sender As Object, e As ApplicationServices.StartupEventArgs) Handles Me.Startup
-            CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
+            _Settings = New XeSettings(XeSettings.Mode.Registry)
+
+            If _Settings.AutoAddExt Then CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
 
             AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
 

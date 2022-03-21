@@ -780,13 +780,15 @@ Public Class MainForm
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
         If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpth" Then
-            DragAccepted = True
-            CP_BeforeDragAndDrop = CP
-            BlurForm(Me)
-            dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
             e.Effect = DragDropEffects.Copy
-            dragPreviewer.File = files(0)
-            dragPreviewer.Show()
+            If My.Application._Settings.DragAndDropPreview Then
+                DragAccepted = True
+                CP_BeforeDragAndDrop = CP
+                BlurForm(Me)
+                dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+                dragPreviewer.File = files(0)
+                dragPreviewer.Show()
+            End If
         Else
             DragAccepted = False
             e.Effect = DragDropEffects.None
@@ -795,7 +797,7 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
-        If DragAccepted Then
+        If DragAccepted And My.Application._Settings.DragAndDropPreview Then
             dragPreviewer.Close()
             CP = CP_BeforeDragAndDrop
             ApplyCPValues(CP_BeforeDragAndDrop)
@@ -806,20 +808,20 @@ Public Class MainForm
 
     Private Sub MainForm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, XenonGroupBox8.DragOver, pnl_preview.DragOver,
         PaletteContainer.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, XenonGroupBox2.DragOver, XenonGroupBox13.DragOver
-        If DragAccepted Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
     Private Sub MainForm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, XenonGroupBox8.DragDrop, pnl_preview.DragDrop,
         PaletteContainer.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
-            dragPreviewer.Close()
+            If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
             CP = New CP(CP.Mode.File, files(0))
             ApplyCPValues(CP)
             ApplyLivePreviewFromCP(CP)
-            ReleaseBlur()
+            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
         End If
 
     End Sub
@@ -831,20 +833,23 @@ Public Class MainForm
 
     Sub BlurForm(ByVal [Form] As Form)
         'Dim P_Blur As New PictureBox With {.Dock = DockStyle.Fill, .SizeMode = PictureBoxSizeMode.StretchImage}
-        b = TakeScreenshot(Me)
-        bblur = BlurBitmap(b, 1)
-        P_Blur.Image = bblur
-        [Form].Controls.Add(P_Blur)
-        P_Blur.BringToFront()
-        My.Application.AnimatorX.ShowSync(P_Blur)
+        If My.Application._Settings.DragAndDropPreview Then
+            b = TakeScreenshot(Me)
+            bblur = BlurBitmap(b, 1)
+            P_Blur.Image = bblur
+            [Form].Controls.Add(P_Blur)
+            P_Blur.BringToFront()
+            My.Application.AnimatorX.ShowSync(P_Blur)
+        End If
     End Sub
 
     Sub ReleaseBlur()
-        My.Application.AnimatorX.HideSync(P_Blur)
-        Me.Controls.Remove(P_Blur)
-        P_Blur.Visible = False
-
-        'P_Blur.Dispose()
+        If My.Application._Settings.DragAndDropPreview Then
+            My.Application.AnimatorX.HideSync(P_Blur)
+            Me.Controls.Remove(P_Blur)
+            P_Blur.Visible = False
+            'P_Blur.Dispose()
+        End If
     End Sub
 
     Public Shared Function TakeScreenshot(ByVal window As Form) As Bitmap
@@ -985,7 +990,7 @@ Public Class MainForm
         ApplyLivePreviewFromCP(CP)
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.Click, themename_lbl.Click
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
         EditInfo.Load_Info(CP)
         ApplyCPValues(CP)
     End Sub
@@ -1001,8 +1006,6 @@ Public Class MainForm
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         SettingsX.ShowDialog()
     End Sub
-
-
 
 #End Region
 
