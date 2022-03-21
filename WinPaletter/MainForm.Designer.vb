@@ -25,6 +25,16 @@ Partial Class MainForm
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.PaletteContainer = New System.Windows.Forms.Panel()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.NotificationsPanel = New System.Windows.Forms.FlowLayoutPanel()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FromCurrentPaletteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.status_lbl = New System.Windows.Forms.Label()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
+        Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
         Me.ShowAccentOnTitlebarAndBorders_Toggle = New WinPaletter.XenonToggle()
@@ -94,16 +104,6 @@ Partial Class MainForm
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
         Me.lbl5 = New System.Windows.Forms.Label()
         Me.SettingsIconsAndLinks_picker = New WinPaletter.XenonGroupBox()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.NotificationsPanel = New System.Windows.Forms.FlowLayoutPanel()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FromCurrentPaletteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.status_lbl = New System.Windows.Forms.Label()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.ActionCenter = New WinPaletter.XenonAcrylic()
@@ -133,6 +133,7 @@ Partial Class MainForm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.PaletteContainer.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.XenonGroupBox5.SuspendLayout()
         Me.XenonGroupBox7.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -169,7 +170,6 @@ Partial Class MainForm
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl5.SuspendLayout()
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
         Me.XenonGroupBox8.SuspendLayout()
         Me.pnl_preview.SuspendLayout()
         Me.XenonWindow1.SuspendLayout()
@@ -188,6 +188,97 @@ Partial Class MainForm
         Me.PaletteContainer.Name = "PaletteContainer"
         Me.PaletteContainer.Size = New System.Drawing.Size(452, 550)
         Me.PaletteContainer.TabIndex = 17
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "wpt"
+        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "wpt"
+        Me.SaveFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth"
+        '
+        'NotificationsPanel
+        '
+        Me.NotificationsPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NotificationsPanel.BackColor = System.Drawing.Color.Transparent
+        Me.NotificationsPanel.Location = New System.Drawing.Point(466, 422)
+        Me.NotificationsPanel.Margin = New System.Windows.Forms.Padding(0)
+        Me.NotificationsPanel.Name = "NotificationsPanel"
+        Me.NotificationsPanel.Size = New System.Drawing.Size(536, 205)
+        Me.NotificationsPanel.TabIndex = 18
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.FromCurrentPaletteToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(229, 70)
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.White
+        Me.ToolStripMenuItem1.Image = CType(resources.GetObject("ToolStripMenuItem1.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(228, 22)
+        Me.ToolStripMenuItem1.Text = "From Init (Native Windows)"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.ForeColor = System.Drawing.Color.White
+        Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(228, 22)
+        Me.ToolStripMenuItem2.Text = "From Init (Empty Colors)"
+        '
+        'FromCurrentPaletteToolStripMenuItem
+        '
+        Me.FromCurrentPaletteToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.FromCurrentPaletteToolStripMenuItem.Image = CType(resources.GetObject("FromCurrentPaletteToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.FromCurrentPaletteToolStripMenuItem.Name = "FromCurrentPaletteToolStripMenuItem"
+        Me.FromCurrentPaletteToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.FromCurrentPaletteToolStripMenuItem.Text = "From Current Applied Palette"
+        '
+        'status_lbl
+        '
+        Me.status_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.status_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.status_lbl.Location = New System.Drawing.Point(0, 694)
+        Me.status_lbl.Name = "status_lbl"
+        Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.status_lbl.Size = New System.Drawing.Size(1013, 29)
+        Me.status_lbl.TabIndex = 19
+        Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonSeparator1
+        '
+        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(13, 638)
+        Me.XenonSeparator1.Name = "XenonSeparator1"
+        Me.XenonSeparator1.Size = New System.Drawing.Size(989, 1)
+        Me.XenonSeparator1.TabIndex = 20
+        Me.XenonSeparator1.TabStop = False
+        Me.XenonSeparator1.Text = "XenonSeparator1"
+        '
+        'apply_btn
+        '
+        Me.apply_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.apply_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.apply_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.apply_btn.ForeColor = System.Drawing.Color.White
+        Me.apply_btn.Image = Nothing
+        Me.apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.apply_btn.LineSize = 1
+        Me.apply_btn.Location = New System.Drawing.Point(906, 650)
+        Me.apply_btn.Name = "apply_btn"
+        Me.apply_btn.Size = New System.Drawing.Size(96, 33)
+        Me.apply_btn.TabIndex = 16
+        Me.apply_btn.Text = "Apply"
+        Me.apply_btn.UseVisualStyleBackColor = False
         '
         'XenonGroupBox5
         '
@@ -1148,96 +1239,6 @@ Partial Class MainForm
         Me.SettingsIconsAndLinks_picker.TabIndex = 2
         Me.SettingsIconsAndLinks_picker.Text = "XenonGroupBox19"
         '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.DefaultExt = "wpt"
-        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "wpt"
-        Me.SaveFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth"
-        '
-        'NotificationsPanel
-        '
-        Me.NotificationsPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NotificationsPanel.BackColor = System.Drawing.Color.Transparent
-        Me.NotificationsPanel.Location = New System.Drawing.Point(466, 422)
-        Me.NotificationsPanel.Margin = New System.Windows.Forms.Padding(0)
-        Me.NotificationsPanel.Name = "NotificationsPanel"
-        Me.NotificationsPanel.Size = New System.Drawing.Size(536, 205)
-        Me.NotificationsPanel.TabIndex = 18
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.FromCurrentPaletteToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(229, 70)
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.White
-        Me.ToolStripMenuItem1.Image = CType(resources.GetObject("ToolStripMenuItem1.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(228, 22)
-        Me.ToolStripMenuItem1.Text = "From Init (Native Windows)"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.ForeColor = System.Drawing.Color.White
-        Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(228, 22)
-        Me.ToolStripMenuItem2.Text = "From Init (Empty Colors)"
-        '
-        'FromCurrentPaletteToolStripMenuItem
-        '
-        Me.FromCurrentPaletteToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.FromCurrentPaletteToolStripMenuItem.Image = CType(resources.GetObject("FromCurrentPaletteToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.FromCurrentPaletteToolStripMenuItem.Name = "FromCurrentPaletteToolStripMenuItem"
-        Me.FromCurrentPaletteToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-        Me.FromCurrentPaletteToolStripMenuItem.Text = "From Current Applied Palette"
-        '
-        'status_lbl
-        '
-        Me.status_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.status_lbl.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.status_lbl.Location = New System.Drawing.Point(0, 694)
-        Me.status_lbl.Name = "status_lbl"
-        Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.status_lbl.Size = New System.Drawing.Size(1013, 29)
-        Me.status_lbl.TabIndex = 19
-        Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonSeparator1
-        '
-        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(13, 638)
-        Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(989, 1)
-        Me.XenonSeparator1.TabIndex = 20
-        Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
-        '
-        'apply_btn
-        '
-        Me.apply_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.apply_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.apply_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.apply_btn.ForeColor = System.Drawing.Color.White
-        Me.apply_btn.Image = Nothing
-        Me.apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.apply_btn.LineSize = 1
-        Me.apply_btn.Location = New System.Drawing.Point(906, 650)
-        Me.apply_btn.Name = "apply_btn"
-        Me.apply_btn.Size = New System.Drawing.Size(96, 33)
-        Me.apply_btn.TabIndex = 16
-        Me.apply_btn.Text = "Apply"
-        Me.apply_btn.UseVisualStyleBackColor = False
-        '
         'XenonGroupBox8
         '
         Me.XenonGroupBox8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1722,6 +1723,7 @@ Partial Class MainForm
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter"
         Me.PaletteContainer.ResumeLayout(False)
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.XenonGroupBox5.ResumeLayout(False)
         Me.XenonGroupBox7.ResumeLayout(False)
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1758,7 +1760,6 @@ Partial Class MainForm
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl5.ResumeLayout(False)
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.XenonGroupBox8.ResumeLayout(False)
         Me.pnl_preview.ResumeLayout(False)
         Me.XenonWindow1.ResumeLayout(False)

@@ -774,12 +774,17 @@ Public Class MainForm
         Adjust_Preview()
     End Sub
 
+    Dim wpth_or_wpsf As Boolean = True
+
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, XenonGroupBox8.DragEnter, pnl_preview.DragEnter,
         PaletteContainer.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
+
+        Text = My.Application._Settings.DragAndDropPreview
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
         If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpth" Then
+            wpth_or_wpsf = True
             e.Effect = DragDropEffects.Copy
             If My.Application._Settings.DragAndDropPreview Then
                 DragAccepted = True
@@ -789,6 +794,10 @@ Public Class MainForm
                 dragPreviewer.File = files(0)
                 dragPreviewer.Show()
             End If
+        ElseIf My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpsf" Then
+            wpth_or_wpsf = False
+            DragAccepted = True
+            e.Effect = DragDropEffects.Copy
         Else
             DragAccepted = False
             e.Effect = DragDropEffects.None
@@ -797,12 +806,12 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
-        If DragAccepted And My.Application._Settings.DragAndDropPreview Then
-            dragPreviewer.Close()
+        If DragAccepted Then
+            If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
             CP = CP_BeforeDragAndDrop
             ApplyCPValues(CP_BeforeDragAndDrop)
             ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
-            ReleaseBlur()
+            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
         End If
     End Sub
 
@@ -815,13 +824,19 @@ Public Class MainForm
         PaletteContainer.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
-            If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
-            CP = New CP(CP.Mode.File, files(0))
-            ApplyCPValues(CP)
-            ApplyLivePreviewFromCP(CP)
-            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+            If wpth_or_wpsf Then
+                If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
+                CP = New CP(CP.Mode.File, files(0))
+                ApplyCPValues(CP)
+                ApplyLivePreviewFromCP(CP)
+                If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+            Else
+                SettingsX._External = True
+                SettingsX._File = files(0)
+                SettingsX.Show()
+            End If
         End If
 
     End Sub
@@ -839,6 +854,8 @@ Public Class MainForm
             P_Blur.Image = bblur
             [Form].Controls.Add(P_Blur)
             P_Blur.BringToFront()
+            status_lbl.SendToBack()
+
             My.Application.AnimatorX.ShowSync(P_Blur)
         End If
     End Sub
@@ -1004,7 +1021,7 @@ Public Class MainForm
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
-        SettingsX.ShowDialog()
+        SettingsX.Show()
     End Sub
 
 #End Region

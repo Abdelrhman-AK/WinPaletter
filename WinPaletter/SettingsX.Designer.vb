@@ -436,7 +436,7 @@ Partial Class SettingsX
         Me.XenonCheckBox3.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox3.Location = New System.Drawing.Point(84, 76)
         Me.XenonCheckBox3.Name = "XenonCheckBox3"
-        Me.XenonCheckBox3.Size = New System.Drawing.Size(510, 26)
+        Me.XenonCheckBox3.Size = New System.Drawing.Size(324, 26)
         Me.XenonCheckBox3.TabIndex = 12
         Me.XenonCheckBox3.Text = "Drag and Drop previews theme file in the application"
         '
@@ -476,9 +476,10 @@ Partial Class SettingsX
         Me.XenonRadioButton2.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton2.Location = New System.Drawing.Point(84, 140)
         Me.XenonRadioButton2.Name = "XenonRadioButton2"
-        Me.XenonRadioButton2.Size = New System.Drawing.Size(510, 26)
+        Me.XenonRadioButton2.Size = New System.Drawing.Size(484, 26)
         Me.XenonRadioButton2.TabIndex = 9
-        Me.XenonRadioButton2.Text = "Opening the file from explorer applies the theme without opening the application"
+        Me.XenonRadioButton2.Text = "Opening theme file from explorer applies the theme without opening the applicatio" &
+    "n"
         '
         'XenonRadioButton1
         '
@@ -489,9 +490,9 @@ Partial Class SettingsX
         Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton1.Location = New System.Drawing.Point(84, 108)
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
-        Me.XenonRadioButton1.Size = New System.Drawing.Size(510, 26)
+        Me.XenonRadioButton1.Size = New System.Drawing.Size(364, 26)
         Me.XenonRadioButton1.TabIndex = 8
-        Me.XenonRadioButton1.Text = "Opening the file from explorer previews it in the application"
+        Me.XenonRadioButton1.Text = "Opening theme file from explorer previews it in the application"
         '
         'PictureBox3
         '
@@ -584,6 +585,7 @@ Partial Class SettingsX
         Me.Name = "SettingsX"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Settings"
+        Me.TopMost = True
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()

@@ -7,6 +7,9 @@
         LoadSettings()
     End Sub
 
+    Public _External As Boolean = False
+    Public _File As String = Nothing
+
     Dim Changed As Boolean = False
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
@@ -30,9 +33,13 @@
                     e.Cancel = True
                 Case DialogResult.Yes
                     SaveSettings()
+                    _External = False
+                    _File = Nothing
                     e.Cancel = False
                     MyBase.OnFormClosing(e)
                 Case DialogResult.No
+                    _External = False
+                    _File = Nothing
                     e.Cancel = False
                     MyBase.OnFormClosing(e)
             End Select
@@ -43,17 +50,35 @@
     End Sub
 
     Sub LoadSettings()
-        With My.Application._Settings
-            XenonCheckBox1.Checked = .AutoAddExt
-            XenonCheckBox3.Checked = .DragAndDropPreview
-            XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
-            XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+        If Not _External Then
+            With My.Application._Settings
+                XenonCheckBox1.Checked = .AutoAddExt
+                XenonCheckBox3.Checked = .DragAndDropPreview
+                XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
+                XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
 
-            XenonCheckBox2.Checked = .AutoRestartExplorer
-            XenonCheckBox5.Checked = .AutoUpdatesChecking
-            XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-            XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
-        End With
+                XenonCheckBox2.Checked = .AutoRestartExplorer
+                XenonCheckBox5.Checked = .AutoUpdatesChecking
+                XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+                XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+            End With
+        Else
+            Dim sets As New XeSettings(XeSettings.Mode.File, _File)
+
+            With sets
+                XenonCheckBox1.Checked = .AutoAddExt
+                XenonCheckBox3.Checked = .DragAndDropPreview
+                XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
+                XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+
+                XenonCheckBox2.Checked = .AutoRestartExplorer
+                XenonCheckBox5.Checked = .AutoUpdatesChecking
+                XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+                XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+            End With
+
+            OpenFileDialog1.FileName = _File
+        End If
     End Sub
 
     Sub SaveSettings()
