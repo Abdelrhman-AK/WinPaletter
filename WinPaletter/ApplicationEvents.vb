@@ -88,43 +88,71 @@ Namespace My
         End Sub
 
         Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, ByVal exeProgram As String) As Boolean
-            ' Extension is the extension to be registered (eg ".cad"
-            ' ClassName is the name of the associated class (eg "CADDoc")
-            ' Description is the textual description (eg "CAD Document"
-            ' ExeProgram is the app that manages that extension (eg "c:\Cad\MyCad.exe")
+            ' Extension is the extension to be registered (eg ".wpth"
+            ' ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")
+            ' Description is the textual description (eg "WinPaletter ThemeFile"
+            ' ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)
 
             Const SHCNE_ASSOCCHANGED = &H8000000
             Const SHCNF_IDLIST = 0
+            If extension.Substring(0, 1) <> "." Then extension = "." & extension
+            Dim key1, key2, key3, key4 As RegistryKey
 
-            ' ensure that there is a leading dot
-            If extension.Substring(0, 1) <> "." Then
-                extension = "." & extension
-            End If
+            Try
+                ' create a value for this key that contains the classname
+                key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key1.CreateSubKey(extension, True).SetValue("", className)
+                ' create a new key for the Class name
+                key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key2.CreateSubKey(className, True).SetValue("", description)
+                ' associate the program to open the files with this extension
+                key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
+                ' associate file icon
+                key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
 
-            Dim key1, key2, key3, key4 As Microsoft.Win32.RegistryKey
+            Catch e As Exception
+                Return False
+            Finally
+                If key1 IsNot Nothing Then key1.Close()
+                If key2 IsNot Nothing Then key2.Close()
+                If key3 IsNot Nothing Then key3.Close()
+                If key4 IsNot Nothing Then key4.Close()
+            End Try
 
-            'Try
-            ' create a value for this key that contains the classname
-            key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-            key1.CreateSubKey(extension, True).SetValue("", className)
-            ' create a new key for the Class name
-            key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-            key2.CreateSubKey(className, True).SetValue("", description)
-            ' associate the program to open the files with this extension
-            key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-            key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
-            ' associate file icon
-            key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-            key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
+            ' notify Windows that file associations have changed
+            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+            Return True
+        End Function
 
-            'Catch e As Exception
-            'Return False
-            'Finally
-            If Not key1 Is Nothing Then key1.Close()
-                If Not key2 Is Nothing Then key2.Close()
-                If Not key3 Is Nothing Then key3.Close()
-                If Not key4 Is Nothing Then key4.Close()
-            'End Try
+        Function DeleteFileAssociation(ByVal extension As String, ByVal className As String) As Boolean
+            Const SHCNE_ASSOCCHANGED = &H8000000
+            Const SHCNF_IDLIST = 0
+            If extension.Substring(0, 1) <> "." Then extension = "." & extension
+            Dim key1, key2, key3, key4 As RegistryKey
+
+            Try
+                key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key1.DeleteSubKeyTree(extension, False)
+
+                key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                key2.DeleteSubKeyTree(className, False)
+
+                'key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                'key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
+
+                'key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                'key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
+
+            Catch e As Exception
+                Return False
+            Finally
+                If key1 IsNot Nothing Then key1.Close()
+                If key2 IsNot Nothing Then key2.Close()
+                If key3 IsNot Nothing Then key3.Close()
+                If key4 IsNot Nothing Then key4.Close()
+            End Try
 
             ' notify Windows that file associations have changed
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
@@ -135,8 +163,8 @@ Namespace My
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
             If _Settings.AutoAddExt Then
-                CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
-                CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
+                CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
+                CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
             End If
 
             AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}

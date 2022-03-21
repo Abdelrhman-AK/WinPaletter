@@ -28,7 +28,6 @@
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Question)
             Select Case MsgBox("Do you want to save Settings?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
                 Case DialogResult.Cancel
                     e.Cancel = True
@@ -167,5 +166,29 @@
         End With
 
         OpenFileDialog1.FileName = files(0)
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        If MsgBox("Are you sure from removing files association (*.wpth,*.wpsf) from registry?" & vbCrLf & vbCrLf & "* You can reassociate them by activating its checkbox and restarting the application.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            XenonCheckBox1.Checked = False
+            My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
+            My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+        End If
+    End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry and the application itself.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
+            My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+
+            Dim prc As New Process
+            prc.StartInfo.FileName = "cmd.exe"
+            prc.StartInfo.Arguments = "/C choice /C Y /N /D Y /T 0 & Del " & """" & Application.ExecutablePath & """"
+            prc.StartInfo.CreateNoWindow = True
+            prc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            prc.Start()
+
+            Application.[Exit]()
+        End If
     End Sub
 End Class
