@@ -103,28 +103,28 @@ Namespace My
 
             Dim key1, key2, key3, key4 As Microsoft.Win32.RegistryKey
 
-            Try
-                ' create a value for this key that contains the classname
-                key1 = Microsoft.Win32.Registry.ClassesRoot.CreateSubKey(extension)
-                key1.SetValue("", className)
-                ' create a new key for the Class name
-                key2 = Microsoft.Win32.Registry.ClassesRoot.CreateSubKey(className)
-                key2.SetValue("", description)
-                ' associate the program to open the files with this extension
-                key3 = Microsoft.Win32.Registry.ClassesRoot.CreateSubKey(className & "\Shell\Open\Command")
-                key3.SetValue("", exeProgram & " ""%1""")
-                ' associate file icon
-                key4 = Microsoft.Win32.Registry.ClassesRoot.CreateSubKey(className & "\DefaultIcon")
-                key4.SetValue("", exeProgram & ",1")
+            'Try
+            ' create a value for this key that contains the classname
+            key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            key1.CreateSubKey(extension, True).SetValue("", className)
+            ' create a new key for the Class name
+            key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            key2.CreateSubKey(className, True).SetValue("", description)
+            ' associate the program to open the files with this extension
+            key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
+            ' associate file icon
+            key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
 
-            Catch e As Exception
-                Return False
-            Finally
-                If Not key1 Is Nothing Then key1.Close()
+            'Catch e As Exception
+            'Return False
+            'Finally
+            If Not key1 Is Nothing Then key1.Close()
                 If Not key2 Is Nothing Then key2.Close()
                 If Not key3 Is Nothing Then key3.Close()
                 If Not key4 Is Nothing Then key4.Close()
-            End Try
+            'End Try
 
             ' notify Windows that file associations have changed
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
@@ -134,7 +134,10 @@ Namespace My
         Private Sub MyApplication_Startup(sender As Object, e As ApplicationServices.StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
-            If _Settings.AutoAddExt Then CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
+            If _Settings.AutoAddExt Then
+                CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
+                CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & System.Reflection.Assembly.GetExecutingAssembly().Location & """")
+            End If
 
             AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
 
@@ -176,6 +179,14 @@ Namespace My
                         ExternalLink_File = arg
                         '''''''
                     End If
+
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                        SettingsX._External = True
+                        SettingsX._File = arg
+                        SettingsX.ShowDialog()
+                        Process.GetCurrentProcess.Kill()
+                        '''''''
+                    End If
                 Next
             Catch
             End Try
@@ -197,6 +208,14 @@ Namespace My
                         WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
                         '''''''
                     End If
+
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                        SettingsX._External = True
+                        SettingsX._File = arg
+                        SettingsX.Show()
+                        '''''''
+                    End If
+
                 End If
             Catch
                 ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)

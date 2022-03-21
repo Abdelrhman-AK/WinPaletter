@@ -28,6 +28,7 @@
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
+            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Question)
             Select Case MsgBox("Do you want to save Settings?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
                 Case DialogResult.Cancel
                     e.Cancel = True
