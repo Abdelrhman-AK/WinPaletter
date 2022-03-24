@@ -58,6 +58,7 @@ Module XenonModule
             Return [Control].Parent.BackColor
         Else
             Try
+                If Control.Parent Is Nothing Then Exit Function
                 If Control.Parent.BackColor.A = 255 Then
                     Return Color.FromArgb(255, [Control].Parent.BackColor)
                 Else
