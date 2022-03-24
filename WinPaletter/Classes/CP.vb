@@ -1,8 +1,13 @@
 ﻿Imports System.Globalization
+Imports System.Security.Principal
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
+    Dim identity = WindowsIdentity.GetCurrent()
+    Dim principal = New WindowsPrincipal(identity)
+    Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
+
     Public Titlebar_Active As Color
     Public Titlebar_DWM_Active As Color
     Public Titlebar_Inactive As Color
@@ -25,10 +30,38 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-    Public Win32UI_ActiveBorder As Color
-    Public Win32UI_MenuHilight As Color
-    Public Win32UI_HotTrackingColor As Color
-    Public Win32UI_Hilight As Color
+    Public Win32UI_ActiveBorder As Color = Color.FromArgb(180, 180, 180)
+    Public Win32UI_ActiveTitle As Color = Color.FromArgb(153, 180, 209)
+    Public Win32UI_AppWorkspace As Color = Color.FromArgb(171, 171, 171)
+    Public Win32UI_Background As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_ButtonAlternateFace As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_ButtonDkShadow As Color = Color.FromArgb(105, 105, 105)
+    Public Win32UI_ButtonFace As Color = Color.FromArgb(240, 240, 240)
+    Public Win32UI_ButtonHilight As Color = Color.FromArgb(255, 255, 255)
+    Public Win32UI_ButtonLight As Color = Color.FromArgb(227, 227, 227)
+    Public Win32UI_ButtonShadow As Color = Color.FromArgb(160, 160, 160)
+    Public Win32UI_ButtonText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_GradientActiveTitle As Color = Color.FromArgb(185, 209, 234)
+    Public Win32UI_GradientInactiveTitle As Color = Color.FromArgb(215, 228, 242)
+    Public Win32UI_GrayText As Color = Color.FromArgb(109, 109, 109)
+    Public Win32UI_HilightText As Color = Color.FromArgb(255, 255, 255)
+    Public Win32UI_HotTrackingColor As Color = Color.FromArgb(0, 102, 204)
+    Public Win32UI_InactiveBorder As Color = Color.FromArgb(244, 247, 252)
+    Public Win32UI_InactiveTitle As Color = Color.FromArgb(191, 205, 219)
+    Public Win32UI_InactiveTitleText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_InfoText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_InfoWindow As Color = Color.FromArgb(255, 255, 225)
+    Public Win32UI_Menu As Color = Color.FromArgb(240, 240, 240)
+    Public Win32UI_MenuBar As Color = Color.FromArgb(240, 240, 240)
+    Public Win32UI_MenuText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_Scrollbar As Color = Color.FromArgb(200, 200, 200)
+    Public Win32UI_TitleText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_Window As Color = Color.FromArgb(255, 255, 255)
+    Public Win32UI_WindowFrame As Color = Color.FromArgb(100, 100, 100)
+    Public Win32UI_WindowText As Color = Color.FromArgb(0, 0, 0)
+    Public Win32UI_Hilight As Color = Color.FromArgb(0, 120, 215)
+    Public Win32UI_MenuHilight As Color = Color.FromArgb(0, 120, 215)
+    Public Win32UI_Desktop As Color = Color.FromArgb(0, 0, 0)
 #End Region
 
     Public WinMode_Light As Boolean
@@ -117,20 +150,132 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 0 0")
-                    Win32UI_Hilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "180 180 180")
+                    Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 0 0")
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
+                    Win32UI_ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171")
+                    Win32UI_AppWorkspace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                    Win32UI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0")
+                    Win32UI_ButtonAlternateFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105")
+                    Win32UI_ButtonDkShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240")
+                    Win32UI_ButtonFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255")
+                    Win32UI_ButtonHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227")
+                    Win32UI_ButtonLight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160")
+                    Win32UI_ButtonShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0")
+                    Win32UI_ButtonText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234")
+                    Win32UI_GradientActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242")
+                    Win32UI_GradientInactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109")
+                    Win32UI_GrayText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255")
+                    Win32UI_HilightText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204")
                     Win32UI_HotTrackingColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 0 0")
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252")
+                    Win32UI_InactiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219")
+                    Win32UI_InactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0")
+                    Win32UI_InactiveTitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0")
+                    Win32UI_InfoText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225")
+                    Win32UI_InfoWindow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240")
+                    Win32UI_Menu = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240")
+                    Win32UI_MenuBar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0")
+                    Win32UI_MenuText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200")
+                    Win32UI_Scrollbar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0")
+                    Win32UI_TitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255")
+                    Win32UI_Window = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100")
+                    Win32UI_WindowFrame = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0")
+                    Win32UI_WindowText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215")
+                    Win32UI_Hilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215")
                     Win32UI_MenuHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "0 0 0")
-                    Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
+                    Win32UI_Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 #End Region
 
@@ -178,12 +323,39 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-                    If lin.Contains("*ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*ActiveBorder= ".Count))
-                    If lin.Contains("*Hilight= ") Then Win32UI_Hilight = Color.FromArgb(lin.Remove(0, "*Hilight= ".Count))
-                    If lin.Contains("*HotTrackingColor= ") Then Win32UI_HotTrackingColor = Color.FromArgb(lin.Remove(0, "*HotTrackingColor= ".Count))
-                    If lin.Contains("*MenuHilight= ") Then Win32UI_MenuHilight = Color.FromArgb(lin.Remove(0, "*MenuHilight= ".Count))
+                    If lin.Contains("*Win32UI_ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
+                    If lin.Contains("*Win32UI_ActiveTitle= ") Then Win32UI_ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
+                    If lin.Contains("*Win32UI_AppWorkspace= ") Then Win32UI_AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
+                    If lin.Contains("*Win32UI_Background= ") Then Win32UI_Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
+                    If lin.Contains("*Win32UI_ButtonAlternateFace= ") Then Win32UI_ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
+                    If lin.Contains("*Win32UI_ButtonDkShadow= ") Then Win32UI_ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
+                    If lin.Contains("*Win32UI_ButtonFace= ") Then Win32UI_ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
+                    If lin.Contains("*Win32UI_ButtonHilight= ") Then Win32UI_ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
+                    If lin.Contains("*Win32UI_ButtonLight= ") Then Win32UI_ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
+                    If lin.Contains("*Win32UI_ButtonShadow= ") Then Win32UI_ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
+                    If lin.Contains("*Win32UI_ButtonText= ") Then Win32UI_ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
+                    If lin.Contains("*Win32UI_GradientActiveTitle= ") Then Win32UI_GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
+                    If lin.Contains("*Win32UI_GradientInactiveTitle= ") Then Win32UI_GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
+                    If lin.Contains("*Win32UI_GrayText= ") Then Win32UI_GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
+                    If lin.Contains("*Win32UI_HilightText= ") Then Win32UI_HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
+                    If lin.Contains("*Win32UI_HotTrackingColor= ") Then Win32UI_HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
+                    If lin.Contains("*Win32UI_InactiveBorder= ") Then Win32UI_InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
+                    If lin.Contains("*Win32UI_InactiveTitle= ") Then Win32UI_InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
+                    If lin.Contains("*Win32UI_InactiveTitleText= ") Then Win32UI_InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
+                    If lin.Contains("*Win32UI_InfoText= ") Then Win32UI_InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
+                    If lin.Contains("*Win32UI_InfoWindow= ") Then Win32UI_InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
+                    If lin.Contains("*Win32UI_Menu= ") Then Win32UI_Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
+                    If lin.Contains("*Win32UI_MenuBar= ") Then Win32UI_MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
+                    If lin.Contains("*Win32UI_MenuText= ") Then Win32UI_MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
+                    If lin.Contains("*Win32UI_Scrollbar= ") Then Win32UI_Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
+                    If lin.Contains("*Win32UI_TitleText= ") Then Win32UI_TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
+                    If lin.Contains("*Win32UI_Window= ") Then Win32UI_Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
+                    If lin.Contains("*Win32UI_WindowFrame= ") Then Win32UI_WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
+                    If lin.Contains("*Win32UI_WindowText= ") Then Win32UI_WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
+                    If lin.Contains("*Win32UI_Hilight= ") Then Win32UI_Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
+                    If lin.Contains("*Win32UI_MenuHilight= ") Then Win32UI_MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
+                    If lin.Contains("*Win32UI_Desktop= ") Then Win32UI_Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
-
                 Next
 
             Case Mode.Init
@@ -202,17 +374,45 @@ Public Class CP
                 StartListFolders_TaskbarFront = New Color
                 ActionCenter_AppsLinks = New Color
 
-                Win32UI_ActiveBorder = New Color
-                Win32UI_MenuHilight = New Color
-                Win32UI_HotTrackingColor = New Color
-                Win32UI_Hilight = New Color
-
                 LogonUI_Background = New Color
                 LogonUI_PersonalColors_Background = New Color
                 LogonUI_PersonalColors_Accent = New Color
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
                 LogonUI_NoLockScreen = False
+
+                Win32UI_ActiveBorder = Color.FromArgb(180, 180, 180)
+                Win32UI_ActiveTitle = Color.FromArgb(153, 180, 209)
+                Win32UI_AppWorkspace = Color.FromArgb(171, 171, 171)
+                Win32UI_Background = Color.FromArgb(0, 0, 0)
+                Win32UI_ButtonAlternateFace = Color.FromArgb(0, 0, 0)
+                Win32UI_ButtonDkShadow = Color.FromArgb(105, 105, 105)
+                Win32UI_ButtonFace = Color.FromArgb(240, 240, 240)
+                Win32UI_ButtonHilight = Color.FromArgb(255, 255, 255)
+                Win32UI_ButtonLight = Color.FromArgb(227, 227, 227)
+                Win32UI_ButtonShadow = Color.FromArgb(160, 160, 160)
+                Win32UI_ButtonText = Color.FromArgb(0, 0, 0)
+                Win32UI_GradientActiveTitle = Color.FromArgb(185, 209, 234)
+                Win32UI_GradientInactiveTitle = Color.FromArgb(215, 228, 242)
+                Win32UI_GrayText = Color.FromArgb(109, 109, 109)
+                Win32UI_HilightText = Color.FromArgb(255, 255, 255)
+                Win32UI_HotTrackingColor = Color.FromArgb(0, 102, 204)
+                Win32UI_InactiveBorder = Color.FromArgb(244, 247, 252)
+                Win32UI_InactiveTitle = Color.FromArgb(191, 205, 219)
+                Win32UI_InactiveTitleText = Color.FromArgb(0, 0, 0)
+                Win32UI_InfoText = Color.FromArgb(0, 0, 0)
+                Win32UI_InfoWindow = Color.FromArgb(255, 255, 225)
+                Win32UI_Menu = Color.FromArgb(240, 240, 240)
+                Win32UI_MenuBar = Color.FromArgb(240, 240, 240)
+                Win32UI_MenuText = Color.FromArgb(0, 0, 0)
+                Win32UI_Scrollbar = Color.FromArgb(200, 200, 200)
+                Win32UI_TitleText = Color.FromArgb(0, 0, 0)
+                Win32UI_Window = Color.FromArgb(255, 255, 255)
+                Win32UI_WindowFrame = Color.FromArgb(100, 100, 100)
+                Win32UI_WindowText = Color.FromArgb(0, 0, 0)
+                Win32UI_Hilight = Color.FromArgb(0, 120, 215)
+                Win32UI_MenuHilight = Color.FromArgb(0, 120, 215)
+                Win32UI_Desktop = Color.FromArgb(0, 0, 0)
 
                 WinMode_Light = False
                 AppMode_Light = False
@@ -252,19 +452,89 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
 
 #Region "LogonUI"
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
-                EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(LogonUI_PersonalColors_Background).ToArgb)
-                EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(LogonUI_PersonalColors_Accent).ToArgb)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
-                EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
+                If isElevated Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
+                    EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(LogonUI_PersonalColors_Background).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(LogonUI_PersonalColors_Accent).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
+                    EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
+
+                Else
+                    Dim ls As New List(Of String)
+                    ls.Clear()
+                    ls.Add("Windows Registry Editor Version 5.00")
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]")
+                    ls.Add(String.Format("""Background""=""{0} {1} {2}""", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B))
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
+                    ls.Add(String.Format("""PersonalColors_Background""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Background))))
+                    ls.Add(String.Format("""PersonalColors_Accent""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Accent))))
+                    ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
+                    ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0)))
+                    ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
+
+                    Dim result As String = CStr_FromList(ls)
+                    IO.File.WriteAllText("tempreg.reg", result)
+
+                    Dim process As Process = Nothing
+
+                    Dim processStartInfo As New ProcessStartInfo With {
+                       .FileName = "regedit",
+                       .Verb = "runas",
+                       .Arguments = String.Format("/s ""{0}\tempreg.reg""", My.Application.Info.DirectoryPath),
+                       .WindowStyle = ProcessWindowStyle.Maximized,
+                       .CreateNoWindow = True,
+                       .UseShellExecute = True
+                    }
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    processStartInfo.FileName = "reg"
+                    processStartInfo.Arguments = String.Format("import ""{0}\tempreg.reg""", My.Application.Info.DirectoryPath)
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    Kill("tempreg.reg")
+                End If
+
+
 #End Region
 
 #Region "Win32UI"
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Win32UI_Hilight.R, Win32UI_Hilight.G, Win32UI_Hilight.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", Win32UI_HotTrackingColor.R, Win32UI_HotTrackingColor.G, Win32UI_HotTrackingColor.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", Win32UI_MenuHilight.R, Win32UI_MenuHilight.G, Win32UI_MenuHilight.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Win32UI_Background.R, Win32UI_Background.G, Win32UI_Background.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", Win32UI_ButtonAlternateFace.R, Win32UI_ButtonAlternateFace.G, Win32UI_ButtonAlternateFace.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", Win32UI_ButtonDkShadow.R, Win32UI_ButtonDkShadow.G, Win32UI_ButtonDkShadow.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", Win32UI_ButtonFace.R, Win32UI_ButtonFace.G, Win32UI_ButtonFace.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", Win32UI_ButtonHilight.R, Win32UI_ButtonHilight.G, Win32UI_ButtonHilight.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", Win32UI_ButtonLight.R, Win32UI_ButtonLight.G, Win32UI_ButtonLight.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", Win32UI_ButtonShadow.R, Win32UI_ButtonShadow.G, Win32UI_ButtonShadow.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", Win32UI_ButtonText.R, Win32UI_ButtonText.G, Win32UI_ButtonText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientActiveTitle.R, Win32UI_GradientActiveTitle.G, Win32UI_GradientActiveTitle.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientInactiveTitle.R, Win32UI_GradientInactiveTitle.G, Win32UI_GradientInactiveTitle.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", Win32UI_GrayText.R, Win32UI_GrayText.G, Win32UI_GrayText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", Win32UI_HilightText.R, Win32UI_HilightText.G, Win32UI_HilightText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", Win32UI_HotTrackingColor.R, Win32UI_HotTrackingColor.G, Win32UI_HotTrackingColor.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", Win32UI_InactiveBorder.R, Win32UI_InactiveBorder.G, Win32UI_InactiveBorder.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", Win32UI_InactiveTitle.R, Win32UI_InactiveTitle.G, Win32UI_InactiveTitle.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", Win32UI_InactiveTitleText.R, Win32UI_InactiveTitleText.G, Win32UI_InactiveTitleText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", Win32UI_InfoText.R, Win32UI_InfoText.G, Win32UI_InfoText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", Win32UI_InfoWindow.R, Win32UI_InfoWindow.G, Win32UI_InfoWindow.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Win32UI_Menu.R, Win32UI_Menu.G, Win32UI_Menu.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", Win32UI_MenuBar.R, Win32UI_MenuBar.G, Win32UI_MenuBar.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", Win32UI_MenuText.R, Win32UI_MenuText.G, Win32UI_MenuText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Win32UI_Scrollbar.R, Win32UI_Scrollbar.G, Win32UI_Scrollbar.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", Win32UI_TitleText.R, Win32UI_TitleText.G, Win32UI_TitleText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Win32UI_Window.R, Win32UI_Window.G, Win32UI_Window.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", Win32UI_WindowFrame.R, Win32UI_WindowFrame.G, Win32UI_WindowFrame.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", Win32UI_WindowText.R, Win32UI_WindowText.G, Win32UI_WindowText.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Win32UI_Hilight.R, Win32UI_Hilight.G, Win32UI_Hilight.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", Win32UI_MenuHilight.R, Win32UI_MenuHilight.G, Win32UI_MenuHilight.B), False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32UI_Desktop.R, Win32UI_Desktop.G, Win32UI_Desktop.B), False, True)
 #End Region
 
             Case SavingMode.File
@@ -322,10 +592,38 @@ Public Class CP
 
 #Region "Win32UI"
                 tx.Add("<Win32UI>")
-                tx.Add("*Hilight= " & Win32UI_Hilight.ToArgb)
-                tx.Add("*HotTrackingColor= " & Win32UI_HotTrackingColor.ToArgb)
-                tx.Add("*MenuHilight= " & Win32UI_MenuHilight.ToArgb)
-                tx.Add("*ActiveBorder= " & Win32UI_ActiveBorder.ToArgb)
+                tx.Add("*Win32UI_ActiveBorder= " & Win32UI_ActiveBorder.ToArgb)
+                tx.Add("*Win32UI_ActiveTitle= " & Win32UI_ActiveTitle.ToArgb)
+                tx.Add("*Win32UI_AppWorkspace= " & Win32UI_AppWorkspace.ToArgb)
+                tx.Add("*Win32UI_Background= " & Win32UI_Background.ToArgb)
+                tx.Add("*Win32UI_ButtonAlternateFace= " & Win32UI_ButtonAlternateFace.ToArgb)
+                tx.Add("*Win32UI_ButtonDkShadow= " & Win32UI_ButtonDkShadow.ToArgb)
+                tx.Add("*Win32UI_ButtonFace= " & Win32UI_ButtonFace.ToArgb)
+                tx.Add("*Win32UI_ButtonHilight= " & Win32UI_ButtonHilight.ToArgb)
+                tx.Add("*Win32UI_ButtonLight= " & Win32UI_ButtonLight.ToArgb)
+                tx.Add("*Win32UI_ButtonShadow= " & Win32UI_ButtonShadow.ToArgb)
+                tx.Add("*Win32UI_ButtonText= " & Win32UI_ButtonText.ToArgb)
+                tx.Add("*Win32UI_GradientActiveTitle= " & Win32UI_GradientActiveTitle.ToArgb)
+                tx.Add("*Win32UI_GradientInactiveTitle= " & Win32UI_GradientInactiveTitle.ToArgb)
+                tx.Add("*Win32UI_GrayText= " & Win32UI_GrayText.ToArgb)
+                tx.Add("*Win32UI_HilightText= " & Win32UI_HilightText.ToArgb)
+                tx.Add("*Win32UI_HotTrackingColor= " & Win32UI_HotTrackingColor.ToArgb)
+                tx.Add("*Win32UI_InactiveBorder= " & Win32UI_InactiveBorder.ToArgb)
+                tx.Add("*Win32UI_InactiveTitle= " & Win32UI_InactiveTitle.ToArgb)
+                tx.Add("*Win32UI_InactiveTitleText= " & Win32UI_InactiveTitleText.ToArgb)
+                tx.Add("*Win32UI_InfoText= " & Win32UI_InfoText.ToArgb)
+                tx.Add("*Win32UI_InfoWindow= " & Win32UI_InfoWindow.ToArgb)
+                tx.Add("*Win32UI_Menu= " & Win32UI_Menu.ToArgb)
+                tx.Add("*Win32UI_MenuBar= " & Win32UI_MenuBar.ToArgb)
+                tx.Add("*Win32UI_MenuText= " & Win32UI_MenuText.ToArgb)
+                tx.Add("*Win32UI_Scrollbar= " & Win32UI_Scrollbar.ToArgb)
+                tx.Add("*Win32UI_TitleText= " & Win32UI_TitleText.ToArgb)
+                tx.Add("*Win32UI_Window= " & Win32UI_Window.ToArgb)
+                tx.Add("*Win32UI_WindowFrame= " & Win32UI_WindowFrame.ToArgb)
+                tx.Add("*Win32UI_WindowText= " & Win32UI_WindowText.ToArgb)
+                tx.Add("*Win32UI_Hilight= " & Win32UI_Hilight.ToArgb)
+                tx.Add("*Win32UI_MenuHilight= " & Win32UI_MenuHilight.ToArgb)
+                tx.Add("*Win32UI_Desktop= " & Win32UI_Desktop.ToArgb)
                 tx.Add("</Win32UI>" & vbCrLf)
 #End Region
                 tx.Add(vbCrLf & "</WinPaletter>")
@@ -341,13 +639,11 @@ Public Class CP
     End Function
 
     Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
-
         Dim R As RegistryKey
 
         If KeyName.Contains("HKEY_CURRENT_USER") Then
             R = Registry.CurrentUser
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
-
         ElseIf KeyName.Contains("HKEY_LOCAL_MACHINE") Then
             R = Registry.LocalMachine
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
@@ -367,6 +663,8 @@ Public Class CP
             If R IsNot Nothing Then R.Close()
         End Try
 
+
+
     End Sub
 
     Enum SavingMode
@@ -384,6 +682,11 @@ Public Class CP
         sb.Add(String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))
 
         Return sb
+    End Function
+
+    Function RGB2HEX_oneline(ByVal [Color] As Color) As String
+        Return String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
+            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
     End Function
 
     Function BizareColorInvertor([Color] As Color) As Color
