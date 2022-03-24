@@ -436,6 +436,11 @@ Public Class MainForm
         ApplyLivePreviewFromCP(CP)
     End Sub
 
+    Private Sub Blur_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Blur_Toggle.CheckedChanged
+        CP.Blur = sender.Checked
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
     Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         CP.ApplyAccentonTitlebars = sender.Checked
         ApplyLivePreviewFromCP(CP)
@@ -890,6 +895,7 @@ Public Class MainForm
         WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
         AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
         Transparency_Toggle.Checked = ColorPalette.Transparency
+        Blur_Toggle.Checked = ColorPalette.Blur
         ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
         AccentOnStartAndTaskbar_Toggle.Checked = ColorPalette.ApplyAccentonTaskbar
         ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active
@@ -902,6 +908,16 @@ Public Class MainForm
         TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
         ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
         SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
+
+        LogonUI_Background_Picker.BackColor = ColorPalette.LogonUI_Background
+        LogonUI_PersonalColorsBackground_Picker.BackColor = ColorPalette.LogonUI_PersonalColors_Background
+        LogonUI_PersonalColorsAccent_Picker.BackColor = ColorPalette.LogonUI_PersonalColors_Accent
+        LogonUI_Acrylic_Toggle.Checked = Not ColorPalette.LogonUI_DisableAcrylicBackgroundOnLogon
+        LogonUI_Background_Toggle.Checked = Not ColorPalette.LogonUI_DisableLogonBackgroundImage
+        LogonUI_Lockscreen_Toggle.Checked = Not ColorPalette.LogonUI_NoLockScreen
+#Region "LogonUI"
+
+#End Region
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -1024,6 +1040,56 @@ Public Class MainForm
         SettingsX.Show()
     End Sub
 
+    Private Sub LogonUI_Acrylic_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Acrylic_Toggle.CheckedChanged
+        CP.LogonUI_DisableAcrylicBackgroundOnLogon = Not sender.Checked
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub LogonUI_Background_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Background_Toggle.CheckedChanged
+        CP.LogonUI_DisableLogonBackgroundImage = Not sender.Checked
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub LogonUI_Lockscreen_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Lockscreen_Toggle.CheckedChanged
+        CP.LogonUI_NoLockScreen = Not sender.Checked
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub LogonUI_Background_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_Background_Picker.Click
+        Dim CList As New List(Of Control)
+        CList.Add(sender)
+
+        Dim C As Color = ColorPicker.Pick(CList)
+        CP.LogonUI_Background = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        CList.Clear()
+        CList = Nothing
+    End Sub
+
+    Private Sub LogonUI_PersonalColorsBackground_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_PersonalColorsBackground_Picker.Click
+        Dim CList As New List(Of Control)
+        CList.Add(sender)
+
+        Dim C As Color = ColorPicker.Pick(CList)
+        CP.LogonUI_PersonalColors_Background = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        CList.Clear()
+        CList = Nothing
+    End Sub
+
+    Private Sub LogonUI_PersonalColorsAccent_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_PersonalColorsAccent_Picker.Click
+        Dim CList As New List(Of Control)
+        CList.Add(sender)
+
+        Dim C As Color = ColorPicker.Pick(CList)
+        CP.LogonUI_PersonalColors_Accent = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        CList.Clear()
+        CList = Nothing
+    End Sub
 #End Region
 
 End Class

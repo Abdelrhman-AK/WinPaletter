@@ -170,6 +170,12 @@
     <Compile Include="Updates.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Win32UI.Designer.vb">
+      <DependentUpon>Win32UI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
@@ -205,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI.resx">
+      <DependentUpon>Win32UI.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
