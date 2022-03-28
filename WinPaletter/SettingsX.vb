@@ -94,6 +94,15 @@
         End With
 
         MsgBox("Settings Saved.", MsgBoxStyle.Information)
+        Me.Close()
+
+        If My.Application._Settings.CustomPreviewConfig_Enabled Then
+            MainForm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
+        Else
+            If My.W11 Then MainForm.PreviewConfig = MainForm.WinVer.Eleven Else MainForm.PreviewConfig = MainForm.WinVer.Ten
+        End If
+
+        MainForm.Adjust_Preview()
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

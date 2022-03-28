@@ -188,22 +188,24 @@ Public Class XenonCore
     Const WM_USER As Integer = &H400
 
     Public Shared Sub RestartExplorer()
-        Dim ptr = FindWindow("Shell_TrayWnd", Nothing)
-        PostMessage(ptr, WM_USER + 436, CType(0, IntPtr), CType(0, IntPtr))
+        If My.Application._Settings.AutoRestartExplorer Then
+            Dim ptr = FindWindow("Shell_TrayWnd", Nothing)
+            PostMessage(ptr, WM_USER + 436, CType(0, IntPtr), CType(0, IntPtr))
 
-        Do
-            ptr = FindWindow("Shell_TrayWnd", Nothing)
+            Do
+                ptr = FindWindow("Shell_TrayWnd", Nothing)
 
-            If ptr.ToInt32() = 0 Then
-                Exit Do
-            End If
+                If ptr.ToInt32() = 0 Then
+                    Exit Do
+                End If
 
-            Thread.Sleep(1000)
-        Loop While True
+                Thread.Sleep(1000)
+            Loop While True
 
-        'Shell("C:\Windows\explorer.exe") 
-        'Process.Start("userinit.exe")
-        Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\explorer.exe").WaitForInputIdle()
+            'Shell("C:\Windows\explorer.exe") 
+            'Process.Start("userinit.exe")
+            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\explorer.exe").WaitForInputIdle()
+        End If
     End Sub
 
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap

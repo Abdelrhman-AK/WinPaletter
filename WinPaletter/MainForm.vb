@@ -9,9 +9,8 @@ Public Class MainForm
 
     Private _Shown As Boolean = False
 
-    Public CP As CP
+    Public CP, CP_Original, CP_FirstTime As CP
     Dim CP_BeforeDragAndDrop As CP
-    Dim CP_Original As CP
 
     Public PreviewConfig As WinVer = WinVer.Eleven
     Private ReorderAfterPreviewConfigChange As Boolean = False
@@ -108,12 +107,14 @@ Public Class MainForm
             lbl.Font = New Font(If(My.W11, "Segoe UI Variable Static Text", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
         Next
 
-        'PreviewConfig = WinVer.Ten
-        If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
+        If My.Application._Settings.CustomPreviewConfig_Enabled Then
+            PreviewConfig = My.Application._Settings.CustomPreviewConfig
+        Else
+            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
+        End If
 
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         Adjust_Preview()
-
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
@@ -126,12 +127,55 @@ Public Class MainForm
         End If
 
         CP_Original = CP
+        CP_FirstTime = CP
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
 
     Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
+    End Sub
+
+    Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
+        Dim Changed As Boolean = (CP.GetHashCode <> CP_Original.GetHashCode)
+
+        If e.CloseReason = CloseReason.UserClosing And Changed Then
+            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program) and apply it?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                Case DialogResult.Cancel
+                    e.Cancel = True
+                Case DialogResult.Yes
+
+                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                            CP_Original = CP
+                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                        Else
+                            e.Cancel = False
+                            MyBase.OnFormClosing(e)
+                            Exit Sub
+                        End If
+                    Else
+                        CP_Original = CP
+                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        CP.Save(CP.SavingMode.Registry)
+                        RestartExplorer()
+                    End If
+
+                    e.Cancel = False
+                    MyBase.OnFormClosing(e)
+                Case DialogResult.No
+                    CP = CP_Original
+                    CP.Save(CP.SavingMode.Registry)
+                    RestartExplorer()
+                    e.Cancel = False
+                    MyBase.OnFormClosing(e)
+            End Select
+        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
+            e.Cancel = False
+            MyBase.OnFormClosing(e)
+        End If
     End Sub
 
     Sub ApplyLivePreviewFromCP(ByVal CP As CP)
@@ -612,7 +656,7 @@ Public Class MainForm
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
-        CP.Save(CP.SavingMode.Registery)
+        CP.Save(CP.SavingMode.Registry)
         RestartExplorer()
     End Sub
 
@@ -833,6 +877,29 @@ Public Class MainForm
 
             If wpth_or_wpsf Then
                 If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
+
+                If Not CP.GetHashCode = CP_Original.GetHashCode Then
+                    Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                        Case MsgBoxResult.Yes
+                            If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP_Original = CP
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+                                    Exit Sub
+                                End If
+                            Else
+                                CP_Original = CP
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                            End If
+
+                        Case MsgBoxResult.Cancel
+                            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+                            Exit Sub
+                    End Select
+                End If
+
                 CP = New CP(CP.Mode.File, files(0))
                 ApplyCPValues(CP)
                 ApplyLivePreviewFromCP(CP)
@@ -932,6 +999,27 @@ Public Class MainForm
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+
+            If Not CP.GetHashCode = CP_Original.GetHashCode Then
+                Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                    Case MsgBoxResult.Yes
+                        If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP_Original = CP
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                            Else
+                                Exit Sub
+                            End If
+                        Else
+                            CP_Original = CP
+                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        End If
+
+                    Case MsgBoxResult.Cancel
+                        Exit Sub
+                End Select
+            End If
+
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
             CP = New CP(CP.Mode.File, OpenFileDialog1.FileName)
             ApplyCPValues(CP)
@@ -995,6 +1083,27 @@ Public Class MainForm
     End Sub
 
     Private Sub FromCurrentPaletteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromCurrentPaletteToolStripMenuItem.Click
+
+        If Not CP.GetHashCode = CP_Original.GetHashCode Then
+            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                Case MsgBoxResult.Yes
+                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                            CP_Original = CP
+                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        Else
+                            Exit Sub
+                        End If
+                    Else
+                        CP_Original = CP
+                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                    End If
+
+                Case MsgBoxResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
         CP = New CP(CP.Mode.Registry)
         CP_Original = CP
         OpenFileDialog1.FileName = Nothing
@@ -1004,6 +1113,26 @@ Public Class MainForm
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        If Not CP.GetHashCode = CP_Original.GetHashCode Then
+            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                Case MsgBoxResult.Yes
+                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                            CP_Original = CP
+                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        Else
+                            Exit Sub
+                        End If
+                    Else
+                        CP_Original = CP
+                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                    End If
+
+                Case MsgBoxResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
         CP = New CP(CP.Mode.Init)
         CP_Original = CP
         OpenFileDialog1.FileName = Nothing
@@ -1013,6 +1142,26 @@ Public Class MainForm
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        If Not CP.GetHashCode = CP_Original.GetHashCode Then
+            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                Case MsgBoxResult.Yes
+                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
+                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                            CP_Original = CP
+                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        Else
+                            Exit Sub
+                        End If
+                    Else
+                        CP_Original = CP
+                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                    End If
+
+                Case MsgBoxResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
         If My.W11 Then IO.File.WriteAllBytes("temp.wpth", My.Resources.W11_init) Else IO.File.WriteAllBytes("temp.wpth", My.Resources.W10_init)
         CP = New CP(CP.Mode.File, "temp.wpth")
         Kill("temp.wpth")
@@ -1093,6 +1242,27 @@ Public Class MainForm
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
         Win32UI.Show()
+    End Sub
+
+    Private Sub PictureBox23_MouseHover(sender As Object, e As EventArgs) Handles PictureBox23.MouseHover, PictureBox28.MouseHover, PictureBox29.MouseHover, PictureBox23.MouseEnter, PictureBox28.MouseEnter, PictureBox29.MouseEnter
+        ToolTip1.Show("This has effect only for Windows 10", sender)
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        CP_Original = CP
+        CP.Save(CP.SavingMode.Registry)
+        RestartExplorer()
+        Me.Close()
+    End Sub
+
+    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
+        CP_FirstTime.Save(CP.SavingMode.Registry)
+        RestartExplorer()
+        Me.Close()
+    End Sub
+
+    Private Sub PictureBox23_MouseLeave(sender As Object, e As EventArgs) Handles PictureBox23.MouseLeave, PictureBox28.MouseLeave, PictureBox29.MouseLeave
+        ToolTip1.Hide(sender)
     End Sub
 #End Region
 

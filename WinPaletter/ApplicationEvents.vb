@@ -203,12 +203,19 @@ Namespace My
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     Dim arg As String = Environment.GetCommandLineArgs(x)
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        ExternalLink = True
-                        ExternalLink_File = arg
+                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                            ExternalLink = True
+                            ExternalLink_File = arg
+                        Else
+                            Dim CPx As New CP(CP.Mode.File, arg)
+                            CPx.Save(CP.SavingMode.Registry, arg)
+                            RestartExplorer()
+                            Process.GetCurrentProcess.Kill()
+                        End If
                         '''''''
                     End If
 
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
                         SettingsX._External = True
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
@@ -228,23 +235,55 @@ Namespace My
                     ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)
                     ''e.BringToForeground = True
                 Else
+
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        WinPaletter.MainForm.CP = New CP(CP.Mode.File, arg)
-                        WinPaletter.MainForm.OpenFileDialog1.FileName = arg
-                        WinPaletter.MainForm.SaveFileDialog1.FileName = arg
-                        WinPaletter.MainForm.ApplyCPValues(WinPaletter.MainForm.CP)
-                        WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
-                        '''''''
+                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                            If Not WinPaletter.MainForm.CP.GetHashCode = WinPaletter.MainForm.CP_Original.GetHashCode Then
+                                Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                                    Case MsgBoxResult.Yes
+                                        If Not IO.File.Exists(WinPaletter.MainForm.SaveFileDialog1.FileName) Then
+                                            If WinPaletter.MainForm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                WinPaletter.MainForm.CP_Original = WinPaletter.MainForm.CP
+                                                WinPaletter.MainForm.CP.Save(CP.SavingMode.File, WinPaletter.MainForm.SaveFileDialog1.FileName)
+                                            Else
+                                                Exit Sub
+                                            End If
+                                        Else
+                                            WinPaletter.MainForm.CP_Original = WinPaletter.MainForm.CP
+                                            WinPaletter.MainForm.CP.Save(CP.SavingMode.File, WinPaletter.MainForm.SaveFileDialog1.FileName)
+                                        End If
+
+                                    Case MsgBoxResult.Cancel
+                                        Exit Sub
+                                End Select
+                            End If
+
+                            WinPaletter.MainForm.CP = New CP(CP.Mode.File, arg)
+                            WinPaletter.MainForm.OpenFileDialog1.FileName = arg
+                            WinPaletter.MainForm.SaveFileDialog1.FileName = arg
+                            WinPaletter.MainForm.ApplyCPValues(WinPaletter.MainForm.CP)
+                            WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
+
+                        Else
+                            WinPaletter.MainForm.CP = New CP(CP.Mode.File, arg)
+                            WinPaletter.MainForm.OpenFileDialog1.FileName = arg
+                            WinPaletter.MainForm.SaveFileDialog1.FileName = arg
+                            WinPaletter.MainForm.ApplyCPValues(WinPaletter.MainForm.CP)
+                            WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
+                            WinPaletter.MainForm.CP.Save(CP.SavingMode.Registry, arg)
+                            RestartExplorer()
+                            '''''''
+                        End If
                     End If
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                        SettingsX._External = True
-                        SettingsX._File = arg
-                        SettingsX.Show()
-                        '''''''
-                    End If
+                            SettingsX._External = True
+                            SettingsX._File = arg
+                            SettingsX.Show()
+                            '''''''
+                        End If
 
-                End If
+                    End If
             Catch
                 ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)
                 ''e.BringToForeground = True

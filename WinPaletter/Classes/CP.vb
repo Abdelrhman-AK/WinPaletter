@@ -4,9 +4,7 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
-    Dim identity = WindowsIdentity.GetCurrent()
-    Dim principal = New WindowsPrincipal(identity)
-    Dim isElevated As Boolean = principal.IsInRole(WindowsBuiltInRole.Administrator)
+    Dim isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
     Public Titlebar_Active As Color
     Public Titlebar_DWM_Active As Color
@@ -426,7 +424,7 @@ Public Class CP
 
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
-            Case SavingMode.Registery
+            Case SavingMode.Registry
 
                 Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
                      , (Taskbar_Icon_Underline).R, (Taskbar_Icon_Underline).G, (Taskbar_Icon_Underline).B, (Taskbar_Icon_Underline).A _
@@ -668,7 +666,7 @@ Public Class CP
     End Sub
 
     Enum SavingMode
-        Registery
+        Registry
         File
     End Enum
 
