@@ -158,6 +158,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="QA.Designer.vb">
+      <DependentUpon>QA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="QA.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -205,6 +211,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QA.resx">
+      <DependentUpon>QA.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

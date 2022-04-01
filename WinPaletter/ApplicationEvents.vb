@@ -30,13 +30,27 @@ Namespace My
 
         Public Function GetCurrentWallpaper() As Bitmap
             Try
-                Dim rkWallPaper As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+                Dim rkWallPaper As RegistryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
                 Dim WallpaperPath As String = rkWallPaper.GetValue("WallPaper").ToString()
-                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
-                Return Image.FromStream(x)
-                x.Close()
-                rkWallPaper.Close()
-                My.Application.FlushMem()
+
+                If IO.File.Exists(WallpaperPath) Then
+                    Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
+                    Return Image.FromStream(x)
+                    x.Close()
+                    rkWallPaper.Close()
+                    My.Application.FlushMem()
+                Else
+                    Dim bmp As Bitmap = New Bitmap(528, 297)
+                    Dim g As Graphics = Graphics.FromImage(bmp)
+
+                    With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                        g.Clear(Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)))
+                    End With
+
+                    Return bmp
+                    g.Dispose()
+                    bmp.Dispose()
+                End If
             Catch
                 Return Nothing
             End Try
@@ -87,14 +101,15 @@ Namespace My
     ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
         End Sub
 
+        Public Const SHCNE_ASSOCCHANGED = &H8000000
+        Public Const SHCNF_IDLIST = 0
+
         Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, ByVal exeProgram As String) As Boolean
             ' Extension is the extension to be registered (eg ".wpth"
             ' ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")
             ' Description is the textual description (eg "WinPaletter ThemeFile"
             ' ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)
 
-            Const SHCNE_ASSOCCHANGED = &H8000000
-            Const SHCNF_IDLIST = 0
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
             Dim key1, key2, key3, key4 As RegistryKey
 

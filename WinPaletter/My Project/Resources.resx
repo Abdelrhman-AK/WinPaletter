@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ActiveApp_Taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\ActiveApp_Taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AC_10_Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_10_Dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -154,16 +157,43 @@
   <data name="GaussianBlur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\Xenon_RetroStudio\FLUENT\Layers\GaussianBlur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="InactiveApp_Taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\InactiveApp_Taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="lightmode_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\lightmode_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lightmode_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\lightmode_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="notify_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Mini_ACHover_Links" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_ACHover_Links.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="notify_error1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Mini_Lines_Toggles_Buttons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_Lines_Toggles_Buttons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_NotUsed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_NotUsed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_SettingsIcons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_SettingsIcons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_Start10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_Start10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_Start11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_Start11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_StartMenuAccent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_StartMenuAccent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_StartMenu_Taskbar_AC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_StartMenu_Taskbar_AC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mini_TaskbarActiveIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Items Icons\Mini_TaskbarActiveIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notify_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="notify_info" type="System.Resources.ResXFileRef, System.Windows.Forms">

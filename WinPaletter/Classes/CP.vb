@@ -362,19 +362,20 @@ Public Class CP
                 PaletteVersion = "1.0"
                 PaletteName = "Init"
 
-                Titlebar_Active = New Color
-                Titlebar_Inactive = New Color
-                StartMenu_Accent = New Color
-                StartButton_Hover = New Color
-                Taskbar_Background = New Color
-                Taskbar_Icon_Underline = New Color
-                StartMenuBackground_ActiveTaskbarButton = New Color
-                StartListFolders_TaskbarFront = New Color
-                ActionCenter_AppsLinks = New Color
+                Titlebar_Active = Color.Black
+                Titlebar_Inactive = Color.Black
+                StartMenu_Accent = Color.Black
+                StartButton_Hover = Color.Black
+                Taskbar_Background = Color.Black
+                Taskbar_Icon_Underline = Color.Black
+                StartMenuBackground_ActiveTaskbarButton = Color.Black
+                StartListFolders_TaskbarFront = Color.Black
+                SettingsIconsAndLinks = Color.Black
+                ActionCenter_AppsLinks = Color.Black
 
-                LogonUI_Background = New Color
-                LogonUI_PersonalColors_Background = New Color
-                LogonUI_PersonalColors_Accent = New Color
+                LogonUI_Background = Color.Black
+                LogonUI_PersonalColors_Background = Color.Black
+                LogonUI_PersonalColors_Accent = Color.Black
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
                 LogonUI_NoLockScreen = False
@@ -426,6 +427,8 @@ Public Class CP
         Select Case [SaveTo]
             Case SavingMode.Registry
 
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+
                 Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
                      , (Taskbar_Icon_Underline).R, (Taskbar_Icon_Underline).G, (Taskbar_Icon_Underline).B, (Taskbar_Icon_Underline).A _
                      , (StartButton_Hover).R, (StartButton_Hover).G, (StartButton_Hover).B, (StartButton_Hover).A _
@@ -436,7 +439,6 @@ Public Class CP
                      , 255, 0, 0, 0}
 
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
-
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_DWM_Active).ToArgb)
@@ -484,7 +486,7 @@ Public Class CP
                        .FileName = "regedit",
                        .Verb = "runas",
                        .Arguments = String.Format("/s ""{0}\tempreg.reg""", My.Application.Info.DirectoryPath),
-                       .WindowStyle = ProcessWindowStyle.Maximized,
+                       .WindowStyle = ProcessWindowStyle.Hidden,
                        .CreateNoWindow = True,
                        .UseShellExecute = True
                     }

@@ -103,6 +103,7 @@
         End If
 
         MainForm.Adjust_Preview()
+        MainForm.ApplyLivePreviewFromCP(MainForm.CP)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

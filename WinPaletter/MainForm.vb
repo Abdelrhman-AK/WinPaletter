@@ -13,7 +13,7 @@ Public Class MainForm
     Dim CP_BeforeDragAndDrop As CP
 
     Public PreviewConfig As WinVer = WinVer.Eleven
-    Private ReorderAfterPreviewConfigChange As Boolean = False
+    Private ReorderAfterPreviewConfigChange As Boolean = True
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
@@ -104,7 +104,7 @@ Public Class MainForm
         LabelsList.Add(ColorPicker.Label5)
 
         For Each lbl As Label In LabelsList
-            lbl.Font = New Font(If(My.W11, "Segoe UI Variable Static Text", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
+            lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
         Next
 
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
@@ -191,10 +191,22 @@ Public Class MainForm
         XenonWindow1.DarkMode = Not CP.AppMode_Light
         XenonWindow2.DarkMode = Not CP.AppMode_Light
 
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
+
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
         Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If(CP.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
+
+        pnl1.Top = Label10.Bottom + 3
+        pnl2.Top = pnl1.Bottom + 2
+        pnl3.Top = pnl2.Bottom + 2
+        pnl4.Top = pnl3.Bottom + 2
+        pnl5.Top = pnl4.Bottom + 2
+        pnl6.Top = pnl5.Bottom + 2
+        pnl7.Top = pnl6.Bottom + 2
+        pnl8.Top = pnl7.Bottom + 2
 
         Select Case PreviewConfig
             Case WinVer.Eleven
@@ -207,6 +219,13 @@ Public Class MainForm
                 start.Transparency = CP.Transparency
                 ActionCenter.Transparency = CP.Transparency
 
+                start.Top = taskbar.Top - start.Height - 9
+
+                pic5.Image = My.Resources.Mini_SettingsIcons
+                pic6.Image = My.Resources.Mini_Start11
+                pic7.Image = My.Resources.Mini_StartMenuAccent
+                pic8.Image = My.Resources.Mini_TaskbarActiveIcon
+
                 Select Case Not CP.WinMode_Light
                     Case True   ''''''''''Dark
                         lbl1.Text = "Start Menu, Taskbar and Action Center"
@@ -214,23 +233,27 @@ Public Class MainForm
                         lbl3.Text = "Lines, Toggles and Buttons"
                         lbl4.Text = "Taskbar Active App Background"
 
+                        pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        pic2.Image = My.Resources.Mini_ACHover_Links
+                        pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
+                        pic4.Image = My.Resources.Mini_TaskbarActiveIcon
+
                         If ReorderAfterPreviewConfigChange Then
-                            pnl1.Top = XenonGroupBox6.Bottom + 2
+                            pnl1.Top = Label10.Bottom + 3
                             pnl2.Top = pnl1.Bottom + 2
                             pnl3.Top = pnl2.Bottom + 2
                             pnl4.Top = pnl3.Bottom + 2
                         End If
 
-                        taskbar.BackColorAlpha = 75
-                        start.BackColorAlpha = 175
+                        taskbar.BackColorAlpha = 130
+                        start.BackColorAlpha = 130
+                        ActionCenter.BackColorAlpha = 130
 
                         If CP.ApplyAccentonTaskbar Then
-                            ActionCenter.BackColorAlpha = 180
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
                         Else
-                            ActionCenter.BackColorAlpha = 100
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
@@ -251,22 +274,27 @@ Public Class MainForm
                         lbl3.Text = "Taskbar Color"
                         lbl4.Text = "Lines, Toggles and Buttons"
 
+                        pic1.Image = My.Resources.Mini_ACHover_Links
+                        pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        pic3.Image = My.Resources.Mini_StartMenuAccent
+                        pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
+
                         If ReorderAfterPreviewConfigChange Then
-                            pnl2.Top = XenonGroupBox6.Bottom + 2
+                            pnl2.Top = Label10.Bottom + 3
                             pnl1.Top = pnl2.Bottom + 2
                             pnl4.Top = pnl1.Bottom + 2
                             pnl3.Top = pnl4.Bottom + 2
                         End If
 
-                        taskbar.BackColorAlpha = 200
-                        start.BackColorAlpha = 210
+                        taskbar.BackColorAlpha = 180
+                        start.BackColorAlpha = 180
+                        ActionCenter.BackColorAlpha = 180
+
                         If CP.ApplyAccentonTaskbar Then
-                            ActionCenter.BackColorAlpha = 180
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, CP.Taskbar_Icon_Underline), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, CP.ActionCenter_AppsLinks), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, CP.ActionCenter_AppsLinks), AnimX1, AnimX2)
                         Else
-                            ActionCenter.BackColorAlpha = 100
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
@@ -292,19 +320,30 @@ Public Class MainForm
                 start.Transparency = CP.Transparency
                 ActionCenter.Transparency = CP.Transparency
 
+                start.Top = taskbar.Top - start.Height
+
                 lbl6.Text = "Start Icon Hover"
 
                 If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                    lbl1.Text = ""
-                    lbl2.Text = ""
-                    lbl3.Text = ""
+                    lbl1.Text = "Not Used"
+                    lbl2.Text = "Not Used"
+                    lbl3.Text = "Not Used"
                     lbl4.Text = "Start Menu and Action Center Colors"
                     lbl5.Text = "Settings Icons, Taskbar App Underline & Some Pressed Buttons"
-                    lbl7.Text = ""
+                    lbl7.Text = "Not Used"
                     lbl8.Text = "Links"
 
+                    pic1.Image = My.Resources.Mini_NotUsed
+                    pic2.Image = My.Resources.Mini_NotUsed
+                    pic3.Image = My.Resources.Mini_NotUsed
+                    pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                    pic5.Image = My.Resources.Mini_SettingsIcons
+                    pic6.Image = My.Resources.Mini_Start10
+                    pic7.Image = My.Resources.Mini_NotUsed
+                    pic8.Image = My.Resources.Mini_ACHover_Links
+
                     If ReorderAfterPreviewConfigChange Then
-                        pnl4.Top = XenonGroupBox6.Bottom + 2
+                        pnl4.Top = Label10.Bottom + 3
                         pnl5.Top = pnl4.Bottom + 2
                         pnl8.Top = pnl5.Bottom + 2
                         pnl6.Top = pnl8.Bottom + 2
@@ -316,16 +355,25 @@ Public Class MainForm
 
                 Else
                     If CP.Transparency Then
-                        lbl1.Text = ""
+                        lbl1.Text = "Not Used"
                         lbl2.Text = "Links"
                         lbl3.Text = "Taskbar App Underline"
                         lbl4.Text = "Start Menu and Action Center Colors"
                         lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
-                        lbl7.Text = ""
+                        lbl7.Text = "Not Used"
                         lbl8.Text = "Taskbar Color"
 
+                        pic1.Image = My.Resources.Mini_NotUsed
+                        pic2.Image = My.Resources.Mini_ACHover_Links
+                        pic3.Image = My.Resources.Mini_TaskbarActiveIcon
+                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        pic5.Image = My.Resources.Mini_SettingsIcons
+                        pic6.Image = My.Resources.Mini_Start10
+                        pic7.Image = My.Resources.Mini_NotUsed
+                        pic8.Image = My.Resources.Mini_StartMenuAccent
+
                         If ReorderAfterPreviewConfigChange Then
-                            pnl4.Top = XenonGroupBox6.Bottom + 2
+                            pnl4.Top = Label10.Bottom + 3
                             pnl8.Top = pnl4.Bottom + 2
                             pnl3.Top = pnl8.Bottom + 2
                             pnl5.Top = pnl3.Bottom + 2
@@ -341,11 +389,20 @@ Public Class MainForm
                         lbl3.Text = "Taskbar App Underline"
                         lbl4.Text = "Start Menu, Action Center, Taskbar Active App Background"
                         lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
-                        lbl7.Text = ""
-                        lbl8.Text = ""
+                        lbl7.Text = "Not Used"
+                        lbl8.Text = "Not Used"
+
+                        pic1.Image = My.Resources.Mini_StartMenuAccent
+                        pic2.Image = My.Resources.Mini_ACHover_Links
+                        pic3.Image = My.Resources.Mini_TaskbarActiveIcon
+                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        pic5.Image = My.Resources.Mini_SettingsIcons
+                        pic6.Image = My.Resources.Mini_Start10
+                        pic7.Image = My.Resources.Mini_NotUsed
+                        pic8.Image = My.Resources.Mini_NotUsed
 
                         If ReorderAfterPreviewConfigChange Then
-                            pnl4.Top = XenonGroupBox6.Bottom + 2
+                            pnl4.Top = Label10.Bottom + 3
                             pnl1.Top = pnl4.Bottom + 2
                             pnl3.Top = pnl1.Bottom + 2
                             pnl5.Top = pnl3.Bottom + 2
@@ -360,9 +417,9 @@ Public Class MainForm
                 taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, CP.Taskbar_Icon_Underline))
 
                 If CP.Transparency Then
-                    taskbar.BackColorAlpha = 200
-                    start.BackColorAlpha = 210
-                    ActionCenter.BackColorAlpha = 100
+                    taskbar.BackColorAlpha = 150
+                    start.BackColorAlpha = 150
+                    ActionCenter.BackColorAlpha = 150
                 Else
                     taskbar.BackColorAlpha = 255
                     start.BackColorAlpha = 255
@@ -1255,9 +1312,23 @@ Public Class MainForm
         Me.Close()
     End Sub
 
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        QA.Show()
+    End Sub
+
+    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        ApplyLivePreviewFromCP(CP)
+        ApplyCPValues(CP)
+    End Sub
+
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        CP_FirstTime.Save(CP.SavingMode.Registry)
-        RestartExplorer()
+        If CP.GetHashCode <> CP_FirstTime.GetHashCode Then
+            CP_FirstTime.Save(CP.SavingMode.Registry)
+            CP = CP_FirstTime
+            CP_Original = CP_FirstTime
+            RestartExplorer()
+        End If
+
         Me.Close()
     End Sub
 
