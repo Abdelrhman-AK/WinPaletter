@@ -885,17 +885,15 @@ Public Class MainForm
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, XenonGroupBox8.DragEnter, pnl_preview.DragEnter,
         PaletteContainer.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
 
-        Text = My.Application._Settings.DragAndDropPreview
-
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
         If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpth" Then
             wpth_or_wpsf = True
             e.Effect = DragDropEffects.Copy
+
             If My.Application._Settings.DragAndDropPreview Then
                 DragAccepted = True
                 CP_BeforeDragAndDrop = CP
-                BlurForm(Me)
                 dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
                 dragPreviewer.File = files(0)
                 dragPreviewer.Show()
@@ -917,7 +915,6 @@ Public Class MainForm
             CP = CP_BeforeDragAndDrop
             ApplyCPValues(CP_BeforeDragAndDrop)
             ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
-            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
         End If
     End Sub
 
@@ -943,7 +940,7 @@ Public Class MainForm
                                     CP_Original = CP
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
                                 Else
-                                    If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+                                    '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                     Exit Sub
                                 End If
                             Else
@@ -952,7 +949,7 @@ Public Class MainForm
                             End If
 
                         Case MsgBoxResult.Cancel
-                            If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
+                            '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                             Exit Sub
                     End Select
                 End If
@@ -960,7 +957,6 @@ Public Class MainForm
                 CP = New CP(CP.Mode.File, files(0))
                 ApplyCPValues(CP)
                 ApplyLivePreviewFromCP(CP)
-                If My.Application._Settings.DragAndDropPreview Then ReleaseBlur()
             Else
                 SettingsX._External = True
                 SettingsX._File = files(0)
@@ -971,46 +967,6 @@ Public Class MainForm
     End Sub
 
     Dim DragAccepted As Boolean
-    Dim P_Blur As New PictureBox With {.Dock = DockStyle.Fill, .SizeMode = PictureBoxSizeMode.StretchImage, .Visible = False}
-    Dim b As Bitmap
-    Dim bblur As Bitmap
-
-    Sub BlurForm(ByVal [Form] As Form)
-        'Dim P_Blur As New PictureBox With {.Dock = DockStyle.Fill, .SizeMode = PictureBoxSizeMode.StretchImage}
-        If My.Application._Settings.DragAndDropPreview Then
-            b = TakeScreenshot(Me)
-            bblur = BlurBitmap(b, 1)
-            P_Blur.Image = bblur
-            [Form].Controls.Add(P_Blur)
-            P_Blur.BringToFront()
-            status_lbl.SendToBack()
-
-            My.Application.AnimatorX.ShowSync(P_Blur)
-        End If
-    End Sub
-
-    Sub ReleaseBlur()
-        If My.Application._Settings.DragAndDropPreview Then
-            My.Application.AnimatorX.HideSync(P_Blur)
-            Me.Controls.Remove(P_Blur)
-            P_Blur.Visible = False
-            'P_Blur.Dispose()
-        End If
-    End Sub
-
-    Public Shared Function TakeScreenshot(ByVal window As Form) As Bitmap
-        Dim b = New Bitmap(window.Width, window.Height)
-        window.DrawToBitmap(b, New Rectangle(0, 0, window.Width, window.Height))
-        Dim p As Point = window.PointToScreen(Point.Empty)
-        Dim target As Bitmap = New Bitmap(window.ClientSize.Width, window.ClientSize.Height)
-
-        Using g As Graphics = Graphics.FromImage(target)
-            g.DrawImage(b, 0, 0, New Rectangle(p.X - window.Location.X, p.Y - window.Location.Y, target.Width, target.Height), GraphicsUnit.Pixel)
-        End Using
-
-        b.Dispose()
-        Return target
-    End Function
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
         themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
