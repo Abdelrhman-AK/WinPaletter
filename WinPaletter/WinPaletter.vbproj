@@ -63,7 +63,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icons8_paint_palette.ico</ApplicationIcon>
+    <ApplicationIcon>ICON.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
@@ -251,8 +251,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icons8_color_palette.ico" />
-    <Content Include="icons8_paint_palette.ico" />
+    <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
