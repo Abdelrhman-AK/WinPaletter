@@ -245,7 +245,7 @@ Partial Class dragPreviewer
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Fuchsia
-        Me.ClientSize = New System.Drawing.Size(408, 328)
+        Me.ClientSize = New System.Drawing.Size(408, 240)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.pnl_preview)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

@@ -107,6 +107,7 @@ Public Class dragPreviewer
     Private Sub dragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CP = New CP(CP.Mode.File, File)
         pnl_preview.BackgroundImage = My.Application.Wallpaper
+        Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
         pnl_preview.Visible = True : PictureBox1.Image = GetControlImage(pnl_preview) : pnl_preview.Visible = False
         Acrylism.EnableBlur(Me.Handle, True)
@@ -261,6 +262,65 @@ Public Class dragPreviewer
                 MainForm.ReValidateLivePreview(pnl_preview)
 #End Region
         End Select
+    End Sub
+
+    Sub Adjust_Preview()
+
+        Select Case MainForm.PreviewConfig
+            Case MainForm.WinVer.Eleven
+                ActionCenter.Size = New Size(120, 85)
+                ActionCenter.Location = New Point(398, 161)
+                ActionCenter.Dock = Nothing
+                ActionCenter.RoundedCorners = True
+
+                taskbar.Height = 42
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+
+                start.Size = New Size(135, 200)
+                start.Location = New Point(7, 46)
+                start.RoundedCorners = True
+
+                XenonWindow1.RoundedCorners = True
+                XenonWindow2.RoundedCorners = True
+
+            Case MainForm.WinVer.Ten
+                ActionCenter.Dock = DockStyle.Right
+                ActionCenter.RoundedCorners = False
+
+                taskbar.Height = 35
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+
+                start.Size = New Size(182, 201)
+                start.Location = New Point(0, 59)
+                start.RoundedCorners = False
+
+                XenonWindow1.RoundedCorners = False
+                XenonWindow2.RoundedCorners = False
+        End Select
+
+        XenonWindow1.Top = start.Top
+        XenonWindow1.Left = start.Right + 5
+
+        XenonWindow2.Top = XenonWindow1.Bottom + 5
+        XenonWindow2.Left = XenonWindow1.Left
+
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
+
+        ReValidateLivePreview(pnl_preview)
+
+    End Sub
+
+    Sub ReValidateLivePreview(ByVal Parent As Control)
+        Parent.Invalidate()
+
+        For Each ctrl As Control In Parent.Controls
+            If ctrl.HasChildren Then
+                For Each c As Control In ctrl.Controls
+                    ReValidateLivePreview(c)
+                Next
+            End If
+        Next
     End Sub
 
 End Class

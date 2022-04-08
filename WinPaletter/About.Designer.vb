@@ -58,10 +58,10 @@ Partial Class About
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(174, 28)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(92, 20)
+        Me.Label17.Size = New System.Drawing.Size(117, 25)
         Me.Label17.TabIndex = 1
         Me.Label17.Text = "WinPaletter"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -69,10 +69,10 @@ Partial Class About
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(176, 53)
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(177, 55)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(116, 17)
+        Me.Label1.Size = New System.Drawing.Size(101, 13)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "By Abdelrhman-AK"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -80,10 +80,10 @@ Partial Class About
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(269, 30)
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(287, 37)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 16)
+        Me.Label2.Size = New System.Drawing.Size(40, 13)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "1.0.0.0"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

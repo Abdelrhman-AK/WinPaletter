@@ -56,13 +56,12 @@ Namespace My
             End Try
         End Function
 
-        Private Sub XenonMica_UserPreferenceChanged(sender As Object, e As Microsoft.Win32.UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
+        Private Sub WallpaperChanged_UserPreferenceChanged(sender As Object, e As Microsoft.Win32.UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
             If e.Category = e.Category.General Then
                 Threading.Thread.Sleep(1000)
                 Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
                 Global.WinPaletter.MainForm.pnl_preview.BackgroundImage = My.Application.Wallpaper
                 Global.WinPaletter.dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-                '''''''''''''''''''''''''''''''''''MicaWall = GetCurrentWallpaper()
             End If
         End Sub
 
@@ -188,7 +187,7 @@ Namespace My
             ExternalLink_File = ""
 
             Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-            AddHandler Microsoft.Win32.SystemEvents.UserPreferenceChanged, AddressOf XenonMica_UserPreferenceChanged
+            AddHandler Microsoft.Win32.SystemEvents.UserPreferenceChanged, AddressOf WallpaperChanged_UserPreferenceChanged
 
             Try
                 W11 = My.Computer.Info.OSFullName.Contains("11")

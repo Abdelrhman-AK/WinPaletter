@@ -25,13 +25,13 @@ Partial Class Updates
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Updates))
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -66,49 +66,6 @@ Partial Class Updates
         Me.XenonButton3.TabIndex = 2
         Me.XenonButton3.Text = "Cancel"
         Me.XenonButton3.UseVisualStyleBackColor = False
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(177, 25)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 16)
-        Me.Label2.TabIndex = 7
-        Me.Label2.Text = "1.0.0.0"
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(84, 48)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(116, 17)
-        Me.Label1.TabIndex = 6
-        Me.Label1.Text = "By Abdelrhman-AK"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Segoe UI Variable Static Displa", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(82, 23)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(92, 20)
-        Me.Label17.TabIndex = 5
-        Me.Label17.Text = "WinPaletter"
-        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(64, 64)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 4
-        Me.PictureBox1.TabStop = False
         '
         'XenonSeparator1
         '
@@ -160,19 +117,62 @@ Partial Class Updates
         Me.XenonAlertBox2.Text = "Update Avaliable"
         Me.XenonAlertBox2.Visible = False
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(195, 32)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(40, 13)
+        Me.Label2.TabIndex = 16
+        Me.Label2.Text = "1.0.0.0"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(85, 50)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(101, 13)
+        Me.Label1.TabIndex = 15
+        Me.Label1.Text = "By Abdelrhman-AK"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(82, 23)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(117, 25)
+        Me.Label17.TabIndex = 14
+        Me.Label17.Text = "WinPaletter"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(64, 64)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 13
+        Me.PictureBox1.TabStop = False
+        '
         'Updates
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(605, 202)
-        Me.Controls.Add(Me.XenonAlertBox2)
-        Me.Controls.Add(Me.XenonAlertBox1)
-        Me.Controls.Add(Me.XenonSeparator1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.XenonAlertBox2)
+        Me.Controls.Add(Me.XenonAlertBox1)
+        Me.Controls.Add(Me.XenonSeparator1)
         Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.XenonButton1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -194,11 +194,11 @@ Partial Class Updates
 
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonSeparator1 As XenonSeparator
+    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Label17 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonAlertBox2 As XenonAlertBox
 End Class
