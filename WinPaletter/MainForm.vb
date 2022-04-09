@@ -1,7 +1,18 @@
 ﻿Imports System.Reflection
+Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class MainForm
+    Event UserPreferenceChanged As UserPreferenceChangedEventHandler
+
+    Private Sub Desktop_UserPreferenceChanged(sender As Object, e As UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
+        If e.Category = UserPreferenceCategory.Desktop Then
+            My.Application.Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+            pnl_preview.BackgroundImage = My.Application.Wallpaper
+            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+        End If
+    End Sub
+
     Enum WinVer
         Eleven
         Ten
@@ -11,7 +22,6 @@ Public Class MainForm
 
     Public CP, CP_Original, CP_FirstTime As CP
     Dim CP_BeforeDragAndDrop As CP
-
     Public PreviewConfig As WinVer = WinVer.Eleven
     Private ReorderAfterPreviewConfigChange As Boolean = True
 
@@ -85,7 +95,16 @@ Public Class MainForm
         If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
     End Sub
 
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
+        ''''Because this is a static event, you must detach your event handlers when your application is disposed, or memory leaks will result.
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+
         _Shown = False
 
         MakeItDoubleBuffered(Me)
@@ -225,6 +244,16 @@ Public Class MainForm
                 pic6.Image = My.Resources.Mini_Start11
                 pic7.Image = My.Resources.Mini_StartMenuAccent
                 pic8.Image = My.Resources.Mini_TaskbarActiveIcon
+
+                lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
+                lbl6.Text = "Start Button Hover, Some Pressed Buttons"
+                lbl7.Text = "Start Menu Accent Color (Maybe not effective)"
+                lbl8.Text = "Taskbar Background (Maybe not effective)"
+
+                pic5.Image = My.Resources.Mini_SettingsIcons
+                pic6.Image = My.Resources.Mini_Start11
+                pic7.Image = My.Resources.Mini_StartMenuAccent
+                pic8.Image = My.Resources.Mini_Taskbar
 
                 Select Case Not CP.WinMode_Light
                     Case True   ''''''''''Dark
@@ -870,6 +899,8 @@ Public Class MainForm
         End If
     End Sub
 
+
+
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         PreviewConfig = WinVer.Ten
         Adjust_Preview()
@@ -881,6 +912,7 @@ Public Class MainForm
     End Sub
 
     Dim wpth_or_wpsf As Boolean = True
+    Dim DragAccepted As Boolean
 
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, XenonGroupBox8.DragEnter, pnl_preview.DragEnter,
         PaletteContainer.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
@@ -966,7 +998,6 @@ Public Class MainForm
 
     End Sub
 
-    Dim DragAccepted As Boolean
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
         themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
@@ -988,16 +1019,6 @@ Public Class MainForm
         TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
         ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
         SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
-
-        LogonUI_Background_Picker.BackColor = ColorPalette.LogonUI_Background
-        LogonUI_PersonalColorsBackground_Picker.BackColor = ColorPalette.LogonUI_PersonalColors_Background
-        LogonUI_PersonalColorsAccent_Picker.BackColor = ColorPalette.LogonUI_PersonalColors_Accent
-        LogonUI_Acrylic_Toggle.Checked = Not ColorPalette.LogonUI_DisableAcrylicBackgroundOnLogon
-        LogonUI_Background_Toggle.Checked = Not ColorPalette.LogonUI_DisableLogonBackgroundImage
-        LogonUI_Lockscreen_Toggle.Checked = Not ColorPalette.LogonUI_NoLockScreen
-#Region "LogonUI"
-
-#End Region
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -1202,74 +1223,24 @@ Public Class MainForm
         SettingsX.Show()
     End Sub
 
-    Private Sub LogonUI_Acrylic_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Acrylic_Toggle.CheckedChanged
-        CP.LogonUI_DisableAcrylicBackgroundOnLogon = Not sender.Checked
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub LogonUI_Background_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Background_Toggle.CheckedChanged
-        CP.LogonUI_DisableLogonBackgroundImage = Not sender.Checked
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub LogonUI_Lockscreen_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles LogonUI_Lockscreen_Toggle.CheckedChanged
-        CP.LogonUI_NoLockScreen = Not sender.Checked
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub LogonUI_Background_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_Background_Picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
-
-        Dim C As Color = ColorPicker.Pick(CList)
-        CP.LogonUI_Background = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        CList.Clear()
-        CList = Nothing
-    End Sub
-
-    Private Sub LogonUI_PersonalColorsBackground_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_PersonalColorsBackground_Picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
-
-        Dim C As Color = ColorPicker.Pick(CList)
-        CP.LogonUI_PersonalColors_Background = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        CList.Clear()
-        CList = Nothing
-    End Sub
-
-    Private Sub LogonUI_PersonalColorsAccent_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_PersonalColorsAccent_Picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
-
-        Dim C As Color = ColorPicker.Pick(CList)
-        CP.LogonUI_PersonalColors_Accent = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        CList.Clear()
-        CList = Nothing
-    End Sub
-
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
         Win32UI.Show()
     End Sub
 
-    Private Sub PictureBox23_MouseHover(sender As Object, e As EventArgs) Handles PictureBox23.MouseHover, PictureBox28.MouseHover, PictureBox29.MouseHover, PictureBox23.MouseEnter, PictureBox28.MouseEnter, PictureBox29.MouseEnter
-        ToolTip1.Show("This has effect only for Windows 10", sender)
-    End Sub
-
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
-        CP_Original = CP
-        CP.Save(CP.SavingMode.Registry)
-        RestartExplorer()
-        Me.Close()
-    End Sub
-
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
         QA.Show()
+    End Sub
+
+    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+        LogonUI.Show()
+    End Sub
+
+    Private Sub StartAccent_picker_Paint(sender As Object, e As PaintEventArgs) Handles StartAccent_picker.Paint
+
+    End Sub
+
+    Private Sub TaskbarBackground_Picker_Paint(sender As Object, e As PaintEventArgs) Handles TaskbarBackground_Picker.Paint
+
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
@@ -1288,9 +1259,7 @@ Public Class MainForm
         Me.Close()
     End Sub
 
-    Private Sub PictureBox23_MouseLeave(sender As Object, e As EventArgs) Handles PictureBox23.MouseLeave, PictureBox28.MouseLeave, PictureBox29.MouseLeave
-        ToolTip1.Hide(sender)
-    End Sub
+
 #End Region
 
 End Class

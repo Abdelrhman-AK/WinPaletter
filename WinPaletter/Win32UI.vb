@@ -1,10 +1,14 @@
-﻿Public Class Win32UI
+﻿Imports WinPaletter.XenonCore
 
+Public Class Win32UI
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
+        MainForm.Visible = False
+        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         loadCP(MainForm.CP)
     End Sub
 
@@ -24,7 +28,7 @@
         btnhilight_pick.BackColor = CP.Win32UI_ButtonHilight
         btnlight_pick.BackColor = CP.Win32UI_ButtonLight
         btnshadow_pick.BackColor = CP.Win32UI_ButtonShadow
-        BtnText_pick.BackColor = CP.Win32UI_ButtonText
+        btntext_pick.BackColor = CP.Win32UI_ButtonText
         GActivetitle_pick.BackColor = CP.Win32UI_GradientActiveTitle
         GInactivetitle_pick.BackColor = CP.Win32UI_GradientInactiveTitle
         GrayText_pick.BackColor = CP.Win32UI_GrayText
@@ -106,5 +110,9 @@
 
     Private Sub AppWorkspace_pick_Paint(sender As Object, e As PaintEventArgs)
 
+    End Sub
+
+    Private Sub Win32UI_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainForm.Visible = True
     End Sub
 End Class

@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports Cyotek.Windows.Forms
+Imports WinPaletter.XenonCore
 
 Public Class ColorPicker
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -15,6 +16,8 @@ Public Class ColorPicker
     End Sub
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
+
         Me.Left = fr.Right - 14
         Me.Top = fr.Top
         Me.Height = fr.Height
@@ -91,6 +94,7 @@ Public Class ColorPicker
             My.Application.AnimatorX.Hide(MainForm.XenonGroupBox2, True)
             My.Application.AnimatorX.Hide(MainForm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainForm.XenonButton4, True)
+            My.Application.AnimatorX.Hide(MainForm.XenonButton13, True)
             My.Application.AnimatorX.Hide(MainForm.XenonSeparator1, True)
 
             PreviousWidth = MainForm.Width
@@ -139,6 +143,7 @@ Public Class ColorPicker
             My.Application.AnimatorX.Show(MainForm.XenonGroupBox2, True)
             My.Application.AnimatorX.Show(MainForm.apply_btn, True)
             My.Application.AnimatorX.Show(MainForm.XenonButton4, True)
+            My.Application.AnimatorX.Show(MainForm.XenonButton13, True)
             My.Application.AnimatorX.Show(MainForm.XenonSeparator1, True)
         End If
 

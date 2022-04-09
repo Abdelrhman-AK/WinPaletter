@@ -1,4 +1,6 @@
-﻿Public Class About
+﻿Imports WinPaletter.XenonCore
+
+Public Class About
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Process.Start("https://icons8.com/app/windows")
     End Sub
@@ -20,6 +22,7 @@
     End Sub
 
     Private Sub About_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
         Label2.Text = My.Application.Info.Version.ToString
     End Sub
 

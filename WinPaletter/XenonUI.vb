@@ -727,7 +727,7 @@ Public Class XenonRadioButton
             Dim OuterCircle As Rectangle = New Rectangle(3, 4, Height - 8, Height - 8)
             Dim InnerCircle As Rectangle = New Rectangle(4, 5, Height - 10, Height - 10)
             Dim CheckCircle As Rectangle = New Rectangle(7, 8, Height - 16, Height - 16)
-            Dim TightRect As Rectangle = New Rectangle(0, 1, OuterCircle.Right + SZ1.Width + 2, Height - 2)
+            Dim TightRect As Rectangle = New Rectangle(0, 1, OuterCircle.Right + SZ1.Width - 5, Height - 2)
 
 #Region "Colors System"
             Dim HoverCircle_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -978,7 +978,7 @@ Public Class XenonCheckBox
 
             Dim OuterCheckRect As Rectangle = New Rectangle(3, 4, Height - 8, Height - 8)
             Dim InnerCheckRect As Rectangle = New Rectangle(4, 5, Height - 10, Height - 10)
-            Dim TightRect As Rectangle = New Rectangle(0, 1, InnerCheckRect.Right + SZ1.Width + 3, Height - 2)
+            Dim TightRect As Rectangle = New Rectangle(0, 1, InnerCheckRect.Right + SZ1.Width - 4, Height - 2)
 
 #Region "Colors System"
             Dim HoverRect_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -1450,11 +1450,7 @@ Public Class XenonButton : Inherits Button
 
         If Image Is Nothing Then
             Try
-                If Font.Name = My.Application.Font_CtrlBox.Name Then
-                    G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(ContentAlignment.MiddleCenter))
-                Else
-                    G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(1, 0, Width, Height), StringAligner(TextAlign))
-                End If
+                G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(1, 0, Width, Height), StringAligner(TextAlign))
             Catch
             End Try
         Else

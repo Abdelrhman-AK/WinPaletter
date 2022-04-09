@@ -4,9 +4,9 @@ Imports WinPaletter.XenonCore
 Imports System
 Imports Microsoft.Win32
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Threading
 
 Namespace My
-
     Public Module WindowsVersions
         Public W11 As Boolean
         Public W10 As Boolean
@@ -15,13 +15,21 @@ Namespace My
     End Module
 
     Partial Friend Class MyApplication
-        Public _Settings As XeSettings
+#Region "Addons"
+        <Runtime.InteropServices.DllImport("dwmapi.dll", PreserveSig:=False)>
+        Public Shared Function DwmIsCompositionEnabled() As Boolean
+        End Function
+        Public Function AeroEnabled() As Boolean
+            Return DwmIsCompositionEnabled()
+        End Function
+        <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub _
+    SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer,
+    ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+        End Sub
 
-        Public Shared Event UserPreferenceChanged As Microsoft.Win32.UserPreferenceChangedEventHandler
+#End Region
+        Public _Settings As XeSettings
         Public Wallpaper As Bitmap
-        Public Font_CtrlBox As Font = New Font("Segoe MDL2 Assets", 6.5!, FontStyle.Regular)
-        Public Font_Console As Font = New Font("JetBrains Mono Medium", 8, FontStyle.Regular)
-        Public Font_Console_Bigger As Font = New Font("JetBrains Mono Medium", 10, FontStyle.Regular)
         Public BackColor_Dark As Color = Color.FromArgb(24, 24, 26)
         Public BackColor_Light As Color = Color.FromArgb(235, 235, 235)
         Public WithEvents AnimatorX As AnimatorNS.Animator
@@ -30,15 +38,14 @@ Namespace My
 
         Public Function GetCurrentWallpaper() As Bitmap
             Try
-                Dim rkWallPaper As RegistryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-                Dim WallpaperPath As String = rkWallPaper.GetValue("WallPaper").ToString()
+                Dim rkWallPaper As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+                Dim WallpaperPath As String = rkWallPaper.GetValue("Wallpaper").ToString()
 
                 If IO.File.Exists(WallpaperPath) Then
                     Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
                     Return Image.FromStream(x)
                     x.Close()
                     rkWallPaper.Close()
-                    My.Application.FlushMem()
                 Else
                     Dim bmp As Bitmap = New Bitmap(528, 297)
                     Dim g As Graphics = Graphics.FromImage(bmp)
@@ -55,50 +62,6 @@ Namespace My
                 Return Nothing
             End Try
         End Function
-
-        Private Sub WallpaperChanged_UserPreferenceChanged(sender As Object, e As Microsoft.Win32.UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
-            If e.Category = e.Category.General Then
-                Threading.Thread.Sleep(1000)
-                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-                Global.WinPaletter.MainForm.pnl_preview.BackgroundImage = My.Application.Wallpaper
-                Global.WinPaletter.dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-            End If
-        End Sub
-
-        <DllImport("KERNEL32.DLL", EntryPoint:=
-      "SetProcessWorkingSetSize", SetLastError:=True,
-      CallingConvention:=CallingConvention.StdCall)>
-        Friend Shared Function SetProcessWorkingSetSize32Bit _
-      (ByVal pProcess As IntPtr, ByVal dwMinimumWorkingSetSize _
-      As Integer, ByVal dwMaximumWorkingSetSize As Integer) _
-      As Boolean
-        End Function
-
-        <DllImport("KERNEL32.DLL", EntryPoint:=
-      "SetProcessWorkingSetSize", SetLastError:=True,
-      CallingConvention:=CallingConvention.StdCall)>
-        Friend Shared Function SetProcessWorkingSetSize64Bit _
-      (ByVal pProcess As IntPtr, ByVal dwMinimumWorkingSetSize _
-      As Long, ByVal dwMaximumWorkingSetSize As Long) As Boolean
-        End Function
-
-        Public Sub FlushMem()
-            GC.Collect()
-            GC.WaitForPendingFinalizers()
-            If Environment.OSVersion.Platform = PlatformID.Win32NT Then SetProcessWorkingSetSize32Bit(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1)
-        End Sub
-
-        <Runtime.InteropServices.DllImport("dwmapi.dll", PreserveSig:=False)>
-        Public Shared Function DwmIsCompositionEnabled() As Boolean
-        End Function
-        Public Function AeroEnabled() As Boolean
-            Return DwmIsCompositionEnabled()
-        End Function
-
-        <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub _
-    SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer,
-    ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
-        End Sub
 
         Public Const SHCNE_ASSOCCHANGED = &H8000000
         Public Const SHCNF_IDLIST = 0
@@ -173,7 +136,11 @@ Namespace My
             Return True
         End Function
 
-        Private Sub MyApplication_Startup(sender As Object, e As ApplicationServices.StartupEventArgs) Handles Me.Startup
+
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
             If _Settings.AutoAddExt Then
@@ -185,9 +152,6 @@ Namespace My
 
             ExternalLink = False
             ExternalLink_File = ""
-
-            Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-            AddHandler Microsoft.Win32.SystemEvents.UserPreferenceChanged, AddressOf WallpaperChanged_UserPreferenceChanged
 
             Try
                 W11 = My.Computer.Info.OSFullName.Contains("11")
@@ -229,7 +193,7 @@ Namespace My
                         '''''''
                     End If
 
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
                         SettingsX._External = True
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
@@ -291,13 +255,13 @@ Namespace My
                     End If
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                            SettingsX._External = True
-                            SettingsX._File = arg
-                            SettingsX.Show()
-                            '''''''
-                        End If
-
+                        SettingsX._External = True
+                        SettingsX._File = arg
+                        SettingsX.Show()
+                        '''''''
                     End If
+
+                End If
             Catch
                 ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)
                 ''e.BringToForeground = True

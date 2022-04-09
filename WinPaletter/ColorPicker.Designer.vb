@@ -123,7 +123,7 @@ Partial Class ColorPicker
         '
         Me.ScreenColorPicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ScreenColorPicker1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ScreenColorPicker1.Location = New System.Drawing.Point(134, 654)
+        Me.ScreenColorPicker1.Location = New System.Drawing.Point(134, 530)
         Me.ScreenColorPicker1.Name = "ScreenColorPicker1"
         Me.ScreenColorPicker1.Size = New System.Drawing.Size(206, 34)
         Me.ScreenColorPicker1.Text = "Drag me and release to pick a color"
@@ -507,7 +507,7 @@ Partial Class ColorPicker
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(347, 654)
+        Me.XenonButton3.Location = New System.Drawing.Point(347, 530)
         Me.XenonButton3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(99, 34)
@@ -524,7 +524,7 @@ Partial Class ColorPicker
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(449, 654)
+        Me.XenonButton2.Location = New System.Drawing.Point(449, 530)
         Me.XenonButton2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(99, 34)
@@ -559,13 +559,14 @@ Partial Class ColorPicker
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(46, Byte), Integer))
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Nothing
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
+        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(223, 3)
+        Me.XenonButton5.Location = New System.Drawing.Point(153, 3)
         Me.XenonButton5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(143, 34)
+        Me.XenonButton5.Size = New System.Drawing.Size(163, 34)
         Me.XenonButton5.TabIndex = 6
         Me.XenonButton5.Text = "Get Palette from Image"
         Me.XenonButton5.UseVisualStyleBackColor = False
@@ -597,13 +598,14 @@ Partial Class ColorPicker
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(46, Byte), Integer))
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = Nothing
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
+        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(91, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(367, 3)
+        Me.XenonButton1.Location = New System.Drawing.Point(317, 3)
         Me.XenonButton1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(77, 34)
+        Me.XenonButton1.Size = New System.Drawing.Size(101, 34)
         Me.XenonButton1.TabIndex = 1
         Me.XenonButton1.Text = "Color Grid"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -615,13 +617,14 @@ Partial Class ColorPicker
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(46, Byte), Integer))
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = Nothing
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
+        Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(104, Byte), Integer), CType(CType(86, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(445, 3)
+        Me.XenonButton8.Location = New System.Drawing.Point(419, 3)
         Me.XenonButton8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(87, 34)
+        Me.XenonButton8.Size = New System.Drawing.Size(113, 34)
         Me.XenonButton8.TabIndex = 0
         Me.XenonButton8.Text = "Color Wheel"
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -631,7 +634,7 @@ Partial Class ColorPicker
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(561, 701)
+        Me.ClientSize = New System.Drawing.Size(561, 577)
         Me.Controls.Add(Me.XenonGroupBox3)
         Me.Controls.Add(Me.XenonGroupBox1)
         Me.Controls.Add(Me.ColorGrid1)

@@ -2606,7 +2606,7 @@ Partial Class Win32UI
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Win32UI"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Win32UI"
         Me.Panel1.ResumeLayout(False)
         Me.XenonGroupBox66.ResumeLayout(False)

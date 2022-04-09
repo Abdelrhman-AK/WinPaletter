@@ -1,9 +1,12 @@
-﻿Public Class SettingsX
+﻿Imports WinPaletter.XenonCore
+
+Public Class SettingsX
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
 
     Private Sub SettingsX_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
         LoadSettings()
     End Sub
 

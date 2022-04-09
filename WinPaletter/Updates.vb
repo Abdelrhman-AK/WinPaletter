@@ -56,6 +56,8 @@ Public Class Updates
     End Sub
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
+
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
         url = Nothing
         XenonButton1.Text = "Check for updates"

@@ -5,91 +5,19 @@ Imports System.Threading
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
-    Public Shared Sub SetProgressbar(ByVal val As Integer, ByVal progressbar As ProgressBar)
-        Try
-            If progressbar.InvokeRequired Then
-                Try
-                    progressbar.Invoke(New SetProgressbarInvoker(AddressOf SetProgressbar), val, progressbar)
-                Catch
 
-                End Try
-            Else
-                progressbar.Value = val
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub SetProgressbarInvoker(ByVal val As Integer, ByVal progressbar As ProgressBar)
-
-    Public Shared Sub SetProgressbarMax(ByVal val As Integer, ByVal progressbar As ProgressBar)
-        Try
-            If progressbar.InvokeRequired Then
-                Try
-                    progressbar.Invoke(New SetProgressbarMaxInvoker(AddressOf SetProgressbarMax), val, progressbar)
-                Catch
-
-                End Try
-            Else
-                progressbar.Maximum = val
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub SetProgressbarMaxInvoker(ByVal val As Integer, ByVal progressbar As ProgressBar)
-
-    Public Shared Sub AddProgress(ByVal val As Integer, ByVal progressba As ProgressBar)
-        Try
-            If progressba.InvokeRequired Then
-                progressba.Invoke(New addProgressInvoker(AddressOf AddProgress), val, progressba)
-            Else
-                progressba.Value += val
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub addProgressInvoker(ByVal val As Integer, ByVal progressba As ProgressBar)
-
-    Public Shared Sub Setpicbox(ByVal pic As Image, ByVal ctrl As PictureBox)
+    Public Shared Sub SetBackImage(ByVal ctrl As Control, ByVal pic As Image)
         Try
             If ctrl.InvokeRequired Then
-                ctrl.Invoke(New setpicboxInvoker(AddressOf Setpicbox), pic, ctrl)
+                ctrl.Invoke(New SetBackImageInvoker(AddressOf SetBackImage), ctrl, pic)
             Else
-                ctrl.Image = pic
+                ctrl.BackgroundImage = pic
             End If
         Catch
 
         End Try
     End Sub
-    Private Delegate Sub setpicboxInvoker(ByVal pic As Image, ByVal ctrl As PictureBox)
-
-    Public Shared Sub Setfrmheight(ByVal [Height] As Integer, ByVal [Form] As Form)
-        Try
-            If [Form].InvokeRequired Then
-                [Form].Invoke(New setfrmheightInvoker(AddressOf Setfrmheight), [Height], [Form])
-            Else
-                [Form].Height = [Height]
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub setfrmheightInvoker(ByVal [Height] As Integer, ByVal [Form] As Form)
-
-    Public Shared Sub SetCtrlSize(ByVal Size As Size, ByVal Ctrl As Control)
-        Try
-            If Ctrl.InvokeRequired Then
-                Ctrl.Invoke(New SetCtrlSizeInvoker(AddressOf SetCtrlSize), Size, Ctrl)
-            Else
-                Ctrl.Size = Size
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub SetCtrlSizeInvoker(ByVal Size As Size, ByVal Ctrl As Control)
+    Private Delegate Sub SetBackImageInvoker(ByVal ctrl As Control, ByVal pic As Image)
 
     Public Shared Sub SetCtrlTxt(ByVal text As String, ByVal Ctrl As Control)
         Try
@@ -104,74 +32,6 @@ Public Class XenonCore
     End Sub
     Private Delegate Sub setCtrlTxtInvoker(ByVal text As String, ByVal Ctrl As Control)
 
-    Public Shared Sub SetTxt(ByVal text As String, ByVal [TextBox] As TextBox)
-        Try
-            If [TextBox].InvokeRequired Then
-                [TextBox].Invoke(New setTxtInvoker(AddressOf SetTxt), text, [TextBox])
-                Try
-                    [TextBox].SelectionStart = [TextBox].TextLength
-                    [TextBox].ScrollToCaret()
-                Catch
-
-                End Try
-            Else
-                [TextBox].Text = text
-                [TextBox].SelectionStart = [TextBox].TextLength
-                [TextBox].ScrollToCaret()
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub setTxtInvoker(ByVal text As String, ByVal [TextBox] As TextBox)
-
-    Public Shared Sub AppendTxt(ByVal text As String, ByVal [TextBox] As TextBox)
-        Try
-            If [TextBox].InvokeRequired Then
-                [TextBox].Invoke(New setTxtInvoker(AddressOf AppendTxt), text, [TextBox])
-                Try
-                    [TextBox].SelectionStart = [TextBox].TextLength
-                    [TextBox].ScrollToCaret()
-                Catch
-                End Try
-            Else
-                [TextBox].AppendText(text)
-                [TextBox].SelectionStart = [TextBox].TextLength
-                [TextBox].ScrollToCaret()
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub AppendTxtInvoker(ByVal text As String, ByVal [TextBox] As TextBox)
-
-    Public Shared Sub CloseForm(ByVal [Form] As Form)
-
-        If [Form].InvokeRequired Then
-            Dim T As New setFormClosing(AddressOf CloseForm)
-            Try
-                [Form].Invoke(T, New Control() {[Form]})
-            Catch
-
-            End Try
-        Else
-            [Form].Close()
-        End If
-    End Sub
-    Public Delegate Sub setFormClosing(ByVal [Form] As Form)
-
-    Public Shared Sub ShowDlg(ByVal Dlg As Form)
-        Try
-            If Dlg.InvokeRequired Then
-                Dlg.Invoke(New ShowDlgInvoker(AddressOf ShowDlg), Dlg)
-            Else
-                Dlg.ShowDialog()
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub ShowDlgInvoker(ByVal Dlg As Form)
 
 #End Region
 
@@ -186,7 +46,6 @@ Public Class XenonCore
 
     End Function
     Const WM_USER As Integer = &H400
-
     Public Shared Sub RestartExplorer()
         If My.Application._Settings.AutoRestartExplorer Then
             Dim ptr = FindWindow("Shell_TrayWnd", Nothing)
@@ -202,12 +61,10 @@ Public Class XenonCore
                 Thread.Sleep(1000)
             Loop While True
 
-            'Shell("C:\Windows\explorer.exe") 
-            'Process.Start("userinit.exe")
-            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\explorer.exe").WaitForInputIdle()
+
+            Try : Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\explorer.exe").WaitForInputIdle() : Catch : End Try
         End If
     End Sub
-
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
@@ -527,11 +384,9 @@ Public Class XenonCore
             Reader.Close()
             Reader.Dispose()
         End Using
-        My.Application.FlushMem()
     End Sub
     Public Shared Function CStr_FromList(ByVal [List] As List(Of String)) As String
         Return String.Join(vbCrLf, [List].ToArray)
-        My.Application.FlushMem()
     End Function
 #End Region
 

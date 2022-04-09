@@ -82,6 +82,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -133,6 +134,12 @@
       <DependentUpon>EditInfo.vb</DependentUpon>
     </Compile>
     <Compile Include="EditInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI.Designer.vb">
+      <DependentUpon>LogonUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.vb">
@@ -195,13 +202,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI.resx">
+      <DependentUpon>LogonUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
