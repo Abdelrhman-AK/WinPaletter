@@ -35,6 +35,7 @@ Namespace My
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
+        Event UserPreferenceChanged As UserPreferenceChangedEventHandler
 
         Public Function GetCurrentWallpaper() As Bitmap
             Try
@@ -136,10 +137,39 @@ Namespace My
             Return True
         End Function
 
+        Private Sub Desktop_UserPreferenceChanged(sender As Object, e As UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
+            If e.Category = UserPreferenceCategory.Desktop Then
+                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                RaiseEvent WallpaperChanged()
 
+            ElseIf e.Category = UserPreferenceCategory.General Then
+                NReg = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False).GetValue("Wallpaper").ToString()
+                If NReg <> OReg Then
+                    OReg = NReg
+                    Threading.Thread.Sleep(1000)
+                    Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                    RaiseEvent WallpaperChanged()
+                End If
+            End If
+        End Sub
+
+        Public Event WallpaperChanged()
+        Dim OReg, NReg As String
+
+        Private Sub MainForm_WallpaperChanged() Handles Me.WallpaperChanged
+            WinPaletter.MainForm.pnl_preview.BackgroundImage = My.Application.Wallpaper
+            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+        End Sub
+
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
+            ''''Because this is a static event, you must detach your event handlers when your application is disposed, or memory leaks will result.
+        End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+            AddHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
 
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
@@ -276,6 +306,10 @@ Namespace My
             If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
 #Disable Warning BC42105
         End Function
+
+
+
+
 
 
 #Enable Warning BC42105

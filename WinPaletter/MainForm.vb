@@ -3,15 +3,6 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class MainForm
-    Event UserPreferenceChanged As UserPreferenceChangedEventHandler
-
-    Private Sub Desktop_UserPreferenceChanged(sender As Object, e As UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
-        If e.Category = UserPreferenceCategory.Desktop Then
-            My.Application.Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
-            pnl_preview.BackgroundImage = My.Application.Wallpaper
-            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-        End If
-    End Sub
 
     Enum WinVer
         Eleven
@@ -24,6 +15,7 @@ Public Class MainForm
     Dim CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
     Private ReorderAfterPreviewConfigChange As Boolean = True
+
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
@@ -95,13 +87,8 @@ Public Class MainForm
         If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
     End Sub
 
-    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
-        ''''Because this is a static event, you must detach your event handlers when your application is disposed, or memory leaks will result.
-    End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AddHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
@@ -1258,8 +1245,6 @@ Public Class MainForm
 
         Me.Close()
     End Sub
-
-
 #End Region
 
 End Class
