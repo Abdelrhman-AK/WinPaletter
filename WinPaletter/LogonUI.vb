@@ -4,9 +4,9 @@ Public Class LogonUI
     Private Sub LogonUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
-        MainForm.Visible = False
+        MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
-        Load_FromCP(MainForm.CP)
+        Load_FromCP(MainFrm.CP)
     End Sub
 
     Sub Load_FromCP(ByVal ColorPalette As CP)
@@ -38,7 +38,7 @@ Public Class LogonUI
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Save(MainForm.CP)
+        Save(MainFrm.CP)
         Me.Close()
     End Sub
 
@@ -47,6 +47,6 @@ Public Class LogonUI
     End Sub
 
     Private Sub LogonUI_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainForm.Visible = True
+        MainFrm.Visible = True
     End Sub
 End Class

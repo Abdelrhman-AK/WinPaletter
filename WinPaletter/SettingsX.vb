@@ -100,13 +100,13 @@ Public Class SettingsX
         Me.Close()
 
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            MainForm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
+            MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
         Else
-            If My.W11 Then MainForm.PreviewConfig = MainForm.WinVer.Eleven Else MainForm.PreviewConfig = MainForm.WinVer.Ten
+            If My.W11 Then MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Else MainFrm.PreviewConfig = MainFrm.WinVer.Ten
         End If
 
-        MainForm.Adjust_Preview()
-        MainForm.ApplyLivePreviewFromCP(MainForm.CP)
+        MainFrm.Adjust_Preview()
+        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -161,7 +161,7 @@ Public Class SettingsX
         End If
     End Sub
 
-    Private Sub MainForm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop
+    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
         Dim sets As New XeSettings(XeSettings.Mode.File, files(0))

@@ -143,11 +143,11 @@
     <Compile Include="LogonUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.vb">
+    <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.vb">
-      <DependentUpon>MainForm.vb</DependentUpon>
+    <Compile Include="MainFrm.Designer.vb">
+      <DependentUpon>MainFrm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -213,8 +213,8 @@
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.vb</DependentUpon>
+    <EmbeddedResource Include="MainFrm.resx">
+      <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>

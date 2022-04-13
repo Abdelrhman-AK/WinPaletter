@@ -7,9 +7,9 @@ Public Class Win32UI
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        MainForm.Visible = False
+        MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
-        loadCP(MainForm.CP)
+        loadCP(MainFrm.CP)
     End Sub
 
 
@@ -88,7 +88,7 @@ Public Class Win32UI
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        ApplyToCP(MainForm.CP)
+        ApplyToCP(MainFrm.CP)
         Me.Close()
     End Sub
 
@@ -113,6 +113,6 @@ Public Class Win32UI
     End Sub
 
     Private Sub Win32UI_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainForm.Visible = True
+        MainFrm.Visible = True
     End Sub
 End Class

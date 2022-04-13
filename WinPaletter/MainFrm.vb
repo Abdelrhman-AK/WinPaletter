@@ -1,21 +1,20 @@
-﻿Imports System.Reflection
+﻿Imports System.Management
+Imports System.Reflection
+Imports System.Security.Principal
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
-Public Class MainForm
-
-    Enum WinVer
-        Eleven
-        Ten
-    End Enum
-
+Public Class MainFrm
     Private _Shown As Boolean = False
-
     Public CP, CP_Original, CP_FirstTime As CP
     Dim CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
     Private ReorderAfterPreviewConfigChange As Boolean = True
 
+    Enum WinVer
+        Eleven
+        Ten
+    End Enum
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
@@ -36,6 +35,56 @@ Public Class MainForm
 
             DoubleBufferedControl(ctrl, True)
         Next
+    End Sub
+
+    Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+
+        _Shown = False
+
+        MakeItDoubleBuffered(Me)
+        ApplyDarkMode(Me)
+
+        Dim LabelsList As New List(Of Label)
+        LabelsList.Add(Label1)
+        LabelsList.Add(Label10)
+        LabelsList.Add(Label17)
+        LabelsList.Add(Label21)
+        LabelsList.Add(themename_lbl)
+        LabelsList.Add(author_lbl)
+        LabelsList.Add(ColorPicker.Label1)
+        LabelsList.Add(ColorPicker.Label2)
+        LabelsList.Add(ColorPicker.Label3)
+        LabelsList.Add(ColorPicker.Label5)
+
+        For Each lbl As Label In LabelsList
+            lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
+        Next
+
+        If My.Application._Settings.CustomPreviewConfig_Enabled Then
+            PreviewConfig = My.Application._Settings.CustomPreviewConfig
+        Else
+            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
+        End If
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        Adjust_Preview()
+
+        If Not My.Application.ExternalLink Then
+            CP = New CP(CP.Mode.Registry)
+        Else
+            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            OpenFileDialog1.FileName = My.Application.ExternalLink_File
+            SaveFileDialog1.FileName = My.Application.ExternalLink_File
+            My.Application.ExternalLink = False
+            My.Application.ExternalLink_File = ""
+        End If
+
+        CP_Original = CP
+        CP_FirstTime = CP
+        ApplyCPValues(CP)
+        ApplyLivePreviewFromCP(CP)
     End Sub
 
     Sub Adjust_Preview()
@@ -88,57 +137,9 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
-        _Shown = False
 
-        MakeItDoubleBuffered(Me)
-        ApplyDarkMode(Me)
-
-        Dim LabelsList As New List(Of Label)
-        LabelsList.Add(Label1)
-        LabelsList.Add(Label10)
-        LabelsList.Add(Label17)
-        LabelsList.Add(Label21)
-        LabelsList.Add(themename_lbl)
-        LabelsList.Add(author_lbl)
-        LabelsList.Add(ColorPicker.Label1)
-        LabelsList.Add(ColorPicker.Label2)
-        LabelsList.Add(ColorPicker.Label3)
-        LabelsList.Add(ColorPicker.Label5)
-
-        For Each lbl As Label In LabelsList
-            lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
-        Next
-
-        If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            PreviewConfig = My.Application._Settings.CustomPreviewConfig
-        Else
-            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
-        End If
-
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        Adjust_Preview()
-
-        If Not My.Application.ExternalLink Then
-            CP = New CP(CP.Mode.Registry)
-        Else
-            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            OpenFileDialog1.FileName = My.Application.ExternalLink_File
-            SaveFileDialog1.FileName = My.Application.ExternalLink_File
-            My.Application.ExternalLink = False
-            My.Application.ExternalLink_File = ""
-        End If
-
-        CP_Original = CP
-        CP_FirstTime = CP
-        ApplyCPValues(CP)
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
     End Sub
 
@@ -928,7 +929,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub MainForm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
+    Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         If DragAccepted Then
             If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
             CP = CP_BeforeDragAndDrop
@@ -937,12 +938,12 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub MainForm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, XenonGroupBox8.DragOver, pnl_preview.DragOver,
+    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, XenonGroupBox8.DragOver, pnl_preview.DragOver,
         PaletteContainer.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, XenonGroupBox2.DragOver, XenonGroupBox13.DragOver
         If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
-    Private Sub MainForm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, XenonGroupBox8.DragDrop, pnl_preview.DragDrop,
+    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, XenonGroupBox8.DragDrop, pnl_preview.DragDrop,
         PaletteContainer.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
@@ -1220,14 +1221,6 @@ Public Class MainForm
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         LogonUI.Show()
-    End Sub
-
-    Private Sub StartAccent_picker_Paint(sender As Object, e As PaintEventArgs) Handles StartAccent_picker.Paint
-
-    End Sub
-
-    Private Sub TaskbarBackground_Picker_Paint(sender As Object, e As PaintEventArgs) Handles TaskbarBackground_Picker.Paint
-
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click

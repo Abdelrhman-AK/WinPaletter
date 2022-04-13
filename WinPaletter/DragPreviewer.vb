@@ -132,8 +132,8 @@ Public Class dragPreviewer
 
         Label8.ForeColor = If(CP.AppMode_Light, Color.Black, Color.White)
 
-        Select Case MainForm.PreviewConfig
-            Case MainForm.WinVer.Eleven
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.Eleven
 #Region "Win11"
                 start.DarkMode = Not CP.WinMode_Light
                 taskbar.DarkMode = Not CP.WinMode_Light
@@ -194,7 +194,7 @@ Public Class dragPreviewer
                         Label12.ForeColor = CP.StartListFolders_TaskbarFront
                 End Select
 #End Region
-            Case MainForm.WinVer.Ten
+            Case MainFrm.WinVer.Ten
 #Region "Win10"
                 start.DarkMode = Not CP.WinMode_Light
                 taskbar.DarkMode = Not CP.WinMode_Light
@@ -259,15 +259,15 @@ Public Class dragPreviewer
                     End If
                 End If
 
-                MainForm.ReValidateLivePreview(pnl_preview)
+                MainFrm.ReValidateLivePreview(pnl_preview)
 #End Region
         End Select
     End Sub
 
     Sub Adjust_Preview()
 
-        Select Case MainForm.PreviewConfig
-            Case MainForm.WinVer.Eleven
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.Eleven
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
                 ActionCenter.Dock = Nothing
@@ -283,7 +283,7 @@ Public Class dragPreviewer
                 XenonWindow1.RoundedCorners = True
                 XenonWindow2.RoundedCorners = True
 
-            Case MainForm.WinVer.Ten
+            Case MainFrm.WinVer.Ten
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
 

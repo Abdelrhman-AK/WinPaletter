@@ -34,7 +34,7 @@ Public Class ColorPicker
     Dim ls As New List(Of Control)
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
-        MainForm.Visible = False
+        MainFrm.Visible = False
         Win32UI.Visible = False
 
         ls.Clear()
@@ -51,7 +51,7 @@ Public Class ColorPicker
     End Sub
 
     Private Sub ScreenColorPicker1_MouseUp(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseUp
-        MainForm.Visible = True
+        MainFrm.Visible = True
         Win32UI.Visible = True
 
         For Each ctrl As Control In ls
@@ -89,17 +89,17 @@ Public Class ColorPicker
 
         fr = Ctrl(0).FindForm
 
-        If fr Is MainForm Then
-            My.Application.AnimatorX.Hide(MainForm.PaletteContainer, True)
-            My.Application.AnimatorX.Hide(MainForm.XenonGroupBox2, True)
-            My.Application.AnimatorX.Hide(MainForm.apply_btn, True)
-            My.Application.AnimatorX.Hide(MainForm.XenonButton4, True)
-            My.Application.AnimatorX.Hide(MainForm.XenonButton13, True)
-            My.Application.AnimatorX.Hide(MainForm.XenonSeparator1, True)
+        If fr Is MainFrm Then
+            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonGroupBox2, True)
+            My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonSeparator1, True)
 
-            PreviousWidth = MainForm.Width
-            DestinatedWidth = MainForm.XenonGroupBox8.Width + MainForm.XenonGroupBox2.Left * 3.25
-            MainForm.Width = DestinatedWidth
+            PreviousWidth = MainFrm.Width
+            DestinatedWidth = MainFrm.XenonGroupBox8.Width + MainFrm.XenonGroupBox2.Left * 3.25
+            MainFrm.Width = DestinatedWidth
         End If
 
         Dim c As Color = Ctrl(0).BackColor
@@ -137,14 +137,14 @@ Public Class ColorPicker
 
         RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
-        If fr Is MainForm Then
-            MainForm.Width = PreviousWidth
-            My.Application.AnimatorX.Show(MainForm.PaletteContainer, True)
-            My.Application.AnimatorX.Show(MainForm.XenonGroupBox2, True)
-            My.Application.AnimatorX.Show(MainForm.apply_btn, True)
-            My.Application.AnimatorX.Show(MainForm.XenonButton4, True)
-            My.Application.AnimatorX.Show(MainForm.XenonButton13, True)
-            My.Application.AnimatorX.Show(MainForm.XenonSeparator1, True)
+        If fr Is MainFrm Then
+            MainFrm.Width = PreviousWidth
+            My.Application.AnimatorX.Show(MainFrm.PaletteContainer, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonGroupBox2, True)
+            My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonSeparator1, True)
         End If
 
         fr = Nothing
@@ -228,7 +228,7 @@ Public Class ColorPicker
     End Sub
 
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Async Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
         Select Case XenonRadioButton1.Checked
             Case True
                 img = My.Application.GetCurrentWallpaper()

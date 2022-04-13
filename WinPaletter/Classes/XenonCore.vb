@@ -243,9 +243,9 @@ Public Class XenonCore
         If Form Is Nothing Then
             '####################### For Form1
             Try
-                EnumControls(MainForm, DarkMode)
-                MainForm.Invalidate()
-                MainForm.Refresh()
+                EnumControls(MainFrm, DarkMode)
+                MainFrm.Invalidate()
+                MainFrm.Refresh()
             Catch
 
             End Try

@@ -5,7 +5,7 @@ Public Class EditInfo
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
-        'Load_Info(MainForm.CP)
+        'Load_Info(MainFrm.CP)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -30,7 +30,7 @@ Public Class EditInfo
             Exit Sub
         End If
 
-        Save_Info(MainForm.CP)
+        Save_Info(MainFrm.CP)
         Me.Close()
     End Sub
 

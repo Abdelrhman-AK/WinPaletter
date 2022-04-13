@@ -658,7 +658,7 @@ Public Class CP
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
             End If
         Catch
-            'MainForm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
+            'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
         Finally
             If R IsNot Nothing Then R.Close()
         End Try

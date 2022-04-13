@@ -4,7 +4,8 @@ Imports WinPaletter.XenonCore
 Imports System
 Imports Microsoft.Win32
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.Threading
+Imports System.Management
+Imports System.Security.Principal
 
 Namespace My
     Public Module WindowsVersions
@@ -35,7 +36,6 @@ Namespace My
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
-        Event UserPreferenceChanged As UserPreferenceChangedEventHandler
 
         Public Function GetCurrentWallpaper() As Bitmap
             Try
@@ -137,39 +137,34 @@ Namespace My
             Return True
         End Function
 
-        Private Sub Desktop_UserPreferenceChanged(sender As Object, e As UserPreferenceChangedEventArgs) Handles Me.UserPreferenceChanged
-            If e.Category = UserPreferenceCategory.Desktop Then
-                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-                RaiseEvent WallpaperChanged()
-
-            ElseIf e.Category = UserPreferenceCategory.General Then
-                NReg = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False).GetValue("Wallpaper").ToString()
-                If NReg <> OReg Then
-                    OReg = NReg
-                    Threading.Thread.Sleep(1000)
-                    Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-                    RaiseEvent WallpaperChanged()
-                End If
-            End If
+        Sub RegMon(KeyPath As String, valueName As String)
+            Dim currentUser = WindowsIdentity.GetCurrent()
+            Dim Base As String = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query = New WqlEventQuery(Base)
+            watcher = New ManagementEventWatcher(query)
+            watcher.Start()
         End Sub
 
-        Public Event WallpaperChanged()
-        Dim OReg, NReg As String
+        Dim WithEvents Watcher As ManagementEventWatcher
 
-        Private Sub MainForm_WallpaperChanged() Handles Me.WallpaperChanged
-            WinPaletter.MainForm.pnl_preview.BackgroundImage = My.Application.Wallpaper
-            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+        Delegate Sub UpdateBKDelegate(ByVal [Image] As Image)
+        Private Sub UpdateBK(ByVal [Image] As Image)
+            MainFrm.pnl_preview.BackgroundImage = [Image]
+            dragPreviewer.pnl_preview.BackgroundImage = [Image]
         End Sub
 
-
-        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
-            ''''Because this is a static event, you must detach your event handlers when your application is disposed, or memory leaks will result.
+        Sub watcher_EventArrived(sender As Object, e As EventArrivedEventArgs) Handles watcher.EventArrived
+            Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+            Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
+            MainForm.Invoke(updateBkX, Wallpaper)
         End Sub
+
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
-            AddHandler SystemEvents.UserPreferenceChanged, AddressOf Desktop_UserPreferenceChanged
+
+            RegMon("Control Panel\Desktop", "WallPaper")
+            'RegMon("Control Panel\Colors", "Background")
 
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
@@ -231,6 +226,7 @@ Namespace My
                         '''''''
                     End If
                 Next
+
             Catch
             End Try
         End Sub
@@ -246,19 +242,19 @@ Namespace My
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                         If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                            If Not WinPaletter.MainForm.CP.GetHashCode = WinPaletter.MainForm.CP_Original.GetHashCode Then
+                            If Not MainFrm.CP.GetHashCode = MainFrm.CP_Original.GetHashCode Then
                                 Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
                                     Case MsgBoxResult.Yes
-                                        If Not IO.File.Exists(WinPaletter.MainForm.SaveFileDialog1.FileName) Then
-                                            If WinPaletter.MainForm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                WinPaletter.MainForm.CP_Original = WinPaletter.MainForm.CP
-                                                WinPaletter.MainForm.CP.Save(CP.SavingMode.File, WinPaletter.MainForm.SaveFileDialog1.FileName)
+                                        If Not IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                MainFrm.CP_Original = MainFrm.CP
+                                                MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
                                             Else
                                                 Exit Sub
                                             End If
                                         Else
-                                            WinPaletter.MainForm.CP_Original = WinPaletter.MainForm.CP
-                                            WinPaletter.MainForm.CP.Save(CP.SavingMode.File, WinPaletter.MainForm.SaveFileDialog1.FileName)
+                                            MainFrm.CP_Original = MainFrm.CP
+                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
                                         End If
 
                                     Case MsgBoxResult.Cancel
@@ -266,19 +262,19 @@ Namespace My
                                 End Select
                             End If
 
-                            WinPaletter.MainForm.CP = New CP(CP.Mode.File, arg)
-                            WinPaletter.MainForm.OpenFileDialog1.FileName = arg
-                            WinPaletter.MainForm.SaveFileDialog1.FileName = arg
-                            WinPaletter.MainForm.ApplyCPValues(WinPaletter.MainForm.CP)
-                            WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
+                            MainFrm.CP = New CP(CP.Mode.File, arg)
+                            MainFrm.OpenFileDialog1.FileName = arg
+                            MainFrm.SaveFileDialog1.FileName = arg
+                            MainFrm.ApplyCPValues(MainFrm.CP)
+                            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
 
                         Else
-                            WinPaletter.MainForm.CP = New CP(CP.Mode.File, arg)
-                            WinPaletter.MainForm.OpenFileDialog1.FileName = arg
-                            WinPaletter.MainForm.SaveFileDialog1.FileName = arg
-                            WinPaletter.MainForm.ApplyCPValues(WinPaletter.MainForm.CP)
-                            WinPaletter.MainForm.ApplyLivePreviewFromCP(WinPaletter.MainForm.CP)
-                            WinPaletter.MainForm.CP.Save(CP.SavingMode.Registry, arg)
+                            MainFrm.CP = New CP(CP.Mode.File, arg)
+                            MainFrm.OpenFileDialog1.FileName = arg
+                            MainFrm.SaveFileDialog1.FileName = arg
+                            MainFrm.ApplyCPValues(MainFrm.CP)
+                            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+                            MainFrm.CP.Save(CP.SavingMode.Registry, arg)
                             RestartExplorer()
                             '''''''
                         End If
@@ -306,9 +302,6 @@ Namespace My
             If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
 #Disable Warning BC42105
         End Function
-
-
-
 
 
 
