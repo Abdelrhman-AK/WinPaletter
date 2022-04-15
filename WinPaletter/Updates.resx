@@ -118,6 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAaNJREFUOE/N
+        kjtPwlAYhusf0EQ0ljhgtXK/GI3G0YFN1246O/gbdCDRjeBaTEw0IthKvRQBL4lxURMdXMBJYZCWlrZG
+        /8DnOfWAGmD3Sb7hvM933pzhUP8PF19eGUiULp18FU+WxDYzV5+OyStrkRzbiVy8r/mk2u1gogQ0XwFn
+        sgpEUdPXOh25sJ7RQOTc5CmAHqK+CefN2XDRhIBcPx1KlKNDyZcovVWZw27q0uqbOLcesQ8XTAgVDAjm
+        jXX7YpNQweSCZ7YQSNQiUPzoDxWNaChv3uCdQK4RC8oNu7yFP6dzAbkBfrm9oEkwZwj2zonOkegHHPpO
+        dPAd610L/LIu4B1PpwIceo808Eha1wJc7rF3OhWg0J3VAE3XAuzc2Tqwovq3YFyqL7CHanxcRFJQ79iM
+        ynmlNwfRLdyiJiDfXsCKygYWYwdoMgqMppWHUcHqw47mq/M0/8oNbpY4Jl2TxzIqjGTqs/bF3zAHSgxd
+        BGZfuWf3zF4SU/gz4U+FP5dru3LLpNRVotphUsrS8M7fp6OCXfQKARUIzvjTMon/DRT1BYAr4X/c9LiU
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="XenonAlertBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -146,7 +159,7 @@
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAF19JREFUeF7tm3l0VFW2xiEM6nvd73W/f5QMlXmsJJXUkAoEkgpTAAecWlvfU5fa
+        vgAADr4B6kKxwAAAF19JREFUeF7tm3l0VFW2xiEM6nvd73W/f5QMlXmsJJXUkAoEkgpTAAecWlvfU5fa
         zq0yIyKCjE7N4IAoIqioKMqkiECSW5mYBRUlQIAEkjBDGEzC5Nrv2+dO51ZVAPvh6j98tdZeqYRbqfy+
         vc/e3zm3aPf/D+nxtLLlT6vHvuI7XzDQ1+r1+s67inzn7QW+VnylPDz3FuE5vueveQX49+vx1SW+b3IU
         +A7Y83w10S5fLb6OnL3Ql1dz2udF3KlU+5rwO5vwu+odXl9tstdXjWsWD7zvT9pbtwtffygrYstpX8TG

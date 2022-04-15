@@ -41,8 +41,9 @@ Partial Class Updates
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = Nothing
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
+        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
         Me.XenonButton1.Location = New System.Drawing.Point(411, 154)
         Me.XenonButton1.Name = "XenonButton1"
@@ -58,7 +59,7 @@ Partial Class Updates
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(282, 154)
         Me.XenonButton3.Name = "XenonButton3"

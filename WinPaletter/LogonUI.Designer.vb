@@ -334,7 +334,7 @@ Partial Class LogonUI
         Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
         Me.PictureBox28.Location = New System.Drawing.Point(31, 2)
         Me.PictureBox28.Name = "PictureBox28"
-        Me.PictureBox28.Size = New System.Drawing.Size(16, 19)
+        Me.PictureBox28.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.PictureBox28.TabIndex = 6
         Me.PictureBox28.TabStop = False
@@ -406,7 +406,7 @@ Partial Class LogonUI
         Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
         Me.PictureBox29.Location = New System.Drawing.Point(31, 2)
         Me.PictureBox29.Name = "PictureBox29"
-        Me.PictureBox29.Size = New System.Drawing.Size(16, 19)
+        Me.PictureBox29.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.PictureBox29.TabIndex = 7
         Me.PictureBox29.TabStop = False
@@ -498,7 +498,7 @@ Partial Class LogonUI
         Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
         Me.PictureBox23.Location = New System.Drawing.Point(31, 2)
         Me.PictureBox23.Name = "PictureBox23"
-        Me.PictureBox23.Size = New System.Drawing.Size(16, 19)
+        Me.PictureBox23.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.PictureBox23.TabIndex = 5
         Me.PictureBox23.TabStop = False
@@ -527,7 +527,7 @@ Partial Class LogonUI
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.Maroon
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
         Me.XenonButton2.Location = New System.Drawing.Point(15, 362)
         Me.XenonButton2.Name = "XenonButton2"

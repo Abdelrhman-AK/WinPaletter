@@ -37,6 +37,14 @@ Public Class MainFrm
         Next
     End Sub
 
+    Sub UpdateHint(Sender As Object, e As EventArgs)
+        status_lbl.Text = TryCast(Sender, XenonButton).Tag
+    End Sub
+
+    Sub EraseHint()
+        status_lbl.Text = ""
+    End Sub
+
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
@@ -60,6 +68,13 @@ Public Class MainFrm
 
         For Each lbl As Label In LabelsList
             lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
+        Next
+
+        For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
         Next
 
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
@@ -600,18 +615,6 @@ Public Class MainFrm
         CP.Taskbar_Icon_Underline = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        If Not CP.WinMode_Light Then
-            ShowAccentOnTitlebarAndBorders_Toggle.ColorPalette.BaseColor = sender.BackColor
-            ShowAccentOnTitlebarAndBorders_Toggle.Invalidate()
-            WinMode_Toggle.ColorPalette.BaseColor = sender.BackColor
-            WinMode_Toggle.Invalidate()
-            AppMode_Toggle.ColorPalette.BaseColor = sender.BackColor
-            AppMode_Toggle.Invalidate()
-            Transparency_Toggle.ColorPalette.BaseColor = sender.BackColor
-            Transparency_Toggle.Invalidate()
-            AccentOnStartAndTaskbar_Toggle.ColorPalette.BaseColor = sender.BackColor
-            AccentOnStartAndTaskbar_Toggle.Invalidate()
-        End If
 
         CList.Clear()
         CList = Nothing
@@ -859,23 +862,6 @@ Public Class MainFrm
 
         CP.StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
-
-        If PreviewConfig = WinVer.Eleven Then
-            If CP.WinMode_Light Then
-                ShowAccentOnTitlebarAndBorders_Toggle.ColorPalette.BaseColor = sender.BackColor
-                ShowAccentOnTitlebarAndBorders_Toggle.Invalidate()
-                WinMode_Toggle.ColorPalette.BaseColor = sender.BackColor
-                WinMode_Toggle.Invalidate()
-                AppMode_Toggle.ColorPalette.BaseColor = sender.BackColor
-                AppMode_Toggle.Invalidate()
-                Transparency_Toggle.ColorPalette.BaseColor = sender.BackColor
-                Transparency_Toggle.Invalidate()
-                AccentOnStartAndTaskbar_Toggle.ColorPalette.BaseColor = sender.BackColor
-                AccentOnStartAndTaskbar_Toggle.Invalidate()
-            End If
-        Else
-
-        End If
 
         CList.Clear()
         CList = Nothing
@@ -1223,7 +1209,10 @@ Public Class MainFrm
         LogonUI.Show()
     End Sub
 
+
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        My.Application.Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
     End Sub

@@ -29,6 +29,8 @@ Namespace My
         End Sub
 
 #End Region
+
+#Region "Variables"
         Public _Settings As XeSettings
         Public Wallpaper As Bitmap
         Public BackColor_Dark As Color = Color.FromArgb(24, 24, 26)
@@ -36,34 +38,9 @@ Namespace My
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
+#End Region
 
-        Public Function GetCurrentWallpaper() As Bitmap
-            Try
-                Dim rkWallPaper As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-                Dim WallpaperPath As String = rkWallPaper.GetValue("Wallpaper").ToString()
-
-                If IO.File.Exists(WallpaperPath) Then
-                    Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
-                    Return Image.FromStream(x)
-                    x.Close()
-                    rkWallPaper.Close()
-                Else
-                    Dim bmp As Bitmap = New Bitmap(528, 297)
-                    Dim g As Graphics = Graphics.FromImage(bmp)
-
-                    With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
-                        g.Clear(Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)))
-                    End With
-
-                    Return bmp
-                    g.Dispose()
-                    bmp.Dispose()
-                End If
-            Catch
-                Return Nothing
-            End Try
-        End Function
-
+#Region "File Association"
         Public Const SHCNE_ASSOCCHANGED = &H8000000
         Public Const SHCNF_IDLIST = 0
 
@@ -136,48 +113,129 @@ Namespace My
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
             Return True
         End Function
+#End Region
 
-        Sub RegMon(KeyPath As String, valueName As String)
+#Region "Wallpaper Change Detector"
+        Sub Monitor()
             Dim currentUser = WindowsIdentity.GetCurrent()
+
+            Dim KeyPath As String = "Control Panel\Desktop"
+            Dim valueName As String = "Wallpaper"
             Dim Base As String = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query = New WqlEventQuery(Base)
-            watcher = New ManagementEventWatcher(query)
-            watcher.Start()
+            Dim query1 = New WqlEventQuery(Base)
+            Dim WallMon_Watcher1 As ManagementEventWatcher = New ManagementEventWatcher(query1)
+
+
+            KeyPath = "Control Panel\Colors"
+            valueName = "Background"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query2 = New WqlEventQuery(Base)
+            Dim WallMon_Watcher2 As ManagementEventWatcher = New ManagementEventWatcher(query2)
+
+
+            KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
+            valueName = "BackgroundType"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query3 = New WqlEventQuery(Base)
+            Dim WallMon_Watcher3 As ManagementEventWatcher = New ManagementEventWatcher(query3)
+
+            KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+            valueName = "AppsUseLightTheme"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query4 = New WqlEventQuery(Base)
+            Dim WallMon_Watcher4 As ManagementEventWatcher = New ManagementEventWatcher(query4)
+
+            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+            AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed
+            AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed
+
+            WallMon_Watcher1.Start()
+            WallMon_Watcher2.Start()
+            WallMon_Watcher3.Start()
+            WallMon_Watcher4.Start()
+
+        End Sub
+        Sub DarkMode_Changed()
+            Dim UpdateDarkModeX As UpdateDarkModeDelegate = AddressOf UpdateDarkMode
+            MainForm.Invoke(UpdateDarkModeX)
         End Sub
 
-        Dim WithEvents Watcher As ManagementEventWatcher
-
-        Delegate Sub UpdateBKDelegate(ByVal [Image] As Image)
-        Private Sub UpdateBK(ByVal [Image] As Image)
-            MainFrm.pnl_preview.BackgroundImage = [Image]
-            dragPreviewer.pnl_preview.BackgroundImage = [Image]
+        Private Sub UpdateDarkMode()
+            ApplyDarkMode()
         End Sub
+        Delegate Sub UpdateDarkModeDelegate()
 
-        Sub watcher_EventArrived(sender As Object, e As EventArrivedEventArgs) Handles watcher.EventArrived
+        Sub Wallpaper_Changed(sender As Object, e As EventArrivedEventArgs)
             Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
             Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
             MainForm.Invoke(updateBkX, Wallpaper)
         End Sub
 
+        Private Sub UpdateBK(ByVal [Image] As Image)
+            MainFrm.pnl_preview.BackgroundImage = [Image]
+            dragPreviewer.pnl_preview.BackgroundImage = [Image]
+            MainFrm.pnl_preview.Invalidate()
+            dragPreviewer.pnl_preview.Invalidate()
+        End Sub
+        Delegate Sub UpdateBKDelegate(ByVal [Image] As Image)
 
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+        Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+            Dim S As New Stopwatch
 
-            RegMon("Control Panel\Desktop", "WallPaper")
-            'RegMon("Control Panel\Colors", "Background")
+            If R1.GetValue("BackgroundType") = 0 Then
+                S.Reset()
+                S.Start()
 
-            _Settings = New XeSettings(XeSettings.Mode.Registry)
+                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
+                    If S.ElapsedMilliseconds > 5000 Then Exit Do
+                Loop
 
-            If _Settings.AutoAddExt Then
-                CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
-                CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
+                S.Stop()
+
+                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
+                MainForm.Invoke(updateBkX, Wallpaper)
+
             End If
 
-            AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
+            R1.Close()
+            R2.Close()
+        End Sub
+#End Region
 
-            ExternalLink = False
-            ExternalLink_File = ""
+        Public Function GetCurrentWallpaper() As Bitmap
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
 
+            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
+            Dim WallpaperType As Integer = R2.GetValue("BackgroundType")
+
+            If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
+                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
+                Return Image.FromStream(x)
+                x.Close()
+            Else
+                Dim bmp As Bitmap = New Bitmap(528, 297)
+                Dim g As Graphics = Graphics.FromImage(bmp)
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                    g.Clear(Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)))
+                End With
+
+                Return bmp
+                g.Dispose()
+                bmp.Dispose()
+            End If
+
+            R1.Close()
+            R2.Close()
+
+        End Function
+
+        Sub DetectOS()
             Try
                 W11 = My.Computer.Info.OSFullName.Contains("11")
             Catch
@@ -201,6 +259,29 @@ Namespace My
             Catch
                 W_Aero = False
             End Try
+        End Sub
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+
+        End Sub
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+            Monitor()
+
+            _Settings = New XeSettings(XeSettings.Mode.Registry)
+
+            If _Settings.AutoAddExt Then
+                CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
+                CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
+            End If
+
+            AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
+
+            ExternalLink = False
+            ExternalLink_File = ""
+
+            DetectOS()
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
@@ -302,8 +383,6 @@ Namespace My
             If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
 #Disable Warning BC42105
         End Function
-
-
 
 #Enable Warning BC42105
 

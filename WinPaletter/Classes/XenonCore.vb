@@ -5,20 +5,6 @@ Imports System.Threading
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
-
-    Public Shared Sub SetBackImage(ByVal ctrl As Control, ByVal pic As Image)
-        Try
-            If ctrl.InvokeRequired Then
-                ctrl.Invoke(New SetBackImageInvoker(AddressOf SetBackImage), ctrl, pic)
-            Else
-                ctrl.BackgroundImage = pic
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub SetBackImageInvoker(ByVal ctrl As Control, ByVal pic As Image)
-
     Public Shared Sub SetCtrlTxt(ByVal text As String, ByVal Ctrl As Control)
         Try
             If Ctrl.InvokeRequired Then
@@ -31,8 +17,6 @@ Public Class XenonCore
         End Try
     End Sub
     Private Delegate Sub setCtrlTxtInvoker(ByVal text As String, ByVal Ctrl As Control)
-
-
 #End Region
 
 #Region "Misc"
