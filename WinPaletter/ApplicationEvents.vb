@@ -262,10 +262,13 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            Try : Kill("oldWinpaletterfile.trash") : Catch : End Try
 
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Try : Kill("oldWinpaletterfile.trash") : Catch : End Try
+
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
 
@@ -286,6 +289,7 @@ Namespace My
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     Dim arg As String = Environment.GetCommandLineArgs(x)
+
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                         If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True

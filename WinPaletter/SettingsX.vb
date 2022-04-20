@@ -28,6 +28,7 @@ Public Class SettingsX
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then Changed = True
             If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then Changed = True
+            If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -64,6 +65,7 @@ Public Class SettingsX
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+                XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
             End With
         Else
             Dim sets As New XeSettings(XeSettings.Mode.File, _File)
@@ -78,6 +80,8 @@ Public Class SettingsX
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+                XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+
             End With
 
             OpenFileDialog1.FileName = _File
@@ -93,6 +97,7 @@ Public Class SettingsX
             .AutoUpdatesChecking = XenonCheckBox5.Checked
             .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
             .CustomPreviewConfig = XenonComboBox1.SelectedIndex
+            .UpdateChannel = XenonComboBox2.SelectedIndex
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -126,6 +131,8 @@ Public Class SettingsX
                 .AutoUpdatesChecking = XenonCheckBox5.Checked
                 .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
                 .CustomPreviewConfig = XenonComboBox1.SelectedIndex
+                .UpdateChannel = XenonComboBox2.SelectedIndex
+
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -147,6 +154,7 @@ Public Class SettingsX
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+                XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
             End With
         End If
     End Sub
@@ -176,6 +184,8 @@ Public Class SettingsX
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+            XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+
         End With
 
         OpenFileDialog1.FileName = files(0)

@@ -11,11 +11,17 @@ Public Class XeSettings
     Public AutoUpdatesChecking As Boolean = True
     Public CustomPreviewConfig_Enabled As Boolean = False
     Public CustomPreviewConfig As WinVer = WinVer.Eleven
+    Public UpdateChannel As UpdateChannels = UpdateChannels.Stable
 #End Region
 
     Public Enum WinVer
         Eleven
         Ten
+    End Enum
+
+    Public Enum UpdateChannels
+        Stable
+        Beta
     End Enum
 
     Enum Mode
@@ -37,6 +43,7 @@ Public Class XeSettings
         If Key.GetValue("AutoUpdatesChecking", Nothing) Is Nothing Then Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
+        If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
 
     End Sub
 
@@ -54,6 +61,7 @@ Public Class XeSettings
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
                 CustomPreviewConfig = If(Key.GetValue("CustomPreviewConfig", Nothing) = WinVer.Eleven, WinVer.Eleven, WinVer.Ten)
+                UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -66,6 +74,8 @@ Public Class XeSettings
                     If x.Contains("AutoUpdatesChecking= ") Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
                     If x.Contains("CustomPreviewConfig_Enabled= ") Then CustomPreviewConfig_Enabled = x.Remove(0, "CustomPreviewConfig_Enabled= ".Count)
                     If x.Contains("CustomPreviewConfig= ") Then CustomPreviewConfig = x.Remove(0, "CustomPreviewConfig= ".Count)
+                    If x.Contains("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
+
                 Next
         End Select
     End Sub
@@ -83,6 +93,7 @@ Public Class XeSettings
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
+                Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -97,6 +108,8 @@ Public Class XeSettings
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
                 l.Add(String.Format("CustomPreviewConfig= {0}", If(CustomPreviewConfig = WinVer.Eleven, 0, 1)))
+                l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
+
                 IO.File.WriteAllText(File, CStr_FromList(l))
         End Select
     End Sub

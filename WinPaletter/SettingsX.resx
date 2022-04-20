@@ -227,6 +227,25 @@
         6YDB/PPJyvoJa2f5CcPM6lwAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="PictureBox5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAL0SURBVEhL5dJdSFNhHAbw3WlqadPMu5xzam66QZBd28dFUPhB+UG0SinNiJC6GKhLvbGcklGR
+        XkRmurktnftyrlCUlKASuhEpMsrpmWdnGlFI3Ty979mRHH7NedkDz832nt//3X9H9P9F6fafIG1Qurkm
+        vq5As2id/rosu++QcHT7UQ4t1SiH/KDNdpEO+pE1yCHLGajCwfeP3MGqhEdCD7l17SYwq7D7dXK7z0eK
+        TBunER4LLRTf5MZQ2H06eo7grZlWMmBg4Tb/YChRuvx1G8H0tnIbXzbT5tNlWlnfwQE29AEEbt4CBn9j
+        KwsK02ZYSPtDGMDj24UDODJebDEg2+nXhQOn9wWattkAxaBfuwOY1It000KtwAVH4Qjg4cJpZi9kpOlG
+        b65A/ovcyeWuwOSNCAuWmbyQmpgGgQwOwW+EDffOQdr9FVK9p1Hg1iajn0mW29jv24FTDR4k6d4h5uYI
+        Iqvcy1EV9sXoy5bRmHJTgcAGR97PqgjKUXTLVehnsVc7jogqNyIrnYiqsIHgiCkzY89FPWLVXc0CGxw6
+        hKDcRnCqkeGb1PwWEddeQf14ApMzHI7UOHg89kIXxOqniDv3BPEl7XkCGxwZGUJgbj1Y2ssgpWeWrGUY
+        kVdd0Ojfg1n6hfw7bv7m1zuGoX3+GuLSdsQXPxoRyLWRGVkVgbnVMF8DA0nXF+yqGvodRVYyOeNDjsaC
+        /eXddC3Iqe7Gh89exBfdR8LZth8Ct35kRo+KoNwKnGKYR4p+HpLOmVtRlfaf0eVmTEwzOKod4HG6lmMa
+        A95MfUPCmVYkFrZsPoBGYmQOE3iJh0mT9YyWfh59xTJGd65ue4mPc4s43dCHvHoTPnk4XLrbR3HsK9Rt
+        vKLVOWD0SlJ65qslPXPHhY9Eu8vMp/i35XwnipqssIxPY2B8CqWNRiQWNJMBOjKg5aRwPLzEqZ/V07WI
+        SzvIzh+Qtdzjb05x0jrh2M4iLukoFBc/HCN/6DLBSXWj5BfkB74Vif4CxH5V37XtOrIAAAAASUVORK5C
+        YII=
+</value>
+  </data>
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAJpJREFUSEvt
@@ -348,7 +367,7 @@
   <data name="PictureBox17.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAABNJJREFUWEftlmtMU2cYx9l028clS5YsGZvD4URu7bgVnbchYoaauCyIyVyyJQ5k
+        vQAADr0BR/uQrQAABNJJREFUWEftlmtMU2cYx9l028clS5YsGZvD4URu7bgVnbchYoaauCyIyVyyJQ5k
         iWEgcg8gUKCAQrGAZAwNZtzcQC5CBnKHllIu5V4oLeXW0nFrBUpPv/z3FtBAppnC2YclPMkv5/LhfX95
         zpP/eU1263XKz8/vveyszPsP8/OE2yHvQW5zeHjIpaKioj0bS26/AgICPujr6+kyGAzYDprFRZQU/67K
         zOR9HxkZ+ebGsturncpotVr09/VCLpNpkznxvjsSokNmYKB/7X5UKl3MysrY/iejU0av10MyNDSTmZ72
