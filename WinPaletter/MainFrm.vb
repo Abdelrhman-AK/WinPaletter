@@ -1,4 +1,6 @@
-﻿Imports System.Management
+﻿Imports System.ComponentModel
+Imports System.Management
+Imports System.Net
 Imports System.Reflection
 Imports System.Security.Principal
 Imports Microsoft.Win32
@@ -44,6 +46,50 @@ Public Class MainFrm
     Sub EraseHint()
         status_lbl.Text = ""
     End Sub
+
+    Sub AutoUpdatesCheck()
+        StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
+        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
+        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
+        BackgroundWorker1.RunWorkerAsync()
+    End Sub
+
+    Dim RaiseUpdate As Boolean = False
+    Dim ver As String = ""
+    Dim StableInt, BetaInt, UpdateChannel As Integer
+    Dim ChannelFixer As Integer
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        If IsNetAvaliable() Then
+            Dim ls As New List(Of String)
+            Dim WebCL As New WebClient
+            RaiseUpdate = False
+            ver = ""
+
+            CList_FromStr(ls, WebCL.DownloadString("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/updates?raw=true"))
+
+            For x = 0 To ls.Count - 1
+                If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
+                    If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
+                    If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                End If
+            Next
+
+            If ChannelFixer = 0 Then UpdateChannel = StableInt
+            If ChannelFixer = 1 Then UpdateChannel = BetaInt
+
+            ver = ls(UpdateChannel).Split(" ")(1)
+
+            If ver > My.Application.Info.Version.ToString Then
+                RaiseUpdate = True
+            End If
+        End If
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        If RaiseUpdate Then Notify(String.Format("New Update Avaliable ({0}). Open Updates form for actions.", ver), My.Resources.notify_update, 10000)
+    End Sub
+
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         pnl_preview.BackgroundImage = My.Application.Wallpaper
@@ -156,7 +202,10 @@ Public Class MainFrm
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
+        If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
     End Sub
+
+
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         Dim Changed As Boolean = (CP.GetHashCode <> CP_Original.GetHashCode)
@@ -1208,7 +1257,6 @@ Public Class MainFrm
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         LogonUI.Show()
     End Sub
-
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
         My.Application.Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)

@@ -262,12 +262,12 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            Try : Kill("oldWinpaletterfile.trash") : Catch : End Try
+            Try : Kill("oldWinpaletter.trash") : Catch : End Try
 
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Try : Kill("oldWinpaletterfile.trash") : Catch : End Try
+            Try : Kill("oldWinpaletter.trash") : Catch : End Try
 
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
