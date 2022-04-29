@@ -29,9 +29,15 @@ Public Class Changelog
         Dim DefCTCount As Integer
         Dim DarkIndex As String = "cf0"
         Dim LightIndex As String = "cf1"
+        Dim TBR As String = "cf"
 
         For Each l As String In Encoding.ASCII.GetString(e.Result).Split(vbCrLf)
             If l.Contains("{\colortbl") Then
+
+                For Each r As String In l.Split(";")
+                    MsgBox(r)
+                Next
+
                 DefCTCount = l.Split(";").Count - 2
                 l = l.Replace("}", "\red0\green0\blue0;\red255\green255\blue255;}")
                 DarkIndex = String.Format("cf{0}", DefCTCount + 1)
