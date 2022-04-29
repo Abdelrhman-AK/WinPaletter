@@ -152,6 +152,7 @@ Public Class Updates
         'Changelog Link https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true
         'Create a form for processing changelog
 
+        Changelog.Show()
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

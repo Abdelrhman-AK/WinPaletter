@@ -302,6 +302,12 @@ Public Class XenonCore
             ctrl.BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.04, -0.04))
         End If
 
+        If TypeOf ctrl Is RichTextBox Then
+            ctrl.BackColor = ctrl.Parent.BackColor
+            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
+
+        End If
+
         If TypeOf ctrl Is DataGridView Then
             Dim ColumnBack As Color
             Dim Fore As Color

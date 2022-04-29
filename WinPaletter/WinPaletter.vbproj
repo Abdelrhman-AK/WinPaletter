@@ -115,6 +115,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Changelog.Designer.vb">
+      <DependentUpon>Changelog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Changelog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Classes\Acrylism.vb" />
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\Protector.vb" />
@@ -204,6 +210,9 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Changelog.resx">
+      <DependentUpon>Changelog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
