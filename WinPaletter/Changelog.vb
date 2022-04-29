@@ -18,7 +18,7 @@ Public Class Changelog
         ProgressBar1.Visible = True
         ProgressBar1.Value = 0
         W = New WebClient
-        W.DownloadDataAsync(New Uri("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true"))
+        W.DownloadDataAsync(New Uri("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog.rtf?raw=true"))
     End Sub
 
     Private Sub W_DownloadDataCompleted(sender As Object, e As DownloadDataCompletedEventArgs) Handles W.DownloadDataCompleted
