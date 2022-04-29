@@ -22,8 +22,31 @@ Public Class Changelog
     End Sub
 
     Private Sub W_DownloadDataCompleted(sender As Object, e As DownloadDataCompletedEventArgs) Handles W.DownloadDataCompleted
-        RTF = Encoding.ASCII.GetString(e.Result)
-        RichTextBox1.Text = RTF
+        RTF = Nothing
+
+        '{\colortbl ;\red255\green255\blue0;\red255\green0\blue0;}
+
+        Dim DefCTCount As Integer
+        Dim DarkIndex As String = "cf0"
+        Dim LightIndex As String = "cf1"
+
+        For Each l As String In Encoding.ASCII.GetString(e.Result).Split(vbCrLf)
+            If l.Contains("{\colortbl") Then
+                DefCTCount = l.Split(";").Count - 2
+                l = l.Replace("}", "\red0\green0\blue0;\red255\green255\blue255;}")
+                DarkIndex = String.Format("cf{0}", DefCTCount + 1)
+                LightIndex = String.Format("cf{0}", DefCTCount + 2)
+                RTF &= l
+            Else
+                RTF &= l
+            End If
+        Next
+
+        RTF = RTF.Replace("cf2", "cf1")
+        RichTextBox1.Rtf = RTF
+
+
+
         Threading.Thread.Sleep(500)
         ProgressBar1.Visible = False
     End Sub
