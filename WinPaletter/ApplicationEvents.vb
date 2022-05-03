@@ -38,6 +38,8 @@ Namespace My
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
+        Public ChangeLogImgLst As New ImageList
+
 #End Region
 
 #Region "File Association"
@@ -285,6 +287,18 @@ Namespace My
             ExternalLink_File = ""
 
             DetectOS()
+
+            ChangeLogImgLst.ColorDepth = ColorDepth.Depth32Bit
+            ChangeLogImgLst.ImageSize = New Size(24, 24)
+            ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
+            ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
+            ChangeLogImgLst.Images.Add("Add", My.Resources.CL_add)
+            ChangeLogImgLst.Images.Add("Removed", My.Resources.CL_Removed)
+            ChangeLogImgLst.Images.Add("BugFix", My.Resources.CL_BugFix)
+            ChangeLogImgLst.Images.Add("New", My.Resources.CL_New)
+            ChangeLogImgLst.Images.Add("Channel", My.Resources.CL_channel)
+            ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
+            ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1

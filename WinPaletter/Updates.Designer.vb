@@ -48,6 +48,8 @@ Partial Class Updates
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.XenonSeparatorVertical1 = New WinPaletter.XenonSeparatorVertical()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,7 +73,7 @@ Partial Class Updates
         Me.Label3.ForeColor = System.Drawing.Color.DodgerBlue
         Me.Label3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.Label3.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.Label3.Location = New System.Drawing.Point(226, 84)
+        Me.Label3.Location = New System.Drawing.Point(207, 84)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(98, 21)
         Me.Label3.TabIndex = 17
@@ -88,7 +90,7 @@ Partial Class Updates
         Me.Panel1.Controls.Add(Me.XenonRadioButton1)
         Me.Panel1.Location = New System.Drawing.Point(12, 177)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(631, 89)
+        Me.Panel1.Size = New System.Drawing.Size(624, 89)
         Me.Panel1.TabIndex = 18
         Me.Panel1.Visible = False
         '
@@ -137,7 +139,7 @@ Partial Class Updates
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ProgressBar1.Location = New System.Drawing.Point(12, 272)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(631, 10)
+        Me.ProgressBar1.Size = New System.Drawing.Size(624, 10)
         Me.ProgressBar1.TabIndex = 3
         Me.ProgressBar1.Visible = False
         '
@@ -263,7 +265,7 @@ Partial Class Updates
         Me.XenonAlertBox2.Image = Nothing
         Me.XenonAlertBox2.Location = New System.Drawing.Point(12, 129)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(631, 42)
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(624, 42)
         Me.XenonAlertBox2.TabIndex = 12
         Me.XenonAlertBox2.TabStop = False
         Me.XenonAlertBox2.Text = "Update Avaliable"
@@ -275,7 +277,7 @@ Partial Class Updates
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 119)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(631, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(624, 1)
         Me.XenonSeparator1.TabIndex = 8
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -289,7 +291,7 @@ Partial Class Updates
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(351, 325)
+        Me.XenonButton3.Location = New System.Drawing.Point(344, 325)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(104, 36)
         Me.XenonButton3.TabIndex = 2
@@ -306,7 +308,7 @@ Partial Class Updates
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(461, 325)
+        Me.XenonButton1.Location = New System.Drawing.Point(454, 325)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(182, 36)
         Me.XenonButton1.TabIndex = 0
@@ -332,20 +334,44 @@ Partial Class Updates
         Me.LinkLabel1.ForeColor = System.Drawing.Color.DodgerBlue
         Me.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel1.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel1.Location = New System.Drawing.Point(330, 84)
+        Me.LinkLabel1.Location = New System.Drawing.Point(311, 84)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(98, 21)
+        Me.LinkLabel1.Size = New System.Drawing.Size(136, 21)
         Me.LinkLabel1.TabIndex = 32
         Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "Changelog"
+        Me.LinkLabel1.Text = "Previous Changelogs"
         Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TreeView1
+        '
+        Me.TreeView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TreeView1.FullRowSelect = True
+        Me.TreeView1.ItemHeight = 28
+        Me.TreeView1.Location = New System.Drawing.Point(650, 12)
+        Me.TreeView1.Name = "TreeView1"
+        Me.TreeView1.ShowLines = False
+        Me.TreeView1.Size = New System.Drawing.Size(410, 349)
+        Me.TreeView1.TabIndex = 33
+        '
+        'XenonSeparatorVertical1
+        '
+        Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(642, 12)
+        Me.XenonSeparatorVertical1.Name = "XenonSeparatorVertical1"
+        Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(2, 349)
+        Me.XenonSeparatorVertical1.TabIndex = 34
+        Me.XenonSeparatorVertical1.TabStop = False
+        Me.XenonSeparatorVertical1.Text = "XenonSeparatorVertical1"
         '
         'Updates
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(655, 372)
+        Me.ClientSize = New System.Drawing.Size(1072, 372)
+        Me.Controls.Add(Me.XenonSeparatorVertical1)
+        Me.Controls.Add(Me.TreeView1)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.XenonCheckBox1)
         Me.Controls.Add(Me.PictureBox5)
@@ -412,4 +438,6 @@ Partial Class Updates
     Friend WithEvents Label9 As Label
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
     Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents XenonSeparatorVertical1 As XenonSeparatorVertical
 End Class

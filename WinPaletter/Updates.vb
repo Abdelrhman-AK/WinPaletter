@@ -15,6 +15,7 @@ Public Class Updates
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If url Is Nothing Then
             Me.Cursor = Cursors.AppStarting
+            TreeView1.Nodes.Clear()
 
             My.Application.AnimatorX.HideSync(XenonAlertBox2, True)
             My.Application.AnimatorX.HideSync(XenonButton1, True)
@@ -52,6 +53,35 @@ Public Class Updates
                         Label7.Text = UpdateSize & " MB"
                         Label9.Text = ReleaseDate
 
+                        Dim Customchangelog_str As String = Nothing
+
+                        If IsNetAvaliable() Then
+                            Try
+                                Customchangelog_str = WebCL.DownloadString(New Uri("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true"))
+                            Catch ex As Exception
+                                With TreeView1.Nodes.Add("Error reading changelog online")
+                                    Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                                    .ImageIndex = imgI : .SelectedImageIndex = imgI
+                                    With .Nodes.Add(ex.Message.Replace(vbCrLf, ", "))
+                                        .ImageIndex = imgI : .SelectedImageIndex = imgI
+                                    End With
+                                End With
+
+                                TreeView1.ExpandAll()
+                            End Try
+                        Else
+                            With TreeView1.Nodes.Add("No Network is avaliable")
+                                Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                                .ImageIndex = imgI : .SelectedImageIndex = imgI
+                                With .Nodes.Add("Check your connection and try again")
+                                    .ImageIndex = imgI : .SelectedImageIndex = imgI
+                                End With
+                            End With
+
+                            TreeView1.ExpandAll()
+                        End If
+
+                        Changelog.PhraseInfo(TreeView1, ver, Customchangelog_str)
                         My.Application.AnimatorX.Show(Panel1, True)
                         XenonButton1.Text = "Do Action"
                         XenonAlertBox2.Text = String.Format("Update Avaliable ({0})", ver)
@@ -76,12 +106,12 @@ Public Class Updates
                 End If
             Catch
                 Label5.Text = ""
-                Label7.Text = ""
-                Label9.Text = ""
-                url = Nothing
-                XenonButton1.Text = "Check for updates"
-                XenonAlertBox2.Text = String.Format("Error: Network issues or Github repository is private or deleted. Visit Github page for details.")
-                XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+            Label7.Text = ""
+            Label9.Text = ""
+            url = Nothing
+            XenonButton1.Text = "Check for updates"
+            XenonAlertBox2.Text = String.Format("Error: Network issues or Github repository is private or deleted. Visit Github page for details.")
+            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
             End Try
 
             My.Application.AnimatorX.Show(XenonAlertBox2, True)
@@ -120,6 +150,7 @@ Public Class Updates
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        TreeView1.Nodes.Clear()
         Label3.Text = String.Format("{0} Channel", If(My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, "Stable", "Beta"))
         XenonCheckBox1.Checked = My.Application._Settings.AutoUpdatesChecking
         _Shown = False
