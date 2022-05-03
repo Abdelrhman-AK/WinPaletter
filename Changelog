@@ -1,12 +1,12 @@
 [1.1.0.0]
-Channel= Stable
-BugFix= To Be Written
+Channel= beta
+BugFix= To Be Written beta
 NewFeature= beta
 Added= TBR
 Removed= TBR
 
-[1.0.1.0]
-Channel= Beta
+[0.1.0.0]
+Channel= Stable
 BugFix= To Be Written  beta
 NewFeature= beta
 Added= TBR
