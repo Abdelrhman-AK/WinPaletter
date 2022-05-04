@@ -5,34 +5,7 @@
 #Added= String
 #Removed= String
 
-[1.5.1.7]
-Channel= Beta
-Date= -8585510284854775808
-BugFix= To Be Written  beta
-NewFeature= beta
-Added= TBR
-Removed= TBR
-
-[1.2.0.0]
+[1.0.0.0]
 Channel= Stable
 Date= -8585510284854775808
-BugFix= To Be Written
-NewFeature= beta
-Added= TBR
-Removed= TBR
-
-[1.1.0.0]
-Channel= Stable
-Date= -8585510284854775808
-BugFix= To Be Written
-NewFeature= beta
-Added= TBR
-Removed= TBR
-
-[1.0.1.0]
-Channel= Beta
-Date= -8585510284854775808
-BugFix= To Be Written  beta
-NewFeature= beta
-Added= TBR
-Removed= TBR
+NewFeature= Initial Release
