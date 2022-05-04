@@ -124,7 +124,13 @@
   <data name="AC_10_Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_10_Dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AC_10_Dark1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_10_Dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AC_10_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_10_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AC_10_Light1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_10_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AC_11_Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -143,31 +149,31 @@
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\MainForm\AppPreviewInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_Beta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_Beta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Beta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_BugFix" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_BugFix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_BugFix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_channel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_channel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_channel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_Date" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_Date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_New" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_Removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_Removed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Removed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CL_Stable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\boody\Desktop\changelogs\CL_Stable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Stable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorThief_Desktop_v46" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Sources\Programming\Controls\ColorThief.Desktop.v46.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

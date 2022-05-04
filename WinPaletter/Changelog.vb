@@ -27,7 +27,6 @@ Public Class Changelog
         XenonTextBox1.Text = My.Application.Info.Version.ToString
         XenonCheckBox1.Checked = My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta
         ApplyDarkMode(Me)
-        SetTreeViewTheme(TreeView1.Handle)
         ProgressBar1.Visible = False
         LoadChangelog()
 
@@ -106,6 +105,7 @@ Public Class Changelog
         [TreeView].ShowRootLines = True
         [TreeView].ShowPlusMinus = True
         [TreeView].ImageList = My.Application.ChangeLogImgLst
+        SetTreeViewTheme([TreeView].Handle)
 
         Try
             CList_FromStr(ls, If(Customchangelog_str = Nothing, changelog_str, Customchangelog_str))
@@ -192,10 +192,7 @@ Skip:
                                 If ls(i).StartsWith("Date= ") Then
                                     Str = "Released on: " & Date.FromBinary(ls(i).Remove(0, "Date= ".Count))
                                     imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Date")
-
                                 End If
-
-
 
                                 With [TreeView].Nodes.Item(x).Nodes.Add(Str)
                                     .ImageIndex = imgI : .SelectedImageIndex = imgI

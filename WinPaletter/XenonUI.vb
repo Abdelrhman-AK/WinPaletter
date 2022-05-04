@@ -1262,7 +1262,7 @@ Public Class XenonButton : Inherits Button
     End Sub
 
     Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
-        MyBase.OnMouseUp(e)
+        Try : MyBase.OnMouseUp(e) : Catch : End Try
 
         Dim C_Before As Color = BackColor
         Dim C_After As Color

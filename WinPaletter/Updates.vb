@@ -30,7 +30,7 @@ Public Class Updates
                     Label5.Text = "Checking ..."
                     Dim ls As New List(Of String)
 
-                    CList_FromStr(ls, WebCL.DownloadString("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/updates?raw=true"))
+                    CList_FromStr(ls, WebCL.DownloadString("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Updates?raw=true"))
 
                     For x = 0 To ls.Count - 1
                         If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
@@ -179,10 +179,6 @@ Public Class Updates
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-
-        'Changelog Link https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true
-        'Create a form for processing changelog
-
         Changelog.Show()
     End Sub
 

@@ -277,11 +277,21 @@ Public Class XenonCore
             [Form].Refresh()
             'Adjust_Form(DarkMode, [Form])
         End If
+
+        MainFrm.ContextMenuStrip1.BackColor = If(DarkMode, Color.FromArgb(35, 35, 35), Color.FromArgb(250, 250, 250))
+        MainFrm.ContextMenuStrip1.ForeColor = If(DarkMode, Color.White, Color.Black)
+
+        For Each it As ToolStripItem In MainFrm.ContextMenuStrip1.Items
+            it.ForeColor = If(DarkMode, Color.White, Color.Black)
+        Next
+
+        MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
+        MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
+
     End Sub
 
 
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
-
         Select Case DarkMode
             Case True
                 If ctrl.ForeColor = Color.Black Then ctrl.ForeColor = Color.White
