@@ -53,7 +53,12 @@ Namespace My
             ' ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)
 
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
+
             Dim key1, key2, key3, key4 As RegistryKey
+            key1 = Nothing
+            key2 = Nothing
+            key3 = Nothing
+            key4 = Nothing
 
             Try
                 ' create a value for this key that contains the classname
@@ -88,6 +93,10 @@ Namespace My
             Const SHCNF_IDLIST = 0
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
             Dim key1, key2, key3, key4 As RegistryKey
+            key1 = Nothing
+            key2 = Nothing
+            key3 = Nothing
+            key4 = Nothing
 
             Try
                 key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)

@@ -639,7 +639,7 @@ Public Class CP
     End Function
 
     Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
-        Dim R As RegistryKey
+        Dim R As RegistryKey = Nothing
 
         If KeyName.Contains("HKEY_CURRENT_USER") Then
             R = Registry.CurrentUser

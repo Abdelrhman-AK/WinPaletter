@@ -14,7 +14,7 @@ Public Class About
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter")
+        Process.Start(My.Resources.Link_Repository)
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

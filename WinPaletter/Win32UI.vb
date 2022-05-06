@@ -13,7 +13,7 @@ Public Class Win32UI
     End Sub
 
 
-    Sub loadCP(ByVal CP As CP)
+    Sub LoadCP(ByVal CP As CP)
         ApplyCPValues(CP)
     End Sub
 
@@ -99,13 +99,12 @@ Public Class Win32UI
             InfoText_pick.Click, InfoWindow_pick.Click, menu_pick.Click, menubar_pick.Click, menutext_pick.Click, Scrollbar_pick.Click, TitleText_pick.Click, Window_pick.Click, Frame_pick.Click,
             WindowText_pick.Click, hilight_pick.Click, menuhilight_pick.Click, desktop_pick.Click
 
+        Dim CList As New List(Of Control) From {sender}
 
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
         Dim C As Color = ColorPicker.Pick(CList)
         CType(sender, XenonGroupBox).BackColor = C
         CList.Clear()
-        CList = Nothing
+
     End Sub
 
     Private Sub AppWorkspace_pick_Paint(sender As Object, e As PaintEventArgs)

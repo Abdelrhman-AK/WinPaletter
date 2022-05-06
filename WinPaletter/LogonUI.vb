@@ -21,11 +21,11 @@ Public Class LogonUI
     Private Sub LogonUI_Background_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_Background_Picker.Click, LogonUI_PersonalColorsBackground_Picker.Click,
         LogonUI_PersonalColorsAccent_Picker.Click
 
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
+        Dim CList As New List(Of Control) From {sender}
+
         Dim C As Color = ColorPicker.Pick(CList)
         CList.Clear()
-        CList = Nothing
+
     End Sub
 
     Sub Save(ByVal ColorPalette As CP)

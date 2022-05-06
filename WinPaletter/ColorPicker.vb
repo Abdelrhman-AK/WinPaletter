@@ -228,7 +228,7 @@ Public Class ColorPicker
     End Sub
 
 
-    Private Async Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
         Select Case XenonRadioButton1.Checked
             Case True
                 img = My.Application.GetCurrentWallpaper()

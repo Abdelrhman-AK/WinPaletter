@@ -38,7 +38,7 @@ Public Class Changelog
 
         If IsNetAvaliable() Then
             Try
-                W.DownloadDataAsync(New Uri("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true"))
+                W.DownloadDataAsync(New Uri(My.Resources.Link_Changelog))
             Catch ex As Exception
                 With TreeView1.Nodes.Add("Error reading changelog online")
                     Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
@@ -156,7 +156,7 @@ Skip:
 
                             If Not ls(i).StartsWith("#") Then
 
-                                Dim Str As String
+                                Dim Str As String = ""
                                 Dim imgI As Integer
 
                                 If ls(i).StartsWith("Channel= ") Then

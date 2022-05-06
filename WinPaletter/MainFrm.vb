@@ -11,7 +11,7 @@ Public Class MainFrm
     Public CP, CP_Original, CP_FirstTime As CP
     Dim CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
-    Private ReorderAfterPreviewConfigChange As Boolean = True
+    Private ReadOnly ReorderAfterPreviewConfigChange As Boolean = True
 
     Enum WinVer
         Eleven
@@ -66,7 +66,7 @@ Public Class MainFrm
             RaiseUpdate = False
             ver = ""
 
-            CList_FromStr(ls, WebCL.DownloadString("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/updates?raw=true"))
+            CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
 
             For x = 0 To ls.Count - 1
                 If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
@@ -100,17 +100,18 @@ Public Class MainFrm
         MakeItDoubleBuffered(Me)
         ApplyDarkMode(Me)
 
-        Dim LabelsList As New List(Of Label)
-        LabelsList.Add(Label1)
-        LabelsList.Add(Label10)
-        LabelsList.Add(Label17)
-        LabelsList.Add(Label21)
-        LabelsList.Add(themename_lbl)
-        LabelsList.Add(author_lbl)
-        LabelsList.Add(ColorPicker.Label1)
-        LabelsList.Add(ColorPicker.Label2)
-        LabelsList.Add(ColorPicker.Label3)
-        LabelsList.Add(ColorPicker.Label5)
+        Dim LabelsList As New List(Of Label) From {
+            Label1,
+            Label10,
+            Label17,
+            Label21,
+            themename_lbl,
+            author_lbl,
+            ColorPicker.Label1,
+            ColorPicker.Label2,
+            ColorPicker.Label3,
+            ColorPicker.Label5
+        }
 
         For Each lbl As Label In LabelsList
             lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
@@ -569,34 +570,31 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
-        CList.Add(XenonWindow1)
+
+        Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPicker.Pick(CList)
         CP.Titlebar_Active = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If Not CP.ApplyAccentonTitlebars Then
             Notify("To colorize active titlebar, please activate the toggle", My.Resources.notify_info, 5000)
         End If
-
     End Sub
 
     Private Sub XenonGroupBox21_Click(sender As Object, e As EventArgs) Handles InactiveTitlebar_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
-        CList.Add(XenonWindow2)
+
+        Dim CList As New List(Of Control) From {sender, XenonWindow2}
 
         Dim C As Color = ColorPicker.Pick(CList, True)
         CP.Titlebar_Inactive = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If Not CP.ApplyAccentonTitlebars Then
             Notify("To colorize inactive titlebar, please activate the toggle", My.Resources.notify_info, 5000)
@@ -666,7 +664,7 @@ Public Class MainFrm
 
 
         CList.Clear()
-        CList = Nothing
+
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -676,8 +674,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
+
+        Dim CList As New List(Of Control) From {sender}
 
         If PreviewConfig = WinVer.Eleven Then
             If Not CP.WinMode_Light Then
@@ -702,7 +700,7 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If PreviewConfig = WinVer.Eleven Then
             If Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -745,7 +743,7 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -778,7 +776,7 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
@@ -822,7 +820,7 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -840,8 +838,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub StartAccent_picker_Click(sender As Object, e As EventArgs) Handles StartAccent_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
+
+        Dim CList As New List(Of Control) From {sender}
 
         If PreviewConfig = WinVer.Eleven Then
             CList.Add(start)
@@ -854,24 +852,25 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
     End Sub
 
     Private Sub StartButtonHover_picker_Click(sender As Object, e As EventArgs) Handles StartButtonHover_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
+
+        Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPicker.Pick(CList)
         CP.StartButton_Hover = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
     End Sub
 
     Private Sub StartBackgroundAndTaskbarButton_picker_Click(sender As Object, e As EventArgs) Handles StartBackgroundAndTaskbarButton_picker.Click
-        Dim CList As New List(Of Control)
-        CList.Add(sender)
+
+        Dim CList As New List(Of Control) From {sender}
+
         Dim C As Color
 
         If PreviewConfig = WinVer.Eleven Then
@@ -913,7 +912,7 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         CList.Clear()
-        CList = Nothing
+
 
         If PreviewConfig = WinVer.Ten Then
             If Not CP.ApplyAccentonTaskbar Then
@@ -1128,7 +1127,7 @@ Public Class MainFrm
 
     End Sub
 
-    Dim NotificationsList As New List(Of Notifier)
+    ReadOnly NotificationsList As New List(Of Notifier)
     Dim WithEvents NTimer As New Timer With {.Enabled = False, .Interval = 100}
 
     Private Sub ActiveTitlebar_picker_Paint(sender As Object, e As PaintEventArgs) Handles ActiveTitlebar_picker.Paint

@@ -146,7 +146,7 @@ Module XenonModule
 
     Public Function RoundedRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
         Try
-            Dim path As GraphicsPath = New GraphicsPath()
+            Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
 
             path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)
@@ -171,7 +171,7 @@ Module XenonModule
     Public Sub DrawRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
-            [Radius_willbe_x2] = [Radius_willbe_x2] * 2
+            [Radius_willbe_x2] *= 2
 
             [Graphics].SmoothingMode = SmoothingMode.HighQuality
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
@@ -193,7 +193,7 @@ Module XenonModule
     Public Sub DrawRect_LikeW11(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
-            [Radius_willbe_x2] = [Radius_willbe_x2] * 2
+            [Radius_willbe_x2] *= 2
             [Graphics].SmoothingMode = SmoothingMode.HighQuality
 
             Dim [Pen] As New Pen(BorderColor)
@@ -246,8 +246,7 @@ Public Class XenonToggle
     Inherits UserControl
     Public ColorPalette As New XenonColorPalette()
 
-    Dim CheckC As Rectangle = New Rectangle(5, 5, 13, 13)
-
+    Dim CheckC As New Rectangle(5, 5, 13, 13)
     Dim MouseState As Integer = 0
     Dim WasMoving As Boolean = False
 
@@ -260,7 +259,7 @@ Public Class XenonToggle
 
     Public Property DarkLight_Toggler As Boolean = False
 
-    Dim DarkLight_TogglerSize As Integer = 14
+    ReadOnly DarkLight_TogglerSize As Integer = 14
 
     Private _checked As Boolean
     Public Property Checked As Boolean
@@ -342,8 +341,8 @@ Public Class XenonToggle
         G.Clear(BackColor)
 
         '################################################################################# Customizer
-        Dim MainRect As Rectangle = New Rectangle(2, 2, Width - 5, Height - 5)
-        Dim InnerRect As Rectangle = New Rectangle(3, 3, Width - 7, Height - 7)
+        Dim MainRect As New Rectangle(2, 2, Width - 5, Height - 5)
+        Dim InnerRect As New Rectangle(3, 3, Width - 7, Height - 7)
         Dim BorderColor As Color
 
         If GetDarkMode() Then BorderColor = ControlPaint.Light(BackColor, 1.6) Else BorderColor = ControlPaint.DarkDark(BackColor)
@@ -504,8 +503,6 @@ Public Class XenonRadioButton
         AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
-        P1 = New Pen(AccentColor)
-        P2 = New Pen(AccentColor)
     End Sub
 
 #Region "Properties"
@@ -531,8 +528,8 @@ Public Class XenonRadioButton
             End If
 
             RaiseEvent CheckedChanged(Me)
-            tmr2.Enabled = True
-            tmr2.Start()
+            Tmr2.Enabled = True
+            Tmr2.Start()
             Invalidate()
         End Set
     End Property
@@ -574,30 +571,30 @@ Public Class XenonRadioButton
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = True
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
         MyBase.OnMouseDown(e)
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -608,23 +605,11 @@ Public Class XenonRadioButton
         If Not DesignMode Then
             Try
                 AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                AddHandler FindForm.Load, AddressOf Loader
                 AddHandler FindForm.Shown, AddressOf RefreshColorPalette
-                AddHandler FindForm.Shown, AddressOf Shower
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
             Catch
             End Try
         End If
-    End Sub
-
-    Dim _Shown As Boolean = False
-
-    Sub Loader()
-        _Shown = False
-    End Sub
-
-    Sub Shower()
-        _Shown = True
     End Sub
 
     Public Sub RefreshColorPalette()
@@ -635,10 +620,10 @@ Public Class XenonRadioButton
 
 #Region "Animator"
     Dim alpha, alpha2 As Integer
-    Dim Factor As Integer = 25
-    Dim WithEvents tmr, tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -646,8 +631,8 @@ Public Class XenonRadioButton
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -659,8 +644,8 @@ Public Class XenonRadioButton
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -669,7 +654,7 @@ Public Class XenonRadioButton
         End If
     End Sub
 
-    Private Sub tmr2_Tick(sender As Object, e As EventArgs) Handles tmr2.Tick
+    Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
         If Not DesignMode Then
 
             If Checked Then
@@ -677,8 +662,8 @@ Public Class XenonRadioButton
                     alpha2 += Factor
                 ElseIf alpha2 + Factor > 255 Then
                     alpha2 = 255
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -690,8 +675,8 @@ Public Class XenonRadioButton
                     alpha2 -= Factor
                 ElseIf alpha2 - Factor < 0 Then
                     alpha2 = 0
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -702,10 +687,8 @@ Public Class XenonRadioButton
 #End Region
 
 #Region "Drawing Variables"
-    Private GP1 As GraphicsPath
     Private SZ1 As SizeF
     Private PT1 As PointF
-    Private P1, P2 As Pen
 #End Region
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
@@ -724,10 +707,10 @@ Public Class XenonRadioButton
             SZ1 = G.MeasureString(Text, Font)
             PT1 = New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
 
-            Dim OuterCircle As Rectangle = New Rectangle(3, 4, Height - 8, Height - 8)
-            Dim InnerCircle As Rectangle = New Rectangle(4, 5, Height - 10, Height - 10)
-            Dim CheckCircle As Rectangle = New Rectangle(7, 8, Height - 16, Height - 16)
-            Dim TightRect As Rectangle = New Rectangle(0, 1, OuterCircle.Right + SZ1.Width - 5, Height - 2)
+            Dim OuterCircle As New Rectangle(3, 4, Height - 8, Height - 8)
+            Dim InnerCircle As New Rectangle(4, 5, Height - 10, Height - 10)
+            Dim CheckCircle As New Rectangle(7, 8, Height - 16, Height - 16)
+            Dim TightRect As New Rectangle(0, 1, OuterCircle.Right + SZ1.Width - 5, Height - 2)
 
 #Region "Colors System"
             Dim HoverCircle_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -797,15 +780,15 @@ Public Class XenonCheckBox
         Set(ByVal value As Boolean)
             _Checked = value
             RaiseEvent CheckedChanged(Me)
-            tmr2.Enabled = True
-            tmr2.Start()
+            Tmr2.Enabled = True
+            Tmr2.Start()
             Invalidate()
         End Set
     End Property
 
     Private _Checked As Boolean
 
-    Dim Radius As Integer = 5
+    ReadOnly Radius As Integer = 5
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -848,29 +831,29 @@ Public Class XenonCheckBox
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = Not Checked
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -896,10 +879,10 @@ Public Class XenonCheckBox
 
 #Region "Animator"
     Dim alpha, alpha2 As Integer
-    Dim Factor As Integer = 25
-    Dim WithEvents tmr, tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -907,8 +890,8 @@ Public Class XenonCheckBox
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -920,8 +903,8 @@ Public Class XenonCheckBox
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -930,7 +913,7 @@ Public Class XenonCheckBox
         End If
     End Sub
 
-    Private Sub tmr2_Tick(sender As Object, e As EventArgs) Handles tmr2.Tick
+    Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
         If Not DesignMode Then
 
             If Checked Then
@@ -938,8 +921,8 @@ Public Class XenonCheckBox
                     alpha2 += Factor
                 ElseIf alpha2 + Factor > 255 Then
                     alpha2 = 255
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -951,8 +934,8 @@ Public Class XenonCheckBox
                     alpha2 -= Factor
                 ElseIf alpha2 - Factor < 0 Then
                     alpha2 = 0
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -974,11 +957,11 @@ Public Class XenonCheckBox
 
             '################################################################################# Customizer
             Dim SZ1 As SizeF = G.MeasureString(Text, Font)
-            Dim PT1 As PointF = New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
+            Dim PT1 As New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
 
-            Dim OuterCheckRect As Rectangle = New Rectangle(3, 4, Height - 8, Height - 8)
-            Dim InnerCheckRect As Rectangle = New Rectangle(4, 5, Height - 10, Height - 10)
-            Dim TightRect As Rectangle = New Rectangle(0, 1, InnerCheckRect.Right + SZ1.Width - 4, Height - 2)
+            Dim OuterCheckRect As New Rectangle(3, 4, Height - 8, Height - 8)
+            Dim InnerCheckRect As New Rectangle(4, 5, Height - 10, Height - 10)
+            Dim TightRect As New Rectangle(0, 1, InnerCheckRect.Right + SZ1.Width - 4, Height - 2)
 
 #Region "Colors System"
             Dim HoverRect_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -1001,7 +984,7 @@ Public Class XenonCheckBox
             Dim x2_Right As Integer = InnerCheckRect.Right - 2
             Dim y2_Right As Integer = y1_Left - 3
 
-            Dim CheckSignPen As Pen = New Pen(CheckRect_Color, 1.8F)
+            Dim CheckSignPen As New Pen(CheckRect_Color, 1.8F)
 #End Region
             '#################################################################################
 
@@ -1102,7 +1085,7 @@ Public Class XenonGroupBox
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighQuality
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
 
         G.Clear(GetParentColor(Me))
 
@@ -1198,8 +1181,8 @@ Public Class XenonButton : Inherits Button
 
 #Region "Events"
     Dim BC As Color
-    Dim Steps As Integer = 15
-    Dim Delay As Integer = 2
+    ReadOnly Steps As Integer = 15
+    ReadOnly Delay As Integer = 2
 
     Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
         MyBase.OnPaintBackground(e)
@@ -1225,8 +1208,8 @@ Public Class XenonButton : Inherits Button
         End Select
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -1238,8 +1221,8 @@ Public Class XenonButton : Inherits Button
         Dim C_After As Color = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.07))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -1256,8 +1239,8 @@ Public Class XenonButton : Inherits Button
         End Select
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -1277,8 +1260,8 @@ Public Class XenonButton : Inherits Button
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 #End Region
@@ -1337,10 +1320,10 @@ Public Class XenonButton : Inherits Button
 
 #Region "Animator"
     Dim alpha As Integer
-    Dim Factor As Integer = 15
-    Dim WithEvents tmr As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 15
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -1348,8 +1331,8 @@ Public Class XenonButton : Inherits Button
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1361,8 +1344,8 @@ Public Class XenonButton : Inherits Button
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1508,7 +1491,7 @@ Public Class XenonButton : Inherits Button
         alpha = 0
     End Sub
 
-    Sub rfrsh()
+    Sub Rfrsh()
         BC = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.04))
         BackColor = BC
         Invalidate()
@@ -1525,27 +1508,10 @@ Public Class XenonSeparator
     End Sub
 
 #Region "Events"
-    Enum MouseState
-        None
-        Over
-        Down
-    End Enum
-
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
-        MyBase.OnMouseEnter(e)
-        State = MouseState.Over : Invalidate()
-    End Sub
-
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
-        MyBase.OnMouseLeave(e)
-        State = MouseState.None : Invalidate()
-    End Sub
-
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
         Size = New Size(Width, 1)
     End Sub
-    Dim State As MouseState = MouseState.None
 #End Region
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
@@ -1683,10 +1649,10 @@ Public Class XenonNumericUpDown
 
 #Region "Animator"
     Dim alpha As Integer
-    Dim Factor As Integer = 20
-    Dim WithEvents tmr As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 20
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -1694,8 +1660,8 @@ Public Class XenonNumericUpDown
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1707,8 +1673,8 @@ Public Class XenonNumericUpDown
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1722,22 +1688,22 @@ Public Class XenonNumericUpDown
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
 
         MyBase.OnMouseUp(e)
 
@@ -1752,8 +1718,8 @@ Public Class XenonNumericUpDown
 
     Private Sub XenonNumericUpDown_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
     End Sub
 
     Protected Overrides Sub OnResize(e As EventArgs)
@@ -1794,9 +1760,9 @@ Public Class XenonNumericUpDown
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim OuterRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim InnerRect As Rectangle = New Rectangle(1, 1, Width - 3, Height - 3)
-        Dim SideRect As Rectangle = New Rectangle(Width - 16, 1, 15, Height - 2)
+        Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
+        Dim SideRect As New Rectangle(Width - 16, 1, 15, Height - 2)
 
         '#################################################################################
 
@@ -1832,25 +1798,12 @@ Public Class XenonSeparatorVertical
     End Sub
 
 #Region "Events"
-    Enum MouseState
-        None
-        Over
-        Down
-    End Enum
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
-        MyBase.OnMouseEnter(e)
-        State = MouseState.Over : Invalidate()
-    End Sub
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
-        MyBase.OnMouseLeave(e)
-        State = MouseState.None : Invalidate()
-    End Sub
+
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
         Size = New Size(2, Height)
     End Sub
 
-    Dim State As MouseState = MouseState.None
 #End Region
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
@@ -2109,32 +2062,32 @@ End Class
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         MyBase.OnMouseDown(e)
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         MyBase.OnMouseUp(e)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         TB.Focus() : Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -2142,10 +2095,10 @@ End Class
 
 #Region "Animator"
     Dim alpha As Integer
-    Dim Factor As Integer = 20
-    Dim WithEvents tmr As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 20
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -2153,8 +2106,8 @@ End Class
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2166,8 +2119,8 @@ End Class
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2225,8 +2178,8 @@ End Class
             If ForeColor <> Color.Black Then ForeColor = Color.Black
         End If
 
-        Dim OuterRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim InnerRect As Rectangle = New Rectangle(1, 1, Width - 3, Height - 3)
+        Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
 
         Dim FadeInColor As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
         Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Border)
@@ -2251,22 +2204,22 @@ End Class
 
     Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -2352,7 +2305,7 @@ Public Class XenonComboBox : Inherits ComboBox
 
         Try
             e.Graphics.FillRectangle(New SolidBrush(BackColor), e.Bounds)
-            Dim Rect As Rectangle = New Rectangle(e.Bounds.X + 1, e.Bounds.Y + 1, e.Bounds.Width - 3, e.Bounds.Height - 3)
+            Dim Rect As New Rectangle(e.Bounds.X + 1, e.Bounds.Y + 1, e.Bounds.Width - 3, e.Bounds.Height - 3)
 
             If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
                 FillRect(e.Graphics, New SolidBrush(ColorPalette.Color_Border_Checked_Hover), Rect, 4)
@@ -2365,11 +2318,9 @@ Public Class XenonComboBox : Inherits ComboBox
     End Sub
 
     Protected Sub DrawTriangle(ByVal Clr As Color, ByVal FirstPoint As Point, ByVal SecondPoint As Point, ByVal ThirdPoint As Point, ByVal G As Graphics)
-        Dim points As New List(Of Point) From {
-            FirstPoint,
-            SecondPoint,
-            ThirdPoint
-        }
+
+        Dim points As New List(Of Point) From {FirstPoint, SecondPoint, ThirdPoint}
+
         G.FillPolygon(New SolidBrush(Clr), points.ToArray())
     End Sub
 #End Region
@@ -2384,30 +2335,30 @@ Public Class XenonComboBox : Inherits ComboBox
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
         State = MouseState.Over
-        tmr.Enabled = True
-        tmr.Start()
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -2442,13 +2393,13 @@ Public Class XenonComboBox : Inherits ComboBox
 
 
     Private Sub XenonComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
-        tmr2.Enabled = True
-        tmr2.Start()
+        Tmr2.Enabled = True
+        Tmr2.Start()
     End Sub
 
     Private Sub XenonComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
-        tmr2.Enabled = True
-        tmr2.Start()
+        Tmr2.Enabled = True
+        Tmr2.Start()
     End Sub
 
     Dim State As MouseState = MouseState.None
@@ -2456,10 +2407,10 @@ Public Class XenonComboBox : Inherits ComboBox
 
 #Region "Animator"
     Dim alpha, alpha2 As Integer
-    Dim Factor As Integer = 20
-    Dim WithEvents tmr, tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+    ReadOnly Factor As Integer = 20
+    Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
 
-    Private Sub tmr_Tick(sender As Object, e As EventArgs) Handles tmr.Tick
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
             If State = MouseState.Over Then
@@ -2467,8 +2418,8 @@ Public Class XenonComboBox : Inherits ComboBox
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
                     alpha = 255
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2480,8 +2431,8 @@ Public Class XenonComboBox : Inherits ComboBox
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
                     alpha = 0
-                    tmr.Enabled = False
-                    tmr.Stop()
+                    Tmr.Enabled = False
+                    Tmr.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2490,7 +2441,7 @@ Public Class XenonComboBox : Inherits ComboBox
         End If
     End Sub
 
-    Private Sub tmr2_Tick(sender As Object, e As EventArgs) Handles tmr2.Tick
+    Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
         If Not DesignMode Then
 
             If DroppedDown Then
@@ -2498,8 +2449,8 @@ Public Class XenonComboBox : Inherits ComboBox
                     alpha2 += Factor
                 ElseIf alpha2 + Factor > 255 Then
                     alpha2 = 255
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2511,8 +2462,8 @@ Public Class XenonComboBox : Inherits ComboBox
                     alpha2 -= Factor
                 ElseIf alpha2 - Factor < 0 Then
                     alpha2 = 0
-                    tmr2.Enabled = False
-                    tmr2.Stop()
+                    Tmr2.Enabled = False
+                    Tmr2.Stop()
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -2529,9 +2480,9 @@ Public Class XenonComboBox : Inherits ComboBox
         DoubleBuffered = True
 
         If GetDarkMode() Then ForeColor = Color.White Else ForeColor = Color.Black
-        Dim OuterRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim InnerRect As Rectangle = New Rectangle(1, 1, Width - 3, Height - 3)
-        Dim TextRect As Rectangle = New Rectangle(5, 0, Width - 1, Height - 1)
+        Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
+        Dim TextRect As New Rectangle(5, 0, Width - 1, Height - 1)
 
         Dim FadeInColor As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
         Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Border)
@@ -2631,11 +2582,9 @@ Public Class XenonAlertBox
 #Region "Events"
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
-        State = MouseState.Over : Invalidate()
     End Sub
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
-        State = MouseState.None : Invalidate()
     End Sub
     Protected Overrides Sub OnMouseMove(ByVal e As System.Windows.Forms.MouseEventArgs)
         MyBase.OnMouseMove(e)
@@ -2654,14 +2603,6 @@ Public Class XenonAlertBox
         MyBase.OnMouseDown(e)
         If overExit And CanClose = Close.Yes Then Me.Visible = False
     End Sub
-
-    Enum MouseState
-        None
-        Over
-        Down
-    End Enum
-
-    Dim State As MouseState = MouseState.None
 #End Region
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
@@ -2982,13 +2923,13 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
     Public Sub DrawRR(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1)
         Try
-            [Radius_willbe_x2] = [Radius_willbe_x2] * 2
+            [Radius_willbe_x2] *= 2
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             Dim [Pen] As New Pen(BorderColor)
             Dim [Pen2] As New Pen(CCB(BorderColor, 0.2))
 
-            Dim R1 As Rectangle = New Rectangle([Rectangle].X, [Rectangle].Y, 6, 6)
+            Dim R1 As New Rectangle([Rectangle].X, [Rectangle].Y, 6, 6)
             Dim LG As New LinearGradientBrush(R1, [Pen2].Color, [Pen].Color, LinearGradientMode.Vertical)
 
             [Graphics].DrawArc(New Pen(LG), [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
@@ -3060,8 +3001,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
 
-        Dim Rect As Rectangle = New Rectangle(-1, -1, Width + 2, Height + 2)
-        Dim RRect As Rectangle = New Rectangle(0, 0, Width, Height)
+        Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
+        Dim RRect As New Rectangle(0, 0, Width, Height)
 
         G.Clear(Color.Transparent)
 
@@ -3085,9 +3026,9 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Transparency Then FillRect(G, Noise, RRect, Radius, True)
 
             If UseItAsStartMenu Then
-                Dim SearchRect As Rectangle = New Rectangle(7, 10, 120, 18)
-                Dim SearchRectFixer As Rectangle = New Rectangle(7, 21, 120, 5)
-                Dim SearchRectTop As Rectangle = New Rectangle(7, 10, 120, 16)
+                Dim SearchRect As New Rectangle(7, 10, 120, 18)
+                Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
+                Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
 
                 FillImg(G, If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
@@ -3138,10 +3079,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If UseItAsStartMenu Then G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
 
             If UseItAsActionCenter Then
-                Dim rect1 As Rectangle = New Rectangle(85, 6, 30, 3)
-                Dim rect2 As Rectangle = New Rectangle(5, 190, 30, 3)
+                Dim rect1 As New Rectangle(85, 6, 30, 3)
+                Dim rect2 As New Rectangle(5, 190, 30, 3)
 
-                Dim rect3 As Rectangle = New Rectangle(42, 201, 34, 24)
+                Dim rect3 As New Rectangle(42, 201, 34, 24)
 
                 G.FillRectangle(New SolidBrush(LinkColor), rect3)
                 G.DrawImage(If(DarkMode, My.Resources.AC_10_Dark, My.Resources.AC_10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
@@ -3156,16 +3097,16 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         If UseItAsTaskbar Then
             Select Case UseItAsTaskbar_Version
                 Case TaskbarVersion.Eleven
-                    Dim StartBtnRect As Rectangle = New Rectangle(8, 3, 36, 36)
-                    Dim StartImgRect As Rectangle = New Rectangle(8, 3, 37, 37)
+                    Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
+                    Dim StartImgRect As New Rectangle(8, 3, 37, 37)
 
-                    Dim App2BtnRect As Rectangle = New Rectangle(StartBtnRect.Right + 5, 3, 36, 36)
-                    Dim App2ImgRect As Rectangle = New Rectangle(StartBtnRect.Right + 5, 3, 37, 37)
-                    Dim App2BtnRectUnderline As Rectangle = New Rectangle(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3)
+                    Dim App2BtnRect As New Rectangle(StartBtnRect.Right + 5, 3, 36, 36)
+                    Dim App2ImgRect As New Rectangle(StartBtnRect.Right + 5, 3, 37, 37)
+                    Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3)
 
-                    Dim AppBtnRect As Rectangle = New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
-                    Dim AppImgRect As Rectangle = New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
-                    Dim AppBtnRectUnderline As Rectangle = New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 17) / 2 - 1, AppBtnRect.Y + AppBtnRect.Height - 3, 20, 3)
+                    Dim AppBtnRect As New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
+                    Dim AppImgRect As New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
+                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 17) / 2 - 1, AppBtnRect.Y + AppBtnRect.Height - 3, 20, 3)
 
                     Dim BackC As Color
                     Dim BorderC As Color
@@ -3191,17 +3132,17 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     FillRect(G, New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
 
                 Case TaskbarVersion.Ten
-                    Dim StartBtnRect As Rectangle = New Rectangle(-1, -1, 42, Height + 2)
-                    Dim StartBtnImgRect As Rectangle = New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
+                    Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
+                    Dim StartBtnImgRect As New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
 
 
-                    Dim AppBtnRect As Rectangle = New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
-                    Dim AppBtnImgRect As Rectangle = New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2 + 1, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
-                    Dim AppBtnRectUnderline As Rectangle = New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
+                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2 + 1, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
 
-                    Dim App2BtnRect As Rectangle = New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
-                    Dim App2BtnImgRect As Rectangle = New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2 + 1, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
-                    Dim App2BtnRectUnderline As Rectangle = New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
+                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2 + 1, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+                    Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
 
 
                     Dim StartColor As Color = If(Transparency, Color.FromArgb(100, 100, 100, 100), _StartColor)
@@ -3324,12 +3265,12 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim RectBK As Rectangle = New Rectangle(0, 0, Width, Height)
-        Dim TitlebarRect As Rectangle = New Rectangle(0, 0, Width - 1, 23)
-        Dim IconRect As Rectangle = New Rectangle(4, 4, 15, 15)
-        Dim LabelRect As Rectangle = New Rectangle(21, 1, TitlebarRect.Width - 21, TitlebarRect.Height)
-        Dim XRect As Rectangle = New Rectangle(Rect.Right - 17, 1, 17, TitlebarRect.Height)
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim RectBK As New Rectangle(0, 0, Width, Height)
+        Dim TitlebarRect As New Rectangle(0, 0, Width - 1, 23)
+        Dim IconRect As New Rectangle(4, 4, 15, 15)
+        Dim LabelRect As New Rectangle(21, 1, TitlebarRect.Width - 21, TitlebarRect.Height)
+        Dim XRect As New Rectangle(Rect.Right - 17, 1, 17, TitlebarRect.Height)
 
         Dim RectClip As Rectangle = Bounds
         G.Clear(Color.Transparent)
@@ -3445,7 +3386,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
     Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
         Try
-            Dim path As GraphicsPath = New GraphicsPath()
+            Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
 
             path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)

@@ -331,6 +331,42 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Changelog?raw=true.
+        '''</summary>
+        Public ReadOnly Property Link_Changelog() As String
+            Get
+                Return ResourceManager.GetString("Link_Changelog", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/releases.
+        '''</summary>
+        Public ReadOnly Property Link_Releases() As String
+            Get
+                Return ResourceManager.GetString("Link_Releases", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/.
+        '''</summary>
+        Public ReadOnly Property Link_Repository() As String
+            Get
+                Return ResourceManager.GetString("Link_Repository", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Updates?raw=true.
+        '''</summary>
+        Public ReadOnly Property Link_Updates() As String
+            Get
+                Return ResourceManager.GetString("Link_Updates", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property Mini_ACHover_Links() As System.Drawing.Bitmap
@@ -467,15 +503,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("notify_warning", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to D6nGzPNVL@j$H~kR^cfTb&gt;A&amp;*2]sw?ha(&apos;;9SCvr)q-gB[&quot;t.+.
-        '''</summary>
-        Public ReadOnly Property PasswordProtector() As String
-            Get
-                Return ResourceManager.GetString("PasswordProtector", resourceCulture)
             End Get
         End Property
         

@@ -30,7 +30,7 @@ Public Class Updates
                     Label5.Text = "Checking ..."
                     Dim ls As New List(Of String)
 
-                    CList_FromStr(ls, WebCL.DownloadString("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Updates?raw=true"))
+                    CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
 
                     For x = 0 To ls.Count - 1
                         If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
@@ -57,7 +57,7 @@ Public Class Updates
 
                         If IsNetAvaliable() Then
                             Try
-                                Customchangelog_str = WebCL.DownloadString(New Uri("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Changelog?raw=true"))
+                                Customchangelog_str = WebCL.DownloadString(New Uri(My.Resources.Link_Changelog))
                             Catch ex As Exception
                                 With TreeView1.Nodes.Add("Error reading changelog online")
                                     Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
@@ -141,7 +141,7 @@ Public Class Updates
             End If
 
             If XenonRadioButton3.Checked Then
-                Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/releases")
+                Process.Start(My.Resources.Link_Releases)
             End If
 
         End If

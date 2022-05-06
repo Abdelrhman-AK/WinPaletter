@@ -123,7 +123,6 @@
     </Compile>
     <Compile Include="Classes\Acrylism.vb" />
     <Compile Include="Classes\CP.vb" />
-    <Compile Include="Classes\Updater.vb" />
     <Compile Include="Classes\Visual.vb" />
     <Compile Include="Classes\XenonColorPalette.vb" />
     <Compile Include="Classes\XenonCore.vb" />
@@ -165,7 +164,7 @@
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -215,18 +214,22 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
@@ -236,6 +239,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="QA.resx">
       <DependentUpon>QA.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
