@@ -29,9 +29,6 @@ Public Class Changelog
         ApplyDarkMode(Me)
         ProgressBar1.Visible = False
         LoadChangelog()
-
-        'changelog_str = IO.File.ReadAllText("C:\Users\boody\Desktop\Changelog")
-        'PhraseInfo(TreeView1)
     End Sub
 
     Sub LoadChangelog()
@@ -68,14 +65,13 @@ Public Class Changelog
     End Sub
 
     Private Sub W_DownloadDataCompleted(sender As Object, e As DownloadDataCompletedEventArgs) Handles W.DownloadDataCompleted
+        ProgressBar1.Visible = False
 
         If e.Error Is Nothing Then
             changelog_str = Encoding.ASCII.GetString(e.Result)
-
             PhraseInfo(TreeView1)
-
-            ProgressBar1.Visible = False
         Else
+
             With TreeView1.Nodes.Add("Error reading changelog online")
                 Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                 .ImageIndex = imgI : .SelectedImageIndex = imgI
@@ -226,7 +222,11 @@ Skip:
 
             With [TreeView].Nodes.Add("Error phrasing changelog")
                 .ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
-                .Nodes.Add(whatToadd).ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                .SelectedImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                With .Nodes.Add(whatToadd)
+                    .ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                    .SelectedImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                End With
             End With
 
             [TreeView].ExpandAll()
@@ -261,13 +261,12 @@ Skip:
     End Sub
 
     Public Shared Function RemoveExtraSpaces(strVal As String) As String
-        Dim iCount As Integer = 1
         Dim sTempstrVal As String
 
         sTempstrVal = ""
 
         For iCount = 1 To Len(strVal)
-            sTempstrVal = sTempstrVal + Mid(strVal, iCount, 1).Trim
+            sTempstrVal += Mid(strVal, iCount, 1).Trim
         Next
 
         RemoveExtraSpaces = sTempstrVal

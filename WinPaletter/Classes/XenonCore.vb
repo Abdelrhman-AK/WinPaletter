@@ -315,7 +315,6 @@ Public Class XenonCore
         If TypeOf ctrl Is RichTextBox Then
             ctrl.BackColor = ctrl.Parent.BackColor
             ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
-
         End If
 
         If TypeOf ctrl Is DataGridView Then
@@ -356,6 +355,13 @@ Public Class XenonCore
         If TypeOf ctrl Is XenonComboBox Then TryCast(ctrl, XenonComboBox).ColorPalette = New XenonColorPalette(ctrl)
         If TypeOf ctrl Is XenonTextBox Then TryCast(ctrl, XenonTextBox).ColorPalette = New XenonColorPalette(ctrl)
         If TypeOf ctrl Is XenonToggle Then TryCast(ctrl, XenonToggle).ColorPalette = New XenonColorPalette(ctrl)
+
+        If TypeOf ctrl Is TreeView Then
+            With TryCast(ctrl, TreeView)
+                .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+        End If
 
         If TypeOf ctrl Is TrackBar Then TryCast(ctrl, TrackBar).BackColor = ctrl.Parent.BackColor
         If TypeOf ctrl Is CheckedListBox Then TryCast(ctrl, CheckedListBox).BackColor = ctrl.Parent.BackColor

@@ -123,7 +123,6 @@
     </Compile>
     <Compile Include="Classes\Acrylism.vb" />
     <Compile Include="Classes\CP.vb" />
-    <Compile Include="Classes\Protector.vb" />
     <Compile Include="Classes\Updater.vb" />
     <Compile Include="Classes\Visual.vb" />
     <Compile Include="Classes\XenonColorPalette.vb" />
@@ -280,6 +279,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"F:\VB Working Area - Projects\WinPaletter_WorkingArea\InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)icons"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)InsertIcons.exe" "$(TargetPath)" "$(ProjectDir)icons"</PostBuildEvent>
   </PropertyGroup>
 </Project>

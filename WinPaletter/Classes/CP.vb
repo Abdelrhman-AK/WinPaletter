@@ -281,7 +281,7 @@ Public Class CP
             Case Mode.File
                 Dim txt As New List(Of String)
                 txt.Clear()
-                CList_FromStr(txt, Protector.Decrypt(IO.File.ReadAllText(PaletteFile)))
+                CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
 
                 For Each lin As String In txt
                     If lin.Contains("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
@@ -628,7 +628,7 @@ Public Class CP
 #End Region
                 tx.Add(vbCrLf & "</WinPaletter>")
 
-                IO.File.WriteAllText(FileLocation, Protector.Encrypt(CStr_FromList(tx)))
+                IO.File.WriteAllText(FileLocation, CStr_FromList(tx))
         End Select
 
     End Sub
