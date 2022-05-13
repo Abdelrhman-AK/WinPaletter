@@ -4,7 +4,7 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
-    Dim isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+    ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
     Public Titlebar_Active As Color
     Public Titlebar_DWM_Active As Color

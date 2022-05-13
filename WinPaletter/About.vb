@@ -29,4 +29,8 @@ Public Class About
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         Me.Close()
     End Sub
+
+    Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+        Process.Start("https://www.codeproject.com/Articles/548769/Animator-for-WinForms")
+    End Sub
 End Class

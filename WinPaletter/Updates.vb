@@ -106,12 +106,12 @@ Public Class Updates
                 End If
             Catch
                 Label5.Text = ""
-            Label7.Text = ""
-            Label9.Text = ""
-            url = Nothing
-            XenonButton1.Text = "Check for updates"
-            XenonAlertBox2.Text = String.Format("Error: Network issues or Github repository is private or deleted. Visit Github page for details.")
-            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+                Label7.Text = ""
+                Label9.Text = ""
+                url = Nothing
+                XenonButton1.Text = "Check for updates"
+                XenonAlertBox2.Text = String.Format("Error: Network issues or Github repository is private or deleted. Visit Github page for details.")
+                XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
             End Try
 
             My.Application.AnimatorX.Show(XenonAlertBox2, True)

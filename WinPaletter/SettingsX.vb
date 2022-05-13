@@ -192,7 +192,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If MsgBox("Are you sure from removing files association (*.wpth,*.wpsf) from registry?" & vbCrLf & vbCrLf & "* You can reassociate them by activating its checkbox and restarting the application.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("Are you sure from removing files association (*.wpth, *.wpsf) from registry?" & vbCrLf & vbCrLf & "Note: You can reassociate them by activating its checkbox and restarting the application.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")

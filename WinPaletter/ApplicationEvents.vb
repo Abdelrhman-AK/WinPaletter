@@ -1,11 +1,9 @@
-﻿Imports System.Reflection
-Imports System.Runtime.InteropServices
-Imports WinPaletter.XenonCore
-Imports System
-Imports Microsoft.Win32
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.Management
+﻿Imports System.Management
+Imports System.Reflection
 Imports System.Security.Principal
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.Win32
+Imports WinPaletter.XenonCore
 
 Namespace My
     Public Module WindowsVersions
@@ -273,12 +271,13 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            Try : Kill("oldWinpaletter.trash") : Catch : End Try
-
+            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+            Catch : End Try
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Try : Kill("oldWinpaletter.trash") : Catch : End Try
+            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+            Catch : End Try
 
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()

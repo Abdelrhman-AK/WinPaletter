@@ -1,9 +1,6 @@
 ﻿Imports System.ComponentModel
-Imports System.Management
 Imports System.Net
 Imports System.Reflection
-Imports System.Security.Principal
-Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
@@ -61,28 +58,32 @@ Public Class MainFrm
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If IsNetAvaliable() Then
-            Dim ls As New List(Of String)
-            Dim WebCL As New WebClient
-            RaiseUpdate = False
-            ver = ""
+            Try
 
-            CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
+                Dim ls As New List(Of String)
+                Dim WebCL As New WebClient
+                RaiseUpdate = False
+                ver = ""
 
-            For x = 0 To ls.Count - 1
-                If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
-                    If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
-                    If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
+
+                For x = 0 To ls.Count - 1
+                    If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
+                        If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
+                        If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                    End If
+                Next
+
+                If ChannelFixer = 0 Then UpdateChannel = StableInt
+                If ChannelFixer = 1 Then UpdateChannel = BetaInt
+
+                ver = ls(UpdateChannel).Split(" ")(1)
+
+                If ver > My.Application.Info.Version.ToString Then
+                    RaiseUpdate = True
                 End If
-            Next
-
-            If ChannelFixer = 0 Then UpdateChannel = StableInt
-            If ChannelFixer = 1 Then UpdateChannel = BetaInt
-
-            ver = ls(UpdateChannel).Split(" ")(1)
-
-            If ver > My.Application.Info.Version.ToString Then
-                RaiseUpdate = True
-            End If
+            Catch
+            End Try
         End If
     End Sub
 
@@ -1089,51 +1090,6 @@ Public Class MainFrm
         End If
     End Sub
 
-#Region "Notifications Base"
-    Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
-        Dim NB As New XenonAlertBox With {
-         .AlertStyle = XenonAlertBox.Style.Adaptive,
-         .Text = Text,
-         .Image = [Icon],
-         .Size = New Size(NotificationsPanel.Width - 5, MeasureString([Text], .Font).Height + 15),
-         .Left = 0
-         }
-
-        NotificationsList.Add(New Notifier(NB, [Interval]))
-        NotificationsPanel.Controls.Add(NB)
-        NotificationsPanel.BringToFront()
-        NTimer.Enabled = True
-        NTimer.Start()
-    End Sub
-    Private Sub NTimer_Tick(sender As Object, e As EventArgs) Handles NTimer.Tick
-
-        Try
-            For Each nx As Notifier In NotificationsList
-                If nx.Interval - NTimer.Interval <= 0 Then
-                    NotificationsPanel.Controls.Remove(nx.Control)
-                    nx.Control.Dispose()
-                    NotificationsList.Remove(nx)
-                Else
-                    nx.Interval -= NTimer.Interval
-                End If
-            Next
-        Catch
-        End Try
-
-        If NotificationsList.Count = 0 Then
-            NTimer.Enabled = False
-            NTimer.Stop()
-        End If
-
-    End Sub
-
-    ReadOnly NotificationsList As New List(Of Notifier)
-    Dim WithEvents NTimer As New Timer With {.Enabled = False, .Interval = 100}
-
-    Private Sub ActiveTitlebar_picker_Paint(sender As Object, e As PaintEventArgs) Handles ActiveTitlebar_picker.Paint
-
-    End Sub
-
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         ContextMenuStrip1.Show(sender, TryCast(sender, Control).Location + New Point(15, 15))
     End Sub
@@ -1274,6 +1230,48 @@ Public Class MainFrm
 
         Me.Close()
     End Sub
+
+#Region "Notifications Base"
+    Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
+        Dim NB As New XenonAlertBox With {
+         .AlertStyle = XenonAlertBox.Style.Adaptive,
+         .Text = Text,
+         .Image = [Icon],
+         .Size = New Size(NotificationsPanel.Width - 5, MeasureString([Text], .Font).Height + 15),
+         .Left = 0
+         }
+
+        NotificationsList.Add(New Notifier(NB, [Interval]))
+        NotificationsPanel.Controls.Add(NB)
+        NotificationsPanel.BringToFront()
+        NTimer.Enabled = True
+        NTimer.Start()
+    End Sub
+    Private Sub NTimer_Tick(sender As Object, e As EventArgs) Handles NTimer.Tick
+
+        Try
+            For Each nx As Notifier In NotificationsList
+                If nx.Interval - NTimer.Interval <= 0 Then
+                    NotificationsPanel.Controls.Remove(nx.Control)
+                    nx.Control.Dispose()
+                    NotificationsList.Remove(nx)
+                Else
+                    nx.Interval -= NTimer.Interval
+                End If
+            Next
+        Catch
+        End Try
+
+        If NotificationsList.Count = 0 Then
+            NTimer.Enabled = False
+            NTimer.Stop()
+        End If
+
+    End Sub
+
+    ReadOnly NotificationsList As New List(Of Notifier)
+    Dim WithEvents NTimer As New Timer With {.Enabled = False, .Interval = 100}
+
 #End Region
 
 End Class

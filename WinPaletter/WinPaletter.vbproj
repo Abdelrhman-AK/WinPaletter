@@ -71,15 +71,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
-      <HintPath>F:\VB Working Area - Projects\Xenon_RetroStudio\DLLs\Animator.dll</HintPath>
+      <HintPath>..\References\Animator.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
+      <HintPath>..\References\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Cyotek.Windows.Forms.ColorPicker">
-      <HintPath>F:\Sources\Programming\Controls\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+      <HintPath>..\References\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -151,11 +151,10 @@
     <Compile Include="LogonUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainFrm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="MainFrm.Designer.vb">
       <DependentUpon>MainFrm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -164,7 +163,7 @@
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -214,32 +213,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="QA.resx">
       <DependentUpon>QA.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -252,6 +246,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -262,8 +257,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -280,6 +273,8 @@
   <ItemGroup>
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

@@ -40,7 +40,7 @@ Public Class ColorPicker
         ls.Clear()
 
         For Each ctrl As Control In Me.Controls
-            If Not TypeOf ctrl Is ScreenColorPicker And ctrl.Visible Then
+            If TypeOf ctrl IsNot ScreenColorPicker And ctrl.Visible Then
                 ctrl.Visible = False
                 ls.Add(ctrl)
             End If
@@ -264,7 +264,7 @@ Public Class ColorPicker
 
     Dim ColorsList As New List(Of Color)
     Dim img As Image
-    Dim colorThiefX As New ColorThiefDotNet.ColorThief
+    ReadOnly ColorThiefX As New ColorThiefDotNet.ColorThief
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
@@ -281,10 +281,10 @@ Public Class ColorPicker
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
-            Dim pnl As XenonGroupBox = New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
+            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
             pnl.BackColor = Color.FromArgb(255, C)
             ImgPaletteContainer.Controls.Add(pnl)
-            AddHandler pnl.Click, AddressOf pnl_click
+            AddHandler pnl.Click, AddressOf Pnl_click
         Next
 
         ProgressBar1.Visible = False
@@ -293,7 +293,7 @@ Public Class ColorPicker
         My.Application.AnimatorX.ShowSync(XenonButton6, True)
     End Sub
 
-    Private Sub pnl_click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub Pnl_click(ByVal sender As Object, ByVal e As EventArgs)
         With CType(sender, XenonGroupBox)
             ColorEditorManager1.Color = .BackColor
             ColorEditor1.Color = .BackColor
@@ -304,7 +304,7 @@ Public Class ColorPicker
         CHANGECOLORPREVIEW()
     End Sub
 
-    Public Shared fs As System.IO.FileStream
+    Public Shared fs As IO.FileStream
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         ColorWheel1.Visible = False
@@ -316,14 +316,6 @@ Public Class ColorPicker
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             TextBox1.Text = OpenFileDialog1.FileName
         End If
-    End Sub
-
-    Private Sub XenonRadioButton1_CheckedChanged(sender As Object)
-
-    End Sub
-
-    Private Sub ScreenColorPicker1_ColorChanged(sender As Object, e As EventArgs) Handles ScreenColorPicker1.ColorChanged
-
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

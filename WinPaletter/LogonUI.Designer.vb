@@ -67,16 +67,13 @@ Partial Class LogonUI
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox15.SuspendLayout()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.LogonUI_PersonalColorsAccent_Picker.SuspendLayout()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox10.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.LogonUI_PersonalColorsBackground_Picker.SuspendLayout()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.LogonUI_Background_Picker.SuspendLayout()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -273,6 +270,7 @@ Partial Class LogonUI
         Me.XenonGroupBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.XenonGroupBox15.Controls.Add(Me.PictureBox28)
         Me.XenonGroupBox15.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox15.Controls.Add(Me.Label15)
         Me.XenonGroupBox15.Controls.Add(Me.LogonUI_PersonalColorsAccent_Picker)
@@ -316,7 +314,6 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsAccent_Picker.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LogonUI_PersonalColorsAccent_Picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.LogonUI_PersonalColorsAccent_Picker.Controls.Add(Me.PictureBox28)
         Me.LogonUI_PersonalColorsAccent_Picker.CustomColor = True
         Me.LogonUI_PersonalColorsAccent_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_PersonalColorsAccent_Picker.LineSize = 1
@@ -330,9 +327,9 @@ Partial Class LogonUI
         'PictureBox28
         '
         Me.PictureBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
-        Me.PictureBox28.Location = New System.Drawing.Point(31, 2)
+        Me.PictureBox28.Location = New System.Drawing.Point(165, 6)
         Me.PictureBox28.Name = "PictureBox28"
         Me.PictureBox28.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -345,6 +342,7 @@ Partial Class LogonUI
         Me.XenonGroupBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.XenonGroupBox10.Controls.Add(Me.PictureBox29)
         Me.XenonGroupBox10.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox10.Controls.Add(Me.Label6)
         Me.XenonGroupBox10.Controls.Add(Me.LogonUI_PersonalColorsBackground_Picker)
@@ -388,7 +386,6 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsBackground_Picker.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LogonUI_PersonalColorsBackground_Picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.LogonUI_PersonalColorsBackground_Picker.Controls.Add(Me.PictureBox29)
         Me.LogonUI_PersonalColorsBackground_Picker.CustomColor = True
         Me.LogonUI_PersonalColorsBackground_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_PersonalColorsBackground_Picker.LineSize = 1
@@ -402,9 +399,9 @@ Partial Class LogonUI
         'PictureBox29
         '
         Me.PictureBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
-        Me.PictureBox29.Location = New System.Drawing.Point(31, 2)
+        Me.PictureBox29.Location = New System.Drawing.Point(165, 6)
         Me.PictureBox29.Name = "PictureBox29"
         Me.PictureBox29.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -437,6 +434,7 @@ Partial Class LogonUI
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.PictureBox23)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox12.Controls.Add(Me.Label14)
         Me.XenonGroupBox12.Controls.Add(Me.LogonUI_Background_Picker)
@@ -480,7 +478,6 @@ Partial Class LogonUI
         Me.LogonUI_Background_Picker.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LogonUI_Background_Picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.LogonUI_Background_Picker.Controls.Add(Me.PictureBox23)
         Me.LogonUI_Background_Picker.CustomColor = True
         Me.LogonUI_Background_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_Background_Picker.LineSize = 1
@@ -494,9 +491,9 @@ Partial Class LogonUI
         'PictureBox23
         '
         Me.PictureBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
-        Me.PictureBox23.Location = New System.Drawing.Point(31, 2)
+        Me.PictureBox23.Location = New System.Drawing.Point(165, 6)
         Me.PictureBox23.Name = "PictureBox23"
         Me.PictureBox23.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -582,20 +579,17 @@ Partial Class LogonUI
         Me.XenonGroupBox17.ResumeLayout(False)
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox15.ResumeLayout(False)
+        Me.XenonGroupBox15.PerformLayout()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.LogonUI_PersonalColorsAccent_Picker.ResumeLayout(False)
-        Me.LogonUI_PersonalColorsAccent_Picker.PerformLayout()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox10.ResumeLayout(False)
+        Me.XenonGroupBox10.PerformLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.LogonUI_PersonalColorsBackground_Picker.ResumeLayout(False)
-        Me.LogonUI_PersonalColorsBackground_Picker.PerformLayout()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
+        Me.XenonGroupBox12.PerformLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.LogonUI_Background_Picker.ResumeLayout(False)
-        Me.LogonUI_Background_Picker.PerformLayout()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

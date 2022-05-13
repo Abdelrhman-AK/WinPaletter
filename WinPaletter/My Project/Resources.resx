@@ -140,7 +140,7 @@
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_11_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Animator" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\Xenon_RetroStudio\DLLs\Animator.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\..\References\Animator.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="AppPreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\MainForm\AppPreview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -176,10 +176,10 @@
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Stable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorThief_Desktop_v46" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\Sources\Programming\Controls\ColorThief.Desktop.v46.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\..\References\ColorThief.Desktop.v46.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Cyotek_Windows_Forms_ColorPicker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\Sources\Programming\Controls\Cyotek.Windows.Forms.ColorPicker.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\..\References\Cyotek.Windows.Forms.ColorPicker.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="darkmode_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\darkmode_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,10 +277,10 @@
   <data name="StartBtn_11Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\StartBtn_11Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="W10_init" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\W10_init.wpth;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="W10_Init" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\StockThemes\W10_Init.wpth;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="W11_init" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\W11_init.wpth;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="W11_Init" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\StockThemes\W11_Init.wpth;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
