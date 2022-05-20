@@ -73,29 +73,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property AC_10_Dark1() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("AC_10_Dark1", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Public ReadOnly Property AC_10_Light() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("AC_10_Light", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Public ReadOnly Property AC_10_Light1() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("AC_10_Light1", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -587,22 +567,62 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
+        '''  Looks up a localized string similar to &lt;WinPaletter - Programmed by Abdelrhman_AK&gt;
+        '''*Created from App Version= 1.0.0.0
+        '''
+        '''&lt;General&gt;
+        '''*Palette Name= Windows 10 (Initial)
+        '''*Palette Description= (Initial; Like first time after Windows Setup)
+        '''*Palette File Version= 1.0
+        '''*Author= Microsoft
+        '''*AuthorSocialMediaLink= www.microsoft.com
+        '''&lt;/General&gt;
+        '''
+        '''&lt;Toggles&gt;
+        '''*WinMode_Light= False
+        '''*AppMode_Light= True
+        '''*Transparency= True
+        '''*Blur= True
+        '''*AccentColorOnTitlebarAndBorders= False
+        '''*AccentColorOnStartTaskbarAndActionCenter= False
+        '''&lt;/Toggles&gt;
+        '''
+        '''&lt;UWP&gt;
+        '''*Tit [rest of string was truncated]&quot;;.
         '''</summary>
-        Public ReadOnly Property W10_init() As Byte()
+        Public ReadOnly Property W10_Init() As String
             Get
-                Dim obj As Object = ResourceManager.GetObject("W10_init", resourceCulture)
-                Return CType(obj,Byte())
+                Return ResourceManager.GetString("W10_Init", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
+        '''  Looks up a localized string similar to &lt;WinPaletter - Programmed by Abdelrhman_AK&gt;
+        '''*Created from App Version= 1.0.0.0
+        '''
+        '''&lt;General&gt;
+        '''*Palette Name= Windows 11 (Initial)
+        '''*Palette Description= (Initial; Like first time after Windows Setup)
+        '''*Palette File Version= 1.0
+        '''*Author= Microsoft
+        '''*AuthorSocialMediaLink= www.microsoft.com
+        '''&lt;/General&gt;
+        '''
+        '''&lt;Toggles&gt;
+        '''*WinMode_Light= True
+        '''*AppMode_Light= True
+        '''*Transparency= True
+        '''*Blur= False
+        '''*AccentColorOnTitlebarAndBorders= True
+        '''*AccentColorOnStartTaskbarAndActionCenter= False
+        '''&lt;/Toggles&gt;
+        '''
+        '''&lt;UWP&gt;
+        '''*Titl [rest of string was truncated]&quot;;.
         '''</summary>
-        Public ReadOnly Property W11_init() As Byte()
+        Public ReadOnly Property W11_Init() As String
             Get
-                Dim obj As Object = ResourceManager.GetObject("W11_init", resourceCulture)
-                Return CType(obj,Byte())
+                Return ResourceManager.GetString("W11_Init", resourceCulture)
             End Get
         End Property
     End Module

@@ -1783,7 +1783,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.author_lbl.AutoEllipsis = True
         Me.author_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.author_lbl.Font = New System.Drawing.Font("Segoe UI Variable Display", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.author_lbl.Font = New System.Drawing.Font("Segoe UI", 9.75!)
         Me.author_lbl.Location = New System.Drawing.Point(415, 37)
         Me.author_lbl.Name = "author_lbl"
         Me.author_lbl.Size = New System.Drawing.Size(570, 17)
@@ -1797,7 +1797,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.themename_lbl.AutoEllipsis = True
         Me.themename_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.themename_lbl.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.themename_lbl.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold)
         Me.themename_lbl.Location = New System.Drawing.Point(415, 3)
         Me.themename_lbl.Name = "themename_lbl"
         Me.themename_lbl.Size = New System.Drawing.Size(570, 30)

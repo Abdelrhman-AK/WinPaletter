@@ -1322,7 +1322,9 @@ Public Class MainFrm
             End Select
         End If
 
-        If My.W11 Then IO.File.WriteAllBytes("temp.wpth", My.Resources.W11_init) Else IO.File.WriteAllBytes("temp.wpth", My.Resources.W10_init)
+
+
+        If My.W11 Then IO.File.WriteAllText("temp.wpth", My.Resources.W11_Init) Else IO.File.WriteAllText("temp.wpth", My.Resources.W10_Init)
         CP = New CP(CP.Mode.File, "temp.wpth")
         Kill("temp.wpth")
         CP_Original = CP
