@@ -1,5 +1,5 @@
 # WinPaletter
-https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBanner.jpg?raw=true
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBanner.jpg?raw=true)
 Colorize Windows 10/11 Accents without restrictions.
 
 # Idea of the program
@@ -7,6 +7,6 @@ The Accents are stored in registry, one of them stored as an array, and the othe
 
 # Screenshots
 
-https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/0.png?raw=true
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/0.png?raw=true)
 
-https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/1.png?raw=true
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/1.png?raw=true)
