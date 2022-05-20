@@ -1,2 +1,2 @@
 # WinPaletter
-Colorize Windows 10/11 Accents, Like Win9x
+Colorize Windows 10/11 Accents without restrictions
