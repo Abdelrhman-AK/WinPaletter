@@ -1,5 +1,4 @@
-# WinPaletter
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBanner.jpg?raw=true)
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBanner.jpg?raw=true)
 Colorize Windows 10/11 Accents without restrictions.
 
 # Idea of the program
