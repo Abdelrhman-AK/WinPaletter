@@ -103,6 +103,7 @@ Partial Class MainFrm
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FromCurrentPaletteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.status_lbl = New System.Windows.Forms.Label()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
@@ -140,7 +141,6 @@ Partial Class MainFrm
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.PaletteContainer.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -1219,7 +1219,7 @@ Partial Class MainFrm
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.FromCurrentPaletteToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(229, 92)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(229, 70)
         '
         'ToolStripMenuItem1
         '
@@ -1250,12 +1250,18 @@ Partial Class MainFrm
         Me.status_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.status_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.status_lbl.Location = New System.Drawing.Point(0, 646)
         Me.status_lbl.Name = "status_lbl"
         Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
         Me.status_lbl.Size = New System.Drawing.Size(1013, 29)
         Me.status_lbl.TabIndex = 19
         Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'XenonGroupBox3
         '
@@ -1862,11 +1868,6 @@ Partial Class MainFrm
         Me.XenonButton2.TabIndex = 2
         Me.XenonButton2.Tag = "Open a Theme File"
         Me.XenonButton2.UseVisualStyleBackColor = False
-        '
-        'BackgroundWorker1
-        '
-        Me.BackgroundWorker1.WorkerReportsProgress = True
-        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'MainFrm
         '

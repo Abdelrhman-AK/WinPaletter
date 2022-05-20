@@ -13,78 +13,78 @@ Public Class Win32UI
     End Sub
 
 
-    Sub LoadCP(ByVal CP As CP)
-        ApplyCPValues(CP)
+    Sub LoadCP(ByVal [CP] As CP)
+        ApplyCPValues([CP])
     End Sub
 
-    Sub ApplyCPValues(ByVal CP As CP)
-        ActiveBorder_pick.BackColor = CP.Win32UI_ActiveBorder
-        activetitle_pick.BackColor = CP.Win32UI_ActiveTitle
-        AppWorkspace_pick.BackColor = CP.Win32UI_AppWorkspace
-        background_pick.BackColor = CP.Win32UI_Background
-        btnaltface_pick.BackColor = CP.Win32UI_ButtonAlternateFace
-        btndkshadow_pick.BackColor = CP.Win32UI_ButtonDkShadow
-        btnface_pick.BackColor = CP.Win32UI_ButtonFace
-        btnhilight_pick.BackColor = CP.Win32UI_ButtonHilight
-        btnlight_pick.BackColor = CP.Win32UI_ButtonLight
-        btnshadow_pick.BackColor = CP.Win32UI_ButtonShadow
-        btntext_pick.BackColor = CP.Win32UI_ButtonText
-        GActivetitle_pick.BackColor = CP.Win32UI_GradientActiveTitle
-        GInactivetitle_pick.BackColor = CP.Win32UI_GradientInactiveTitle
-        GrayText_pick.BackColor = CP.Win32UI_GrayText
-        hilighttext_pick.BackColor = CP.Win32UI_HilightText
-        hottracking_pick.BackColor = CP.Win32UI_HotTrackingColor
-        InactiveBorder_pick.BackColor = CP.Win32UI_InactiveBorder
-        InactiveTitle_pick.BackColor = CP.Win32UI_InactiveTitle
-        InactivetitleText_pick.BackColor = CP.Win32UI_InactiveTitleText
-        InfoText_pick.BackColor = CP.Win32UI_InfoText
-        InfoWindow_pick.BackColor = CP.Win32UI_InfoWindow
-        menu_pick.BackColor = CP.Win32UI_Menu
-        menubar_pick.BackColor = CP.Win32UI_MenuBar
-        menutext_pick.BackColor = CP.Win32UI_MenuText
-        Scrollbar_pick.BackColor = CP.Win32UI_Scrollbar
-        TitleText_pick.BackColor = CP.Win32UI_TitleText
-        Window_pick.BackColor = CP.Win32UI_Window
-        Frame_pick.BackColor = CP.Win32UI_WindowFrame
-        WindowText_pick.BackColor = CP.Win32UI_WindowText
-        hilight_pick.BackColor = CP.Win32UI_Hilight
-        menuhilight_pick.BackColor = CP.Win32UI_MenuHilight
-        desktop_pick.BackColor = CP.Win32UI_Desktop
+    Sub ApplyCPValues(ByVal [CP] As CP)
+        ActiveBorder_pick.BackColor = [CP].Win32UI_ActiveBorder
+        activetitle_pick.BackColor = [CP].Win32UI_ActiveTitle
+        AppWorkspace_pick.BackColor = [CP].Win32UI_AppWorkspace
+        background_pick.BackColor = [CP].Win32UI_Background
+        btnaltface_pick.BackColor = [CP].Win32UI_ButtonAlternateFace
+        btndkshadow_pick.BackColor = [CP].Win32UI_ButtonDkShadow
+        btnface_pick.BackColor = [CP].Win32UI_ButtonFace
+        btnhilight_pick.BackColor = [CP].Win32UI_ButtonHilight
+        btnlight_pick.BackColor = [CP].Win32UI_ButtonLight
+        btnshadow_pick.BackColor = [CP].Win32UI_ButtonShadow
+        btntext_pick.BackColor = [CP].Win32UI_ButtonText
+        GActivetitle_pick.BackColor = [CP].Win32UI_GradientActiveTitle
+        GInactivetitle_pick.BackColor = [CP].Win32UI_GradientInactiveTitle
+        GrayText_pick.BackColor = [CP].Win32UI_GrayText
+        hilighttext_pick.BackColor = [CP].Win32UI_HilightText
+        hottracking_pick.BackColor = [CP].Win32UI_HotTrackingColor
+        InactiveBorder_pick.BackColor = [CP].Win32UI_InactiveBorder
+        InactiveTitle_pick.BackColor = [CP].Win32UI_InactiveTitle
+        InactivetitleText_pick.BackColor = [CP].Win32UI_InactiveTitleText
+        InfoText_pick.BackColor = [CP].Win32UI_InfoText
+        InfoWindow_pick.BackColor = [CP].Win32UI_InfoWindow
+        menu_pick.BackColor = [CP].Win32UI_Menu
+        menubar_pick.BackColor = [CP].Win32UI_MenuBar
+        menutext_pick.BackColor = [CP].Win32UI_MenuText
+        Scrollbar_pick.BackColor = [CP].Win32UI_Scrollbar
+        TitleText_pick.BackColor = [CP].Win32UI_TitleText
+        Window_pick.BackColor = [CP].Win32UI_Window
+        Frame_pick.BackColor = [CP].Win32UI_WindowFrame
+        WindowText_pick.BackColor = [CP].Win32UI_WindowText
+        hilight_pick.BackColor = [CP].Win32UI_Hilight
+        menuhilight_pick.BackColor = [CP].Win32UI_MenuHilight
+        desktop_pick.BackColor = [CP].Win32UI_Desktop
     End Sub
 
-    Sub ApplyToCP(ByVal CP As CP)
-        CP.Win32UI_ActiveBorder = ActiveBorder_pick.BackColor
-        CP.Win32UI_ActiveTitle = activetitle_pick.BackColor
-        CP.Win32UI_AppWorkspace = AppWorkspace_pick.BackColor
-        CP.Win32UI_Background = background_pick.BackColor
-        CP.Win32UI_ButtonAlternateFace = btnaltface_pick.BackColor
-        CP.Win32UI_ButtonDkShadow = btndkshadow_pick.BackColor
-        CP.Win32UI_ButtonFace = btnface_pick.BackColor
-        CP.Win32UI_ButtonHilight = btnhilight_pick.BackColor
-        CP.Win32UI_ButtonLight = btnlight_pick.BackColor
-        CP.Win32UI_ButtonShadow = btnshadow_pick.BackColor
-        CP.Win32UI_ButtonText = btntext_pick.BackColor
-        CP.Win32UI_GradientActiveTitle = GActivetitle_pick.BackColor
-        CP.Win32UI_GradientInactiveTitle = GInactivetitle_pick.BackColor
-        CP.Win32UI_GrayText = GrayText_pick.BackColor
-        CP.Win32UI_HilightText = hilighttext_pick.BackColor
-        CP.Win32UI_HotTrackingColor = hottracking_pick.BackColor
-        CP.Win32UI_InactiveBorder = InactiveBorder_pick.BackColor
-        CP.Win32UI_InactiveTitle = InactiveTitle_pick.BackColor
-        CP.Win32UI_InactiveTitleText = InactivetitleText_pick.BackColor
-        CP.Win32UI_InfoText = InfoText_pick.BackColor
-        CP.Win32UI_InfoWindow = InfoWindow_pick.BackColor
-        CP.Win32UI_Menu = menu_pick.BackColor
-        CP.Win32UI_MenuBar = menubar_pick.BackColor
-        CP.Win32UI_MenuText = menutext_pick.BackColor
-        CP.Win32UI_Scrollbar = Scrollbar_pick.BackColor
-        CP.Win32UI_TitleText = TitleText_pick.BackColor
-        CP.Win32UI_Window = Window_pick.BackColor
-        CP.Win32UI_WindowFrame = Frame_pick.BackColor
-        CP.Win32UI_WindowText = WindowText_pick.BackColor
-        CP.Win32UI_Hilight = hilight_pick.BackColor
-        CP.Win32UI_MenuHilight = menuhilight_pick.BackColor
-        CP.Win32UI_Desktop = desktop_pick.BackColor
+    Sub ApplyToCP(ByVal [CP] As CP)
+        [CP].Win32UI_ActiveBorder = ActiveBorder_pick.BackColor
+        [CP].Win32UI_ActiveTitle = activetitle_pick.BackColor
+        [CP].Win32UI_AppWorkspace = AppWorkspace_pick.BackColor
+        [CP].Win32UI_Background = background_pick.BackColor
+        [CP].Win32UI_ButtonAlternateFace = btnaltface_pick.BackColor
+        [CP].Win32UI_ButtonDkShadow = btndkshadow_pick.BackColor
+        [CP].Win32UI_ButtonFace = btnface_pick.BackColor
+        [CP].Win32UI_ButtonHilight = btnhilight_pick.BackColor
+        [CP].Win32UI_ButtonLight = btnlight_pick.BackColor
+        [CP].Win32UI_ButtonShadow = btnshadow_pick.BackColor
+        [CP].Win32UI_ButtonText = btntext_pick.BackColor
+        [CP].Win32UI_GradientActiveTitle = GActivetitle_pick.BackColor
+        [CP].Win32UI_GradientInactiveTitle = GInactivetitle_pick.BackColor
+        [CP].Win32UI_GrayText = GrayText_pick.BackColor
+        [CP].Win32UI_HilightText = hilighttext_pick.BackColor
+        [CP].Win32UI_HotTrackingColor = hottracking_pick.BackColor
+        [CP].Win32UI_InactiveBorder = InactiveBorder_pick.BackColor
+        [CP].Win32UI_InactiveTitle = InactiveTitle_pick.BackColor
+        [CP].Win32UI_InactiveTitleText = InactivetitleText_pick.BackColor
+        [CP].Win32UI_InfoText = InfoText_pick.BackColor
+        [CP].Win32UI_InfoWindow = InfoWindow_pick.BackColor
+        [CP].Win32UI_Menu = menu_pick.BackColor
+        [CP].Win32UI_MenuBar = menubar_pick.BackColor
+        [CP].Win32UI_MenuText = menutext_pick.BackColor
+        [CP].Win32UI_Scrollbar = Scrollbar_pick.BackColor
+        [CP].Win32UI_TitleText = TitleText_pick.BackColor
+        [CP].Win32UI_Window = Window_pick.BackColor
+        [CP].Win32UI_WindowFrame = Frame_pick.BackColor
+        [CP].Win32UI_WindowText = WindowText_pick.BackColor
+        [CP].Win32UI_Hilight = hilight_pick.BackColor
+        [CP].Win32UI_MenuHilight = menuhilight_pick.BackColor
+        [CP].Win32UI_Desktop = desktop_pick.BackColor
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

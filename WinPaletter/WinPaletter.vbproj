@@ -66,6 +66,7 @@
   <PropertyGroup>
     <ApplicationIcon>ICON.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -108,6 +109,19 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Compile Include="About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -121,16 +135,19 @@
     <Compile Include="Changelog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\Acrylism.vb" />
     <Compile Include="Classes\CP.vb" />
-    <Compile Include="Classes\Visual.vb" />
-    <Compile Include="Classes\XenonColorPalette.vb" />
     <Compile Include="Classes\XenonCore.vb" />
     <Compile Include="Classes\XeSettings.vb" />
     <Compile Include="ColorPicker.Designer.vb">
       <DependentUpon>ColorPicker.vb</DependentUpon>
     </Compile>
     <Compile Include="ColorPicker.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComplexSave.Designer.vb">
+      <DependentUpon>ComplexSave.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ComplexSave.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DragPreviewer.Designer.vb">
@@ -157,22 +174,10 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb" />
+    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="QA.Designer.vb">
       <DependentUpon>QA.vb</DependentUpon>
     </Compile>
@@ -200,9 +205,13 @@
     <Compile Include="XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="XenonUI.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="XenonUI.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
+    <Content Include="My Project\Application.myapp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
@@ -213,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker.resx">
       <DependentUpon>ColorPicker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComplexSave.resx">
+      <DependentUpon>ComplexSave.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
@@ -226,12 +238,7 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="QA.resx">
       <DependentUpon>QA.vb</DependentUpon>
     </EmbeddedResource>
@@ -248,33 +255,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ICON.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
+    <None Include="My Project\Settings.settings" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

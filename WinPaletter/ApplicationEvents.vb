@@ -37,7 +37,8 @@ Namespace My
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
         Public ChangeLogImgLst As New ImageList
-
+        Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
+        Public ComplexSaveResult As String = "2.0"
 #End Region
 
 #Region "File Association"
@@ -132,27 +133,27 @@ Namespace My
             Dim valueName As String = "Wallpaper"
             Dim Base As String = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
             Dim query1 = New WqlEventQuery(Base)
-            Dim WallMon_Watcher1 As ManagementEventWatcher = New ManagementEventWatcher(query1)
+            WallMon_Watcher1 = New ManagementEventWatcher(query1)
 
 
             KeyPath = "Control Panel\Colors"
             valueName = "Background"
             Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
             Dim query2 = New WqlEventQuery(Base)
-            Dim WallMon_Watcher2 As ManagementEventWatcher = New ManagementEventWatcher(query2)
+            WallMon_Watcher2 = New ManagementEventWatcher(query2)
 
 
             KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
             valueName = "BackgroundType"
             Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
             Dim query3 = New WqlEventQuery(Base)
-            Dim WallMon_Watcher3 As ManagementEventWatcher = New ManagementEventWatcher(query3)
+            WallMon_Watcher3 = New ManagementEventWatcher(query3)
 
             KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
             valueName = "AppsUseLightTheme"
             Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
             Dim query4 = New WqlEventQuery(Base)
-            Dim WallMon_Watcher4 As ManagementEventWatcher = New ManagementEventWatcher(query4)
+            WallMon_Watcher4 = New ManagementEventWatcher(query4)
 
             AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
             AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
@@ -163,7 +164,6 @@ Namespace My
             WallMon_Watcher2.Start()
             WallMon_Watcher3.Start()
             WallMon_Watcher4.Start()
-
         End Sub
         Sub DarkMode_Changed()
             Dim UpdateDarkModeX As UpdateDarkModeDelegate = AddressOf UpdateDarkMode
@@ -171,7 +171,9 @@ Namespace My
         End Sub
 
         Private Sub UpdateDarkMode()
-            ApplyDarkMode()
+            If My.Application._Settings.Appearance_Auto Then
+                ApplyDarkMode()
+            End If
         End Sub
         Delegate Sub UpdateDarkModeDelegate()
 
@@ -271,6 +273,11 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            WallMon_Watcher1.Stop()
+            WallMon_Watcher2.Stop()
+            WallMon_Watcher3.Stop()
+            WallMon_Watcher4.Stop()
+
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
         End Sub
@@ -293,6 +300,7 @@ Namespace My
 
             ExternalLink = False
             ExternalLink_File = ""
+            ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
 
             DetectOS()
 
@@ -343,33 +351,62 @@ Namespace My
                 Dim arg As String = e.CommandLine(0)
 
                 If arg = "" Then
-                    ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)
-                    ''e.BringToForeground = True
+                    e.BringToForeground = True
                 Else
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                            If Not MainFrm.CP.GetHashCode = MainFrm.CP_Original.GetHashCode Then
-                                Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                                    Case MsgBoxResult.Yes
-                                        If Not IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                MainFrm.CP_Original = MainFrm.CP
-                                                MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                            Else
-                                                Exit Sub
-                                            End If
-                                        Else
-                                            MainFrm.CP_Original = MainFrm.CP
-                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                        End If
 
-                                    Case MsgBoxResult.Cancel
+                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                            If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
+
+                                Select Case ComplexSave.ShowDialog()
+                                    Case DialogResult.Yes
+
+                                        Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                                        Dim r1 As String = r(0)
+                                        Dim r2 As String = r(1)
+
+                                        Select Case r1
+                                            Case 0              '' Save
+                                                If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                    MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                    MainFrm.CP_Original = MainFrm.CP
+                                                Else
+                                                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                        MainFrm.CP_Original = MainFrm.CP
+                                                    Else
+                                                        Exit Sub
+                                                    End If
+                                                End If
+
+                                            Case 1              '' Save As
+                                                If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                    MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                    MainFrm.CP_Original = MainFrm.CP
+                                                Else
+                                                    Exit Sub
+                                                End If
+                                        End Select
+
+                                        Select Case r2
+                                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                                MainFrm.CP.Save(CP.SavingMode.Registry)
+                                                RestartExplorer()
+                                        End Select
+
+                                    Case DialogResult.No
+
+
+                                    Case DialogResult.Cancel
                                         Exit Sub
                                 End Select
+
+
                             End If
 
                             MainFrm.CP = New CP(CP.Mode.File, arg)
+                            MainFrm.CP_Original = New CP(CP.Mode.File, arg)
                             MainFrm.OpenFileDialog1.FileName = arg
                             MainFrm.SaveFileDialog1.FileName = arg
                             MainFrm.ApplyCPValues(MainFrm.CP)
@@ -377,6 +414,7 @@ Namespace My
 
                         Else
                             MainFrm.CP = New CP(CP.Mode.File, arg)
+                            MainFrm.CP_Original = New CP(CP.Mode.File, arg)
                             MainFrm.OpenFileDialog1.FileName = arg
                             MainFrm.SaveFileDialog1.FileName = arg
                             MainFrm.ApplyCPValues(MainFrm.CP)
@@ -396,8 +434,7 @@ Namespace My
 
                 End If
             Catch
-                ''MsgboxX.ShowMsg("Error", "You can't run double instance of Xenon Retro Studio.", MsgboxX.Icons.Error_, MsgboxX.Button.OK)
-                ''e.BringToForeground = True
+                e.BringToForeground = True
             End Try
         End Sub
 

@@ -111,12 +111,29 @@ Public Class MainFrm
             ColorPicker.Label1,
             ColorPicker.Label2,
             ColorPicker.Label3,
-            ColorPicker.Label5
+            ColorPicker.Label5,
+            About.Label17,
+            About.Label4,
+            About.Label3,
+            ComplexSave.Label1,
+            ComplexSave.Label2,
+            ComplexSave.Label17,
+            LogonUI.Label13,
+            SettingsX.Label17,
+            SettingsX.Label1,
+            SettingsX.Label2,
+            SettingsX.Label3,
+            SettingsX.Label5,
+            SettingsX.Label6,
+            Win32UI.Label37,
+            Win32UI.Label40
         }
 
-        For Each lbl As Label In LabelsList
-            lbl.Font = New Font(If(My.W11, "Segoe UI Variable Display", "Segoe UI"), lbl.Font.Size, lbl.Font.Style)
-        Next
+        If My.W11 Then
+            For Each lbl As Label In LabelsList
+                lbl.Font = New Font("Segoe UI Variable Display", lbl.Font.Size, lbl.Font.Style)
+            Next
+        End If
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -136,16 +153,18 @@ Public Class MainFrm
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
+            CP_Original = New CP(CP.Mode.Registry)
+            CP_FirstTime = New CP(CP.Mode.Registry)
         Else
             CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
             OpenFileDialog1.FileName = My.Application.ExternalLink_File
             SaveFileDialog1.FileName = My.Application.ExternalLink_File
             My.Application.ExternalLink = False
             My.Application.ExternalLink_File = ""
         End If
 
-        CP_Original = CP
-        CP_FirstTime = CP
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -199,70 +218,77 @@ Public Class MainFrm
         If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
     End Sub
 
-
-
-
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
         If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
     End Sub
 
-
-
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        Dim Changed As Boolean = (CP.GetHashCode <> CP_Original.GetHashCode)
+        Dim Changed As Boolean = Not CP.Equals(CP_Original)
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program) and apply it?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                Case DialogResult.Cancel
-                    e.Cancel = True
+
+            Select Case ComplexSave.ShowDialog
                 Case DialogResult.Yes
 
-                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                            CP_Original = CP
-                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    e.Cancel = True
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                e.Cancel = True
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
                             RestartExplorer()
-                        Else
-                            e.Cancel = False
-                            MyBase.OnFormClosing(e)
-                            Exit Sub
-                        End If
-                    Else
-                        CP_Original = CP
-                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                        CP.Save(CP.SavingMode.Registry)
-                        RestartExplorer()
-                    End If
+                    End Select
 
-                    e.Cancel = False
-                    MyBase.OnFormClosing(e)
                 Case DialogResult.No
-                    CP = CP_Original
-                    CP.Save(CP.SavingMode.Registry)
-                    RestartExplorer()
                     e.Cancel = False
                     MyBase.OnFormClosing(e)
+
+                Case DialogResult.Cancel
+                    e.Cancel = True
             End Select
+
         ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
             e.Cancel = False
             MyBase.OnFormClosing(e)
         End If
     End Sub
 
-    Sub ApplyLivePreviewFromCP(ByVal CP As CP)
-        XenonWindow1.AccentColor_Enabled = CP.ApplyAccentonTitlebars
-        XenonWindow2.AccentColor_Enabled = CP.ApplyAccentonTitlebars
+    Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
+        XenonWindow1.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
+        XenonWindow2.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
 
-        XenonWindow1.AccentColor_Active = CP.Titlebar_Active
-        XenonWindow2.AccentColor_Active = CP.Titlebar_Active
+        XenonWindow1.AccentColor_Active = [CP].Titlebar_Active
+        XenonWindow2.AccentColor_Active = [CP].Titlebar_Active
 
-        XenonWindow1.AccentColor_Inactive = CP.Titlebar_Inactive
-        XenonWindow2.AccentColor_Inactive = CP.Titlebar_Inactive
+        XenonWindow1.AccentColor_Inactive = [CP].Titlebar_Inactive
+        XenonWindow2.AccentColor_Inactive = [CP].Titlebar_Inactive
 
-        XenonWindow1.DarkMode = Not CP.AppMode_Light
-        XenonWindow2.DarkMode = Not CP.AppMode_Light
+        XenonWindow1.DarkMode = Not [CP].AppMode_Light
+        XenonWindow2.DarkMode = Not [CP].AppMode_Light
 
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()
@@ -270,7 +296,7 @@ Public Class MainFrm
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
-        Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If(CP.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
+        Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
         pnl1.Top = Label10.Bottom + 3
         pnl2.Top = pnl1.Bottom + 2
@@ -284,13 +310,13 @@ Public Class MainFrm
         Select Case PreviewConfig
             Case WinVer.Eleven
 #Region "Win11"
-                start.DarkMode = Not CP.WinMode_Light
-                taskbar.DarkMode = Not CP.WinMode_Light
-                ActionCenter.DarkMode = Not CP.WinMode_Light
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
 
-                taskbar.Transparency = CP.Transparency
-                start.Transparency = CP.Transparency
-                ActionCenter.Transparency = CP.Transparency
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
 
                 start.Top = taskbar.Top - start.Height - 9
 
@@ -309,7 +335,7 @@ Public Class MainFrm
                 pic7.Image = My.Resources.Mini_StartMenuAccent
                 pic8.Image = My.Resources.Mini_Taskbar
 
-                Select Case Not CP.WinMode_Light
+                Select Case Not [CP].WinMode_Light
                     Case True   ''''''''''Dark
                         lbl1.Text = "Start Menu, Taskbar and Action Center"
                         lbl2.Text = "Action Center Hover and Links"
@@ -332,24 +358,24 @@ Public Class MainFrm
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        If CP.ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, CP.StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                        If [CP].ApplyAccentonTaskbar Then
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
                         Else
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
                         End If
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, CP.Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, CP.ActionCenter_AppsLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, CP.StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, CP.Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, CP.Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
 
-                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, CP.SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, CP.ActionCenter_AppsLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
                         lbl1.Text = "Action Center Hover and Links"
@@ -373,41 +399,41 @@ Public Class MainFrm
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        If CP.ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, CP.Taskbar_Icon_Underline), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, CP.ActionCenter_AppsLinks), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, CP.ActionCenter_AppsLinks), AnimX1, AnimX2)
+                        If [CP].ApplyAccentonTaskbar Then
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
                         Else
                             Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                             Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                             Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                         End If
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, CP.StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, CP.StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
 
-                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, CP.SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, CP.StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
                 End Select
 #End Region
             Case WinVer.Ten
 #Region "Win10"
-                start.DarkMode = Not CP.WinMode_Light
-                taskbar.DarkMode = Not CP.WinMode_Light
-                ActionCenter.DarkMode = Not CP.WinMode_Light
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
 
-                taskbar.Transparency = CP.Transparency
-                start.Transparency = CP.Transparency
-                ActionCenter.Transparency = CP.Transparency
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
 
                 start.Top = taskbar.Top - start.Height
 
                 lbl6.Text = "Start Icon Hover"
 
-                If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
+                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
                     lbl1.Text = "Not Used"
                     lbl2.Text = "Not Used"
                     lbl3.Text = "Not Used"
@@ -437,7 +463,7 @@ Public Class MainFrm
                     End If
 
                 Else
-                    If CP.Transparency Then
+                    If [CP].Transparency Then
                         lbl1.Text = "Not Used"
                         lbl2.Text = "Links"
                         lbl3.Text = "Taskbar App Underline"
@@ -497,9 +523,9 @@ Public Class MainFrm
                     End If
                 End If
 
-                taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, CP.Taskbar_Icon_Underline))
+                taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, [CP].Taskbar_Icon_Underline))
 
-                If CP.Transparency Then
+                If [CP].Transparency Then
                     taskbar.BackColorAlpha = 150
                     start.BackColorAlpha = 150
                     ActionCenter.BackColorAlpha = 150
@@ -509,47 +535,47 @@ Public Class MainFrm
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
+                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(237, 237, 237), AnimX1, AnimX2)
                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(227, 227, 227), AnimX1, AnimX2)
                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(227, 227, 227), AnimX1, AnimX2)
                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
                 Else
-                    If Not CP.ApplyAccentonTaskbar Then
+                    If Not [CP].ApplyAccentonTaskbar Then
                         Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(23, 23, 23), AnimX1, AnimX2)
                         Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(36, 36, 36), AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(36, 36, 36), AnimX1, AnimX2)
                         Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
 
                     Else
-                        Visual.FadeColor(start, "BackColor", start.BackColor, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
 
-                        If CP.Transparency Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, CP.Taskbar_Background, AnimX1, AnimX2)
+                        If [CP].Transparency Then
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
                         Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, CP.StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
                         End If
 
                     End If
                 End If
 
-                If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                    Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, CP.SettingsIconsAndLinks, AnimX1, AnimX2)
-                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, CP.Taskbar_Background, AnimX1, AnimX2)
-                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, CP.Taskbar_Background, AnimX1, AnimX2)
+                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
+                    Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.Transparent, AnimX1, AnimX2)
                 Else
-                    Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, CP.SettingsIconsAndLinks, AnimX1, AnimX2)
-                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, CP.ActionCenter_AppsLinks, AnimX1, AnimX2)
-                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, CP.Taskbar_Icon_Underline, AnimX1, AnimX2)
-                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, CP.Taskbar_Icon_Underline, AnimX1, AnimX2)
+                    Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
 
-                    If Not CP.Transparency And Not CP.ApplyAccentonTaskbar Then
+                    If Not [CP].Transparency And Not [CP].ApplyAccentonTaskbar Then
                         Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.Transparent, AnimX1, AnimX2)
                     Else
-                        Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, CP.StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
                     End If
                 End If
 
@@ -571,7 +597,6 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
-
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPicker.Pick(CList)
@@ -786,11 +811,17 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
-        status_lbl.Text = "This will restart the explorer, don't worry it won't close your work."
+        If My.Application._Settings.AutoRestartExplorer Then
+            status_lbl.Text = "This will restart the explorer, don't worry this won't close other applications."
+            status_lbl.ForeColor = Color.Gold
+        End If
     End Sub
 
     Private Sub XenonButton4_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
-        status_lbl.Text = ""
+        If My.Application._Settings.AutoRestartExplorer Then
+            status_lbl.Text = ""
+            status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        End If
     End Sub
 
     Private Sub XenonGroupBox12_Click(sender As Object, e As EventArgs) Handles TaskbarBackground_Picker.Click
@@ -987,26 +1018,51 @@ Public Class MainFrm
             If wpth_or_wpsf Then
                 If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
 
-                If Not CP.GetHashCode = CP_Original.GetHashCode Then
-                    Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                        Case MsgBoxResult.Yes
-                            If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP_Original = CP
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                Else
-                                    '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
-                                    Exit Sub
-                                End If
-                            Else
-                                CP_Original = CP
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                            End If
+                If Not CP.Equals(CP_Original) Then
 
-                        Case MsgBoxResult.Cancel
-                            '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                    Select Case ComplexSave.ShowDialog
+                        Case DialogResult.Yes
+
+                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                            Dim r1 As String = r(0)
+                            Dim r2 As String = r(1)
+
+                            Select Case r1
+                                Case 0              '' Save
+                                    If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP
+                                    Else
+                                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                            CP_Original = CP
+                                        Else
+                                            '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                                            Exit Sub
+                                        End If
+                                    End If
+                                Case 1              '' Save As
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP
+                                    Else
+                                        '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                                        Exit Sub
+                                    End If
+                            End Select
+
+                            Select Case r2
+                                Case 1      '' Apply   ' Case 0= Don't Apply
+                                    CP.Save(CP.SavingMode.Registry)
+                                    RestartExplorer()
+                            End Select
+
+                        Case DialogResult.No
+
+                        Case DialogResult.Cancel
                             Exit Sub
                     End Select
+
                 End If
 
                 CP = New CP(CP.Mode.File, files(0))
@@ -1057,25 +1113,46 @@ Public Class MainFrm
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
-            If Not CP.GetHashCode = CP_Original.GetHashCode Then
-                Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                    Case MsgBoxResult.Yes
-                        If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP_Original = CP
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    Exit Sub
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
                             Else
                                 Exit Sub
                             End If
-                        Else
-                            CP_Original = CP
-                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                        End If
+                    End Select
 
-                    Case MsgBoxResult.Cancel
-                        Exit Sub
-                End Select
-            End If
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
+                    Exit Sub
+            End Select
 
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
             CP = New CP(CP.Mode.File, OpenFileDialog1.FileName)
@@ -1091,29 +1168,54 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        ContextMenuStrip1.Show(sender, TryCast(sender, Control).Location + New Point(15, 15))
+        ContextMenuStrip1.Show(sender, New Point(2, sender.height))
     End Sub
 
     Private Sub FromCurrentPaletteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromCurrentPaletteToolStripMenuItem.Click
 
-        If Not CP.GetHashCode = CP_Original.GetHashCode Then
-            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                Case MsgBoxResult.Yes
-                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                            CP_Original = CP
-                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                        Else
-                            Exit Sub
-                        End If
-                    Else
-                        CP_Original = CP
-                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                    End If
+        If Not CP.Equals(CP_Original) Then
 
-                Case MsgBoxResult.Cancel
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    Exit Sub
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                Exit Sub
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
                     Exit Sub
             End Select
+
         End If
 
         CP = New CP(CP.Mode.Registry)
@@ -1125,22 +1227,45 @@ Public Class MainFrm
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        If Not CP.GetHashCode = CP_Original.GetHashCode Then
-            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                Case MsgBoxResult.Yes
-                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                            CP_Original = CP
-                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                        Else
-                            Exit Sub
-                        End If
-                    Else
-                        CP_Original = CP
-                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                    End If
+        If Not CP.Equals(CP_Original) Then
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
 
-                Case MsgBoxResult.Cancel
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    Exit Sub
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                Exit Sub
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
                     Exit Sub
             End Select
         End If
@@ -1154,22 +1279,45 @@ Public Class MainFrm
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        If Not CP.GetHashCode = CP_Original.GetHashCode Then
-            Select Case MsgBox("Current Palette Changed. Do you want to save the palette as a theme file (for the program)?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                Case MsgBoxResult.Yes
-                    If Not IO.File.Exists(SaveFileDialog1.FileName) Then
-                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                            CP_Original = CP
-                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                        Else
-                            Exit Sub
-                        End If
-                    Else
-                        CP_Original = CP
-                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                    End If
+        If Not CP.Equals(CP_Original) Then
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
 
-                Case MsgBoxResult.Cancel
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    Exit Sub
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                Exit Sub
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
                     Exit Sub
             End Select
         End If
@@ -1221,7 +1369,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        If CP.GetHashCode <> CP_FirstTime.GetHashCode Then
+        If CP.Equals(CP_FirstTime) Then
             CP_FirstTime.Save(CP.SavingMode.Registry)
             CP = CP_FirstTime
             CP_Original = CP_FirstTime

@@ -34,21 +34,21 @@ Public Class EditInfo
         Me.Close()
     End Sub
 
-    Public Sub Load_Info(ByVal CP As CP)
-        XenonTextBox1.Text = CP.PaletteName
-        XenonTextBox2.Text = CP.PaletteVersion
-        XenonTextBox3.Text = CP.PaletteDescription
-        XenonTextBox4.Text = CP.Author
-        XenonTextBox5.Text = CP.AuthorSocialMediaLink
+    Public Sub Load_Info(ByVal [CP] As CP)
+        XenonTextBox1.Text = [CP].PaletteName
+        XenonTextBox2.Text = [CP].PaletteVersion
+        XenonTextBox3.Text = [CP].PaletteDescription
+        XenonTextBox4.Text = [CP].Author
+        XenonTextBox5.Text = [CP].AuthorSocialMediaLink
         ShowDialog()
     End Sub
 
-    Sub Save_Info(ByVal CP As CP)
-        CP.PaletteName = XenonTextBox1.Text
-        CP.PaletteVersion = XenonTextBox2.Text
-        CP.PaletteDescription = XenonTextBox3.Text
-        CP.Author = XenonTextBox4.Text
-        CP.AuthorSocialMediaLink = XenonTextBox5.Text
+    Sub Save_Info(ByVal [CP] As CP)
+        [CP].PaletteName = XenonTextBox1.Text
+        [CP].PaletteVersion = XenonTextBox2.Text
+        [CP].PaletteDescription = XenonTextBox3.Text
+        [CP].Author = XenonTextBox4.Text
+        [CP].AuthorSocialMediaLink = XenonTextBox5.Text
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

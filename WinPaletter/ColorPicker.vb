@@ -169,13 +169,6 @@ Public Class ColorPicker
                     .Invalidate()
                 End With
 
-            ElseIf TypeOf ctrl Is XenonToggle Then
-                With TryCast(ctrl, XenonToggle)
-                    .ColorPalette.BaseColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)
-                    .AccentColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)
-                    .Invalidate()
-                End With
-
             ElseIf TypeOf ctrl Is XenonAcrylic Then
 
                 With TryCast(ctrl, XenonAcrylic)

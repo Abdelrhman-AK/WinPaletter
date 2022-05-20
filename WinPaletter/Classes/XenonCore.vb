@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Imaging
+﻿Imports System.ComponentModel
+Imports System.Drawing.Imaging
 Imports System.Net
 Imports System.Runtime.InteropServices
 Imports System.Threading
@@ -163,12 +164,20 @@ Public Class XenonCore
         If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
             Return True
         Else
-            i = CLng(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Nothing))
-            If i = 1 Then
-                Return False
-            Else
+            Try
+                If My.Application._Settings.Appearance_Auto Then
+                    i = CLng(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Nothing))
+                    If i = 1 Then
+                        Return False
+                    Else
+                        Return True
+                    End If
+                Else
+                    Return My.Application._Settings.Appearance_Dark
+                End If
+            Catch
                 Return True
-            End If
+            End Try
         End If
     End Function
     Public Shared Function IsNetAvaliable() As Boolean
@@ -395,5 +404,355 @@ Public Class XenonCore
         Return String.Join(vbCrLf, [List].ToArray)
     End Function
 #End Region
+
+End Class
+
+Public Class Acrylism
+
+#Region "Fluent"
+
+    Friend Structure WindowCompositionAttributeData
+        Public Attribute As WindowCompositionAttribute
+        Public Data As IntPtr
+        Public SizeOfData As Integer
+    End Structure
+
+    Friend Enum WindowCompositionAttribute
+        WCA_ACCENT_POLICY = 19
+    End Enum
+
+    Friend Enum AccentState
+        ACCENT_DISABLED = 0
+        ACCENT_ENABLE_GRADIENT = 1
+        ACCENT_ENABLE_TRANSPARENTGRADIENT = 2
+        ACCENT_ENABLE_BLURBEHIND = 3
+        ACCENT_ENABLE_TRANSPARANT = 6
+        ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
+    End Enum
+
+    <StructLayout(LayoutKind.Sequential)>
+    Friend Structure AccentPolicy
+        Public AccentState As AccentState
+        Public AccentFlags As Integer
+        Public GradientColor As Integer
+        Public AnimationId As Integer
+    End Structure
+
+    Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
+    Private Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+
+#End Region
+
+#Region "Aero"
+    <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure Side
+        Public Left As Integer
+        Public Right As Integer
+        Public Top As Integer
+        Public Buttom As Integer
+    End Structure
+    <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarinset As Side) As Integer
+    End Function
+
+#End Region
+
+    Public Shared Sub EnableBlur(ByVal Handle As IntPtr, Optional ByVal Border As Boolean = True)
+
+        Dim accent = New AccentPolicy With {.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND}
+        If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
+        Dim accentStructSize = Marshal.SizeOf(accent)
+        Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
+        Marshal.StructureToPtr(accent, accentPtr, False)
+
+        Dim Data = New WindowCompositionAttributeData With {
+                .Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                .SizeOfData = accentStructSize,
+                .Data = accentPtr
+            }
+
+        SetWindowCompositionAttribute(Handle, Data)
+
+        Marshal.FreeHGlobal(accentPtr)
+
+    End Sub
+
+    Public Shared Sub EnableAero(ByVal Handle As IntPtr)
+        Try
+            Dim side As Side = New Side
+            side.Left = -1
+            side.Right = -1
+            side.Top = -1
+            side.Buttom = -1
+            Dim result As Integer = DwmExtendFrameIntoClientArea(Handle, side)
+        Catch
+        End Try
+    End Sub
+End Class
+
+Public Class Visual
+    '' FILENAME:        Visual.vb
+    '' NAMESPACE:       PI.Common
+    '' APPLICATION:     N/A
+    '' CREATED BY:      Luke Berg
+    '' CREATED:         10-02-06
+    '' REVISED BY:      _revisedby_
+    '' REVISED:         _revised_
+    '' DESCRIPTION:     A common module of visual functions.
+
+    Private Shared colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
+    Private Shared backgroundWorkers As New Dictionary(Of BackgroundWorker, ColorFaderInformation) 'Associate each background worker with information it needs
+
+    ' The delegate of a method that will be called when the color finishes fading
+    Public Delegate Sub DoneFading(ByVal container As Object, ByVal colorProperty As String)
+
+    ''' <summary>
+    '''  Fades a color property from one color to another
+    ''' </summary>
+    ''' <param name="container">The object that contains the color property</param>
+    ''' <param name="colorProperty">The name of the color property to change</param>
+    ''' <param name="startColor">The color to start the fade with</param>
+    ''' <param name="endColor">The color to end the fade with</param>
+    ''' <param name="steps">The number of steps to take to fade from the start color to the end color</param>
+    ''' <param name="delay">The delay in milliseconds between each step in the fade.</param>
+    ''' <param name="callback">A function to be called when the fade completes</param>
+    ''' <remarks></remarks>
+    Public Shared Sub FadeColor(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal endColor As Color, ByVal steps As Integer, ByVal delay As Integer, Optional ByVal callback As DoneFading = Nothing)
+        Dim colorSteps(0) As ColorStep
+        colorSteps(0) = New ColorStep(endColor, steps)
+        FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+    End Sub
+
+    ''' <summary>
+    '''  Fades a color property from one color to another, and then to yet another
+    ''' </summary>
+    ''' <param name="container">The object that contains the color property</param>
+    ''' <param name="colorProperty">The name of the color property to change</param>
+    ''' <param name="startColor">The color to start the fade with</param>
+    ''' <param name="middleColor">The color to fade to first</param>
+    ''' <param name="middleSteps">The number of steps to take in fading to the first color</param>
+    ''' <param name="endcolor">The last color to fade to</param>
+    ''' <param name="endSteps">The number of steps to take in fading to the last color</param>
+    ''' <param name="delay">The delay between each step in the fade</param>
+    ''' <param name="callback">A function that will be called after the fading has completed</param>
+    ''' <remarks></remarks>
+    Public Shared Sub FadeColor(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal middleColor As Color, ByVal middleSteps As Integer, ByVal endcolor As Color, ByVal endSteps As Integer, ByVal delay As Integer, Optional ByVal callback As DoneFading = Nothing)
+        Dim colorSteps(1) As ColorStep
+        colorSteps(0) = New ColorStep(middleColor, middleSteps)
+        colorSteps(1) = New ColorStep(endcolor, endSteps)
+        FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+    End Sub
+
+    ''' <summary>
+    '''  Fades a color property to various colors
+    ''' </summary>
+    ''' <param name="container">The object that contains the color property</param>
+    ''' <param name="colorProperty">The name of the color property to change</param>
+    ''' <param name="startColor">The color to start the fade with</param>
+    ''' <param name="colorSteps">A list of steps in fading the color - an enumerable list of colors and the steps to get to that color</param>
+    ''' <param name="delay">The delay between each step in fading the color</param>
+    ''' <param name="callBack">A method to call when the fading has completed</param>
+    ''' <remarks></remarks>
+    Public Shared Sub FadeColor(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal colorSteps As IEnumerable(Of ColorStep), ByVal delay As Integer, Optional ByVal callBack As DoneFading = Nothing)
+
+        Dim colorFader As BackgroundWorker
+
+        ' Stores all the parameter information into a class that the background worker will access
+        Dim colorFaderInfo As New ColorFaderInformation(container, colorProperty, startColor, colorSteps, delay, callBack)
+
+        ' Checks if the color is already in the process of fading.
+#Disable Warning BC42030
+        If colorsFading.TryGetValue(GenerateHashCode(container, colorProperty), colorFader) Then
+#Enable Warning BC42030
+
+            ' Cancels the backgroundWorkers process and sets a flag indicating that it should restart itself with
+            ' the new information.
+            colorFader.CancelAsync()
+            colorFaderInfo.Rerun = True
+            backgroundWorkers(colorFader) = colorFaderInfo
+        Else
+
+            ' Creates a new backgroundWorker and adds handlers to all its events
+            colorFader = New BackgroundWorker()
+            AddHandler colorFader.DoWork, AddressOf BackgroundWorker_DoWork
+            AddHandler colorFader.ProgressChanged, AddressOf BackgroundWorker_ProgressChanged
+            AddHandler colorFader.RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
+            colorFader.WorkerReportsProgress = True
+            colorFader.WorkerSupportsCancellation = True
+
+            backgroundWorkers.Add(colorFader, colorFaderInfo)
+            colorsFading.Add(GenerateHashCode(container, colorProperty), colorFader)
+
+        End If
+
+        ' Starts the backgroundWorker beginning the fade
+        If Not colorFader.IsBusy() Then
+            colorFader.RunWorkerAsync(colorFaderInfo)
+        End If
+    End Sub
+
+    ''' <summary>
+    '''  The work that the background worker does in fading the color
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Shared Sub BackgroundWorker_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim info As ColorFaderInformation = CType(e.Argument, ColorFaderInformation)
+        ' These are calculated with each iteration (step) and used to set the color
+        ' when the background worker reports its progress.
+
+        Dim curA As Double
+        Dim curR As Double
+        Dim curG As Double
+        Dim curB As Double
+
+        Dim startStepColor As Color = info.StartColor
+        Dim endStepColor As Color
+
+        For Each colorStep As ColorStep In info.Colors
+
+            endStepColor = colorStep.Color
+
+            ' Gets the amount to change each color part per step
+
+            Dim aStep As Double = (CType(endStepColor.A, Double) - startStepColor.A) / colorStep.Steps
+            Dim rStep As Double = (CType(endStepColor.R, Double) - startStepColor.R) / colorStep.Steps
+            Dim gStep As Double = (CType(endStepColor.G, Double) - startStepColor.G) / colorStep.Steps
+            Dim bStep As Double = (CType(endStepColor.B, Double) - startStepColor.B) / colorStep.Steps
+
+            ' the red, green and blue parts of the current color
+            curA = startStepColor.A
+            curR = startStepColor.R
+            curG = startStepColor.G
+            curB = startStepColor.B
+
+            ' loop through, and fade
+            For i As Integer = 1 To colorStep.Steps
+                curA += aStep
+                curR += rStep
+                curB += bStep
+                curG += gStep
+
+                CType(sender, BackgroundWorker).ReportProgress(0, Color.FromArgb(CInt(curA), CInt(curR), CInt(curG), CInt(curB)))
+
+                System.Threading.Thread.Sleep(info.Delay)
+
+                If CType(sender, BackgroundWorker).CancellationPending Then
+                    e.Cancel = True
+                    Exit For
+                End If
+            Next
+
+            startStepColor = endStepColor
+
+        Next
+
+    End Sub
+
+    ''' <summary>
+    '''  Calls to this method are marshalled back to the original thread, so here is where we actually change the color.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Shared Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+        Dim info As ColorFaderInformation
+#Disable Warning BC42030
+        If backgroundWorkers.TryGetValue(CType(sender, BackgroundWorker), info) Then
+#Enable Warning BC42030
+            Dim currentColor As Color = CType(e.UserState, Color)
+            Try
+                CallByName(info.Container, info.ColorProperty, CallType.Let, currentColor)
+            Catch
+            End Try
+        End If
+    End Sub
+
+    ''' <summary>
+    '''  This is raised when the background method completes.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Shared Sub BackgroundWorker_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+
+        Dim info As ColorFaderInformation = Nothing
+
+        If backgroundWorkers.TryGetValue(CType(sender, BackgroundWorker), info) Then
+
+            If Not e.Cancelled Then
+
+                If info.CallBack IsNot Nothing Then
+                    info.CallBack.Invoke(info.Container, info.ColorProperty)
+                End If
+
+                backgroundWorkers.Remove(CType(sender, BackgroundWorker))
+                colorsFading.Remove(GenerateHashCode(info.Container, info.ColorProperty))
+            Else
+
+                If info.Rerun Then
+
+                    info.Rerun = False
+                    CType(sender, BackgroundWorker).RunWorkerAsync(info)
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    '''  Generates a hashcode for an object and its color that are in the process of fading
+    ''' </summary>
+    ''' <param name="container">The object whose color property needs to be faded</param>
+    ''' <param name="colorProperty">The string name of the property to fade</param>
+    ''' <returns>A unique string representing the object and it's color property</returns>
+    ''' <remarks></remarks>
+    Private Shared Function GenerateHashCode(ByVal container As Object, ByVal colorProperty As String) As String
+        Return container.GetHashCode() & colorProperty
+    End Function
+
+    ''' <summary>
+    '''  A simple class for storing information a backgroundWorker needs to perform the fading.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Class ColorFaderInformation
+
+        Public CallBack As DoneFading
+        Public Container As Object
+        Public ColorProperty As String
+        Public StartColor As Color
+        Public Colors As IEnumerable(Of ColorStep)
+        Public Delay As Integer
+        Public Rerun As Boolean
+
+        Public Sub New(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal colorSteps As IEnumerable(Of ColorStep), ByVal delay As Integer, Optional ByVal callBack As DoneFading = Nothing)
+            Me.Container = container
+            Me.ColorProperty = colorProperty
+            Me.StartColor = startColor
+            Me.Colors = colorSteps
+            Me.Delay = delay
+            Me.CallBack = callBack
+            Me.Rerun = False
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    '''  A simple class needed to represent a single step in the fading process
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Structure ColorStep
+
+        Public Color As Color
+        Public Steps As Integer
+
+        Public Sub New(ByVal color As Color, ByVal steps As Integer)
+            Me.Color = color
+            Me.Steps = steps
+        End Sub
+
+    End Structure
 
 End Class

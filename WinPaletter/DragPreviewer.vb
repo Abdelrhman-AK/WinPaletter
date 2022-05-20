@@ -114,45 +114,45 @@ Public Class dragPreviewer
         Me.Invalidate()
     End Sub
 
-    Sub ApplyLivePreviewFromCP(ByVal CP As CP)
-        XenonWindow1.AccentColor_Enabled = CP.ApplyAccentonTitlebars
-        XenonWindow2.AccentColor_Enabled = CP.ApplyAccentonTitlebars
+    Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
+        XenonWindow1.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
+        XenonWindow2.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
 
-        XenonWindow1.AccentColor_Active = CP.Titlebar_Active
-        XenonWindow2.AccentColor_Active = CP.Titlebar_Active
+        XenonWindow1.AccentColor_Active = [CP].Titlebar_Active
+        XenonWindow2.AccentColor_Active = [CP].Titlebar_Active
 
-        XenonWindow1.AccentColor_Inactive = CP.Titlebar_Inactive
-        XenonWindow2.AccentColor_Inactive = CP.Titlebar_Inactive
+        XenonWindow1.AccentColor_Inactive = [CP].Titlebar_Inactive
+        XenonWindow2.AccentColor_Inactive = [CP].Titlebar_Inactive
 
-        XenonWindow1.DarkMode = Not CP.AppMode_Light
-        XenonWindow2.DarkMode = Not CP.AppMode_Light
+        XenonWindow1.DarkMode = Not [CP].AppMode_Light
+        XenonWindow2.DarkMode = Not [CP].AppMode_Light
 
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
-        Label8.ForeColor = If(CP.AppMode_Light, Color.Black, Color.White)
+        Label8.ForeColor = If([CP].AppMode_Light, Color.Black, Color.White)
 
         Select Case MainFrm.PreviewConfig
             Case MainFrm.WinVer.Eleven
 #Region "Win11"
-                start.DarkMode = Not CP.WinMode_Light
-                taskbar.DarkMode = Not CP.WinMode_Light
-                ActionCenter.DarkMode = Not CP.WinMode_Light
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
 
-                taskbar.Transparency = CP.Transparency
-                start.Transparency = CP.Transparency
-                ActionCenter.Transparency = CP.Transparency
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
 
-                Select Case Not CP.WinMode_Light
+                Select Case Not [CP].WinMode_Light
                     Case True   ''''''''''Dark
                         taskbar.BackColorAlpha = 75
                         start.BackColorAlpha = 175
 
-                        If CP.ApplyAccentonTaskbar Then
+                        If [CP].ApplyAccentonTaskbar Then
                             ActionCenter.BackColorAlpha = 180
-                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, CP.StartListFolders_TaskbarFront)
-                            start.BackColor = Color.FromArgb(start.BackColor.A, CP.StartListFolders_TaskbarFront)
-                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, CP.StartListFolders_TaskbarFront)
+                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront)
+                            start.BackColor = Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront)
+                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront)
                         Else
                             ActionCenter.BackColorAlpha = 100
                             taskbar.BackColor = Color.FromArgb(55, 55, 55)
@@ -160,23 +160,23 @@ Public Class dragPreviewer
                             ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
                         End If
 
-                        ActionCenter.ActionCenterButton_Normal = CP.Taskbar_Icon_Underline
-                        ActionCenter.ActionCenterButton_Hover = CP.ActionCenter_AppsLinks
-                        ActionCenter.ActionCenterButton_Pressed = CP.StartButton_Hover
-                        start.SearchBoxAccent = CP.Taskbar_Icon_Underline
-                        taskbar.AppUnderline = CP.Taskbar_Icon_Underline
+                        ActionCenter.ActionCenterButton_Normal = [CP].Taskbar_Icon_Underline
+                        ActionCenter.ActionCenterButton_Hover = [CP].ActionCenter_AppsLinks
+                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
+                        start.SearchBoxAccent = [CP].Taskbar_Icon_Underline
+                        taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
 
-                        Label3.ForeColor = CP.SettingsIconsAndLinks
-                        Label12.ForeColor = CP.ActionCenter_AppsLinks
+                        Label3.ForeColor = [CP].SettingsIconsAndLinks
+                        Label12.ForeColor = [CP].ActionCenter_AppsLinks
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 200
                         start.BackColorAlpha = 210
-                        If CP.ApplyAccentonTaskbar Then
+                        If [CP].ApplyAccentonTaskbar Then
                             ActionCenter.BackColorAlpha = 180
-                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, CP.Taskbar_Icon_Underline)
-                            start.BackColor = Color.FromArgb(start.BackColor.A, CP.ActionCenter_AppsLinks)
-                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, CP.ActionCenter_AppsLinks)
+                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline)
+                            start.BackColor = Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks)
+                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks)
                         Else
                             ActionCenter.BackColorAlpha = 100
                             taskbar.BackColor = Color.FromArgb(255, 255, 255)
@@ -184,29 +184,29 @@ Public Class dragPreviewer
                             ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
                         End If
 
-                        ActionCenter.ActionCenterButton_Normal = CP.StartMenuBackground_ActiveTaskbarButton
-                        ActionCenter.ActionCenterButton_Hover = CP.StartListFolders_TaskbarFront
-                        ActionCenter.ActionCenterButton_Pressed = CP.StartButton_Hover
-                        start.SearchBoxAccent = CP.StartMenuBackground_ActiveTaskbarButton
-                        taskbar.AppUnderline = CP.StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.ActionCenterButton_Normal = [CP].StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.ActionCenterButton_Hover = [CP].StartListFolders_TaskbarFront
+                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
+                        start.SearchBoxAccent = [CP].StartMenuBackground_ActiveTaskbarButton
+                        taskbar.AppUnderline = [CP].StartMenuBackground_ActiveTaskbarButton
 
-                        Label3.ForeColor = CP.SettingsIconsAndLinks
-                        Label12.ForeColor = CP.StartListFolders_TaskbarFront
+                        Label3.ForeColor = [CP].SettingsIconsAndLinks
+                        Label12.ForeColor = [CP].StartListFolders_TaskbarFront
                 End Select
 #End Region
             Case MainFrm.WinVer.Ten
 #Region "Win10"
-                start.DarkMode = Not CP.WinMode_Light
-                taskbar.DarkMode = Not CP.WinMode_Light
-                ActionCenter.DarkMode = Not CP.WinMode_Light
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
 
-                taskbar.Transparency = CP.Transparency
-                start.Transparency = CP.Transparency
-                ActionCenter.Transparency = CP.Transparency
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
 
-                taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, CP.Taskbar_Icon_Underline))
+                taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, [CP].Taskbar_Icon_Underline))
 
-                If CP.Transparency Then
+                If [CP].Transparency Then
                     taskbar.BackColorAlpha = 200
                     start.BackColorAlpha = 210
                     ActionCenter.BackColorAlpha = 100
@@ -216,44 +216,44 @@ Public Class dragPreviewer
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
+                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
                     taskbar.BackColor = Color.FromArgb(237, 237, 237)
                     start.BackColor = Color.FromArgb(227, 227, 227)
                     ActionCenter.BackColor = Color.FromArgb(227, 227, 227)
                     taskbar.StartColor = Color.Transparent
                 Else
-                    If Not CP.ApplyAccentonTaskbar Then
+                    If Not [CP].ApplyAccentonTaskbar Then
                         taskbar.BackColor = Color.FromArgb(23, 23, 23)
                         start.BackColor = Color.FromArgb(36, 36, 36)
                         ActionCenter.BackColor = Color.FromArgb(36, 36, 36)
                         taskbar.StartColor = Color.Transparent
 
                     Else
-                        start.BackColor = CP.StartMenuBackground_ActiveTaskbarButton
-                        taskbar.StartColor = CP.StartMenuBackground_ActiveTaskbarButton
-                        ActionCenter.BackColor = CP.StartMenuBackground_ActiveTaskbarButton
+                        start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                        taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
 
-                        If CP.Transparency Then
-                            taskbar.BackColor = CP.Taskbar_Background
+                        If [CP].Transparency Then
+                            taskbar.BackColor = [CP].Taskbar_Background
                         Else
-                            taskbar.BackColor = CP.StartListFolders_TaskbarFront
+                            taskbar.BackColor = [CP].StartListFolders_TaskbarFront
                         End If
 
                     End If
                 End If
 
-                If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                    Label3.ForeColor = CP.SettingsIconsAndLinks
-                    Label12.ForeColor = CP.Taskbar_Background
-                    ActionCenter.LinkColor = CP.Taskbar_Background
+                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
+                    Label3.ForeColor = [CP].SettingsIconsAndLinks
+                    Label12.ForeColor = [CP].Taskbar_Background
+                    ActionCenter.LinkColor = [CP].Taskbar_Background
                 Else
-                    Label3.ForeColor = CP.SettingsIconsAndLinks
-                    Label12.ForeColor = CP.ActionCenter_AppsLinks
-                    taskbar.AppUnderline = CP.Taskbar_Icon_Underline
-                    ActionCenter.LinkColor = CP.Taskbar_Icon_Underline
+                    Label3.ForeColor = [CP].SettingsIconsAndLinks
+                    Label12.ForeColor = [CP].ActionCenter_AppsLinks
+                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                    ActionCenter.LinkColor = [CP].Taskbar_Icon_Underline
 
-                    If Not CP.Transparency Then
-                        taskbar.AppBackground = CP.StartMenuBackground_ActiveTaskbarButton
+                    If Not [CP].Transparency Then
+                        taskbar.AppBackground = [CP].StartMenuBackground_ActiveTaskbarButton
                     Else
                         taskbar.AppBackground = Color.Transparent
                     End If

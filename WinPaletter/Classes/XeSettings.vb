@@ -4,14 +4,18 @@ Imports WinPaletter.XenonCore
 Public Class XeSettings
 
 #Region "Settings"
-    Public AutoAddExt As Boolean = True
-    Public DragAndDropPreview As Boolean = True
-    Public OpeningPreviewInApp_or_AppliesIt As Boolean = True
-    Public AutoRestartExplorer As Boolean = True
-    Public AutoUpdatesChecking As Boolean = True
-    Public CustomPreviewConfig_Enabled As Boolean = False
-    Public CustomPreviewConfig As WinVer = WinVer.Eleven
-    Public UpdateChannel As UpdateChannels = UpdateChannels.Stable
+    Public Property AutoAddExt As Boolean = True
+    Public Property DragAndDropPreview As Boolean = True
+    Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
+    Public Property AutoRestartExplorer As Boolean = True
+    Public Property AutoUpdatesChecking As Boolean = True
+    Public Property CustomPreviewConfig_Enabled As Boolean = False
+    Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable
+    Public Property Appearance_Dark As Boolean = True
+    Public Property Appearance_Auto As Boolean = True
+    'Public Property Appearance_AdaptColors As Boolean = True
+
 #End Region
 
     Public Enum WinVer
@@ -44,6 +48,9 @@ Public Class XeSettings
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
+        If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
+        'If Key.GetValue("Appearance_AdaptColors", Nothing) Is Nothing Then Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
 
     End Sub
 
@@ -62,19 +69,25 @@ Public Class XeSettings
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
                 CustomPreviewConfig = If(Key.GetValue("CustomPreviewConfig", Nothing) = WinVer.Eleven, WinVer.Eleven, WinVer.Ten)
                 UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
+                Appearance_Dark = Key.GetValue("Appearance_Dark", Nothing)
+                Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
+                'Appearance_AdaptColors = Key.GetValue("Appearance_AdaptColors", Nothing)
 
             Case Mode.File
                 Dim l As New List(Of String)
                 CList_FromStr(l, IO.File.ReadAllText(File))
                 For Each x As String In l
-                    If x.Contains("AutoAddExt= ") Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
-                    If x.Contains("DragAndDropPreview= ") Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
-                    If x.Contains("OpeningPreviewInApp_or_AppliesIt= ") Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
-                    If x.Contains("AutoRestartExplorer= ") Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
-                    If x.Contains("AutoUpdatesChecking= ") Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
-                    If x.Contains("CustomPreviewConfig_Enabled= ") Then CustomPreviewConfig_Enabled = x.Remove(0, "CustomPreviewConfig_Enabled= ".Count)
-                    If x.Contains("CustomPreviewConfig= ") Then CustomPreviewConfig = x.Remove(0, "CustomPreviewConfig= ".Count)
-                    If x.Contains("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
+                    If x.StartsWith("AutoAddExt= ") Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
+                    If x.StartsWith("DragAndDropPreview= ") Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
+                    If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ") Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
+                    If x.StartsWith("AutoRestartExplorer= ") Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
+                    If x.StartsWith("AutoUpdatesChecking= ") Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
+                    If x.StartsWith("CustomPreviewConfig_Enabled= ") Then CustomPreviewConfig_Enabled = x.Remove(0, "CustomPreviewConfig_Enabled= ".Count)
+                    If x.StartsWith("CustomPreviewConfig= ") Then CustomPreviewConfig = x.Remove(0, "CustomPreviewConfig= ".Count)
+                    If x.StartsWith("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
+                    If x.StartsWith("Appearance_Dark= ") Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
+                    If x.StartsWith("Appearance_Auto= ") Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
+                    'If x.StartsWith("Appearance_AdaptColors= ") Then Appearance_AdaptColors = x.Remove(0, "Appearance_AdaptColors= ".Count)
 
                 Next
         End Select
@@ -94,6 +107,9 @@ Public Class XeSettings
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
+                Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
+                'Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -109,6 +125,9 @@ Public Class XeSettings
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
                 l.Add(String.Format("CustomPreviewConfig= {0}", If(CustomPreviewConfig = WinVer.Eleven, 0, 1)))
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
+                l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
+                l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
+                'l.Add(String.Format("Appearance_AdaptColors= {0}", Appearance_AdaptColors))
 
                 IO.File.WriteAllText(File, CStr_FromList(l))
         End Select

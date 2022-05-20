@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("WinPaletter")>
-<Assembly: AssemblyDescription("Change Windows 10/11 Accents Colors Freely, Like Win9x")>
+<Assembly: AssemblyDescription("Change Windows 10/11 Accents Colors Without Restrictions")>
 <Assembly: AssemblyCompany("Abdelrhman_AK")>
 <Assembly: AssemblyProduct("WinPaletter")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.0.1.0")>
-<Assembly: AssemblyFileVersion("0.0.1.0")>
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>

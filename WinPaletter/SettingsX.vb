@@ -29,6 +29,8 @@ Public Class SettingsX
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then Changed = True
             If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
+            If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
+            If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -54,38 +56,28 @@ Public Class SettingsX
     End Sub
 
     Sub LoadSettings()
-        If Not _External Then
-            With My.Application._Settings
-                XenonCheckBox1.Checked = .AutoAddExt
-                XenonCheckBox3.Checked = .DragAndDropPreview
-                XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
-                XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+        Dim sets As XeSettings
 
-                XenonCheckBox2.Checked = .AutoRestartExplorer
-                XenonCheckBox5.Checked = .AutoUpdatesChecking
-                XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-                XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
-                XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
-            End With
-        Else
-            Dim sets As New XeSettings(XeSettings.Mode.File, _File)
+        If Not _External Then sets = My.Application._Settings Else sets = New XeSettings(XeSettings.Mode.File, _File)
 
-            With sets
-                XenonCheckBox1.Checked = .AutoAddExt
-                XenonCheckBox3.Checked = .DragAndDropPreview
-                XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
-                XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+        With sets
+            XenonCheckBox1.Checked = .AutoAddExt
+            XenonCheckBox3.Checked = .DragAndDropPreview
+            XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
+            XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
 
-                XenonCheckBox2.Checked = .AutoRestartExplorer
-                XenonCheckBox5.Checked = .AutoUpdatesChecking
-                XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-                XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
-                XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+            XenonCheckBox2.Checked = .AutoRestartExplorer
+            XenonCheckBox5.Checked = .AutoUpdatesChecking
+            XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+            XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+            XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
-            End With
+            XenonRadioButton3.Checked = .Appearance_Dark
+            XenonRadioButton4.Checked = Not .Appearance_Dark
+            XenonCheckBox6.Checked = .Appearance_Auto
+        End With
 
-            OpenFileDialog1.FileName = _File
-        End If
+        If _External Then OpenFileDialog1.FileName = _File
     End Sub
 
     Sub SaveSettings()
@@ -98,6 +90,8 @@ Public Class SettingsX
             .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
             .CustomPreviewConfig = XenonComboBox1.SelectedIndex
             .UpdateChannel = XenonComboBox2.SelectedIndex
+            .Appearance_Dark = XenonRadioButton3.Checked
+            .Appearance_Auto = XenonCheckBox6.Checked
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -112,6 +106,7 @@ Public Class SettingsX
 
         MainFrm.Adjust_Preview()
         MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+        ApplyDarkMode()
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -132,6 +127,8 @@ Public Class SettingsX
                 .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
                 .CustomPreviewConfig = XenonComboBox1.SelectedIndex
                 .UpdateChannel = XenonComboBox2.SelectedIndex
+                .Appearance_Dark = XenonRadioButton3.Checked
+                .Appearance_Auto = XenonCheckBox6.Checked
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -155,6 +152,10 @@ Public Class SettingsX
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
                 XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+
+                XenonRadioButton3.Checked = .Appearance_Dark
+                XenonRadioButton4.Checked = Not .Appearance_Dark
+                XenonCheckBox6.Checked = .Appearance_Auto
             End With
         End If
     End Sub
@@ -186,6 +187,9 @@ Public Class SettingsX
             XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
+            XenonRadioButton3.Checked = .Appearance_Dark
+            XenonRadioButton4.Checked = Not .Appearance_Dark
+            XenonCheckBox6.Checked = .Appearance_Auto
         End With
 
         OpenFileDialog1.FileName = files(0)

@@ -2,79 +2,78 @@
 Imports System.Security.Principal
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports System.Reflection
 
 Public Class CP
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
-
-    Public Titlebar_Active As Color
-    Public Titlebar_DWM_Active As Color
-    Public Titlebar_Inactive As Color
-    Public StartMenu_Accent As Color
-    Public StartButton_Hover As Color
-    Public Taskbar_Background As Color
-    Public Taskbar_Icon_Underline As Color
-    Public StartMenuBackground_ActiveTaskbarButton As Color
-    Public StartListFolders_TaskbarFront As Color
-    Public ActionCenter_AppsLinks As Color
-    Public SettingsIconsAndLinks As Color
+    Public Property Titlebar_Active As Color
+    Public Property Titlebar_DWM_Active As Color
+    Public Property Titlebar_Inactive As Color
+    Public Property StartMenu_Accent As Color
+    Public Property StartButton_Hover As Color
+    Public Property Taskbar_Background As Color
+    Public Property Taskbar_Icon_Underline As Color
+    Public Property StartMenuBackground_ActiveTaskbarButton As Color
+    Public Property StartListFolders_TaskbarFront As Color
+    Public Property ActionCenter_AppsLinks As Color
+    Public Property SettingsIconsAndLinks As Color
 
 #Region "LogonUI"
-    Public LogonUI_Background As Color
-    Public LogonUI_PersonalColors_Background As Color
-    Public LogonUI_PersonalColors_Accent As Color
-    Public LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
-    Public LogonUI_DisableLogonBackgroundImage As Boolean = False
-    Public LogonUI_NoLockScreen As Boolean = False
+    Public Property LogonUI_Background As Color
+    Public Property LogonUI_PersonalColors_Background As Color
+    Public Property LogonUI_PersonalColors_Accent As Color
+    Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
+    Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
+    Public Property LogonUI_NoLockScreen As Boolean = False
 #End Region
 
 #Region "Win32UI"
-    Public Win32UI_ActiveBorder As Color = Color.FromArgb(180, 180, 180)
-    Public Win32UI_ActiveTitle As Color = Color.FromArgb(153, 180, 209)
-    Public Win32UI_AppWorkspace As Color = Color.FromArgb(171, 171, 171)
-    Public Win32UI_Background As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_ButtonAlternateFace As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_ButtonDkShadow As Color = Color.FromArgb(105, 105, 105)
-    Public Win32UI_ButtonFace As Color = Color.FromArgb(240, 240, 240)
-    Public Win32UI_ButtonHilight As Color = Color.FromArgb(255, 255, 255)
-    Public Win32UI_ButtonLight As Color = Color.FromArgb(227, 227, 227)
-    Public Win32UI_ButtonShadow As Color = Color.FromArgb(160, 160, 160)
-    Public Win32UI_ButtonText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_GradientActiveTitle As Color = Color.FromArgb(185, 209, 234)
-    Public Win32UI_GradientInactiveTitle As Color = Color.FromArgb(215, 228, 242)
-    Public Win32UI_GrayText As Color = Color.FromArgb(109, 109, 109)
-    Public Win32UI_HilightText As Color = Color.FromArgb(255, 255, 255)
-    Public Win32UI_HotTrackingColor As Color = Color.FromArgb(0, 102, 204)
-    Public Win32UI_InactiveBorder As Color = Color.FromArgb(244, 247, 252)
-    Public Win32UI_InactiveTitle As Color = Color.FromArgb(191, 205, 219)
-    Public Win32UI_InactiveTitleText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_InfoText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_InfoWindow As Color = Color.FromArgb(255, 255, 225)
-    Public Win32UI_Menu As Color = Color.FromArgb(240, 240, 240)
-    Public Win32UI_MenuBar As Color = Color.FromArgb(240, 240, 240)
-    Public Win32UI_MenuText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_Scrollbar As Color = Color.FromArgb(200, 200, 200)
-    Public Win32UI_TitleText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_Window As Color = Color.FromArgb(255, 255, 255)
-    Public Win32UI_WindowFrame As Color = Color.FromArgb(100, 100, 100)
-    Public Win32UI_WindowText As Color = Color.FromArgb(0, 0, 0)
-    Public Win32UI_Hilight As Color = Color.FromArgb(0, 120, 215)
-    Public Win32UI_MenuHilight As Color = Color.FromArgb(0, 120, 215)
-    Public Win32UI_Desktop As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_ActiveBorder As Color = Color.FromArgb(180, 180, 180)
+    Public Property Win32UI_ActiveTitle As Color = Color.FromArgb(153, 180, 209)
+    Public Property Win32UI_AppWorkspace As Color = Color.FromArgb(171, 171, 171)
+    Public Property Win32UI_Background As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_ButtonAlternateFace As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_ButtonDkShadow As Color = Color.FromArgb(105, 105, 105)
+    Public Property Win32UI_ButtonFace As Color = Color.FromArgb(240, 240, 240)
+    Public Property Win32UI_ButtonHilight As Color = Color.FromArgb(255, 255, 255)
+    Public Property Win32UI_ButtonLight As Color = Color.FromArgb(227, 227, 227)
+    Public Property Win32UI_ButtonShadow As Color = Color.FromArgb(160, 160, 160)
+    Public Property Win32UI_ButtonText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_GradientActiveTitle As Color = Color.FromArgb(185, 209, 234)
+    Public Property Win32UI_GradientInactiveTitle As Color = Color.FromArgb(215, 228, 242)
+    Public Property Win32UI_GrayText As Color = Color.FromArgb(109, 109, 109)
+    Public Property Win32UI_HilightText As Color = Color.FromArgb(255, 255, 255)
+    Public Property Win32UI_HotTrackingColor As Color = Color.FromArgb(0, 102, 204)
+    Public Property Win32UI_InactiveBorder As Color = Color.FromArgb(244, 247, 252)
+    Public Property Win32UI_InactiveTitle As Color = Color.FromArgb(191, 205, 219)
+    Public Property Win32UI_InactiveTitleText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_InfoText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_InfoWindow As Color = Color.FromArgb(255, 255, 225)
+    Public Property Win32UI_Menu As Color = Color.FromArgb(240, 240, 240)
+    Public Property Win32UI_MenuBar As Color = Color.FromArgb(240, 240, 240)
+    Public Property Win32UI_MenuText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_Scrollbar As Color = Color.FromArgb(200, 200, 200)
+    Public Property Win32UI_TitleText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_Window As Color = Color.FromArgb(255, 255, 255)
+    Public Property Win32UI_WindowFrame As Color = Color.FromArgb(100, 100, 100)
+    Public Property Win32UI_WindowText As Color = Color.FromArgb(0, 0, 0)
+    Public Property Win32UI_Hilight As Color = Color.FromArgb(0, 120, 215)
+    Public Property Win32UI_MenuHilight As Color = Color.FromArgb(0, 120, 215)
+    Public Property Win32UI_Desktop As Color = Color.FromArgb(0, 0, 0)
 #End Region
 
-    Public WinMode_Light As Boolean
-    Public AppMode_Light As Boolean
-    Public Transparency As Boolean
-    Public Blur As Boolean
-    Public ApplyAccentonTitlebars As Boolean
-    Public ApplyAccentonTaskbar As Boolean
-
-    Public AppVersion As String
-    Public PaletteName As String
-    Public PaletteDescription As String
-    Public PaletteVersion As String
-    Public Author As String
-    Public AuthorSocialMediaLink As String
+    Public Property WinMode_Light As Boolean
+    Public Property AppMode_Light As Boolean
+    Public Property Transparency As Boolean
+    Public Property Blur As Boolean
+    Public Property ApplyAccentonTitlebars As Boolean
+    Public Property ApplyAccentonTaskbar As Boolean
+    Public Property AppVersion As String
+    Public Property PaletteName As String
+    Public Property PaletteDescription As String
+    Public Property PaletteVersion As String
+    Public Property Author As String
+    Public Property AuthorSocialMediaLink As String
 
     Enum Mode
         Registry
@@ -284,75 +283,75 @@ Public Class CP
                 CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
 
                 For Each lin As String In txt
-                    If lin.Contains("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
-                    If lin.Contains("*Palette Name= ") Then PaletteName = lin.Remove(0, "*Palette Name= ".Count)
-                    If lin.Contains("*Palette Description= ") Then PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If lin.Contains("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
-                    If lin.Contains("*Author= ") Then Author = lin.Remove(0, "*Author= ".Count)
-                    If lin.Contains("*AuthorSocialMediaLink= ") Then AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If lin.Contains("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
-                    If lin.Contains("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
-                    If lin.Contains("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
-                    If lin.Contains("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
-                    If lin.Contains("*Blur= ") Then Blur = lin.Remove(0, "*Blur= ".Count)
-                    If lin.Contains("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
-                    If lin.Contains("*AccentColorOnStartTaskbarAndActionCenter= ") Then ApplyAccentonTaskbar = lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
-                    If lin.Contains("*Titlebar_Active= ") Then
+                    If lin.StartsWith("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
+                    If lin.StartsWith("*Palette Name= ") Then PaletteName = lin.Remove(0, "*Palette Name= ".Count)
+                    If lin.StartsWith("*Palette Description= ") Then PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+                    If lin.StartsWith("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*Author= ") Then Author = lin.Remove(0, "*Author= ".Count)
+                    If lin.StartsWith("*AuthorSocialMediaLink= ") Then AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
+                    If lin.StartsWith("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
+                    If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
+                    If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
+                    If lin.StartsWith("*Blur= ") Then Blur = lin.Remove(0, "*Blur= ".Count)
+                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
+                    If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then ApplyAccentonTaskbar = lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
+                    If lin.StartsWith("*Titlebar_Active= ") Then
                         Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
                         Titlebar_DWM_Active = Titlebar_Active
                     End If
-                    If lin.Contains("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
-                    If lin.Contains("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
-                    If lin.Contains("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
-                    If lin.Contains("*StartButton_Hover= ") Then StartButton_Hover = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
-                    If lin.Contains("*SettingsIconsAndLinks= ") Then SettingsIconsAndLinks = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
-                    If lin.Contains("*StartMenuBackground_ActiveTaskbarButton= ") Then StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
-                    If lin.Contains("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
-                    If lin.Contains("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
-                    If lin.Contains("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                    If lin.StartsWith("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
+                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
+                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
+                    If lin.StartsWith("*StartButton_Hover= ") Then StartButton_Hover = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
+                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then SettingsIconsAndLinks = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
+                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
+                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
+                    If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
+                    If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
 
 #Region "LogonUI"
-                    If lin.Contains("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
-                    If lin.Contains("*LogonUI_PersonalColors_Background= ") Then LogonUI_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Background= ".Count))
-                    If lin.Contains("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
-                    If lin.Contains("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
-                    If lin.Contains("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
-                    If lin.Contains("*LogonUI_NoLockScreen= ") Then LogonUI_NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
+                    If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
+                    If lin.StartsWith("*LogonUI_PersonalColors_Background= ") Then LogonUI_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Background= ".Count))
+                    If lin.StartsWith("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
+                    If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
+                    If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
+                    If lin.StartsWith("*LogonUI_NoLockScreen= ") Then LogonUI_NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
 #End Region
 
 #Region "Win32UI"
-                    If lin.Contains("*Win32UI_ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
-                    If lin.Contains("*Win32UI_ActiveTitle= ") Then Win32UI_ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
-                    If lin.Contains("*Win32UI_AppWorkspace= ") Then Win32UI_AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
-                    If lin.Contains("*Win32UI_Background= ") Then Win32UI_Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
-                    If lin.Contains("*Win32UI_ButtonAlternateFace= ") Then Win32UI_ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
-                    If lin.Contains("*Win32UI_ButtonDkShadow= ") Then Win32UI_ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
-                    If lin.Contains("*Win32UI_ButtonFace= ") Then Win32UI_ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
-                    If lin.Contains("*Win32UI_ButtonHilight= ") Then Win32UI_ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
-                    If lin.Contains("*Win32UI_ButtonLight= ") Then Win32UI_ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
-                    If lin.Contains("*Win32UI_ButtonShadow= ") Then Win32UI_ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
-                    If lin.Contains("*Win32UI_ButtonText= ") Then Win32UI_ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
-                    If lin.Contains("*Win32UI_GradientActiveTitle= ") Then Win32UI_GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
-                    If lin.Contains("*Win32UI_GradientInactiveTitle= ") Then Win32UI_GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
-                    If lin.Contains("*Win32UI_GrayText= ") Then Win32UI_GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
-                    If lin.Contains("*Win32UI_HilightText= ") Then Win32UI_HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
-                    If lin.Contains("*Win32UI_HotTrackingColor= ") Then Win32UI_HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
-                    If lin.Contains("*Win32UI_InactiveBorder= ") Then Win32UI_InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
-                    If lin.Contains("*Win32UI_InactiveTitle= ") Then Win32UI_InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
-                    If lin.Contains("*Win32UI_InactiveTitleText= ") Then Win32UI_InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
-                    If lin.Contains("*Win32UI_InfoText= ") Then Win32UI_InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
-                    If lin.Contains("*Win32UI_InfoWindow= ") Then Win32UI_InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
-                    If lin.Contains("*Win32UI_Menu= ") Then Win32UI_Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
-                    If lin.Contains("*Win32UI_MenuBar= ") Then Win32UI_MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
-                    If lin.Contains("*Win32UI_MenuText= ") Then Win32UI_MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
-                    If lin.Contains("*Win32UI_Scrollbar= ") Then Win32UI_Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
-                    If lin.Contains("*Win32UI_TitleText= ") Then Win32UI_TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
-                    If lin.Contains("*Win32UI_Window= ") Then Win32UI_Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
-                    If lin.Contains("*Win32UI_WindowFrame= ") Then Win32UI_WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
-                    If lin.Contains("*Win32UI_WindowText= ") Then Win32UI_WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
-                    If lin.Contains("*Win32UI_Hilight= ") Then Win32UI_Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
-                    If lin.Contains("*Win32UI_MenuHilight= ") Then Win32UI_MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
-                    If lin.Contains("*Win32UI_Desktop= ") Then Win32UI_Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
+                    If lin.StartsWith("*Win32UI_ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
+                    If lin.StartsWith("*Win32UI_ActiveTitle= ") Then Win32UI_ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
+                    If lin.StartsWith("*Win32UI_AppWorkspace= ") Then Win32UI_AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
+                    If lin.StartsWith("*Win32UI_Background= ") Then Win32UI_Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonAlternateFace= ") Then Win32UI_ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonDkShadow= ") Then Win32UI_ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonFace= ") Then Win32UI_ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonHilight= ") Then Win32UI_ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonLight= ") Then Win32UI_ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonShadow= ") Then Win32UI_ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
+                    If lin.StartsWith("*Win32UI_ButtonText= ") Then Win32UI_ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
+                    If lin.StartsWith("*Win32UI_GradientActiveTitle= ") Then Win32UI_GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
+                    If lin.StartsWith("*Win32UI_GradientInactiveTitle= ") Then Win32UI_GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
+                    If lin.StartsWith("*Win32UI_GrayText= ") Then Win32UI_GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
+                    If lin.StartsWith("*Win32UI_HilightText= ") Then Win32UI_HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
+                    If lin.StartsWith("*Win32UI_HotTrackingColor= ") Then Win32UI_HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
+                    If lin.StartsWith("*Win32UI_InactiveBorder= ") Then Win32UI_InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
+                    If lin.StartsWith("*Win32UI_InactiveTitle= ") Then Win32UI_InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
+                    If lin.StartsWith("*Win32UI_InactiveTitleText= ") Then Win32UI_InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
+                    If lin.StartsWith("*Win32UI_InfoText= ") Then Win32UI_InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
+                    If lin.StartsWith("*Win32UI_InfoWindow= ") Then Win32UI_InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
+                    If lin.StartsWith("*Win32UI_Menu= ") Then Win32UI_Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
+                    If lin.StartsWith("*Win32UI_MenuBar= ") Then Win32UI_MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
+                    If lin.StartsWith("*Win32UI_MenuText= ") Then Win32UI_MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
+                    If lin.StartsWith("*Win32UI_Scrollbar= ") Then Win32UI_Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
+                    If lin.StartsWith("*Win32UI_TitleText= ") Then Win32UI_TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
+                    If lin.StartsWith("*Win32UI_Window= ") Then Win32UI_Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
+                    If lin.StartsWith("*Win32UI_WindowFrame= ") Then Win32UI_WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
+                    If lin.StartsWith("*Win32UI_WindowText= ") Then Win32UI_WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
+                    If lin.StartsWith("*Win32UI_Hilight= ") Then Win32UI_Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
+                    If lin.StartsWith("*Win32UI_MenuHilight= ") Then Win32UI_MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
+                    If lin.StartsWith("*Win32UI_Desktop= ") Then Win32UI_Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
                 Next
 
@@ -692,4 +691,42 @@ Public Class CP
     Function BizareColorInvertor([Color] As Color) As Color
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
+
+    Public Overrides Function Equals(obj As Object) As Boolean
+        'obj = TryCast(obj, CP)
+
+        Dim _Equals As Boolean = True
+
+        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+        Dim type2 As Type = obj.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+
+        For Each [property] As PropertyInfo In properties1
+            If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
+                _Equals = False
+                Exit For
+            End If
+        Next
+
+        Return _Equals
+    End Function
+
+
+    '#### Alternative Method for comparing (less efficient)
+
+    'Public Overrides Function Equals(obj As Object) As Boolean
+    'obj = TryCast(obj, CP)
+    'Dim LS1, LS2 As New Dictionary(Of String, Object)
+    'LS1.Clear() : LS2.Clear()
+    'Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+    'Dim type2 As Type = obj.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+    'For Each [property] As PropertyInfo In properties1
+    'LS1.Add([property].Name, [property].GetValue(Me, Nothing))
+    'Next
+    'For Each [property] As PropertyInfo In properties2
+    'LS2.Add([property].Name, [property].GetValue(obj, Nothing))
+    'Next
+    'Return LS1.SequenceEqual(LS2)
+    'End Function
+
 End Class
+
