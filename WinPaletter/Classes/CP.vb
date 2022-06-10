@@ -65,7 +65,6 @@ Public Class CP
     Public Property WinMode_Light As Boolean
     Public Property AppMode_Light As Boolean
     Public Property Transparency As Boolean
-    Public Property Blur As Boolean
     Public Property ApplyAccentonTitlebars As Boolean
     Public Property ApplyAccentonTaskbar As Boolean
     Public Property AppVersion As String
@@ -126,7 +125,6 @@ Public Class CP
                 WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", True)
                 AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", True)
                 Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
-                Blur = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnabledBlurBehind", True)
                 ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", False)
                 ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", False)
 
@@ -293,7 +291,6 @@ Public Class CP
                     If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
                     If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
                     If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
-                    If lin.StartsWith("*Blur= ") Then Blur = lin.Remove(0, "*Blur= ".Count)
                     If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                     If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then ApplyAccentonTaskbar = lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
                     If lin.StartsWith("*Titlebar_Active= ") Then
@@ -415,7 +412,6 @@ Public Class CP
                 WinMode_Light = False
                 AppMode_Light = False
                 Transparency = True
-                Blur = True
                 ApplyAccentonTitlebars = False
                 ApplyAccentonTaskbar = False
         End Select
@@ -446,7 +442,6 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnabledBlurBehind", If(Blur, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", If(ApplyAccentonTaskbar, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
 
@@ -559,7 +554,6 @@ Public Class CP
                 tx.Add("*WinMode_Light= " & WinMode_Light)
                 tx.Add("*AppMode_Light= " & AppMode_Light)
                 tx.Add("*Transparency= " & Transparency)
-                tx.Add("*Blur= " & Blur)
                 tx.Add("*AccentColorOnTitlebarAndBorders= " & ApplyAccentonTitlebars)
                 tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " & ApplyAccentonTaskbar)
                 tx.Add("</Toggles>" & vbCrLf)

@@ -642,10 +642,6 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
     End Sub
 
-    Private Sub Blur_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Blur_Toggle.CheckedChanged
-        CP.Blur = sender.Checked
-        ApplyLivePreviewFromCP(CP)
-    End Sub
 
     Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         CP.ApplyAccentonTitlebars = sender.Checked
@@ -1085,7 +1081,6 @@ Public Class MainFrm
         WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
         AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
         Transparency_Toggle.Checked = ColorPalette.Transparency
-        Blur_Toggle.Checked = ColorPalette.Blur
         ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
         AccentOnStartAndTaskbar_Toggle.Checked = ColorPalette.ApplyAccentonTaskbar
         ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active

@@ -61,10 +61,6 @@ Partial Class MainFrm
         Me.lbl5 = New System.Windows.Forms.Label()
         Me.SettingsIconsAndLinks_picker = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
-        Me.Blur_Toggle = New WinPaletter.XenonToggle()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
         Me.AccentOnStartAndTaskbar_Toggle = New WinPaletter.XenonToggle()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
@@ -161,8 +157,6 @@ Partial Class MainFrm
         Me.pnl5.SuspendLayout()
         CType(Me.pic5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox5.SuspendLayout()
-        Me.XenonGroupBox7.SuspendLayout()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox6.SuspendLayout()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox4.SuspendLayout()
@@ -722,7 +716,6 @@ Partial Class MainFrm
         Me.XenonGroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(37, Byte), Integer))
-        Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox7)
         Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox6)
         Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox4)
         Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox18)
@@ -738,59 +731,6 @@ Partial Class MainFrm
         Me.XenonGroupBox5.Size = New System.Drawing.Size(448, 135)
         Me.XenonGroupBox5.TabIndex = 11
         Me.XenonGroupBox5.Text = "XenonGroupBox5"
-        '
-        'XenonGroupBox7
-        '
-        Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox7.Controls.Add(Me.Blur_Toggle)
-        Me.XenonGroupBox7.Controls.Add(Me.PictureBox4)
-        Me.XenonGroupBox7.Controls.Add(Me.Label4)
-        Me.XenonGroupBox7.CustomColor = False
-        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(59, Byte), Integer))
-        Me.XenonGroupBox7.LineSize = 1
-        Me.XenonGroupBox7.Location = New System.Drawing.Point(225, 72)
-        Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox7.Name = "XenonGroupBox7"
-        Me.XenonGroupBox7.Size = New System.Drawing.Size(220, 29)
-        Me.XenonGroupBox7.TabIndex = 7
-        Me.XenonGroupBox7.Text = "XenonGroupBox7"
-        '
-        'Blur_Toggle
-        '
-        Me.Blur_Toggle.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.Blur_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Blur_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.Blur_Toggle.Checked = False
-        Me.Blur_Toggle.DarkLight_Toggler = False
-        Me.Blur_Toggle.Location = New System.Drawing.Point(169, 2)
-        Me.Blur_Toggle.Name = "Blur_Toggle"
-        Me.Blur_Toggle.Size = New System.Drawing.Size(50, 24)
-        Me.Blur_Toggle.TabIndex = 7
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(3, 1)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(30, 27)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox4.TabIndex = 4
-        Me.PictureBox4.TabStop = False
-        '
-        'Label4
-        '
-        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(36, 2)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(128, 24)
-        Me.Label4.TabIndex = 3
-        Me.Label4.Text = "Blur"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox6
         '
@@ -914,7 +854,7 @@ Partial Class MainFrm
         Me.XenonGroupBox18.Location = New System.Drawing.Point(3, 72)
         Me.XenonGroupBox18.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox18.Name = "XenonGroupBox18"
-        Me.XenonGroupBox18.Size = New System.Drawing.Size(220, 29)
+        Me.XenonGroupBox18.Size = New System.Drawing.Size(442, 29)
         Me.XenonGroupBox18.TabIndex = 9
         Me.XenonGroupBox18.Text = "XenonGroupBox18"
         '
@@ -925,7 +865,7 @@ Partial Class MainFrm
         Me.Transparency_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Transparency_Toggle.Checked = False
         Me.Transparency_Toggle.DarkLight_Toggler = False
-        Me.Transparency_Toggle.Location = New System.Drawing.Point(169, 2)
+        Me.Transparency_Toggle.Location = New System.Drawing.Point(391, 2)
         Me.Transparency_Toggle.Name = "Transparency_Toggle"
         Me.Transparency_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.Transparency_Toggle.TabIndex = 16
@@ -950,9 +890,9 @@ Partial Class MainFrm
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(36, 2)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(128, 23)
+        Me.Label9.Size = New System.Drawing.Size(350, 23)
         Me.Label9.TabIndex = 13
-        Me.Label9.Text = "Transparency"
+        Me.Label9.Text = "Transparency (Mica/Acrylic)"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox24
@@ -1914,8 +1854,6 @@ Partial Class MainFrm
         Me.pnl5.ResumeLayout(False)
         CType(Me.pic5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox5.ResumeLayout(False)
-        Me.XenonGroupBox7.ResumeLayout(False)
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox6.ResumeLayout(False)
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox4.ResumeLayout(False)
@@ -1981,9 +1919,6 @@ Partial Class MainFrm
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents XenonGroupBox7 As XenonGroupBox
-    Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents Label4 As Label
     Friend WithEvents XenonGroupBox4 As XenonGroupBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents XenonGroupBox18 As XenonGroupBox
@@ -2051,7 +1986,6 @@ Partial Class MainFrm
     Friend WithEvents XenonButton10 As XenonButton
     Friend WithEvents XenonButton11 As XenonButton
     Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents Blur_Toggle As XenonToggle
     Friend WithEvents XenonButton4 As XenonButton
     Friend WithEvents XenonButton13 As XenonButton
     Friend WithEvents XenonButton15 As XenonButton

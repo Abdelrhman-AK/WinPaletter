@@ -5,6 +5,11 @@
 #Added= String
 #Removed= String
 
+[1.0.1.0]
+Channel= Stable
+Date= -8585467948854775808
+BugFix= Removed "Blur" Toggle as it crashed UWP/WinUI3 for other users.
+
 [1.0.0.0]
 Channel= Stable
 Date= -8585486092854775808

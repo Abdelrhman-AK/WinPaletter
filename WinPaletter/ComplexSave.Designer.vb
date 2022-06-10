@@ -72,14 +72,14 @@ Partial Class ComplexSave
         '
         Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonGroupBox1.Controls.Add(Me.XenonRadioButton3)
         Me.XenonGroupBox1.Controls.Add(Me.XenonRadioButton2)
         Me.XenonGroupBox1.Controls.Add(Me.XenonRadioButton1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 77)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -91,7 +91,7 @@ Partial Class ComplexSave
         'XenonRadioButton3
         '
         Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonRadioButton3.Checked = False
         Me.XenonRadioButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
@@ -104,7 +104,7 @@ Partial Class ComplexSave
         'XenonRadioButton2
         '
         Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonRadioButton2.Checked = False
         Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioButton2.ForeColor = System.Drawing.Color.White
@@ -117,7 +117,7 @@ Partial Class ComplexSave
         'XenonRadioButton1
         '
         Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonRadioButton1.Checked = True
         Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
@@ -142,21 +142,21 @@ Partial Class ComplexSave
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(44, 3)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(84, 35)
+        Me.Label1.Size = New System.Drawing.Size(129, 35)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Saving"
+        Me.Label1.Text = "Saving Mode"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox2
         '
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonGroupBox2.Controls.Add(Me.XenonCheckBox1)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
         Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 213)
         Me.XenonGroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -168,7 +168,7 @@ Partial Class ComplexSave
         'XenonCheckBox1
         '
         Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
@@ -193,15 +193,15 @@ Partial Class ComplexSave
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(44, 3)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(84, 35)
+        Me.Label2.Size = New System.Drawing.Size(129, 35)
         Me.Label2.TabIndex = 0
-        Me.Label2.Text = "Applying"
+        Me.Label2.Text = "Applying Mode"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton1
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = Nothing
@@ -217,7 +217,7 @@ Partial Class ComplexSave
         'XenonButton2
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -233,7 +233,7 @@ Partial Class ComplexSave
         'XenonButton3
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
