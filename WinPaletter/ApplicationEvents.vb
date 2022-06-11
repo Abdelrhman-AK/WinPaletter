@@ -71,7 +71,11 @@ Namespace My
                 key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
                 ' associate file icon
                 key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
+
+                Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
+                If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+
+                key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", If(className = "WinPaletter.ThemeFile", appData & "\fileextension.ico", appData & "\settingsfile.ico"))
 
             Catch e As Exception
                 Return False
@@ -104,11 +108,6 @@ Namespace My
                 key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
                 key2.DeleteSubKeyTree(className, False)
 
-                'key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                'key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
-
-                'key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                'key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", exeProgram & If(className = "WinPaletter.ThemeFile", ",1", ",2"))
 
             Catch e As Exception
                 Return False
@@ -292,6 +291,17 @@ Namespace My
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
             If _Settings.AutoAddExt Then
+                Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
+                If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+
+                Dim file As System.IO.FileStream = New System.IO.FileStream(appData & "\fileextension.ico", System.IO.FileMode.OpenOrCreate)
+                My.Resources.fileextension.Save(file)
+                file.Close()
+
+                file = New System.IO.FileStream(appData & "\settingsfile.ico", System.IO.FileMode.OpenOrCreate)
+                My.Resources.settingsfile.Save(file)
+                file.Close()
+
                 CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
                 CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
             End If

@@ -271,6 +271,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Public ReadOnly Property fileextension() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("fileextension", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property GaussianBlur() As System.Drawing.Bitmap
@@ -483,6 +493,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("notify_warning", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Public ReadOnly Property settingsfile() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("settingsfile", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
         
