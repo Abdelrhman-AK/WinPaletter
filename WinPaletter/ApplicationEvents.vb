@@ -21,11 +21,6 @@ Namespace My
         Public Function AeroEnabled() As Boolean
             Return DwmIsCompositionEnabled()
         End Function
-        <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub _
-    SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer,
-    ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
-        End Sub
-
 #End Region
 
 #Region "Variables"
@@ -37,9 +32,13 @@ Namespace My
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
         Public ChangeLogImgLst As New ImageList
-        Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         Public ComplexSaveResult As String = "2.0"
+        Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
+
 #End Region
+
+        <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+        End Sub
 
 #Region "File Association"
         Public Const SHCNE_ASSOCCHANGED = &H8000000
@@ -215,7 +214,6 @@ Namespace My
             R2.Close()
         End Sub
 #End Region
-
         Public Function GetCurrentWallpaper() As Bitmap
             Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)

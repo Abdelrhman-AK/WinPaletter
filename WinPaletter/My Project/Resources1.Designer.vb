@@ -231,6 +231,29 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to @NewTag= Create New Theme (Palette) File
+        '''@OpenTag= Open a Theme File
+        '''@SaveTag= Save Theme File
+        '''@SaveAsTag= Save Theme File as ...
+        '''@EditInfoTag= Edit Information of current Theme File
+        '''@QuestionsAndAnswersTag= Q\A
+        '''@NewUpdate= New Update Avaliable
+        '''@OpenForActions= Open Updates form for actions.
+        '''@X1= Start Menu, Taskbar and Action Center
+        '''@X2= Action Center Hover and Links
+        '''@X3= Lines, Toggles and Buttons
+        '''@X4= Taskbar Active App Background
+        '''@X5= Start Menu and Action Center Colors
+        '''@X6= Taskbar Color
+        ''' [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property CodeStr() As String
+            Get
+                Return ResourceManager.GetString("CodeStr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
         Public ReadOnly Property ColorThief_Desktop_v46() As Byte()

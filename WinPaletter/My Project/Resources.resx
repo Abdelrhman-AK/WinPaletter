@@ -169,6 +169,9 @@
   <data name="CL_Stable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Stable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CodeStr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\CodeStr.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1256</value>
+  </data>
   <data name="ColorThief_Desktop_v46" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\References\ColorThief.Desktop.v46.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -185,7 +188,7 @@
     <value>..\icons\fileextension.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GaussianBlur" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\Xenon_RetroStudio\FLUENT\Layers\GaussianBlur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\GaussianBlur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="InactiveApp_Taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\InactiveApp_Taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

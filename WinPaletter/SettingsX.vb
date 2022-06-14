@@ -204,18 +204,17 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry and the application itself.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
-
-            Dim prc As New Process
-            prc.StartInfo.FileName = "cmd.exe"
-            prc.StartInfo.Arguments = "/C choice /C Y /N /D Y /T 0 & Del " & """" & Application.ExecutablePath & """"
-            prc.StartInfo.CreateNoWindow = True
-            prc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-            prc.Start()
-
+            Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
+            If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+            IO.File.Delete(appData & "\fileextension.ico")
+            IO.File.Delete(appData & "\settingsfile.ico")
+            MsgBox("Now, the application will exit. You can delete the application file.", MsgBoxStyle.Information)
             Application.[Exit]()
         End If
     End Sub
+
+
 End Class

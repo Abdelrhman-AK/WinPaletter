@@ -21,33 +21,34 @@ Public Class XenonCore
 #End Region
 
 #Region "Misc"
-    <DllImport("user32.dll", SetLastError:=True)>
-    Private Shared Function PostMessage(ByVal hWnd As IntPtr,
-        <MarshalAs(UnmanagedType.U4)> ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As Boolean
 
-    End Function
-    <DllImport("user32.dll", SetLastError:=True)>
-    Private Shared Function FindWindow(ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
-
-    End Function
-    Const WM_USER As Integer = &H400
     Public Shared Sub RestartExplorer()
         If My.Application._Settings.AutoRestartExplorer Then
-            Dim ptr = FindWindow("Shell_TrayWnd", Nothing)
-            PostMessage(ptr, WM_USER + 436, CType(0, IntPtr), CType(0, IntPtr))
 
-            Do
-                ptr = FindWindow("Shell_TrayWnd", Nothing)
+            Dim explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
 
-                If ptr.ToInt32() = 0 Then
-                    Exit Do
-                End If
+            Dim process As Process = Nothing
 
-                Thread.Sleep(1000)
-            Loop While True
+            Dim processStartInfo As New ProcessStartInfo With {
+                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
+                .Verb = "runas",
+                .Arguments = "/F /IM explorer.exe",
+                .WindowStyle = ProcessWindowStyle.Hidden,
+                .UseShellExecute = True
+            }
 
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
 
-            Try : Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\explorer.exe").WaitForInputIdle() : Catch : End Try
+            processStartInfo = New ProcessStartInfo With {
+                .FileName = explorerPath,
+                .Verb = "runas",
+                .Arguments = "",
+                .WindowStyle = ProcessWindowStyle.Normal,
+                .UseShellExecute = True
+            }
+
+            process = Process.Start(processStartInfo)
         End If
     End Sub
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
@@ -184,7 +185,7 @@ Public Class XenonCore
         If My.Computer.Network.IsAvailable Then
             Try
                 Using client = New WebClient()
-                    Using stream = client.OpenRead("http://www.google.com")
+                    Using stream = client.OpenRead("https://www.github.com")
                         Return True
                     End Using
                 End Using

@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("WinPaletter")>
 <Assembly: AssemblyDescription("Change Windows 10/11 Accents Colors Without Restrictions")>
-<Assembly: AssemblyCompany("Abdelrhman_AK")>
+<Assembly: AssemblyCompany("Abdelrhman-AK")>
 <Assembly: AssemblyProduct("WinPaletter")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>

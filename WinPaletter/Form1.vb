@@ -7,11 +7,11 @@ Public Class Form1
         'Dim L As New Localizer
         'L.ExportLanguage("D:\X.txt")
 
-        MyCodes_Users_Salahiyat("D:\X.txt")
+        MyCodes_Users("D:\X.txt")
     End Sub
 
 
-    Public Sub MyCodes_Users_Salahiyat(File As String)
+    Public Sub MyCodes_Users(File As String)
         Dim LS As New List(Of String)
         LS.Clear()
 
@@ -27,15 +27,21 @@ Public Class Form1
             End Using
         Next
 
-        IO.File.WriteAllText(File, CStr_FromList(LS))
+        Dim lx As New List(Of String)
+        lx.Add("!Name= Abdelrhman-AK")
+        lx.Add("!TrVer= 1.0")
+        lx.Add("!Lang= English")
+        lx.Add("!LangCode= EN-US")
+        lx.Add("!AppVer= " & My.Application.Info.Version.ToString)
+        lx.Add("!RightToLeft= False")
+
+        IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & My.Resources.CodeStr & vbCrLf & CStr_FromList(LS))
     End Sub
 
-    ' A recursive method to get all the controls...
     Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
         Dim cs = parent.Controls.OfType(Of Control)
         Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
     End Function
-
 
     Public Function getAllTypesOfControl(assembly As Assembly) As IEnumerable(Of Type)
         Return assembly.GetTypes().
@@ -47,5 +53,13 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         XenonCore.ApplyDarkMode(Me)
+    End Sub
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        RestartExplorer()
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        MainFrm.Show()
     End Sub
 End Class

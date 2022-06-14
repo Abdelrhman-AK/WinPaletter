@@ -806,6 +806,11 @@ Public Class MainFrm
         RestartExplorer()
     End Sub
 
+    <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub _
+    SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer,
+    ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+    End Sub
+
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.Application._Settings.AutoRestartExplorer Then
             status_lbl.Text = "This will restart the explorer, don't worry this won't close other applications."
