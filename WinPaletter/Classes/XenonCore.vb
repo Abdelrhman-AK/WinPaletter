@@ -2,7 +2,6 @@
 Imports System.Drawing.Imaging
 Imports System.Net
 Imports System.Runtime.InteropServices
-Imports System.Threading
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
@@ -23,34 +22,22 @@ Public Class XenonCore
 #Region "Misc"
 
     Public Shared Sub RestartExplorer()
-        If My.Application._Settings.AutoRestartExplorer Then
+        With My.Application
+            If ._Settings.AutoRestartExplorer Then
+                Try
+                    Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
+                    If ._Settings.RescueBox Then RescueBox.Show()
+                    .processKiller.Start()
+                    .processKiller.WaitForExit()
+                    .processExplorer.Start()
+                    If ._Settings.RescueBox Then .processExplorer.Refresh()
+                Catch
+                End Try
+            End If
+        End With
 
-            Dim explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
-
-            Dim process As Process = Nothing
-
-            Dim processStartInfo As New ProcessStartInfo With {
-                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
-                .Verb = "runas",
-                .Arguments = "/F /IM explorer.exe",
-                .WindowStyle = ProcessWindowStyle.Hidden,
-                .UseShellExecute = True
-            }
-
-            process = Process.Start(processStartInfo)
-            process.WaitForExit()
-
-            processStartInfo = New ProcessStartInfo With {
-                .FileName = explorerPath,
-                .Verb = "runas",
-                .Arguments = "",
-                .WindowStyle = ProcessWindowStyle.Normal,
-                .UseShellExecute = True
-            }
-
-            process = Process.Start(processStartInfo)
-        End If
     End Sub
+
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
@@ -444,18 +431,6 @@ Public Class Acrylism
 
 #End Region
 
-#Region "Aero"
-    <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure Side
-        Public Left As Integer
-        Public Right As Integer
-        Public Top As Integer
-        Public Buttom As Integer
-    End Structure
-    <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarinset As Side) As Integer
-    End Function
-
-#End Region
-
     Public Shared Sub EnableBlur(ByVal Handle As IntPtr, Optional ByVal Border As Boolean = True)
 
         Dim accent = New AccentPolicy With {.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND}
@@ -473,19 +448,6 @@ Public Class Acrylism
         SetWindowCompositionAttribute(Handle, Data)
 
         Marshal.FreeHGlobal(accentPtr)
-
-    End Sub
-
-    Public Shared Sub EnableAero(ByVal Handle As IntPtr)
-        Try
-            Dim side As Side = New Side
-            side.Left = -1
-            side.Right = -1
-            side.Top = -1
-            side.Buttom = -1
-            Dim result As Integer = DwmExtendFrameIntoClientArea(Handle, side)
-        Catch
-        End Try
     End Sub
 End Class
 

@@ -11,12 +11,15 @@ Public Class XeSettings
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
-    'Public Property Appearance_AdaptColors As Boolean = True
+    Public Property RescueBox As Boolean = True
+    Public Property WhatsNewRecord As String() = {""}
 
+    'Public Property Appearance_AdaptColors As Boolean = True
 #End Region
+
 
     Public Enum WinVer
         Eleven
@@ -50,8 +53,10 @@ Public Class XeSettings
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
         If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
-        'If Key.GetValue("Appearance_AdaptColors", Nothing) Is Nothing Then Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
+        If Key.GetValue("RescueBox", Nothing) Is Nothing Then Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
+        If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
 
+        'If Key.GetValue("Appearance_AdaptColors", Nothing) Is Nothing Then Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -71,6 +76,9 @@ Public Class XeSettings
                 UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
                 Appearance_Dark = Key.GetValue("Appearance_Dark", Nothing)
                 Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
+                RescueBox = Key.GetValue("RescueBox", Nothing)
+                WhatsNewRecord = Key.GetValue("WhatsNewRecord", Nothing)
+
                 'Appearance_AdaptColors = Key.GetValue("Appearance_AdaptColors", Nothing)
 
             Case Mode.File
@@ -87,6 +95,8 @@ Public Class XeSettings
                     If x.StartsWith("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
                     If x.StartsWith("Appearance_Dark= ") Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
                     If x.StartsWith("Appearance_Auto= ") Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
+                    If x.StartsWith("RescueBox= ") Then RescueBox = x.Remove(0, "RescueBox= ".Count)
+
                     'If x.StartsWith("Appearance_AdaptColors= ") Then Appearance_AdaptColors = x.Remove(0, "Appearance_AdaptColors= ".Count)
 
                 Next
@@ -109,6 +119,9 @@ Public Class XeSettings
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
                 Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
+                Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
+                Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
+
                 'Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
 
             Case Mode.File
@@ -127,6 +140,8 @@ Public Class XeSettings
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
+                l.Add(String.Format("RescueBox= {0}", RescueBox))
+
                 'l.Add(String.Format("Appearance_AdaptColors= {0}", Appearance_AdaptColors))
 
                 IO.File.WriteAllText(File, CStr_FromList(l))

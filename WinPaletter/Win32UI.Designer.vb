@@ -1066,7 +1066,7 @@ Partial Class Win32UI
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(123, 16)
         Me.Label14.TabIndex = 3
-        Me.Label14.Text = "Highlight Text"
+        Me.Label14.Text = "Hilight Text"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'hilighttext_pick
@@ -1178,7 +1178,7 @@ Partial Class Win32UI
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(123, 16)
         Me.Label19.TabIndex = 3
-        Me.Label19.Text = "Highlight"
+        Me.Label19.Text = "Hilight"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'hilight_pick

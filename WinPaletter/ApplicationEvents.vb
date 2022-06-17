@@ -34,9 +34,13 @@ Namespace My
         Public ChangeLogImgLst As New ImageList
         Public ComplexSaveResult As String = "2.0"
         Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
+        Public ShowChangelog As Boolean = False
+        Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
+        Public processKiller As New Process
+        Public processExplorer As New Process
+        Public processStartMenuExperienceHost As Process
 
 #End Region
-
         <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
         End Sub
 
@@ -279,7 +283,63 @@ Namespace My
             Catch : End Try
         End Sub
 
+        Function RemoveDuplicate(ByVal TheList As List(Of String)) As List(Of String)
+            Dim Result As New List(Of String)
+
+            Dim Exist As Boolean = False
+            For Each ElementString As String In TheList
+                Exist = False
+                For Each ElementStringInResult As String In Result
+                    If ElementString = ElementStringInResult Then
+                        Exist = True
+                        Exit For
+                    End If
+                Next
+                If Not Exist Then
+                    Result.Add(ElementString)
+                End If
+            Next
+
+            Return Result
+        End Function
+
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+
+                    If arg.ToLower = "/exportlanguage" Then
+                        Console.WriteLine()
+                        Console.Write("Exporting Language to Language.txt ...")
+                        ExportNativeLang("Language.txt")
+                        Console.WriteLine()
+                        Console.Write("Language Exported Successfully.")
+                        Process.GetCurrentProcess.Kill()
+                    End If
+
+                Next
+            Catch
+            End Try
+
+            Dim ProcessKillerInfo As New ProcessStartInfo With {
+                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
+                .Verb = "runas",
+                .Arguments = "/F /IM explorer.exe",
+                .WindowStyle = ProcessWindowStyle.Hidden,
+                .UseShellExecute = True
+            }
+
+            Dim processExplorerInfo As New ProcessStartInfo With {
+                .FileName = explorerPath,
+                .Verb = "runas",
+                .Arguments = "",
+                .WindowStyle = ProcessWindowStyle.Normal,
+                .UseShellExecute = True
+            }
+
+            processKiller.StartInfo = ProcessKillerInfo
+            processExplorer.StartInfo = processExplorerInfo
+
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
 
@@ -287,6 +347,26 @@ Namespace My
             Monitor()
 
             _Settings = New XeSettings(XeSettings.Mode.Registry)
+
+#Region "WhatsNew Versions"
+
+            If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
+                '### Popup WhatsNew
+
+                Dim ver As New List(Of String)
+                ver.Clear()
+
+                For Each X As String In _Settings.WhatsNewRecord.ToArray()
+                    ver.Add(X)
+                Next
+
+                ver.Add(My.Application.Info.Version.ToString)
+                ver = RemoveDuplicate(ver)
+                _Settings.WhatsNewRecord = ver.ToArray
+                _Settings.Save(XeSettings.Mode.Registry)
+            End If
+#End Region
+
 
             If _Settings.AutoAddExt Then
                 Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
@@ -338,7 +418,6 @@ Namespace My
                             RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
-                        '''''''
                     End If
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
@@ -346,7 +425,6 @@ Namespace My
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
                         Process.GetCurrentProcess.Kill()
-                        '''''''
                     End If
                 Next
 
@@ -362,89 +440,136 @@ Namespace My
                     e.BringToForeground = True
                 Else
 
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                    If arg.ToLower = "/exportlanguage" Then
+                        ExportNativeLang("Language.txt")
+                        MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
+                    Else
 
-                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                            If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
+                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
 
-                                Select Case ComplexSave.ShowDialog()
-                                    Case DialogResult.Yes
+                            If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                                If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
 
-                                        Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                                        Dim r1 As String = r(0)
-                                        Dim r2 As String = r(1)
+                                    Select Case ComplexSave.ShowDialog()
+                                        Case DialogResult.Yes
 
-                                        Select Case r1
-                                            Case 0              '' Save
-                                                If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                    MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                    MainFrm.CP_Original = MainFrm.CP
-                                                Else
+                                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                                            Dim r1 As String = r(0)
+                                            Dim r2 As String = r(1)
+
+                                            Select Case r1
+                                                Case 0              '' Save
+                                                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                        MainFrm.CP_Original = MainFrm.CP
+                                                    Else
+                                                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP
+                                                        Else
+                                                            Exit Sub
+                                                        End If
+                                                    End If
+
+                                                Case 1              '' Save As
                                                     If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                                         MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
                                                         MainFrm.CP_Original = MainFrm.CP
                                                     Else
                                                         Exit Sub
                                                     End If
-                                                End If
+                                            End Select
 
-                                            Case 1              '' Save As
-                                                If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                    MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                    MainFrm.CP_Original = MainFrm.CP
-                                                Else
-                                                    Exit Sub
-                                                End If
-                                        End Select
+                                            Select Case r2
+                                                Case 1      '' Apply   ' Case 0= Don't Apply
+                                                    MainFrm.CP.Save(CP.SavingMode.Registry)
+                                                    RestartExplorer()
+                                            End Select
 
-                                        Select Case r2
-                                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                                MainFrm.CP.Save(CP.SavingMode.Registry)
-                                                RestartExplorer()
-                                        End Select
-
-                                    Case DialogResult.No
+                                        Case DialogResult.No
 
 
-                                    Case DialogResult.Cancel
-                                        Exit Sub
-                                End Select
+                                        Case DialogResult.Cancel
+                                            Exit Sub
+                                    End Select
 
 
+                                End If
+
+                                MainFrm.CP = New CP(CP.Mode.File, arg)
+                                MainFrm.CP_Original = New CP(CP.Mode.File, arg)
+                                MainFrm.OpenFileDialog1.FileName = arg
+                                MainFrm.SaveFileDialog1.FileName = arg
+                                MainFrm.ApplyCPValues(MainFrm.CP)
+                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+
+                            Else
+                                MainFrm.CP = New CP(CP.Mode.File, arg)
+                                MainFrm.CP_Original = New CP(CP.Mode.File, arg)
+                                MainFrm.OpenFileDialog1.FileName = arg
+                                MainFrm.SaveFileDialog1.FileName = arg
+                                MainFrm.ApplyCPValues(MainFrm.CP)
+                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+                                MainFrm.CP.Save(CP.SavingMode.Registry, arg)
+                                RestartExplorer()
+                                '''''''
                             End If
+                        End If
 
-                            MainFrm.CP = New CP(CP.Mode.File, arg)
-                            MainFrm.CP_Original = New CP(CP.Mode.File, arg)
-                            MainFrm.OpenFileDialog1.FileName = arg
-                            MainFrm.SaveFileDialog1.FileName = arg
-                            MainFrm.ApplyCPValues(MainFrm.CP)
-                            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-
-                        Else
-                            MainFrm.CP = New CP(CP.Mode.File, arg)
-                            MainFrm.CP_Original = New CP(CP.Mode.File, arg)
-                            MainFrm.OpenFileDialog1.FileName = arg
-                            MainFrm.SaveFileDialog1.FileName = arg
-                            MainFrm.ApplyCPValues(MainFrm.CP)
-                            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-                            MainFrm.CP.Save(CP.SavingMode.Registry, arg)
-                            RestartExplorer()
+                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                            SettingsX._External = True
+                            SettingsX._File = arg
+                            SettingsX.Show()
                             '''''''
                         End If
-                    End If
 
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                        SettingsX._External = True
-                        SettingsX._File = arg
-                        SettingsX.Show()
-                        '''''''
                     End If
-
                 End If
             Catch
                 e.BringToForeground = True
             End Try
         End Sub
+
+#Region "Language"
+        Public Sub ExportNativeLang(File As String)
+            Dim LS As New List(Of String)
+            LS.Clear()
+
+            For Each f In Assembly.GetExecutingAssembly().GetTypes().
+                Where(Function(t) GetType(Form).IsAssignableFrom(t))
+
+                Using ins = DirectCast(Activator.CreateInstance(f), Form)
+                    LS.Add(ins.Name & "= " & ins.Text)
+                    For Each ctrl In GetAllControls(ins)
+                        LS.Add(ins.Name & "\" & ctrl.Name & "= " & ctrl.Text)
+                    Next
+                End Using
+            Next
+
+            Dim lx As New List(Of String)
+            lx.Add("!Name= Abdelrhman-AK")
+            lx.Add("!TrVer= 1.0")
+            lx.Add("!Lang= English")
+            lx.Add("!LangCode= EN-US")
+            lx.Add("!AppVer= " & My.Application.Info.Version.ToString)
+            lx.Add("!RightToLeft= False")
+
+            IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & My.Resources.CodeStr & vbCrLf & CStr_FromList(LS))
+        End Sub
+
+        Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
+            Dim cs = parent.Controls.OfType(Of Control)
+            Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
+        End Function
+
+        Public Function getAllTypesOfControl(assembly As Assembly) As IEnumerable(Of Type)
+            Return assembly.GetTypes().
+        Where(Function(t) t.IsSubclassOf(GetType(ContainerControl))).
+        SelectMany(Function(container) container.GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)).
+        Where(Function(f) f.FieldType.IsSubclassOf(GetType(Control))).
+        Select(Function(f) f.FieldType)
+        End Function
+#End Region
 
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
 

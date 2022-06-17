@@ -15,6 +15,10 @@ Public Class MainFrm
         Ten
     End Enum
 
+    Sub Main()
+
+    End Sub
+
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
         Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)

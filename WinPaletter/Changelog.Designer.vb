@@ -43,7 +43,8 @@ Partial Class Changelog
         '
         'TreeView1
         '
-        Me.TreeView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.TreeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TreeView1.FullRowSelect = True
@@ -51,41 +52,40 @@ Partial Class Changelog
         Me.TreeView1.Location = New System.Drawing.Point(12, 12)
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.ShowLines = False
-        Me.TreeView1.Size = New System.Drawing.Size(860, 488)
+        Me.TreeView1.Size = New System.Drawing.Size(860, 464)
         Me.TreeView1.TabIndex = 2
         '
         'PictureBox18
         '
+        Me.PictureBox18.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox18.Image = CType(resources.GetObject("PictureBox18.Image"), System.Drawing.Image)
-        Me.PictureBox18.Location = New System.Drawing.Point(12, 506)
+        Me.PictureBox18.Location = New System.Drawing.Point(12, 492)
         Me.PictureBox18.Name = "PictureBox18"
         Me.PictureBox18.Size = New System.Drawing.Size(30, 27)
         Me.PictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox18.TabIndex = 14
         Me.PictureBox18.TabStop = False
-        Me.PictureBox18.Visible = False
         '
         'Label9
         '
-        Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label9.BackColor = System.Drawing.Color.Transparent
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(45, 507)
+        Me.Label9.Location = New System.Drawing.Point(45, 493)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(431, 23)
+        Me.Label9.Size = New System.Drawing.Size(128, 23)
         Me.Label9.TabIndex = 15
         Me.Label9.Text = "Search for a version:"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label9.Visible = False
         '
         'XenonTextBox1
         '
+        Me.XenonTextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonTextBox1.Location = New System.Drawing.Point(179, 506)
+        Me.XenonTextBox1.Location = New System.Drawing.Point(179, 492)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
         Me.XenonTextBox1.Name = "XenonTextBox1"
@@ -95,17 +95,16 @@ Partial Class Changelog
         Me.XenonTextBox1.Text = "1.0.0.0"
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
-        Me.XenonTextBox1.Visible = False
         '
         'XenonCheckBox1
         '
         Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonCheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(729, 507)
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(729, 492)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(143, 23)
         Me.XenonCheckBox1.TabIndex = 3
@@ -128,6 +127,7 @@ Partial Class Changelog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(466, 400)
         Me.Name = "Changelog"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

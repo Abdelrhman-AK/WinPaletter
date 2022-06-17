@@ -1,8 +1,8 @@
 ﻿Imports System.Globalization
+Imports System.Reflection
 Imports System.Security.Principal
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
-Imports System.Reflection
 
 Public Class CP
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
@@ -472,14 +472,20 @@ Public Class CP
                     ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
 
                     Dim result As String = CStr_FromList(ls)
-                    IO.File.WriteAllText("tempreg.reg", result)
+
+                    Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
+                    If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+
+                    Dim tempreg As String = appData & "\tempreg.reg"
+
+                    IO.File.WriteAllText(tempreg, result)
 
                     Dim process As Process = Nothing
 
                     Dim processStartInfo As New ProcessStartInfo With {
                        .FileName = "regedit",
                        .Verb = "runas",
-                       .Arguments = String.Format("/s ""{0}\tempreg.reg""", My.Application.Info.DirectoryPath),
+                       .Arguments = String.Format("/s ""{0}""", tempreg),
                        .WindowStyle = ProcessWindowStyle.Hidden,
                        .CreateNoWindow = True,
                        .UseShellExecute = True
@@ -487,10 +493,10 @@ Public Class CP
                     process = Process.Start(processStartInfo)
                     process.WaitForExit()
                     processStartInfo.FileName = "reg"
-                    processStartInfo.Arguments = String.Format("import ""{0}\tempreg.reg""", My.Application.Info.DirectoryPath)
+                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
                     process = Process.Start(processStartInfo)
                     process.WaitForExit()
-                    Kill("tempreg.reg")
+                    Kill(tempreg)
                 End If
 
 

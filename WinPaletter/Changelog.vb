@@ -25,7 +25,7 @@ Public Class Changelog
         TreeView1.ImageList = My.Application.ChangeLogImgLst
 
         XenonTextBox1.Text = My.Application.Info.Version.ToString
-        XenonCheckBox1.Checked = My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta
+        XenonCheckBox1.Checked = (My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta)
         ApplyDarkMode(Me)
         ProgressBar1.Visible = False
         LoadChangelog()

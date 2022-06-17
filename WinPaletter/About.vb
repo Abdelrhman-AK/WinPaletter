@@ -33,4 +33,9 @@ Public Class About
     Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
         Process.Start("https://www.codeproject.com/Articles/548769/Animator-for-WinForms")
     End Sub
+
+    Private Sub LinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel5.LinkClicked
+        Process.Start("https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent/?utm_medium=android_app&utm_source=share")
+        Process.Start("https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well/?utm_medium=android_app&utm_source=share")
+    End Sub
 End Class

@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports Microsoft.Win32
+Imports WinPaletter.XenonCore
 
 Public Class SettingsX
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
@@ -75,6 +76,7 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
+            XenonCheckBox7.Checked = .RescueBox
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
@@ -92,6 +94,7 @@ Public Class SettingsX
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
+            .RescueBox = XenonCheckBox7.Checked
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -129,7 +132,7 @@ Public Class SettingsX
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
-
+                .RescueBox = XenonCheckBox7.Checked
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -156,6 +159,7 @@ Public Class SettingsX
                 XenonRadioButton3.Checked = .Appearance_Dark
                 XenonRadioButton4.Checked = Not .Appearance_Dark
                 XenonCheckBox6.Checked = .Appearance_Auto
+                XenonCheckBox7.Checked = .RescueBox
             End With
         End If
     End Sub
@@ -190,6 +194,7 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
+            XenonCheckBox7.Checked = .RescueBox
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -204,17 +209,15 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry and the application's settings.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
-            Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
-            If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
-            IO.File.Delete(appData & "\fileextension.ico")
-            IO.File.Delete(appData & "\settingsfile.ico")
-            MsgBox("Now, the application will exit. You can delete the application file.", MsgBoxStyle.Information)
+
+            Dim key1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\WinPaletter", True)
+            key1.DeleteSubKeyTree("Settings", False)
+            If key1 IsNot Nothing Then key1.Close()
+
             Application.[Exit]()
         End If
     End Sub
-
-
 End Class

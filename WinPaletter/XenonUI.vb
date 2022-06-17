@@ -299,23 +299,171 @@ End Class
 #End Region
 
 #Region "Xenon UI - Version 2"
-Public Class TablessControl
-    Inherits TabControl
 
-    Public Sub New()
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-        SetStyle(ControlStyles.ResizeRedraw, True)
-        Me.DoubleBuffered = True
+Public Class XenonTabControl : Inherits Windows.Forms.TabControl
+    Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
+    Dim A As Integer = 255
+    Dim WithEvents T As New Timer With {.Enabled = False, .Interval = 1}
+    Dim oldi As Integer
+
+    Sub New()
+        SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer, True)
+        ItemSize = New Size(40, 150) 'New Size(25, 120)
+        DrawMode = TabDrawMode.OwnerDrawFixed
+        SizeMode = TabSizeMode.Fixed
+        Font = New Font("Segoe UI", 9)
     End Sub
 
-    Protected Overrides Sub WndProc(ByRef m As Message)
-        If m.Msg = &H1328 AndAlso Not DesignMode Then
-            m.Result = CType(1, IntPtr)
+    Protected Overrides Sub CreateHandle()
+        MyBase.CreateHandle()
+
+        Dim X1 As Integer = ItemSize.Width
+        Dim X2 As Integer = ItemSize.Height
+
+        If Alignment = TabAlignment.Top Or Alignment = TabAlignment.Bottom Then
+            If X1 >= X2 Then
+                ItemSize = New Size(X1, X2)
+            Else
+                ItemSize = New Size(X2, X1)
+            End If
         Else
-            MyBase.WndProc(m)
+            If X2 >= X1 Then
+                ItemSize = New Size(X1, X2)
+            Else
+                ItemSize = New Size(X2, X1)
+            End If
         End If
     End Sub
+
+    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.HighSpeed
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        DoubleBuffered = True
+
+        Dim SelectColor, oldSelectColor As Color
+        Dim TextColor As Color
+        Dim ParentColor As Color = GetParentColor(Me)
+
+        Dim img As Image = Nothing
+        Dim imgOld As Image = Nothing
+        G.Clear(ParentColor)
+
+        For i = 0 To TabCount - 1
+            Dim TabRect As Rectangle = GetTabRect(i)
+            Dim OldTabRect As Rectangle = GetTabRect(oldi)
+            Dim SideTapeH As Integer = TabRect.Height * 0.75
+            Dim SideTapeW As Integer = 4
+            Dim SideTape, OldSideTape As Rectangle
+
+            If Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left Then
+                SideTape = New Rectangle(TabRect.X + 1, TabRect.Y + (TabRect.Height - SideTapeH) / 2, SideTapeW, SideTapeH)
+                OldSideTape = New Rectangle(OldTabRect.X + 1, OldTabRect.Y + (OldTabRect.Height - SideTapeH) / 2, SideTapeW, SideTapeH)
+            ElseIf Alignment = TabAlignment.Top Then
+                SideTape = New Rectangle(TabRect.X + TabRect.Width * 0.125, TabRect.Y + TabRect.Height - SideTapeW - 1, TabRect.Width * 0.75, SideTapeW)
+                OldSideTape = New Rectangle(OldTabRect.X + OldTabRect.Width * 0.125, OldTabRect.Y + OldTabRect.Height - SideTapeW - 1, OldTabRect.Width * 0.75, SideTapeW)
+            Else
+                SideTape = New Rectangle(TabRect.X, TabRect.Y, TabRect.Width, SideTapeW)
+                OldSideTape = New Rectangle(OldTabRect.X, OldTabRect.Y, OldTabRect.Width, SideTapeW)
+            End If
+
+            Try
+                If Me.ImageList IsNot Nothing Then
+                    Dim ls As ImageList = ImageList
+                    img = ls.Images.Item(i)
+                    SelectColor = GetAverageColor(img)
+                    imgOld = ls.Images.Item(oldi)
+                    oldSelectColor = GetAverageColor(imgOld)
+                Else
+                    SelectColor = LineColor
+                    oldSelectColor = LineColor
+                End If
+            Catch
+                SelectColor = LineColor
+                oldSelectColor = LineColor
+            End Try
+
+            If Not GetDarkMode() Then
+                SelectColor = ControlPaint.Light(SelectColor)
+                oldSelectColor = Color.FromArgb(255 - A, ControlPaint.Light(oldSelectColor))
+            End If
+
+            SelectColor = Color.FromArgb(A, SelectColor)
+            oldSelectColor = Color.FromArgb(255 - A, oldSelectColor)
+
+            Try
+                TabPages.Item(i).BackColor = ParentColor
+            Catch
+            End Try
+
+            If i = SelectedIndex Then
+                FillRect(G, New SolidBrush(SelectColor), TabRect)
+                FillRect(G, New SolidBrush(ControlPaint.Light(SelectColor, 0.65)), SideTape, 3)
+
+                FillRect(G, New SolidBrush(oldSelectColor), OldTabRect)
+                FillRect(G, New SolidBrush(ControlPaint.Light(oldSelectColor)), SideTape, 3)
+
+                TextColor = If(IsColorDark(SelectColor), Color.White, Color.Black)
+                oldi = i
+            Else
+
+                TextColor = If(IsColorDark(ParentColor), Color.White, Color.Black)
+            End If
+
+            Dim imgRect As Rectangle
+
+            If img IsNot Nothing Then
+                imgRect = New Rectangle(TabRect.X + 10, TabRect.Y + (TabRect.Height - img.Height) / 2, img.Width, img.Height)
+                G.DrawImage(img, imgRect)
+            End If
+
+            If img IsNot Nothing And (Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left) Then
+                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(imgRect.Right + 10, TabRect.Y, TabRect.Width - imgRect.Width - 10, TabRect.Height), StringAligner(ContentAlignment.MiddleLeft))
+            Else
+                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+            End If
+        Next
+
+        'DrawRect(G, New Pen(CCB(ParentColor, If(IsColorDark(ParentColor), 0.35, -0.35))), New Rectangle(0, 0, Width - 1, Height - 1))
+
+    End Sub
+
+    Private Sub XenonTabControl_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles Me.Selecting
+        If Not DesignMode Then
+            A = 0
+            Invalidate()
+        End If
+    End Sub
+
+    Private Sub XenonTabControl_Selected(sender As Object, e As EventArgs) Handles Me.Selected
+        If Not DesignMode Then
+            A = 0
+            Invalidate()
+            T.Enabled = True
+            T.Start()
+        End If
+    End Sub
+
+    Dim factor As Integer = 35
+
+    Private Sub T_Tick(sender As Object, e As EventArgs) Handles T.Tick
+        If Not DesignMode Then
+            If A + factor >= 255 Then
+                A = 255
+                Invalidate()
+                T.Stop()
+                T.Enabled = False
+            Else
+                A += factor
+                Invalidate()
+            End If
+            Threading.Thread.Sleep(1)
+        End If
+    End Sub
+
 End Class
+
+
 
 <DefaultEvent("CheckedChanged")>
 Public Class XenonToggle
