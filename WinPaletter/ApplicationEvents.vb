@@ -304,22 +304,22 @@ Namespace My
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
+            'Try
+            'For x = 1 To Environment.GetCommandLineArgs.Count - 1
+            'Dim arg As String = Environment.GetCommandLineArgs(x)
 
-                    If arg.ToLower = "/exportlanguage" Then
-                        Console.WriteLine()
-                        Console.Write("Exporting Language to Language.txt ...")
-                        ExportNativeLang("Language.txt")
-                        Console.WriteLine()
-                        Console.Write("Language Exported Successfully.")
-                        Process.GetCurrentProcess.Kill()
-                    End If
+            'If arg.ToLower = "/exportlanguage" Then
+            'Console.WriteLine()
+            'Console.Write("Exporting Language to Language.txt ...")
+            'ExportNativeLang("Language.txt")
+            'Console.WriteLine()
+            'Console.Write("Language Exported Successfully.")
+            'Process.GetCurrentProcess.Kill()
+            'End If
 
-                Next
-            Catch
-            End Try
+            'Next
+            'Catch
+            'End Try
 
             Dim ProcessKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
@@ -348,19 +348,19 @@ Namespace My
 
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
-#Region "WhatsNew Versions"
+#Region "WhatsNew"
 
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
                 '### Popup WhatsNew
 
                 Dim ver As New List(Of String)
                 ver.Clear()
+                ver.Add(My.Application.Info.Version.ToString)
 
                 For Each X As String In _Settings.WhatsNewRecord.ToArray()
                     ver.Add(X)
                 Next
 
-                ver.Add(My.Application.Info.Version.ToString)
                 ver = RemoveDuplicate(ver)
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
@@ -441,8 +441,8 @@ Namespace My
                 Else
 
                     If arg.ToLower = "/exportlanguage" Then
-                        ExportNativeLang("Language.txt")
-                        MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
+                        'ExportNativeLang("Language.txt")
+                        'MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
                     Else
 
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then

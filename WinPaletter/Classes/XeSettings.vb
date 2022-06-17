@@ -11,7 +11,7 @@ Public Class XeSettings
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
     Public Property RescueBox As Boolean = True
