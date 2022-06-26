@@ -4,6 +4,7 @@ Imports System.Security.Principal
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports WinPaletter.Localizer
 
 Namespace My
     Public Module WindowsVersions
@@ -39,6 +40,8 @@ Namespace My
         Public processKiller As New Process
         Public processExplorer As New Process
         Public processStartMenuExperienceHost As Process
+        Public LanguageHelper As New Localizer
+        Public allForms As New List(Of Form)
 
 #End Region
         <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
@@ -304,22 +307,40 @@ Namespace My
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            'Try
-            'For x = 1 To Environment.GetCommandLineArgs.Count - 1
-            'Dim arg As String = Environment.GetCommandLineArgs(x)
+            allForms.Clear()
+            allForms.Add(My.Forms.About)
+            allForms.Add(My.Forms.Changelog)
+            allForms.Add(My.Forms.ColorPicker)
+            allForms.Add(My.Forms.ComplexSave)
+            allForms.Add(My.Forms.dragPreviewer)
+            allForms.Add(My.Forms.EditInfo)
+            allForms.Add(My.Forms.LogonUI)
+            allForms.Add(My.Forms.MainFrm)
+            allForms.Add(My.Forms.QA)
+            allForms.Add(My.Forms.RescueBox)
+            allForms.Add(My.Forms.SettingsX)
+            allForms.Add(My.Forms.Tutorial)
+            allForms.Add(My.Forms.Updates)
+            allForms.Add(My.Forms.Win32UI)
 
-            'If arg.ToLower = "/exportlanguage" Then
-            'Console.WriteLine()
-            'Console.Write("Exporting Language to Language.txt ...")
-            'ExportNativeLang("Language.txt")
-            'Console.WriteLine()
-            'Console.Write("Language Exported Successfully.")
-            'Process.GetCurrentProcess.Kill()
-            'End If
+            LanguageHelper.LoadLanguageFromFile("C:\Users\boody\Desktop\Ar.wpl")
 
-            'Next
-            'Catch
-            'End Try
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+
+                    If arg.ToLower = "/exportlanguage" Then
+                        Console.WriteLine()
+                        Console.Write("Exporting Language to Language.txt ...")
+                        LanguageHelper.ExportNativeLang("Language.txt")
+                        Console.WriteLine()
+                        Console.Write("Language Exported Successfully.")
+                        Process.GetCurrentProcess.Kill()
+                    End If
+
+                Next
+            Catch
+            End Try
 
             Dim ProcessKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
@@ -441,8 +462,8 @@ Namespace My
                 Else
 
                     If arg.ToLower = "/exportlanguage" Then
-                        'ExportNativeLang("Language.txt")
-                        'MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
+                        LanguageHelper.ExportNativeLang("Language.txt")
+                        MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
                     Else
 
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
@@ -529,47 +550,6 @@ Namespace My
                 e.BringToForeground = True
             End Try
         End Sub
-
-#Region "Language"
-        Public Sub ExportNativeLang(File As String)
-            Dim LS As New List(Of String)
-            LS.Clear()
-
-            For Each f In Assembly.GetExecutingAssembly().GetTypes().
-                Where(Function(t) GetType(Form).IsAssignableFrom(t))
-
-                Using ins = DirectCast(Activator.CreateInstance(f), Form)
-                    LS.Add(ins.Name & "= " & ins.Text)
-                    For Each ctrl In GetAllControls(ins)
-                        LS.Add(ins.Name & "\" & ctrl.Name & "= " & ctrl.Text)
-                    Next
-                End Using
-            Next
-
-            Dim lx As New List(Of String)
-            lx.Add("!Name= Abdelrhman-AK")
-            lx.Add("!TrVer= 1.0")
-            lx.Add("!Lang= English")
-            lx.Add("!LangCode= EN-US")
-            lx.Add("!AppVer= " & My.Application.Info.Version.ToString)
-            lx.Add("!RightToLeft= False")
-
-            IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & My.Resources.CodeStr & vbCrLf & CStr_FromList(LS))
-        End Sub
-
-        Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
-            Dim cs = parent.Controls.OfType(Of Control)
-            Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
-        End Function
-
-        Public Function getAllTypesOfControl(assembly As Assembly) As IEnumerable(Of Type)
-            Return assembly.GetTypes().
-        Where(Function(t) t.IsSubclassOf(GetType(ContainerControl))).
-        SelectMany(Function(container) container.GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)).
-        Where(Function(f) f.FieldType.IsSubclassOf(GetType(Control))).
-        Select(Function(f) f.FieldType)
-        End Function
-#End Region
 
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
 

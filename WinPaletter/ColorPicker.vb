@@ -3,17 +3,6 @@ Imports Cyotek.Windows.Forms
 Imports WinPaletter.XenonCore
 
 Public Class ColorPicker
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ColorWheel1.Visible = True
-        ColorGrid1.Visible = False
-        XenonGroupBox3.Visible = False
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        ColorWheel1.Visible = False
-        ColorGrid1.Visible = True
-        XenonGroupBox3.Visible = False
-    End Sub
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
@@ -21,8 +10,12 @@ Public Class ColorPicker
         Me.Left = fr.Right - 14
         Me.Top = fr.Top
         Me.Height = fr.Height
+        With Panel1.VerticalScroll
+            .Visible = True
+            .Enabled = True
+        End With
 
-        ColorWheel1.Location = ColorGrid1.Location
+
     End Sub
 
 
@@ -34,8 +27,7 @@ Public Class ColorPicker
     Dim ls As New List(Of Control)
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
-        MainFrm.Visible = False
-        Win32UI.Visible = False
+        fr.Visible = False
 
         ls.Clear()
 
@@ -51,8 +43,7 @@ Public Class ColorPicker
     End Sub
 
     Private Sub ScreenColorPicker1_MouseUp(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseUp
-        MainFrm.Visible = True
-        Win32UI.Visible = True
+        fr.Visible = True
 
         For Each ctrl As Control In ls
             ctrl.Visible = True
@@ -261,7 +252,7 @@ Public Class ColorPicker
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
-            For Each C As ColorThiefDotNet.QuantizedColor In colorThiefX.GetPalette(img, XenonNumericUpDown1.Value, XenonNumericUpDown2.Value, XenonCheckBox1.Checked)
+            For Each C As ColorThiefDotNet.QuantizedColor In ColorThiefX.GetPalette(img, XenonNumericUpDown1.Value, XenonNumericUpDown2.Value, XenonCheckBox1.Checked)
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
 
@@ -299,11 +290,6 @@ Public Class ColorPicker
 
     Public Shared fs As IO.FileStream
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        ColorWheel1.Visible = False
-        ColorGrid1.Visible = False
-        XenonGroupBox3.Visible = True
-    End Sub
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
@@ -315,4 +301,22 @@ Public Class ColorPicker
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub
+
+
+
+
+
+    Dim WithEvents cl As New ColorCollection
+
+    Private Sub ScreenColorPicker1_ColorChanged(sender As Object, e As EventArgs) Handles ScreenColorPicker1.ColorChanged
+
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Dim File As String = "C:\Users\boody\Documents\paint.net User Files\Palettes\Test.txt"
+        cl.Load(File)
+        ColorGrid1.CustomColors = cl
+        ColorEditorManager1.ColorGrid.CustomColors = cl
+    End Sub
+
 End Class

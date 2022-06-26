@@ -540,7 +540,7 @@ Partial Class SettingsX
         Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton1.Location = New System.Drawing.Point(87, 118)
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
-        Me.XenonRadioButton1.Size = New System.Drawing.Size(377, 26)
+        Me.XenonRadioButton1.Size = New System.Drawing.Size(506, 26)
         Me.XenonRadioButton1.TabIndex = 8
         Me.XenonRadioButton1.Text = "Opening theme file from explorer previews it in the application"
         '
@@ -641,7 +641,7 @@ Partial Class SettingsX
         Me.XenonRadioButton4.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton4.Location = New System.Drawing.Point(87, 86)
         Me.XenonRadioButton4.Name = "XenonRadioButton4"
-        Me.XenonRadioButton4.Size = New System.Drawing.Size(98, 26)
+        Me.XenonRadioButton4.Size = New System.Drawing.Size(309, 26)
         Me.XenonRadioButton4.TabIndex = 13
         Me.XenonRadioButton4.Text = "Light Mode"
         '
@@ -654,7 +654,7 @@ Partial Class SettingsX
         Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton3.Location = New System.Drawing.Point(87, 54)
         Me.XenonRadioButton3.Name = "XenonRadioButton3"
-        Me.XenonRadioButton3.Size = New System.Drawing.Size(98, 26)
+        Me.XenonRadioButton3.Size = New System.Drawing.Size(309, 26)
         Me.XenonRadioButton3.TabIndex = 12
         Me.XenonRadioButton3.Text = "Dark Mode"
         '

@@ -112,7 +112,6 @@ Public Class MainFrm
             Label21,
             themename_lbl,
             author_lbl,
-            ColorPicker.Label1,
             ColorPicker.Label2,
             ColorPicker.Label3,
             ColorPicker.Label5,
@@ -1384,6 +1383,7 @@ Public Class MainFrm
 
         Me.Close()
     End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

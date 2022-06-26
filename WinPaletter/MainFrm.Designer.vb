@@ -137,6 +137,7 @@ Partial Class MainFrm
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.PaletteContainer.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -1809,6 +1810,22 @@ Partial Class MainFrm
         Me.XenonButton2.Tag = "Open a Theme File"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
+        'XenonButton14
+        '
+        Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton14.ForeColor = System.Drawing.Color.White
+        Me.XenonButton14.Image = Nothing
+        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton14.LineSize = 1
+        Me.XenonButton14.Location = New System.Drawing.Point(470, 602)
+        Me.XenonButton14.Name = "XenonButton14"
+        Me.XenonButton14.Size = New System.Drawing.Size(96, 33)
+        Me.XenonButton14.TabIndex = 29
+        Me.XenonButton14.Text = "Cancel"
+        Me.XenonButton14.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -1816,6 +1833,7 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1013, 675)
+        Me.Controls.Add(Me.XenonButton14)
         Me.Controls.Add(Me.XenonGroupBox3)
         Me.Controls.Add(Me.XenonButton13)
         Me.Controls.Add(Me.XenonSeparator1)
@@ -1994,4 +2012,5 @@ Partial Class MainFrm
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents Label13 As Label
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents XenonButton14 As XenonButton
 End Class

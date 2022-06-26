@@ -26,6 +26,9 @@ Partial Class Updates
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.LinkLabel()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton1 = New WinPaletter.XenonRadioButton()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -43,9 +46,6 @@ Partial Class Updates
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.XenonSeparatorVertical1 = New WinPaletter.XenonSeparatorVertical()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton1 = New WinPaletter.XenonRadioButton()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonButton3 = New WinPaletter.XenonButton()
@@ -91,6 +91,45 @@ Partial Class Updates
         Me.Panel1.Size = New System.Drawing.Size(624, 89)
         Me.Panel1.TabIndex = 18
         Me.Panel1.Visible = False
+        '
+        'XenonRadioButton2
+        '
+        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton2.Checked = False
+        Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton2.Location = New System.Drawing.Point(3, 32)
+        Me.XenonRadioButton2.Name = "XenonRadioButton2"
+        Me.XenonRadioButton2.Size = New System.Drawing.Size(134, 23)
+        Me.XenonRadioButton2.TabIndex = 2
+        Me.XenonRadioButton2.Text = "Save download as..."
+        '
+        'XenonRadioButton3
+        '
+        Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton3.Checked = False
+        Me.XenonRadioButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton3.Location = New System.Drawing.Point(3, 61)
+        Me.XenonRadioButton3.Name = "XenonRadioButton3"
+        Me.XenonRadioButton3.Size = New System.Drawing.Size(202, 23)
+        Me.XenonRadioButton3.TabIndex = 1
+        Me.XenonRadioButton3.Text = "Just Download from the browser"
+        '
+        'XenonRadioButton1
+        '
+        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton1.Checked = True
+        Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton1.Location = New System.Drawing.Point(3, 3)
+        Me.XenonRadioButton1.Name = "XenonRadioButton1"
+        Me.XenonRadioButton1.Size = New System.Drawing.Size(451, 23)
+        Me.XenonRadioButton1.TabIndex = 0
+        Me.XenonRadioButton1.Text = "Download then Close the current executable and replace it by the new update"
         '
         'ProgressBar1
         '
@@ -257,45 +296,6 @@ Partial Class Updates
         Me.XenonCheckBox1.TabIndex = 31
         Me.XenonCheckBox1.Text = "Automatic Check for Updates"
         '
-        'XenonRadioButton2
-        '
-        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonRadioButton2.Checked = False
-        Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioButton2.Location = New System.Drawing.Point(3, 32)
-        Me.XenonRadioButton2.Name = "XenonRadioButton2"
-        Me.XenonRadioButton2.Size = New System.Drawing.Size(134, 23)
-        Me.XenonRadioButton2.TabIndex = 2
-        Me.XenonRadioButton2.Text = "Save download as..."
-        '
-        'XenonRadioButton3
-        '
-        Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonRadioButton3.Checked = False
-        Me.XenonRadioButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioButton3.Location = New System.Drawing.Point(3, 61)
-        Me.XenonRadioButton3.Name = "XenonRadioButton3"
-        Me.XenonRadioButton3.Size = New System.Drawing.Size(202, 23)
-        Me.XenonRadioButton3.TabIndex = 1
-        Me.XenonRadioButton3.Text = "Just Download from the browser"
-        '
-        'XenonRadioButton1
-        '
-        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonRadioButton1.Checked = True
-        Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioButton1.Location = New System.Drawing.Point(3, 3)
-        Me.XenonRadioButton1.Name = "XenonRadioButton1"
-        Me.XenonRadioButton1.Size = New System.Drawing.Size(451, 23)
-        Me.XenonRadioButton1.TabIndex = 0
-        Me.XenonRadioButton1.Text = "Download then Close the current executable and replace it by the new update"
-        '
         'XenonAlertBox2
         '
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
@@ -386,6 +386,7 @@ Partial Class Updates
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

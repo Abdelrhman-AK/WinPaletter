@@ -302,7 +302,7 @@ End Class
 
 Public Class XenonTabControl : Inherits Windows.Forms.TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
-    Dim A As Integer = 255
+    'Dim A As Integer = 255
     Dim WithEvents T As New Timer With {.Enabled = False, .Interval = 1}
     Dim oldi As Integer
 
@@ -341,7 +341,7 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
-        Dim SelectColor, oldSelectColor As Color
+        Dim SelectColor As Color
         Dim TextColor As Color
         Dim ParentColor As Color = GetParentColor(Me)
 
@@ -349,23 +349,11 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         Dim imgOld As Image = Nothing
         G.Clear(ParentColor)
 
+        'FillRect(G, New SolidBrush(CCB(ParentColor, If(GetDarkMode(), 0.05, -0.05))), New Rectangle(0, 0, Width - 1, ItemSize.Height))
+
         For i = 0 To TabCount - 1
             Dim TabRect As Rectangle = GetTabRect(i)
             Dim OldTabRect As Rectangle = GetTabRect(oldi)
-            Dim SideTapeH As Integer = TabRect.Height * 0.75
-            Dim SideTapeW As Integer = 4
-            Dim SideTape, OldSideTape As Rectangle
-
-            If Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left Then
-                SideTape = New Rectangle(TabRect.X + 1, TabRect.Y + (TabRect.Height - SideTapeH) / 2, SideTapeW, SideTapeH)
-                OldSideTape = New Rectangle(OldTabRect.X + 1, OldTabRect.Y + (OldTabRect.Height - SideTapeH) / 2, SideTapeW, SideTapeH)
-            ElseIf Alignment = TabAlignment.Top Then
-                SideTape = New Rectangle(TabRect.X + TabRect.Width * 0.125, TabRect.Y + TabRect.Height - SideTapeW - 1, TabRect.Width * 0.75, SideTapeW)
-                OldSideTape = New Rectangle(OldTabRect.X + OldTabRect.Width * 0.125, OldTabRect.Y + OldTabRect.Height - SideTapeW - 1, OldTabRect.Width * 0.75, SideTapeW)
-            Else
-                SideTape = New Rectangle(TabRect.X, TabRect.Y, TabRect.Width, SideTapeW)
-                OldSideTape = New Rectangle(OldTabRect.X, OldTabRect.Y, OldTabRect.Width, SideTapeW)
-            End If
 
             Try
                 If Me.ImageList IsNot Nothing Then
@@ -373,42 +361,32 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
                     img = ls.Images.Item(i)
                     SelectColor = GetAverageColor(img)
                     imgOld = ls.Images.Item(oldi)
-                    oldSelectColor = GetAverageColor(imgOld)
                 Else
                     SelectColor = LineColor
-                    oldSelectColor = LineColor
                 End If
             Catch
                 SelectColor = LineColor
-                oldSelectColor = LineColor
             End Try
 
             If Not GetDarkMode() Then
                 SelectColor = ControlPaint.Light(SelectColor)
-                oldSelectColor = Color.FromArgb(255 - A, ControlPaint.Light(oldSelectColor))
             End If
 
-            SelectColor = Color.FromArgb(A, SelectColor)
-            oldSelectColor = Color.FromArgb(255 - A, oldSelectColor)
+            SelectColor = SelectColor
 
-            Try
-                TabPages.Item(i).BackColor = ParentColor
-            Catch
-            End Try
 
             If i = SelectedIndex Then
                 FillRect(G, New SolidBrush(SelectColor), TabRect)
-                FillRect(G, New SolidBrush(ControlPaint.Light(SelectColor, 0.65)), SideTape, 3)
-
-                FillRect(G, New SolidBrush(oldSelectColor), OldTabRect)
-                FillRect(G, New SolidBrush(ControlPaint.Light(oldSelectColor)), SideTape, 3)
-
                 TextColor = If(IsColorDark(SelectColor), Color.White, Color.Black)
                 oldi = i
             Else
-
                 TextColor = If(IsColorDark(ParentColor), Color.White, Color.Black)
             End If
+
+            Try
+                If Not DesignMode Then TabPages.Item(i).BackColor = ParentColor
+            Catch
+            End Try
 
             Dim imgRect As Rectangle
 
@@ -423,47 +401,8 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
                 G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
             End If
         Next
-
-        'DrawRect(G, New Pen(CCB(ParentColor, If(IsColorDark(ParentColor), 0.35, -0.35))), New Rectangle(0, 0, Width - 1, Height - 1))
-
     End Sub
-
-    Private Sub XenonTabControl_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles Me.Selecting
-        If Not DesignMode Then
-            A = 0
-            Invalidate()
-        End If
-    End Sub
-
-    Private Sub XenonTabControl_Selected(sender As Object, e As EventArgs) Handles Me.Selected
-        If Not DesignMode Then
-            A = 0
-            Invalidate()
-            T.Enabled = True
-            T.Start()
-        End If
-    End Sub
-
-    Dim factor As Integer = 35
-
-    Private Sub T_Tick(sender As Object, e As EventArgs) Handles T.Tick
-        If Not DesignMode Then
-            If A + factor >= 255 Then
-                A = 255
-                Invalidate()
-                T.Stop()
-                T.Enabled = False
-            Else
-                A += factor
-                Invalidate()
-            End If
-            Threading.Thread.Sleep(1)
-        End If
-    End Sub
-
 End Class
-
-
 
 <DefaultEvent("CheckedChanged")>
 Public Class XenonToggle
@@ -745,16 +684,19 @@ Public Class XenonRadioButton
             Return _Checked
         End Get
         Set(ByVal value As Boolean)
-            _Checked = value
+            Try
+                _Checked = value
 
-            If _Checked Then
-                InvalidateParent()
-            End If
+                If _Checked Then
+                    InvalidateParent()
+                End If
 
-            RaiseEvent CheckedChanged(Me)
-            Tmr2.Enabled = True
-            Tmr2.Start()
-            Invalidate()
+                RaiseEvent CheckedChanged(Me)
+                Tmr2.Enabled = True
+                Tmr2.Start()
+                Invalidate()
+            Catch
+            End Try
         End Set
     End Property
 
@@ -932,12 +874,20 @@ Public Class XenonRadioButton
 
             '################################################################################# Customizer
             SZ1 = G.MeasureString(Text, Font)
-            PT1 = New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
 
+            Dim format As StringFormat = New StringFormat()
             Dim OuterCircle As New Rectangle(3, 4, Height - 8, Height - 8)
             Dim InnerCircle As New Rectangle(4, 5, Height - 10, Height - 10)
             Dim CheckCircle As New Rectangle(7, 8, Height - 16, Height - 16)
-            Dim TightRect As New Rectangle(0, 1, OuterCircle.Right + SZ1.Width - 5, Height - 2)
+            Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - OuterCircle.Width, Height - 1)
+
+            If RightToLeft Then
+                format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
+                OuterCircle.X = Width - OuterCircle.X - OuterCircle.Width
+                InnerCircle.X = Width - InnerCircle.X - InnerCircle.Width
+                CheckCircle.X = Width - CheckCircle.X - CheckCircle.Width
+                TextRect.Width -= OuterCircle.Width + 13
+            End If
 
 #Region "Colors System"
             Dim HoverCircle_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -951,8 +901,6 @@ Public Class XenonRadioButton
             '#################################################################################
 
             G.Clear(ParentColor)
-
-            If Enabled Then FillRect(G, New SolidBrush(Color.FromArgb(alpha, Selection_Color)), TightRect)   '"Rectangle Hover"
             G.FillEllipse(New SolidBrush(BackCircle_Color), OuterCircle)
 
             If Checked Then
@@ -967,13 +915,11 @@ Public Class XenonRadioButton
             End If
 
 #Region "Strings"
-
             If Checked Then
-                G.DrawString(Text, Font, New SolidBrush(CheckCircle_Color), PT1)
+                G.DrawString(Text, Font, New SolidBrush(CheckCircle_Color), TextRect, format)
             Else
-                G.DrawString(Text, Font, New SolidBrush(ForeColor), PT1)
+                G.DrawString(Text, Font, New SolidBrush(ForeColor), TextRect, format)
             End If
-
 #End Region
         Catch
 
@@ -1005,11 +951,14 @@ Public Class XenonCheckBox
             Return _Checked
         End Get
         Set(ByVal value As Boolean)
-            _Checked = value
-            RaiseEvent CheckedChanged(Me)
-            Tmr2.Enabled = True
-            Tmr2.Start()
-            Invalidate()
+            Try
+                _Checked = value
+                RaiseEvent CheckedChanged(Me)
+                Tmr2.Enabled = True
+                Tmr2.Start()
+                Invalidate()
+            Catch
+            End Try
         End Set
     End Property
 
@@ -2373,18 +2322,23 @@ End Class
     End Function
 
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
-        MyBase.OnHandleCreated(e)
-        If Not String.IsNullOrEmpty(Hint) Then UpdateHint()
-        alpha = 0
-        ColorPalette = New XenonColorPalette(Me)
-        If Not DesignMode Then
-            Try
-                AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                AddHandler FindForm.Shown, AddressOf RefreshColorPalette
-                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-            Catch
-            End Try
-        End If
+        Try
+            If Not DesignMode Then
+                MyBase.OnHandleCreated(e)
+                If Not String.IsNullOrEmpty(Hint) Then UpdateHint()
+                alpha = 0
+                ColorPalette = New XenonColorPalette(Me)
+                If Not DesignMode Then
+                    Try
+                        AddHandler FindForm.Load, AddressOf RefreshColorPalette
+                        AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                        AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                    Catch
+                    End Try
+                End If
+            End If
+        Catch
+        End Try
     End Sub
 
     Private m_Hint As String
