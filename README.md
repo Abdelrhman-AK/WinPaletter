@@ -7,11 +7,6 @@ Colorize Windows 10/11 Accents without restrictions.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/1.png?raw=true)
 
-# Antiviruses or some browsers download issue
-- If you face in avast that the program is infected with IDP.Generic, then go to Avast > Updates > Update Definitions and then reopen the app after restoring it from quarantine. Avast will rescan it and it will find that the application is clean. (It was a false positive fixed in last definition updates - Thanks to Ondrej; Avast Customer Care Team)
-- Other Antiviruses (Kaspersky, Malwarebyte) found it clean, don't worry.
-- Some browsers like Edge will prompt you that the program may harm the computer (The program is not signed so the browser think that the program is from unknown organization and may be harmful). You can download it anyway, don't worry.
-
 # Idea of the program
 Inspired by u/aveyo and u/Egg-Tricky (Reddit): 
 
@@ -24,3 +19,8 @@ The Accent colors are stored in the Windows registry, one of them is stored as a
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/2.png?raw=true)
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/3.png?raw=true)
+
+# Antiviruses or some browsers download issue
+- If you face in avast that the program is infected with IDP.Generic, then go to Avast > Updates > Update Definitions and then reopen the app after restoring it from quarantine. Avast will rescan it and it will find that the application is clean. (It was a false positive fixed in last definition updates - Thanks to Ondrej; Avast Customer Care Team)
+- Other Antiviruses (Kaspersky, Malwarebyte) found it clean, don't worry.
+- Some browsers like Edge will prompt you that the program may harm the computer (The program is not signed so the browser think that the program is from unknown organization and may be harmful). You can download it anyway, don't worry.
