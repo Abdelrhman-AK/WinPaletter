@@ -112,6 +112,7 @@ Public Class MainFrm
             Label21,
             themename_lbl,
             author_lbl,
+            ColorPicker.Label1,
             ColorPicker.Label2,
             ColorPicker.Label3,
             ColorPicker.Label5,
@@ -127,12 +128,10 @@ Public Class MainFrm
             SettingsX.Label2,
             SettingsX.Label3,
             SettingsX.Label5,
-            SettingsX.Label6,
-            Win32UI.Label37,
-            Win32UI.Label40
+            SettingsX.Label6
         }
 
-        If My.W11 Then
+        If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then
             For Each lbl As Label In LabelsList
                 lbl.Font = New Font("Segoe UI Variable Display", lbl.Font.Size, lbl.Font.Style)
             Next
@@ -1351,6 +1350,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If My.Application._Settings.Language Then My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
         SettingsX.Show()
     End Sub
 
@@ -1374,14 +1374,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        If CP.Equals(CP_FirstTime) Then
-            CP_FirstTime.Save(CP.SavingMode.Registry)
-            CP = CP_FirstTime
-            CP_Original = CP_FirstTime
-            RestartExplorer()
-        End If
-
         Me.Close()
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+
     End Sub
 
 

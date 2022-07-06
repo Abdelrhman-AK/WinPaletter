@@ -256,7 +256,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl8.BackColor = System.Drawing.Color.Transparent
-        Me.lbl8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl8.Location = New System.Drawing.Point(36, 3)
         Me.lbl8.Name = "lbl8"
         Me.lbl8.Size = New System.Drawing.Size(345, 24)
@@ -315,7 +315,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl7.BackColor = System.Drawing.Color.Transparent
-        Me.lbl7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl7.Location = New System.Drawing.Point(36, 3)
         Me.lbl7.Name = "lbl7"
         Me.lbl7.Size = New System.Drawing.Size(345, 24)
@@ -374,7 +374,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl4.BackColor = System.Drawing.Color.Transparent
-        Me.lbl4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl4.Location = New System.Drawing.Point(36, 3)
         Me.lbl4.Name = "lbl4"
         Me.lbl4.Size = New System.Drawing.Size(345, 24)
@@ -443,7 +443,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl6.BackColor = System.Drawing.Color.Transparent
-        Me.lbl6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl6.Location = New System.Drawing.Point(36, 3)
         Me.lbl6.Name = "lbl6"
         Me.lbl6.Size = New System.Drawing.Size(345, 24)
@@ -517,7 +517,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl1.BackColor = System.Drawing.Color.Transparent
-        Me.lbl1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl1.Location = New System.Drawing.Point(39, 3)
         Me.lbl1.Name = "lbl1"
         Me.lbl1.Size = New System.Drawing.Size(345, 24)
@@ -576,7 +576,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl3.BackColor = System.Drawing.Color.Transparent
-        Me.lbl3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl3.Location = New System.Drawing.Point(36, 3)
         Me.lbl3.Name = "lbl3"
         Me.lbl3.Size = New System.Drawing.Size(345, 24)
@@ -586,7 +586,7 @@ Partial Class MainFrm
         '
         'Label10
         '
-        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label10.Location = New System.Drawing.Point(44, 3)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(85, 35)
@@ -645,7 +645,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl2.BackColor = System.Drawing.Color.Transparent
-        Me.lbl2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl2.Location = New System.Drawing.Point(36, 3)
         Me.lbl2.Name = "lbl2"
         Me.lbl2.Size = New System.Drawing.Size(345, 24)
@@ -689,7 +689,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl5.BackColor = System.Drawing.Color.Transparent
-        Me.lbl5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lbl5.Location = New System.Drawing.Point(36, 3)
         Me.lbl5.Name = "lbl5"
         Me.lbl5.Size = New System.Drawing.Size(345, 24)
@@ -781,7 +781,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.BackColor = System.Drawing.Color.Transparent
-        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label19.Location = New System.Drawing.Point(36, 3)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(345, 24)
@@ -823,7 +823,7 @@ Partial Class MainFrm
         Me.Label2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label2.Location = New System.Drawing.Point(36, 2)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(128, 23)
@@ -888,7 +888,7 @@ Partial Class MainFrm
         Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label9.Location = New System.Drawing.Point(36, 2)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(350, 23)
@@ -941,7 +941,7 @@ Partial Class MainFrm
         Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label7.Location = New System.Drawing.Point(36, 2)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(128, 23)
@@ -961,7 +961,7 @@ Partial Class MainFrm
         '
         'Label17
         '
-        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label17.Location = New System.Drawing.Point(44, 3)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(80, 35)
@@ -1034,7 +1034,7 @@ Partial Class MainFrm
         Me.Label11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label11.Location = New System.Drawing.Point(36, 2)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(128, 24)
@@ -1069,7 +1069,7 @@ Partial Class MainFrm
         '
         'Label1
         '
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label1.Location = New System.Drawing.Point(44, 3)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(84, 35)
@@ -1110,7 +1110,7 @@ Partial Class MainFrm
         Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label5.BackColor = System.Drawing.Color.Transparent
-        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label5.Location = New System.Drawing.Point(36, 2)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(128, 24)
@@ -1191,7 +1191,7 @@ Partial Class MainFrm
         Me.status_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.status_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.status_lbl.Location = New System.Drawing.Point(0, 646)
         Me.status_lbl.Name = "status_lbl"
         Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
@@ -1252,7 +1252,7 @@ Partial Class MainFrm
         '
         'Label13
         '
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label13.Location = New System.Drawing.Point(44, 3)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(84, 35)
@@ -1425,7 +1425,7 @@ Partial Class MainFrm
         'Label12
         '
         Me.Label12.BackColor = System.Drawing.Color.Transparent
-        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label12.ForeColor = System.Drawing.Color.Brown
         Me.Label12.Location = New System.Drawing.Point(4, 120)
         Me.Label12.Name = "Label12"
@@ -1449,7 +1449,7 @@ Partial Class MainFrm
         '
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(59, 1)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(119, 37)
@@ -1461,7 +1461,7 @@ Partial Class MainFrm
         '
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Label3.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
         Me.Label3.Location = New System.Drawing.Point(1, 1)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(58, 37)
@@ -1594,7 +1594,7 @@ Partial Class MainFrm
         '
         'Label21
         '
-        Me.Label21.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label21.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label21.Location = New System.Drawing.Point(44, 3)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(80, 35)
@@ -1819,7 +1819,7 @@ Partial Class MainFrm
         Me.XenonButton14.Image = Nothing
         Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(470, 602)
+        Me.XenonButton14.Location = New System.Drawing.Point(477, 601)
         Me.XenonButton14.Name = "XenonButton14"
         Me.XenonButton14.Size = New System.Drawing.Size(96, 33)
         Me.XenonButton14.TabIndex = 29
@@ -1843,7 +1843,7 @@ Partial Class MainFrm
         Me.Controls.Add(Me.PaletteContainer)
         Me.Controls.Add(Me.XenonGroupBox8)
         Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

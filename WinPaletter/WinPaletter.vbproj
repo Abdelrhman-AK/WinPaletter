@@ -29,6 +29,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,7 +66,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -175,7 +178,7 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application1.Designer.vb">
+    <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -198,6 +201,12 @@
     </Compile>
     <Compile Include="RescueBox.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RetroUI.Designer.vb">
+      <DependentUpon>RetroUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RetroUI.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -233,9 +242,10 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="App.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -288,7 +298,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
   </ItemGroup>

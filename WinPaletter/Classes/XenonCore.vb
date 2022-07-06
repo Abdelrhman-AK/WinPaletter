@@ -289,12 +289,32 @@ Public Class XenonCore
 
 
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
-        Select Case DarkMode
-            Case True
-                If ctrl.ForeColor = Color.Black Then ctrl.ForeColor = Color.White
-            Case False
-                If ctrl.ForeColor = Color.White Then ctrl.ForeColor = Color.Black
-        End Select
+
+        Dim b As Boolean = False
+        If TypeOf ctrl Is RetroButton Then b = True
+        If TypeOf ctrl Is RetroCheckBox Then b = True
+        If TypeOf ctrl Is RetroGroupBox Then b = True
+        If TypeOf ctrl Is RetroLabel Then b = True
+        If TypeOf ctrl Is RetroListbox Then b = True
+        If TypeOf ctrl Is RetroPanel Then b = True
+        If TypeOf ctrl Is RetroPanelRaised Then b = True
+        If TypeOf ctrl Is RetroProgressBar Then b = True
+        If TypeOf ctrl Is RetroRadioButton Then b = True
+        If TypeOf ctrl Is RetroSeparatorH Then b = True
+        If TypeOf ctrl Is RetroSeparatorV Then b = True
+        If TypeOf ctrl Is RetroTabControl Then b = True
+        If TypeOf ctrl Is RetroTextBox Then b = True
+        If TypeOf ctrl Is RetroWindow Then b = True
+
+        If Not b Then
+            Select Case DarkMode
+                Case True
+                    If ctrl.ForeColor = Color.Black Then ctrl.ForeColor = Color.White
+                Case False
+                    If ctrl.ForeColor = Color.White Then ctrl.ForeColor = Color.Black
+            End Select
+        End If
+
 
         If TypeOf ctrl Is XenonGroupBox Then
             If TryCast(ctrl, XenonGroupBox).CustomColor Then

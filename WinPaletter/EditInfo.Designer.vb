@@ -62,7 +62,7 @@ Partial Class EditInfo
         'Label2
         '
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label2.Location = New System.Drawing.Point(45, 16)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(124, 18)
@@ -84,7 +84,7 @@ Partial Class EditInfo
         'Label1
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label1.Location = New System.Drawing.Point(45, 48)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(124, 18)
@@ -106,7 +106,7 @@ Partial Class EditInfo
         'Label3
         '
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label3.Location = New System.Drawing.Point(45, 80)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(124, 18)
@@ -163,7 +163,7 @@ Partial Class EditInfo
         Me.XenonTextBox3.Multiline = True
         Me.XenonTextBox3.Name = "XenonTextBox3"
         Me.XenonTextBox3.ReadOnly = False
-        Me.XenonTextBox3.Size = New System.Drawing.Size(420, 149)
+        Me.XenonTextBox3.Size = New System.Drawing.Size(420, 24)
         Me.XenonTextBox3.TabIndex = 16
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox3.UseSystemPasswordChar = False
@@ -229,7 +229,7 @@ Partial Class EditInfo
         'Label4
         '
         Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label4.Location = New System.Drawing.Point(45, 275)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(124, 18)
@@ -251,7 +251,7 @@ Partial Class EditInfo
         'Label5
         '
         Me.Label5.BackColor = System.Drawing.Color.Transparent
-        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label5.Location = New System.Drawing.Point(45, 243)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(124, 18)
@@ -316,7 +316,7 @@ Partial Class EditInfo
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.Label2)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)

@@ -17,6 +17,8 @@ Public Class Localizer
 #End Region
 
 #Region "Deep-In-Code Strings"
+    Property Yes As String
+    Property No As String
     Property NewTag As String
     Property OpenTag As String
     Property SaveTag As String
@@ -82,7 +84,6 @@ Public Class Localizer
     Property Channel As String
 #End Region
 
-
     Public Sub ExportNativeLang(File As String)
         Dim LS As New List(Of String)
         LS.Clear()
@@ -108,7 +109,9 @@ Public Class Localizer
         IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & My.Resources.CodeStr & vbCrLf & CStr_FromList(LS))
     End Sub
 
-    Public Sub LoadLanguageFromFile(File As String)
+    Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
+        If Not IO.File.Exists(File) Then Exit Sub
+
         Dim Dic As New List(Of ControlsBase)
         Dic.Clear()
 
@@ -151,65 +154,66 @@ Public Class Localizer
             End If
         Next
 
-
-
-
-        For Each [Form] As Form In My.Application.allForms
-
-            For Each dicX As ControlsBase In Dic
-
-                If [Form].Name = dicX.Form Then
-                    If dicX.Control = Nothing Then
-                        '# Form
-                        [Form].Text = dicX.Value
-                        [Form].RightToLeft = If(RightToLeft, 1, 0)
-                        [Form].RightToLeftLayout = RightToLeft
-                        RTL([Form])
-
-                        [Form].Refresh()
-
-                    Else
-                        '# Control
-
-                        For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
-                            ctrl.Text = dicX.Value
-                            ctrl.RightToLeft = If(RightToLeft, 1, 0)
-                            ctrl.Refresh()
-
-                            If TypeOf ctrl.Parent Is XenonGroupBox Or TypeOf ctrl.Parent Is Panel Then
-                                For Each Cx As Control In ctrl.Parent.Controls
-                                    Cx.Left = ctrl.Parent.Width - Cx.Left - Cx.Width
-                                    If Cx.HasChildren Then RTL(Cx)
-                                Next
-                            End If
-
-                        Next
-                    End If
-                End If
+        If [_Form] Is Nothing Then
+            For Each [Form] As Form In My.Application.allForms
+                Populate(Dic, [Form])
             Next
-        Next
+        Else
+            Populate(Dic, [_Form])
+        End If
+
     End Sub
 
+    Sub Populate(ByVal Dic As List(Of ControlsBase), [Form] As Form)
+        For Each dicX As ControlsBase In Dic
+
+            If [Form].Name = dicX.Form Then
+                If dicX.Control = Nothing Then
+                    '# Form
+                    [Form].Text = dicX.Value
+                    [Form].RightToLeft = If(RightToLeft, 1, 0)
+                    [Form].RightToLeftLayout = RightToLeft
+                    RTL([Form])
+                    [Form].Refresh()
+
+                Else
+                    '# Control
+                    For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
+                        ctrl.Text = dicX.Value
+                        ctrl.RightToLeft = If(RightToLeft, 1, 0)
+                        ctrl.Refresh()
+                    Next
+                End If
+            End If
+        Next
+
+    End Sub
     Sub RTL(Parent As Control)
         If RightToLeft Then
+
             For Each XeTP As XenonTabControl In Parent.Controls.OfType(Of XenonTabControl)
                 XeTP.RightToLeft = If(RightToLeft, 1, 0)
                 XeTP.RightToLeftLayout = RightToLeft
 
                 For i = 0 To XeTP.TabPages.Count - 1
                     XeTP.TabPages.Item(i).RightToLeft = If(RightToLeft, 1, 0)
+                    If XeTP.TabPages.Item(i).HasChildren Then RTL(XeTP.TabPages.Item(i))
+
                     For Each Cx As Control In XeTP.TabPages.Item(i).Controls
                         Cx.Left = XeTP.TabPages.Item(i).Width - Cx.Left - Cx.Width
+                        If Cx.HasChildren Then RTL(Cx)
                     Next
                 Next
             Next
 
-            For Each XeTP As XenonGroupBox In Parent.Controls.OfType(Of XenonGroupBox)
-                XeTP.RightToLeft = If(RightToLeft, 1, 0)
-                For Each Cx As Control In XeTP.Controls
-                    Cx.Left = XeTP.Width - Cx.Left - Cx.Width
-                    If Cx.HasChildren Then RTL(Cx)
-                Next
+            For Each XeTP As Control In Parent.Controls
+                If TypeOf XeTP Is XenonGroupBox Or TypeOf XeTP Is Panel Then
+                    XeTP.RightToLeft = If(RightToLeft, 1, 0)
+                    For Each Cx As Control In XeTP.Controls
+                        Cx.Left = XeTP.Width - Cx.Left - Cx.Width
+                        If Cx.HasChildren Then RTL(Cx)
+                    Next
+                End If
             Next
 
         End If

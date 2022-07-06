@@ -16,10 +16,10 @@ Public Class XeSettings
     Public Property Appearance_Auto As Boolean = True
     Public Property RescueBox As Boolean = True
     Public Property WhatsNewRecord As String() = {""}
+    Public Property Language As Boolean = False
+    Public Property Language_File As String = Nothing
 
-    'Public Property Appearance_AdaptColors As Boolean = True
 #End Region
-
 
     Public Enum WinVer
         Eleven
@@ -55,8 +55,8 @@ Public Class XeSettings
         If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
         If Key.GetValue("RescueBox", Nothing) Is Nothing Then Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
         If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
-
-        'If Key.GetValue("Appearance_AdaptColors", Nothing) Is Nothing Then Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
+        If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", Language, RegistryValueKind.DWord)
+        If Key.GetValue("Language_File", Nothing) Is Nothing Then Key.SetValue("Language_File", "", RegistryValueKind.String)
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -78,8 +78,8 @@ Public Class XeSettings
                 Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
                 RescueBox = Key.GetValue("RescueBox", Nothing)
                 WhatsNewRecord = Key.GetValue("WhatsNewRecord", Nothing)
-
-                'Appearance_AdaptColors = Key.GetValue("Appearance_AdaptColors", Nothing)
+                Language = Key.GetValue("Language", False)
+                Language_File = Key.GetValue("Language_File", Nothing)
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -96,8 +96,8 @@ Public Class XeSettings
                     If x.StartsWith("Appearance_Dark= ") Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
                     If x.StartsWith("Appearance_Auto= ") Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
                     If x.StartsWith("RescueBox= ") Then RescueBox = x.Remove(0, "RescueBox= ".Count)
-
-                    'If x.StartsWith("Appearance_AdaptColors= ") Then Appearance_AdaptColors = x.Remove(0, "Appearance_AdaptColors= ".Count)
+                    If x.StartsWith("Language= ") Then Language = x.Remove(0, "Language= ".Count)
+                    If x.StartsWith("Language_File= ") Then Language_File = x.Remove(0, "Language_File= ".Count)
 
                 Next
         End Select
@@ -121,8 +121,8 @@ Public Class XeSettings
                 Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
                 Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
                 Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
-
-                'Key.SetValue("Appearance_AdaptColors", Appearance_AdaptColors, RegistryValueKind.DWord)
+                Key.SetValue("Language", Language, RegistryValueKind.DWord)
+                Key.SetValue("Language_File", Language_File, RegistryValueKind.String)
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -141,8 +141,8 @@ Public Class XeSettings
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
                 l.Add(String.Format("RescueBox= {0}", RescueBox))
-
-                'l.Add(String.Format("Appearance_AdaptColors= {0}", Appearance_AdaptColors))
+                l.Add(String.Format("Language= {0}", Language))
+                l.Add(String.Format("Language_File= {0}", Language_File))
 
                 IO.File.WriteAllText(File, CStr_FromList(l))
         End Select

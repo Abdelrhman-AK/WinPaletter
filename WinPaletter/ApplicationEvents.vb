@@ -5,6 +5,8 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Imports WinPaletter.Localizer
+Imports System.ComponentModel
+Imports System.Globalization
 
 Namespace My
     Public Module WindowsVersions
@@ -307,6 +309,8 @@ Namespace My
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            _Settings = New XeSettings(XeSettings.Mode.Registry)
+
             allForms.Clear()
             allForms.Add(My.Forms.About)
             allForms.Add(My.Forms.Changelog)
@@ -318,12 +322,14 @@ Namespace My
             allForms.Add(My.Forms.MainFrm)
             allForms.Add(My.Forms.QA)
             allForms.Add(My.Forms.RescueBox)
-            allForms.Add(My.Forms.SettingsX)
             allForms.Add(My.Forms.Tutorial)
             allForms.Add(My.Forms.Updates)
             allForms.Add(My.Forms.Win32UI)
+            allForms.Add(My.Forms.SettingsX)
 
-            LanguageHelper.LoadLanguageFromFile("C:\Users\boody\Desktop\Ar.wpl")
+            If My.Application._Settings.Language Then
+                '    LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+            End If
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
@@ -367,7 +373,6 @@ Namespace My
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
 
-            _Settings = New XeSettings(XeSettings.Mode.Registry)
 
 #Region "WhatsNew"
 

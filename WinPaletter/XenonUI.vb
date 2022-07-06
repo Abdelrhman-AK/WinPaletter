@@ -298,17 +298,13 @@ Public Class XenonColorPalette
 End Class
 #End Region
 
-#Region "Xenon UI - Version 2"
-
+#Region "Xenon UI - Version 3"
 Public Class XenonTabControl : Inherits Windows.Forms.TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
-    'Dim A As Integer = 255
-    Dim WithEvents T As New Timer With {.Enabled = False, .Interval = 1}
-    Dim oldi As Integer
 
     Sub New()
-        SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer, True)
-        ItemSize = New Size(40, 150) 'New Size(25, 120)
+        SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.Opaque, True)
+        ItemSize = New Size(40, 150)
         DrawMode = TabDrawMode.OwnerDrawFixed
         SizeMode = TabSizeMode.Fixed
         Font = New Font("Segoe UI", 9)
@@ -337,8 +333,7 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.SmoothingMode = SmoothingMode.HighQuality
         DoubleBuffered = True
 
         Dim SelectColor As Color
@@ -346,21 +341,17 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         Dim ParentColor As Color = GetParentColor(Me)
 
         Dim img As Image = Nothing
-        Dim imgOld As Image = Nothing
-        G.Clear(ParentColor)
 
-        'FillRect(G, New SolidBrush(CCB(ParentColor, If(GetDarkMode(), 0.05, -0.05))), New Rectangle(0, 0, Width - 1, ItemSize.Height))
+        G.Clear(ParentColor)
 
         For i = 0 To TabCount - 1
             Dim TabRect As Rectangle = GetTabRect(i)
-            Dim OldTabRect As Rectangle = GetTabRect(oldi)
 
             Try
                 If Me.ImageList IsNot Nothing Then
                     Dim ls As ImageList = ImageList
                     img = ls.Images.Item(i)
                     SelectColor = GetAverageColor(img)
-                    imgOld = ls.Images.Item(oldi)
                 Else
                     SelectColor = LineColor
                 End If
@@ -368,17 +359,11 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
                 SelectColor = LineColor
             End Try
 
-            If Not GetDarkMode() Then
-                SelectColor = ControlPaint.Light(SelectColor)
-            End If
-
-            SelectColor = SelectColor
-
+            If Not GetDarkMode() Then SelectColor = ControlPaint.Light(SelectColor)
 
             If i = SelectedIndex Then
                 FillRect(G, New SolidBrush(SelectColor), TabRect)
                 TextColor = If(IsColorDark(SelectColor), Color.White, Color.Black)
-                oldi = i
             Else
                 TextColor = If(IsColorDark(ParentColor), Color.White, Color.Black)
             End If
@@ -1135,12 +1120,14 @@ Public Class XenonCheckBox
             DoubleBuffered = True
 
             '################################################################################# Customizer
+            Dim format As StringFormat = New StringFormat()
+
             Dim SZ1 As SizeF = G.MeasureString(Text, Font)
             Dim PT1 As New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
 
             Dim OuterCheckRect As New Rectangle(3, 4, Height - 8, Height - 8)
             Dim InnerCheckRect As New Rectangle(4, 5, Height - 10, Height - 10)
-            Dim TightRect As New Rectangle(0, 1, InnerCheckRect.Right + SZ1.Width - 4, Height - 2)
+            Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - InnerCheckRect.Width, Height - 1)
 
 #Region "Colors System"
             Dim HoverRect_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
@@ -1151,6 +1138,14 @@ Public Class XenonCheckBox
             Dim ParentColor As Color = ColorPalette.Color_Parent
             Dim Selection_Color As Color = ColorPalette.Color_Parent_Hover
 #End Region
+
+            If RightToLeft Then
+                format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
+                OuterCheckRect.X = Width - OuterCheckRect.X - OuterCheckRect.Width
+                InnerCheckRect.X = Width - InnerCheckRect.X - InnerCheckRect.Width
+                TextRect.Width = Width - InnerCheckRect.Width - 10
+                TextRect.X = 0
+            End If
 
 #Region "Check Sign x,y system"
             Dim x1_Left As Integer = InnerCheckRect.X + 3
@@ -1168,8 +1163,6 @@ Public Class XenonCheckBox
             '#################################################################################
 
             G.Clear(ParentColor)
-
-            If Enabled Then FillRect(G, New SolidBrush(Color.FromArgb(alpha, Selection_Color)), TightRect)   '"Rectangle Hover"
 
             FillRect(G, New SolidBrush(BackRect_Color), OuterCheckRect, Radius)
 
@@ -1189,9 +1182,9 @@ Public Class XenonCheckBox
             End If
 
             If Checked Then
-                G.DrawString(Text, Font, New SolidBrush(CheckRect_Color), PT1)
+                G.DrawString(Text, Font, New SolidBrush(CheckRect_Color), TextRect, format)
             Else
-                G.DrawString(Text, Font, New SolidBrush(ForeColor), PT1)
+                G.DrawString(Text, Font, New SolidBrush(ForeColor), TextRect, format)
             End If
 
         Catch

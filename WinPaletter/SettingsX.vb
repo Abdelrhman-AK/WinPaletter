@@ -2,6 +2,11 @@
 Imports WinPaletter.XenonCore
 
 Public Class SettingsX
+
+    Public _External As Boolean = False
+    Public _File As String = Nothing
+    Dim Changed As Boolean = False
+
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
@@ -10,11 +15,6 @@ Public Class SettingsX
         ApplyDarkMode(Me)
         LoadSettings()
     End Sub
-
-    Public _External As Boolean = False
-    Public _File As String = Nothing
-
-    Dim Changed As Boolean = False
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         Dim NewSets As New XeSettings(XeSettings.Mode.Empty)
@@ -32,6 +32,8 @@ Public Class SettingsX
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
+            If .Language <> XenonCheckBox8.Checked Then Changed = True
+            If .Language_File <> OpenFileDialog2.FileName Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -77,9 +79,21 @@ Public Class SettingsX
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
             XenonCheckBox7.Checked = .RescueBox
+            XenonCheckBox8.Checked = .Language
+            OpenFileDialog2.FileName = .Language_File
+        End With
+
+        With My.Application.LanguageHelper
+            Label11.Text = .Name
+            Label12.Text = .TrVer
+            Label14.Text = .AppVer
+            Label19.Text = .Lang
+            Label16.Text = .LangCode
+            Label21.Text = If(.RightToLeft, .Yes, .No)
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
+        OpenFileDialog2.FileName = My.Application._Settings.Language_File
     End Sub
 
     Sub SaveSettings()
@@ -95,6 +109,8 @@ Public Class SettingsX
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
             .RescueBox = XenonCheckBox7.Checked
+            .Language = XenonCheckBox8.Checked
+            .Language_File = OpenFileDialog2.FileName
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -133,6 +149,8 @@ Public Class SettingsX
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
                 .RescueBox = XenonCheckBox7.Checked
+                .Language = XenonCheckBox8.Checked
+                .Language_File = OpenFileDialog2.FileName
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -160,6 +178,8 @@ Public Class SettingsX
                 XenonRadioButton4.Checked = Not .Appearance_Dark
                 XenonCheckBox6.Checked = .Appearance_Auto
                 XenonCheckBox7.Checked = .RescueBox
+                XenonCheckBox8.Checked = .Language
+                OpenFileDialog2.FileName = .Language_File
             End With
         End If
     End Sub
@@ -195,6 +215,8 @@ Public Class SettingsX
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
             XenonCheckBox7.Checked = .RescueBox
+            XenonCheckBox8.Checked = .Language
+            OpenFileDialog2.FileName = .Language_File
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -219,5 +241,23 @@ Public Class SettingsX
 
             Application.[Exit]()
         End If
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        With My.Application.LanguageHelper
+            My.Application.LanguageHelper = New Localizer()
+
+            If OpenFileDialog2.ShowDialog = DialogResult.OK Then
+                .LoadLanguageFromFile(OpenFileDialog2.FileName)
+                Label11.Text = .Name
+                Label12.Text = .TrVer
+                Label14.Text = .AppVer
+                Label19.Text = .Lang
+                Label16.Text = .LangCode
+                Label21.Text = If(.RightToLeft, .Yes, .No)
+            End If
+        End With
+
+
     End Sub
 End Class

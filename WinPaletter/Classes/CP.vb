@@ -692,6 +692,39 @@ Public Class CP
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
 
+    Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
+        If IO.File.Exists(Filename) Then
+
+            Dim ls As New List(Of Color)
+            ls.Clear()
+
+            Dim tx As New List(Of String)
+            CList_FromStr(tx, IO.File.ReadAllText(Filename))
+
+            For Each x As String In tx
+                Try
+                    If x.Contains("=") Then
+                        If x.Split("=")(1).Contains(" ") Then
+                            If x.Split("=")(1).Split(" ").Count = 3 Then
+                                Dim c As String = x.Split("=")(1)
+                                Dim inx As Boolean = True
+                                For Each u In c.Split(" ")
+                                    If Not IsNumeric(u) Then inx = False
+                                Next
+                                If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
+                            End If
+                        End If
+                    End If
+                Catch
+                End Try
+            Next
+
+            Return ls
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Public Overrides Function Equals(obj As Object) As Boolean
         'obj = TryCast(obj, CP)
 
@@ -709,24 +742,6 @@ Public Class CP
 
         Return _Equals
     End Function
-
-
-    '#### Alternative Method for comparing (less efficient)
-
-    'Public Overrides Function Equals(obj As Object) As Boolean
-    'obj = TryCast(obj, CP)
-    'Dim LS1, LS2 As New Dictionary(Of String, Object)
-    'LS1.Clear() : LS2.Clear()
-    'Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
-    'Dim type2 As Type = obj.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
-    'For Each [property] As PropertyInfo In properties1
-    'LS1.Add([property].Name, [property].GetValue(Me, Nothing))
-    'Next
-    'For Each [property] As PropertyInfo In properties2
-    'LS2.Add([property].Name, [property].GetValue(obj, Nothing))
-    'Next
-    'Return LS1.SequenceEqual(LS2)
-    'End Function
 
 End Class
 
