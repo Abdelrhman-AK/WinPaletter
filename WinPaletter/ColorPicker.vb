@@ -1,28 +1,15 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Imports Cyotek.Windows.Forms
 Imports WinPaletter.XenonCore
 
 Public Class ColorPicker
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ColorWheel1.Visible = True
-        ColorGrid1.Visible = False
-        XenonGroupBox3.Visible = False
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        ColorWheel1.Visible = False
-        ColorGrid1.Visible = True
-        XenonGroupBox3.Visible = False
-    End Sub
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-
         Me.Left = fr.Right - 14
         Me.Top = fr.Top
         Me.Height = fr.Height
-
-        ColorWheel1.Location = ColorGrid1.Location
     End Sub
 
 
@@ -63,19 +50,8 @@ Public Class ColorPicker
         Me.TransparencyKey = Nothing
     End Sub
 
-    Dim GetIfWindow_InactiveTitlebar As Boolean = False
+    Private _Conditions As New Conditions
 
-    Dim GetIfAppUnderlineOnly As Boolean = False
-
-    Dim GetIfAppBackgroundOnly As Boolean = False
-
-    Dim GetIfStartColorOnly As Boolean = False
-
-    Dim GetIfStartSearchOnly As Boolean = False
-
-    Dim GetIfActionCenterBtn As Boolean = False
-
-    Dim GetIfActionCenterLink As Boolean = False
 
     Dim InitColor As Color
 
@@ -83,10 +59,8 @@ Public Class ColorPicker
 
     Dim fr As Form
 
-    Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal Window_InactiveTitlebar As Boolean = False, Optional ByVal AppUnderlineOnly As Boolean = False,
-                  Optional ByVal AppBackgroundOnly As Boolean = False, Optional ByVal StartColorOnly As Boolean = False,
-                  Optional StartSearchOnly As Boolean = False, Optional ActionCenterBtn As Boolean = False, Optional ByVal ActionCenterLink As Boolean = False) As Color
 
+    Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing) As Color
         fr = Ctrl(0).FindForm
 
         If fr Is MainFrm Then
@@ -108,13 +82,7 @@ Public Class ColorPicker
 
         CList = Ctrl
 
-        GetIfWindow_InactiveTitlebar = Window_InactiveTitlebar
-        GetIfAppUnderlineOnly = AppUnderlineOnly
-        GetIfAppBackgroundOnly = AppBackgroundOnly
-        GetIfStartColorOnly = StartColorOnly
-        GetIfStartSearchOnly = StartSearchOnly
-        GetIfActionCenterBtn = ActionCenterBtn
-        GetIfActionCenterLink = ActionCenterLink
+        If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
 
         AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
@@ -126,14 +94,6 @@ Public Class ColorPicker
             CHANGECOLORPREVIEW()
             c = InitColor
         End If
-
-        GetIfWindow_InactiveTitlebar = False
-        GetIfAppUnderlineOnly = False
-        GetIfAppBackgroundOnly = False
-        GetIfStartColorOnly = False
-        GetIfStartSearchOnly = False
-        GetIfActionCenterBtn = False
-        GetIfActionCenterLink = False
 
         RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
@@ -161,7 +121,7 @@ Public Class ColorPicker
 
             If TypeOf ctrl Is XenonWindow Then
                 With TryCast(ctrl, XenonWindow)
-                    If Not GetIfWindow_InactiveTitlebar Then
+                    If Not _Conditions.Window_InactiveTitlebar Then
                         .AccentColor_Active = ColorEditorManager1.Color
                     Else
                         .AccentColor_Inactive = ColorEditorManager1.Color
@@ -174,13 +134,13 @@ Public Class ColorPicker
                 With TryCast(ctrl, XenonAcrylic)
 
                     If .UseItAsTaskbar Then
-                        If GetIfAppUnderlineOnly Then
+                        If _Conditions.AppUnderlineOnly Then
                             Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppUnderline", .AppUnderline, ControlPaint.Light(Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)), steps, delay)
                             .Invalidate()
-                        ElseIf GetIfAppBackgroundOnly Then
+                        ElseIf _Conditions.AppBackgroundOnly Then
                             Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
                             .Invalidate()
-                        ElseIf GetIfStartColorOnly Then
+                        ElseIf _Conditions.StartColorOnly Then
                             Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                             .Invalidate()
                         Else
@@ -189,15 +149,15 @@ Public Class ColorPicker
                         End If
                         .Invalidate()
 
-                    ElseIf .UseItAsStartMenu And GetIfStartSearchOnly Then
+                    ElseIf .UseItAsStartMenu And _Conditions.StartSearchOnly Then
                         Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "SearchBoxAccent", .SearchBoxAccent, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Invalidate()
 
-                    ElseIf .UseItAsActionCenter And GetIfActionCenterBtn Then
+                    ElseIf .UseItAsActionCenter And _Conditions.ActionCenterBtn Then
                         Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Invalidate()
 
-                    ElseIf .UseItAsActionCenter And GetIfActionCenterLink Then
+                    ElseIf .UseItAsActionCenter And _Conditions.ActionCenterLink Then
                         Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Invalidate()
                     Else
@@ -207,7 +167,46 @@ Public Class ColorPicker
                 End With
 
             ElseIf TypeOf ctrl Is Label Then
-                Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color), steps, delay)
+
+            ElseIf TypeOf ctrl Is RetroWindow Then
+                With TryCast(ctrl, RetroWindow)
+                    If _Conditions.RetroWindowColor1 Then .Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroWindowColor2 Then .Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroWindowBorder Then .ColorBorder = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    .Invalidate()
+                End With
+
+            ElseIf TypeOf ctrl Is RetroButton Then
+                With TryCast(ctrl, RetroButton)
+                    If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    .Invalidate()
+                End With
+
+            ElseIf TypeOf ctrl Is Panel Then
+                If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                ctrl.Invalidate()
+
+            ElseIf TypeOf ctrl Is RetroTextBox Then
+                With TryCast(ctrl, RetroTextBox)
+                    If _Conditions.RetroWindowText Then
+                        ctrl.ForeColor = Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color)
+                    Else
+                        ctrl.BackColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)
+                    End If
+                    ctrl.Invalidate()
+                End With
+
             Else
                 Visual.FadeColor(ctrl, "BackColor", ctrl.BackColor, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
             End If
@@ -261,7 +260,7 @@ Public Class ColorPicker
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
-            For Each C As ColorThiefDotNet.QuantizedColor In colorThiefX.GetPalette(img, XenonNumericUpDown1.Value, XenonNumericUpDown2.Value, XenonCheckBox1.Checked)
+            For Each C As ColorThiefDotNet.QuantizedColor In ColorThiefX.GetPalette(img, XenonNumericUpDown1.Value, XenonNumericUpDown2.Value, XenonCheckBox1.Checked)
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
 
@@ -299,10 +298,9 @@ Public Class ColorPicker
 
     Public Shared fs As IO.FileStream
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
         ColorWheel1.Visible = False
         ColorGrid1.Visible = False
-        XenonGroupBox3.Visible = True
     End Sub
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
@@ -311,8 +309,85 @@ Public Class ColorPicker
         End If
     End Sub
 
+    Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        If OpenFileDialog2.ShowDialog = DialogResult.OK Then
+            ColorGrid1.Colors = ColorCollection.LoadPalette(OpenFileDialog2.FileName)
+        End If
+    End Sub
+
+    Private Sub XenonButton5_Click_1(sender As Object, e As EventArgs)
+        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+            Dim Tx As PaletteSerializer
+            Dim serializer As IPaletteSerializer
+
+            serializer = Tx.GetSerializer(SaveFileDialog1.FileName)
+            Dim fs As FileStream = New FileStream(SaveFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite)
+
+            serializer.Serialize(fs, ColorGrid1.Colors)
+            fs.Close()
+        End If
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenThemeDialog.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenThemeDialog.FileName
+        End If
+    End Sub
+
+    Private Sub XenonButton5_Click_2(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        If IO.File.Exists(XenonTextBox1.Text) Then
+            ThemePaletteContainer.Controls.Clear()
+
+            Try
+                For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
+                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
+                    pnl.BackColor = Color.FromArgb(255, C)
+                    ThemePaletteContainer.Controls.Add(pnl)
+                    AddHandler pnl.Click, AddressOf Pnl_click
+                Next
+            Catch
+                MsgBox("Error: Invalid Theme File.", MsgBoxStyle.Critical)
+            End Try
+
+        Else
+            MsgBox("Theme File doesn't exist.", MsgBoxStyle.Critical)
+        End If
+    End Sub
+
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub
+
+
 End Class
+
+Public Class Conditions
+
+    Public Sub New()
+
+    End Sub
+
+    Public Property Window_InactiveTitlebar As Boolean = False
+    Public Property AppUnderlineOnly As Boolean = False
+    Public Property AppBackgroundOnly As Boolean = False
+    Public Property StartColorOnly As Boolean = False
+    Public Property StartSearchOnly As Boolean = False
+    Public Property ActionCenterBtn As Boolean = False
+    Public Property ActionCenterLink As Boolean = False
+    Public Property RetroWindowColor1 As Boolean = False
+    Public Property RetroWindowColor2 As Boolean = False
+    Public Property RetroWindowForeColor As Boolean = False
+    Public Property RetroWindowBorder As Boolean = False
+    Public Property RetroWindowFrame As Boolean = False
+    Public Property RetroButtonDkShadow As Boolean = False
+    Public Property RetroButtonShadow As Boolean = False
+    Public Property RetroButtonHilight As Boolean = False
+    Public Property RetroButtonLight As Boolean = False
+    Public Property RetroButtonText As Boolean = False
+    Public Property RetroAppWorkspace As Boolean = False
+    Public Property RetroBackground As Boolean = False
+    Public Property RetroWindowText As Boolean = False
+
+End Class
+

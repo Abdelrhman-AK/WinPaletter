@@ -231,7 +231,7 @@ Namespace My
             Dim WallpaperType As Integer = R2.GetValue("BackgroundType")
 
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
-                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
+                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
                 Return Image.FromStream(x)
                 x.Close()
             Else
@@ -328,7 +328,7 @@ Namespace My
             allForms.Add(My.Forms.SettingsX)
 
             If My.Application._Settings.Language Then
-                '    LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+                LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
             End If
 
             Try
@@ -373,7 +373,6 @@ Namespace My
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
 
-
 #Region "WhatsNew"
 
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
@@ -392,7 +391,6 @@ Namespace My
                 _Settings.Save(XeSettings.Mode.Registry)
             End If
 #End Region
-
 
             If _Settings.AutoAddExt Then
                 Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath

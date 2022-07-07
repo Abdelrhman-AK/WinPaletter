@@ -68,6 +68,11 @@ Public Class RetroButton : Inherits Button
             Invalidate()
         End Set
     End Property
+    Public Property WindowFrame As Color = Color.Black
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
 
 #End Region
 
@@ -137,29 +142,29 @@ Public Class RetroButton : Inherits Button
 #Region "Button Render"
         If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
             If Not Focused Then
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.8)), New Point(0, 0), New Point(Width - 1, 0))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.8)), New Point(0, 1), New Point(0, Height - 1))
-                G.DrawLine(New Pen(Color.Black), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
-                G.DrawLine(New Pen(Color.Black), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
-                G.DrawLine(New Pen(Color.FromArgb(144, 152, 160)), New Point(1, 1), New Point(Width - 2, 1))
-                G.DrawLine(New Pen(Color.FromArgb(144, 152, 160)), New Point(1, 2), New Point(1, Height - 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
+                G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
+                G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
+                G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
+                G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
             Else
-                G.DrawRectangle(New Pen(Color.Black), rect)
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.8)), New Point(1, 1), New Point(Width - 2, 1))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.8)), New Point(1, 2), New Point(1, Height - 2))
-                G.DrawLine(New Pen(Color.Black), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(Color.Black), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(Color.FromArgb(144, 152, 160)), New Point(2, 2), New Point(Width - 3, 2))
-                G.DrawLine(New Pen(Color.FromArgb(144, 152, 160)), New Point(2, 3), New Point(2, Height - 3))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
+                G.DrawRectangle(New Pen(ButtonDkShadow), rect)
+                G.DrawLine(New Pen(ButtonHilight), New Point(1, 1), New Point(Width - 2, 1))
+                G.DrawLine(New Pen(ButtonHilight), New Point(1, 2), New Point(1, Height - 2))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                G.DrawLine(New Pen(ButtonLight), New Point(2, 2), New Point(Width - 3, 2))
+                G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
+                G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
+                G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
                 If Pressed Then G.DrawRectangle(pendash, rectdash)
             End If
         Else
-            G.DrawRectangle(New Pen(Color.Black), rect)
-            G.DrawRectangle(New Pen(ChangeColorBrightness(BackColor, -0.2)), rectinner)
+            G.DrawRectangle(New Pen(WindowFrame), rect)
+            G.DrawRectangle(New Pen(ButtonShadow), rectinner)
             G.DrawRectangle(pendash, rectdash)
         End If
 #End Region
@@ -256,7 +261,10 @@ Public Class RetroCheckBox
     End Property
 
     Private _Checked As Boolean
-
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
 #End Region
 
 #Region "Events"
@@ -295,14 +303,14 @@ Public Class RetroCheckBox
         G.Clear(BackColor)
 
         With CheckRect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
+            G.DrawLine(New Pen(ButtonLight), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonLight), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
             G.FillRectangle(New SolidBrush(If(State = MouseState.Down, BackColor, Color.White)), New Rectangle(.X + 2, .Y + 2, .Width - 3, .Height - 3))
         End With
 
@@ -361,6 +369,11 @@ Public Class RetroRadioButton
         End Set
     End Property
     Private _Checked As Boolean
+
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
 #End Region
 
 #Region "Events"
@@ -401,11 +414,11 @@ Public Class RetroRadioButton
         G.Clear(BackColor)
 
         G.FillEllipse(New SolidBrush(If(State = MouseState.Down, BackColor, Color.White)), CheckRect)
-        G.DrawArc(New Pen(ChangeColorBrightness(BackColor, -0.4)), CheckRect, 140, 180)
-        G.DrawArc(New Pen(ChangeColorBrightness(BackColor, +0.4)), CheckRect, 320, 180)
-        G.DrawArc(New Pen(Color.Black), CheckRect2, 140, 180)
-        G.DrawLine(New Pen(Color.Black), New Point(CheckRect2.X, CheckRect2.Y) + New Point(1, 1), New Point(CheckRect2.X, CheckRect2.Y) + New Point(2, 1))
-        G.DrawLine(New Pen(Color.Black), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-1, 1), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-2, 1))
+        G.DrawArc(New Pen(ButtonShadow), CheckRect, 140, 180)
+        G.DrawArc(New Pen(ButtonHilight), CheckRect, 320, 180)
+        G.DrawArc(New Pen(ButtonDkShadow), CheckRect2, 140, 180)
+        G.DrawLine(New Pen(ButtonDkShadow), New Point(CheckRect2.X, CheckRect2.Y) + New Point(1, 1), New Point(CheckRect2.X, CheckRect2.Y) + New Point(2, 1))
+        G.DrawLine(New Pen(ButtonDkShadow), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-1, 1), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-2, 1))
         G.DrawArc(New Pen(BackColor), CheckRect2, 320, 180)
         G.DrawLine(New Pen(BackColor), New Point(CheckRect2.X, CheckRect2.Y + CheckRect2.Height) + New Point(1, -1), New Point(CheckRect2.X, CheckRect2.Y + CheckRect2.Height) + New Point(2, -1))
         G.DrawLine(New Pen(BackColor), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y + CheckRect2.Height) + New Point(-1, -1), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y + CheckRect2.Height) + New Point(-2, -1))
@@ -430,7 +443,7 @@ End Class
                  ControlStyles.ResizeRedraw Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.SupportsTransparentBackColor, True)
         DoubleBuffered = True
         ForeColor = Color.Black
-        BackColor = Color.FromArgb(192, 192, 192)
+        BackColor = Color.White
         TB = New Windows.Forms.TextBox
         TB.Visible = True
         Font = New Font("Microsoft Sans Serif", 8)
@@ -655,7 +668,10 @@ End Class
 
 #End Region
 #End Region
-
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
 #Region "Colors"
     Private _BaseColor As Color = BackColor
     Private _TextColor As Color = ForeColor
@@ -696,17 +712,18 @@ End Class
         '################################################################################# Customizer
         Dim CheckRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
         '#################################################################################
-        G.Clear(Color.White)
+
+        G.Clear(BackColor)
 
         With CheckRect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
+            G.DrawLine(New Pen(ButtonLight), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonLight), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
         End With
 
         G.DrawString(TB.Text, Font, New SolidBrush(ForeColor), New Point(2, 4))
@@ -733,6 +750,9 @@ End Class
         State = MouseState.None : Invalidate()
     End Sub
 
+    Private Sub RetroTextBox_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+        Try : TB.BackColor = BackColor : Catch : End Try
+    End Sub
 End Class
 Public Class RetroLabel : Inherits Label
     Sub New()
@@ -764,91 +784,6 @@ Public Class RetroLabel : Inherits Label
     End Sub
 
 End Class
-Public Class RetroTabControl : Inherits TabControl
-
-    Private ReadOnly CenterSringFormat As StringFormat = New StringFormat With {
-            .Alignment = StringAlignment.Near,
-            .LineAlignment = StringAlignment.Center
-        }
-    Overrides Property BackColor As Color = Color.FromArgb(192, 192, 192)
-
-    Public Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.OptimizedDoubleBuffer, True)
-        DoubleBuffered = True
-        Font = New Font("Microsoft Sans Serif", 8)
-        ForeColor = Color.Black
-        BackColor = Color.FromArgb(192, 192, 192)
-        SizeMode = TabSizeMode.Normal
-        ItemSize = New Size(240, 16)
-        AllowDrop = True
-    End Sub
-    Protected Overrides Sub CreateHandle()
-        MyBase.CreateHandle()
-        Alignment = TabAlignment.Top
-    End Sub
-    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
-        Dim p = e.Location
-        MyBase.OnMouseDown(e)
-        Invalidate()
-    End Sub
-    Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
-        MyBase.OnMouseUp(e)
-    End Sub
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
-        Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.PixelOffsetMode = PixelOffsetMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
-        G.Clear(BackColor)
-        Dim TabRect As Rectangle = New Rectangle(0, 0, Width, 21)
-        If Not DesignMode Then SelectedTab.BackColor = Me.BackColor
-        If Not DesignMode Then SelectedTab.BorderStyle = BorderStyle.None
-        Dim SelectedTabRect As Rectangle
-        Dim SelectedTabText As Rectangle
-
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(0, TabRect.Height - 2), New Point(Width - 1, TabRect.Height - 2))
-
-        For i = 0 To TabCount - 1
-            SelectedTabRect = GetTabRect(i)
-            SelectedTabText = New Rectangle(SelectedTabRect.X + 2, SelectedTabRect.Y + 1, SelectedTabRect.Width - 4, SelectedTabRect.Height)
-            If Not i = SelectedIndex Then
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X, 4), New Point(SelectedTabRect.X + 2, 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X, 4), New Point(SelectedTabRect.X, SelectedTabRect.Height + 2))
-                G.DrawLine(New Pen(Color.Black), New Point(SelectedTabRect.X + SelectedTabRect.Width - 1, 4), New Point(SelectedTabRect.X + SelectedTabRect.Width - 1, SelectedTabRect.Height + 2))
-                G.DrawLine(New Pen(Color.Black), New Point(SelectedTabRect.X + SelectedTabRect.Width - 1, 4), New Point(SelectedTabRect.X + SelectedTabRect.Width - 3, 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X + 2, 2), New Point(SelectedTabRect.X + SelectedTabRect.Width - 3, 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(SelectedTabRect.X + SelectedTabRect.Width - 2, 4), New Point(SelectedTabRect.X + SelectedTabRect.Width - 2, SelectedTabRect.Height + 2))
-                G.DrawString(TabPages(i).Text, Font, New SolidBrush(Me.ForeColor), SelectedTabText, StringAligner(ContentAlignment.MiddleCenter))
-            End If
-        Next
-
-        For i = 0 To TabCount - 1
-            SelectedTabRect = GetTabRect(i)
-            SelectedTabText = New Rectangle(SelectedTabRect.X + 2, SelectedTabRect.Y, SelectedTabRect.Width - 4, SelectedTabRect.Height)
-            If i = SelectedIndex Then
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X, 2), New Point(SelectedTabRect.X, SelectedTabRect.Height + 2))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X, 2), New Point(SelectedTabRect.X + 2, 0))
-                G.DrawLine(New Pen(Color.Black), New Point(SelectedTabRect.X + SelectedTabRect.Width + 1, 2), New Point(SelectedTabRect.X + SelectedTabRect.Width + 1, SelectedTabRect.Height + 3))
-                G.DrawLine(New Pen(Color.Black), New Point(SelectedTabRect.X + SelectedTabRect.Width + 1, 2), New Point(SelectedTabRect.X + SelectedTabRect.Width - 1, 0))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(SelectedTabRect.X + 2, 0), New Point(SelectedTabRect.X + SelectedTabRect.Width - 2, 0))
-                G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(SelectedTabRect.X + SelectedTabRect.Width, 2), New Point(SelectedTabRect.X + SelectedTabRect.Width, SelectedTabRect.Height + 3))
-                G.DrawLine(New Pen(BackColor), New Point(SelectedTabRect.X + 1, TabRect.Height - 2), New Point(SelectedTabRect.X + SelectedTabRect.Width - 1, TabRect.Height - 2))
-                G.DrawString(TabPages(i).Text, Font, New SolidBrush(Me.ForeColor), SelectedTabText, StringAligner(ContentAlignment.MiddleCenter))
-                If Focused Then
-                    Dim pendash As New Pen(Color.Black)
-                    pendash.DashStyle = DashStyle.Dot
-                    G.DrawRectangle(pendash, SelectedTabText)
-                End If
-            End If
-        Next
-
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.5)), New Point(0, TabRect.Height - 1), New Point(0, Height - 1))
-        G.DrawLine(New Pen(Color.Black), New Point(Width - 1, TabRect.Height - 1), New Point(Width - 1, Height - 1))
-        G.DrawLine(New Pen(Color.Black), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(Width - 2, TabRect.Height - 1), New Point(Width - 2, Height - 2))
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(0, Height - 2), New Point(Width - 2, Height - 2))
-    End Sub
-End Class
 Public Class RetroGroupBox : Inherits GroupBox
     Public Sub New()
         DoubleBuffered = True
@@ -856,6 +791,9 @@ Public Class RetroGroupBox : Inherits GroupBox
         ForeColor = Color.Black
         BackColor = Color.FromArgb(192, 192, 192)
     End Sub
+
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim B As New Bitmap(Width, Height)
@@ -867,9 +805,9 @@ Public Class RetroGroupBox : Inherits GroupBox
 
         Dim Rect1 As New Rectangle(0, 6, Width - 1, Height - 10)
         Dim Rect2 As New Rectangle(1, 7, Width - 3, Height - 12)
-        Dim C12 As Color = ChangeColorBrightness(BackColor, 0.4)
+        Dim C12 As Color = ButtonHilight
         Dim Rect3 As New Rectangle(0, 6, Width - 2, Height - 11)
-        Dim C3 As Color = ChangeColorBrightness(BackColor, -0.4)
+        Dim C3 As Color = ButtonShadow
 
         G.DrawRectangle(New Pen(C12), Rect1)
         G.DrawRectangle(New Pen(C12), Rect2)
@@ -885,150 +823,6 @@ Public Class RetroGroupBox : Inherits GroupBox
         G.Dispose() : B.Dispose()
     End Sub
 End Class
-Class RetroProgressBar : Inherits ProgressBar
-
-    Sub New()
-        SetStyle(DirectCast(139286, ControlStyles), True)
-        SetStyle(ControlStyles.Selectable, False)
-        DoubleBuffered = True
-        Font = New Font("Microsoft Sans Serif", 8)
-        BlocksNumber = 20
-        BackColor = Color.FromArgb(192, 192, 192)
-        ForeColor = Color.FromArgb(0, 0, 153)
-    End Sub
-
-    Property Minimum() As Integer
-        Get
-            Return _Minimum
-        End Get
-        Set(ByVal value As Integer)
-            If value < 0 Then
-                Throw New Exception("Property value is not valid.")
-            End If
-
-            _Minimum = value
-            If value > _Value Then _Value = value
-            If value > _Maximum Then _Maximum = value
-            Invalidate()
-        End Set
-    End Property
-
-    Property Maximum() As Integer
-        Get
-            Return _Maximum
-        End Get
-        Set(ByVal value As Integer)
-            If value < 0 Then
-                Throw New Exception("Property value is not valid.")
-            End If
-
-            _Maximum = value
-            If value < _Value Then _Value = value
-            If value < _Minimum Then _Minimum = value
-            Invalidate()
-        End Set
-    End Property
-
-    Public Property Value() As Integer
-        Get
-            Return _Value
-        End Get
-
-        Set(ByVal Value As Integer)
-            Dim oldValue As Integer = _Value
-            Dim e As EventArgs
-
-            ' Make sure that the value does not stray outside the valid range.
-            If (Value < Minimum) Then
-                _Value = Minimum
-            ElseIf (Value > Maximum) Then
-                _Value = Maximum
-            Else
-                _Value = Value
-            End If
-
-            If _Value <> oldValue Then
-                e = New EventArgs
-                'RaiseEvent OnValueChange(Me, e) ' Here is the trick!
-            End If
-            Invalidate()
-        End Set
-    End Property
-
-    Public Property BlocksNumber As Integer = 20
-    Public Property ShowProgress As Boolean = False
-    Public Property IsVertical As Boolean = False
-
-    Private _Value As Integer
-    Private _Minimum As Integer
-    Private _Maximum As Integer = 100
-
-    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
-        Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
-        DoubleBuffered = True
-
-        '################################################################################# Customizer
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim ProgAreaFull As Rectangle = New Rectangle(Rect.X + 2, Rect.Y + 2, Rect.Width - 3, Rect.Height - 3)
-        Dim ProgArea As Rectangle
-        '#################################################################################
-        G.Clear(BackColor)
-
-        Dim Param As Integer = BlocksNumber
-
-        If Not IsVertical Then
-            If Style = ProgressBarStyle.Blocks Then
-                ProgArea = New Rectangle(Rect.X + 2, Rect.Y + 2, ((Value - (Value Mod (Maximum / Param))) / Maximum) * (Rect.Width - 3), Rect.Height - 3)
-                G.FillRectangle(New SolidBrush(ForeColor), ProgArea)
-                Dim BlockSize As Decimal = ProgAreaFull.Width / Param
-                For x = 1 To ProgAreaFull.Width / BlockSize
-                    G.DrawLine(New Pen(BackColor, 2), New Point(x * BlockSize + 1, ProgArea.Y), New Point(x * BlockSize + 1, ProgArea.Height + 2))
-                Next
-                If Value >= Maximum Then
-                    Dim ProgAreaEmpty As Rectangle = New Rectangle(ProgArea.Width, ProgArea.Y, ProgAreaFull.Width - ProgArea.Width + 1, ProgArea.Height)
-                    G.FillRectangle(New SolidBrush(ForeColor), ProgAreaEmpty)
-                End If
-            Else
-                ProgArea = New Rectangle(Rect.X + 2, Rect.Y + 2, (Value / Maximum) * (Rect.Width - 3), Rect.Height - 3)
-                G.FillRectangle(New SolidBrush(ForeColor), ProgArea)
-            End If
-
-
-
-        Else
-            If Style = ProgressBarStyle.Blocks Then
-                ProgArea = New Rectangle(Rect.X + 2, Rect.Y + 2, Rect.Width - 3, (((Maximum - Value) - ((Maximum - Value) Mod (Maximum / Param))) / Maximum) * (Rect.Height - 3))
-                G.FillRectangle(New SolidBrush(ForeColor), ProgAreaFull)
-                G.FillRectangle(New SolidBrush(BackColor), ProgArea)
-                Dim BlockSize As Decimal = ProgAreaFull.Height / Param
-                For x = 1 To ProgAreaFull.Height / BlockSize
-                    G.DrawLine(New Pen(BackColor, 2), New Point(ProgArea.X, x * BlockSize + 1), New Point(ProgArea.X + ProgArea.Width, x * BlockSize + 1))
-                Next
-                If Value >= Maximum Then
-                    Dim ProgAreaEmpty As Rectangle = New Rectangle(ProgArea.Width, ProgArea.Y, ProgAreaFull.Width - ProgArea.Width + 1, ProgArea.Height)
-                    G.FillRectangle(New SolidBrush(ForeColor), ProgAreaEmpty)
-                End If
-            Else
-                ProgArea = New Rectangle(Rect.X + 2, Rect.Y + 2, Rect.Width - 3, ((Maximum - Value) / Maximum) * (Rect.Height - 3))
-                G.FillRectangle(New SolidBrush(ForeColor), ProgAreaFull)
-                G.FillRectangle(New SolidBrush(BackColor), ProgArea)
-            End If
-        End If
-
-        Dim C As Color = If(Value / Maximum <= 0.5, ForeColor, BackColor)
-        If ShowProgress Then G.DrawString(CInt((Value / Maximum) * 100) & "%", Font, New SolidBrush(C), Rect, StringAligner(ContentAlignment.MiddleCenter))
-
-        With Rect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
-        End With
-
-    End Sub
-End Class
 Public Class RetroSeparatorH : Inherits Control
     Private G As Graphics
 
@@ -1037,6 +831,8 @@ Public Class RetroSeparatorH : Inherits Control
         DoubleBuffered = True
     End Sub
 
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
@@ -1044,8 +840,8 @@ Public Class RetroSeparatorH : Inherits Control
         DoubleBuffered = True
         MyBase.OnPaint(e)
 
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(0, 0), New Point(Width, 0))
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.4)), New Point(0, 1), New Point(Width, 1))
+        G.DrawLine(New Pen(ButtonShadow), New Point(0, 0), New Point(Width, 0))
+        G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(Width, 1))
     End Sub
 
     Private Sub RetroSeparatorH_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -1060,13 +856,16 @@ Public Class RetroSeparatorV : Inherits Control
         DoubleBuffered = True
     End Sub
 
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
         G.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
         DoubleBuffered = True
         MyBase.OnPaint(e)
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(0, 0), New Point(0, Height))
-        G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.4)), New Point(1, 0), New Point(1, Height))
+        G.DrawLine(New Pen(ButtonShadow), New Point(0, 0), New Point(0, Height))
+        G.DrawLine(New Pen(ButtonHilight), New Point(1, 0), New Point(1, Height))
     End Sub
 
     Private Sub RetroSeparatorV_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -1082,6 +881,9 @@ Public Class RetroPanel : Inherits Panel
         BorderStyle = BorderStyle.None
     End Sub
 
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
@@ -1094,10 +896,10 @@ Public Class RetroPanel : Inherits Panel
         G.Clear(BackColor)
 
         With Rect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
         End With
     End Sub
 End Class
@@ -1110,6 +912,9 @@ Public Class RetroPanelRaised : Inherits Panel
         BorderStyle = BorderStyle.None
     End Sub
 
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
@@ -1122,84 +927,59 @@ Public Class RetroPanelRaised : Inherits Panel
         G.Clear(BackColor)
 
         With Rect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Height), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.Width - 1, .Y))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.X, .Height - 1))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.Width, .X), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Height), New Point(.Width, .Height))
         End With
     End Sub
 End Class
-Public Class RetroListbox : Inherits ListBox
+Public Class RetroWindow : Inherits Panel
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-        SetStyle(ControlStyles.ResizeRedraw, True)
-        SetStyle(ControlStyles.DoubleBuffer, True)
-        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-        BorderStyle = BorderStyle.None
-        DrawMode = Windows.Forms.DrawMode.OwnerDrawVariable
         DoubleBuffered = True
         Font = New Font("Microsoft Sans Serif", 8)
-        BackColor = Color.White
-        ForeColor = Color.Black
+        BackColor = Color.FromArgb(192, 192, 192)
+        ForeColor = Color.White
+        BorderStyle = BorderStyle.None
+        TitlebarText = "New Window"
     End Sub
 
-    Public Property SelectionColor As Color = Color.FromArgb(0, 0, 128)
-
-    Sub ReplaceItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles Me.DrawItem
-        e.DrawBackground()
-        e.Graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
-
-        Try
-            If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-                e.Graphics.FillRectangle(New SolidBrush(SelectionColor), e.Bounds)
-                If IsColorDark(SelectionColor) = IsColorDark(ForeColor) Then
-                    e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, New SolidBrush(If(IsColorDark(SelectionColor), InvertColor(ForeColor), ForeColor)), e.Bounds.X + 2, e.Bounds.Y + 1)
-                End If
-            Else
-                e.Graphics.FillRectangle(New SolidBrush(Me.BackColor), e.Bounds)
-                e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
-            End If
-        Catch
-        End Try
-
-        Dim CheckRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
-
-        With CheckRect
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            e.Graphics.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
-            e.Graphics.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            e.Graphics.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
-        End With
-
-    End Sub
-
+    Public Property Color1 As Color = Color.FromArgb(0, 0, 128)
+    Public Property Color2 As Color = Color.FromArgb(16, 132, 208)
+    Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
+    Public Property TitlebarText As String = "New Window"
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
         DoubleBuffered = True
 
-        Dim CheckRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        '################################################################################# Customizer
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim TRect As New Rectangle(3, 3, Width - 6, 18)
+        Dim ARect As New Rectangle(2, 2, Width - 5, Height - 5)
+        '#################################################################################
+        G.Clear(BackColor)
 
-        G.Clear(Color.White)
-
-        With CheckRect
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.4)), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
-            G.DrawLine(New Pen(Color.Black), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, -0.2)), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ChangeColorBrightness(BackColor, 0.7)), New Point(.X, .Height), New Point(.Width, .Height))
+        With Rect
+            G.DrawLine(New Pen(ButtonShadow), New Point(.Width - 1, .X + 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonShadow), New Point(.X + 1, .Height - 1), New Point(.Width - 1, .Height - 1))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.Width - 2, .Y + 1))
+            G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.X + 1, .Height - 2))
+            G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.Width - 1, .Y))
+            G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.X, .Height - 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.Width, .X), New Point(.Width, .Height))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Height), New Point(.Width, .Height))
         End With
+
+        G.DrawRectangle(New Pen(ColorBorder), ARect)
+
+        Dim gr As New LinearGradientBrush(TRect, Color1, Color2, LinearGradientMode.Horizontal)
+        G.FillRectangle(gr, TRect)
+        G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft))
     End Sub
-End Class
-
-Public Class RetroWindow : Inherits RetroPanelRaised
-
 End Class

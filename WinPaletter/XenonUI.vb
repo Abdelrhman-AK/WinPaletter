@@ -334,6 +334,8 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighQuality
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+
         DoubleBuffered = True
 
         Dim SelectColor As Color
@@ -479,7 +481,7 @@ Public Class XenonToggle
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Me.OnPaintBackground(e)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.HighSpeed
         DoubleBuffered = True
 
         If Parent Is Nothing Then Exit Sub

@@ -97,13 +97,13 @@ Public Class MainFrm
 
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-
         _Shown = False
 
-        MakeItDoubleBuffered(Me)
         ApplyDarkMode(Me)
+        MakeItDoubleBuffered(Me)
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
         Dim LabelsList As New List(Of Label) From {
             Label1,
@@ -112,7 +112,6 @@ Public Class MainFrm
             Label21,
             themename_lbl,
             author_lbl,
-            ColorPicker.Label1,
             ColorPicker.Label2,
             ColorPicker.Label3,
             ColorPicker.Label5,
@@ -150,8 +149,6 @@ Public Class MainFrm
             If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
         End If
 
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        Adjust_Preview()
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
@@ -167,6 +164,7 @@ Public Class MainFrm
             My.Application.ExternalLink_File = ""
         End If
 
+        Adjust_Preview()
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -617,7 +615,9 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender, XenonWindow2}
 
-        Dim C As Color = ColorPicker.Pick(CList, True)
+        Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
+        Dim C As Color = ColorPicker.Pick(CList, _Conditions)
+
         CP.Titlebar_Inactive = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
@@ -671,7 +671,14 @@ Public Class MainFrm
                 CList.Add(AppMode_Toggle)
                 CList.Add(Transparency_Toggle)
                 CList.Add(AccentOnStartAndTaskbar_Toggle)
-                C = ColorPicker.Pick(CList, False, True, False, False, True, True)
+
+                Dim _Conditions As New Conditions With {
+                    .AppUnderlineOnly = True,
+                     .StartSearchOnly = True,
+                     .ActionCenterBtn = True
+ }
+
+                C = ColorPicker.Pick(CList, _Conditions)
             Else
                 C = ColorPicker.Pick(CList)
             End If
@@ -679,7 +686,9 @@ Public Class MainFrm
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
             Else
                 CList.Add(taskbar)
-                C = ColorPicker.Pick(CList, False, True)
+
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             End If
         End If
 
@@ -751,7 +760,8 @@ Public Class MainFrm
                 C = ColorPicker.Pick(CList)
             Else
                 CList.Add(Label12)
-                C = ColorPicker.Pick(CList, False, True)
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             End If
         Else
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -759,7 +769,8 @@ Public Class MainFrm
             Else
                 CList.Add(ActionCenter)
                 CList.Add(Label12)
-                C = ColorPicker.Pick(CList, False, False, False, False, False, False, True)
+                Dim _Conditions As New Conditions With {.ActionCenterLink = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             End If
         End If
 
@@ -789,7 +800,8 @@ Public Class MainFrm
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
                 CList.Add(Label3)
                 CList.Add(taskbar)
-                C = ColorPicker.Pick(CList, False, True)
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             Else
                 CList.Add(Label3)
                 C = ColorPicker.Pick(CList)
@@ -835,7 +847,8 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Eleven Then
             CList.Add(taskbar)
-            C = ColorPicker.Pick(CList, False, False, True)
+            Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
+            C = ColorPicker.Pick(CList, _Conditions)
         Else
 
             If CP.WinMode_Light Then
@@ -925,9 +938,17 @@ Public Class MainFrm
                 CList.Add(AccentOnStartAndTaskbar_Toggle)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
-                C = ColorPicker.Pick(CList, False, True, False, False, True, True)
+
+                Dim _Conditions As New Conditions With {
+                    .AppUnderlineOnly = True,
+                     .StartSearchOnly = True,
+                     .ActionCenterBtn = True
+ }
+
+                C = ColorPicker.Pick(CList, _Conditions)
             Else
-                C = ColorPicker.Pick(CList, False, False, False, True)
+                Dim _Conditions As New Conditions With {.StartColorOnly = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             End If
 
         Else
@@ -939,7 +960,8 @@ Public Class MainFrm
                 CList.Add(start)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
-                C = ColorPicker.Pick(CList, False, False, True)
+                Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
+                C = ColorPicker.Pick(CList, _Conditions)
             End If
         End If
 

@@ -295,14 +295,11 @@ Public Class XenonCore
         If TypeOf ctrl Is RetroCheckBox Then b = True
         If TypeOf ctrl Is RetroGroupBox Then b = True
         If TypeOf ctrl Is RetroLabel Then b = True
-        If TypeOf ctrl Is RetroListbox Then b = True
         If TypeOf ctrl Is RetroPanel Then b = True
         If TypeOf ctrl Is RetroPanelRaised Then b = True
-        If TypeOf ctrl Is RetroProgressBar Then b = True
         If TypeOf ctrl Is RetroRadioButton Then b = True
         If TypeOf ctrl Is RetroSeparatorH Then b = True
         If TypeOf ctrl Is RetroSeparatorV Then b = True
-        If TypeOf ctrl Is RetroTabControl Then b = True
         If TypeOf ctrl Is RetroTextBox Then b = True
         If TypeOf ctrl Is RetroWindow Then b = True
 

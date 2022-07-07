@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Win32UI
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,10 +20,59 @@ Partial Class Win32UI
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Win32UI))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox41 = New System.Windows.Forms.PictureBox()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.pnl_preview = New System.Windows.Forms.Panel()
+        Me.Menu = New WinPaletter.RetroPanelRaised()
+        Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.RetroLabel12 = New WinPaletter.RetroLabel()
+        Me.RetroSeparatorH5 = New WinPaletter.RetroSeparatorH()
+        Me.Panel10 = New System.Windows.Forms.Panel()
+        Me.RetroLabel11 = New WinPaletter.RetroLabel()
+        Me.RetroSeparatorH4 = New WinPaletter.RetroSeparatorH()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.RetroLabel10 = New WinPaletter.RetroLabel()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.RetroLabel9 = New WinPaletter.RetroLabel()
+        Me.RetroSeparatorH3 = New WinPaletter.RetroSeparatorH()
+        Me.menuhighlight = New System.Windows.Forms.Panel()
+        Me.RetroLabel8 = New WinPaletter.RetroLabel()
+        Me.RetroSeparatorH2 = New WinPaletter.RetroSeparatorH()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.RetroLabel7 = New WinPaletter.RetroLabel()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.RetroLabel5 = New WinPaletter.RetroLabel()
+        Me.RetroSeparatorH1 = New WinPaletter.RetroSeparatorH()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.RetroLabel6 = New WinPaletter.RetroLabel()
+        Me.RetroWindow4 = New WinPaletter.RetroWindow()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.RetroButton9 = New WinPaletter.RetroButton()
+        Me.RetroWindow3 = New WinPaletter.RetroWindow()
+        Me.RetroButton2 = New WinPaletter.RetroButton()
+        Me.RetroButton1 = New WinPaletter.RetroButton()
+        Me.RetroLabel4 = New WinPaletter.RetroLabel()
+        Me.RetroWindow2 = New WinPaletter.RetroWindow()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.RetroLabel1 = New WinPaletter.RetroLabel()
+        Me.RetroLabel2 = New WinPaletter.RetroLabel()
+        Me.RetroPanel1 = New WinPaletter.RetroPanel()
+        Me.RetroLabel3 = New WinPaletter.RetroLabel()
+        Me.RetroButton5 = New WinPaletter.RetroButton()
+        Me.RetroButton4 = New WinPaletter.RetroButton()
+        Me.RetroButton3 = New WinPaletter.RetroButton()
+        Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
+        Me.RetroWindow1 = New WinPaletter.RetroWindow()
+        Me.RetroButton6 = New WinPaletter.RetroButton()
+        Me.RetroButton7 = New WinPaletter.RetroButton()
+        Me.RetroButton8 = New WinPaletter.RetroButton()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox66 = New WinPaletter.XenonGroupBox()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
         Me.Label36 = New System.Windows.Forms.Label()
@@ -182,16 +231,25 @@ Partial Class Win32UI
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GInactivetitle_pick = New WinPaletter.XenonGroupBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
-        Me.pnl_preview = New System.Windows.Forms.Panel()
-        Me.PictureBox41 = New System.Windows.Forms.PictureBox()
-        Me.Label41 = New System.Windows.Forms.Label()
-        Me.RetroPanelRaised1 = New WinPaletter.RetroPanelRaised()
-        Me.RetroButton1 = New WinPaletter.RetroButton()
         Me.Panel1.SuspendLayout()
+        Me.XenonGroupBox8.SuspendLayout()
+        CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnl_preview.SuspendLayout()
+        Me.Menu.SuspendLayout()
+        Me.Panel11.SuspendLayout()
+        Me.Panel10.SuspendLayout()
+        Me.Panel9.SuspendLayout()
+        Me.Panel8.SuspendLayout()
+        Me.menuhighlight.SuspendLayout()
+        Me.Panel6.SuspendLayout()
+        Me.Panel5.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        Me.RetroWindow4.SuspendLayout()
+        Me.RetroWindow3.SuspendLayout()
+        Me.RetroWindow2.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.RetroPanel1.SuspendLayout()
+        Me.RetroWindow1.SuspendLayout()
         Me.XenonGroupBox66.SuspendLayout()
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox47.SuspendLayout()
@@ -274,10 +332,6 @@ Partial Class Win32UI
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox31.SuspendLayout()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox8.SuspendLayout()
-        Me.pnl_preview.SuspendLayout()
-        CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RetroPanelRaised1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -296,6 +350,755 @@ Partial Class Win32UI
         Me.Panel1.Size = New System.Drawing.Size(476, 468)
         Me.Panel1.TabIndex = 57
         '
+        'XenonGroupBox8
+        '
+        Me.XenonGroupBox8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
+        Me.XenonGroupBox8.Controls.Add(Me.Label41)
+        Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
+        Me.XenonGroupBox8.CustomColor = False
+        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox8.LineSize = 1
+        Me.XenonGroupBox8.Location = New System.Drawing.Point(498, 12)
+        Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonGroupBox8.Name = "XenonGroupBox8"
+        Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
+        Me.XenonGroupBox8.Size = New System.Drawing.Size(545, 468)
+        Me.XenonGroupBox8.TabIndex = 65
+        Me.XenonGroupBox8.Text = "XenonGroupBox8"
+        '
+        'PictureBox41
+        '
+        Me.PictureBox41.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox41.Name = "PictureBox41"
+        Me.PictureBox41.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox41.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox41.TabIndex = 1
+        Me.PictureBox41.TabStop = False
+        '
+        'Label41
+        '
+        Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label41.Location = New System.Drawing.Point(44, 3)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(80, 35)
+        Me.Label41.TabIndex = 0
+        Me.Label41.Text = "Preview"
+        Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'pnl_preview
+        '
+        Me.pnl_preview.BackColor = System.Drawing.Color.Teal
+        Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnl_preview.Controls.Add(Me.Menu)
+        Me.pnl_preview.Controls.Add(Me.RetroWindow4)
+        Me.pnl_preview.Controls.Add(Me.RetroWindow3)
+        Me.pnl_preview.Controls.Add(Me.RetroWindow2)
+        Me.pnl_preview.Controls.Add(Me.RetroWindow1)
+        Me.pnl_preview.Location = New System.Drawing.Point(4, 42)
+        Me.pnl_preview.Name = "pnl_preview"
+        Me.pnl_preview.Size = New System.Drawing.Size(537, 422)
+        Me.pnl_preview.TabIndex = 2
+        '
+        'Menu
+        '
+        Me.Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu.ButtonHilight = System.Drawing.Color.White
+        Me.Menu.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu.Controls.Add(Me.Panel11)
+        Me.Menu.Controls.Add(Me.RetroSeparatorH5)
+        Me.Menu.Controls.Add(Me.Panel10)
+        Me.Menu.Controls.Add(Me.RetroSeparatorH4)
+        Me.Menu.Controls.Add(Me.Panel9)
+        Me.Menu.Controls.Add(Me.Panel8)
+        Me.Menu.Controls.Add(Me.RetroSeparatorH3)
+        Me.Menu.Controls.Add(Me.menuhighlight)
+        Me.Menu.Controls.Add(Me.RetroSeparatorH2)
+        Me.Menu.Controls.Add(Me.Panel6)
+        Me.Menu.Controls.Add(Me.Panel5)
+        Me.Menu.Controls.Add(Me.RetroSeparatorH1)
+        Me.Menu.Controls.Add(Me.Panel4)
+        Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.Menu.ForeColor = System.Drawing.Color.Black
+        Me.Menu.Location = New System.Drawing.Point(415, 70)
+        Me.Menu.Name = "Menu"
+        Me.Menu.Padding = New System.Windows.Forms.Padding(3)
+        Me.Menu.Size = New System.Drawing.Size(116, 191)
+        Me.Menu.TabIndex = 4
+        '
+        'Panel11
+        '
+        Me.Panel11.BackColor = System.Drawing.Color.Transparent
+        Me.Panel11.Controls.Add(Me.RetroLabel12)
+        Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel11.Location = New System.Drawing.Point(3, 168)
+        Me.Panel11.Name = "Panel11"
+        Me.Panel11.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel11.Size = New System.Drawing.Size(110, 20)
+        Me.Panel11.TabIndex = 18
+        '
+        'RetroLabel12
+        '
+        Me.RetroLabel12.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel12.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel12.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel12.Name = "RetroLabel12"
+        Me.RetroLabel12.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel12.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel12.TabIndex = 3
+        Me.RetroLabel12.Text = "Properties"
+        Me.RetroLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroSeparatorH5
+        '
+        Me.RetroSeparatorH5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroSeparatorH5.ButtonHilight = System.Drawing.Color.White
+        Me.RetroSeparatorH5.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroSeparatorH5.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroSeparatorH5.Location = New System.Drawing.Point(3, 163)
+        Me.RetroSeparatorH5.Name = "RetroSeparatorH5"
+        Me.RetroSeparatorH5.Size = New System.Drawing.Size(110, 5)
+        Me.RetroSeparatorH5.TabIndex = 17
+        Me.RetroSeparatorH5.Text = "RetroSeparatorH5"
+        '
+        'Panel10
+        '
+        Me.Panel10.BackColor = System.Drawing.Color.Transparent
+        Me.Panel10.Controls.Add(Me.RetroLabel11)
+        Me.Panel10.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel10.Location = New System.Drawing.Point(3, 143)
+        Me.Panel10.Name = "Panel10"
+        Me.Panel10.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel10.Size = New System.Drawing.Size(110, 20)
+        Me.Panel10.TabIndex = 16
+        '
+        'RetroLabel11
+        '
+        Me.RetroLabel11.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel11.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel11.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel11.Name = "RetroLabel11"
+        Me.RetroLabel11.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel11.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel11.TabIndex = 3
+        Me.RetroLabel11.Text = "New"
+        Me.RetroLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroSeparatorH4
+        '
+        Me.RetroSeparatorH4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroSeparatorH4.ButtonHilight = System.Drawing.Color.White
+        Me.RetroSeparatorH4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroSeparatorH4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroSeparatorH4.Location = New System.Drawing.Point(3, 138)
+        Me.RetroSeparatorH4.Name = "RetroSeparatorH4"
+        Me.RetroSeparatorH4.Size = New System.Drawing.Size(110, 5)
+        Me.RetroSeparatorH4.TabIndex = 13
+        Me.RetroSeparatorH4.Text = "RetroSeparatorH4"
+        '
+        'Panel9
+        '
+        Me.Panel9.BackColor = System.Drawing.Color.Transparent
+        Me.Panel9.Controls.Add(Me.RetroLabel10)
+        Me.Panel9.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel9.Location = New System.Drawing.Point(3, 118)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel9.Size = New System.Drawing.Size(110, 20)
+        Me.Panel9.TabIndex = 14
+        '
+        'RetroLabel10
+        '
+        Me.RetroLabel10.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel10.ForeColor = System.Drawing.Color.DimGray
+        Me.RetroLabel10.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel10.Name = "RetroLabel10"
+        Me.RetroLabel10.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel10.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel10.TabIndex = 3
+        Me.RetroLabel10.Text = "Paste Shortcut"
+        Me.RetroLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel8
+        '
+        Me.Panel8.BackColor = System.Drawing.Color.Transparent
+        Me.Panel8.Controls.Add(Me.RetroLabel9)
+        Me.Panel8.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel8.Location = New System.Drawing.Point(3, 98)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel8.Size = New System.Drawing.Size(110, 20)
+        Me.Panel8.TabIndex = 12
+        '
+        'RetroLabel9
+        '
+        Me.RetroLabel9.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel9.ForeColor = System.Drawing.Color.DimGray
+        Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel9.Name = "RetroLabel9"
+        Me.RetroLabel9.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel9.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel9.TabIndex = 3
+        Me.RetroLabel9.Text = "Paste"
+        Me.RetroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroSeparatorH3
+        '
+        Me.RetroSeparatorH3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroSeparatorH3.ButtonHilight = System.Drawing.Color.White
+        Me.RetroSeparatorH3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroSeparatorH3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroSeparatorH3.Location = New System.Drawing.Point(3, 93)
+        Me.RetroSeparatorH3.Name = "RetroSeparatorH3"
+        Me.RetroSeparatorH3.Size = New System.Drawing.Size(110, 5)
+        Me.RetroSeparatorH3.TabIndex = 11
+        Me.RetroSeparatorH3.Text = "RetroSeparatorH3"
+        '
+        'menuhighlight
+        '
+        Me.menuhighlight.BackColor = System.Drawing.Color.Navy
+        Me.menuhighlight.Controls.Add(Me.RetroLabel8)
+        Me.menuhighlight.Dock = System.Windows.Forms.DockStyle.Top
+        Me.menuhighlight.Location = New System.Drawing.Point(3, 73)
+        Me.menuhighlight.Name = "menuhighlight"
+        Me.menuhighlight.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.menuhighlight.Size = New System.Drawing.Size(110, 20)
+        Me.menuhighlight.TabIndex = 10
+        '
+        'RetroLabel8
+        '
+        Me.RetroLabel8.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel8.ForeColor = System.Drawing.Color.White
+        Me.RetroLabel8.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel8.Name = "RetroLabel8"
+        Me.RetroLabel8.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel8.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel8.TabIndex = 3
+        Me.RetroLabel8.Text = "Refresh"
+        Me.RetroLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroSeparatorH2
+        '
+        Me.RetroSeparatorH2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroSeparatorH2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroSeparatorH2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroSeparatorH2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroSeparatorH2.Location = New System.Drawing.Point(3, 68)
+        Me.RetroSeparatorH2.Name = "RetroSeparatorH2"
+        Me.RetroSeparatorH2.Size = New System.Drawing.Size(110, 5)
+        Me.RetroSeparatorH2.TabIndex = 9
+        Me.RetroSeparatorH2.Text = "RetroSeparatorH2"
+        '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.Color.Transparent
+        Me.Panel6.Controls.Add(Me.RetroLabel7)
+        Me.Panel6.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel6.Location = New System.Drawing.Point(3, 48)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel6.Size = New System.Drawing.Size(110, 20)
+        Me.Panel6.TabIndex = 8
+        '
+        'RetroLabel7
+        '
+        Me.RetroLabel7.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel7.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel7.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel7.Name = "RetroLabel7"
+        Me.RetroLabel7.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel7.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel7.TabIndex = 3
+        Me.RetroLabel7.Text = "Line Up Icons"
+        Me.RetroLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel5
+        '
+        Me.Panel5.BackColor = System.Drawing.Color.Transparent
+        Me.Panel5.Controls.Add(Me.RetroLabel5)
+        Me.Panel5.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel5.Location = New System.Drawing.Point(3, 28)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel5.Size = New System.Drawing.Size(110, 20)
+        Me.Panel5.TabIndex = 7
+        '
+        'RetroLabel5
+        '
+        Me.RetroLabel5.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel5.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel5.Name = "RetroLabel5"
+        Me.RetroLabel5.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel5.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel5.TabIndex = 3
+        Me.RetroLabel5.Text = "Arrange Icons"
+        Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroSeparatorH1
+        '
+        Me.RetroSeparatorH1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroSeparatorH1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroSeparatorH1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroSeparatorH1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroSeparatorH1.Location = New System.Drawing.Point(3, 23)
+        Me.RetroSeparatorH1.Name = "RetroSeparatorH1"
+        Me.RetroSeparatorH1.Size = New System.Drawing.Size(110, 5)
+        Me.RetroSeparatorH1.TabIndex = 2
+        Me.RetroSeparatorH1.Text = "RetroSeparatorH1"
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.Color.Transparent
+        Me.Panel4.Controls.Add(Me.RetroLabel6)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel4.Location = New System.Drawing.Point(3, 3)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.Panel4.Size = New System.Drawing.Size(110, 20)
+        Me.Panel4.TabIndex = 6
+        '
+        'RetroLabel6
+        '
+        Me.RetroLabel6.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel6.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
+        Me.RetroLabel6.Name = "RetroLabel6"
+        Me.RetroLabel6.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.RetroLabel6.Size = New System.Drawing.Size(89, 20)
+        Me.RetroLabel6.TabIndex = 3
+        Me.RetroLabel6.Text = "Active Desktop"
+        Me.RetroLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroWindow4
+        '
+        Me.RetroWindow4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow4.ButtonHilight = System.Drawing.Color.White
+        Me.RetroWindow4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow4.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow4.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.RetroWindow4.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow4.Controls.Add(Me.Panel2)
+        Me.RetroWindow4.Controls.Add(Me.RetroButton9)
+        Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroWindow4.ForeColor = System.Drawing.Color.White
+        Me.RetroWindow4.Location = New System.Drawing.Point(291, 281)
+        Me.RetroWindow4.Name = "RetroWindow4"
+        Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(3, 0, 3, 3)
+        Me.RetroWindow4.Size = New System.Drawing.Size(202, 119)
+        Me.RetroWindow4.TabIndex = 3
+        Me.RetroWindow4.TitlebarText = "Programs Container"
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel2.Location = New System.Drawing.Point(3, 22)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(196, 94)
+        Me.Panel2.TabIndex = 4
+        '
+        'RetroButton9
+        '
+        Me.RetroButton9.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton9.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton9.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton9.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton9.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton9.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton9.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton9.Image = Nothing
+        Me.RetroButton9.Location = New System.Drawing.Point(181, 5)
+        Me.RetroButton9.Name = "RetroButton9"
+        Me.RetroButton9.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton9.TabIndex = 3
+        Me.RetroButton9.Text = "r"
+        Me.RetroButton9.UseVisualStyleBackColor = False
+        Me.RetroButton9.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroWindow3
+        '
+        Me.RetroWindow3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow3.ButtonHilight = System.Drawing.Color.White
+        Me.RetroWindow3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow3.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow3.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.RetroWindow3.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow3.Controls.Add(Me.RetroButton2)
+        Me.RetroWindow3.Controls.Add(Me.RetroButton1)
+        Me.RetroWindow3.Controls.Add(Me.RetroLabel4)
+        Me.RetroWindow3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroWindow3.ForeColor = System.Drawing.Color.White
+        Me.RetroWindow3.Location = New System.Drawing.Point(307, 94)
+        Me.RetroWindow3.Name = "RetroWindow3"
+        Me.RetroWindow3.Size = New System.Drawing.Size(147, 77)
+        Me.RetroWindow3.TabIndex = 2
+        Me.RetroWindow3.TitlebarText = "Message Box"
+        '
+        'RetroButton2
+        '
+        Me.RetroButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton2.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton2.Image = Nothing
+        Me.RetroButton2.Location = New System.Drawing.Point(126, 5)
+        Me.RetroButton2.Name = "RetroButton2"
+        Me.RetroButton2.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton2.TabIndex = 3
+        Me.RetroButton2.Text = "r"
+        Me.RetroButton2.UseVisualStyleBackColor = False
+        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton1
+        '
+        Me.RetroButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RetroButton1.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton1.Image = Nothing
+        Me.RetroButton1.Location = New System.Drawing.Point(36, 47)
+        Me.RetroButton1.Name = "RetroButton1"
+        Me.RetroButton1.Size = New System.Drawing.Size(75, 23)
+        Me.RetroButton1.TabIndex = 2
+        Me.RetroButton1.Text = "OK"
+        Me.RetroButton1.UseVisualStyleBackColor = False
+        Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroLabel4
+        '
+        Me.RetroLabel4.AutoSize = True
+        Me.RetroLabel4.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel4.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel4.Location = New System.Drawing.Point(7, 26)
+        Me.RetroLabel4.Name = "RetroLabel4"
+        Me.RetroLabel4.Size = New System.Drawing.Size(74, 13)
+        Me.RetroLabel4.TabIndex = 1
+        Me.RetroLabel4.Text = "Message Text"
+        Me.RetroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroWindow2
+        '
+        Me.RetroWindow2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroWindow2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow2.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow2.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.RetroWindow2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow2.Controls.Add(Me.Panel3)
+        Me.RetroWindow2.Controls.Add(Me.RetroButton5)
+        Me.RetroWindow2.Controls.Add(Me.RetroButton4)
+        Me.RetroWindow2.Controls.Add(Me.RetroButton3)
+        Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
+        Me.RetroWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroWindow2.ForeColor = System.Drawing.Color.White
+        Me.RetroWindow2.Location = New System.Drawing.Point(297, 29)
+        Me.RetroWindow2.Name = "RetroWindow2"
+        Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
+        Me.RetroWindow2.TabIndex = 1
+        Me.RetroWindow2.TitlebarText = "Active Window"
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.Silver
+        Me.Panel3.Controls.Add(Me.RetroLabel1)
+        Me.Panel3.Controls.Add(Me.RetroLabel2)
+        Me.Panel3.Controls.Add(Me.RetroPanel1)
+        Me.Panel3.Location = New System.Drawing.Point(3, 21)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(190, 20)
+        Me.Panel3.TabIndex = 5
+        '
+        'RetroLabel1
+        '
+        Me.RetroLabel1.AutoSize = True
+        Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel1.Location = New System.Drawing.Point(3, 4)
+        Me.RetroLabel1.Name = "RetroLabel1"
+        Me.RetroLabel1.Size = New System.Drawing.Size(40, 13)
+        Me.RetroLabel1.TabIndex = 0
+        Me.RetroLabel1.Text = "Normal"
+        Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroLabel2
+        '
+        Me.RetroLabel2.AutoSize = True
+        Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.RetroLabel2.Location = New System.Drawing.Point(49, 4)
+        Me.RetroLabel2.Name = "RetroLabel2"
+        Me.RetroLabel2.Size = New System.Drawing.Size(48, 13)
+        Me.RetroLabel2.TabIndex = 1
+        Me.RetroLabel2.Text = "Disabled"
+        Me.RetroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroPanel1
+        '
+        Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroPanel1.Controls.Add(Me.RetroLabel3)
+        Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
+        Me.RetroPanel1.Location = New System.Drawing.Point(103, 2)
+        Me.RetroPanel1.Name = "RetroPanel1"
+        Me.RetroPanel1.Size = New System.Drawing.Size(52, 17)
+        Me.RetroPanel1.TabIndex = 2
+        '
+        'RetroLabel3
+        '
+        Me.RetroLabel3.AutoSize = True
+        Me.RetroLabel3.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel3.Location = New System.Drawing.Point(3, 2)
+        Me.RetroLabel3.Name = "RetroLabel3"
+        Me.RetroLabel3.Size = New System.Drawing.Size(49, 13)
+        Me.RetroLabel3.TabIndex = 1
+        Me.RetroLabel3.Text = "Selected"
+        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RetroButton5
+        '
+        Me.RetroButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton5.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton5.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton5.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton5.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton5.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton5.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton5.Image = Nothing
+        Me.RetroButton5.Location = New System.Drawing.Point(141, 5)
+        Me.RetroButton5.Name = "RetroButton5"
+        Me.RetroButton5.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton5.TabIndex = 6
+        Me.RetroButton5.Text = "0"
+        Me.RetroButton5.UseVisualStyleBackColor = False
+        Me.RetroButton5.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton4
+        '
+        Me.RetroButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton4.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton4.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton4.Image = Nothing
+        Me.RetroButton4.Location = New System.Drawing.Point(157, 5)
+        Me.RetroButton4.Name = "RetroButton4"
+        Me.RetroButton4.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton4.TabIndex = 5
+        Me.RetroButton4.Text = "1"
+        Me.RetroButton4.UseVisualStyleBackColor = False
+        Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton3
+        '
+        Me.RetroButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton3.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton3.Image = Nothing
+        Me.RetroButton3.Location = New System.Drawing.Point(175, 5)
+        Me.RetroButton3.Name = "RetroButton3"
+        Me.RetroButton3.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton3.TabIndex = 4
+        Me.RetroButton3.Text = "r"
+        Me.RetroButton3.UseVisualStyleBackColor = False
+        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroTextBox1
+        '
+        Me.RetroTextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroTextBox1.BackColor = System.Drawing.Color.White
+        Me.RetroTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.RetroTextBox1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroTextBox1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroTextBox1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroTextBox1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroTextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroTextBox1.ForeColor = System.Drawing.Color.Black
+        Me.RetroTextBox1.Location = New System.Drawing.Point(5, 41)
+        Me.RetroTextBox1.MaxLength = 32767
+        Me.RetroTextBox1.Multiline = True
+        Me.RetroTextBox1.Name = "RetroTextBox1"
+        Me.RetroTextBox1.ReadOnly = False
+        Me.RetroTextBox1.Size = New System.Drawing.Size(187, 64)
+        Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
+        Me.RetroTextBox1.TabIndex = 3
+        Me.RetroTextBox1.Text = "RetroTextBox1"
+        Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.RetroTextBox1.UseSystemPasswordChar = False
+        '
+        'RetroWindow1
+        '
+        Me.RetroWindow1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroWindow1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow1.Color1 = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.RetroWindow1.Color2 = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer))
+        Me.RetroWindow1.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroWindow1.Controls.Add(Me.RetroButton6)
+        Me.RetroWindow1.Controls.Add(Me.RetroButton7)
+        Me.RetroWindow1.Controls.Add(Me.RetroButton8)
+        Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroWindow1.ForeColor = System.Drawing.Color.White
+        Me.RetroWindow1.Location = New System.Drawing.Point(291, 6)
+        Me.RetroWindow1.Name = "RetroWindow1"
+        Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
+        Me.RetroWindow1.TabIndex = 0
+        Me.RetroWindow1.Text = "New Window"
+        Me.RetroWindow1.TitlebarText = "Inactive Window"
+        '
+        'RetroButton6
+        '
+        Me.RetroButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton6.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton6.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton6.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton6.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton6.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton6.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton6.Image = Nothing
+        Me.RetroButton6.Location = New System.Drawing.Point(125, 5)
+        Me.RetroButton6.Name = "RetroButton6"
+        Me.RetroButton6.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton6.TabIndex = 9
+        Me.RetroButton6.Text = "0"
+        Me.RetroButton6.UseVisualStyleBackColor = False
+        Me.RetroButton6.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton7
+        '
+        Me.RetroButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton7.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton7.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton7.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton7.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton7.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton7.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton7.Image = Nothing
+        Me.RetroButton7.Location = New System.Drawing.Point(141, 5)
+        Me.RetroButton7.Name = "RetroButton7"
+        Me.RetroButton7.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton7.TabIndex = 8
+        Me.RetroButton7.Text = "1"
+        Me.RetroButton7.UseVisualStyleBackColor = False
+        Me.RetroButton7.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton8
+        '
+        Me.RetroButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton8.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton8.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton8.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton8.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton8.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton8.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton8.Image = Nothing
+        Me.RetroButton8.Location = New System.Drawing.Point(159, 5)
+        Me.RetroButton8.Name = "RetroButton8"
+        Me.RetroButton8.Size = New System.Drawing.Size(16, 14)
+        Me.RetroButton8.TabIndex = 7
+        Me.RetroButton8.Text = "r"
+        Me.RetroButton8.UseVisualStyleBackColor = False
+        Me.RetroButton8.WindowFrame = System.Drawing.Color.Black
+        '
+        'XenonButton2
+        '
+        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonButton2.Image = Nothing
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton2.LineSize = 1
+        Me.XenonButton2.Location = New System.Drawing.Point(702, 495)
+        Me.XenonButton2.Name = "XenonButton2"
+        Me.XenonButton2.Size = New System.Drawing.Size(114, 38)
+        Me.XenonButton2.TabIndex = 64
+        Me.XenonButton2.Text = "Cancel"
+        Me.XenonButton2.UseVisualStyleBackColor = False
+        '
+        'XenonButton1
+        '
+        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton1.ForeColor = System.Drawing.Color.White
+        Me.XenonButton1.Image = Nothing
+        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(61, Byte), Integer), CType(CType(82, Byte), Integer))
+        Me.XenonButton1.LineSize = 1
+        Me.XenonButton1.Location = New System.Drawing.Point(822, 494)
+        Me.XenonButton1.Name = "XenonButton1"
+        Me.XenonButton1.Size = New System.Drawing.Size(221, 38)
+        Me.XenonButton1.TabIndex = 63
+        Me.XenonButton1.Text = "Load these into current palette"
+        Me.XenonButton1.UseVisualStyleBackColor = False
+        '
+        'XenonSeparator1
+        '
+        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 486)
+        Me.XenonSeparator1.Name = "XenonSeparator1"
+        Me.XenonSeparator1.Size = New System.Drawing.Size(1031, 1)
+        Me.XenonSeparator1.TabIndex = 62
+        Me.XenonSeparator1.TabStop = False
+        Me.XenonSeparator1.Text = "XenonSeparator1"
+        '
         'XenonGroupBox66
         '
         Me.XenonGroupBox66.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
@@ -307,7 +1110,7 @@ Partial Class Win32UI
         Me.XenonGroupBox66.CustomColor = False
         Me.XenonGroupBox66.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox66.LineSize = 1
-        Me.XenonGroupBox66.Location = New System.Drawing.Point(4, 542)
+        Me.XenonGroupBox66.Location = New System.Drawing.Point(3, 541)
         Me.XenonGroupBox66.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox66.Name = "XenonGroupBox66"
         Me.XenonGroupBox66.Size = New System.Drawing.Size(224, 106)
@@ -316,7 +1119,6 @@ Partial Class Win32UI
         '
         'PictureBox40
         '
-        Me.PictureBox40.Image = CType(resources.GetObject("PictureBox40.Image"), System.Drawing.Image)
         Me.PictureBox40.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox40.Name = "PictureBox40"
         Me.PictureBox40.Size = New System.Drawing.Size(35, 35)
@@ -354,7 +1156,6 @@ Partial Class Win32UI
         '
         Me.PictureBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox25.Image = CType(resources.GetObject("PictureBox25.Image"), System.Drawing.Image)
         Me.PictureBox25.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox25.Name = "PictureBox25"
         Me.PictureBox25.Size = New System.Drawing.Size(30, 24)
@@ -410,7 +1211,6 @@ Partial Class Win32UI
         '
         Me.PictureBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
         Me.PictureBox9.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(30, 24)
@@ -466,7 +1266,6 @@ Partial Class Win32UI
         '
         Me.PictureBox43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox43.Image = CType(resources.GetObject("PictureBox43.Image"), System.Drawing.Image)
         Me.PictureBox43.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox43.Name = "PictureBox43"
         Me.PictureBox43.Size = New System.Drawing.Size(30, 24)
@@ -516,7 +1315,7 @@ Partial Class Win32UI
         Me.XenonGroupBox63.CustomColor = False
         Me.XenonGroupBox63.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox63.LineSize = 1
-        Me.XenonGroupBox63.Location = New System.Drawing.Point(230, 445)
+        Me.XenonGroupBox63.Location = New System.Drawing.Point(229, 444)
         Me.XenonGroupBox63.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox63.Name = "XenonGroupBox63"
         Me.XenonGroupBox63.Size = New System.Drawing.Size(224, 202)
@@ -525,7 +1324,6 @@ Partial Class Win32UI
         '
         'PictureBox37
         '
-        Me.PictureBox37.Image = CType(resources.GetObject("PictureBox37.Image"), System.Drawing.Image)
         Me.PictureBox37.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox37.Name = "PictureBox37"
         Me.PictureBox37.Size = New System.Drawing.Size(35, 35)
@@ -563,7 +1361,6 @@ Partial Class Win32UI
         '
         Me.PictureBox26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox26.Image = CType(resources.GetObject("PictureBox26.Image"), System.Drawing.Image)
         Me.PictureBox26.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox26.Name = "PictureBox26"
         Me.PictureBox26.Size = New System.Drawing.Size(30, 24)
@@ -582,7 +1379,7 @@ Partial Class Win32UI
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(123, 16)
         Me.Label25.TabIndex = 3
-        Me.Label25.Text = "Frame"
+        Me.Label25.Text = "Frame Button"
         Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Frame_pick
@@ -619,7 +1416,6 @@ Partial Class Win32UI
         '
         Me.PictureBox39.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox39.Image = CType(resources.GetObject("PictureBox39.Image"), System.Drawing.Image)
         Me.PictureBox39.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox39.Name = "PictureBox39"
         Me.PictureBox39.Size = New System.Drawing.Size(30, 24)
@@ -675,7 +1471,6 @@ Partial Class Win32UI
         '
         Me.PictureBox27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
         Me.PictureBox27.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox27.Name = "PictureBox27"
         Me.PictureBox27.Size = New System.Drawing.Size(30, 24)
@@ -731,7 +1526,6 @@ Partial Class Win32UI
         '
         Me.PictureBox20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox20.Image = CType(resources.GetObject("PictureBox20.Image"), System.Drawing.Image)
         Me.PictureBox20.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox20.Name = "PictureBox20"
         Me.PictureBox20.Size = New System.Drawing.Size(30, 24)
@@ -787,7 +1581,6 @@ Partial Class Win32UI
         '
         Me.PictureBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
         Me.PictureBox15.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox15.Name = "PictureBox15"
         Me.PictureBox15.Size = New System.Drawing.Size(30, 24)
@@ -806,7 +1599,7 @@ Partial Class Win32UI
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(123, 16)
         Me.Label15.TabIndex = 3
-        Me.Label15.Text = "Gray Text"
+        Me.Label15.Text = "Disabled Text"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'GrayText_pick
@@ -843,7 +1636,6 @@ Partial Class Win32UI
         '
         Me.PictureBox32.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox32.Image = CType(resources.GetObject("PictureBox32.Image"), System.Drawing.Image)
         Me.PictureBox32.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox32.Name = "PictureBox32"
         Me.PictureBox32.Size = New System.Drawing.Size(30, 24)
@@ -893,7 +1685,7 @@ Partial Class Win32UI
         Me.XenonGroupBox57.CustomColor = False
         Me.XenonGroupBox57.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox57.LineSize = 1
-        Me.XenonGroupBox57.Location = New System.Drawing.Point(4, 4)
+        Me.XenonGroupBox57.Location = New System.Drawing.Point(3, 3)
         Me.XenonGroupBox57.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox57.Name = "XenonGroupBox57"
         Me.XenonGroupBox57.Size = New System.Drawing.Size(224, 234)
@@ -902,7 +1694,6 @@ Partial Class Win32UI
         '
         'PictureBox38
         '
-        Me.PictureBox38.Image = CType(resources.GetObject("PictureBox38.Image"), System.Drawing.Image)
         Me.PictureBox38.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox38.Name = "PictureBox38"
         Me.PictureBox38.Size = New System.Drawing.Size(35, 35)
@@ -940,7 +1731,6 @@ Partial Class Win32UI
         '
         Me.PictureBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
         Me.PictureBox28.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox28.Name = "PictureBox28"
         Me.PictureBox28.Size = New System.Drawing.Size(30, 24)
@@ -996,7 +1786,6 @@ Partial Class Win32UI
         '
         Me.PictureBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
         Me.PictureBox23.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox23.Name = "PictureBox23"
         Me.PictureBox23.Size = New System.Drawing.Size(30, 24)
@@ -1052,7 +1841,6 @@ Partial Class Win32UI
         '
         Me.PictureBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
         Me.PictureBox14.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox14.Name = "PictureBox14"
         Me.PictureBox14.Size = New System.Drawing.Size(30, 24)
@@ -1108,7 +1896,6 @@ Partial Class Win32UI
         '
         Me.PictureBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
         Me.PictureBox13.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox13.Name = "PictureBox13"
         Me.PictureBox13.Size = New System.Drawing.Size(30, 24)
@@ -1164,7 +1951,6 @@ Partial Class Win32UI
         '
         Me.PictureBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox19.Image = CType(resources.GetObject("PictureBox19.Image"), System.Drawing.Image)
         Me.PictureBox19.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox19.Name = "PictureBox19"
         Me.PictureBox19.Size = New System.Drawing.Size(30, 24)
@@ -1220,7 +2006,6 @@ Partial Class Win32UI
         '
         Me.PictureBox17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox17.Image = CType(resources.GetObject("PictureBox17.Image"), System.Drawing.Image)
         Me.PictureBox17.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox17.Name = "PictureBox17"
         Me.PictureBox17.Size = New System.Drawing.Size(30, 24)
@@ -1269,7 +2054,7 @@ Partial Class Win32UI
         Me.XenonGroupBox60.CustomColor = False
         Me.XenonGroupBox60.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox60.LineSize = 1
-        Me.XenonGroupBox60.Location = New System.Drawing.Point(230, 273)
+        Me.XenonGroupBox60.Location = New System.Drawing.Point(229, 272)
         Me.XenonGroupBox60.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox60.Name = "XenonGroupBox60"
         Me.XenonGroupBox60.Size = New System.Drawing.Size(224, 170)
@@ -1278,7 +2063,6 @@ Partial Class Win32UI
         '
         'PictureBox35
         '
-        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
         Me.PictureBox35.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox35.Name = "PictureBox35"
         Me.PictureBox35.Size = New System.Drawing.Size(35, 35)
@@ -1316,7 +2100,6 @@ Partial Class Win32UI
         '
         Me.PictureBox36.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox36.Image = CType(resources.GetObject("PictureBox36.Image"), System.Drawing.Image)
         Me.PictureBox36.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox36.Name = "PictureBox36"
         Me.PictureBox36.Size = New System.Drawing.Size(30, 24)
@@ -1372,7 +2155,6 @@ Partial Class Win32UI
         '
         Me.PictureBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox24.Image = CType(resources.GetObject("PictureBox24.Image"), System.Drawing.Image)
         Me.PictureBox24.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox24.Name = "PictureBox24"
         Me.PictureBox24.Size = New System.Drawing.Size(30, 24)
@@ -1428,7 +2210,6 @@ Partial Class Win32UI
         '
         Me.PictureBox21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox21.Image = CType(resources.GetObject("PictureBox21.Image"), System.Drawing.Image)
         Me.PictureBox21.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox21.Name = "PictureBox21"
         Me.PictureBox21.Size = New System.Drawing.Size(30, 24)
@@ -1484,7 +2265,6 @@ Partial Class Win32UI
         '
         Me.PictureBox18.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox18.Image = CType(resources.GetObject("PictureBox18.Image"), System.Drawing.Image)
         Me.PictureBox18.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox18.Name = "PictureBox18"
         Me.PictureBox18.Size = New System.Drawing.Size(30, 24)
@@ -1540,7 +2320,6 @@ Partial Class Win32UI
         '
         Me.PictureBox22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox22.Image = CType(resources.GetObject("PictureBox22.Image"), System.Drawing.Image)
         Me.PictureBox22.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox22.Name = "PictureBox22"
         Me.PictureBox22.Size = New System.Drawing.Size(30, 24)
@@ -1591,7 +2370,7 @@ Partial Class Win32UI
         Me.XenonGroupBox58.CustomColor = False
         Me.XenonGroupBox58.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox58.LineSize = 1
-        Me.XenonGroupBox58.Location = New System.Drawing.Point(230, 4)
+        Me.XenonGroupBox58.Location = New System.Drawing.Point(229, 3)
         Me.XenonGroupBox58.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox58.Name = "XenonGroupBox58"
         Me.XenonGroupBox58.Size = New System.Drawing.Size(224, 266)
@@ -1600,7 +2379,6 @@ Partial Class Win32UI
         '
         'PictureBox33
         '
-        Me.PictureBox33.Image = CType(resources.GetObject("PictureBox33.Image"), System.Drawing.Image)
         Me.PictureBox33.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox33.Name = "PictureBox33"
         Me.PictureBox33.Size = New System.Drawing.Size(35, 35)
@@ -1638,7 +2416,6 @@ Partial Class Win32UI
         '
         Me.PictureBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
         Me.PictureBox4.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 24)
@@ -1694,7 +2471,6 @@ Partial Class Win32UI
         '
         Me.PictureBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
         Me.PictureBox3.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 24)
@@ -1750,7 +2526,6 @@ Partial Class Win32UI
         '
         Me.PictureBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 24)
@@ -1806,7 +2581,6 @@ Partial Class Win32UI
         '
         Me.PictureBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 24)
@@ -1862,7 +2636,6 @@ Partial Class Win32UI
         '
         Me.PictureBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
         Me.PictureBox8.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(30, 24)
@@ -1918,7 +2691,6 @@ Partial Class Win32UI
         '
         Me.PictureBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
         Me.PictureBox7.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(30, 24)
@@ -1974,7 +2746,6 @@ Partial Class Win32UI
         '
         Me.PictureBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
         Me.PictureBox6.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(30, 24)
@@ -2026,7 +2797,7 @@ Partial Class Win32UI
         Me.XenonGroupBox59.CustomColor = False
         Me.XenonGroupBox59.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox59.LineSize = 1
-        Me.XenonGroupBox59.Location = New System.Drawing.Point(4, 241)
+        Me.XenonGroupBox59.Location = New System.Drawing.Point(3, 240)
         Me.XenonGroupBox59.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox59.Name = "XenonGroupBox59"
         Me.XenonGroupBox59.Size = New System.Drawing.Size(224, 298)
@@ -2035,7 +2806,6 @@ Partial Class Win32UI
         '
         'PictureBox34
         '
-        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
         Me.PictureBox34.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox34.Name = "PictureBox34"
         Me.PictureBox34.Size = New System.Drawing.Size(35, 35)
@@ -2073,7 +2843,6 @@ Partial Class Win32UI
         '
         Me.PictureBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
         Me.PictureBox29.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox29.Name = "PictureBox29"
         Me.PictureBox29.Size = New System.Drawing.Size(30, 24)
@@ -2129,7 +2898,6 @@ Partial Class Win32UI
         '
         Me.PictureBox30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
         Me.PictureBox30.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox30.Name = "PictureBox30"
         Me.PictureBox30.Size = New System.Drawing.Size(30, 24)
@@ -2185,7 +2953,6 @@ Partial Class Win32UI
         '
         Me.PictureBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
         Me.PictureBox5.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 24)
@@ -2241,7 +3008,6 @@ Partial Class Win32UI
         '
         Me.PictureBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
         Me.PictureBox12.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(30, 24)
@@ -2297,7 +3063,6 @@ Partial Class Win32UI
         '
         Me.PictureBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox11.Image = CType(resources.GetObject("PictureBox11.Image"), System.Drawing.Image)
         Me.PictureBox11.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox11.Name = "PictureBox11"
         Me.PictureBox11.Size = New System.Drawing.Size(30, 24)
@@ -2353,7 +3118,6 @@ Partial Class Win32UI
         '
         Me.PictureBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
         Me.PictureBox10.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox10.Name = "PictureBox10"
         Me.PictureBox10.Size = New System.Drawing.Size(30, 24)
@@ -2409,7 +3173,6 @@ Partial Class Win32UI
         '
         Me.PictureBox31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
         Me.PictureBox31.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox31.Name = "PictureBox31"
         Me.PictureBox31.Size = New System.Drawing.Size(30, 24)
@@ -2465,7 +3228,6 @@ Partial Class Win32UI
         '
         Me.PictureBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
         Me.PictureBox16.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox16.Name = "PictureBox16"
         Me.PictureBox16.Size = New System.Drawing.Size(30, 24)
@@ -2501,128 +3263,12 @@ Partial Class Win32UI
         Me.GInactivetitle_pick.TabIndex = 2
         Me.GInactivetitle_pick.Text = "XenonGroupBox19"
         '
-        'XenonButton2
-        '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(707, 495)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(114, 38)
-        Me.XenonButton2.TabIndex = 64
-        Me.XenonButton2.Text = "Cancel"
-        Me.XenonButton2.UseVisualStyleBackColor = False
-        '
-        'XenonButton1
-        '
-        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
-        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(61, Byte), Integer), CType(CType(82, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(827, 494)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(221, 38)
-        Me.XenonButton1.TabIndex = 63
-        Me.XenonButton1.Text = "Load these into current palette"
-        Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'XenonSeparator1
-        '
-        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 486)
-        Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(1036, 1)
-        Me.XenonSeparator1.TabIndex = 62
-        Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
-        '
-        'XenonGroupBox8
-        '
-        Me.XenonGroupBox8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
-        Me.XenonGroupBox8.Controls.Add(Me.Label41)
-        Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
-        Me.XenonGroupBox8.CustomColor = False
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox8.LineSize = 1
-        Me.XenonGroupBox8.Location = New System.Drawing.Point(503, 65)
-        Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox8.Name = "XenonGroupBox8"
-        Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
-        Me.XenonGroupBox8.Size = New System.Drawing.Size(536, 343)
-        Me.XenonGroupBox8.TabIndex = 65
-        Me.XenonGroupBox8.Text = "XenonGroupBox8"
-        '
-        'pnl_preview
-        '
-        Me.pnl_preview.BackColor = System.Drawing.Color.Teal
-        Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.pnl_preview.Controls.Add(Me.RetroPanelRaised1)
-        Me.pnl_preview.Location = New System.Drawing.Point(4, 42)
-        Me.pnl_preview.Name = "pnl_preview"
-        Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
-        Me.pnl_preview.TabIndex = 2
-        '
-        'PictureBox41
-        '
-        Me.PictureBox41.Image = CType(resources.GetObject("PictureBox41.Image"), System.Drawing.Image)
-        Me.PictureBox41.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox41.Name = "PictureBox41"
-        Me.PictureBox41.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox41.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox41.TabIndex = 1
-        Me.PictureBox41.TabStop = False
-        '
-        'Label41
-        '
-        Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label41.Location = New System.Drawing.Point(44, 3)
-        Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(80, 35)
-        Me.Label41.TabIndex = 0
-        Me.Label41.Text = "Preview"
-        Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'RetroPanelRaised1
-        '
-        Me.RetroPanelRaised1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanelRaised1.Controls.Add(Me.RetroButton1)
-        Me.RetroPanelRaised1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanelRaised1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanelRaised1.Location = New System.Drawing.Point(119, 40)
-        Me.RetroPanelRaised1.Name = "RetroPanelRaised1"
-        Me.RetroPanelRaised1.Size = New System.Drawing.Size(300, 200)
-        Me.RetroPanelRaised1.TabIndex = 0
-        '
-        'RetroButton1
-        '
-        Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroButton1.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton1.Image = Nothing
-        Me.RetroButton1.Location = New System.Drawing.Point(204, 160)
-        Me.RetroButton1.Name = "RetroButton1"
-        Me.RetroButton1.Size = New System.Drawing.Size(93, 37)
-        Me.RetroButton1.TabIndex = 0
-        Me.RetroButton1.Text = "RetroButton1"
-        Me.RetroButton1.UseVisualStyleBackColor = False
-        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1060, 542)
+        Me.ClientSize = New System.Drawing.Size(1055, 542)
         Me.Controls.Add(Me.XenonGroupBox8)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
@@ -2631,7 +3277,6 @@ Partial Class Win32UI
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -2639,6 +3284,27 @@ Partial Class Win32UI
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Win32UI"
         Me.Panel1.ResumeLayout(False)
+        Me.XenonGroupBox8.ResumeLayout(False)
+        CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnl_preview.ResumeLayout(False)
+        Me.Menu.ResumeLayout(False)
+        Me.Panel11.ResumeLayout(False)
+        Me.Panel10.ResumeLayout(False)
+        Me.Panel9.ResumeLayout(False)
+        Me.Panel8.ResumeLayout(False)
+        Me.menuhighlight.ResumeLayout(False)
+        Me.Panel6.ResumeLayout(False)
+        Me.Panel5.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
+        Me.RetroWindow4.ResumeLayout(False)
+        Me.RetroWindow3.ResumeLayout(False)
+        Me.RetroWindow3.PerformLayout()
+        Me.RetroWindow2.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
+        Me.RetroPanel1.ResumeLayout(False)
+        Me.RetroPanel1.PerformLayout()
+        Me.RetroWindow1.ResumeLayout(False)
         Me.XenonGroupBox66.ResumeLayout(False)
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox47.ResumeLayout(False)
@@ -2721,10 +3387,6 @@ Partial Class Win32UI
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox31.ResumeLayout(False)
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox8.ResumeLayout(False)
-        Me.pnl_preview.ResumeLayout(False)
-        CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RetroPanelRaised1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -2895,6 +3557,47 @@ Partial Class Win32UI
     Friend WithEvents PictureBox41 As PictureBox
     Friend WithEvents Label41 As Label
     Friend WithEvents pnl_preview As Panel
-    Friend WithEvents RetroPanelRaised1 As RetroPanelRaised
+    Friend WithEvents RetroWindow1 As RetroWindow
+    Friend WithEvents RetroWindow3 As RetroWindow
     Friend WithEvents RetroButton1 As RetroButton
+    Friend WithEvents RetroLabel4 As RetroLabel
+    Friend WithEvents RetroWindow2 As RetroWindow
+    Friend WithEvents RetroTextBox1 As RetroTextBox
+    Friend WithEvents RetroPanel1 As RetroPanel
+    Friend WithEvents RetroLabel3 As RetroLabel
+    Friend WithEvents RetroLabel2 As RetroLabel
+    Friend WithEvents RetroLabel1 As RetroLabel
+    Friend WithEvents RetroButton2 As RetroButton
+    Friend WithEvents RetroButton5 As RetroButton
+    Friend WithEvents RetroButton4 As RetroButton
+    Friend WithEvents RetroButton3 As RetroButton
+    Friend WithEvents RetroButton6 As RetroButton
+    Friend WithEvents RetroButton7 As RetroButton
+    Friend WithEvents RetroButton8 As RetroButton
+    Friend WithEvents RetroWindow4 As RetroWindow
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents RetroButton9 As RetroButton
+    Friend WithEvents Menu As RetroPanelRaised
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents RetroLabel12 As RetroLabel
+    Friend WithEvents RetroSeparatorH5 As RetroSeparatorH
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents RetroLabel11 As RetroLabel
+    Friend WithEvents RetroSeparatorH4 As RetroSeparatorH
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents RetroLabel10 As RetroLabel
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents RetroLabel9 As RetroLabel
+    Friend WithEvents RetroSeparatorH3 As RetroSeparatorH
+    Friend WithEvents menuhighlight As Panel
+    Friend WithEvents RetroLabel8 As RetroLabel
+    Friend WithEvents RetroSeparatorH2 As RetroSeparatorH
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents RetroLabel7 As RetroLabel
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents RetroLabel5 As RetroLabel
+    Friend WithEvents RetroSeparatorH1 As RetroSeparatorH
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents RetroLabel6 As RetroLabel
+    Friend WithEvents Panel3 As Panel
 End Class
