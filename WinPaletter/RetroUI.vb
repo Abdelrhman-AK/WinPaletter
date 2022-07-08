@@ -160,12 +160,12 @@ Public Class RetroButton : Inherits Button
                 G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
                 G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
                 G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
-                If Pressed Then G.DrawRectangle(pendash, rectdash)
+                If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
             End If
         Else
             G.DrawRectangle(New Pen(WindowFrame), rect)
             G.DrawRectangle(New Pen(ButtonShadow), rectinner)
-            G.DrawRectangle(pendash, rectdash)
+            If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
         End If
 #End Region
 

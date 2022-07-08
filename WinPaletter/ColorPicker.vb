@@ -167,7 +167,11 @@ Public Class ColorPicker
                 End With
 
             ElseIf TypeOf ctrl Is Label Then
-                Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color), steps, delay)
+                If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then
+                    ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                Else
+                    Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color), steps, delay)
+                End If
 
             ElseIf TypeOf ctrl Is RetroWindow Then
                 With TryCast(ctrl, RetroWindow)
@@ -184,6 +188,7 @@ Public Class ColorPicker
 
             ElseIf TypeOf ctrl Is RetroButton Then
                 With TryCast(ctrl, RetroButton)
+                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -315,18 +320,6 @@ Public Class ColorPicker
         End If
     End Sub
 
-    Private Sub XenonButton5_Click_1(sender As Object, e As EventArgs)
-        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim Tx As PaletteSerializer
-            Dim serializer As IPaletteSerializer
-
-            serializer = Tx.GetSerializer(SaveFileDialog1.FileName)
-            Dim fs As FileStream = New FileStream(SaveFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite)
-
-            serializer.Serialize(fs, ColorGrid1.Colors)
-            fs.Close()
-        End If
-    End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
@@ -380,6 +373,7 @@ Public Class Conditions
     Public Property RetroWindowForeColor As Boolean = False
     Public Property RetroWindowBorder As Boolean = False
     Public Property RetroWindowFrame As Boolean = False
+    Public Property RetroButtonFace As Boolean = False
     Public Property RetroButtonDkShadow As Boolean = False
     Public Property RetroButtonShadow As Boolean = False
     Public Property RetroButtonHilight As Boolean = False
