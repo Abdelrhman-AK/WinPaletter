@@ -22,6 +22,7 @@ Partial Class Win32UI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Win32UI))
         Me.XenonGroupBox47 = New WinPaletter.XenonGroupBox()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
         Me.Label24 = New System.Windows.Forms.Label()
@@ -187,12 +188,13 @@ Partial Class Win32UI
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox47.SuspendLayout()
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox17.SuspendLayout()
@@ -1000,7 +1002,7 @@ Partial Class Win32UI
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(222, 16)
         Me.Label17.TabIndex = 3
-        Me.Label17.Text = "Desktop"
+        Me.Label17.Text = "Desktop (Unknown usage)"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'desktop_pick
@@ -2075,7 +2077,7 @@ Partial Class Win32UI
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel13.Location = New System.Drawing.Point(218, 39)
+        Me.RetroLabel13.Location = New System.Drawing.Point(222, 39)
         Me.RetroLabel13.Name = "RetroLabel13"
         Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
         Me.RetroLabel13.TabIndex = 5
@@ -2092,7 +2094,7 @@ Partial Class Win32UI
         Me.Menu.Controls.Add(Me.Panel4)
         Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu.ForeColor = System.Drawing.Color.Black
-        Me.Menu.Location = New System.Drawing.Point(229, 130)
+        Me.Menu.Location = New System.Drawing.Point(233, 130)
         Me.Menu.Name = "Menu"
         Me.Menu.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu.Size = New System.Drawing.Size(116, 66)
@@ -2214,7 +2216,7 @@ Partial Class Win32UI
         Me.RetroWindow3.Controls.Add(Me.RetroLabel4)
         Me.RetroWindow3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow3.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow3.Location = New System.Drawing.Point(133, 155)
+        Me.RetroWindow3.Location = New System.Drawing.Point(137, 155)
         Me.RetroWindow3.Name = "RetroWindow3"
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 77)
         Me.RetroWindow3.TabIndex = 2
@@ -2288,7 +2290,7 @@ Partial Class Win32UI
         Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
         Me.RetroWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow2.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow2.Location = New System.Drawing.Point(123, 90)
+        Me.RetroWindow2.Location = New System.Drawing.Point(127, 90)
         Me.RetroWindow2.Name = "RetroWindow2"
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
         Me.RetroWindow2.TabIndex = 1
@@ -2454,7 +2456,7 @@ Partial Class Win32UI
         Me.RetroWindow1.Controls.Add(Me.RetroButton8)
         Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow1.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow1.Location = New System.Drawing.Point(117, 67)
+        Me.RetroWindow1.Location = New System.Drawing.Point(121, 67)
         Me.RetroWindow1.Name = "RetroWindow1"
         Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
         Me.RetroWindow1.TabIndex = 0
@@ -2532,7 +2534,7 @@ Partial Class Win32UI
         Me.RetroWindow4.Controls.Add(Me.RetroButton9)
         Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow4.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow4.Location = New System.Drawing.Point(71, 23)
+        Me.RetroWindow4.Location = New System.Drawing.Point(75, 23)
         Me.RetroWindow4.Name = "RetroWindow4"
         Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
@@ -2631,9 +2633,9 @@ Partial Class Win32UI
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(466, 336)
+        Me.XenonButton2.Location = New System.Drawing.Point(466, 375)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(129, 38)
+        Me.XenonButton2.Size = New System.Drawing.Size(129, 30)
         Me.XenonButton2.TabIndex = 64
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -2648,9 +2650,9 @@ Partial Class Win32UI
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(61, Byte), Integer), CType(CType(82, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(601, 335)
+        Me.XenonButton1.Location = New System.Drawing.Point(601, 374)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(221, 38)
+        Me.XenonButton1.Size = New System.Drawing.Size(221, 30)
         Me.XenonButton1.TabIndex = 63
         Me.XenonButton1.Text = "Load these into current palette"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -2659,7 +2661,7 @@ Partial Class Win32UI
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 327)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 365)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(810, 1)
         Me.XenonSeparator1.TabIndex = 62
@@ -2702,22 +2704,6 @@ Partial Class Win32UI
         Me.TabPage1.Size = New System.Drawing.Size(323, 301)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "3D Objects"
-        '
-        'XenonButton4
-        '
-        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = Nothing
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(178, 336)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(201, 38)
-        Me.XenonButton4.TabIndex = 67
-        Me.XenonButton4.Text = "Make the 3D looks like Windows 9x"
-        Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'TabPage2
         '
@@ -2771,6 +2757,22 @@ Partial Class Win32UI
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Window Objects"
         '
+        'XenonButton4
+        '
+        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton4.ForeColor = System.Drawing.Color.White
+        Me.XenonButton4.Image = Nothing
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton4.LineSize = 1
+        Me.XenonButton4.Location = New System.Drawing.Point(178, 375)
+        Me.XenonButton4.Name = "XenonButton4"
+        Me.XenonButton4.Size = New System.Drawing.Size(219, 30)
+        Me.XenonButton4.TabIndex = 67
+        Me.XenonButton4.Text = "Make the 3D looks like Windows 9x"
+        Me.XenonButton4.UseVisualStyleBackColor = False
+        '
         'XenonButton3
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -2780,9 +2782,9 @@ Partial Class Win32UI
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(12, 336)
+        Me.XenonButton3.Location = New System.Drawing.Point(12, 375)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(160, 38)
+        Me.XenonButton3.Size = New System.Drawing.Size(160, 30)
         Me.XenonButton3.TabIndex = 66
         Me.XenonButton3.Text = "Open from a Win9x theme"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -2791,12 +2793,33 @@ Partial Class Win32UI
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
         '
+        'XenonAlertBox7
+        '
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox7.Border = True
+        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox7.CenterText = False
+        Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox7.Image = CType(resources.GetObject("XenonAlertBox7.Image"), System.Drawing.Image)
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 329)
+        Me.XenonAlertBox7.Name = "XenonAlertBox7"
+        Me.XenonAlertBox7.Size = New System.Drawing.Size(810, 30)
+        Me.XenonAlertBox7.TabIndex = 68
+        Me.XenonAlertBox7.TabStop = False
+        Me.XenonAlertBox7.Text = "Applying these colors requires sign out and resign in, or Windows Restart (Not Ex" &
+    "plorer Restart)"
+        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(834, 383)
+        Me.ClientSize = New System.Drawing.Size(834, 415)
+        Me.Controls.Add(Me.XenonAlertBox7)
         Me.Controls.Add(Me.XenonButton4)
         Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.XenonTabControl1)
@@ -3073,4 +3096,5 @@ Partial Class Win32UI
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
     Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonAlertBox7 As XenonAlertBox
 End Class

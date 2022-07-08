@@ -655,6 +655,18 @@ Public Class Win32UI
 
         c = Scrollbar_pick.BackColor
         RetroPanel2.BackColor = c
+
+        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+            RW.Invalidate()
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.Invalidate()
+            Next
+        Next
+
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.Invalidate()
+        Next
+
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
