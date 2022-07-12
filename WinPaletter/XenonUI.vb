@@ -110,7 +110,7 @@ Module XenonModule
             If [Radius] = -1 Then [Radius] = 6
 
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
-            [Graphics].SmoothingMode = SmoothingMode.HighQuality
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
                 Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
@@ -173,7 +173,7 @@ Module XenonModule
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
             [Radius_willbe_x2] *= 2
 
-            [Graphics].SmoothingMode = SmoothingMode.HighQuality
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
                 [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
                 [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
@@ -194,7 +194,7 @@ Module XenonModule
         Try
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
             [Radius_willbe_x2] *= 2
-            [Graphics].SmoothingMode = SmoothingMode.HighQuality
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             Dim [Pen] As New Pen(BorderColor)
             Dim [Pen2] As New Pen(CCB(BorderColor, -0.085))
@@ -333,7 +333,7 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
         DoubleBuffered = True
@@ -481,7 +481,7 @@ Public Class XenonToggle
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Me.OnPaintBackground(e)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
+        G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
 
         If Parent Is Nothing Then Exit Sub
@@ -855,7 +855,7 @@ Public Class XenonRadioButton
             Dim clr As Color = AccentColor
 
             G = e.Graphics
-            G.SmoothingMode = SmoothingMode.HighQuality
+            G.SmoothingMode = SmoothingMode.AntiAlias
             G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
             DoubleBuffered = True
 
@@ -1117,7 +1117,7 @@ Public Class XenonCheckBox
             BackColor = Parent.BackColor
 
             Dim G As Graphics = e.Graphics
-            G.SmoothingMode = SmoothingMode.HighQuality
+            G.SmoothingMode = SmoothingMode.AntiAlias
             G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
             DoubleBuffered = True
 
@@ -1258,7 +1258,7 @@ Public Class XenonGroupBox
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
 
         G.Clear(GetParentColor(Me))
@@ -1534,7 +1534,7 @@ Public Class XenonButton : Inherits Button
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
@@ -1696,7 +1696,7 @@ Public Class XenonSeparator
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
-        G.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
         MyBase.OnPaint(e)
 
@@ -1935,7 +1935,7 @@ Public Class XenonNumericUpDown
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
@@ -1988,7 +1988,7 @@ Public Class XenonSeparatorVertical
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
-        G.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
         MyBase.OnPaint(e)
 
@@ -2354,7 +2354,7 @@ End Class
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         MyBase.OnPaint(e)
 
         If GetDarkMode() Then
@@ -2479,6 +2479,7 @@ Public Class XenonComboBox : Inherits ComboBox
 #Region "Subs"
     Sub ReplaceItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles Me.DrawItem
         BackColor = ColorPalette.Color_Back_Checked
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
         e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         e.DrawBackground()
 
@@ -2664,7 +2665,7 @@ Public Class XenonComboBox : Inherits ComboBox
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
@@ -2797,7 +2798,7 @@ Public Class XenonAlertBox
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
@@ -3563,7 +3564,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             If [Radius] = -1 Then [Radius] = 6
 
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
-            [Graphics].SmoothingMode = SmoothingMode.HighQuality
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
+
 
             Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
                 Graphics.FillPath(Brush, path)

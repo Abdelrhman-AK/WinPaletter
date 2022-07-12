@@ -376,9 +376,9 @@ Public Class Win32UI
                 RetroLabel6.ForeColor = C
 
             Case "hilighttext_pick"
-                CList.Add(RetroLabel8)
+                CList.Add(RetroLabel5)
                 C = ColorPicker.Pick(CList)
-                RetroLabel8.ForeColor = C
+                RetroLabel5.ForeColor = C
 
             Case "GrayText_pick"
                 CList.Add(RetroLabel2)
@@ -635,7 +635,7 @@ Public Class Win32UI
         RetroLabel6.ForeColor = c
 
         c = hilighttext_pick.BackColor
-        RetroLabel8.ForeColor = c
+        RetroLabel5.ForeColor = c
 
         c = GrayText_pick.BackColor
         RetroLabel2.ForeColor = c
@@ -677,5 +677,23 @@ Public Class Win32UI
         btnface_pick.BackColor = Color.FromArgb(192, 192, 192)
         Frame_pick.BackColor = Color.Black
         ApplyRetroPreview()
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            LoadCP(New CP(CP.Mode.File, OpenFileDialog1.FileName))
+        End If
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        LoadCP(New CP(CP.Mode.Registry))
+    End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        LoadCP(New CP(CP.Mode.Init))
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        Process.Start("https://www.neowin.net/forum/topic/624901-windows-colors-explained/")
     End Sub
 End Class
