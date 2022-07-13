@@ -1408,6 +1408,14 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton8_Click_1(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        MsgBox("Windows Volume slider and UAC follow this color.", MsgBoxStyle.Information)
+    End Sub
+
+    Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Process.Start(My.Resources.Link_Telegram)
+    End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

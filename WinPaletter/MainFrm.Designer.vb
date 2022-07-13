@@ -88,6 +88,7 @@ Partial Class MainFrm
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.ActiveTitlebar_picker = New WinPaletter.XenonGroupBox()
@@ -136,6 +137,7 @@ Partial Class MainFrm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
+        Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.PaletteContainer.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -1078,6 +1080,7 @@ Partial Class MainFrm
         'XenonGroupBox9
         '
         Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox9.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox9.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox9.Controls.Add(Me.Label5)
         Me.XenonGroupBox9.Controls.Add(Me.ActiveTitlebar_picker)
@@ -1090,6 +1093,22 @@ Partial Class MainFrm
         Me.XenonGroupBox9.Size = New System.Drawing.Size(220, 29)
         Me.XenonGroupBox9.TabIndex = 5
         Me.XenonGroupBox9.Text = "XenonGroupBox9"
+        '
+        'XenonButton8
+        '
+        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(56, Byte), Integer))
+        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton8.ForeColor = System.Drawing.Color.White
+        Me.XenonButton8.Image = Nothing
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton8.LineSize = 1
+        Me.XenonButton8.Location = New System.Drawing.Point(144, 4)
+        Me.XenonButton8.Name = "XenonButton8"
+        Me.XenonButton8.Size = New System.Drawing.Size(20, 21)
+        Me.XenonButton8.TabIndex = 27
+        Me.XenonButton8.Text = "?"
+        Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'PictureBox5
         '
@@ -1604,6 +1623,7 @@ Partial Class MainFrm
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(37, Byte), Integer))
+        Me.XenonGroupBox2.Controls.Add(Me.XenonButton14)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton12)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton6)
@@ -1781,6 +1801,25 @@ Partial Class MainFrm
         '
         Me.SaveFileDialog2.DefaultExt = "wpt"
         Me.SaveFileDialog2.Filter = "PNG File|*.png"
+        '
+        'XenonButton14
+        '
+        Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(46, Byte), Integer))
+        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton14.ForeColor = System.Drawing.Color.White
+        Me.XenonButton14.Image = CType(resources.GetObject("XenonButton14.Image"), System.Drawing.Image)
+        Me.XenonButton14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.XenonButton14.LineSize = 1
+        Me.XenonButton14.Location = New System.Drawing.Point(877, 10)
+        Me.XenonButton14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonButton14.Name = "XenonButton14"
+        Me.XenonButton14.Size = New System.Drawing.Size(101, 40)
+        Me.XenonButton14.TabIndex = 13
+        Me.XenonButton14.Tag = "About"
+        Me.XenonButton14.Text = "Themes"
+        Me.XenonButton14.UseVisualStyleBackColor = False
         '
         'MainFrm
         '
@@ -1966,4 +2005,6 @@ Partial Class MainFrm
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents SaveFileDialog2 As SaveFileDialog
+    Friend WithEvents XenonButton8 As XenonButton
+    Friend WithEvents XenonButton14 As XenonButton
 End Class

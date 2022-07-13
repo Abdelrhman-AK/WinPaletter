@@ -208,6 +208,9 @@
   <data name="Link_Repository" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/</value>
   </data>
+  <data name="Link_Telegram" xml:space="preserve">
+    <value>https://t.me/WinPaletter</value>
+  </data>
   <data name="Link_Updates" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Updates?raw=true</value>
   </data>

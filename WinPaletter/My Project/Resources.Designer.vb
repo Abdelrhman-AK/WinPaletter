@@ -231,7 +231,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to @NewTag= Create New Theme (Palette) File
+        '''  Looks up a localized string similar to @Yes= Yes
+        '''@No= No
+        '''@NewTag= Create New Theme (Palette) File
         '''@OpenTag= Open a Theme File
         '''@SaveTag= Save Theme File
         '''@SaveAsTag= Save Theme File as ...
@@ -244,7 +246,6 @@ Namespace My.Resources
         '''@X3= Lines, Toggles and Buttons
         '''@X4= Taskbar Active App Background
         '''@X5= Start Menu and Action Center Colors
-        '''@X6= Taskbar Color
         ''' [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property CodeStr() As String
@@ -367,6 +368,15 @@ Namespace My.Resources
         Public ReadOnly Property Link_Repository() As String
             Get
                 Return ResourceManager.GetString("Link_Repository", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://t.me/WinPaletter.
+        '''</summary>
+        Public ReadOnly Property Link_Telegram() As String
+            Get
+                Return ResourceManager.GetString("Link_Telegram", resourceCulture)
             End Get
         End Property
         
