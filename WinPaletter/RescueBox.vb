@@ -23,6 +23,9 @@ Public Class RescueBox
         For Each Ctrl As XenonButton In XenonGroupBox3.Controls.OfType(Of XenonButton)
             AddHandler Ctrl.Click, AddressOf StopAutoClose
         Next
+
+        Me.Text = If(My.Application._Settings.RescueBox_Autoclose, "Rescue Box - Press any Keyboard Key to disable auto closing", "Rescue Box")
+
     End Sub
 
     Protected Overrides Function ProcessKeyPreview(ByRef m As System.Windows.Forms.Message) As Boolean
@@ -101,7 +104,7 @@ Public Class RescueBox
     Private int As Integer = 0
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If int >= 4 Then
+        If int >= My.Application._Settings.RescueBox_Threshold - 1 Then
             int = 0
 
             With My.Application
@@ -112,7 +115,7 @@ Public Class RescueBox
                     If Not StartMenuExperienceHost Then
                         .AnimatorX.Show(Label11)
                     Else
-                        If _AutoClosing Then Me.Close()
+                        If _AutoClosing And My.Application._Settings.RescueBox_Autoclose Then Me.Close()
                     End If
 
                 Catch
@@ -132,7 +135,7 @@ Public Class RescueBox
                     StartMenuExperienceHost = Not Process.GetProcessesByName("StartMenuExperienceHost")(0).HasExited
                     If Not StartMenuExperienceHost Then
                     Else
-                        If _AutoClosing Then Me.Close()
+                        If _AutoClosing And My.Application._Settings.RescueBox_Autoclose Then Me.Close()
                     End If
                 Catch
                 End Try

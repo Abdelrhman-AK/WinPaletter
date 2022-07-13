@@ -165,6 +165,12 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LanguageContribute.Designer.vb">
+      <DependentUpon>LanguageContribute.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageContribute.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="LogonUI.Designer.vb">
       <DependentUpon>LogonUI.vb</DependentUpon>
     </Compile>
@@ -213,10 +219,10 @@
     <Compile Include="SettingsX.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tutorial.Designer.vb">
-      <DependentUpon>Tutorial.vb</DependentUpon>
+    <Compile Include="Whatsnew.Designer.vb">
+      <DependentUpon>Whatsnew.vb</DependentUpon>
     </Compile>
-    <Compile Include="Tutorial.vb">
+    <Compile Include="Whatsnew.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Updates.Designer.vb">
@@ -267,6 +273,9 @@
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LanguageContribute.resx">
+      <DependentUpon>LanguageContribute.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -278,17 +287,14 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="QA.resx">
-      <DependentUpon>QA.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RescueBox.resx">
       <DependentUpon>RescueBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tutorial.resx">
-      <DependentUpon>Tutorial.vb</DependentUpon>
+    <EmbeddedResource Include="Whatsnew.resx">
+      <DependentUpon>Whatsnew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>

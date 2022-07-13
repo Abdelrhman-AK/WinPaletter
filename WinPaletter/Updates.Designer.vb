@@ -101,7 +101,7 @@ Partial Class Updates
         Me.XenonRadioButton2.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton2.Location = New System.Drawing.Point(3, 32)
         Me.XenonRadioButton2.Name = "XenonRadioButton2"
-        Me.XenonRadioButton2.Size = New System.Drawing.Size(134, 23)
+        Me.XenonRadioButton2.Size = New System.Drawing.Size(618, 23)
         Me.XenonRadioButton2.TabIndex = 2
         Me.XenonRadioButton2.Text = "Save download as..."
         '
@@ -114,7 +114,7 @@ Partial Class Updates
         Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton3.Location = New System.Drawing.Point(3, 61)
         Me.XenonRadioButton3.Name = "XenonRadioButton3"
-        Me.XenonRadioButton3.Size = New System.Drawing.Size(202, 23)
+        Me.XenonRadioButton3.Size = New System.Drawing.Size(618, 23)
         Me.XenonRadioButton3.TabIndex = 1
         Me.XenonRadioButton3.Text = "Just Download from the browser"
         '
@@ -127,7 +127,7 @@ Partial Class Updates
         Me.XenonRadioButton1.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton1.Location = New System.Drawing.Point(3, 3)
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
-        Me.XenonRadioButton1.Size = New System.Drawing.Size(451, 23)
+        Me.XenonRadioButton1.Size = New System.Drawing.Size(618, 23)
         Me.XenonRadioButton1.TabIndex = 0
         Me.XenonRadioButton1.Text = "Download then Close the current executable and replace it by the new update"
         '
@@ -292,7 +292,7 @@ Partial Class Updates
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 332)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(185, 23)
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(326, 23)
         Me.XenonCheckBox1.TabIndex = 31
         Me.XenonCheckBox1.Text = "Automatic Check for Updates"
         '

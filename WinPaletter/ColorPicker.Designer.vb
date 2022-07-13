@@ -470,7 +470,7 @@ Partial Class ColorPicker
         Me.XenonTabControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(135, 30)
+        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(140, 30)
         Me.XenonTabControl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonTabControl1.Location = New System.Drawing.Point(0, 0)
         Me.XenonTabControl1.Multiline = True
@@ -504,10 +504,10 @@ Partial Class ColorPicker
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(95, Byte), Integer), CType(CType(98, Byte), Integer), CType(CType(82, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(3, 3)
+        Me.XenonButton1.Location = New System.Drawing.Point(4, 4)
         Me.XenonButton1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(453, 26)
+        Me.XenonButton1.Size = New System.Drawing.Size(344, 26)
         Me.XenonButton1.TabIndex = 5
         Me.XenonButton1.Text = "Open from external app palette (e.g. Photoshop palettes)"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -677,7 +677,7 @@ Partial Class ColorPicker
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.MinimumSize = New System.Drawing.Size(0, 645)
+        Me.MinimumSize = New System.Drawing.Size(16, 645)
         Me.Name = "ColorPicker"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Color Picker"

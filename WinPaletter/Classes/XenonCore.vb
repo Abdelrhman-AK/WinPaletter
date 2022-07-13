@@ -26,7 +26,10 @@ Public Class XenonCore
             If ._Settings.AutoRestartExplorer Then
                 Try
                     Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
-                    If ._Settings.RescueBox Then RescueBox.Show()
+                    If ._Settings.RescueBox Then
+                        RescueBox.Close()
+                        RescueBox.Show()
+                    End If
                     .processKiller.Start()
                     .processKiller.WaitForExit()
                     .processExplorer.Start()

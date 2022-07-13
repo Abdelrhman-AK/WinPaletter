@@ -135,12 +135,14 @@ Partial Class About
         '
         'LinkLabel1
         '
+        Me.LinkLabel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel1.LinkColor = System.Drawing.Color.White
         Me.LinkLabel1.Location = New System.Drawing.Point(42, 226)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(136, 24)
+        Me.LinkLabel1.Size = New System.Drawing.Size(360, 24)
         Me.LinkLabel1.TabIndex = 11
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "Icons by Pichon"
@@ -148,12 +150,14 @@ Partial Class About
         '
         'LinkLabel2
         '
+        Me.LinkLabel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel2.LinkColor = System.Drawing.Color.White
         Me.LinkLabel2.Location = New System.Drawing.Point(42, 256)
         Me.LinkLabel2.Name = "LinkLabel2"
-        Me.LinkLabel2.Size = New System.Drawing.Size(189, 24)
+        Me.LinkLabel2.Size = New System.Drawing.Size(360, 24)
         Me.LinkLabel2.TabIndex = 12
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "Color Picking Controls by Cyotek"
@@ -161,12 +165,14 @@ Partial Class About
         '
         'LinkLabel3
         '
+        Me.LinkLabel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel3.LinkColor = System.Drawing.Color.White
         Me.LinkLabel3.Location = New System.Drawing.Point(42, 286)
         Me.LinkLabel3.Name = "LinkLabel3"
-        Me.LinkLabel3.Size = New System.Drawing.Size(331, 24)
+        Me.LinkLabel3.Size = New System.Drawing.Size(360, 24)
         Me.LinkLabel3.TabIndex = 13
         Me.LinkLabel3.TabStop = True
         Me.LinkLabel3.Text = "Image to Palette Mechanism by KSemenenko/ColorThief"
@@ -246,12 +252,14 @@ Partial Class About
         '
         'LinkLabel4
         '
+        Me.LinkLabel4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel4.LinkColor = System.Drawing.Color.White
         Me.LinkLabel4.Location = New System.Drawing.Point(42, 316)
         Me.LinkLabel4.Name = "LinkLabel4"
-        Me.LinkLabel4.Size = New System.Drawing.Size(331, 24)
+        Me.LinkLabel4.Size = New System.Drawing.Size(360, 24)
         Me.LinkLabel4.TabIndex = 20
         Me.LinkLabel4.TabStop = True
         Me.LinkLabel4.Text = "Animaton for Controls by Pavel Torgashov"
@@ -281,6 +289,8 @@ Partial Class About
         '
         'LinkLabel5
         '
+        Me.LinkLabel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel5.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel5.LinkColor = System.Drawing.Color.White

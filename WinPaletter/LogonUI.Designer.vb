@@ -38,22 +38,22 @@ Partial Class LogonUI
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.LogonUI_PersonalColorsAccent_Picker = New WinPaletter.XenonGroupBox()
-        Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox29 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.LogonUI_PersonalColorsBackground_Picker = New WinPaletter.XenonGroupBox()
-        Me.PictureBox29 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox23 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.LogonUI_Background_Picker = New WinPaletter.XenonGroupBox()
-        Me.PictureBox23 = New System.Windows.Forms.PictureBox()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
@@ -66,15 +66,15 @@ Partial Class LogonUI
         Me.XenonGroupBox17.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox15.SuspendLayout()
-        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox10.SuspendLayout()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'XenonGroupBox3
@@ -284,6 +284,19 @@ Partial Class LogonUI
         Me.XenonGroupBox15.TabIndex = 7
         Me.XenonGroupBox15.Text = "XenonGroupBox15"
         '
+        'PictureBox28
+        '
+        Me.PictureBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
+        Me.PictureBox28.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox28.Name = "PictureBox28"
+        Me.PictureBox28.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox28.TabIndex = 6
+        Me.PictureBox28.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.PictureBox28, "This has effect only for Windows 10")
+        '
         'PictureBox12
         '
         Me.PictureBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -324,19 +337,6 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsAccent_Picker.TabIndex = 2
         Me.LogonUI_PersonalColorsAccent_Picker.Text = "XenonGroupBox21"
         '
-        'PictureBox28
-        '
-        Me.PictureBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
-        Me.PictureBox28.Location = New System.Drawing.Point(165, 6)
-        Me.PictureBox28.Name = "PictureBox28"
-        Me.PictureBox28.Size = New System.Drawing.Size(16, 16)
-        Me.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox28.TabIndex = 6
-        Me.PictureBox28.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.PictureBox28, "This has effect only for Windows 10")
-        '
         'XenonGroupBox10
         '
         Me.XenonGroupBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -355,6 +355,19 @@ Partial Class LogonUI
         Me.XenonGroupBox10.Size = New System.Drawing.Size(239, 29)
         Me.XenonGroupBox10.TabIndex = 6
         Me.XenonGroupBox10.Text = "XenonGroupBox10"
+        '
+        'PictureBox29
+        '
+        Me.PictureBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
+        Me.PictureBox29.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox29.Name = "PictureBox29"
+        Me.PictureBox29.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox29.TabIndex = 7
+        Me.PictureBox29.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.PictureBox29, "This has effect only for Windows 10")
         '
         'PictureBox3
         '
@@ -396,19 +409,6 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsBackground_Picker.TabIndex = 2
         Me.LogonUI_PersonalColorsBackground_Picker.Text = "XenonGroupBox21"
         '
-        'PictureBox29
-        '
-        Me.PictureBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
-        Me.PictureBox29.Location = New System.Drawing.Point(165, 6)
-        Me.PictureBox29.Name = "PictureBox29"
-        Me.PictureBox29.Size = New System.Drawing.Size(16, 16)
-        Me.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox29.TabIndex = 7
-        Me.PictureBox29.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.PictureBox29, "This has effect only for Windows 10")
-        '
         'PictureBox6
         '
         Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
@@ -424,7 +424,7 @@ Partial Class LogonUI
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(44, 3)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(192, 35)
+        Me.Label13.Size = New System.Drawing.Size(197, 35)
         Me.Label13.TabIndex = 0
         Me.Label13.Text = "LogonUI and LockScreen"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -447,6 +447,19 @@ Partial Class LogonUI
         Me.XenonGroupBox12.Size = New System.Drawing.Size(239, 29)
         Me.XenonGroupBox12.TabIndex = 5
         Me.XenonGroupBox12.Text = "XenonGroupBox12"
+        '
+        'PictureBox23
+        '
+        Me.PictureBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
+        Me.PictureBox23.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox23.Name = "PictureBox23"
+        Me.PictureBox23.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox23.TabIndex = 5
+        Me.PictureBox23.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.PictureBox23, "This has effect only for Windows 10")
         '
         'PictureBox8
         '
@@ -487,19 +500,6 @@ Partial Class LogonUI
         Me.LogonUI_Background_Picker.Size = New System.Drawing.Size(50, 21)
         Me.LogonUI_Background_Picker.TabIndex = 2
         Me.LogonUI_Background_Picker.Text = "XenonGroupBox10"
-        '
-        'PictureBox23
-        '
-        Me.PictureBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
-        Me.PictureBox23.Location = New System.Drawing.Point(165, 6)
-        Me.PictureBox23.Name = "PictureBox23"
-        Me.PictureBox23.Size = New System.Drawing.Size(16, 16)
-        Me.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox23.TabIndex = 5
-        Me.PictureBox23.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.PictureBox23, "This has effect only for Windows 10")
         '
         'XenonButton1
         '
@@ -580,17 +580,17 @@ Partial Class LogonUI
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox15.ResumeLayout(False)
         Me.XenonGroupBox15.PerformLayout()
-        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox10.ResumeLayout(False)
         Me.XenonGroupBox10.PerformLayout()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
         Me.XenonGroupBox12.PerformLayout()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

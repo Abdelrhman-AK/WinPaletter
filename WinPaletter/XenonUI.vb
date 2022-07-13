@@ -299,6 +299,23 @@ End Class
 #End Region
 
 #Region "Xenon UI - Version 3"
+Public Class TablessControl
+    Inherits TabControl
+
+    Public Sub New()
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+        SetStyle(ControlStyles.ResizeRedraw, True)
+        Me.DoubleBuffered = True
+    End Sub
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = &H1328 AndAlso Not DesignMode Then
+            m.Result = CType(1, IntPtr)
+        Else
+            MyBase.WndProc(m)
+        End If
+    End Sub
+End Class
 Public Class XenonTabControl : Inherits Windows.Forms.TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
 

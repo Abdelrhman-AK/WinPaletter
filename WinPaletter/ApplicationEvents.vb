@@ -322,7 +322,7 @@ Namespace My
             allForms.Add(My.Forms.MainFrm)
             allForms.Add(My.Forms.QA)
             allForms.Add(My.Forms.RescueBox)
-            allForms.Add(My.Forms.Tutorial)
+            allForms.Add(My.Forms.Whatsnew)
             allForms.Add(My.Forms.Updates)
             allForms.Add(My.Forms.Win32UI)
             allForms.Add(My.Forms.SettingsX)
@@ -375,8 +375,10 @@ Namespace My
 
 #Region "WhatsNew"
 
+
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
                 '### Popup WhatsNew
+                Whatsnew.ShowDialog()
 
                 Dim ver As New List(Of String)
                 ver.Clear()

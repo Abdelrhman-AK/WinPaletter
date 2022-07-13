@@ -109,7 +109,6 @@ Public Class MainFrm
             Label1,
             Label10,
             Label17,
-            Label21,
             themename_lbl,
             author_lbl,
             ColorPicker.Label2,
@@ -980,12 +979,12 @@ Public Class MainFrm
 
 
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs)
         PreviewConfig = WinVer.Ten
         Adjust_Preview()
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs)
         PreviewConfig = WinVer.Eleven
         Adjust_Preview()
     End Sub
@@ -1399,8 +1398,14 @@ Public Class MainFrm
         Me.Close()
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            GetControlImage(pnl_preview).Save(SaveFileDialog2.FileName)
+        End If
     End Sub
 
 

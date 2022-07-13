@@ -22,7 +22,6 @@ Partial Class QA
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(QA))
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -75,7 +74,6 @@ Partial Class QA
         '
         'PictureBox17
         '
-        Me.PictureBox17.Image = CType(resources.GetObject("PictureBox17.Image"), System.Drawing.Image)
         Me.PictureBox17.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox17.Name = "PictureBox17"
         Me.PictureBox17.Size = New System.Drawing.Size(35, 35)
@@ -95,7 +93,6 @@ Partial Class QA
         '
         'PictureBox5
         '
-        Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
         Me.PictureBox5.Location = New System.Drawing.Point(20, 68)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 24)
@@ -127,7 +124,6 @@ Partial Class QA
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(574, 58)
         Me.Label1.TabIndex = 7
-        Me.Label1.Text = resources.GetString("Label1.Text")
         '
         'XenonSeparator1
         '
@@ -165,7 +161,6 @@ Partial Class QA
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(20, 182)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 24)
@@ -212,7 +207,6 @@ Partial Class QA
         '
         'PictureBox2
         '
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.Location = New System.Drawing.Point(20, 352)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 24)
@@ -260,7 +254,6 @@ Partial Class QA
         '
         'PictureBox3
         '
-        Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
         Me.PictureBox3.Location = New System.Drawing.Point(20, 260)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 24)
@@ -302,11 +295,9 @@ Partial Class QA
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(574, 55)
         Me.Label9.TabIndex = 23
-        Me.Label9.Text = resources.GetString("Label9.Text")
         '
         'PictureBox4
         '
-        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
         Me.PictureBox4.Location = New System.Drawing.Point(20, 430)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 24)
@@ -364,7 +355,7 @@ Partial Class QA
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
+        Me.XenonButton3.Image = Nothing
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(89, Byte), Integer), CType(CType(89, Byte), Integer), CType(CType(89, Byte), Integer))
         Me.XenonButton3.LineSize = 1
@@ -408,7 +399,6 @@ Partial Class QA
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

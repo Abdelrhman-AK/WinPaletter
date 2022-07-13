@@ -194,10 +194,12 @@ Public Class Win32UI
 
             Case "btnface_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+                    CList.Add(RW)
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                         CList.Add(RB)
                     Next
                 Next
+
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
@@ -206,6 +208,7 @@ Public Class Win32UI
                 C = ColorPicker.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+                    RW.BackColor = C
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                         RB.BackColor = C
                     Next
@@ -548,6 +551,7 @@ Public Class Win32UI
 
         c = btnface_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+            RW.BackColor = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.BackColor = c
             Next
