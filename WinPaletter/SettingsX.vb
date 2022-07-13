@@ -274,4 +274,8 @@ Public Class SettingsX
 
 
     End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        LanguageContribute.Show()
+    End Sub
 End Class
