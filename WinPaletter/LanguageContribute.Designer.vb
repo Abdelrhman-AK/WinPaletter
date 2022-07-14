@@ -227,7 +227,7 @@ Partial Class LanguageContribute
         Me.XenonTextBox1.ReadOnly = True
         Me.XenonTextBox1.Size = New System.Drawing.Size(345, 24)
         Me.XenonTextBox1.TabIndex = 9
-        Me.XenonTextBox1.Text = "WinPaletter /Extractlanguage"
+        Me.XenonTextBox1.Text = "WinPaletter /exportlanguage"
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
         '
