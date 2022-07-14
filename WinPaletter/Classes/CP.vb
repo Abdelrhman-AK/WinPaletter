@@ -719,7 +719,7 @@ Public Class CP
                 End Try
             Next
 
-            Return ls
+            Return ls.Distinct.ToList
         Else
             Return Nothing
         End If

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class ColorPicker
+Partial Class ColorPickerDlg
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class ColorPicker
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ColorPicker))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ColorPickerDlg))
         Me.ColorEditorManager1 = New Cyotek.Windows.Forms.ColorEditorManager()
         Me.ColorEditor1 = New Cyotek.Windows.Forms.ColorEditor()
         Me.ColorGrid1 = New Cyotek.Windows.Forms.ColorGrid()
@@ -662,7 +662,7 @@ Partial Class ColorPicker
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
         '
-        'ColorPicker
+        'ColorPickerDlg
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -678,7 +678,7 @@ Partial Class ColorPicker
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MinimumSize = New System.Drawing.Size(16, 645)
-        Me.Name = "ColorPicker"
+        Me.Name = "ColorPickerDlg"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Color Picker"
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()

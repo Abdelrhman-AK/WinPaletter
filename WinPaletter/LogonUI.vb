@@ -23,7 +23,7 @@ Public Class LogonUI
 
         Dim CList As New List(Of Control) From {sender}
 
-        Dim C As Color = ColorPicker.Pick(CList)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
         CList.Clear()
 
     End Sub

@@ -111,9 +111,10 @@ Public Class MainFrm
             Label17,
             themename_lbl,
             author_lbl,
-            ColorPicker.Label2,
-            ColorPicker.Label3,
-            ColorPicker.Label5,
+            ColorPickerDlg.Label1,
+            ColorPickerDlg.Label2,
+            ColorPickerDlg.Label3,
+            ColorPickerDlg.Label5,
             About.Label17,
             About.Label4,
             About.Label3,
@@ -598,7 +599,7 @@ Public Class MainFrm
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
-        Dim C As Color = ColorPicker.Pick(CList)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Titlebar_Active = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
@@ -615,7 +616,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender, XenonWindow2}
 
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
-        Dim C As Color = ColorPicker.Pick(CList, _Conditions)
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Titlebar_Inactive = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
@@ -677,9 +678,9 @@ Public Class MainFrm
                      .ActionCenterBtn = True
  }
 
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             Else
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
             End If
         Else
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -687,7 +688,7 @@ Public Class MainFrm
                 CList.Add(taskbar)
 
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         End If
 
@@ -727,7 +728,7 @@ Public Class MainFrm
             End If
         End If
 
-        Dim C As Color = ColorPicker.Pick(CList)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.StartListFolders_TaskbarFront = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
@@ -756,11 +757,11 @@ Public Class MainFrm
             If CP.WinMode_Light Then
                 CList.Add(start)
                 CList.Add(ActionCenter)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
             Else
                 CList.Add(Label12)
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         Else
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -769,7 +770,7 @@ Public Class MainFrm
                 CList.Add(ActionCenter)
                 CList.Add(Label12)
                 Dim _Conditions As New Conditions With {.ActionCenterLink = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         End If
 
@@ -794,16 +795,16 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Eleven Then
             CList.Add(Label3)
-            C = ColorPicker.Pick(CList)
+            C = ColorPickerDlg.Pick(CList)
         Else
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
                 CList.Add(Label3)
                 CList.Add(taskbar)
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             Else
                 CList.Add(Label3)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
             End If
         End If
 
@@ -815,6 +816,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
+        CP_Original = CP
         CP.Save(CP.SavingMode.Registry)
         RestartExplorer()
     End Sub
@@ -847,7 +849,7 @@ Public Class MainFrm
         If PreviewConfig = WinVer.Eleven Then
             CList.Add(taskbar)
             Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
-            C = ColorPicker.Pick(CList, _Conditions)
+            C = ColorPickerDlg.Pick(CList, _Conditions)
         Else
 
             If CP.WinMode_Light Then
@@ -860,7 +862,7 @@ Public Class MainFrm
                 If CP.Transparency Then CList.Add(taskbar)
             End If
 
-            C = ColorPicker.Pick(CList)
+            C = ColorPickerDlg.Pick(CList)
         End If
 
         CP.Taskbar_Background = Color.FromArgb(255, C)
@@ -894,7 +896,7 @@ Public Class MainFrm
 
         End If
 
-        Dim C As Color = ColorPicker.Pick(CList)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.StartMenu_Accent = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
@@ -906,7 +908,7 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender}
 
-        Dim C As Color = ColorPicker.Pick(CList)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.StartButton_Hover = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
@@ -944,23 +946,23 @@ Public Class MainFrm
                      .ActionCenterBtn = True
  }
 
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             Else
                 Dim _Conditions As New Conditions With {.StartColorOnly = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
 
         Else
             If CP.Transparency Then
                 CList.Add(start)
                 CList.Add(ActionCenter)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
             Else
                 CList.Add(start)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
                 Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         End If
 
@@ -1380,7 +1382,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        QA.Show()
+        Whatsnew.Show()
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
@@ -1398,9 +1400,6 @@ Public Class MainFrm
         Me.Close()
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
-
-    End Sub
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
@@ -1415,6 +1414,99 @@ Public Class MainFrm
     Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
         Process.Start(My.Resources.Link_Telegram)
     End Sub
+
+    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+        If Not CP.Equals(CP_Original) Then
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
+        CP = CP_Original
+        ApplyCPValues(CP)
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+        If Not CP.Equals(CP_Original) Then
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
+        CP = CP_FirstTime
+        ApplyCPValues(CP)
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
 
 
 #Region "Notifications Base"

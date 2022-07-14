@@ -124,14 +124,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -149,10 +141,10 @@
     <Compile Include="Classes\Localizer.vb" />
     <Compile Include="Classes\XenonCore.vb" />
     <Compile Include="Classes\XeSettings.vb" />
-    <Compile Include="ColorPicker.Designer.vb">
-      <DependentUpon>ColorPicker.vb</DependentUpon>
+    <Compile Include="ColorPickerDlg.Designer.vb">
+      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </Compile>
-    <Compile Include="ColorPicker.vb">
+    <Compile Include="ColorPickerDlg.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComplexSave.Designer.vb">
@@ -191,23 +183,22 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Settings.Designer.vb" />
-    <Compile Include="QA.Designer.vb">
-      <DependentUpon>QA.vb</DependentUpon>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="QA.vb">
+    <Compile Include="OTVDM.Designer.vb">
+      <DependentUpon>OTVDM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OTVDM.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RescueBoxdlg.Designer.vb">
@@ -216,10 +207,10 @@
     <Compile Include="RescueBoxdlg.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RetroUI.Designer.vb">
+    <Compile Include="GUI\RetroUI.Designer.vb">
       <DependentUpon>RetroUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="RetroUI.vb">
+    <Compile Include="GUI\RetroUI.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsX.Designer.vb">
@@ -246,10 +237,16 @@
     <Compile Include="Win32UI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="XenonUI.Designer.vb">
+    <Compile Include="GUI\XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="XenonUI.vb" />
+    <Compile Include="GUI\XenonUI.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
+    <Content Include="My Project\Application.myapp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
@@ -258,8 +255,8 @@
     <EmbeddedResource Include="Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorPicker.resx">
-      <DependentUpon>ColorPicker.vb</DependentUpon>
+    <EmbeddedResource Include="ColorPickerDlg.resx">
+      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
@@ -281,7 +278,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OTVDM.resx">
+      <DependentUpon>OTVDM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RescueBoxdlg.resx">
+      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -295,14 +298,13 @@
     <EmbeddedResource Include="Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RescueBoxdlg.resx">
-      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ICON.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
+    <None Include="App.config" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

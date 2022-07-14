@@ -156,7 +156,7 @@ Partial Class LanguageContribute
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(26, 363)
+        Me.XenonButton4.Location = New System.Drawing.Point(26, 369)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(88, 35)
         Me.XenonButton4.TabIndex = 14
@@ -168,9 +168,9 @@ Partial Class LanguageContribute
         Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(26, 235)
+        Me.Label9.Location = New System.Drawing.Point(26, 240)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(386, 46)
+        Me.Label9.Size = New System.Drawing.Size(345, 46)
         Me.Label9.TabIndex = 13
         Me.Label9.Text = "- Exporting language file with a native app language (English) (i.e. without load" &
     "ing a previous translation) is better"
@@ -181,7 +181,7 @@ Partial Class LanguageContribute
         Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(3, 293)
+        Me.Label8.Location = New System.Drawing.Point(3, 299)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(409, 66)
         Me.Label8.TabIndex = 12
@@ -196,7 +196,7 @@ Partial Class LanguageContribute
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(26, 211)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(386, 24)
+        Me.Label7.Size = New System.Drawing.Size(345, 24)
         Me.Label7.TabIndex = 11
         Me.Label7.Text = "- First Version supports translation is 1.0.3.0"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -206,9 +206,9 @@ Partial Class LanguageContribute
         Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(26, 167)
+        Me.Label6.Location = New System.Drawing.Point(26, 166)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(386, 44)
+        Me.Label6.Size = New System.Drawing.Size(345, 44)
         Me.Label6.TabIndex = 10
         Me.Label6.Text = "- Latest version of the application is recommended to make your translation up-to" &
     "-dates"
@@ -238,17 +238,18 @@ Partial Class LanguageContribute
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(3, 111)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(409, 26)
+        Me.Label5.Size = New System.Drawing.Size(368, 26)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "- Using Command Prompt: Type "
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
         '
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(418, 6)
+        Me.PictureBox1.Location = New System.Drawing.Point(387, 6)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(212, 308)
+        Me.PictureBox1.Size = New System.Drawing.Size(243, 230)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 7
         Me.PictureBox1.TabStop = False
@@ -275,7 +276,7 @@ Partial Class LanguageContribute
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(3, 3)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(409, 52)
+        Me.Label4.Size = New System.Drawing.Size(378, 52)
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "- Visit Github Main repository and download WinPaletter Language Translator"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

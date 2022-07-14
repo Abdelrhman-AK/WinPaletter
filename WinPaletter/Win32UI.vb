@@ -111,7 +111,7 @@ Public Class Win32UI
                 CList.Add(RetroWindow4)
 
                 Dim _Conditions As New Conditions With {.RetroWindowColor1 = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow2.Color1 = C
                 RetroWindow3.Color1 = C
                 RetroWindow4.Color1 = C
@@ -122,7 +122,7 @@ Public Class Win32UI
                 CList.Add(RetroWindow4)
 
                 Dim _Conditions As New Conditions With {.RetroWindowColor2 = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow2.Color2 = C
                 RetroWindow3.Color2 = C
                 RetroWindow4.Color2 = C
@@ -133,7 +133,7 @@ Public Class Win32UI
                 CList.Add(RetroWindow4)
 
                 Dim _Conditions As New Conditions With {.RetroWindowForeColor = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow2.ForeColor = C
                 RetroWindow3.ForeColor = C
                 RetroWindow4.ForeColor = C
@@ -141,17 +141,17 @@ Public Class Win32UI
             Case "InactiveTitle_pick"
                 CList.Add(RetroWindow1)
                 Dim _Conditions As New Conditions With {.RetroWindowColor1 = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow1.Color1 = C
             Case "GInactivetitle_pick"
                 CList.Add(RetroWindow1)
                 Dim _Conditions As New Conditions With {.RetroWindowColor2 = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow1.Color2 = C
             Case "InactivetitleText_pick"
                 CList.Add(RetroWindow1)
                 Dim _Conditions As New Conditions With {.RetroWindowForeColor = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow1.ForeColor = C
             Case "ActiveBorder_pick"
                 CList.Add(RetroWindow2)
@@ -159,7 +159,7 @@ Public Class Win32UI
                 CList.Add(RetroWindow4)
 
                 Dim _Conditions As New Conditions With {.RetroWindowBorder = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow2.ColorBorder = C
                 RetroWindow3.ColorBorder = C
                 RetroWindow4.ColorBorder = C
@@ -167,7 +167,7 @@ Public Class Win32UI
             Case "InactiveBorder_pick"
                 CList.Add(RetroWindow1)
                 Dim _Conditions As New Conditions With {.RetroWindowBorder = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroWindow1.ColorBorder = C
 
             Case "Frame_pick"
@@ -181,7 +181,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroWindowFrame = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -205,7 +205,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonFace = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     RW.BackColor = C
@@ -229,7 +229,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonDkShadow = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     RW.ButtonDkShadow = C
@@ -253,7 +253,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonHilight = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     RW.ButtonHilight = C
@@ -277,7 +277,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonLight = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     RW.ButtonLight = C
@@ -301,7 +301,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonShadow = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     RW.ButtonShadow = C
@@ -324,7 +324,7 @@ Public Class Win32UI
                 Next
 
                 Dim _Conditions As New Conditions With {.RetroButtonText = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -338,89 +338,89 @@ Public Class Win32UI
             Case "AppWorkspace_pick"
                 CList.Add(Panel2)
                 Dim _Conditions As New Conditions With {.RetroAppWorkspace = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 Panel2.BackColor = C
 
             Case "background_pick"
                 CList.Add(pnl_preview)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 pnl_preview.BackColor = C
 
             Case "menu_pick"
                 CList.Add(Menu)
                 CList.Add(RetroPanel1)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 Menu.BackColor = C
                 RetroPanel1.BackColor = C
 
             Case "menubar_pick"
                 CList.Add(Panel3)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 Panel3.BackColor = C
 
             Case "hilight_pick"
                 CList.Add(highlight)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 highlight.BackColor = C
 
             Case "menuhilight_pick"
                 CList.Add(menuhilight)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 menuhilight.BackColor = C
 
             Case "menutext_pick"
                 CList.Add(RetroLabel6)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
                 RetroLabel6.ForeColor = C
 
             Case "hilighttext_pick"
                 CList.Add(RetroLabel5)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
                 RetroLabel5.ForeColor = C
 
             Case "GrayText_pick"
                 CList.Add(RetroLabel2)
                 CList.Add(RetroLabel9)
 
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
                 RetroLabel2.ForeColor = C
                 RetroLabel9.ForeColor = C
 
             Case "Window_pick"
                 CList.Add(RetroTextBox1)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
                 RetroTextBox1.BackColor = C
 
             Case "WindowText_pick"
                 CList.Add(RetroTextBox1)
                 Dim _Conditions As New Conditions With {.RetroWindowText = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroTextBox1.ForeColor = C
 
             Case "InfoWindow_pick"
                 CList.Add(RetroLabel13)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroLabel13.BackColor = C
 
             Case "InfoText_pick"
                 CList.Add(RetroLabel13)
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
                 RetroLabel13.ForeColor = C
 
             Case "Scrollbar_pick"
                 CList.Add(RetroPanel2)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPicker.Pick(CList, _Conditions)
+                C = ColorPickerDlg.Pick(CList, _Conditions)
                 RetroPanel2.BackColor = C
 
             Case Else
-                C = ColorPicker.Pick(CList)
+                C = ColorPickerDlg.Pick(CList)
         End Select
 
         CType(sender, XenonGroupBox).BackColor = C

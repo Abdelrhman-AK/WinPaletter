@@ -3,7 +3,7 @@ Imports System.IO
 Imports Cyotek.Windows.Forms
 Imports WinPaletter.XenonCore
 
-Public Class ColorPicker
+Public Class ColorPickerDlg
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)

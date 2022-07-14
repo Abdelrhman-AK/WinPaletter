@@ -357,6 +357,8 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         End If
     End Sub
 
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.5))
+
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -391,6 +393,7 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
 
             If i = SelectedIndex Then
                 FillRect(G, New SolidBrush(SelectColor), TabRect)
+                FillRect(G, Noise, TabRect)
                 TextColor = If(IsColorDark(SelectColor), Color.White, Color.Black)
             Else
                 TextColor = If(IsColorDark(ParentColor), Color.White, Color.Black)
