@@ -149,9 +149,9 @@ Partial Class Whatsnew
         'PictureBox3
         '
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(511, 149)
+        Me.PictureBox3.Location = New System.Drawing.Point(499, 149)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(273, 170)
+        Me.PictureBox3.Size = New System.Drawing.Size(356, 149)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox3.TabIndex = 24
         Me.PictureBox3.TabStop = False
@@ -159,7 +159,7 @@ Partial Class Whatsnew
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(508, 105)
+        Me.Label5.Location = New System.Drawing.Point(496, 105)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(264, 41)
         Me.Label5.TabIndex = 23
@@ -171,7 +171,7 @@ Partial Class Whatsnew
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.Location = New System.Drawing.Point(232, 149)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(273, 170)
+        Me.PictureBox2.Size = New System.Drawing.Size(261, 130)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox2.TabIndex = 22
         Me.PictureBox2.TabStop = False

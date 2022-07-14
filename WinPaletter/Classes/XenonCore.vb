@@ -27,8 +27,8 @@ Public Class XenonCore
                 Try
                     Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
                     If ._Settings.RescueBox Then
-                        RescueBox.Close()
-                        RescueBox.Show()
+                        RescueBoxdlg.Close()
+                        RescueBoxdlg.Show()
                     End If
                     .processKiller.Start()
                     .processKiller.WaitForExit()
@@ -285,7 +285,7 @@ Public Class XenonCore
             it.ForeColor = If(DarkMode, Color.White, Color.Black)
         Next
 
-        MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
+        'MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
         MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
 
     End Sub
@@ -332,6 +332,10 @@ Public Class XenonCore
         If TypeOf ctrl Is RichTextBox Then
             ctrl.BackColor = ctrl.Parent.BackColor
             ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
+        End If
+
+        If TypeOf ctrl Is LinkLabel Then
+            DirectCast(ctrl, LinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
         End If
 
         If TypeOf ctrl Is DataGridView Then

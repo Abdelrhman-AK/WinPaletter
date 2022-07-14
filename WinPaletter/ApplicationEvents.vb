@@ -321,7 +321,7 @@ Namespace My
             allForms.Add(My.Forms.LogonUI)
             allForms.Add(My.Forms.MainFrm)
             allForms.Add(My.Forms.QA)
-            allForms.Add(My.Forms.RescueBox)
+            allForms.Add(My.Forms.RescueBoxdlg)
             allForms.Add(My.Forms.Whatsnew)
             allForms.Add(My.Forms.Updates)
             allForms.Add(My.Forms.Win32UI)

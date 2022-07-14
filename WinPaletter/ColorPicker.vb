@@ -69,7 +69,6 @@ Public Class ColorPicker
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonSeparator1, True)
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.XenonGroupBox8.Width + MainFrm.XenonGroupBox2.Left * 3.25
@@ -104,7 +103,6 @@ Public Class ColorPicker
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
-            My.Application.AnimatorX.Show(MainFrm.XenonSeparator1, True)
         End If
 
         fr = Nothing

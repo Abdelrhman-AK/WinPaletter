@@ -196,22 +196,31 @@ Module XenonModule
             [Radius_willbe_x2] *= 2
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
-            Dim [Pen] As New Pen(BorderColor)
-            Dim [Pen2] As New Pen(CCB(BorderColor, -0.085))
+            Dim [Pen] As Pen
+            Dim [Pen2] As Pen
+
+            If GetDarkMode() Then
+                [Pen] = New Pen(BorderColor)
+                [Pen2] = New Pen(CCB(BorderColor, -0.3)) '-0.085)) 
+            Else
+                [Pen] = New Pen(BorderColor)
+                [Pen2] = New Pen(CCB(BorderColor, -0.1))
+            End If
+
+            Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
+            Dim [PenG] As New Pen(G)
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
-
-                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
-                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
-
-                [Graphics].DrawLine([Pen], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-
                 [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
                 [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
                 [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
 
+                [Graphics].DrawLine([PenG], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+                [Graphics].DrawLine([PenG], [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+
+                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
+                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
             Else
                 [Graphics].DrawRectangle([Pen], [Rectangle])
             End If
@@ -412,7 +421,6 @@ End Class
 Public Class XenonToggle
     Inherits UserControl
     Public ColorPalette As New XenonColorPalette()
-
     Dim CheckC As New Rectangle(5, 5, 13, 13)
     Dim MouseState As Integer = 0
     Dim WasMoving As Boolean = False
@@ -429,6 +437,9 @@ Public Class XenonToggle
     ReadOnly DarkLight_TogglerSize As Integer = 14
 
     Private _checked As Boolean
+
+    Private _Shown As Boolean = False
+
     Public Property Checked As Boolean
         Get
             Return _checked
@@ -448,8 +459,10 @@ Public Class XenonToggle
                     Dim s As Integer = (Width - 19) * 0.5
                     For i As Integer = CheckC.Left To Width - 19 Step +5
                         CheckC.X = i + s
-                        Threading.Thread.Sleep(15)
-                        Refresh()
+                        If _Shown Then
+                            Threading.Thread.Sleep(15)
+                            Refresh()
+                        End If
                         If i + s >= Width - 19 Then Exit For
                         s -= 1
                         If s < 0 Then s = 0
@@ -461,8 +474,10 @@ Public Class XenonToggle
                     Dim s As Integer = 10
                     For i As Integer = CheckC.Left To 5 Step -5
                         CheckC.X = i - s
-                        Threading.Thread.Sleep(15)
-                        Refresh()
+                        If _Shown Then
+                            Threading.Thread.Sleep(15)
+                            Refresh()
+                        End If
                         If i - s <= 5 Then Exit For
                         s -= 1
                         If s < 0 Then s = 0
@@ -483,7 +498,7 @@ Public Class XenonToggle
             CheckC.Height = DarkLight_TogglerSize
         End If
 
-        Invalidate()
+        'Invalidate()
     End Sub
     Public Event CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
 
@@ -589,17 +604,29 @@ Public Class XenonToggle
 
         If Not DesignMode Then
             Try
-                AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
             Catch
             End Try
         End If
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonToggle_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
@@ -646,15 +673,6 @@ Public Class XenonToggle
         Refresh()
     End Sub
 
-    Private Sub InitializeComponent()
-        Me.SuspendLayout()
-        '
-        'XenonToggle
-        '
-        Me.Name = "XenonToggle"
-        Me.ResumeLayout(False)
-
-    End Sub
 End Class
 
 <DefaultEvent("CheckedChanged")>
@@ -696,16 +714,20 @@ Public Class XenonRadioButton
                 End If
 
                 RaiseEvent CheckedChanged(Me)
-                Tmr2.Enabled = True
-                Tmr2.Start()
-                Invalidate()
+
+                If _Shown Then
+                    Tmr2.Enabled = True
+                    Tmr2.Start()
+                    Invalidate()
+                End If
+
             Catch
             End Try
         End Set
     End Property
 
     Private _Checked As Boolean
-
+    Private _Shown As Boolean = False
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -775,8 +797,8 @@ Public Class XenonRadioButton
             ColorPalette = New XenonColorPalette(Me)
             If Not DesignMode Then
                 Try
-                    AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                    AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 Catch
                 End Try
@@ -785,9 +807,21 @@ Public Class XenonRadioButton
         End Try
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
     End Sub
 #End Region
 
@@ -808,8 +842,10 @@ Public Class XenonRadioButton
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not State = MouseState.Over Then
@@ -821,8 +857,10 @@ Public Class XenonRadioButton
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -839,8 +877,10 @@ Public Class XenonRadioButton
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not Checked Then
@@ -852,8 +892,10 @@ Public Class XenonRadioButton
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -1044,8 +1086,8 @@ Public Class XenonCheckBox
             ColorPalette = New XenonColorPalette(Me)
             If Not DesignMode Then
                 Try
-                    AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                    AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 Catch
                 End Try
@@ -1054,9 +1096,21 @@ Public Class XenonCheckBox
         End Try
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
     End Sub
 #End Region
 
@@ -1064,7 +1118,7 @@ Public Class XenonCheckBox
     Dim alpha, alpha2 As Integer
     ReadOnly Factor As Integer = 25
     Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
-
+    Private _Shown As Boolean = False
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
@@ -1108,8 +1162,10 @@ Public Class XenonCheckBox
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not Checked Then
@@ -1121,8 +1177,11 @@ Public Class XenonCheckBox
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+
             End If
         End If
     End Sub
@@ -1281,8 +1340,10 @@ Public Class XenonGroupBox
         G.Clear(GetParentColor(Me))
 
         If Not CustomColor Then
-            BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.05, -0.05))
-            LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.1, -0.1))
+            BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.05))
+            LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.03, -0.06))
+            FillRect(G, New SolidBrush(BackColor), Rect)
+            DrawRect(G, New Pen(LineColor), Rect)
         Else
             Select Case State
                 Case MouseState.None
@@ -1294,10 +1355,11 @@ Public Class XenonGroupBox
                 Case MouseState.Down
                     LineColor = CCB(BackColor, If(IsColorDark(BackColor), 0.17, -0.17))
             End Select
+            FillRect(G, New SolidBrush(BackColor), Rect)
+            DrawRect_LikeW11(G, LineColor, Rect)
         End If
 
-        FillRect(G, New SolidBrush(BackColor), Rect)
-        DrawRect_LikeW11(G, LineColor, Rect)
+
     End Sub
 End Class
 Public Class XenonButton : Inherits Button
@@ -1399,8 +1461,12 @@ Public Class XenonButton : Inherits Button
         End Select
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
-        Tmr.Enabled = True
-        Tmr.Start()
+
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
+
         Invalidate()
     End Sub
 
@@ -1412,8 +1478,12 @@ Public Class XenonButton : Inherits Button
         Dim C_After As Color = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.07))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
-        Tmr.Enabled = True
-        Tmr.Start()
+
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
+
         Invalidate()
     End Sub
 
@@ -1430,8 +1500,12 @@ Public Class XenonButton : Inherits Button
         End Select
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         State = MouseState.Down
-        Tmr.Enabled = True
-        Tmr.Start()
+
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
+
         Invalidate()
     End Sub
 
@@ -1451,8 +1525,12 @@ Public Class XenonButton : Inherits Button
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
+
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
+
         Invalidate()
     End Sub
 #End Region
@@ -1527,8 +1605,10 @@ Public Class XenonButton : Inherits Button
                         Tmr.Stop()
                     End If
 
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
+                    If _Shown Then
+                        Threading.Thread.Sleep(1)
+                        Invalidate()
+                    End If
                 End If
 
                 If Not State = MouseState.Over Then
@@ -1540,14 +1620,19 @@ Public Class XenonButton : Inherits Button
                         Tmr.Stop()
                     End If
 
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
+                    If _Shown Then
+                        Threading.Thread.Sleep(1)
+                        Invalidate()
+                    End If
+
                 End If
             End If
         Catch
         End Try
     End Sub
 #End Region
+
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.25))
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -1571,12 +1656,14 @@ Public Class XenonButton : Inherits Button
 
         FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+        If Not State = MouseState.None Then FillRect(G, Noise, Rect)
 
-        c1 = Color.FromArgb(255 - alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.07, -0.07)))
-        c1x = Color.FromArgb(alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.07, -0.07)))
+        c1 = Color.FromArgb(255 - alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.04, -0.04)))
+        c1x = Color.FromArgb(alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.04, -0.04)))
 
         DrawRect_LikeW11(G, c1, InnerRect)
         DrawRect_LikeW11(G, c1x, Rect)
+
 
         Select Case State
             Case MouseState.Over
@@ -1677,6 +1764,8 @@ Public Class XenonButton : Inherits Button
 
             If Not DesignMode Then
                 Try
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.Invalidated, AddressOf Rfrsh
                     AddHandler Parent.BackColorChanged, AddressOf Rfrsh
                 Catch
@@ -1688,10 +1777,22 @@ Public Class XenonButton : Inherits Button
         End Try
     End Sub
 
+    Private _Shown As Boolean = False
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
+    End Sub
+
     Sub Rfrsh()
-        BC = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.04))
-        BackColor = BC
-        Invalidate()
+        If _Shown Then
+            BC = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.04))
+            BackColor = BC
+            Invalidate()
+        End If
     End Sub
 
 End Class
@@ -1861,8 +1962,10 @@ Public Class XenonNumericUpDown
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not State = MouseState.Over Then
@@ -1874,8 +1977,10 @@ Public Class XenonNumericUpDown
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -1936,18 +2041,32 @@ Public Class XenonNumericUpDown
         ColorPalette = New XenonColorPalette(Me)
         If Not DesignMode Then
             Try
-                AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
             Catch
             End Try
         End If
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
+    End Sub
+
+    Private _Shown As Boolean = False
 #End Region
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
@@ -2307,8 +2426,10 @@ End Class
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not State = MouseState.Over Then
@@ -2320,8 +2441,10 @@ End Class
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -2342,8 +2465,8 @@ End Class
                 ColorPalette = New XenonColorPalette(Me)
                 If Not DesignMode Then
                     Try
-                        AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                        AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                        AddHandler FindForm.Load, AddressOf Loaded
+                        AddHandler FindForm.Shown, AddressOf Showed
                         AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                     Catch
                     End Try
@@ -2406,23 +2529,29 @@ End Class
 
     Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
         State = MouseState.Down
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
         State = MouseState.None
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
@@ -2436,17 +2565,31 @@ End Class
         ColorPalette = New XenonColorPalette(Me)
         If Not DesignMode Then
             Try
-                AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
             Catch
             End Try
         End If
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Private _Shown As Boolean = False
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
     End Sub
 End Class
 Public Class XenonComboBox : Inherits ComboBox
@@ -2538,32 +2681,42 @@ Public Class XenonComboBox : Inherits ComboBox
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
+        If _Shown Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
+
+    Private _Shown As Boolean = False
 
     Private Sub XenonComboBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         Try
@@ -2572,6 +2725,7 @@ Public Class XenonComboBox : Inherits ComboBox
 
             Try
                 If Not DesignMode Then
+
                     AddHandler Parent.BackColorChanged, AddressOf Invalidate
                     AddHandler BackColorChanged, AddressOf Invalidate
                 End If
@@ -2583,8 +2737,8 @@ Public Class XenonComboBox : Inherits ComboBox
 
             If Not DesignMode Then
                 Try
-                    AddHandler FindForm.Load, AddressOf RefreshColorPalette
-                    AddHandler FindForm.Shown, AddressOf RefreshColorPalette
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 Catch
                 End Try
@@ -2593,20 +2747,35 @@ Public Class XenonComboBox : Inherits ComboBox
         End Try
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
+    End Sub
 
     Private Sub XenonComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
-        Tmr2.Enabled = True
-        Tmr2.Start()
+        If _Shown Then
+            Tmr2.Enabled = True
+            Tmr2.Start()
+        End If
     End Sub
 
     Private Sub XenonComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
-        Tmr2.Enabled = True
-        Tmr2.Start()
+        If _Shown Then
+            Tmr2.Enabled = True
+            Tmr2.Start()
+        End If
     End Sub
 
     Dim State As MouseState = MouseState.None
@@ -2629,8 +2798,10 @@ Public Class XenonComboBox : Inherits ComboBox
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not State = MouseState.Over Then
@@ -2642,8 +2813,10 @@ Public Class XenonComboBox : Inherits ComboBox
                     Tmr.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -2660,8 +2833,10 @@ Public Class XenonComboBox : Inherits ComboBox
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
 
             If Not DroppedDown Then
@@ -2673,8 +2848,10 @@ Public Class XenonComboBox : Inherits ComboBox
                     Tmr2.Stop()
                 End If
 
-                Threading.Thread.Sleep(1)
-                Invalidate()
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
             End If
         End If
     End Sub
@@ -3370,10 +3547,12 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     End Sub
 
     Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-        Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+        If Not DesignMode Then
+            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+        End If
         ProcessBack()
     End Sub
 
@@ -3615,10 +3794,12 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     End Function
 
     Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-        Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
-        Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+        If Not DesignMode Then
+            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+        End If
         ProcessBack()
     End Sub
 

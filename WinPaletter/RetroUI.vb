@@ -751,7 +751,8 @@ End Class
     End Sub
 
     Private Sub RetroTextBox_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
-        Try : TB.BackColor = BackColor : Catch : End Try
+        Try : If TB IsNot Nothing Then TB.BackColor = BackColor
+        Catch : End Try
     End Sub
 End Class
 Public Class RetroLabel : Inherits Label

@@ -1,6 +1,6 @@
 ﻿Imports WinPaletter.XenonCore
 
-Public Class RescueBox
+Public Class RescueBoxdlg
     Private _AutoClosing As Boolean = False
 
     Private Sub RescueBox_Load(sender As Object, e As EventArgs) Handles MyBase.Load

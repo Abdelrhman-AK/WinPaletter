@@ -124,6 +124,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -189,7 +197,8 @@
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb" />
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -201,10 +210,10 @@
     <Compile Include="QA.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RescueBox.designer.vb">
-      <DependentUpon>RescueBox.vb</DependentUpon>
+    <Compile Include="RescueBoxdlg.Designer.vb">
+      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
     </Compile>
-    <Compile Include="RescueBox.vb">
+    <Compile Include="RescueBoxdlg.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RetroUI.Designer.vb">
@@ -219,16 +228,16 @@
     <Compile Include="SettingsX.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Whatsnew.Designer.vb">
-      <DependentUpon>Whatsnew.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Whatsnew.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Updates.Designer.vb">
       <DependentUpon>Updates.vb</DependentUpon>
     </Compile>
     <Compile Include="Updates.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Whatsnew.Designer.vb">
+      <DependentUpon>Whatsnew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Whatsnew.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Win32UI.Designer.vb">
@@ -241,18 +250,6 @@
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
     <Compile Include="XenonUI.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ICON.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
-    <Content Include="My Project\Application.myapp" />
-    <None Include="App.config" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
@@ -283,29 +280,29 @@
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RescueBox.resx">
-      <DependentUpon>RescueBox.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Whatsnew.resx">
-      <DependentUpon>Whatsnew.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Whatsnew.resx">
+      <DependentUpon>Whatsnew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RescueBoxdlg.resx">
+      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="My Project\app.manifest" />
-    <None Include="My Project\Settings.settings" />
+    <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
