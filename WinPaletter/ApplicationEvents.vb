@@ -335,11 +335,7 @@ Namespace My
                     Dim arg As String = Environment.GetCommandLineArgs(x)
 
                     If arg.ToLower = "/exportlanguage" Then
-                        Console.WriteLine()
-                        Console.Write("Exporting Language to Language.txt ...")
                         LanguageHelper.ExportNativeLang("Language.txt")
-                        Console.WriteLine()
-                        Console.Write("Language Exported Successfully.")
                         Process.GetCurrentProcess.Kill()
                     End If
 
