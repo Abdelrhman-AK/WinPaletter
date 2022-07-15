@@ -316,7 +316,7 @@ Namespace My
                     Dim arg As String = Environment.GetCommandLineArgs(x)
 
                     If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang("Language.txt")
+                        LanguageHelper.ExportNativeLang("Language.wplng")
                         Process.GetCurrentProcess.Kill()
                     End If
 
@@ -443,7 +443,7 @@ Namespace My
                 Else
 
                     If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang("Language.txt")
+                        LanguageHelper.ExportNativeLang("Language.wplng")
                         MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information)
                     Else
 

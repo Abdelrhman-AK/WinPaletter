@@ -103,7 +103,7 @@ Partial Class Form1
         '
         'OpenFileDialog1
         '
-        Me.OpenFileDialog1.Filter = "WinPaletter Language File (*.wpl)|*.wpl|All Files|*.*"
+        Me.OpenFileDialog1.Filter = "WinPaletter Language File (*.wplng)|*.wplng|All Files|*.*"
         '
         'GroupBox1
         '
@@ -443,7 +443,7 @@ Partial Class Form1
         '
         'SaveFileDialog1
         '
-        Me.SaveFileDialog1.Filter = "WinPaletter Language File (*.wpl)|*.wpl|All Files|*.*"
+        Me.SaveFileDialog1.Filter = "WinPaletter Language File (*.wplng)|*.wplng|All Files|*.*"
         '
         'Label10
         '
