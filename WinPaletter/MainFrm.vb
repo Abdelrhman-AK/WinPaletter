@@ -321,10 +321,10 @@ Public Class MainFrm
                 pic7.Image = My.Resources.Mini_StartMenuAccent
                 pic8.Image = My.Resources.Mini_TaskbarActiveIcon
 
-                lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
-                lbl6.Text = "Start Button Hover, Some Pressed Buttons"
-                lbl7.Text = "Start Menu Accent Color (Maybe not effective)"
-                lbl8.Text = "Taskbar Background (Maybe not effective)"
+                lbl5.Text = My.Application.LanguageHelper.X7
+                lbl6.Text = My.Application.LanguageHelper.X8
+                lbl7.Text = My.Application.LanguageHelper.X9
+                lbl8.Text = My.Application.LanguageHelper.X10
 
                 pic5.Image = My.Resources.Mini_SettingsIcons
                 pic6.Image = My.Resources.Mini_Start11
@@ -333,10 +333,10 @@ Public Class MainFrm
 
                 Select Case Not [CP].WinMode_Light
                     Case True   ''''''''''Dark
-                        lbl1.Text = "Start Menu, Taskbar and Action Center"
-                        lbl2.Text = "Action Center Hover and Links"
-                        lbl3.Text = "Lines, Toggles and Buttons"
-                        lbl4.Text = "Taskbar Active App Background"
+                        lbl1.Text = My.Application.LanguageHelper.X1
+                        lbl2.Text = My.Application.LanguageHelper.X2
+                        lbl3.Text = My.Application.LanguageHelper.X3
+                        lbl4.Text = My.Application.LanguageHelper.X4
 
                         pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         pic2.Image = My.Resources.Mini_ACHover_Links
@@ -374,10 +374,10 @@ Public Class MainFrm
                         Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
-                        lbl1.Text = "Action Center Hover and Links"
-                        lbl2.Text = "Start Menu and Action Center Colors"
-                        lbl3.Text = "Taskbar Color"
-                        lbl4.Text = "Lines, Toggles and Buttons"
+                        lbl1.Text = My.Application.LanguageHelper.X2
+                        lbl2.Text = My.Application.LanguageHelper.X5
+                        lbl3.Text = My.Application.LanguageHelper.X6
+                        lbl4.Text = My.Application.LanguageHelper.X3
 
                         pic1.Image = My.Resources.Mini_ACHover_Links
                         pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
@@ -427,16 +427,16 @@ Public Class MainFrm
 
                 start.Top = taskbar.Top - start.Height
 
-                lbl6.Text = "Start Icon Hover"
+                lbl6.Text = My.Application.LanguageHelper.X11
 
                 If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
-                    lbl1.Text = "Not Used"
-                    lbl2.Text = "Not Used"
-                    lbl3.Text = "Not Used"
-                    lbl4.Text = "Start Menu and Action Center Colors"
-                    lbl5.Text = "Settings Icons, Taskbar App Underline & Some Pressed Buttons"
-                    lbl7.Text = "Not Used"
-                    lbl8.Text = "Links"
+                    lbl1.Text = My.Application.LanguageHelper.X16
+                    lbl2.Text = My.Application.LanguageHelper.X16
+                    lbl3.Text = My.Application.LanguageHelper.X16
+                    lbl4.Text = My.Application.LanguageHelper.X5
+                    lbl5.Text = My.Application.LanguageHelper.X12
+                    lbl7.Text = My.Application.LanguageHelper.X16
+                    lbl8.Text = My.Application.LanguageHelper.X14
 
                     pic1.Image = My.Resources.Mini_NotUsed
                     pic2.Image = My.Resources.Mini_NotUsed
@@ -460,13 +460,13 @@ Public Class MainFrm
 
                 Else
                     If [CP].Transparency Then
-                        lbl1.Text = "Not Used"
-                        lbl2.Text = "Links"
-                        lbl3.Text = "Taskbar App Underline"
-                        lbl4.Text = "Start Menu and Action Center Colors"
-                        lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
-                        lbl7.Text = "Not Used"
-                        lbl8.Text = "Taskbar Color"
+                        lbl1.Text = My.Application.LanguageHelper.X16
+                        lbl2.Text = My.Application.LanguageHelper.X14
+                        lbl3.Text = My.Application.LanguageHelper.X15
+                        lbl4.Text = My.Application.LanguageHelper.X5
+                        lbl5.Text = My.Application.LanguageHelper.X7
+                        lbl7.Text = My.Application.LanguageHelper.X16
+                        lbl8.Text = My.Application.LanguageHelper.X6
 
                         pic1.Image = My.Resources.Mini_NotUsed
                         pic2.Image = My.Resources.Mini_ACHover_Links
@@ -489,13 +489,13 @@ Public Class MainFrm
                         End If
 
                     Else
-                        lbl1.Text = "Taskbar Color"
-                        lbl2.Text = "Links"
-                        lbl3.Text = "Taskbar App Underline"
-                        lbl4.Text = "Start Menu, Action Center, Taskbar Active App Background"
-                        lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
-                        lbl7.Text = "Not Used"
-                        lbl8.Text = "Not Used"
+                        lbl1.Text = My.Application.LanguageHelper.X6
+                        lbl2.Text = My.Application.LanguageHelper.X14
+                        lbl3.Text = My.Application.LanguageHelper.X15
+                        lbl4.Text = My.Application.LanguageHelper.X13
+                        lbl5.Text = My.Application.LanguageHelper.X7
+                        lbl7.Text = My.Application.LanguageHelper.X16
+                        lbl8.Text = My.Application.LanguageHelper.X16
 
                         pic1.Image = My.Resources.Mini_StartMenuAccent
                         pic2.Image = My.Resources.Mini_ACHover_Links
@@ -1369,7 +1369,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
-        If My.Application._Settings.Language Then My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
+        If My.Application._Settings.Language Then
+            My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
+        Else
+            My.Application.LanguageHelper.LoadInternal()
+        End If
+
         SettingsX.Show()
     End Sub
 
@@ -1378,6 +1383,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        If My.Application._Settings.Language Then
+            My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, Whatsnew)
+        Else
+            My.Application.LanguageHelper.LoadInternal()
+        End If
+
         Whatsnew.Show()
     End Sub
 

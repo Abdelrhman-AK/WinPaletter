@@ -304,6 +304,8 @@ Namespace My
             allForms.Add(My.Forms.Updates)
             allForms.Add(My.Forms.Win32UI)
             allForms.Add(My.Forms.SettingsX)
+            allForms.Add(My.Forms.LanguageContribute)
+            allForms.Add(My.Forms.OTVDM)
 
             If My.Application._Settings.Language Then
                 LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)

@@ -1,5 +1,6 @@
 ﻿Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             LoadTranslation(OpenFileDialog1.FileName)
         End If
@@ -202,6 +203,5 @@
             IO.File.WriteAllText(SaveFileDialog1.FileName, s)
         End If
     End Sub
-
 
 End Class

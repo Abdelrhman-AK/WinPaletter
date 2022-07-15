@@ -41,6 +41,7 @@ Partial Class LanguageContribute
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -283,6 +284,7 @@ Partial Class LanguageContribute
         '
         'XenonButton1
         '
+        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
@@ -296,12 +298,33 @@ Partial Class LanguageContribute
         Me.XenonButton1.Text = "OK"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
+        'XenonAlertBox1
+        '
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox1.Border = True
+        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox1.CenterText = True
+        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox1.Image = Nothing
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 485)
+        Me.XenonAlertBox1.Name = "XenonAlertBox1"
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(542, 35)
+        Me.XenonAlertBox1.TabIndex = 2
+        Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = "When Translation becomes more stable, we will shift contribution through Github, " &
+    "not Telegram"
+        '
         'LanguageContribute
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(644, 526)
+        Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -341,4 +364,5 @@ Partial Class LanguageContribute
     Friend WithEvents Label8 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents XenonAlertBox1 As XenonAlertBox
 End Class

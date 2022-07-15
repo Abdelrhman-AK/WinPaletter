@@ -45,11 +45,9 @@ Public Class Localizer
     Property X20 As String
     Property X21 As String
     Property X22 As String
-
     Property X23 As String
     Property SaveMsg As String
     Property SettingsSaved As String
-
     Property RemoveExtMsg As String
     Property RemoveExtMsgNote As String
     Property UninstallMsgLine1 As String
@@ -98,6 +96,9 @@ Public Class Localizer
     Property UpdatesTag As String
     Property WhatsnewTag As String
     Property AboutTag As String
+    Property MenuNativeWin As String
+    Property MenuInit As String
+    Property MenuAppliedReg As String
 
 #End Region
 
@@ -193,6 +194,10 @@ Public Class Localizer
                 .XenonButton5.Tag = UpdatesTag
                 .XenonButton6.Tag = WhatsnewTag
                 .XenonButton12.Tag = AboutTag
+                .ToolStripMenuItem1.Text = MenuNativeWin
+                .ToolStripMenuItem2.Text = MenuInit
+                .FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
+
             End With
         End If
     End Sub
@@ -248,7 +253,7 @@ Public Class Localizer
                 Else
                     '# Control
                     For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
-                        ctrl.Text = dicX.Value
+                        ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
                         ctrl.RightToLeft = If(RightToLeft, 1, 0)
                         ctrl.Refresh()
                     Next
