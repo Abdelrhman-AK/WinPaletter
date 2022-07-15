@@ -7,18 +7,18 @@ Public Class Whatsnew
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         XenonButton2.Enabled = True
-        If sender.text = "OK" Then
+        If sender.text = My.Application.LanguageHelper.OK Then
             Me.Close()
         Else
             If XenonTabControl1.SelectedIndex + 1 <= XenonTabControl1.TabPages.Count - 1 Then XenonTabControl1.SelectedIndex += 1
             If XenonTabControl1.SelectedIndex = XenonTabControl1.TabPages.Count - 1 Then
-                XenonButton1.Text = "OK"
+                XenonButton1.Text = My.Application.LanguageHelper.OK
             End If
         End If
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        XenonButton1.Text = "Next"
+        XenonButton1.Text = My.Application.LanguageHelper.Next_
         If XenonTabControl1.SelectedIndex > 0 Then XenonTabControl1.SelectedIndex -= 1
         If XenonTabControl1.SelectedIndex = 0 Then XenonButton2.Enabled = False
     End Sub

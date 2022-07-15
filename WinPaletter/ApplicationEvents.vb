@@ -12,19 +12,9 @@ Namespace My
     Public Module WindowsVersions
         Public W11 As Boolean
         Public W10 As Boolean
-        Public W8 As Boolean
-        Public W_Aero As Boolean
     End Module
 
     Partial Friend Class MyApplication
-#Region "Addons"
-        <Runtime.InteropServices.DllImport("dwmapi.dll", PreserveSig:=False)>
-        Public Shared Function DwmIsCompositionEnabled() As Boolean
-        End Function
-        Public Function AeroEnabled() As Boolean
-            Return DwmIsCompositionEnabled()
-        End Function
-#End Region
 
 #Region "Variables"
         Public _Settings As XeSettings
@@ -46,10 +36,11 @@ Namespace My
         Public allForms As New List(Of Form)
 
 #End Region
+
+#Region "File Association"
         <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
         End Sub
 
-#Region "File Association"
         Public Const SHCNE_ASSOCCHANGED = &H8000000
         Public Const SHCNF_IDLIST = 0
 
@@ -264,18 +255,6 @@ Namespace My
             Catch
                 W10 = False
             End Try
-
-            Try
-                W8 = My.Computer.Info.OSFullName.Contains("8")
-            Catch
-                W8 = False
-            End Try
-
-            Try
-                W_Aero = AeroEnabled() And Not My.Computer.Info.OSFullName.Contains("8") And Not My.Computer.Info.OSFullName.Contains("10")
-            Catch
-                W_Aero = False
-            End Try
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
@@ -328,6 +307,8 @@ Namespace My
 
             If My.Application._Settings.Language Then
                 LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+            Else
+                LanguageHelper.LoadInternal()
             End If
 
             Try
@@ -463,7 +444,7 @@ Namespace My
 
                     If arg.ToLower = "/exportlanguage" Then
                         LanguageHelper.ExportNativeLang("Language.txt")
-                        MsgBox("Language Exported Successfully.", MsgBoxStyle.Information)
+                        MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information)
                     Else
 
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then

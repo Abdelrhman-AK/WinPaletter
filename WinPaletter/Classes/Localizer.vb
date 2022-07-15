@@ -17,14 +17,10 @@ Public Class Localizer
 #End Region
 
 #Region "Deep-In-Code Strings"
+    Property OK As String
     Property Yes As String
     Property No As String
-    Property NewTag As String
-    Property OpenTag As String
-    Property SaveTag As String
-    Property SaveAsTag As String
-    Property EditInfoTag As String
-    Property QuestionsAndAnswersTag As String
+    Property Next_ As String
     Property NewUpdate As String
     Property OpenForActions As String
     Property X1 As String
@@ -49,7 +45,11 @@ Public Class Localizer
     Property X20 As String
     Property X21 As String
     Property X22 As String
+
+    Property X23 As String
     Property SaveMsg As String
+    Property SettingsSaved As String
+
     Property RemoveExtMsg As String
     Property RemoveExtMsgNote As String
     Property UninstallMsgLine1 As String
@@ -82,6 +82,23 @@ Public Class Localizer
     Property Stable As String
     Property Beta As String
     Property Channel As String
+    Property LngExported As String
+    Property InvalidTheme As String
+    Property ThemeNotExist As String
+    Property RescueBoxAutoClose As String
+    Property RescueBox As String
+    Property NewTag As String
+    Property OpenTag As String
+    Property SaveThemeTag As String
+    Property SaveThemeAsTag As String
+    Property UndoTag As String
+    Property UltraUndoTag As String
+    Property EditTag As String
+    Property SettingsTag As String
+    Property UpdatesTag As String
+    Property WhatsnewTag As String
+    Property AboutTag As String
+
 #End Region
 
     Public Sub ExportNativeLang(File As String)
@@ -93,7 +110,9 @@ Public Class Localizer
             Using ins = DirectCast(Activator.CreateInstance(f), Form)
                 LS.Add(ins.Name & "= " & ins.Text)
                 For Each ctrl In GetAllControls(ins)
-                    LS.Add(ins.Name & "\" & ctrl.Name & "= " & ctrl.Text)
+                    If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
+                        LS.Add(ins.Name & "\" & ctrl.Name & "= " & ctrl.Text.Replace(vbCrLf, "<br>"))
+                    End If
                 Next
             End Using
         Next
@@ -110,57 +129,107 @@ Public Class Localizer
     End Sub
 
     Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
-        If Not IO.File.Exists(File) Then Exit Sub
+        If IO.File.Exists(File) Then
+            Dim Dic As New List(Of ControlsBase)
+            Dic.Clear()
 
-        Dim Dic As New List(Of ControlsBase)
-        Dic.Clear()
+            For Each X As String In IO.File.ReadAllLines(File)
+                If X.StartsWith("!") Then
+                    If X.StartsWith("!Name= ") Then Name = X.Remove(0, "!Name= ".Count)
+                    If X.StartsWith("!TrVer= ") Then TrVer = X.Remove(0, "!TrVer= ".Count)
+                    If X.StartsWith("!Lang= ") Then Lang = X.Remove(0, "!Lang= ".Count)
+                    If X.StartsWith("!LangCode= ") Then LangCode = X.Remove(0, "!LangCode= ".Count)
+                    If X.StartsWith("!AppVer= ") Then AppVer = X.Remove(0, "!AppVer= ".Count)
+                    If X.StartsWith("!RightToLeft= ") Then RightToLeft = X.Remove(0, "!RightToLeft= ".Count)
 
-        For Each X As String In IO.File.ReadAllLines(File)
-            If X.StartsWith("!") Then
-                If X.StartsWith("!Name= ") Then Name = X.Remove(0, "!Name= ".Count)
-                If X.StartsWith("!TrVer= ") Then TrVer = X.Remove(0, "!TrVer= ".Count)
-                If X.StartsWith("!Lang= ") Then Lang = X.Remove(0, "!Lang= ".Count)
-                If X.StartsWith("!LangCode= ") Then LangCode = X.Remove(0, "!LangCode= ".Count)
-                If X.StartsWith("!AppVer= ") Then AppVer = X.Remove(0, "!AppVer= ".Count)
-                If X.StartsWith("!RightToLeft= ") Then RightToLeft = X.Remove(0, "!RightToLeft= ".Count)
+                ElseIf X.StartsWith("@") Then
+                    Dim x0, x1 As String
+                    x0 = X.Split("=")(0)
+                    x1 = X.Split("=")(1).Trim
 
-            ElseIf X.StartsWith("@") Then
-                Dim x0, x1 As String
-                x0 = X.Split("=")(0)
-                x1 = X.Split("=")(1).Trim
+                    Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
-                Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+                    For Each [property] As PropertyInfo In properties1
+                        If [property].Name = x0.Remove(0, 1) Then
+                            [property].SetValue(Me, Convert.ChangeType(x1, [property].PropertyType), Nothing)
+                        End If
+                    Next
 
-                For Each [property] As PropertyInfo In properties1
-                    If [property].Name = x0 Then
-                        [property].SetValue(Me, Convert.ChangeType(x1, [property].PropertyType), Nothing)
-                    End If
-                Next
-
-            Else
-                Dim FormName, ControlName, Value As String
-
-                If X.Split("=")(0).Contains("\") Then
-                    FormName = X.Split("=")(0).Split("\")(0)
-                    ControlName = X.Split("=")(0).Split("\")(1)
                 Else
-                    FormName = X.Split("=")(0)
-                    ControlName = Nothing
+                    Dim FormName, ControlName, Value As String
+
+                    If X.Split("=")(0).Contains("\") Then
+                        FormName = X.Split("=")(0).Split("\")(0)
+                        ControlName = X.Split("=")(0).Split("\")(1)
+                    Else
+                        FormName = X.Split("=")(0)
+                        ControlName = Nothing
+                    End If
+
+                    Value = X.Split("=")(1).Trim
+
+                    Dic.Add(New ControlsBase(FormName, ControlName, Value))
                 End If
+            Next
 
-                Value = X.Split("=")(1).Trim
-
-                Dic.Add(New ControlsBase(FormName, ControlName, Value))
+            If [_Form] Is Nothing Then
+                For Each [Form] As Form In My.Application.allForms
+                    Populate(Dic, [Form])
+                Next
+            Else
+                Populate(Dic, [_Form])
             End If
+
+
+            With MainFrm
+                .XenonButton3.Tag = NewTag
+                .XenonButton2.Tag = OpenTag
+                .XenonButton7.Tag = SaveThemeTag
+                .XenonButton9.Tag = SaveThemeAsTag
+                .XenonButton17.Tag = UndoTag
+                .XenonButton18.Tag = UltraUndoTag
+                .XenonButton10.Tag = EditTag
+                .XenonButton11.Tag = SettingsTag
+                .XenonButton5.Tag = UpdatesTag
+                .XenonButton6.Tag = WhatsnewTag
+                .XenonButton12.Tag = AboutTag
+            End With
+        End If
+    End Sub
+
+    Sub LoadInternal()
+        Dim ls As New List(Of String)
+        CList_FromStr(ls, My.Resources.CodeStr)
+
+        For Each X As String In ls
+            Dim x0, x1 As String
+            x0 = X.Split("=")(0)
+            x1 = X.Split("=")(1).Trim
+
+            Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
+            For Each [property] As PropertyInfo In properties1
+                If [property].Name = x0.Remove(0, 1) Then
+                    [property].SetValue(Me, Convert.ChangeType(x1, [property].PropertyType), Nothing)
+                End If
+            Next
         Next
 
-        If [_Form] Is Nothing Then
-            For Each [Form] As Form In My.Application.allForms
-                Populate(Dic, [Form])
-            Next
-        Else
-            Populate(Dic, [_Form])
-        End If
+        With MainFrm
+            .XenonButton3.Tag = NewTag
+            .XenonButton2.Tag = OpenTag
+            .XenonButton7.Tag = SaveThemeTag
+            .XenonButton9.Tag = SaveThemeAsTag
+            .XenonButton17.Tag = UndoTag
+            .XenonButton18.Tag = UltraUndoTag
+            .XenonButton10.Tag = EditTag
+            .XenonButton11.Tag = SettingsTag
+            .XenonButton5.Tag = UpdatesTag
+            .XenonButton6.Tag = WhatsnewTag
+            .XenonButton12.Tag = AboutTag
+        End With
+
+
 
     End Sub
 

@@ -9,26 +9,28 @@ Public Class EditInfo
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        With My.Application.LanguageHelper
+            If String.IsNullOrWhiteSpace(XenonTextBox1.Text) Then
+                MsgBox(.EmptyName, MsgBoxStyle.Critical)
+                Exit Sub
+            End If
 
-        If String.IsNullOrWhiteSpace(XenonTextBox1.Text) Then
-            MsgBox("You can't leave Palette Name Empty. Please type a name to it.", MsgBoxStyle.Critical, "Null Value")
-            Exit Sub
-        End If
+            If String.IsNullOrWhiteSpace(XenonTextBox2.Text) Then
+                MsgBox(.EmptyVer, MsgBoxStyle.Critical)
+                Exit Sub
+            End If
 
-        If String.IsNullOrWhiteSpace(XenonTextBox2.Text) Then
-            MsgBox("You can't leave Palette Version Empty. Please type a version to it in this style (x.x.x.x), replacing (x) by numbers.", MsgBoxStyle.Critical, "Null Value")
-            Exit Sub
-        End If
+            If Not IsNumeric(XenonTextBox2.Text.Replace(".", "")) Then
+                MsgBox(.WrongVerFormat, MsgBoxStyle.Critical)
+                Exit Sub
+            End If
 
-        If Not IsNumeric(XenonTextBox2.Text.Replace(".", "")) Then
-            MsgBox("Wrong Version Fomrat. Please type the version to it in this style (x.x.x.x), replacing (x) by numbers.", MsgBoxStyle.Critical, "Wrong Format")
-            Exit Sub
-        End If
+            If String.IsNullOrWhiteSpace(XenonTextBox4.Text) Then
+                MsgBox(.EmptyAuthorName, MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+        End With
 
-        If String.IsNullOrWhiteSpace(XenonTextBox4.Text) Then
-            MsgBox("You can't leave Author's Name Empty. Please type Author's name or your name.", MsgBoxStyle.Critical, "Null Value")
-            Exit Sub
-        End If
 
         Save_Info(MainFrm.CP)
         Me.Close()

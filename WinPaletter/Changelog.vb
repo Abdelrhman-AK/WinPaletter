@@ -40,7 +40,7 @@ Public Class Changelog
             Try
                 W.DownloadDataAsync(New Uri(My.Resources.Link_Changelog))
             Catch ex As Exception
-                With TreeView1.Nodes.Add("Error reading changelog online")
+                With TreeView1.Nodes.Add(My.Application.LanguageHelper.Error_Online)
                     Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                     With .Nodes.Add(ex.Message.Replace(vbCrLf, ", "))
@@ -51,10 +51,10 @@ Public Class Changelog
                 TreeView1.ExpandAll()
             End Try
         Else
-            With TreeView1.Nodes.Add("No Network is avaliable")
+            With TreeView1.Nodes.Add(My.Application.LanguageHelper.NoNetwork)
                 Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                 .ImageIndex = imgI : .SelectedImageIndex = imgI
-                With .Nodes.Add("Check your connection and try again")
+                With .Nodes.Add(My.Application.LanguageHelper.CheckConnection)
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                 End With
             End With
@@ -72,7 +72,7 @@ Public Class Changelog
             PhraseInfo(TreeView1)
         Else
 
-            With TreeView1.Nodes.Add("Error reading changelog online")
+            With TreeView1.Nodes.Add(My.Application.LanguageHelper.Error_Online)
                 Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                 .ImageIndex = imgI : .SelectedImageIndex = imgI
                 With .Nodes.Add(e.Error.Message.Replace(vbCrLf, ", "))
@@ -215,12 +215,12 @@ Skip:
             Dim whatToadd As String
 
             If SpecificVersion IsNot Nothing Then
-                whatToadd = "Version " & SpecificVersion & " is not released yet, deleted or written in a wrong format."
+                whatToadd = My.Application.LanguageHelper.Version & " " & SpecificVersion & " " & My.Application.LanguageHelper.VersionNotReleased
             Else
                 whatToadd = ex.Message.Replace(vbCrLf, ", ")
             End If
 
-            With [TreeView].Nodes.Add("Error phrasing changelog")
+            With [TreeView].Nodes.Add(My.Application.LanguageHelper.ErrorPhrasingChangelog)
                 .ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                 .SelectedImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                 With .Nodes.Add(whatToadd)

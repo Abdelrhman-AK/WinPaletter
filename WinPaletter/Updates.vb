@@ -27,7 +27,7 @@ Public Class Updates
 
             Try
                 If IsNetAvaliable() Then
-                    Label5.Text = "Checking ..."
+                    Label5.Text = My.Application.LanguageHelper.Label5_Checking
                     Dim ls As New List(Of String)
 
                     CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
@@ -50,7 +50,7 @@ Public Class Updates
                         ReleaseDate = Date.FromBinary(ls(UpdateChannel).Split(" ")(3))
 
                         Label5.Text = ver
-                        Label7.Text = UpdateSize & " MB"
+                        Label7.Text = UpdateSize & " " & My.Application.LanguageHelper.MBSizeUnit
                         Label9.Text = ReleaseDate
 
                         Dim Customchangelog_str As String = Nothing
@@ -59,7 +59,7 @@ Public Class Updates
                             Try
                                 Customchangelog_str = WebCL.DownloadString(New Uri(My.Resources.Link_Changelog))
                             Catch ex As Exception
-                                With TreeView1.Nodes.Add("Error reading changelog online")
+                                With TreeView1.Nodes.Add(My.Application.LanguageHelper.Error_Online)
                                     Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                                     With .Nodes.Add(ex.Message.Replace(vbCrLf, ", "))
@@ -70,10 +70,10 @@ Public Class Updates
                                 TreeView1.ExpandAll()
                             End Try
                         Else
-                            With TreeView1.Nodes.Add("No Network is avaliable")
+                            With TreeView1.Nodes.Add(My.Application.LanguageHelper.NoNetwork)
                                 Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
                                 .ImageIndex = imgI : .SelectedImageIndex = imgI
-                                With .Nodes.Add("Check your connection and try again")
+                                With .Nodes.Add(My.Application.LanguageHelper.CheckConnection)
                                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                                 End With
                             End With
@@ -83,16 +83,16 @@ Public Class Updates
 
                         Changelog.PhraseInfo(TreeView1, ver, Customchangelog_str)
                         My.Application.AnimatorX.Show(Panel1, True)
-                        XenonButton1.Text = "Do Action"
-                        XenonAlertBox2.Text = String.Format("Update Avaliable ({0})", ver)
+                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_UpdateAvaliable
+                        XenonAlertBox2.Text = String.Format("{0} ({1})", My.Application.LanguageHelper.XenonAlertBox2_UpdateAvaliable, ver)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
                     Else
                         Label5.Text = ""
                         Label7.Text = ""
                         Label9.Text = ""
                         url = Nothing
-                        XenonButton1.Text = "Check for updates"
-                        XenonAlertBox2.Text = String.Format("No Avaliable Updates")
+                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+                        XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_NoUpdateAvaliable)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Success
                     End If
                 Else
@@ -100,8 +100,8 @@ Public Class Updates
                     Label7.Text = ""
                     Label9.Text = ""
                     url = Nothing
-                    XenonButton1.Text = "Check for updates"
-                    XenonAlertBox2.Text = String.Format("Network Error")
+                    XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+                    XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_Error)
                     XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
                 End If
             Catch
@@ -109,8 +109,8 @@ Public Class Updates
                 Label7.Text = ""
                 Label9.Text = ""
                 url = Nothing
-                XenonButton1.Text = "Check for updates"
-                XenonAlertBox2.Text = String.Format("Error: Network issues or Github repository is private or deleted. Visit Github page for details.")
+                XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+                XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_ServerError)
                 XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
             End Try
 
@@ -151,12 +151,12 @@ Public Class Updates
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         TreeView1.Nodes.Clear()
-        Label3.Text = String.Format("{0} Channel", If(My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, "Stable", "Beta"))
+        Label3.Text = String.Format("{0} {1}", If(My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, My.Application.LanguageHelper.Stable, My.Application.LanguageHelper.Beta), My.Application.LanguageHelper.Channel)
         XenonCheckBox1.Checked = My.Application._Settings.AutoUpdatesChecking
         _Shown = False
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
         url = Nothing
-        XenonButton1.Text = "Check for updates"
+        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
         Label2.Text = My.Application.Info.Version.ToString
     End Sub
 
@@ -193,7 +193,7 @@ Public Class Updates
     Private Sub UC_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles UC.DownloadFileCompleted
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
-        If XenonRadioButton2.Checked Then MsgBox("Downloaded Successfully", MsgBoxStyle.Information)
+        If XenonRadioButton2.Checked Then MsgBox(My.Application.LanguageHelper.Msgbox_Downloaded, MsgBoxStyle.Information)
         If XenonRadioButton1.Checked Then
             Process.Start(OldName)
             Process.GetCurrentProcess.Kill()

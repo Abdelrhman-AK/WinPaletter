@@ -163,7 +163,7 @@ Partial Class EditInfo
         Me.XenonTextBox3.Multiline = True
         Me.XenonTextBox3.Name = "XenonTextBox3"
         Me.XenonTextBox3.ReadOnly = False
-        Me.XenonTextBox3.Size = New System.Drawing.Size(420, 24)
+        Me.XenonTextBox3.Size = New System.Drawing.Size(420, 149)
         Me.XenonTextBox3.TabIndex = 16
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox3.UseSystemPasswordChar = False

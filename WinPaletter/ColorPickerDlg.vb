@@ -244,7 +244,7 @@ Public Class ColorPickerDlg
         End Select
 
         If img IsNot Nothing Then
-            Label4.Text = "Extracting palette from image depends on your device's performance, maximum palette colors number, image quality and its resolution ..."
+            Label4.Text = My.Application.LanguageHelper.Extracting
             My.Application.AnimatorX.HideSync(XenonButton6, True)
             My.Application.AnimatorX.HideSync(ImgPaletteContainer, True)
             ProgressBar1.Visible = True
@@ -268,7 +268,7 @@ Public Class ColorPickerDlg
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
 
-            XenonCore.SetCtrlTxt("Sorting Colors in Palette ...", Label4)
+            XenonCore.SetCtrlTxt(My.Application.LanguageHelper.Sorting, Label4)
 
         End If
     End Sub
@@ -338,11 +338,11 @@ Public Class ColorPickerDlg
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next
             Catch
-                MsgBox("Error: Invalid Theme File.", MsgBoxStyle.Critical)
+                MsgBox(My.Application.LanguageHelper.InvalidTheme, MsgBoxStyle.Critical)
             End Try
 
         Else
-            MsgBox("Theme File doesn't exist.", MsgBoxStyle.Critical)
+            MsgBox(My.Application.LanguageHelper.ThemeNotExist, MsgBoxStyle.Critical)
         End If
     End Sub
 

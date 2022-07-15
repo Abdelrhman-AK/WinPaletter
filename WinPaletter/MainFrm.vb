@@ -15,10 +15,6 @@ Public Class MainFrm
         Ten
     End Enum
 
-    Sub Main()
-
-    End Sub
-
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
         Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
@@ -92,7 +88,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        If RaiseUpdate Then Notify(String.Format("New Update Avaliable ({0}). Open Updates form for actions.", ver), My.Resources.notify_update, 10000)
+        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Application.LanguageHelper.NewUpdate, My.Application.LanguageHelper.OpenForActions, ver), My.Resources.notify_update, 10000)
     End Sub
 
 
@@ -607,7 +603,7 @@ Public Class MainFrm
 
 
         If Not CP.ApplyAccentonTitlebars Then
-            Notify("To colorize active titlebar, please activate the toggle", My.Resources.notify_info, 5000)
+            Notify(My.Application.LanguageHelper.X17, My.Resources.notify_info, 5000)
         End If
     End Sub
 
@@ -625,7 +621,7 @@ Public Class MainFrm
 
 
         If Not CP.ApplyAccentonTitlebars Then
-            Notify("To colorize inactive titlebar, please activate the toggle", My.Resources.notify_info, 5000)
+            Notify(My.Application.LanguageHelper.X18, My.Resources.notify_info, 5000)
         End If
     End Sub
 
@@ -701,7 +697,7 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify("To colorize taskbar, please activate the toggle", My.Resources.notify_info, 5000)
+                Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
             End If
         End If
     End Sub
@@ -737,11 +733,11 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Eleven Then
             If Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify("To colorize start menu, action center and taskbar, please activate the toggle", My.Resources.notify_info, 5000)
+                Notify(My.Application.LanguageHelper.X20, My.Resources.notify_info, 5000)
             End If
         Else
             If Not CP.Transparency And Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify("To colorize taskbar, please activate the toggle", My.Resources.notify_info, 5000)
+                Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
             End If
         End If
 
@@ -782,7 +778,7 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify("To colorize start menu and action center, please activate the toggle", My.Resources.notify_info, 5000)
+                Notify(My.Application.LanguageHelper.X21, My.Resources.notify_info, 5000)
             End If
         End If
     End Sub
@@ -828,7 +824,7 @@ Public Class MainFrm
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.Application._Settings.AutoRestartExplorer Then
-            status_lbl.Text = "This will restart the explorer, don't worry this won't close other applications."
+            status_lbl.Text = My.Application.LanguageHelper.X22
             status_lbl.ForeColor = Color.Gold
         End If
     End Sub
@@ -877,7 +873,7 @@ Public Class MainFrm
             Else
                 If CP.Transparency Then
                     If Not CP.ApplyAccentonTaskbar Then
-                        Notify("To colorize taskbar, please activate the toggle", My.Resources.notify_info, 5000)
+                        Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
                     End If
                 Else
 
@@ -974,7 +970,7 @@ Public Class MainFrm
 
         If PreviewConfig = WinVer.Ten Then
             If Not CP.ApplyAccentonTaskbar Then
-                Notify("To colorize start menu and action center, please activate the toggle", My.Resources.notify_info, 5000)
+                Notify(My.Application.LanguageHelper.X21, My.Resources.notify_info, 5000)
             End If
         End If
     End Sub
@@ -1408,7 +1404,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton8_Click_1(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        MsgBox("Windows Volume slider and UAC follow this color.", MsgBoxStyle.Information)
+        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information)
     End Sub
 
     Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click

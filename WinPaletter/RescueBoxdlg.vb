@@ -24,7 +24,7 @@ Public Class RescueBoxdlg
             AddHandler Ctrl.Click, AddressOf StopAutoClose
         Next
 
-        Me.Text = If(My.Application._Settings.RescueBox_Autoclose, "Rescue Box - Press any Keyboard Key to disable auto closing", "Rescue Box")
+        Me.Text = If(My.Application._Settings.RescueBox_Autoclose, My.Application.LanguageHelper.RescueBoxAutoClose, My.Application.LanguageHelper.RescueBox)
 
     End Sub
 
@@ -34,7 +34,7 @@ Public Class RescueBoxdlg
             'If key = Keys.S And My.Computer.Keyboard.CtrlKeyDown Then
 
             _AutoClosing = False
-            Text = "Rescue Box"
+            Text = My.Application.LanguageHelper.RescueBox
 
             Return True
             'End If

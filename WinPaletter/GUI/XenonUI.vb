@@ -91,10 +91,8 @@ Module XenonModule
             Else
                 If My.WindowsVersions.W11 Then
                     Return True
-                ElseIf My.WindowsVersions.W10 Or My.WindowsVersions.W8 Then
+                ElseIf My.WindowsVersions.W10 Then
                     Return False
-                ElseIf My.WindowsVersions.W_Aero Then
-                    Return True
                 Else
                     Return False
                 End If
@@ -691,6 +689,7 @@ Public Class XenonRadioButton
         AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
+
     End Sub
 
 #Region "Properties"
@@ -766,6 +765,7 @@ Public Class XenonRadioButton
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = True
         State = MouseState.Down
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -774,6 +774,7 @@ Public Class XenonRadioButton
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -781,6 +782,7 @@ Public Class XenonRadioButton
 
     Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -788,24 +790,28 @@ Public Class XenonRadioButton
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+
+            End If
+        Catch
+        End Try
+
         Try
             alpha = 0
             alpha2 = If(Checked, 255, 0)
             ColorPalette = New XenonColorPalette(Me)
-            If Not DesignMode Then
-                Try
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
-                    AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                Catch
-                End Try
-            End If
         Catch
         End Try
     End Sub
@@ -1272,6 +1278,8 @@ Public Class XenonCheckBox
         End Try
     End Sub
 End Class
+
+<DefaultEvent("Click")>
 Public Class XenonGroupBox
     Inherits Panel
     Sub New()
@@ -1993,6 +2001,7 @@ Public Class XenonNumericUpDown
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -2001,12 +2010,14 @@ Public Class XenonNumericUpDown
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
     End Sub
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
 
@@ -2023,6 +2034,7 @@ Public Class XenonNumericUpDown
 
     Private Sub XenonNumericUpDown_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
     End Sub
@@ -2381,6 +2393,7 @@ End Class
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         MyBase.OnMouseDown(e)
         State = MouseState.Down
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -2389,6 +2402,7 @@ End Class
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         MyBase.OnMouseUp(e)
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         TB.Focus() : Invalidate()
@@ -2397,6 +2411,7 @@ End Class
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -2405,6 +2420,7 @@ End Class
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
+        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -2532,29 +2548,26 @@ End Class
 
     Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
         State = MouseState.Down
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
         State = MouseState.Over
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
         State = MouseState.None
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
@@ -2563,7 +2576,6 @@ End Class
     End Sub
 
     Private Sub XenonTextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-        AddHandler Parent.BackColorChanged, AddressOf Invalidate
         alpha = 0
         ColorPalette = New XenonColorPalette(Me)
         If Not DesignMode Then
@@ -2684,39 +2696,35 @@ Public Class XenonComboBox : Inherits ComboBox
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub XenonComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub XenonComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
         State = MouseState.Over
-        If _Shown Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private _Shown As Boolean = False
@@ -2728,12 +2736,10 @@ Public Class XenonComboBox : Inherits ComboBox
 
             Try
                 If Not DesignMode Then
-
                     AddHandler Parent.BackColorChanged, AddressOf Invalidate
                     AddHandler BackColorChanged, AddressOf Invalidate
                 End If
             Catch
-
             End Try
 
             ColorPalette = New XenonColorPalette(Me)

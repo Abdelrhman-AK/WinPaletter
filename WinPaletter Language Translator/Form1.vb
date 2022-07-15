@@ -1,32 +1,104 @@
 ﻿Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            ListBox1.Items.Clear()
-
-            Dim File As String = OpenFileDialog1.FileName
-            For Each X As String In IO.File.ReadAllLines(File)
-                Dim S As String = X.Split("=")(1).TrimStart
-
-                If Not String.IsNullOrWhiteSpace(S) And Not IsNumeric(S) And Not S = "" And Not S.StartsWith("Xenon") And Not X.StartsWith("@") And Not X.StartsWith("!") Then
-                    ListBox1.Items.Add(X)
-                ElseIf X.StartsWith("@") Then
-                    ListBox1.Items.Add(X)
-                ElseIf X.StartsWith("!") Then
-                    Dim XX As String = X.Split("=")(0)
-                    If XX = "!Name" Then TextBox3.Text = S
-                    If XX = "!TrVer" Then TextBox7.Text = S
-                    If XX = "!Lang" Then TextBox4.Text = S
-                    If XX = "!LangCode" Then TextBox8.Text = S
-                    If XX = "!AppVer" Then TextBox5.Text = S
-                    If XX = "!RightToLeft" Then CheckBox1.Checked = S
-                End If
-
-            Next
-
-
+            LoadTranslation(OpenFileDialog1.FileName)
         End If
 
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim F0 As String = ""
+        Dim F1 As String = ""
+
+        MsgBox("Now open the most recent exported language from WinPaletter")
+
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            F0 = OpenFileDialog1.FileName
+        Else
+            Exit Sub
+        End If
+
+        MsgBox("Now open the previously translated one")
+
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            F1 = OpenFileDialog1.FileName
+        Else
+            Exit Sub
+        End If
+
+        LoadTranslation(F0, F1)
+
+    End Sub
+
+
+    Sub LoadTranslation(File As String, Optional OldTranslated As String = "")
+        ListBox1.Items.Clear()
+
+        If Not IO.File.Exists(OldTranslated) Then
+            LoopInLines(IO.File.ReadAllLines(File).ToList)
+        Else
+            Dim LS0, LS1 As String()
+            Dim LSFinal As New List(Of String)
+            LS0 = Nothing
+            LS1 = Nothing
+            LSFinal.Clear()
+
+            LS0 = IO.File.ReadAllLines(File)
+            LS1 = IO.File.ReadAllLines(OldTranslated)
+
+            Dim LX0, LX1 As New Dictionary(Of String, String)
+            LX0.Clear()
+            LX1.Clear()
+
+            For Each x As String In LS0
+                Try : LX0.Add(x.Split("=")(0), x.Split("=")(1).Trim) : Catch : End Try
+            Next
+
+            For Each x As String In LS1
+                Try : LX1.Add(x.Split("=")(0), x.Split("=")(1).Trim) : Catch : End Try
+            Next
+
+            For Each x As KeyValuePair(Of String, String) In LX0
+                For Each y As KeyValuePair(Of String, String) In LX1
+                    If x.Key = y.Key Then
+                        LSFinal.Add(x.Key & "= " & y.Value)
+                        Exit For
+                    End If
+                Next
+            Next
+
+            For Each y As KeyValuePair(Of String, String) In LX1
+                LX0.Remove(y.Key)
+            Next
+
+            For Each x As KeyValuePair(Of String, String) In LX0
+                LSFinal.Add(x.Key & "= " & x.Value)
+            Next
+
+                LoopInLines(LSFinal)
+        End If
+
+        ListBox1.Sorted = True
+    End Sub
+
+    Sub LoopInLines(LS As List(Of String))
+        For Each X As String In LS
+            Dim S As String = X.Split("=")(1).TrimStart
+
+            If Not String.IsNullOrWhiteSpace(S) And Not IsNumeric(S) And Not S = "" And Not S.StartsWith("Xenon") And Not X.StartsWith("@") And Not X.StartsWith("!") Then
+                ListBox1.Items.Add(X)
+            ElseIf X.StartsWith("@") Then
+                ListBox1.Items.Add(X)
+            ElseIf X.StartsWith("!") Then
+                Dim XX As String = X.Split("=")(0)
+                If XX = "!Name" Then TextBox3.Text = S
+                If XX = "!TrVer" Then TextBox7.Text = S
+                If XX = "!Lang" Then TextBox4.Text = S
+                If XX = "!LangCode" Then TextBox8.Text = S
+                If XX = "!AppVer" Then TextBox5.Text = S
+                If XX = "!RightToLeft" Then CheckBox1.Checked = S
+            End If
+        Next
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
@@ -61,7 +133,7 @@
                     End If
 
 
-                    TextBox1.Text = X.Remove(0, X.Split("=")(0).Count + 2)
+                    TextBox1.Text = X.Remove(0, X.Split("=")(0).Count + 2).Replace("<br>", vbCrLf)
                     TextBox2.Text = TextBox1.Text
             End Select
         End If
@@ -72,21 +144,22 @@
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Modifying = True
 
-        TextBox1.Text = TextBox2.Text
+        If TextBox1.Text = "WinPaletter /exportlanguage" Then TextBox2.Text = "WinPaletter /exportlanguage" Else TextBox1.Text = TextBox2.Text
+
         Dim i As Integer = ListBox1.SelectedIndex
 
         Select Case ListBox1.SelectedItem.ToString.StartsWith("@")
             Case True
                 Dim tmp As String = ListBox1.SelectedItem.ToString.Split("=")(0)
                 ListBox1.Items.RemoveAt(i)
-                ListBox1.Items.Insert(i, tmp & "= " & TextBox1.Text)
+                ListBox1.Items.Insert(i, tmp & "= " & TextBox1.Text.Replace(vbCrLf, "<br>"))
             Case False
                 ListBox1.Items.RemoveAt(i)
 
                 If Label5.Text = Label4.Text Then
-                    ListBox1.Items.Insert(i, Label5.Text & "= " & TextBox1.Text)
+                    ListBox1.Items.Insert(i, Label5.Text & "= " & TextBox1.Text.Replace(vbCrLf, "<br>"))
                 Else
-                    ListBox1.Items.Insert(i, Label5.Text & "\" & Label4.Text & "= " & TextBox1.Text)
+                    ListBox1.Items.Insert(i, Label5.Text & "\" & Label4.Text & "= " & TextBox1.Text.Replace(vbCrLf, "<br>"))
                 End If
         End Select
 
@@ -94,7 +167,9 @@
         ListBox1.SelectedIndex = i
         Modifying = False
 
-        ListBox2.Items.Add(TextBox2.Text)
+        If Not ListBox2.Items.Contains(TextBox2.Text) Then ListBox2.Items.Add(TextBox2.Text)
+        ListBox2.SelectedIndex = ListBox2.Items.Count - 1
+
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -103,10 +178,6 @@
         Else
             TextBox2.RightToLeft = RightToLeft.No
         End If
-    End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Button1.PerformClick()
     End Sub
 
     Private Sub ListBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox2.DoubleClick
@@ -132,7 +203,5 @@
         End If
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs)
 
-    End Sub
 End Class

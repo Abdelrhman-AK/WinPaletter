@@ -40,7 +40,7 @@ Public Class SettingsX
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox("Do you want to save Settings?", MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+            Select Case MsgBox(My.Application.LanguageHelper.SaveMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
                 Case DialogResult.Cancel
                     e.Cancel = True
                 Case DialogResult.Yes
@@ -122,7 +122,7 @@ Public Class SettingsX
             .Save(XeSettings.Mode.Registry)
         End With
 
-        MsgBox("Settings Saved.", MsgBoxStyle.Information)
+        MsgBox(My.Application.LanguageHelper.SettingsSaved, MsgBoxStyle.Information)
         Me.Close()
 
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
@@ -237,7 +237,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If MsgBox("Are you sure from removing files association (*.wpth, *.wpsf) from registry?" & vbCrLf & vbCrLf & "Note: You can reassociate them by activating its checkbox and restarting the application.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox(My.Application.LanguageHelper.RemoveExtMsg & vbCrLf & vbCrLf & My.Application.LanguageHelper.RemoveExtMsgNote, MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
@@ -245,7 +245,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        If MsgBox("Are you sure from Uninstalling the program?" & vbCrLf & vbCrLf & "This will delete associated files extensions from registry and the application's settings.", MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox(My.Application.LanguageHelper.UninstallMsgLine1 & vbCrLf & vbCrLf & My.Application.LanguageHelper.UninstallMsgLine2, MsgBoxStyle.Question + MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
 

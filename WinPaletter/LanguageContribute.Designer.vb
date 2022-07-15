@@ -156,7 +156,7 @@ Partial Class LanguageContribute
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(26, 369)
+        Me.XenonButton4.Location = New System.Drawing.Point(26, 376)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(88, 35)
         Me.XenonButton4.TabIndex = 14
@@ -170,7 +170,7 @@ Partial Class LanguageContribute
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(26, 240)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(345, 46)
+        Me.Label9.Size = New System.Drawing.Size(345, 59)
         Me.Label9.TabIndex = 13
         Me.Label9.Text = "- Exporting language file with a native app language (English) (i.e. without load" &
     "ing a previous translation) is better"
@@ -181,7 +181,7 @@ Partial Class LanguageContribute
         Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(3, 299)
+        Me.Label8.Location = New System.Drawing.Point(3, 306)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(409, 66)
         Me.Label8.TabIndex = 12
