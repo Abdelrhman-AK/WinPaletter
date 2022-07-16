@@ -101,36 +101,7 @@ Public Class MainFrm
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
-        Dim LabelsList As New List(Of Label) From {
-            Label1,
-            Label10,
-            Label17,
-            themename_lbl,
-            author_lbl,
-            ColorPickerDlg.Label1,
-            ColorPickerDlg.Label2,
-            ColorPickerDlg.Label3,
-            ColorPickerDlg.Label5,
-            About.Label17,
-            About.Label4,
-            About.Label3,
-            ComplexSave.Label1,
-            ComplexSave.Label2,
-            ComplexSave.Label17,
-            LogonUI.Label13,
-            SettingsX.Label17,
-            SettingsX.Label1,
-            SettingsX.Label2,
-            SettingsX.Label3,
-            SettingsX.Label5,
-            SettingsX.Label6
-        }
-
-        If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then
-            For Each lbl As Label In LabelsList
-                lbl.Font = New Font("Segoe UI Variable Display", lbl.Font.Size, lbl.Font.Style)
-            Next
-        End If
+        My.Application.AdjustFonts()
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -1415,7 +1386,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton8_Click_1(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information)
+        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
 
     Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click

@@ -11,22 +11,22 @@ Public Class EditInfo
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         With My.Application.LanguageHelper
             If String.IsNullOrWhiteSpace(XenonTextBox1.Text) Then
-                MsgBox(.EmptyName, MsgBoxStyle.Critical)
+                MsgBox(.EmptyName, MsgBoxStyle.Critical + My.Application.MsgboxRt)
                 Exit Sub
             End If
 
             If String.IsNullOrWhiteSpace(XenonTextBox2.Text) Then
-                MsgBox(.EmptyVer, MsgBoxStyle.Critical)
+                MsgBox(.EmptyVer, MsgBoxStyle.Critical + My.Application.MsgboxRt)
                 Exit Sub
             End If
 
             If Not IsNumeric(XenonTextBox2.Text.Replace(".", "")) Then
-                MsgBox(.WrongVerFormat, MsgBoxStyle.Critical)
+                MsgBox(.WrongVerFormat, MsgBoxStyle.Critical + My.Application.MsgboxRt)
                 Exit Sub
             End If
 
             If String.IsNullOrWhiteSpace(XenonTextBox4.Text) Then
-                MsgBox(.EmptyAuthorName, MsgBoxStyle.Critical)
+                MsgBox(.EmptyAuthorName, MsgBoxStyle.Critical + My.Application.MsgboxRt)
                 Exit Sub
             End If
         End With

@@ -215,6 +215,8 @@ Public Class Localizer
         MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
         MainFrm.ToolStripMenuItem2.Text = MenuInit
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
+
+        My.Application.AdjustFonts()
     End Sub
 
     Sub Populate(ByVal Dic As List(Of ControlsBase), [Form] As Form)
@@ -246,6 +248,8 @@ Public Class Localizer
         MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
         MainFrm.ToolStripMenuItem2.Text = MenuInit
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
+
+        My.Application.AdjustFonts()
     End Sub
     Sub RTL(Parent As Control)
         If RightToLeft Then
@@ -274,6 +278,8 @@ Public Class Localizer
                     Next
                 End If
             Next
+
+            My.Application.AdjustFonts()
 
         End If
     End Sub

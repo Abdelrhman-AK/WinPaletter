@@ -300,7 +300,6 @@ Partial Class Updates
         '
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox2.Border = True
         Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))

@@ -273,8 +273,8 @@ Public Class XenonColorPalette
                 Color_Back_Checked = ControlPaint.Dark(BaseColor, 0.2)
                 Color_Core = ControlPaint.LightLight(BaseColor)
                 Color_Border_Checked_Hover = CCB(BaseColor, -0.2)
-                Color_Border = CCB(Color_Parent, 0.3)
-                Color_Back = CCB(Color_Parent, 0.07)
+                Color_Border = CCB(Color_Parent, 0.08)
+                Color_Back = CCB(Color_Parent, 0.04)
                 Color_Parent_Hover = CCB(Color_Parent, 0.08)
             Else
                 Color_Back_Checked = ControlPaint.LightLight(BaseColor)
@@ -1651,7 +1651,7 @@ Public Class XenonButton : Inherits Button
     End Sub
 #End Region
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.25))
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.4))
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -2133,7 +2133,7 @@ Public Class XenonNumericUpDown
         '################################################################################# Customizer
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
-        SideRect = New Rectangle(Width - 16, 1, 15, Height - 2)
+        SideRect = New Rectangle(Width - 16, 0, 15, Height)
 
         If RTL Then
             OuterRect.X = Width - OuterRect.X - OuterRect.Width
@@ -2571,8 +2571,9 @@ End Class
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
 
+
         Dim FadeInColor As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
-        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Border)
+        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Parent_Hover)
 
         G.Clear(ColorPalette.Color_Parent)
 
@@ -2580,12 +2581,14 @@ End Class
 
         If TB.Focused Or Focused Then
             FillRect(G, New SolidBrush(ColorPalette.Color_Back_Checked), OuterRect)
-            DrawRect(G, New Pen(ColorPalette.Color_Border_Checked_Hover), OuterRect)
+            DrawRect_LikeW11(G, ColorPalette.Color_Border_Checked_Hover, OuterRect)
             TB.BackColor = ColorPalette.Color_Back_Checked
         Else
-            FillRect(G, New SolidBrush(ColorPalette.Color_Back), OuterRect)
-            DrawRect(G, New Pen(FadeInColor), OuterRect)
-            DrawRect(G, New Pen(FadeOutColor), InnerRect)
+            FillRect(G, New SolidBrush(ColorPalette.Color_Back), InnerRect)
+            FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back)), OuterRect)
+
+            DrawRect_LikeW11(G, FadeInColor, OuterRect)
+            DrawRect_LikeW11(G, FadeOutColor, InnerRect)
             TB.BackColor = ColorPalette.Color_Back
         End If
 
@@ -2697,6 +2700,9 @@ Public Class XenonComboBox : Inherits ComboBox
 #End Region
 #End Region
 
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.3))
+
+
 #Region "Subs"
     Sub ReplaceItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles Me.DrawItem
         BackColor = ColorPalette.Color_Back_Checked
@@ -2712,14 +2718,13 @@ Public Class XenonComboBox : Inherits ComboBox
 
         Try
             e.Graphics.FillRectangle(New SolidBrush(BackColor), e.Bounds)
-            Dim Rect As New Rectangle(e.Bounds.X + 1, e.Bounds.Y + 1, e.Bounds.Width - 3, e.Bounds.Height - 3)
+            Dim Rect As New Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height)
 
             If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-                FillRect(e.Graphics, New SolidBrush(ColorPalette.Color_Border_Checked_Hover), Rect, 4)
+                e.Graphics.FillRectangle(New SolidBrush(ColorPalette.Color_Border_Checked_Hover), Rect)
             End If
 
             e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
-
         Catch
         End Try
     End Sub
@@ -2928,7 +2933,10 @@ Public Class XenonComboBox : Inherits ComboBox
 
         G.Clear(ColorPalette.Color_Parent)
 
-        FillRect(G, New SolidBrush(ColorPalette.Color_Back), OuterRect)
+        FillRect(G, New SolidBrush(ColorPalette.Color_Back), InnerRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back)), OuterRect)
+        FillRect(G, Noise, InnerRect)
+
         DrawRect_LikeW11(G, FadeInColor, OuterRect)
         DrawRect_LikeW11(G, FadeOutColor, InnerRect)
 
@@ -3014,8 +3022,6 @@ Public Class XenonAlertBox
     Public Property Image As Image
     Public Property CustomColor As Color
     Public Property CenterText As Boolean = False
-
-    Public Property Border As Boolean = True
 #End Region
 
 #Region "Events"
@@ -3100,7 +3106,7 @@ Public Class XenonAlertBox
         BackColor = innerColor
 
         FillRect(G, New SolidBrush(innerColor), New Rectangle(0, 0, Width - 1, Height - 1))
-        If Border Then DrawRect(G, New Pen(borderColor), New Rectangle(0, 0, Width - 1, Height - 1))
+        DrawRect_LikeW11(G, borderColor, New Rectangle(0, 0, Width - 1, Height - 1))
 
         Dim textY As Integer = CInt((Height - MeasureString(Text, Font).Height) / 2)
         Dim TextX As Integer

@@ -338,11 +338,11 @@ Public Class ColorPickerDlg
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next
             Catch
-                MsgBox(My.Application.LanguageHelper.InvalidTheme, MsgBoxStyle.Critical)
+                MsgBox(My.Application.LanguageHelper.InvalidTheme, MsgBoxStyle.Critical + My.Application.MsgboxRt)
             End Try
 
         Else
-            MsgBox(My.Application.LanguageHelper.ThemeNotExist, MsgBoxStyle.Critical)
+            MsgBox(My.Application.LanguageHelper.ThemeNotExist, MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End If
     End Sub
 

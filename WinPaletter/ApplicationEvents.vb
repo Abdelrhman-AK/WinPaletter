@@ -34,7 +34,6 @@ Namespace My
         Public processStartMenuExperienceHost As Process
         Public LanguageHelper As New Localizer
         Public allForms As New List(Of Form)
-
 #End Region
 
 #Region "File Association"
@@ -286,6 +285,44 @@ Namespace My
 
             Return Result
         End Function
+
+        Public Function MsgboxRt() As MsgBoxStyle
+            Return If(LanguageHelper.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
+        End Function
+
+        Public Sub AdjustFonts()
+            Dim LabelsList As New List(Of Label) From {
+    MainFrm.Label1,
+    MainFrm.Label10,
+    MainFrm.Label17,
+    MainFrm.themename_lbl,
+    MainFrm.author_lbl,
+    ColorPickerDlg.Label1,
+    ColorPickerDlg.Label2,
+    ColorPickerDlg.Label3,
+    ColorPickerDlg.Label5,
+    About.Label17,
+    About.Label4,
+    About.Label3,
+    ComplexSave.Label1,
+    ComplexSave.Label2,
+    ComplexSave.Label17,
+    LogonUI.Label13,
+    SettingsX.Label17,
+    SettingsX.Label1,
+    SettingsX.Label2,
+    SettingsX.Label3,
+    SettingsX.Label5,
+    SettingsX.Label6
+}
+
+            If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then
+                For Each lbl As Label In LabelsList
+                    lbl.Font = New Font("Segoe UI Variable Display", lbl.Font.Size, lbl.Font.Style)
+                    lbl.Refresh()
+                Next
+            End If
+        End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
