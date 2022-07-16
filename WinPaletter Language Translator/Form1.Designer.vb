@@ -57,6 +57,8 @@ Partial Class Form1
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -109,6 +111,8 @@ Partial Class Form1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.Label12)
+        Me.GroupBox1.Controls.Add(Me.Label13)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.Label3)
@@ -129,7 +133,7 @@ Partial Class Form1
         Me.Label4.Location = New System.Drawing.Point(66, 42)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(228, 23)
+        Me.Label4.Size = New System.Drawing.Size(95, 23)
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "Control:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -142,7 +146,7 @@ Partial Class Form1
         Me.Label5.Location = New System.Drawing.Point(66, 19)
         Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(228, 23)
+        Me.Label5.Size = New System.Drawing.Size(95, 23)
         Me.Label5.TabIndex = 3
         Me.Label5.Text = "Form:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -458,6 +462,30 @@ Partial Class Form1
         Me.Label10.Text = "Never use = or <br> in your translation"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'Label12
+        '
+        Me.Label12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(228, 28)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(66, 23)
+        Me.Label12.TabIndex = 6
+        Me.Label12.Text = "Prop:"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label13
+        '
+        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(169, 28)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(51, 23)
+        Me.Label13.TabIndex = 5
+        Me.Label13.Text = "Prop:"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -524,4 +552,6 @@ Partial Class Form1
     Friend WithEvents Button4 As Button
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents Label10 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Label13 As Label
 End Class

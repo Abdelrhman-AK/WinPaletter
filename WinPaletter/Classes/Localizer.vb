@@ -20,6 +20,7 @@ Public Class Localizer
     Property OK As String
     Property Yes As String
     Property No As String
+    Property By As String
     Property Next_ As String
     Property NewUpdate As String
     Property OpenForActions As String
@@ -46,6 +47,7 @@ Public Class Localizer
     Property X21 As String
     Property X22 As String
     Property X23 As String
+    Property CurrentMode As String
     Property SaveMsg As String
     Property SettingsSaved As String
     Property RemoveExtMsg As String
@@ -109,22 +111,26 @@ Public Class Localizer
         For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
 
             Using ins = DirectCast(Activator.CreateInstance(f), Form)
-                LS.Add(ins.Name & "= " & ins.Text)
+                LS.Add(ins.Name & ".Text = " & ins.Text)
                 For Each ctrl In GetAllControls(ins)
                     If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
-                        LS.Add(ins.Name & "\" & ctrl.Name & "= " & ctrl.Text.Replace(vbCrLf, "<br>"))
+                        LS.Add(ins.Name & "." & ctrl.Name & ".Text = " & ctrl.Text.Replace(vbCrLf, "<br>"))
+                    End If
+
+                    If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                        LS.Add(ins.Name & "." & ctrl.Name & ".Tag = " & ctrl.Tag.Replace(vbCrLf, "<br>"))
                     End If
                 Next
             End Using
         Next
 
         Dim lx As New List(Of String)
-        lx.Add("!Name= Abdelrhman-AK")
-        lx.Add("!TrVer= 1.0")
-        lx.Add("!Lang= English")
-        lx.Add("!LangCode= EN-US")
-        lx.Add("!AppVer= " & My.Application.Info.Version.ToString)
-        lx.Add("!RightToLeft= False")
+        lx.Add("!Name = Abdelrhman-AK")
+        lx.Add("!TrVer = 1.0")
+        lx.Add("!Lang = English")
+        lx.Add("!LangCode = EN-US")
+        lx.Add("!AppVer = " & My.Application.Info.Version.ToString)
+        lx.Add("!RightToLeft = False")
 
         IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & My.Resources.CodeStr & vbCrLf & CStr_FromList(LS))
     End Sub
@@ -136,16 +142,16 @@ Public Class Localizer
 
             For Each X As String In IO.File.ReadAllLines(File)
                 If X.StartsWith("!") Then
-                    If X.StartsWith("!Name= ") Then Name = X.Remove(0, "!Name= ".Count)
-                    If X.StartsWith("!TrVer= ") Then TrVer = X.Remove(0, "!TrVer= ".Count)
-                    If X.StartsWith("!Lang= ") Then Lang = X.Remove(0, "!Lang= ".Count)
-                    If X.StartsWith("!LangCode= ") Then LangCode = X.Remove(0, "!LangCode= ".Count)
-                    If X.StartsWith("!AppVer= ") Then AppVer = X.Remove(0, "!AppVer= ".Count)
-                    If X.StartsWith("!RightToLeft= ") Then RightToLeft = X.Remove(0, "!RightToLeft= ".Count)
+                    If X.StartsWith("!Name = ") Then Name = X.Remove(0, "!Name = ".Count)
+                    If X.StartsWith("!TrVer = ") Then TrVer = X.Remove(0, "!TrVer = ".Count)
+                    If X.StartsWith("!Lang = ") Then Lang = X.Remove(0, "!Lang = ".Count)
+                    If X.StartsWith("!LangCode = ") Then LangCode = X.Remove(0, "!LangCode = ".Count)
+                    If X.StartsWith("!AppVer = ") Then AppVer = X.Remove(0, "!AppVer = ".Count)
+                    If X.StartsWith("!RightToLeft = ") Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
 
                 ElseIf X.StartsWith("@") Then
                     Dim x0, x1 As String
-                    x0 = X.Split("=")(0)
+                    x0 = X.Split("=")(0).Trim
                     x1 = X.Split("=")(1).Trim
 
                     Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
@@ -157,19 +163,23 @@ Public Class Localizer
                     Next
 
                 Else
-                    Dim FormName, ControlName, Value As String
+                    Dim FormName, ControlName, Prop, Value As String
 
-                    If X.Split("=")(0).Contains("\") Then
-                        FormName = X.Split("=")(0).Split("\")(0)
-                        ControlName = X.Split("=")(0).Split("\")(1)
-                    Else
-                        FormName = X.Split("=")(0)
-                        ControlName = Nothing
-                    End If
+
+                    Select Case X.Split("=")(0).Trim.Split(".").Count
+                        Case 3
+                            FormName = X.Split("=")(0).Trim.Split(".")(0)
+                            ControlName = X.Split("=")(0).Trim.Split(".")(1)
+                            Prop = X.Split("=")(0).Trim.Split(".")(2)
+                        Case 2
+                            FormName = X.Split("=")(0).Trim.Split(".")(0)
+                            ControlName = Nothing
+                            Prop = X.Split("=")(0).Trim.Split(".")(1)
+                    End Select
 
                     Value = X.Split("=")(1).Trim
 
-                    Dic.Add(New ControlsBase(FormName, ControlName, Value))
+                    Dic.Add(New ControlsBase(FormName, ControlName, Prop, Value))
                 End If
             Next
 
@@ -181,24 +191,6 @@ Public Class Localizer
                 Populate(Dic, [_Form])
             End If
 
-
-            With MainFrm
-                .XenonButton3.Tag = NewTag
-                .XenonButton2.Tag = OpenTag
-                .XenonButton7.Tag = SaveThemeTag
-                .XenonButton9.Tag = SaveThemeAsTag
-                .XenonButton17.Tag = UndoTag
-                .XenonButton18.Tag = UltraUndoTag
-                .XenonButton10.Tag = EditTag
-                .XenonButton11.Tag = SettingsTag
-                .XenonButton5.Tag = UpdatesTag
-                .XenonButton6.Tag = WhatsnewTag
-                .XenonButton12.Tag = AboutTag
-                .ToolStripMenuItem1.Text = MenuNativeWin
-                .ToolStripMenuItem2.Text = MenuInit
-                .FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
-
-            End With
         End If
     End Sub
 
@@ -208,7 +200,7 @@ Public Class Localizer
 
         For Each X As String In ls
             Dim x0, x1 As String
-            x0 = X.Split("=")(0)
+            x0 = X.Split("=")(0).Trim
             x1 = X.Split("=")(1).Trim
 
             Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
@@ -220,22 +212,9 @@ Public Class Localizer
             Next
         Next
 
-        With MainFrm
-            .XenonButton3.Tag = NewTag
-            .XenonButton2.Tag = OpenTag
-            .XenonButton7.Tag = SaveThemeTag
-            .XenonButton9.Tag = SaveThemeAsTag
-            .XenonButton17.Tag = UndoTag
-            .XenonButton18.Tag = UltraUndoTag
-            .XenonButton10.Tag = EditTag
-            .XenonButton11.Tag = SettingsTag
-            .XenonButton5.Tag = UpdatesTag
-            .XenonButton6.Tag = WhatsnewTag
-            .XenonButton12.Tag = AboutTag
-        End With
-
-
-
+        MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
+        MainFrm.ToolStripMenuItem2.Text = MenuInit
+        MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
     End Sub
 
     Sub Populate(ByVal Dic As List(Of ControlsBase), [Form] As Form)
@@ -244,7 +223,9 @@ Public Class Localizer
             If [Form].Name = dicX.Form Then
                 If dicX.Control = Nothing Then
                     '# Form
-                    [Form].Text = dicX.Value
+                    If dicX.Prop.ToLower = "text" Then [Form].Text = dicX.Value
+                    If dicX.Prop.ToLower = "tag" Then [Form].Tag = dicX.Value
+
                     [Form].RightToLeft = If(RightToLeft, 1, 0)
                     [Form].RightToLeftLayout = RightToLeft
                     RTL([Form])
@@ -253,7 +234,8 @@ Public Class Localizer
                 Else
                     '# Control
                     For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
-                        ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        If dicX.Prop.ToLower = "text" Then ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        If dicX.Prop.ToLower = "tag" Then ctrl.Tag = dicX.Value.ToString.Replace("<br>", vbCrLf)
                         ctrl.RightToLeft = If(RightToLeft, 1, 0)
                         ctrl.Refresh()
                     Next
@@ -261,6 +243,9 @@ Public Class Localizer
             End If
         Next
 
+        MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
+        MainFrm.ToolStripMenuItem2.Text = MenuInit
+        MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
     End Sub
     Sub RTL(Parent As Control)
         If RightToLeft Then
@@ -301,13 +286,15 @@ Public Class Localizer
 End Class
 
 Public Class ControlsBase
-    Public Sub New(Form As String, Control As String, Value As Object)
+    Public Sub New(Form As String, Control As String, Prop As String, Value As Object)
         Me.Form = Form
         Me.Control = Control
+        Me.Prop = Prop
         Me.Value = Value
     End Sub
     Public Property Form As String
     Public Property Control As String
+    Public Property Prop As String
     Public Property Value As Object
 
 End Class

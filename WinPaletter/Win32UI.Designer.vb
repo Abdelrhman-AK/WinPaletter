@@ -309,7 +309,7 @@ Partial Class Win32UI
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(155, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(255, 526)
+        Me.XenonButton8.Location = New System.Drawing.Point(277, 526)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(74, 30)
         Me.XenonButton8.TabIndex = 70
@@ -318,7 +318,7 @@ Partial Class Win32UI
         '
         'XenonGroupBox2
         '
-        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton7)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton6)
@@ -326,7 +326,7 @@ Partial Class Win32UI
         Me.XenonGroupBox2.Controls.Add(Me.Label5)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
@@ -462,7 +462,7 @@ Partial Class Win32UI
         Me.XenonButton4.LineSize = 1
         Me.XenonButton4.Location = New System.Drawing.Point(12, 526)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(238, 30)
+        Me.XenonButton4.Size = New System.Drawing.Size(259, 30)
         Me.XenonButton4.TabIndex = 67
         Me.XenonButton4.Text = "Make the 3D looks like Windows 9x"
         Me.XenonButton4.UseVisualStyleBackColor = False
@@ -509,12 +509,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox7.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox7.Controls.Add(Me.Label4)
         Me.XenonGroupBox7.Controls.Add(Me.btnaltface_pick)
         Me.XenonGroupBox7.CustomColor = False
-        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox7.LineSize = 1
         Me.XenonGroupBox7.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -567,12 +567,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox11.Controls.Add(Me.Label6)
         Me.XenonGroupBox11.Controls.Add(Me.btntext_pick)
         Me.XenonGroupBox11.CustomColor = False
-        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox11.LineSize = 1
         Me.XenonGroupBox11.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -625,12 +625,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox49.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox49.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox49.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox49.Controls.Add(Me.PictureBox26)
         Me.XenonGroupBox49.Controls.Add(Me.Label25)
         Me.XenonGroupBox49.Controls.Add(Me.Frame_pick)
         Me.XenonGroupBox49.CustomColor = False
-        Me.XenonGroupBox49.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox49.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox49.LineSize = 1
         Me.XenonGroupBox49.Location = New System.Drawing.Point(3, 234)
         Me.XenonGroupBox49.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -683,12 +683,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox13.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox13.Controls.Add(Me.Label7)
         Me.XenonGroupBox13.Controls.Add(Me.btnshadow_pick)
         Me.XenonGroupBox13.CustomColor = False
-        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox13.LineSize = 1
         Me.XenonGroupBox13.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -741,12 +741,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox5.Controls.Add(Me.Label3)
         Me.XenonGroupBox5.Controls.Add(Me.btndkshadow_pick)
         Me.XenonGroupBox5.CustomColor = False
-        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox5.LineSize = 1
         Me.XenonGroupBox5.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -799,12 +799,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox15.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox15.Controls.Add(Me.Label8)
         Me.XenonGroupBox15.Controls.Add(Me.btnlight_pick)
         Me.XenonGroupBox15.CustomColor = False
-        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox15.LineSize = 1
         Me.XenonGroupBox15.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -857,12 +857,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox3.Controls.Add(Me.Label2)
         Me.XenonGroupBox3.Controls.Add(Me.btnface_pick)
         Me.XenonGroupBox3.CustomColor = False
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(3, 3)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -915,12 +915,12 @@ Partial Class Win32UI
         '
         Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.btnhilight_pick)
         Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(3, 135)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -2338,12 +2338,12 @@ Partial Class Win32UI
         '
         'XenonGroupBox8
         '
-        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
         Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
         Me.XenonGroupBox8.CustomColor = False
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.LineSize = 1
         Me.XenonGroupBox8.Location = New System.Drawing.Point(466, 63)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)

@@ -1102,7 +1102,7 @@ Public Class MainFrm
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
         themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
-        author_lbl.Text = String.Format("By: {0}", CP.Author)
+        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Author)
 
         WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
         AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light

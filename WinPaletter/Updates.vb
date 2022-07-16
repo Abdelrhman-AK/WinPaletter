@@ -151,7 +151,8 @@ Public Class Updates
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         TreeView1.Nodes.Clear()
-        Label3.Text = String.Format("{0} {1}", If(My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, My.Application.LanguageHelper.Stable, My.Application.LanguageHelper.Beta), My.Application.LanguageHelper.Channel)
+        Dim F As String = If(My.Application.LanguageHelper.RightToLeft, "{1}: {0}", "{0} {1}")
+        Label3.Text = String.Format(F, If(My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, My.Application.LanguageHelper.Stable, My.Application.LanguageHelper.Beta), My.Application.LanguageHelper.Channel)
         XenonCheckBox1.Checked = My.Application._Settings.AutoUpdatesChecking
         _Shown = False
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning

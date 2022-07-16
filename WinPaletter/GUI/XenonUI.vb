@@ -14,7 +14,7 @@ Module XenonModule
     Private ReadOnly TextBitmap As Bitmap
     Private ReadOnly TextGraphics As Graphics
 
-    Public Function StringAligner(ByVal goTextAlign As ContentAlignment) As StringFormat
+    Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
         Dim oStringFormat As New StringFormat()
         Select Case goTextAlign
             Case ContentAlignment.TopLeft
@@ -45,6 +45,8 @@ Module XenonModule
                 oStringFormat.LineAlignment = StringAlignment.Far
                 oStringFormat.Alignment = StringAlignment.Far
         End Select
+
+        If RTL Then oStringFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft
 
         Return oStringFormat
     End Function
@@ -361,13 +363,12 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-
         DoubleBuffered = True
 
         Dim SelectColor As Color
         Dim TextColor As Color
         Dim ParentColor As Color = GetParentColor(Me)
-
+        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
         Dim img As Image = Nothing
 
         G.Clear(ParentColor)
@@ -406,14 +407,18 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
 
             If img IsNot Nothing Then
                 imgRect = New Rectangle(TabRect.X + 10, TabRect.Y + (TabRect.Height - img.Height) / 2, img.Width, img.Height)
+                If RTL Then img.RotateFlip(RotateFlipType.Rotate180FlipY)
                 G.DrawImage(img, imgRect)
             End If
 
+
             If img IsNot Nothing And (Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left) Then
-                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(imgRect.Right + 10, TabRect.Y, TabRect.Width - imgRect.Width - 10, TabRect.Height), StringAligner(ContentAlignment.MiddleLeft))
+                Dim tr As New Rectangle(imgRect.Right + 10, TabRect.Y, TabRect.Width - imgRect.Width - 10, TabRect.Height)
+                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), tr, StringAligner(ContentAlignment.MiddleLeft))
             Else
                 G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
             End If
+
         Next
     End Sub
 End Class
@@ -935,8 +940,9 @@ Public Class XenonRadioButton
             Dim InnerCircle As New Rectangle(4, 5, Height - 10, Height - 10)
             Dim CheckCircle As New Rectangle(7, 8, Height - 16, Height - 16)
             Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - OuterCircle.Width, Height - 1)
+            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
 
-            If RightToLeft Then
+            If RTL Then
                 format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
                 OuterCircle.X = Width - OuterCircle.X - OuterCircle.Width
                 InnerCircle.X = Width - InnerCircle.X - InnerCircle.Width
@@ -1226,7 +1232,9 @@ Public Class XenonCheckBox
             Dim Selection_Color As Color = ColorPalette.Color_Parent_Hover
 #End Region
 
-            If RightToLeft Then
+            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+
+            If RTL Then
                 format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
                 OuterCheckRect.X = Width - OuterCheckRect.X - OuterCheckRect.Width
                 InnerCheckRect.X = Width - InnerCheckRect.X - InnerCheckRect.Width
@@ -1715,9 +1723,13 @@ Public Class XenonButton : Inherits Button
 
 #Region "Text and Image Render"
         Dim ButtonString As New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
+        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+        If RTL Then ButtonString.FormatFlags = StringFormatFlags.DirectionRightToLeft
+
         Dim imgX, imgY As Integer
 
-        Try : If Image IsNot Nothing Then imgX = CInt((Width - Image.Width) / 2)
+        Try
+            If Image IsNot Nothing Then imgX = CInt((Width - Image.Width) / 2)
         Catch : End Try
 
         Try : If Image IsNot Nothing Then imgY = CInt((Height - Image.Height) / 2)
@@ -1725,7 +1737,7 @@ Public Class XenonButton : Inherits Button
 
         If Image Is Nothing Then
             Try
-                G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(1, 0, Width, Height), StringAligner(TextAlign))
+                G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(1, 0, Width, Height), StringAligner(TextAlign, RTL))
             Catch
             End Try
         Else
@@ -1733,8 +1745,8 @@ Public Class XenonButton : Inherits Button
             Select Case Me.ImageAlign
                 Case ContentAlignment.MiddleCenter
                     ButtonString.Alignment = StringAlignment.Center : ButtonString.LineAlignment = StringAlignment.Near
-
                     Dim alx As Integer = CInt((Height - (Image.Height + 4 + MeasureString(Text, MyBase.Font).Height)) / 2)
+
                     Try : If Image IsNot Nothing Then
                             If Text = Nothing Then
                                 G.DrawImage(Me.Image, New Rectangle(imgX, imgY, Image.Width, Image.Height))
@@ -1746,24 +1758,46 @@ Public Class XenonButton : Inherits Button
                     Catch : End Try
 
                 Case ContentAlignment.MiddleLeft
-                    ButtonString.Alignment = StringAlignment.Near : ButtonString.LineAlignment = StringAlignment.Center
-                    Dim alx As Integer = CInt((Width - (Image.Width + 4 + MeasureString(Text, MyBase.Font).Width)) / 2)
-                    Try : If Image IsNot Nothing Then
-                            G.DrawImage(Me.Image, New Rectangle(alx, imgY, Image.Width, Image.Height))
-                        End If
-                        G.DrawString(Text, Font, New SolidBrush(Me.ForeColor), New Rectangle(alx + 5 + Image.Width, 0, Width, Height), ButtonString)
-                    Catch : End Try
+                    Dim Rec As New Rectangle(imgY, imgY, Image.Width, Image.Height)
+                    Dim Bo As Integer = imgY + Image.Width + imgY - 5
+                    Dim RecText As New Rectangle(Bo, imgY, MeasureString(Text, Font).Width + 15 - imgY, Image.Height)
+                    Dim u As Rectangle = Rectangle.Union(Rec, RecText)
+                    u.X = (Width - u.Width) / 2
+                    Dim innerSpace As Integer = RecText.Left - Rec.Right
+
+                    If Not RTL Then
+                        Rec.X = u.Left
+                        RecText.X = u.Left + Rec.Width + innerSpace
+                    Else
+                        Rec.X = u.Right - Rec.Width
+                        RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace
+                    End If
+
+
+                    G.DrawImage(Me.Image, Rec)
+                    G.DrawString(Text, Font, New SolidBrush(ForeColor), RecText, ButtonString)
 
                 Case ContentAlignment.MiddleRight
-                    Try : If Image IsNot Nothing Then G.DrawImage(Me.Image, New Rectangle(5, imgY, Image.Width, Image.Height))
-                        G.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(5, 0, Width, Height), StringAligner(TextAlign))
-                    Catch : End Try
+                    Dim Rec As New Rectangle(imgY, imgY, Image.Width, Image.Height)
+                    Dim Bo As Integer = imgY + Image.Width + imgY - 5
+                    Dim RecText As New Rectangle(Bo, imgY, Width - Bo, Image.Height)
+                    Dim u As Rectangle = Rectangle.Union(Rec, RecText)
+                    Dim innerSpace As Integer = RecText.Left - Rec.Right
+
+                    If Not RTL Then
+                        Rec.X = u.Left
+                        RecText.X = u.Left + Rec.Width + innerSpace
+                    Else
+                        Rec.X = u.Right - Rec.Width
+                        RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace
+                    End If
+
+                    G.DrawImage(Me.Image, Rec)
+                    G.DrawString(Text, Font, New SolidBrush(ForeColor), RecText, ButtonString)
             End Select
         End If
 #End Region
 
-        'e.Graphics.DrawImage(B, New Point(0, 0))
-        'G.Dispose() : B.Dispose()
     End Sub
 
     Private Sub XenonButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
@@ -2024,9 +2058,9 @@ Public Class XenonNumericUpDown
         MyBase.OnMouseUp(e)
 
         If Enabled Then
-            If e.X > Width - 20 And e.Y < 10 Then
+            If SideRect.Contains(e.Location) And e.Y < 10 Then
                 Value += UpDownStep
-            ElseIf e.X > Width - 20 And e.Y > 10 Then
+            ElseIf SideRect.Contains(e.Location) And e.Y > 10 Then
                 Value -= UpDownStep
             End If
         End If
@@ -2035,8 +2069,11 @@ Public Class XenonNumericUpDown
     Private Sub XenonNumericUpDown_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
         _Shown = True
-        Tmr.Enabled = True
-        Tmr.Start()
+
+        If Enabled And SideRect.Contains(e.Location) Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
     End Sub
 
     Protected Overrides Sub OnResize(e As EventArgs)
@@ -2084,16 +2121,25 @@ Public Class XenonNumericUpDown
     Private _Shown As Boolean = False
 #End Region
 
+    Dim SideRect As New Rectangle
+
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
+        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
 
         '################################################################################# Customizer
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
-        Dim SideRect As New Rectangle(Width - 16, 1, 15, Height - 2)
+        SideRect = New Rectangle(Width - 16, 1, 15, Height - 2)
+
+        If RTL Then
+            OuterRect.X = Width - OuterRect.X - OuterRect.Width
+            InnerRect.X = Width - InnerRect.X - InnerRect.Width
+            SideRect.X = Width - SideRect.X - SideRect.Width
+        End If
 
         '#################################################################################
 
@@ -2103,8 +2149,8 @@ Public Class XenonNumericUpDown
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back_Checked)), OuterRect)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)), SideRect)
 
-        DrawRect(G, New Pen(Color.FromArgb(255 - alpha, ColorPalette.Color_Border)), InnerRect)
-        DrawRect(G, New Pen(Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)), OuterRect)
+        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, ColorPalette.Color_Border), InnerRect)
+        DrawRect_LikeW11(G, Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover), OuterRect)
 
         If Focused And State = MouseState.None Then DrawRect(G, New Pen(Color.FromArgb(255, ColorPalette.Color_Border_Checked_Hover)), InnerRect)
 
@@ -2113,8 +2159,8 @@ Public Class XenonNumericUpDown
         End Using
 
         Using SignColor As New SolidBrush(ColorPalette.Color_Back_Checked), SignFont As New Font("Marlett", 11)
-            G.DrawString("t", SignFont, SignColor, New Point(Width - 17, 0))
-            G.DrawString("u", SignFont, SignColor, New Point(Width - 17, Height - 16))
+            G.DrawString("t", SignFont, SignColor, New Point(SideRect.Left - 1, 0))
+            G.DrawString("u", SignFont, SignColor, New Point(SideRect.Left - 1, Height - 16))
         End Using
     End Sub
 
@@ -3004,6 +3050,7 @@ Public Class XenonAlertBox
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
+        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
 
         Select Case _alertStyle
             Case Style.Simple
@@ -3059,16 +3106,20 @@ Public Class XenonAlertBox
         Dim TextX As Integer
         Dim ExitX As Integer
 
-        If Image IsNot Nothing Then G.DrawImage(Image, New Rectangle(5, 5, Image.Width, Image.Height))
+        If Image IsNot Nothing Then G.DrawImage(Image, New Rectangle(If(Not RTL, 5, Width - 5 - Image.Width), 5, Image.Width, Image.Height))
 
         If Not CenterText Then
             If Image Is Nothing Then
-                G.DrawString(Text, Font, New SolidBrush(textColor), New Point(TextX, textY))
+                G.DrawString(Text, Font, New SolidBrush(textColor), New Point(TextX, textY), If(RTL, New StringFormat(StringFormatFlags.DirectionRightToLeft), New StringFormat()))
             Else
-                G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), StringAligner(ContentAlignment.TopLeft))
+                If Not RTL Then
+                    G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), StringAligner(ContentAlignment.TopLeft))
+                Else
+                    G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(0, 7, Width - (10 + Image.Width), Height - 10), StringAligner(ContentAlignment.TopRight))
+                End If
             End If
         Else
-            G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(1, 0, Width, Height), StringAligner(ContentAlignment.MiddleCenter))
+            G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(1, 0, Width, Height), StringAligner(ContentAlignment.MiddleCenter, RTL))
         End If
 
         If CanClose = Close.Yes Then

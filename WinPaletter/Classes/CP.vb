@@ -89,7 +89,7 @@ Public Class CP
                 Author = Environment.UserName
                 AppVersion = My.Application.Info.Version.ToString
                 PaletteVersion = "1.0"
-                PaletteName = "Current Mode"
+                PaletteName = My.Application.LanguageHelper.CurrentMode
 
                 Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
                 Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))

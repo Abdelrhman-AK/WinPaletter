@@ -52,17 +52,17 @@
             LX1.Clear()
 
             For Each x As String In LS0
-                Try : LX0.Add(x.Split("=")(0), x.Split("=")(1).Trim) : Catch : End Try
+                Try : LX0.Add(x.Split("=")(0).Trim, x.Split("=")(1).Trim) : Catch : End Try
             Next
 
             For Each x As String In LS1
-                Try : LX1.Add(x.Split("=")(0), x.Split("=")(1).Trim) : Catch : End Try
+                Try : LX1.Add(x.Split("=")(0).Trim, x.Split("=")(1).Trim) : Catch : End Try
             Next
 
             For Each x As KeyValuePair(Of String, String) In LX0
                 For Each y As KeyValuePair(Of String, String) In LX1
                     If x.Key = y.Key Then
-                        LSFinal.Add(x.Key & "= " & y.Value)
+                        LSFinal.Add(x.Key & " = " & y.Value)
                         Exit For
                     End If
                 Next
@@ -73,7 +73,7 @@
             Next
 
             For Each x As KeyValuePair(Of String, String) In LX0
-                LSFinal.Add(x.Key & "= " & x.Value)
+                LSFinal.Add(x.Key & " = " & x.Value)
             Next
 
                 LoopInLines(LSFinal)
@@ -91,7 +91,7 @@
             ElseIf X.StartsWith("@") Then
                 ListBox1.Items.Add(X)
             ElseIf X.StartsWith("!") Then
-                Dim XX As String = X.Split("=")(0)
+                Dim XX As String = X.Split("=")(0).Trim
                 If XX = "!Name" Then TextBox3.Text = S
                 If XX = "!TrVer" Then TextBox7.Text = S
                 If XX = "!Lang" Then TextBox4.Text = S
@@ -109,33 +109,40 @@
                 Case True
                     Label5.Text = "Embedded in code"
                     Label4.Text = "Embedded in code"
+                    Label12.Text = "Embedded"
+
                     Dim X As String = ListBox1.SelectedItem
-                    Dim X1 As String = X.Split("=")(1)
+                    Dim X1 As String = X.Split("=")(1).Trim
                     TextBox1.Text = X1.TrimStart
                     TextBox2.Text = TextBox1.Text
 
                 Case False
                     Dim X As String = ListBox1.SelectedItem
-                    Dim X1 As String = X.Split("=")(0)
+                    Dim X1 As String = X.Split("=")(0).Trim
 
                     Dim FormName As String
                     Dim ControlName As String
+                    Dim Prop As String
 
-                    If X1.Contains("\") Then
-                        FormName = X1.Split("\")(0)
-                        ControlName = X1.Split("\")(1)
-                        Label5.Text = FormName
-                        Label4.Text = ControlName
-                    Else
-                        FormName = X1
-                        ControlName = X1
-                        Label5.Text = FormName
-                        Label4.Text = ControlName
+                    If X1.Contains(".") Then
+                        Select Case X1.Split(".").Count
+                            Case 3
+                                FormName = X.Split("=")(0).Trim.Split(".")(0)
+                                ControlName = X.Split("=")(0).Trim.Split(".")(1)
+                                Prop = X.Split("=")(0).Trim.Split(".")(2)
+                            Case 2
+                                FormName = X.Split("=")(0).Trim.Split(".")(0)
+                                ControlName = FormName
+                                Prop = X.Split("=")(0).Trim.Split(".")(1)
+                        End Select
                     End If
-
 
                     TextBox1.Text = X.Remove(0, X.Split("=")(0).Count + 2).Replace("<br>", vbCrLf)
                     TextBox2.Text = TextBox1.Text
+
+                    Label5.Text = FormName
+                    Label4.Text = ControlName
+                    Label12.Text = Prop
             End Select
         End If
     End Sub
@@ -158,9 +165,9 @@
                 ListBox1.Items.RemoveAt(i)
 
                 If Label5.Text = Label4.Text Then
-                    ListBox1.Items.Insert(i, Label5.Text & "= " & TextBox1.Text.Replace(vbCrLf, "<br>"))
+                    ListBox1.Items.Insert(i, Label5.Text & "." & Label12.Text & " = " & TextBox1.Text.Replace(vbCrLf, "<br>"))
                 Else
-                    ListBox1.Items.Insert(i, Label5.Text & "\" & Label4.Text & "= " & TextBox1.Text.Replace(vbCrLf, "<br>"))
+                    ListBox1.Items.Insert(i, Label5.Text & "." & Label4.Text & "." & Label12.Text & " = " & TextBox1.Text.Replace(vbCrLf, "<br>"))
                 End If
         End Select
 
@@ -189,12 +196,12 @@
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             Dim s As String = ""
             Dim max As Integer = ListBox1.Items.Count - 1
-            s &= "!Name= " & TextBox3.Text & vbCrLf
-            s &= "!TrVer= " & TextBox7.Text & vbCrLf
-            s &= "!Lang= " & TextBox4.Text & vbCrLf
-            s &= "!LangCode= " & TextBox8.Text & vbCrLf
-            s &= "!AppVer= " & TextBox5.Text & vbCrLf
-            s &= "!RightToLeft= " & CheckBox1.Checked & vbCrLf
+            s &= "!Name = " & TextBox3.Text & vbCrLf
+            s &= "!TrVer = " & TextBox7.Text & vbCrLf
+            s &= "!Lang = " & TextBox4.Text & vbCrLf
+            s &= "!LangCode = " & TextBox8.Text & vbCrLf
+            s &= "!AppVer = " & TextBox5.Text & vbCrLf
+            s &= "!RightToLeft = " & CheckBox1.Checked & vbCrLf
 
             For i As Integer = 0 To max
                 s &= ListBox1.Items.Item(i) & If(i < max, vbCrLf, Nothing)
@@ -204,4 +211,7 @@
         End If
     End Sub
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class
