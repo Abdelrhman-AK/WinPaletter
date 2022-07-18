@@ -358,7 +358,6 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
     End Sub
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.5))
-
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -411,12 +410,34 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
                 G.DrawImage(img, imgRect)
             End If
 
-
             If img IsNot Nothing And (Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left) Then
-                Dim tr As New Rectangle(imgRect.Right + 10, TabRect.Y, TabRect.Width - imgRect.Width - 10, TabRect.Height)
-                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), tr, StringAligner(ContentAlignment.MiddleLeft))
+                If Not RTL Then
+                    Dim tr As New Rectangle(imgRect.Right + 10, TabRect.Y, TabRect.Width - imgRect.Width - 10, TabRect.Height)
+                    G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), tr, StringAligner(ContentAlignment.MiddleLeft))
+                Else
+                    Dim b As New Bitmap(TabRect.Width, TabRect.Height)
+                    Dim gx As Graphics = Graphics.FromImage(b)
+                    gx.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(0, 0, b.Width - imgRect.Right - 10, b.Height - 1), StringAligner(ContentAlignment.MiddleLeft, RTL))
+                    gx.Flush()
+                    b.RotateFlip(RotateFlipType.Rotate180FlipY)
+                    G.DrawImage(b, TabRect)
+                    gx.Dispose()
+                    b.Dispose()
+                End If
             Else
-                G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+
+                If Not RTL Then
+                    Dim b As New Bitmap(TabRect.Width, TabRect.Height)
+                    Dim gx As Graphics = Graphics.FromImage(b)
+                    gx.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(0, 0, b.Width - 1, b.Height - 1), StringAligner(ContentAlignment.MiddleCenter))
+                    gx.Flush()
+                    b.RotateFlip(RotateFlipType.Rotate180FlipY)
+                    G.DrawImage(b, TabRect)
+                    gx.Dispose()
+                    b.Dispose()
+                Else
+                    G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+                End If
             End If
 
         Next

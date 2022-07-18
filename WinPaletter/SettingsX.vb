@@ -12,6 +12,9 @@ Public Class SettingsX
     End Sub
 
     Private Sub SettingsX_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        XenonComboBox2.Items.Clear()
+        XenonComboBox2.Items.Add(My.Application.LanguageHelper.Stable)
+        XenonComboBox2.Items.Add(My.Application.LanguageHelper.Beta)
         ApplyDarkMode(Me)
         LoadSettings()
     End Sub
