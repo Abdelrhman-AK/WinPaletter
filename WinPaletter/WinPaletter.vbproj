@@ -66,7 +66,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -165,6 +166,16 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\RetroUI.Designer.vb">
+      <DependentUpon>RetroUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RetroUI.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\XenonUI.Designer.vb">
+      <DependentUpon>XenonUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\XenonUI.vb" />
     <Compile Include="LanguageContribute.Designer.vb">
       <DependentUpon>LanguageContribute.vb</DependentUpon>
     </Compile>
@@ -185,16 +196,8 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb" />
+    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="OTVDM.Designer.vb">
       <DependentUpon>OTVDM.vb</DependentUpon>
     </Compile>
@@ -206,12 +209,6 @@
     </Compile>
     <Compile Include="RescueBoxdlg.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\RetroUI.Designer.vb">
-      <DependentUpon>RetroUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\RetroUI.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -237,10 +234,6 @@
     <Compile Include="Win32UI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\XenonUI.Designer.vb">
-      <DependentUpon>XenonUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\XenonUI.vb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICON.ico" />
@@ -276,11 +269,7 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="OTVDM.resx">
       <DependentUpon>OTVDM.vb</DependentUpon>
     </EmbeddedResource>
@@ -302,10 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
+    <None Include="My Project\Settings.settings" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

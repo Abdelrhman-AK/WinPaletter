@@ -978,9 +978,11 @@ Public Class RetroWindow : Inherits Panel
         End With
 
         G.DrawRectangle(New Pen(ColorBorder), ARect)
+        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
 
-        Dim gr As New LinearGradientBrush(TRect, Color1, Color2, LinearGradientMode.Horizontal)
+        Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
+
         G.FillRectangle(gr, TRect)
-        G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft))
+        G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
     End Sub
 End Class

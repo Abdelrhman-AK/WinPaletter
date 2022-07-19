@@ -417,6 +417,8 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
                 Else
                     Dim b As New Bitmap(TabRect.Width, TabRect.Height)
                     Dim gx As Graphics = Graphics.FromImage(b)
+                    gx.SmoothingMode = G.SmoothingMode
+                    gx.TextRenderingHint = G.TextRenderingHint
                     gx.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(0, 0, b.Width - imgRect.Right - 10, b.Height - 1), StringAligner(ContentAlignment.MiddleLeft, RTL))
                     gx.Flush()
                     b.RotateFlip(RotateFlipType.Rotate180FlipY)
@@ -427,16 +429,18 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
             Else
 
                 If Not RTL Then
+                    G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+                Else
                     Dim b As New Bitmap(TabRect.Width, TabRect.Height)
                     Dim gx As Graphics = Graphics.FromImage(b)
-                    gx.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(0, 0, b.Width - 1, b.Height - 1), StringAligner(ContentAlignment.MiddleCenter))
+                    gx.SmoothingMode = G.SmoothingMode
+                    gx.TextRenderingHint = G.TextRenderingHint
+                    gx.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(0, 0, b.Width - 1, b.Height - 1), StringAligner(ContentAlignment.MiddleCenter, RTL))
                     gx.Flush()
                     b.RotateFlip(RotateFlipType.Rotate180FlipY)
                     G.DrawImage(b, TabRect)
                     gx.Dispose()
                     b.Dispose()
-                Else
-                    G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
                 End If
             End If
 
