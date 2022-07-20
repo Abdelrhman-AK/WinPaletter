@@ -184,8 +184,8 @@ Public Class Localizer
             Next
 
             If [_Form] Is Nothing Then
-                For Each [Form] As Form In My.Application.allForms
-                    Populate(Dic, [Form])
+                For x As Integer = 0 To My.Application.allForms.Count - 1
+                    Populate(Dic, My.Application.allForms(x))
                 Next
             Else
                 Populate(Dic, [_Form])
@@ -220,6 +220,8 @@ Public Class Localizer
     End Sub
 
     Sub Populate(ByVal Dic As List(Of ControlsBase), [Form] As Form)
+        [Form].SuspendLayout()
+
         For Each dicX As ControlsBase In Dic
 
             If [Form].Name = dicX.Form Then
@@ -232,17 +234,20 @@ Public Class Localizer
                     [Form].RightToLeftLayout = RightToLeft
                     RTL([Form])
                     [Form].Refresh()
-
                 Else
                     '# Control
                     For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
+                        ctrl.SuspendLayout()
                         If dicX.Prop.ToLower = "text" Then ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
                         If dicX.Prop.ToLower = "tag" Then ctrl.Tag = dicX.Value.ToString.Replace("<br>", vbCrLf)
                         ctrl.RightToLeft = If(RightToLeft, 1, 0)
                         ctrl.Refresh()
+                        [Form].Refresh()
+                        ctrl.ResumeLayout()
                     Next
                 End If
             End If
+
         Next
 
         MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
@@ -250,6 +255,8 @@ Public Class Localizer
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
 
         My.Application.AdjustFonts()
+
+        [Form].ResumeLayout()
     End Sub
     Sub RTL(Parent As Control)
         If RightToLeft Then

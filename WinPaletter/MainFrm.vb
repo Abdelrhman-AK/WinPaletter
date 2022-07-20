@@ -131,6 +131,7 @@ Public Class MainFrm
             My.Application.ExternalLink_File = ""
         End If
 
+
         Adjust_Preview()
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
@@ -1340,11 +1341,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
-        If My.Application._Settings.Language Then
-            My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
-        Else
-            My.Application.LanguageHelper.LoadInternal()
-        End If
+        'If My.Application._Settings.Language Then
+        'My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
+        'Else
+        'My.Application.LanguageHelper.LoadInternal()
+        'End If
 
         SettingsX.Show()
     End Sub

@@ -66,8 +66,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>ICON.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -237,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />

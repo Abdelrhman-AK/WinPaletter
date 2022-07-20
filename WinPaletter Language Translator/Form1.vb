@@ -76,7 +76,15 @@
                 LSFinal.Add(x.Key & " = " & x.Value)
             Next
 
-                LoopInLines(LSFinal)
+            For Each x As String In LSFinal
+                LX1.Remove(x.Split("=")(0).Trim)
+            Next
+
+            For Each x As KeyValuePair(Of String, String) In LX1
+                LSFinal.Add(x.Key & " = " & x.Value)
+            Next
+
+            LoopInLines(LSFinal)
         End If
 
         ListBox1.Sorted = True

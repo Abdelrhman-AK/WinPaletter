@@ -1544,6 +1544,8 @@ Partial Class SettingsX
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(1020, 615)
         Me.Name = "SettingsX"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

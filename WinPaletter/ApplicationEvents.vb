@@ -345,9 +345,9 @@ Namespace My
             allForms.Add(My.Forms.OTVDM)
 
             If My.Application._Settings.Language Then
-                LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+                My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
             Else
-                LanguageHelper.LoadInternal()
+                My.Application.LanguageHelper.LoadInternal()
             End If
 
             Try

@@ -1813,7 +1813,7 @@ Public Class XenonButton : Inherits Button
                         Rec.X = u.Left
                         RecText.X = u.Left + Rec.Width + innerSpace
                     Else
-                        Rec.X = u.Right - Rec.Width
+                        Rec.X = u.Right - Rec.Width - 2
                         RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace
                     End If
 
