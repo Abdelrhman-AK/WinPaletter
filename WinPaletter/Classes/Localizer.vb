@@ -229,11 +229,11 @@ Public Class Localizer
                     '# Form
                     If dicX.Prop.ToLower = "text" Then [Form].Text = dicX.Value
                     If dicX.Prop.ToLower = "tag" Then [Form].Tag = dicX.Value
-
                     [Form].RightToLeft = If(RightToLeft, 1, 0)
                     [Form].RightToLeftLayout = RightToLeft
                     RTL([Form])
                     [Form].Refresh()
+
                 Else
                     '# Control
                     For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
@@ -245,6 +245,7 @@ Public Class Localizer
                         [Form].Refresh()
                         ctrl.ResumeLayout()
                     Next
+
                 End If
             End If
 

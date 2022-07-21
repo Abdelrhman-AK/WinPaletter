@@ -165,7 +165,7 @@ Public Class Updates
         Dim f As New Updates
         Me.Close()
         SettingsX.ShowDialog()
-        f.Show()
+        f.ShowDialog()
     End Sub
 
     Private Sub Updates_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -180,7 +180,7 @@ Public Class Updates
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Changelog.Show()
+        Changelog.ShowDialog()
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

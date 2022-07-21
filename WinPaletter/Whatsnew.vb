@@ -28,7 +28,7 @@ Public Class Whatsnew
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        LanguageContribute.Show()
+        LanguageContribute.ShowDialog()
     End Sub
 
     Private Sub RetroButton1_Click(sender As Object, e As EventArgs) Handles RetroButton1.Click

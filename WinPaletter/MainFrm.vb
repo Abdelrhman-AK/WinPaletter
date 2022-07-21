@@ -1065,7 +1065,7 @@ Public Class MainFrm
             Else
                 SettingsX._External = True
                 SettingsX._File = files(0)
-                SettingsX.Show()
+                SettingsX.ShowDialog()
             End If
         End If
 
@@ -1337,17 +1337,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        Updates.Show()
+        Updates.ShowDialog()
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
-        'If My.Application._Settings.Language Then
-        'My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, SettingsX)
-        'Else
-        'My.Application.LanguageHelper.LoadInternal()
-        'End If
-
-        SettingsX.Show()
+        SettingsX.ShowDialog()
     End Sub
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
@@ -1355,17 +1349,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        If My.Application._Settings.Language Then
-            My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File, Whatsnew)
-        Else
-            My.Application.LanguageHelper.LoadInternal()
-        End If
-
-        Whatsnew.Show()
+        Whatsnew.ShowDialog()
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        LogonUI.Show()
+        LogonUI.ShowDialog()
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click

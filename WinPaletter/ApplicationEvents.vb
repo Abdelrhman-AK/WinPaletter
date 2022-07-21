@@ -33,7 +33,7 @@ Namespace My
         Public processExplorer As New Process
         Public processStartMenuExperienceHost As Process
         Public LanguageHelper As New Localizer
-        Public allForms As New List(Of Form)
+        Public allForms As List(Of Form)
 #End Region
 
 #Region "File Association"
@@ -327,28 +327,32 @@ Namespace My
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
-            allForms.Clear()
-            allForms.Add(My.Forms.About)
-            allForms.Add(My.Forms.Changelog)
-            allForms.Add(My.Forms.ColorPickerDlg)
-            allForms.Add(My.Forms.ComplexSave)
-            allForms.Add(My.Forms.dragPreviewer)
-            allForms.Add(My.Forms.EditInfo)
-            allForms.Add(My.Forms.LogonUI)
-            allForms.Add(My.Forms.MainFrm)
-            allForms.Add(My.Forms.RescueBoxdlg)
-            allForms.Add(My.Forms.Whatsnew)
-            allForms.Add(My.Forms.Updates)
-            allForms.Add(My.Forms.Win32UI)
-            allForms.Add(My.Forms.SettingsX)
-            allForms.Add(My.Forms.LanguageContribute)
-            allForms.Add(My.Forms.OTVDM)
+            allForms = New List(Of Form)
+            allForms.Add(About)
+            allForms.Add(Changelog)
+            allForms.Add(ColorPickerDlg)
+            allForms.Add(ComplexSave)
+            allForms.Add(dragPreviewer)
+            allForms.Add(EditInfo)
+            allForms.Add(LogonUI)
+            allForms.Add(MainFrm)
+            allForms.Add(RescueBoxdlg)
+            allForms.Add(Whatsnew)
+            allForms.Add(Updates)
+            allForms.Add(Win32UI)
+            allForms.Add(SettingsX)
+            allForms.Add(LanguageContribute)
+            allForms.Add(OTVDM)
 
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
             Else
                 My.Application.LanguageHelper.LoadInternal()
             End If
+
+            For i = 0 To allForms.Count - 1
+                If SettingsX.Name = allForms(i).Name Then SettingsX = allForms(i)
+            Next
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
@@ -560,7 +564,7 @@ Namespace My
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
                             SettingsX._External = True
                             SettingsX._File = arg
-                            SettingsX.Show()
+                            SettingsX.ShowDialog()
                             '''''''
                         End If
 
