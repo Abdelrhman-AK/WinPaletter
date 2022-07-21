@@ -13,10 +13,15 @@ Download Translation > Open app > Settings > Translation > Activate Custom Langu
 
 https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%20Translator.exe
 
-2) Open Command prompt inside WinPaletter Folder > Type: Winpaletter /exportlanguage
+2) Make sure WinPaletter is closed, Open Command prompt inside WinPaletter Folder > Type: Winpaletter /exportlanguage
 3) A new file will be exported, it is English WinPaletter File
 4) Open WinPaletter Language Translator and load this file
 5) Translate all enteries, save the file
 6) Test the file you created in WinPaletter
 7) Upload it to Telegram Group
 https://t.me/WinPaletter
+
+8) Note: First Version Supports Translation is 1.0.3.0
+9) Note: It is better to export language while the language is native (English)
+10) Note: Returning to native language is by deactivating custom language from settings, saving settings and restarting the application
+11) Note: If you want to regularly contribute in a better translation, use the updated WinPaletter (Latest Versions) everytime you translate
