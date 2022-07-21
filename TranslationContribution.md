@@ -6,7 +6,7 @@ https://t.me/WinPaletter
 
 People contributing in translations will upload files to this channel temporarly
 
-Download Translation > Open app > Settings > Translation > Activate Custom Language > Open the downloaded file > Save Settings > Restart the application for better results
+Download Translation > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings > Restart the application for better results
 
 # Contribute in Translation
 1) Download WinPaletter Language Translator from main repository
