@@ -7,16 +7,13 @@ Public Class XeSettings
     Public Property AutoAddExt As Boolean = True
     Public Property DragAndDropPreview As Boolean = True
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
-    Public Property AutoRestartExplorer As Boolean = True
+    Public Property AutoRestartExplorer As Boolean = False
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
     Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
-    Public Property RescueBox As Boolean = True
-    Public Property RescueBox_Autoclose As Boolean = False
-    Public Property RescueBox_Threshold As Integer = 5
     Public Property WhatsNewRecord As String() = {""}
     Public Property Language As Boolean = False
     Public Property Language_File As String = Nothing
@@ -55,9 +52,6 @@ Public Class XeSettings
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
         If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
-        If Key.GetValue("RescueBox", Nothing) Is Nothing Then Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
-        If Key.GetValue("RescueBox_Autoclose", Nothing) Is Nothing Then Key.SetValue("RescueBox_Autoclose", RescueBox_Autoclose, RegistryValueKind.DWord)
-        If Key.GetValue("RescueBox_Threshold", Nothing) Is Nothing Then Key.SetValue("RescueBox_Threshold", RescueBox_Threshold, RegistryValueKind.DWord)
         If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
         If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", Language, RegistryValueKind.DWord)
         If Key.GetValue("Language_File", Nothing) Is Nothing Then Key.SetValue("Language_File", "", RegistryValueKind.String)
@@ -80,9 +74,6 @@ Public Class XeSettings
                 UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
                 Appearance_Dark = Key.GetValue("Appearance_Dark", Nothing)
                 Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
-                RescueBox = Key.GetValue("RescueBox", True)
-                RescueBox_Autoclose = Key.GetValue("RescueBox_Autoclose", True)
-                RescueBox_Threshold = Key.GetValue("RescueBox_Threshold", 5)
                 WhatsNewRecord = Key.GetValue("WhatsNewRecord", Nothing)
                 Language = Key.GetValue("Language", False)
                 Language_File = Key.GetValue("Language_File", Nothing)
@@ -101,9 +92,6 @@ Public Class XeSettings
                     If x.StartsWith("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
                     If x.StartsWith("Appearance_Dark= ") Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
                     If x.StartsWith("Appearance_Auto= ") Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
-                    If x.StartsWith("RescueBox= ") Then RescueBox = x.Remove(0, "RescueBox= ".Count)
-                    If x.StartsWith("RescueBox_Autoclose= ") Then RescueBox_Autoclose = x.Remove(0, "RescueBox_Autoclose= ".Count)
-                    If x.StartsWith("RescueBox_Threshold= ") Then RescueBox_Threshold = x.Remove(0, "RescueBox_Threshold= ".Count)
                     If x.StartsWith("Language= ") Then Language = x.Remove(0, "Language= ".Count)
                     If x.StartsWith("Language_File= ") Then Language_File = x.Remove(0, "Language_File= ".Count)
 
@@ -127,9 +115,6 @@ Public Class XeSettings
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
                 Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
-                Key.SetValue("RescueBox", RescueBox, RegistryValueKind.DWord)
-                Key.SetValue("RescueBox_Autoclose", RescueBox_Autoclose, RegistryValueKind.DWord)
-                Key.SetValue("RescueBox_Threshold", RescueBox_Threshold, RegistryValueKind.DWord)
                 Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
                 Key.SetValue("Language", Language, RegistryValueKind.DWord)
                 Key.SetValue("Language_File", Language_File, RegistryValueKind.String)
@@ -150,9 +135,6 @@ Public Class XeSettings
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
-                l.Add(String.Format("RescueBox= {0}", RescueBox))
-                l.Add(String.Format("RescueBox_Autoclose= {0}", RescueBox_Autoclose))
-                l.Add(String.Format("RescueBox_Threshold= {0}", RescueBox_Threshold))
                 l.Add(String.Format("Language= {0}", Language))
                 l.Add(String.Format("Language_File= {0}", Language_File))
 

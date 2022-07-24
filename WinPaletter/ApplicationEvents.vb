@@ -336,12 +336,10 @@ Namespace My
             allForms.Add(EditInfo)
             allForms.Add(LogonUI)
             allForms.Add(MainFrm)
-            allForms.Add(RescueBoxdlg)
             allForms.Add(Whatsnew)
             allForms.Add(Updates)
             allForms.Add(Win32UI)
             allForms.Add(SettingsX)
-            allForms.Add(LanguageContribute)
             allForms.Add(OTVDM)
 
             If My.Application._Settings.Language Then
@@ -410,6 +408,8 @@ Namespace My
                 ver = RemoveDuplicate(ver)
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
+
+                MainFrm.Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
             End If
 #End Region
 

@@ -38,33 +38,26 @@ Partial Class Whatsnew
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.RetroButton1 = New WinPaletter.RetroButton()
-        Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
+        Me.TabPage10.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.TabPage7.SuspendLayout()
-        Me.TabPage8.SuspendLayout()
         Me.TabPage9.SuspendLayout()
-        Me.TabPage10.SuspendLayout()
         Me.SuspendLayout()
         '
         'XenonButton3
@@ -261,53 +254,6 @@ Partial Class Whatsnew
         Me.Label7.Text = "with live preview, you can see every change you make to colors, with the ability " &
     "to apply old themes of Windows 9x or even WinPaletter themes."
         '
-        'PictureBox5
-        '
-        Me.PictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
-        Me.PictureBox5.Location = New System.Drawing.Point(293, 53)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(368, 133)
-        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox5.TabIndex = 27
-        Me.PictureBox5.TabStop = False
-        '
-        'Label12
-        '
-        Me.Label12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(6, 197)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(655, 25)
-        Me.Label12.TabIndex = 26
-        Me.Label12.Text = "To change preferences: Open Settings > Theme applying behaviour > Rescue Box"
-        '
-        'Label10
-        '
-        Me.Label10.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label10.Location = New System.Drawing.Point(3, 3)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(661, 50)
-        Me.Label10.TabIndex = 24
-        Me.Label10.Text = "Resuce Box"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label11
-        '
-        Me.Label11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(6, 53)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(281, 133)
-        Me.Label11.TabIndex = 25
-        Me.Label11.Text = "Highly necessary, especially for those who are on Windows 11 22621 or who face Wi" &
-    "ndows Crashes." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "It helps you fixing errors and crashes happening after restartin" &
-    "g explorer automatically."
-        '
         'XenonButton8
         '
         Me.XenonButton8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -368,19 +314,17 @@ Partial Class Whatsnew
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(3, 53)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(661, 45)
+        Me.Label14.Size = New System.Drawing.Size(661, 251)
         Me.Label14.TabIndex = 25
-        Me.Label14.Text = "- Explorer Restarting mechanism changed to a better one" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- UI and App loading spe" &
-    "ed Improvements" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label14.Text = resources.GetString("Label14.Text")
         '
         'XenonTabControl1
         '
         Me.XenonTabControl1.Alignment = System.Windows.Forms.TabAlignment.Left
+        Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Controls.Add(Me.TabPage6)
         Me.XenonTabControl1.Controls.Add(Me.TabPage7)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage8)
         Me.XenonTabControl1.Controls.Add(Me.TabPage9)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -393,6 +337,18 @@ Partial Class Whatsnew
         Me.XenonTabControl1.Size = New System.Drawing.Size(825, 315)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 4
+        '
+        'TabPage10
+        '
+        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage10.Controls.Add(Me.Label13)
+        Me.TabPage10.Controls.Add(Me.Label14)
+        Me.TabPage10.Location = New System.Drawing.Point(154, 4)
+        Me.TabPage10.Name = "TabPage10"
+        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage10.Size = New System.Drawing.Size(667, 307)
+        Me.TabPage10.TabIndex = 4
+        Me.TabPage10.Text = "Tweaks & Fixes"
         '
         'TabPage6
         '
@@ -444,20 +400,6 @@ Partial Class Whatsnew
         Me.RetroButton1.UseVisualStyleBackColor = False
         Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
         '
-        'TabPage8
-        '
-        Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage8.Controls.Add(Me.PictureBox5)
-        Me.TabPage8.Controls.Add(Me.Label10)
-        Me.TabPage8.Controls.Add(Me.Label12)
-        Me.TabPage8.Controls.Add(Me.Label11)
-        Me.TabPage8.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(667, 307)
-        Me.TabPage8.TabIndex = 2
-        Me.TabPage8.Text = "Rescue Box"
-        '
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -470,18 +412,6 @@ Partial Class Whatsnew
         Me.TabPage9.Size = New System.Drawing.Size(667, 307)
         Me.TabPage9.TabIndex = 3
         Me.TabPage9.Text = "Languages"
-        '
-        'TabPage10
-        '
-        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage10.Controls.Add(Me.Label13)
-        Me.TabPage10.Controls.Add(Me.Label14)
-        Me.TabPage10.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(667, 307)
-        Me.TabPage10.TabIndex = 4
-        Me.TabPage10.Text = "Tweaks & Fixes"
         '
         'Whatsnew
         '
@@ -508,14 +438,11 @@ Partial Class Whatsnew
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonTabControl1.ResumeLayout(False)
+        Me.TabPage10.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
-        Me.TabPage8.ResumeLayout(False)
-        Me.TabPage8.PerformLayout()
         Me.TabPage9.ResumeLayout(False)
-        Me.TabPage10.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -533,10 +460,6 @@ Partial Class Whatsnew
     Friend WithEvents Label9 As Label
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label11 As Label
-    Friend WithEvents Label12 As Label
-    Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label13 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents XenonButton1 As XenonButton
@@ -546,7 +469,6 @@ Partial Class Whatsnew
     Friend WithEvents XenonTabControl1 As XenonTabControl
     Friend WithEvents TabPage6 As TabPage
     Friend WithEvents TabPage7 As TabPage
-    Friend WithEvents TabPage8 As TabPage
     Friend WithEvents TabPage9 As TabPage
     Friend WithEvents TabPage10 As TabPage
     Friend WithEvents RetroButton1 As RetroButton

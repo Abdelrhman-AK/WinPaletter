@@ -69,6 +69,7 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonButton19, True)
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.XenonGroupBox8.Width + MainFrm.XenonGroupBox2.Left * 3.25
@@ -103,6 +104,7 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonButton19, True)
         End If
 
         fr = Nothing
@@ -199,7 +201,10 @@ Public Class ColorPickerDlg
 
             ElseIf TypeOf ctrl Is Panel Then
                 If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                ctrl.Invalidate()
+                If TypeOf ctrl Is XenonGroupBox Then
+                    If DirectCast(ctrl, XenonGroupBox).CustomColor Then Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                End If
+                    ctrl.Invalidate()
 
             ElseIf TypeOf ctrl Is RetroTextBox Then
                 With TryCast(ctrl, RetroTextBox)
@@ -212,7 +217,7 @@ Public Class ColorPickerDlg
                 End With
 
             Else
-                Visual.FadeColor(ctrl, "BackColor", ctrl.BackColor, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
             End If
 
         Next
@@ -222,7 +227,6 @@ Public Class ColorPickerDlg
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
-
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 

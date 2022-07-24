@@ -27,11 +27,11 @@ Public Class Whatsnew
         Changelog.ShowDialog()
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        LanguageContribute.ShowDialog()
-    End Sub
-
     Private Sub RetroButton1_Click(sender As Object, e As EventArgs) Handles RetroButton1.Click
         OTVDM.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
     End Sub
 End Class

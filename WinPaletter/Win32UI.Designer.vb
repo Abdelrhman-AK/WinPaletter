@@ -34,7 +34,6 @@ Partial Class Win32UI
         Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -309,7 +308,7 @@ Partial Class Win32UI
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(155, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(277, 526)
+        Me.XenonButton8.Location = New System.Drawing.Point(277, 479)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(74, 30)
         Me.XenonButton8.TabIndex = 70
@@ -349,11 +348,11 @@ Partial Class Win32UI
         '
         Me.XenonButton7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = CType(resources.GetObject("XenonButton7.Image"), System.Drawing.Image)
-        Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton7.LineSize = 1
         Me.XenonButton7.Location = New System.Drawing.Point(237, 7)
@@ -367,11 +366,11 @@ Partial Class Win32UI
         '
         Me.XenonButton6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
-        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton6.LineSize = 1
         Me.XenonButton6.Location = New System.Drawing.Point(571, 7)
@@ -385,11 +384,11 @@ Partial Class Win32UI
         '
         Me.XenonButton5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
-        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(82, Byte), Integer))
         Me.XenonButton5.LineSize = 1
         Me.XenonButton5.Location = New System.Drawing.Point(424, 7)
@@ -416,11 +415,11 @@ Partial Class Win32UI
         '
         Me.XenonButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
-        Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(120, 7)
@@ -429,25 +428,6 @@ Partial Class Win32UI
         Me.XenonButton3.TabIndex = 66
         Me.XenonButton3.Text = "Win9x theme"
         Me.XenonButton3.UseVisualStyleBackColor = False
-        '
-        'XenonAlertBox7
-        '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox7.CenterText = False
-        Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox7.Image = CType(resources.GetObject("XenonAlertBox7.Image"), System.Drawing.Image)
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 480)
-        Me.XenonAlertBox7.Name = "XenonAlertBox7"
-        Me.XenonAlertBox7.Size = New System.Drawing.Size(810, 30)
-        Me.XenonAlertBox7.TabIndex = 68
-        Me.XenonAlertBox7.TabStop = False
-        Me.XenonAlertBox7.Text = "Applying these colors requires sign out and resign in, or Windows Restart (Not Ex" &
-    "plorer Restart)"
         '
         'XenonButton4
         '
@@ -459,7 +439,7 @@ Partial Class Win32UI
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(101, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(12, 526)
+        Me.XenonButton4.Location = New System.Drawing.Point(12, 479)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(259, 30)
         Me.XenonButton4.TabIndex = 67
@@ -2936,7 +2916,7 @@ Partial Class Win32UI
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(466, 526)
+        Me.XenonButton2.Location = New System.Drawing.Point(466, 479)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(129, 30)
         Me.XenonButton2.TabIndex = 64
@@ -2953,7 +2933,7 @@ Partial Class Win32UI
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(601, 526)
+        Me.XenonButton1.Location = New System.Drawing.Point(601, 479)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(221, 30)
         Me.XenonButton1.TabIndex = 63
@@ -2964,7 +2944,7 @@ Partial Class Win32UI
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 516)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 469)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(810, 1)
         Me.XenonSeparator1.TabIndex = 62
@@ -2982,7 +2962,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 425)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 411)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(810, 49)
         Me.XenonAlertBox1.TabIndex = 71
@@ -2996,11 +2976,10 @@ Partial Class Win32UI
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(834, 566)
+        Me.ClientSize = New System.Drawing.Size(834, 519)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton8)
         Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Controls.Add(Me.XenonAlertBox7)
         Me.Controls.Add(Me.XenonButton4)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonGroupBox8)
@@ -3278,7 +3257,6 @@ Partial Class Win32UI
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
     Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonAlertBox7 As XenonAlertBox
     Friend WithEvents XenonGroupBox2 As XenonGroupBox
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents XenonButton6 As XenonButton

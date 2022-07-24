@@ -47,6 +47,7 @@ Public Class Localizer
     Property X21 As String
     Property X22 As String
     Property X23 As String
+    Property NoDefResExplorer As String
     Property CurrentMode As String
     Property SaveMsg As String
     Property SettingsSaved As String
@@ -153,12 +154,13 @@ Public Class Localizer
                     Dim x0, x1 As String
                     x0 = X.Split("=")(0).Trim
                     x1 = X.Split("=")(1).Trim
+                    x1 = x1
 
                     Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
                     For Each [property] As PropertyInfo In properties1
                         If [property].Name = x0.Remove(0, 1) Then
-                            [property].SetValue(Me, Convert.ChangeType(x1, [property].PropertyType), Nothing)
+                            [property].SetValue(Me, Convert.ChangeType(x1.Replace("<br>", vbCrLf), [property].PropertyType), Nothing)
                         End If
                     Next
 
@@ -212,7 +214,6 @@ Public Class Localizer
             Next
         Next
 
-        MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
         MainFrm.ToolStripMenuItem2.Text = MenuInit
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
 
@@ -251,7 +252,6 @@ Public Class Localizer
 
         Next
 
-        MainFrm.ToolStripMenuItem1.Text = MenuNativeWin
         MainFrm.ToolStripMenuItem2.Text = MenuInit
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
 

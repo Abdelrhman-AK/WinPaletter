@@ -1,10 +1,16 @@
 ﻿Imports System.Globalization
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
+
+    <DllImport("user32.dll")>
+    Private Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
+    End Function
+
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
     Public Property Titlebar_Active As Color
     Public Property Titlebar_DWM_Active As Color
@@ -498,11 +504,110 @@ Public Class CP
                     process.WaitForExit()
                     Kill(tempreg)
                 End If
-
-
 #End Region
 
 #Region "Win32UI"
+                Dim C1 As New List(Of Integer)
+                Dim C2 As New List(Of UInteger)
+
+                C1.Clear()
+                C2.Clear()
+
+                C1.Add(13)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_Hilight))
+
+                C1.Add(14)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_HilightText))
+
+                C1.Add(9)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_TitleText))
+
+                C1.Add(17)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_GrayText))
+
+                C1.Add(11)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveBorder))
+
+                C1.Add(3)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitle))
+
+                C1.Add(2)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveTitle))
+
+                C1.Add(10)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveBorder))
+
+                C1.Add(12)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_AppWorkspace))
+
+                C1.Add(1)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_Background))
+
+                C1.Add(27)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_GradientActiveTitle))
+
+                C1.Add(28)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_GradientInactiveTitle))
+
+                C1.Add(19)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitleText))
+
+                C1.Add(24)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_InfoWindow))
+
+                C1.Add(23)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_InfoText))
+
+                C1.Add(4)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_Menu))
+
+                C1.Add(7)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuText))
+
+                C1.Add(0)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_Scrollbar))
+
+                C1.Add(5)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_Window))
+
+                C1.Add(6)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_WindowFrame))
+
+                C1.Add(8)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_WindowText))
+
+                C1.Add(26)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_HotTrackingColor))
+
+                C1.Add(29)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuHilight))
+
+                C1.Add(30)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuBar))
+
+                C1.Add(15)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonFace))
+
+                C1.Add(20)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonHilight))
+
+                C1.Add(16)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonShadow))
+
+                C1.Add(18)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonText))
+
+                C1.Add(21)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonDkShadow))
+
+                C1.Add(25)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonAlternateFace))
+
+                C1.Add(22)
+                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonLight))
+
+                SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
+
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
@@ -659,10 +764,17 @@ Public Class CP
         Catch
             'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
         Finally
-            If R IsNot Nothing Then R.Close()
+            If R IsNot Nothing Then
+                R.Flush()
+                R.Close()
+            End If
         End Try
 
-
+        Try
+            R.Flush()
+            R.Close()
+        Catch
+        End Try
 
     End Sub
 

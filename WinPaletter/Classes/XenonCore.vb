@@ -21,24 +21,61 @@ Public Class XenonCore
 
 #Region "Misc"
 
+    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+    Public Shared Function SendMessageTimeout(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As UIntPtr, ByVal lParam As IntPtr, ByVal fuFlags As SendMessageTimeoutFlags, ByVal uTimeout As UInteger, <Out> ByRef lpdwResult As UIntPtr) As IntPtr
+    End Function
+
+    Shared WM_DWMCOLORIZATIONCOLORCHANGED As Integer = &H320
+    Shared WM_DWMCOMPOSITIONCHANGED As Integer = &H31E
+    Shared WM_THEMECHANGED As Integer = &H31A
+    Shared WM_SYSCOLORCHANGE As Integer = &H15
+    Shared WM_PALETTECHANGED As Integer = &H311
+    Shared WM_WININICHANGE As UInteger = &H1A
+    Shared WM_SETTINGCHANGE As UInteger = WM_WININICHANGE
+    Shared HWND_MESSAGE As Int32 = -&H3
+    Shared HWND_BROADCAST As IntPtr = New IntPtr(&HFFFF)
+    Shared MSG_TIMEOUT As Integer = 5000
+    Shared RESULT As UIntPtr
+
+    Enum SendMessageTimeoutFlags As UInteger
+        SMTO_NORMAL = &H0
+        SMTO_BLOCK = &H1
+        SMTO_ABORTIFHUNG = &H2
+        SMTO_NOTIMEOUTIFNOTHUNG = &H8
+    End Enum
+
+    Declare Function SHChangeNotify Lib "Shell32.dll" (ByVal wEventID As Int32,
+    ByVal uFlags As Int32, ByVal dwItem1 As Int32, ByVal dwItem2 As Int32) As Int32
+
+    Public Shared Sub RefreshRegisrty()
+        Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    End Sub
+
     Public Shared Sub RestartExplorer()
         With My.Application
-            If ._Settings.AutoRestartExplorer Then
-                Try
-                    Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
-                    If ._Settings.RescueBox Then
-                        RescueBoxdlg.Close()
-                        RescueBoxdlg.Show()
-                    End If
-                    .processKiller.Start()
-                    .processKiller.WaitForExit()
-                    .processExplorer.Start()
-                    If ._Settings.RescueBox Then .processExplorer.Refresh()
-                Catch
-                End Try
-            End If
+            Try
+                Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
+                .processKiller.Start()
+                .processKiller.WaitForExit()
+                .processExplorer.Start()
+            Catch
+            End Try
         End With
-
     End Sub
 
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap

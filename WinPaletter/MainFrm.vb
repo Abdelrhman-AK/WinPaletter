@@ -9,242 +9,12 @@ Public Class MainFrm
     Dim CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
     Private ReadOnly ReorderAfterPreviewConfigChange As Boolean = True
-
-    Enum WinVer
-        Eleven
-        Ten
-    End Enum
-
-    Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
-        Dim panType As Type = [Control].[GetType]()
-        Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
-        pi.SetValue([Control], setting, Nothing)
-    End Sub
-
-    Sub MakeItDoubleBuffered(ByVal Parent As Control)
-        DoubleBufferedControl(Parent, True)
-
-        For Each ctrl As Control In Parent.Controls
-
-            If ctrl.HasChildren Then
-                For Each c As Control In ctrl.Controls
-                    MakeItDoubleBuffered(c)
-                Next
-            End If
-
-            DoubleBufferedControl(ctrl, True)
-        Next
-    End Sub
-
-    Sub UpdateHint(Sender As Object, e As EventArgs)
-        status_lbl.Text = TryCast(Sender, XenonButton).Tag
-    End Sub
-
-    Sub EraseHint()
-        status_lbl.Text = ""
-    End Sub
-
-    Sub AutoUpdatesCheck()
-        StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
-        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
-        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
-        BackgroundWorker1.RunWorkerAsync()
-    End Sub
-
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
 
-    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        If IsNetAvaliable() Then
-            Try
-
-                Dim ls As New List(Of String)
-                Dim WebCL As New WebClient
-                RaiseUpdate = False
-                ver = ""
-
-                CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
-
-                For x = 0 To ls.Count - 1
-                    If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
-                        If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
-                        If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
-                    End If
-                Next
-
-                If ChannelFixer = 0 Then UpdateChannel = StableInt
-                If ChannelFixer = 1 Then UpdateChannel = BetaInt
-
-                ver = ls(UpdateChannel).Split(" ")(1)
-
-                If ver > My.Application.Info.Version.ToString Then
-                    RaiseUpdate = True
-                End If
-            Catch
-            End Try
-        End If
-    End Sub
-
-    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Application.LanguageHelper.NewUpdate, My.Application.LanguageHelper.OpenForActions, ver), My.Resources.notify_update, 10000)
-    End Sub
-
-
-    Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        _Shown = False
-
-        ApplyDarkMode(Me)
-        MakeItDoubleBuffered(Me)
-
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-
-        My.Application.AdjustFonts()
-
-        For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
-            AddHandler btn.MouseEnter, AddressOf UpdateHint
-            AddHandler btn.Enter, AddressOf UpdateHint
-            AddHandler btn.MouseLeave, AddressOf EraseHint
-            AddHandler btn.Leave, AddressOf EraseHint
-        Next
-
-        If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            PreviewConfig = My.Application._Settings.CustomPreviewConfig
-        Else
-            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
-        End If
-
-
-        If Not My.Application.ExternalLink Then
-            CP = New CP(CP.Mode.Registry)
-            CP_Original = New CP(CP.Mode.Registry)
-            CP_FirstTime = New CP(CP.Mode.Registry)
-        Else
-            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            OpenFileDialog1.FileName = My.Application.ExternalLink_File
-            SaveFileDialog1.FileName = My.Application.ExternalLink_File
-            My.Application.ExternalLink = False
-            My.Application.ExternalLink_File = ""
-        End If
-
-
-        Adjust_Preview()
-        ApplyCPValues(CP)
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Sub Adjust_Preview()
-        If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
-
-        Select Case PreviewConfig
-            Case WinVer.Eleven
-                ActionCenter.Size = New Size(120, 85)
-                ActionCenter.Location = New Point(398, 161)
-                ActionCenter.Dock = Nothing
-                ActionCenter.RoundedCorners = True
-
-                taskbar.Height = 42
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-
-                start.Size = New Size(135, 200)
-                start.Location = New Point(7, 46)
-                start.RoundedCorners = True
-
-                XenonWindow1.RoundedCorners = True
-                XenonWindow2.RoundedCorners = True
-
-            Case WinVer.Ten
-                ActionCenter.Dock = DockStyle.Right
-                ActionCenter.RoundedCorners = False
-
-                taskbar.Height = 35
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-
-                start.Size = New Size(182, 201)
-                start.Location = New Point(0, 59)
-                start.RoundedCorners = False
-
-                XenonWindow1.RoundedCorners = False
-                XenonWindow2.RoundedCorners = False
-        End Select
-
-        XenonWindow1.Top = start.Top
-        XenonWindow1.Left = start.Right + 5
-
-        XenonWindow2.Top = XenonWindow1.Bottom + 5
-        XenonWindow2.Left = XenonWindow1.Left
-
-        XenonWindow1.Invalidate()
-        XenonWindow2.Invalidate()
-
-        ReValidateLivePreview(pnl_preview)
-
-        If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
-    End Sub
-
-    Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        _Shown = True
-        If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
-    End Sub
-
-    Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        Dim Changed As Boolean = Not CP.Equals(CP_Original)
-
-        If e.CloseReason = CloseReason.UserClosing And Changed Then
-
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
-
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
-
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
-                            Else
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
-                                Else
-                                    e.Cancel = True
-                                End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
-                            Else
-                                e.Cancel = True
-                            End If
-                    End Select
-
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
-                    End Select
-
-                Case DialogResult.No
-                    e.Cancel = False
-                    MyBase.OnFormClosing(e)
-
-                Case DialogResult.Cancel
-                    e.Cancel = True
-            End Select
-
-        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
-            e.Cancel = False
-            MyBase.OnFormClosing(e)
-        End If
-    End Sub
-
+#Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
         XenonWindow1.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
         XenonWindow2.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
@@ -564,6 +334,262 @@ Public Class MainFrm
         Next
     End Sub
 
+    Sub Adjust_Preview()
+        If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
+
+        Select Case PreviewConfig
+            Case WinVer.Eleven
+                ActionCenter.Size = New Size(120, 85)
+                ActionCenter.Location = New Point(398, 161)
+                ActionCenter.Dock = Nothing
+                ActionCenter.RoundedCorners = True
+
+                taskbar.Height = 42
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+
+                start.Size = New Size(135, 200)
+                start.Location = New Point(7, 46)
+                start.RoundedCorners = True
+
+                XenonWindow1.RoundedCorners = True
+                XenonWindow2.RoundedCorners = True
+
+            Case WinVer.Ten
+                ActionCenter.Dock = DockStyle.Right
+                ActionCenter.RoundedCorners = False
+
+                taskbar.Height = 35
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+
+                start.Size = New Size(182, 201)
+                start.Location = New Point(0, 59)
+                start.RoundedCorners = False
+
+                XenonWindow1.RoundedCorners = False
+                XenonWindow2.RoundedCorners = False
+        End Select
+
+        XenonWindow1.Top = start.Top
+        XenonWindow1.Left = start.Right + 5
+
+        XenonWindow2.Top = XenonWindow1.Bottom + 5
+        XenonWindow2.Left = XenonWindow1.Left
+
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
+
+        ReValidateLivePreview(pnl_preview)
+
+        If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
+    End Sub
+
+    Sub ApplyCPValues(ByVal ColorPalette As CP)
+        themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
+        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Author)
+
+        WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
+        AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
+        Transparency_Toggle.Checked = ColorPalette.Transparency
+        ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
+        AccentOnStartAndTaskbar_Toggle.Checked = ColorPalette.ApplyAccentonTaskbar
+        ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active
+        InactiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Inactive
+        StartAccent_picker.BackColor = ColorPalette.StartMenu_Accent
+        StartButtonHover_picker.BackColor = ColorPalette.StartButton_Hover
+        TaskbarBackground_Picker.BackColor = ColorPalette.Taskbar_Background
+        TaskbarIconUnderline_picker.BackColor = ColorPalette.Taskbar_Icon_Underline
+        StartBackgroundAndTaskbarButton_picker.BackColor = ColorPalette.StartMenuBackground_ActiveTaskbarButton
+        TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
+        ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
+        SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
+    End Sub
+#End Region
+
+#Region "Misc"
+    Enum WinVer
+        Eleven
+        Ten
+    End Enum
+
+    Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
+        Dim panType As Type = [Control].[GetType]()
+        Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+        pi.SetValue([Control], setting, Nothing)
+    End Sub
+
+    Sub MakeItDoubleBuffered(ByVal Parent As Control)
+        DoubleBufferedControl(Parent, True)
+
+        For Each ctrl As Control In Parent.Controls
+
+            If ctrl.HasChildren Then
+                For Each c As Control In ctrl.Controls
+                    MakeItDoubleBuffered(c)
+                Next
+            End If
+
+            DoubleBufferedControl(ctrl, True)
+        Next
+    End Sub
+
+    Sub UpdateHint(Sender As Object, e As EventArgs)
+        status_lbl.Text = TryCast(Sender, XenonButton).Tag
+    End Sub
+
+    Sub EraseHint()
+        status_lbl.Text = ""
+    End Sub
+#End Region
+
+    Sub AutoUpdatesCheck()
+        StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
+        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
+        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
+        BackgroundWorker1.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        If IsNetAvaliable() Then
+            Try
+
+                Dim ls As New List(Of String)
+                Dim WebCL As New WebClient
+                RaiseUpdate = False
+                ver = ""
+
+                CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
+
+                For x = 0 To ls.Count - 1
+                    If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
+                        If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
+                        If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                    End If
+                Next
+
+                If ChannelFixer = 0 Then UpdateChannel = StableInt
+                If ChannelFixer = 1 Then UpdateChannel = BetaInt
+
+                ver = ls(UpdateChannel).Split(" ")(1)
+
+                If ver > My.Application.Info.Version.ToString Then
+                    RaiseUpdate = True
+                End If
+            Catch
+            End Try
+        End If
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Application.LanguageHelper.NewUpdate, My.Application.LanguageHelper.OpenForActions, ver), My.Resources.notify_update, 10000)
+    End Sub
+
+    Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        _Shown = False
+
+        ApplyDarkMode(Me)
+        MakeItDoubleBuffered(Me)
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+
+        My.Application.AdjustFonts()
+
+        For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
+        Next
+
+        If My.Application._Settings.CustomPreviewConfig_Enabled Then
+            PreviewConfig = My.Application._Settings.CustomPreviewConfig
+        Else
+            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
+        End If
+
+
+        If Not My.Application.ExternalLink Then
+            CP = New CP(CP.Mode.Registry)
+            CP_Original = New CP(CP.Mode.Registry)
+            CP_FirstTime = New CP(CP.Mode.Registry)
+        Else
+            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            OpenFileDialog1.FileName = My.Application.ExternalLink_File
+            SaveFileDialog1.FileName = My.Application.ExternalLink_File
+            My.Application.ExternalLink = False
+            My.Application.ExternalLink_File = ""
+        End If
+
+        XenonButton20.Image = If(My.W11, My.Resources.Native11, My.Resources.Native10)
+
+        Adjust_Preview()
+        ApplyCPValues(CP)
+        ApplyLivePreviewFromCP(CP)
+
+    End Sub
+
+    Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        _Shown = True
+
+        If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
+    End Sub
+
+    Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
+        Dim Changed As Boolean = Not CP.Equals(CP_Original)
+
+        If e.CloseReason = CloseReason.UserClosing And Changed Then
+
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    e.Cancel = True
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                e.Cancel = True
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+                    e.Cancel = False
+                    MyBase.OnFormClosing(e)
+
+                Case DialogResult.Cancel
+                    e.Cancel = True
+            End Select
+
+        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
+            e.Cancel = False
+            MyBase.OnFormClosing(e)
+        End If
+    End Sub
+
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
@@ -571,8 +597,10 @@ Public Class MainFrm
         CP.Titlebar_Active = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        CList.Clear()
+        sender.backcolor = C
+        sender.invalidate
 
+        CList.Clear()
 
         If Not CP.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.X17, My.Resources.notify_info, 5000)
@@ -589,8 +617,10 @@ Public Class MainFrm
         CP.Titlebar_Inactive = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        CList.Clear()
+        sender.backcolor = C
+        sender.invalidate
 
+        CList.Clear()
 
         If Not CP.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.X18, My.Resources.notify_info, 5000)
@@ -611,7 +641,6 @@ Public Class MainFrm
         CP.Transparency = sender.Checked
         ApplyLivePreviewFromCP(CP)
     End Sub
-
 
     Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         CP.ApplyAccentonTitlebars = sender.Checked
@@ -663,6 +692,8 @@ Public Class MainFrm
         CP.Taskbar_Icon_Underline = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
+        sender.backcolor = C
+        sender.invalidate
 
         CList.Clear()
 
@@ -675,7 +706,6 @@ Public Class MainFrm
     End Sub
 
     Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
-
         Dim CList As New List(Of Control) From {sender}
 
         If PreviewConfig = WinVer.Eleven Then
@@ -700,8 +730,10 @@ Public Class MainFrm
         CP.StartListFolders_TaskbarFront = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        CList.Clear()
+        sender.backcolor = C
+        sender.invalidate
 
+        CList.Clear()
 
         If PreviewConfig = WinVer.Eleven Then
             If Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -745,8 +777,10 @@ Public Class MainFrm
         CP.ActionCenter_AppsLinks = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        CList.Clear()
+        sender.backcolor = C
+        sender.invalidate
 
+        CList.Clear()
 
         If PreviewConfig = WinVer.Ten Then
             If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
@@ -779,19 +813,19 @@ Public Class MainFrm
         CP.SettingsIconsAndLinks = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
-        CList.Clear()
+        sender.backcolor = C
+        sender.invalidate
 
+        CList.Clear()
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         CP_Original = CP
         CP.Save(CP.SavingMode.Registry)
-        RestartExplorer()
-    End Sub
 
-    <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub _
-    SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer,
-    ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+        RefreshRegisrty()
+
+        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
@@ -836,6 +870,9 @@ Public Class MainFrm
         CP.Taskbar_Background = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
+        sender.backcolor = C
+        sender.invalidate
+
         CList.Clear()
 
 
@@ -868,6 +905,9 @@ Public Class MainFrm
         CP.StartMenu_Accent = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
+        sender.backcolor = C
+        sender.invalidate
+
         CList.Clear()
 
     End Sub
@@ -879,6 +919,9 @@ Public Class MainFrm
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.StartButton_Hover = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
 
         CList.Clear()
 
@@ -937,6 +980,9 @@ Public Class MainFrm
         CP.StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
+        sender.backcolor = C
+        sender.invalidate
+
         CList.Clear()
 
 
@@ -946,8 +992,6 @@ Public Class MainFrm
             End If
         End If
     End Sub
-
-
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs)
         PreviewConfig = WinVer.Ten
@@ -1069,28 +1113,6 @@ Public Class MainFrm
             End If
         End If
 
-    End Sub
-
-
-    Sub ApplyCPValues(ByVal ColorPalette As CP)
-        themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Author)
-
-        WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
-        AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
-        Transparency_Toggle.Checked = ColorPalette.Transparency
-        ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
-        AccentOnStartAndTaskbar_Toggle.Checked = ColorPalette.ApplyAccentonTaskbar
-        ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active
-        InactiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Inactive
-        StartAccent_picker.BackColor = ColorPalette.StartMenu_Accent
-        StartButtonHover_picker.BackColor = ColorPalette.StartButton_Hover
-        TaskbarBackground_Picker.BackColor = ColorPalette.Taskbar_Background
-        TaskbarIconUnderline_picker.BackColor = ColorPalette.Taskbar_Icon_Underline
-        StartBackgroundAndTaskbarButton_picker.BackColor = ColorPalette.StartMenuBackground_ActiveTaskbarButton
-        TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
-        ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
-        SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -1271,62 +1293,6 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
     End Sub
 
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        If Not CP.Equals(CP_Original) Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
-
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
-
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
-                            Else
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
-                                Else
-                                    Exit Sub
-                                End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
-                            Else
-                                Exit Sub
-                            End If
-                    End Select
-
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
-                    End Select
-
-                Case DialogResult.No
-
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
-        End If
-
-
-
-        If My.W11 Then IO.File.WriteAllText("temp.wpth", My.Resources.W11_Init) Else IO.File.WriteAllText("temp.wpth", My.Resources.W10_Init)
-        CP = New CP(CP.Mode.File, "temp.wpth")
-        Kill("temp.wpth")
-        CP_Original = CP
-        OpenFileDialog1.FileName = Nothing
-        SaveFileDialog1.FileName = Nothing
-        ApplyCPValues(CP)
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
         EditInfo.Load_Info(CP)
         ApplyCPValues(CP)
@@ -1366,7 +1332,6 @@ Public Class MainFrm
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
         Me.Close()
     End Sub
-
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
@@ -1474,7 +1439,65 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
     End Sub
 
+    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+        RestartExplorer()
+    End Sub
 
+    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+        If Not CP.Equals(CP_Original) Then
+            Select Case ComplexSave.ShowDialog
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP
+                                Else
+                                    Exit Sub
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                CP_Original = CP
+                            Else
+                                Exit Sub
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            CP.Save(CP.SavingMode.Registry)
+                            RestartExplorer()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
+                    Exit Sub
+            End Select
+        End If
+
+
+
+        If My.W11 Then IO.File.WriteAllText("temp.wpth", My.Resources.W11_Init) Else IO.File.WriteAllText("temp.wpth", My.Resources.W10_Init)
+        CP = New CP(CP.Mode.File, "temp.wpth")
+        Kill("temp.wpth")
+        CP_Original = CP
+        OpenFileDialog1.FileName = Nothing
+        SaveFileDialog1.FileName = Nothing
+        ApplyCPValues(CP)
+        ApplyLivePreviewFromCP(CP)
+    End Sub
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

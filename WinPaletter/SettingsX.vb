@@ -37,9 +37,6 @@ Public Class SettingsX
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
             If .Language <> XenonCheckBox8.Checked Then Changed = True
             If .Language_File <> OpenFileDialog2.FileName Then Changed = True
-            If .RescueBox <> XenonCheckBox7.Checked Then Changed = True
-            If .RescueBox_Autoclose <> XenonCheckBox9.Checked Then Changed = True
-            If .RescueBox_Threshold <> XenonNumericUpDown1.Value Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -84,9 +81,6 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
-            XenonCheckBox7.Checked = .RescueBox
-            XenonCheckBox9.Checked = .RescueBox_Autoclose
-            XenonNumericUpDown1.Value = .RescueBox_Threshold
 
             XenonCheckBox8.Checked = .Language
             OpenFileDialog2.FileName = .Language_File
@@ -117,9 +111,6 @@ Public Class SettingsX
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
-            .RescueBox = XenonCheckBox7.Checked
-            .RescueBox_Autoclose = XenonCheckBox9.Checked
-            .RescueBox_Threshold = XenonNumericUpDown1.Value
             .Language = XenonCheckBox8.Checked
             .Language_File = OpenFileDialog2.FileName
             .Save(XeSettings.Mode.Registry)
@@ -159,9 +150,6 @@ Public Class SettingsX
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
-                .RescueBox = XenonCheckBox7.Checked
-                .RescueBox_Autoclose = XenonCheckBox9.Checked
-                .RescueBox_Threshold = XenonNumericUpDown1.Value
                 .Language = XenonCheckBox8.Checked
                 .Language_File = OpenFileDialog2.FileName
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
@@ -190,9 +178,6 @@ Public Class SettingsX
                 XenonRadioButton3.Checked = .Appearance_Dark
                 XenonRadioButton4.Checked = Not .Appearance_Dark
                 XenonCheckBox6.Checked = .Appearance_Auto
-                XenonCheckBox7.Checked = .RescueBox
-                XenonCheckBox9.Checked = .RescueBox_Autoclose
-                XenonNumericUpDown1.Value = .RescueBox_Threshold
                 XenonCheckBox8.Checked = .Language
                 OpenFileDialog2.FileName = .Language_File
             End With
@@ -229,9 +214,6 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
-            XenonCheckBox7.Checked = .RescueBox
-            XenonCheckBox9.Checked = .RescueBox_Autoclose
-            XenonNumericUpDown1.Value = .RescueBox_Threshold
             XenonCheckBox8.Checked = .Language
             OpenFileDialog2.FileName = .Language_File
         End With
@@ -283,6 +265,6 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        LanguageContribute.ShowDialog()
+        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
     End Sub
 End Class

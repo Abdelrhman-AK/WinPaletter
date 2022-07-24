@@ -165,6 +165,13 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\CursorsPath.vb" />
     <Compile Include="GUI\RetroUI.Designer.vb">
       <DependentUpon>RetroUI.vb</DependentUpon>
     </Compile>
@@ -175,12 +182,6 @@
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
     <Compile Include="GUI\XenonUI.vb" />
-    <Compile Include="LanguageContribute.Designer.vb">
-      <DependentUpon>LanguageContribute.vb</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageContribute.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="LogonUI.Designer.vb">
       <DependentUpon>LogonUI.vb</DependentUpon>
     </Compile>
@@ -195,18 +196,16 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="OTVDM.Designer.vb">
       <DependentUpon>OTVDM.vb</DependentUpon>
     </Compile>
     <Compile Include="OTVDM.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RescueBoxdlg.Designer.vb">
-      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
-    </Compile>
-    <Compile Include="RescueBoxdlg.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SettingsX.Designer.vb">
@@ -260,8 +259,8 @@
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LanguageContribute.resx">
-      <DependentUpon>LanguageContribute.vb</DependentUpon>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
@@ -269,12 +268,13 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="OTVDM.resx">
       <DependentUpon>OTVDM.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RescueBoxdlg.resx">
-      <DependentUpon>RescueBoxdlg.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
