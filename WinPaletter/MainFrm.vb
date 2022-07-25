@@ -825,7 +825,7 @@ Public Class MainFrm
 
         RefreshRegisrty()
 
-        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer() Else Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
@@ -1509,6 +1509,8 @@ Public Class MainFrm
          .Left = 0
          }
 
+        AddHandler NB.Click, AddressOf NB.Hide
+
         NotificationsList.Add(New Notifier(NB, [Interval]))
         NotificationsPanel.Controls.Add(NB)
         NotificationsPanel.BringToFront()
@@ -1522,6 +1524,7 @@ Public Class MainFrm
                 If nx.Interval - NTimer.Interval <= 0 Then
                     NotificationsPanel.Controls.Remove(nx.Control)
                     nx.Control.Dispose()
+                    RemoveHandler nx.Control.Click, AddressOf nx.Control.Hide
                     NotificationsList.Remove(nx)
                 Else
                     nx.Interval -= NTimer.Interval

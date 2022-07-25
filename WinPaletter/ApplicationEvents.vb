@@ -392,7 +392,6 @@ Namespace My
 
 #Region "WhatsNew"
 
-
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
                 '### Popup WhatsNew
                 Whatsnew.ShowDialog()
@@ -408,8 +407,6 @@ Namespace My
                 ver = RemoveDuplicate(ver)
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
-
-                MainFrm.Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
             End If
 #End Region
 

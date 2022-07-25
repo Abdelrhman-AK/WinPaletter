@@ -243,6 +243,7 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>

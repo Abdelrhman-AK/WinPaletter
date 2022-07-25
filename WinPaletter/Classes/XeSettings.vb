@@ -7,7 +7,7 @@ Public Class XeSettings
     Public Property AutoAddExt As Boolean = True
     Public Property DragAndDropPreview As Boolean = True
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
-    Public Property AutoRestartExplorer As Boolean = False
+    Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven

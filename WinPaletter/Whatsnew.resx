@@ -3641,9 +3641,7 @@
 </value>
   </data>
   <data name="Label14.Text" xml:space="preserve">
-    <value>- Automatic Restarting Explorer is disabled by default, if the palette is not applied correctly, press on "Restart Explorer" button on main form
-
-- Rescue Box Removed
+    <value>- Rescue Box Removed (due to unhandled exceptions errors, not useful anymore after fixing explorer restart mechanism)
 
 - Now you can apply Win32UI colors immediately without any restart or logoff
 

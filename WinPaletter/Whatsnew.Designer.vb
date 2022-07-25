@@ -314,7 +314,7 @@ Partial Class Whatsnew
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(3, 53)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(661, 251)
+        Me.Label14.Size = New System.Drawing.Size(661, 209)
         Me.Label14.TabIndex = 25
         Me.Label14.Text = resources.GetString("Label14.Text")
         '

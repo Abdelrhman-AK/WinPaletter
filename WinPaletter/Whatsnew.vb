@@ -5,8 +5,10 @@ Public Class Whatsnew
         ApplyDarkMode(Me)
     End Sub
 
+
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         XenonButton2.Enabled = True
+
         If sender.text = My.Application.LanguageHelper.OK Then
             Me.Close()
         Else
