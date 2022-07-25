@@ -70,29 +70,28 @@ Public Class CursorsPath
     End Function
 
     Public Function BusyLoader([Rectangle] As Rectangle, Angle As Single, Optional Scale As Single = 1) As GraphicsPath
+        [Rectangle].X += 0
+        [Rectangle].Y += 0
+
         [Rectangle].Width = 22
         [Rectangle].Height = 22
 
         Dim path As New GraphicsPath
+        Dim CPoint As New Point([Rectangle].X + [Rectangle].Width / 2, [Rectangle].Y + [Rectangle].Height / 2)
         Dim R As New Rectangle([Rectangle].X + 5, [Rectangle].Y + 5, 12, 12)
-        Dim Increment As Single = 90.0F
 
-        Dim Outer_Pre As Point = PointOnArc([Rectangle], Angle)
-        Dim Inner_Pre As Point = PointOnArc(R, Angle)
+        Dim innerR = 15
+        Dim thickness = 10
+        Dim arcLength = 50
+        Dim outerR = innerR + thickness
 
-        Dim Outer_Post As Point = PointOnArc([Rectangle], Angle + Increment)
-        Dim Inner_Post As Point = PointOnArc(R, Angle + Increment)
+        Dim outerRect = [Rectangle]
+        Dim innerRect = R
 
-        path.AddArc(R, Angle, Increment)
+        path.AddArc(outerRect, Angle, arcLength)
+        path.AddArc(innerRect, Angle + arcLength, -arcLength)
 
-        path.AddLine(Inner_Pre, Outer_Pre)
-
-        path.AddArc([Rectangle], Angle, Increment)
-
-        path.AddLine(Inner_Post, Outer_Post)
-
-
-        'path.CloseFigure()
+        path.CloseFigure()
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -101,6 +100,55 @@ Public Class CursorsPath
 
         Return path
     End Function
+
+
+    Public Function AppLoading([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        [Rectangle].Width = 16
+        [Rectangle].Height = 16
+
+        Dim path As New GraphicsPath
+        path.AddEllipse([Rectangle])
+        Dim R As New Rectangle([Rectangle].X + 4, [Rectangle].Y + 4, 8, 8)
+        path.AddEllipse(R)
+        path.CloseFigure()
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function AppLoaderCircle([Rectangle] As Rectangle, Angle As Single, Optional Scale As Single = 1) As GraphicsPath
+        [Rectangle].Width = 16
+        [Rectangle].Height = 16
+
+        Dim path As New GraphicsPath
+        Dim CPoint As New Point([Rectangle].X + [Rectangle].Width / 2, [Rectangle].Y + [Rectangle].Height / 2)
+        Dim R As New Rectangle([Rectangle].X + 4, [Rectangle].Y + 4, 8, 8)
+
+        Dim innerR = 15
+        Dim thickness = 6
+        Dim arcLength = 50
+        Dim outerR = innerR + thickness
+
+        Dim outerRect = [Rectangle]
+        Dim innerRect = R
+
+        path.AddArc(outerRect, Angle, arcLength)
+        path.AddArc(innerRect, Angle + arcLength, -arcLength)
+
+        path.CloseFigure()
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
 
 
     Function PointOnArc([Rectangle] As Rectangle, Angle As Single) As Point
