@@ -5,6 +5,14 @@
 #Added= String
 #Removed= String
 
+[1.0.3.1]
+Channel= Stable
+Date= -8585429068854775808
+BugFix= Rescue Box Removed (due to unhandled exceptions errors)
+BugFix= Fixing Color Picker not showing chosen color
+Added= Ability to apply Win32UI colors immediately without any restart or logoff
+Added= UI Improvement
+
 [1.0.3.0]
 Channel= Stable
 Date= -8585431660854775808
