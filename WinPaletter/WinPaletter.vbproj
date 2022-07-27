@@ -77,6 +77,10 @@
       <HintPath>..\References\Animator.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AnimCur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\AnimCur.dll</HintPath>
+    </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\References\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
@@ -241,6 +245,10 @@
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">

@@ -1,19 +1,17 @@
-﻿Imports System.Drawing.Drawing2D
-Imports WinPaletter.XenonCore
-Imports System.Drawing.IconLib
-Imports System.Drawing.IconLib.ColorProcessing
+﻿Imports WinPaletter.XenonCore
 Imports System.IO
 Imports System.Drawing.Imaging
+Imports AnimCur
 
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
     End Sub
 
-    Dim Noise As New TextureBrush(My.Resources.GaussianBlur)
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Dim b As New Bitmap(32, 32, PixelFormat.Format32bppArgb)
+        Dim b As New Bitmap(32, 32, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
         G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         Dim DefCur As New CursorsPath
@@ -21,10 +19,10 @@ Public Class Form1
         Dim Scale As Single = 1
 
 #Region "Default Cursor"
-        'G.FillPath(Brushes.White, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32),Scale))
-        'G.DrawPath(Pens.Black, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32),Scale))
+        G.FillPath(Brushes.Red, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
+        G.FillPath(Noise, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
+        G.DrawPath(Pens.White, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
 #End Region
-
 
 #Region "Busy"
         'Dim C1 As Color = Color.FromArgb(42, 151, 243)
@@ -34,18 +32,18 @@ Public Class Form1
 #End Region
 
 #Region "AppLoading"
-        Dim C1 As Color = Color.FromArgb(42, 151, 243)
-        Dim C2 As Color = Color.FromArgb(37, 204, 255)
+        'Dim C1 As Color = Color.FromArgb(42, 151, 243)
+        'Dim C2 As Color = Color.FromArgb(37, 204, 255)
 
-        Dim CurRect As Rectangle = New Rectangle(0, 8, 32, 32)
-        Dim LoadRect As Rectangle = New Rectangle(6, 0, 15, 15)
+        'Dim CurRect As Rectangle = New Rectangle(0, 8, 32, 32)
+        'Dim LoadRect As Rectangle = New Rectangle(6, 0, 15, 15)
 
-        G.FillPath(Brushes.White, DefCur.DefaultCursor(CurRect, Scale))
+        'G.FillPath(Brushes.White, DefCur.DefaultCursor(CurRect, Scale))
         'G.FillPath(Noise, DefCur.DefaultCursor(CurRect, Scale))
-        G.DrawPath(Pens.Black, DefCur.DefaultCursor(CurRect, Scale))
+        'G.DrawPath(Pens.Black, DefCur.DefaultCursor(CurRect, Scale))
 
-        G.FillPath(New SolidBrush(C1), DefCur.AppLoading(LoadRect, Scale))
-        G.FillPath(New SolidBrush(C2), DefCur.AppLoaderCircle(LoadRect, 90, Scale))
+        'G.FillPath(New SolidBrush(C1), DefCur.AppLoading(LoadRect, Scale))
+        'G.FillPath(New SolidBrush(C2), DefCur.AppLoaderCircle(LoadRect, 90, Scale))
 #End Region
 
 
@@ -54,41 +52,15 @@ Public Class Form1
         g2.Clear(Color.White)
         g2.DrawImage(b, New Point(0, 0))
 
-        ConvertToIco(b, "D:\cur.cur", 32)
 
-    End Sub
 
-    Public Sub ConvertToIco(ByVal img As Image, ByVal file As String, ByVal size As Integer)
-        Dim icon As Icon
+        Dim fs As FileStream = New System.IO.FileStream("D:\cur.cur", FileMode.Create)
 
-        Using msImg = New MemoryStream()
+        Dim EO As New EOIcoCurWriter(fs, 1, EOIcoCurWriter.IcoCurType.Cursor)
 
-            Using msIco = New MemoryStream()
-                img.Save(msImg, ImageFormat.Png)
+        EO.WriteBitmap(b, Nothing, New Point(1, 1))
 
-                Using bw = New BinaryWriter(msIco)
-                    bw.Write(CShort(0))
-                    bw.Write(CShort(1))
-                    bw.Write(CShort(1))
-                    bw.Write(CByte(size))
-                    bw.Write(CByte(size))
-                    bw.Write(CByte(0))
-                    bw.Write(CByte(0))
-                    bw.Write(CShort(0))
-                    bw.Write(CShort(32))
-                    bw.Write(CInt(msImg.Length))
-                    bw.Write(22)
-                    bw.Write(msImg.ToArray())
-                    bw.Flush()
-                    bw.Seek(0, SeekOrigin.Begin)
-                    icon = New Icon(msIco)
-                End Using
-            End Using
-        End Using
-
-        Using fs = New FileStream(file, FileMode.Create, FileAccess.Write)
-            icon.Save(fs)
-        End Using
+        fs.Close()
     End Sub
 
 End Class

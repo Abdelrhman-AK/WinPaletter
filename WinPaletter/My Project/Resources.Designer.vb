@@ -121,6 +121,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property AnimCur() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("AnimCur", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property AppPreview() As System.Drawing.Bitmap
@@ -309,6 +319,16 @@ Namespace My.Resources
         Public ReadOnly Property GaussianBlur() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GaussianBlur", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property GaussianBlurOpaque() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("GaussianBlurOpaque", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

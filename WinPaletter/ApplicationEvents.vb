@@ -578,6 +578,8 @@ Namespace My
             If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
             If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(My.Resources.Cyotek_Windows_Forms_ColorPicker)
             If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
+            If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(My.Resources.AnimCur)
+
 #Disable Warning BC42105
         End Function
 

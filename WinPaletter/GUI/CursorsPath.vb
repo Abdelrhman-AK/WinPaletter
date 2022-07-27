@@ -24,7 +24,7 @@ Public Class CursorsPath
         '#### Down Handle Border
         Dim DHLine1 As Point = DLHLine2
         Dim DHLine2 As New Point(DHLine1.X + 2, DHLine1.Y - 1)
-        path.AddLine(DHLine1, DHLine2)
+        If Scale > 1 Then path.AddLine(DHLine1, DHLine2) Else path.AddArc(DHLine1.X, DHLine2.Y, DHLine2.X - DHLine1.X, DHLine1.Y - DHLine2.Y, 0, 90)
 
         '#### Right Down Handle Border
         Dim DRHLine1 As Point = DHLine2
@@ -41,7 +41,7 @@ Public Class CursorsPath
         Dim RLine2 As Point = LLine1
         path.AddLine(RLine1, RLine2)
 
-        'path.CloseFigure()
+        path.CloseFigure()
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
