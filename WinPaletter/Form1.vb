@@ -6,22 +6,29 @@ Imports AnimCur
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        Draw()
     End Sub
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Dim b As New Bitmap(32, 32, PixelFormat.Format32bppPArgb)
+
+        Draw()
+
+    End Sub
+
+    Sub Draw()
+        Dim Scale As Single = 1
+        Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
         G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         Dim DefCur As New CursorsPath
         G.Clear(Color.Transparent)
-        Dim Scale As Single = 1
 
 #Region "Default Cursor"
-        G.FillPath(Brushes.Red, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
-        G.FillPath(Noise, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
-        G.DrawPath(Pens.White, DefCur.DefaultCursor(New Rectangle(0, 0, 32, 32), Scale))
+        'G.FillPath(Brushes.Red, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.FillPath(Noise, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.White, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
 #Region "Busy"
@@ -35,7 +42,7 @@ Public Class Form1
         'Dim C1 As Color = Color.FromArgb(42, 151, 243)
         'Dim C2 As Color = Color.FromArgb(37, 204, 255)
 
-        'Dim CurRect As Rectangle = New Rectangle(0, 8, 32, 32)
+        'Dim CurRect As Rectangle = New Rectangle(0, 8, b.Width, b.Height)
         'Dim LoadRect As Rectangle = New Rectangle(6, 0, 15, 15)
 
         'G.FillPath(Brushes.White, DefCur.DefaultCursor(CurRect, Scale))
@@ -46,21 +53,39 @@ Public Class Form1
         'G.FillPath(New SolidBrush(C2), DefCur.AppLoaderCircle(LoadRect, 90, Scale))
 #End Region
 
+#Region "Move"
+        'G.FillPath(Brushes.White, DefCur.Move(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Red, DefCur.Move(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "NS"
+        'G.FillPath(Brushes.White, DefCur.NS(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.NS(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "NESW"
+        'G.FillPath(Brushes.White, DefCur.NESW(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        G.DrawPath(Pens.Black, DefCur.NESW(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "NWSE"
+        'G.FillPath(Brushes.White, DefCur.NWSE(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.NWSE(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
 
         Dim g2 As Graphics = Panel1.CreateGraphics
         g2.SmoothingMode = G.SmoothingMode
         g2.Clear(Color.White)
         g2.DrawImage(b, New Point(0, 0))
 
+        b.Save("D:\x.png")
 
+        'Dim fs As FileStream = New System.IO.FileStream("D:\cur.cur", FileMode.Create)
 
-        Dim fs As FileStream = New System.IO.FileStream("D:\cur.cur", FileMode.Create)
+        'Dim EO As New EOIcoCurWriter(fs, 1, EOIcoCurWriter.IcoCurType.Cursor)
 
-        Dim EO As New EOIcoCurWriter(fs, 1, EOIcoCurWriter.IcoCurType.Cursor)
+        'EO.WriteBitmap(b, Nothing, New Point(1, 1))
 
-        EO.WriteBitmap(b, Nothing, New Point(1, 1))
-
-        fs.Close()
+        'fs.Close()
     End Sub
-
 End Class

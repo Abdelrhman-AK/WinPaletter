@@ -149,7 +149,200 @@ Public Class CursorsPath
         Return path
     End Function
 
+    Public Function Move([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 21
+        [Rectangle].Height = 21
+        [Rectangle].X = 0
+        [Rectangle].Y = 0
 
+        Dim UL1 As Point = New Point([Rectangle].X + 11, [Rectangle].Y)
+        Dim UL2 As Point = New Point(UL1.X - 4, [Rectangle].Y + 4)
+        path.AddLine(UL1, UL2)
+
+        Dim ULX1 As Point = New Point(UL2.X, UL2.Y + 1)
+        Dim ULX2 As Point = New Point(ULX1.X + 3, ULX1.Y)
+        path.AddLine(ULX1, ULX2)
+
+        Dim MUL1 As Point = ULX2
+        Dim MUL2 As Point = New Point(MUL1.X, ULX2.Y + 4)
+        path.AddLine(MUL1, MUL2)
+
+        Dim MULX1 As Point = New Point(MUL2.X, MUL2.Y + 1)
+        Dim MULX2 As Point = New Point(MULX1.X - 5, MULX1.Y)
+        path.AddLine(MULX1, MULX2)
+
+        Dim LU1 As Point = MULX2
+        Dim LU2 As Point = New Point(MULX2.X, MULX2.Y - 3)
+        path.AddLine(LU1, LU2)
+
+        Dim LUX1 As Point = New Point(LU2.X - 1, LU2.Y)
+        Dim LUX2 As Point = New Point([Rectangle].X, [Rectangle].Y + 11)
+        path.AddLine(LUX1, LUX2)
+
+        Dim LDX1 As Point = LUX2
+        Dim LDX2 As Point = New Point(LDX1.X + 4, LDX1.Y + 4)
+        path.AddLine(LDX1, LDX2)
+
+        Dim LD1 As Point = New Point(LDX2.X + 1, LDX2.Y)
+        Dim LD2 As Point = New Point(LD1.X, LD1.Y - 2)
+        path.AddLine(LD1, LD2)
+
+        Dim L1 As Point = New Point(LD2.X, LD2.Y - 1)
+        Dim L2 As Point = New Point(L1.X + 5, L1.Y)
+        path.AddLine(L1, L2)
+
+        Dim DL1 As Point = L2
+        Dim DL2 As Point = New Point(L2.X, LD2.Y + 3)
+        path.AddLine(DL1, DL2)
+
+        Dim DX1 As Point = New Point(DL2.X, DL2.Y + 1)
+        Dim DX2 As Point = New Point(DX1.X - 3, DX1.Y)
+        path.AddLine(DX1, DX2)
+
+        Dim DLX1 As Point = New Point(DX2.X, DX2.Y + 1)
+        Dim DLX2 As Point = New Point(DLX1.X + 4, DLX1.Y + 4)
+        path.AddLine(DLX1, DLX2)
+
+        path.AddPath(MirrorRight(path), False)
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function NS([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 9
+        [Rectangle].Height = 23
+        [Rectangle].X = 0
+        [Rectangle].Y = 0
+
+
+        Dim UL1 As Point = New Point([Rectangle].X + 4, [Rectangle].Y)
+        Dim UL2 As Point = New Point([Rectangle].X, [Rectangle].Y + 4)
+        path.AddLine(UL1, UL2)
+
+        Dim ULX1 As Point = New Point(UL2.X, UL2.Y + 1)
+        Dim ULX2 As Point = New Point(ULX1.X + 3, ULX1.Y)
+        path.AddLine(ULX1, ULX2)
+
+        Dim MUL1 As Point = ULX2
+        Dim MUL2 As Point = New Point(MUL1.X, MUL1.Y + 12)
+        path.AddLine(MUL1, MUL2)
+
+        Dim DL1 As Point = MUL2
+        Dim DL2 As Point = New Point(MUL2.X - 3, MUL2.Y)
+        path.AddLine(DL1, DL2)
+
+        Dim DX1 As Point = New Point(DL2.X, DL2.Y + 1)
+        Dim DX2 As Point = New Point(DX1.X + 4, DX1.Y + 4)
+        path.AddLine(DX1, DX2)
+
+        path.AddPath(MirrorRight(path), False)
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function NESW([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 17
+        [Rectangle].Height = 17
+        [Rectangle].X = -4
+        [Rectangle].Y = -1
+
+        Dim UR1 As Point = New Point([Rectangle].X + [Rectangle].Width, [Rectangle].Y)
+        Dim UR2 As Point = New Point(UR1.X - 4, UR1.Y)
+        path.AddLine(UR1, UR2)
+
+        Dim RX1 As Point = New Point(UR2.X, UR2.Y + 1)
+        Dim RX2 As Point = New Point(RX1.X + 1, RX1.Y + 1)
+        path.AddLine(RX1, RX2)
+
+        Dim LX1 As Point = New Point(RX2.X + 1, RX2.Y + 1)
+        Dim LX2 As Point = New Point(LX1.X - 9, LX1.Y + 9)
+        path.AddLine(LX1, LX2)
+
+        Dim DX1 As Point = New Point(LX2.X - 1, LX2.Y - 1)
+        Dim DX2 As Point = New Point(DX1.X - 1, DX1.Y - 1)
+        path.AddLine(DX1, DX2)
+
+        Dim L1 As Point = New Point(DX2.X - 1, DX2.Y)
+        Dim L2 As Point = New Point(L1.X, [Rectangle].Y + [Rectangle].Height - 1)
+        path.AddLine(L1, L2)
+
+        Dim D1 As Point = New Point(L2.X + 1, L2.Y)
+        Dim D2 As Point = New Point(D1.X + 5, D1.Y)
+        path.AddLine(D1, D2)
+
+        Dim DL1 As Point = New Point(D2.X, D2.Y - 1)
+        Dim DL2 As Point = New Point(DL1.X - 1, DL1.Y - 1)
+        path.AddLine(DL1, DL2)
+
+        Dim LX3 As Point = New Point(DL2.X - 1, DL2.Y - 1)
+        Dim LX4 As Point = New Point(LX3.X + 9, LX3.Y - 9)
+        path.AddLine(LX3, LX4)
+
+        Dim DR1 As Point = New Point(LX4.X + 1, LX4.Y + 1)
+        Dim DR2 As Point = New Point(DR1.X + 1, DR1.Y + 1)
+        path.AddLine(DR1, DR2)
+
+        Dim R1 As Point = New Point(DR2.X + 1, DR2.Y)
+        Dim R2 As Point = New Point(R1.X, [Rectangle].Y)
+        path.AddLine(R1, R2)
+
+        path.CloseFigure()
+
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function NWSE([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As GraphicsPath = NESW([Rectangle])
+        [Rectangle].Width = 17
+        [Rectangle].Height = 17
+        [Rectangle].X = -2
+        [Rectangle].Y = 0
+
+        Dim flipXMatrix As Matrix = New Matrix(-1, 0, 0, 1, [Rectangle].Width, 0)
+        Dim transformMatrix As Matrix = New Matrix()
+        transformMatrix.Multiply(flipXMatrix)
+        path.Transform(transformMatrix)
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Private Function MirrorLeft(ByVal path As GraphicsPath) As GraphicsPath
+        Dim r = path.GetBounds()
+        Dim p = CType(path.Clone(), GraphicsPath)
+        p.Transform(New Matrix(-1, 0, 0, 1, 2 * r.Left, 0))
+        Return p
+    End Function
+
+    Private Function MirrorRight(ByVal path As GraphicsPath) As GraphicsPath
+        Dim r = path.GetBounds()
+        Dim p = CType(path.Clone(), GraphicsPath)
+        p.Transform(New Matrix(-1, 0, 0, 1, 2 * (r.Left + r.Width), 0))
+        Return p
+    End Function
 
     Function PointOnArc([Rectangle] As Rectangle, Angle As Single) As Point
 
