@@ -6,7 +6,6 @@ Imports AnimCur
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        Draw()
     End Sub
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
@@ -31,6 +30,13 @@ Public Class Form1
         'G.DrawPath(Pens.White, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
+#Region "Help Cursor"
+        'G.FillPath(Brushes.White, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.DefaultCursor(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.White, DefCur.Help(New Rectangle(11, 6, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Help(New Rectangle(11, 6, b.Width, b.Height), Scale))
+#End Region
+
 #Region "Busy"
         'Dim C1 As Color = Color.FromArgb(42, 151, 243)
         'Dim C2 As Color = Color.FromArgb(37, 204, 255)
@@ -53,9 +59,19 @@ Public Class Form1
         'G.FillPath(New SolidBrush(C2), DefCur.AppLoaderCircle(LoadRect, 90, Scale))
 #End Region
 
+#Region "None"
+        'G.FillPath(Brushes.White, DefCur.NoneBackground(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.Red, DefCur.None(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
 #Region "Move"
         'G.FillPath(Brushes.White, DefCur.Move(New Rectangle(0, 0, b.Width, b.Height), Scale))
         'G.DrawPath(Pens.Red, DefCur.Move(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "Up"
+        'G.FillPath(Brushes.White, DefCur.Up(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Up(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
 #Region "NS"
@@ -63,14 +79,29 @@ Public Class Form1
         'G.DrawPath(Pens.Black, DefCur.NS(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
+#Region "EW"
+        'G.FillPath(Brushes.White, DefCur.EW(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.EW(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
 #Region "NESW"
         'G.FillPath(Brushes.White, DefCur.NESW(New Rectangle(0, 0, b.Width, b.Height), Scale))
-        G.DrawPath(Pens.Black, DefCur.NESW(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Red, DefCur.NESW(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
 #Region "NWSE"
         'G.FillPath(Brushes.White, DefCur.NWSE(New Rectangle(0, 0, b.Width, b.Height), Scale))
         'G.DrawPath(Pens.Black, DefCur.NWSE(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "Pen"
+        'G.FillPath(Brushes.White, DefCur.PenBackground(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Pen(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "Hand"
+        'G.FillPath(Brushes.White, DefCur.PenBackground(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        G.DrawPath(Pens.Red, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
         Dim g2 As Graphics = Panel1.CreateGraphics
@@ -87,5 +118,9 @@ Public Class Form1
         'EO.WriteBitmap(b, Nothing, New Point(1, 1))
 
         'fs.Close()
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Draw()
     End Sub
 End Class
