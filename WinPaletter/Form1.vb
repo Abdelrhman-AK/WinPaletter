@@ -99,10 +99,11 @@ Public Class Form1
         'G.DrawPath(Pens.Black, DefCur.Pen(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
-#Region "Hand"
-        'G.FillPath(Brushes.White, DefCur.PenBackground(New Rectangle(0, 0, b.Width, b.Height), Scale))
-        G.DrawPath(Pens.Red, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#Region "Link"
+        'G.FillPath(Brushes.White, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
+
 
         Dim g2 As Graphics = Panel1.CreateGraphics
         g2.SmoothingMode = G.SmoothingMode

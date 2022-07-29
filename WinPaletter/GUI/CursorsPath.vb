@@ -549,6 +549,22 @@ Public Class CursorsPath
         Dim FreeBorder2 As New Point(FreeBorder1.X, FreeBorder1.Y + 8)
         path.AddLine(FreeBorder1, FreeBorder2)
 
+        Dim LW1 As Point = FreeBorder2 + New Point(0, 1)
+        Dim RW1 As Point = New Point(LW1.X - 14, LW1.Y)
+        Dim Btm As New Rectangle(RW1.X, RW1.Y - 8, 14, 13)
+        path.AddArc(Btm, 0, 180)
+
+        Dim L1 As Point = RW1 - New Point(0, 1)
+        Dim L2 As New Point(L1.X - 2, L1.Y - 2)
+        path.AddLine(L1, L2)
+
+        Dim Thumb As New Rectangle(L2.X - 1, L2.Y - 3, 2, 3)
+        path.AddArc(Thumb, 90, 180)
+
+        Dim LastBorder1 As New Point(Thumb.X + Thumb.Width, Thumb.Y)
+        Dim LastBorder2 As New Point(LastBorder1.X + 3, LastBorder1.Y + 1)
+        path.AddLine(LastBorder1, LastBorder2)
+
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
