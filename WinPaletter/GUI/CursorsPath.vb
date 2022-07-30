@@ -513,6 +513,43 @@ Public Class CursorsPath
         Return path
     End Function
 
+    Public Function PenBackground([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 22
+        [Rectangle].Height = 22
+        [Rectangle].X = 0
+        [Rectangle].Y = 0
+
+        Dim T1 As New Point([Rectangle].X, [Rectangle].Y)
+        Dim T2 As Point = T1 + New Point(6, 2)
+        path.AddLine(T1, T2)
+
+        Dim R1 As New Point(T2.X, T2.Y)
+        Dim R2 As New Point(R1.X + 15, R1.Y + 15)
+        path.AddLine(R1, R2)
+
+        Dim B1 As New Point(R2.X, R2.Y + 1)
+        Dim B2 As New Point(B1.X - 3, B1.Y + 3)
+        path.AddLine(B1, B2)
+
+        Dim L1 As New Point(B2.X - 1, B2.Y)
+        Dim L2 As New Point(L1.X - 15, L1.Y - 15)
+        path.AddLine(L1, L2)
+
+        Dim LX1 As New Point(L2.X, L2.Y)
+        path.AddLine(LX1, T1)
+
+        path.CloseFigure()
+
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
     Public Function Hand([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
         [Rectangle].Width = 18
@@ -556,14 +593,15 @@ Public Class CursorsPath
 
         Dim L1 As Point = RW1 - New Point(0, 1)
         Dim L2 As New Point(L1.X - 2, L1.Y - 2)
-        path.AddLine(L1, L2)
-
         Dim Thumb As New Rectangle(L2.X - 1, L2.Y - 3, 2, 3)
         path.AddArc(Thumb, 90, 180)
+        'path.AddRectangle(Thumb)
 
         Dim LastBorder1 As New Point(Thumb.X + Thumb.Width, Thumb.Y)
-        Dim LastBorder2 As New Point(LastBorder1.X + 3, LastBorder1.Y + 1)
+        Dim LastBorder2 As New Point(LastBorder1.X + 2, LastBorder1.Y + 1)
         path.AddLine(LastBorder1, LastBorder2)
+
+        path.CloseFigure()
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -573,34 +611,137 @@ Public Class CursorsPath
         Return path
     End Function
 
-    Public Function PenBackground([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function Pin([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
-        [Rectangle].Width = 22
-        [Rectangle].Height = 22
+        [Rectangle].Width = 13
+        [Rectangle].Height = 20
+        [Rectangle].X = 15
+        [Rectangle].Y = 11
+
+        Dim U As New Rectangle([Rectangle].X, [Rectangle].Y, 12, 10)
+        path.AddArc(U, 180, 180)
+
+        Dim C As New Point([Rectangle].X + 6, [Rectangle].Y + 18)
+        Dim p1 As New Point([Rectangle].X + 0, [Rectangle].Y + 6)
+        Dim p2 As New Point([Rectangle].X + 12, [Rectangle].Y + 6)
+        path.AddLine(p2, C)
+        path.AddLine(C, p1)
+        path.CloseFigure()
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function Person([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 10
+        [Rectangle].Height = 13
+        [Rectangle].X = 19
+        [Rectangle].Y = 17
+
+        Dim Face As New Rectangle([Rectangle].X, [Rectangle].Y, 5, 6)
+        path.AddEllipse(Face)
+
+        Dim TrunkUpper As New Rectangle(Face.X - 2, Face.Y + Face.Height, 9, 9)
+        path.AddArc(TrunkUpper, 180, 180)
+
+        Dim TrunkLower As New Rectangle(TrunkUpper.X, TrunkUpper.Y + 3, 9, 3)
+        path.AddArc(TrunkLower, 0, 180)
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function IBeam([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim T1 As New Point([Rectangle].X, [Rectangle].Y)
-        Dim T2 As Point = T1 + New Point(6, 2)
-        path.AddLine(T1, T2)
-
-        Dim R1 As New Point(T2.X, T2.Y)
-        Dim R2 As New Point(R1.X + 15, R1.Y + 15)
-        path.AddLine(R1, R2)
-
-        Dim B1 As New Point(R2.X, R2.Y + 1)
-        Dim B2 As New Point(B1.X - 3, B1.Y + 3)
-        path.AddLine(B1, B2)
-
-        Dim L1 As New Point(B2.X - 1, B2.Y)
-        Dim L2 As New Point(L1.X - 15, L1.Y - 15)
+        Dim L1 As New Point([Rectangle].X, [Rectangle].Y)
+        Dim L2 As New Point(L1.X, L1.Y + 2)
         path.AddLine(L1, L2)
 
-        Dim LX1 As New Point(L2.X, L2.Y)
-        path.AddLine(LX1, T1)
+        Dim BU1 As New Point(L2.X + 3, L2.Y)
+        path.AddLine(L2, BU1)
 
-        path.CloseFigure()
+        Dim LX As New Point(BU1.X, BU1.Y + 13)
+        path.AddLine(BU1, LX)
 
+        Dim BU2 As New Point(LX.X - 3, LX.Y)
+        path.AddLine(LX, BU2)
+
+        Dim L3 As New Point(BU2.X, BU2.Y + 2)
+        path.AddLine(BU2, L3)
+
+        Dim Bl As New Point(L3.X + 3, L3.Y)
+        path.AddLine(L3, Bl)
+
+        Dim XB As New Point(Bl.X + 1, Bl.Y - 1)
+        path.AddLine(Bl, XB)
+
+        Dim Br As New Point(XB.X + 1, XB.Y + 1)
+        path.AddLine(XB, Br)
+
+        Dim RB As New Point(Br.X + 3, Br.Y)
+        path.AddLine(Br, RB)
+
+        Dim R1 As New Point(RB.X, RB.Y - 2)
+        path.AddLine(RB, R1)
+
+        Dim BU3 As New Point(R1.X - 3, R1.Y)
+        path.AddLine(R1, BU3)
+
+        Dim RX As New Point(BU3.X, BU3.Y - 13)
+        path.AddLine(BU3, RX)
+
+        Dim TU As New Point(RX.X + 3, RX.Y)
+        path.AddLine(RX, TU)
+
+        Dim RR As New Point(TU.X, TU.Y - 2)
+        path.AddLine(TU, RR)
+
+        Dim T As New Point(RR.X - 3, RR.Y)
+        path.AddLine(RR, T)
+
+        Dim Tx As New Point(T.X - 1, T.Y + 1)
+        path.AddLine(T, Tx)
+
+        Dim TXL As New Point(Tx.X - 1, Tx.Y - 1)
+        path.AddLine(Tx, TXL)
+
+        Dim TL As New Point(TXL.X - 3, TXL.Y)
+        path.AddLine(TXL, TL)
+
+
+        Dim m As Matrix = New Matrix()
+        m.Scale(Scale, Scale, MatrixOrder.Append)
+        m.Translate(1, 1, MatrixOrder.Append)
+        path.Transform(m)
+
+        Return path
+    End Function
+
+    Public Function Pin_CenterPoint([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+        Dim path As New GraphicsPath
+        [Rectangle].Width = 13
+        [Rectangle].Height = 20
+        [Rectangle].X = 15
+        [Rectangle].Y = 11
+
+        Dim o As New Rectangle([Rectangle].X, [Rectangle].Y, 12, 12)
+        Dim o1 As New Rectangle([Rectangle].X, [Rectangle].Y, 6, 6)
+        o1.X = [Rectangle].X + (o.Width - o1.Width) / 2
+        o1.Y = [Rectangle].Y + (o.Height - o1.Height) / 2
+        path.AddEllipse(o1)
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)

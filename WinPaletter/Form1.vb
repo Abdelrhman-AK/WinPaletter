@@ -11,13 +11,18 @@ Public Class Form1
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Dim fs As FileStream = New FileStream("D:\cur.cur", FileMode.Create)
+        Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
 
-        Draw()
+        For i As Single = 1 To 4 Step 0.5
+            EO.WriteBitmap(Draw(i), Nothing, New Point(5 * i - 0.5 * i, 10 * i - 0.5 * i)) 'New Point(1, 1)
+        Next
+
+        fs.Close()
 
     End Sub
 
-    Sub Draw()
-        Dim Scale As Single = 1
+    Function Draw(ByVal Scale As Single) As Bitmap
         Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
         G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
@@ -104,24 +109,35 @@ Public Class Form1
         'G.DrawPath(Pens.Black, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
+#Region "Pin"
+        'G.FillPath(Brushes.White, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(New Pen(Color.Black, 2), DefCur.Pin(New Rectangle(15, 11, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.White, DefCur.Pin(New Rectangle(15, 11, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.Black, DefCur.Pin_CenterPoint(New Rectangle(15, 11, b.Width, b.Height), Scale))
+#End Region
+
+#Region "Person"
+        'G.FillPath(Brushes.White, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Hand(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(New Pen(Color.Black, 2), DefCur.Person(New Rectangle(19, 17, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.White, DefCur.Person(New Rectangle(19, 17, b.Width, b.Height), Scale))
+#End Region
+
+#Region "IBeam"
+        G.FillPath(Brushes.Black, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        G.DrawPath(Pens.White, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
 
         Dim g2 As Graphics = Panel1.CreateGraphics
         g2.SmoothingMode = G.SmoothingMode
         g2.Clear(Color.White)
         g2.DrawImage(b, New Point(0, 0))
 
-        b.Save("D:\x.png")
-
-        'Dim fs As FileStream = New System.IO.FileStream("D:\cur.cur", FileMode.Create)
-
-        'Dim EO As New EOIcoCurWriter(fs, 1, EOIcoCurWriter.IcoCurType.Cursor)
-
-        'EO.WriteBitmap(b, Nothing, New Point(1, 1))
-
-        'fs.Close()
-    End Sub
+        Return b
+    End Function
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Draw()
+        Draw(1)
     End Sub
 End Class
