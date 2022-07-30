@@ -22,6 +22,8 @@ Public Class Form1
 
     End Sub
 
+
+
     Function Draw(ByVal Scale As Single) As Bitmap
         Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
@@ -125,14 +127,21 @@ Public Class Form1
 #End Region
 
 #Region "IBeam"
-        G.FillPath(Brushes.Black, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
-        G.DrawPath(Pens.White, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.FillPath(Brushes.Black, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.White, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+#End Region
+
+#Region "Cross"
+        'G.FillPath(Brushes.Black, DefCur.IBeam(New Rectangle(0, 0, b.Width, b.Height), Scale))
+        'G.DrawPath(Pens.Black, DefCur.Cross(New Rectangle(0, 0, b.Width, b.Height), Scale))
 #End Region
 
         Dim g2 As Graphics = Panel1.CreateGraphics
         g2.SmoothingMode = G.SmoothingMode
         g2.Clear(Color.White)
         g2.DrawImage(b, New Point(0, 0))
+
+        b.Save("D:\x.png")
 
         Return b
     End Function
