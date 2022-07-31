@@ -943,4 +943,5 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_Line2 As Color = Color.Black
     Public Property Prop_LineGradient As Boolean = False
     Public Property Prop_LineGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+
 End Class

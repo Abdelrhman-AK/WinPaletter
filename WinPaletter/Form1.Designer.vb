@@ -27,6 +27,8 @@ Partial Class Form1
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -46,7 +48,7 @@ Partial Class Form1
         '
         Me.Panel2.BackColor = System.Drawing.Color.White
         Me.Panel2.Controls.Add(Me.Panel1)
-        Me.Panel2.Location = New System.Drawing.Point(154, 75)
+        Me.Panel2.Location = New System.Drawing.Point(279, 12)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(180, 180)
         Me.Panel2.TabIndex = 2
@@ -66,12 +68,46 @@ Partial Class Form1
         Me.XenonButton1.Text = "XenonButton1"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
+        'XenonButton2
+        '
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonButton2.Image = Nothing
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton2.LineSize = 1
+        Me.XenonButton2.Location = New System.Drawing.Point(12, 70)
+        Me.XenonButton2.Name = "XenonButton2"
+        Me.XenonButton2.Size = New System.Drawing.Size(100, 52)
+        Me.XenonButton2.TabIndex = 3
+        Me.XenonButton2.Text = "XenonButton2"
+        Me.XenonButton2.UseVisualStyleBackColor = False
+        '
+        'XenonTextBox1
+        '
+        Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox1.Hint = Nothing
+        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonTextBox1.Location = New System.Drawing.Point(12, 128)
+        Me.XenonTextBox1.MaxLength = 32767
+        Me.XenonTextBox1.Multiline = False
+        Me.XenonTextBox1.Name = "XenonTextBox1"
+        Me.XenonTextBox1.ReadOnly = False
+        Me.XenonTextBox1.Size = New System.Drawing.Size(261, 24)
+        Me.XenonTextBox1.TabIndex = 4
+        Me.XenonTextBox1.Text = "XenonTextBox1"
+        Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox1.UseSystemPasswordChar = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(471, 357)
+        Me.Controls.Add(Me.XenonTextBox1)
+        Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -90,4 +126,6 @@ Partial Class Form1
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Panel2 As Panel
+    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonTextBox1 As XenonTextBox
 End Class

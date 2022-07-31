@@ -181,7 +181,6 @@
     <Compile Include="GUI\CursorsCustomizer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\CursorsPath.vb" />
     <Compile Include="GUI\RetroUI.Designer.vb">
       <DependentUpon>RetroUI.vb</DependentUpon>
     </Compile>
