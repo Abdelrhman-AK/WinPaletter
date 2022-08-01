@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports WinPaletter.XenonCore
 
 Public Module Paths
     Enum CursorType
@@ -21,6 +22,8 @@ Public Module Paths
         IBeam
         Cross
     End Enum
+
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
     Public Function Draw([Cursor] As CursorType,
                          [BackColor1] As Color, [BackColor2] As Color, [BackColorGradient] As Boolean, [BackColorGradientMode] As LinearGradientMode,
@@ -331,7 +334,7 @@ Public Module Paths
                 G.FillPath(BB, Hand(_Arrow, Scale))
                 G.DrawPath(PL, Hand(_Arrow, Scale))
                 G.FillPath(BB_P, Pin(_Pin, Scale))
-                G.FillPath(BB_P, Pin_CenterPoint(_Pin, Scale))
+                G.FillPath(BL_P, Pin_CenterPoint(_Pin, Scale))
                 G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, Scale))
 
             Case CursorType.Person
@@ -1216,8 +1219,8 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_BackColorGradient As Boolean = False
     Public Property Prop_BackColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
 
-    Public Property Prop_LineColor1 As Color = Color.FromArgb(249, 249, 249)
-    Public Property Prop_LineColor2 As Color = Color.FromArgb(249, 249, 249)
+    Public Property Prop_LineColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Prop_LineColor2 As Color = Color.FromArgb(64, 65, 75)
     Public Property Prop_LineColorGradient As Boolean = False
     Public Property Prop_LineColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
     Public Property Prop_LineThickness As Single = 1
