@@ -22,8 +22,14 @@ Public Module Paths
         Cross
     End Enum
 
+    Public Function Draw([Cursor] As CursorType,
+                         [BackColor1] As Color, [BackColor2] As Color, [BackColorGradient] As Boolean, [BackColorGradientMode] As LinearGradientMode,
+                         [LineColor1] As Color, [LineColor2] As Color, [LineColorGradient] As Boolean, [LineColorGradientMode] As LinearGradientMode,
+                         [LoadingCircleBack1] As Color, [LoadingCircleBack2] As Color, [LoadingCircleBackGradient] As Boolean, [LoadingCircleBackGradientMode] As LinearGradientMode,
+                         [LoadingCircleHot1] As Color, [LoadingCircleHot2] As Color, [LoadingCircleHotGradient] As Boolean, [LoadingCircleHotGradientMode] As LinearGradientMode,
+                         [LineThickness] As Single, Optional Scale As Single = 1) As Bitmap
 
-    Public Function Draw([Cursor] As CursorType, Optional Scale As Single = 1) As Bitmap
+
         Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
         G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
@@ -33,7 +39,7 @@ Public Module Paths
         Dim _Arrow As New Rectangle(0, 0, b.Width, b.Height)
         Dim _Help As New Rectangle(11, 6, b.Width, b.Height)
         Dim _Busy As New Rectangle(0, 0, 22, 22)
-        Dim _Angle As Single = 50
+        Dim _Angle As Single = 180
         Dim _CurRect As New Rectangle(0, 8, b.Width, b.Height)
         Dim _LoadRect As New Rectangle(6, 0, 15, 15)
         Dim _Pin As New Rectangle(15, 11, b.Width, b.Height)
@@ -41,87 +47,357 @@ Public Module Paths
 #End Region
 
 
+
+
         Select Case [Cursor]
             Case CursorType.Arrow
-                G.FillPath(Brushes.Red, DefaultCursor(_Arrow, Scale))
-                G.DrawPath(Pens.White, DefaultCursor(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, DefaultCursor(_Arrow, Scale))
+                G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
 
             Case CursorType.Help
-                G.FillPath(Brushes.White, DefaultCursor(_Arrow, Scale))
-                G.DrawPath(Pens.Black, DefaultCursor(_Arrow, Scale))
-                G.FillPath(Brushes.White, Help(_Help, Scale))
-                G.DrawPath(Pens.Black, Help(_Help, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                Dim BB_H, BL_H As Brush
+                If [BackColorGradient] Then
+                    BB_H = New LinearGradientBrush(_Help, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB_H = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL_H = New LinearGradientBrush(_Help, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL_H = New SolidBrush([LineColor1])
+                End If
+                Dim PL_H As New Pen(BL_H, [LineThickness])
+
+                G.FillPath(BB, DefaultCursor(_Arrow, Scale))
+                G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
+
+                G.FillPath(BB_H, Help(_Help, Scale))
+                G.DrawPath(PL_H, Help(_Help, Scale))
 
             Case CursorType.Busy
-                Dim C1 As Color = Color.FromArgb(42, 151, 243)
-                Dim C2 As Color = Color.FromArgb(37, 204, 255)
-                G.FillPath(New SolidBrush(C1), Busy(_Busy, Scale))
-                G.FillPath(New SolidBrush(C2), BusyLoader(_Busy, _Angle, Scale))
+
+                Dim BC, BH As Brush
+                If [LoadingCircleBackGradient] Then
+                    BC = New LinearGradientBrush(_Busy, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                Else
+                    BC = New SolidBrush([LoadingCircleBack1])
+                End If
+                If [LoadingCircleHotGradient] Then
+                    BH = New LinearGradientBrush(_Busy, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                Else
+                    BH = New SolidBrush([LoadingCircleHot1])
+                End If
+
+                G.FillPath(BC, Busy(_Busy, Scale))
+                G.FillPath(BH, BusyLoader(_Busy, _Angle, Scale))
 
             Case CursorType.AppLoading
-                Dim C1 As Color = Color.FromArgb(42, 151, 243)
-                Dim C2 As Color = Color.FromArgb(37, 204, 255)
-                G.FillPath(Brushes.White, DefaultCursor(_CurRect, Scale))
-                G.DrawPath(Pens.Black, DefaultCursor(_CurRect, Scale))
-                G.FillPath(New SolidBrush(C1), AppLoading(_LoadRect, Scale))
-                G.FillPath(New SolidBrush(C2), AppLoaderCircle(_LoadRect, _Angle, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_CurRect, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_CurRect, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                Dim BC, BH As Brush
+                If [LoadingCircleBackGradient] Then
+                    BC = New LinearGradientBrush(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                Else
+                    BC = New SolidBrush([LoadingCircleBack1])
+                End If
+                If [LoadingCircleHotGradient] Then
+                    BH = New LinearGradientBrush(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                Else
+                    BH = New SolidBrush([LoadingCircleHot1])
+                End If
+
+                G.FillPath(BB, DefaultCursor(_CurRect, Scale))
+                G.DrawPath(PL, DefaultCursor(_CurRect, Scale))
+
+                G.FillPath(BC, AppLoading(_LoadRect, Scale))
+                G.FillPath(BH, AppLoaderCircle(_LoadRect, _Angle, Scale))
 
             Case CursorType.None
-                G.FillPath(Brushes.White, NoneBackground(_Arrow, Scale))
-                G.FillPath(Brushes.Red, None(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, NoneBackground(_Arrow, Scale))
+                G.FillPath(BL, None(_Arrow, Scale))
 
             Case CursorType.Move
-                G.FillPath(Brushes.White, Move(_Arrow, Scale))
-                G.DrawPath(Pens.Red, Move(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, Move(_Arrow, Scale))
+                G.DrawPath(PL, Move(_Arrow, Scale))
 
             Case CursorType.Up
-                G.FillPath(Brushes.White, Up(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Up(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, Up(_Arrow, Scale))
+                G.DrawPath(PL, Up(_Arrow, Scale))
 
             Case CursorType.NS
-                G.FillPath(Brushes.White, NS(_Arrow, Scale))
-                G.DrawPath(Pens.Black, NS(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, NS(_Arrow, Scale))
+                G.DrawPath(PL, NS(_Arrow, Scale))
 
             Case CursorType.EW
-                G.FillPath(Brushes.White, EW(_Arrow, Scale))
-                G.DrawPath(Pens.Black, EW(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, EW(_Arrow, Scale))
+                G.DrawPath(PL, EW(_Arrow, Scale))
 
             Case CursorType.NESW
-                G.FillPath(Brushes.White, NESW(_Arrow, Scale))
-                G.DrawPath(Pens.Red, NESW(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, NESW(_Arrow, Scale))
+                G.DrawPath(PL, NESW(_Arrow, Scale))
 
             Case CursorType.NWSE
-                G.FillPath(Brushes.White, NWSE(_Arrow, Scale))
-                G.DrawPath(Pens.Black, NWSE(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, NWSE(_Arrow, Scale))
+                G.DrawPath(PL, NWSE(_Arrow, Scale))
 
             Case CursorType.Pen
-                G.FillPath(Brushes.White, PenBackground(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Pen(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, PenBackground(_Arrow, Scale))
+                G.DrawPath(PL, Pen(_Arrow, Scale))
 
             Case CursorType.Link
-                G.FillPath(Brushes.White, Hand(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Hand(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, Scale))
 
             Case CursorType.Pin
-                G.FillPath(Brushes.White, Hand(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Hand(_Arrow, Scale))
-                G.DrawPath(New Pen(Color.Black, 2), Pin(_Pin, Scale))
-                G.FillPath(Brushes.White, Pin(_Pin, Scale))
-                G.FillPath(Brushes.Black, Pin_CenterPoint(_Pin, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                Dim BB_P, BL_P As Brush
+                If [BackColorGradient] Then
+                    BB_P = New LinearGradientBrush(_Pin, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB_P = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL_P = New LinearGradientBrush(_Pin, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL_P = New SolidBrush([LineColor1])
+                End If
+
+                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, Scale))
+                G.FillPath(BB_P, Pin(_Pin, Scale))
+                G.FillPath(BB_P, Pin_CenterPoint(_Pin, Scale))
+                G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, Scale))
 
             Case CursorType.Person
-                G.FillPath(Brushes.White, Hand(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Hand(_Arrow, Scale))
-                G.DrawPath(New Pen(Color.Black, 2), Person(_Person, Scale))
-                G.FillPath(Brushes.White, Person(_Person, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                Dim BB_P, BL_P As Brush
+                If [BackColorGradient] Then
+                    BB_P = New LinearGradientBrush(_Person, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB_P = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL_P = New LinearGradientBrush(_Person, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL_P = New SolidBrush([LineColor1])
+                End If
+
+                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, Scale))
+                G.FillPath(BB_P, Person(_Person, Scale))
+                G.DrawPath(New Pen(BL_P, 2), Person(_Person, Scale))
 
             Case CursorType.IBeam
-                G.FillPath(Brushes.Black, IBeam(_Arrow, Scale))
-                G.DrawPath(Pens.White, IBeam(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, IBeam(_Arrow, Scale))
+                G.DrawPath(PL, IBeam(_Arrow, Scale))
 
             Case CursorType.Cross
-                G.FillPath(Brushes.Black, IBeam(_Arrow, Scale))
-                G.DrawPath(Pens.Black, Cross(_Arrow, Scale))
+                Dim BB, BL As Brush
+                If [BackColorGradient] Then
+                    BB = New LinearGradientBrush(_Arrow, [BackColor1], [BackColor2], [BackColorGradientMode])
+                Else
+                    BB = New SolidBrush([BackColor1])
+                End If
+                If [LineColorGradientMode] Then
+                    BL = New LinearGradientBrush(_Arrow, [LineColor1], [LineColor2], [LineColorGradientMode])
+                Else
+                    BL = New SolidBrush([LineColor1])
+                End If
+                Dim PL As New Pen(BL, [LineThickness])
+
+                G.FillPath(BB, Cross(_Arrow, Scale))
+                G.DrawPath(PL, Cross(_Arrow, Scale))
 
         End Select
 
@@ -213,7 +489,7 @@ Public Module Paths
 
         Dim innerR = 15
         Dim thickness = 10
-        Dim arcLength = 50
+        Dim arcLength = 70
         Dim outerR = innerR + thickness
 
         Dim outerRect = [Rectangle]
@@ -260,7 +536,7 @@ Public Module Paths
 
         Dim innerR = 15
         Dim thickness = 6
-        Dim arcLength = 50
+        Dim arcLength = 70
         Dim outerR = innerR + thickness
 
         Dim outerRect = [Rectangle]
@@ -928,20 +1204,113 @@ Public Module Paths
 
 End Module
 
-Public Class CursorControl : Inherits ContainerControl
 
+Public Class CursorControl : Inherits ContainerControl
     Sub New()
 
     End Sub
 
     Public Property Prop_Cursor As Paths.CursorType = CursorType.Arrow
-    Public Property Prop_Back1 As Color = Color.White
-    Public Property Prop_Back2 As Color = Color.White
-    Public Property Prop_BackGradient As Boolean = False
-    Public Property Prop_BackGradientMode As LinearGradientMode = LinearGradientMode.Vertical
-    Public Property Prop_Line1 As Color = Color.Black
-    Public Property Prop_Line2 As Color = Color.Black
-    Public Property Prop_LineGradient As Boolean = False
-    Public Property Prop_LineGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_BackColor1 As Color = Color.White
+    Public Property Prop_BackColor2 As Color = Color.White
+    Public Property Prop_BackColorGradient As Boolean = False
+    Public Property Prop_BackColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
 
+    Public Property Prop_LineColor1 As Color = Color.FromArgb(249, 249, 249)
+    Public Property Prop_LineColor2 As Color = Color.FromArgb(249, 249, 249)
+    Public Property Prop_LineColorGradient As Boolean = False
+    Public Property Prop_LineColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_LineThickness As Single = 1
+
+
+    Public Property Prop_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Prop_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Prop_LoadingCircleBackGradient As Boolean = False
+    Public Property Prop_LoadingCircleBackGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+
+    Public Property Prop_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Prop_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Prop_LoadingCircleHotGradient As Boolean = False
+    Public Property Prop_LoadingCircleHotGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+
+
+    Public Property Prop_Scale As Single = 1
+
+    Dim ColorPalette As New XenonColorPalette(Me)
+
+    Private _Shown As Boolean = False
+
+    Dim _Focused As Boolean = False
+
+    Dim bmp As Bitmap
+
+    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+            End If
+        Catch
+        End Try
+
+    End Sub
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
+        ColorPalette = New XenonColorPalette(Me)
+        Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
+    End Sub
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+
+        bmp = New Bitmap(32 * Prop_Scale, 32 * Prop_Scale, PixelFormat.Format32bppPArgb)
+
+        bmp = Draw(Prop_Cursor,
+                   Prop_BackColor1, Prop_BackColor2, Prop_BackColorGradient, Prop_BackColorGradientMode,
+                   Prop_LineColor1, Prop_LineColor2, Prop_LineColorGradient, Prop_LineColorGradientMode,
+                   Prop_LoadingCircleBack1, Prop_LoadingCircleBack2, Prop_LoadingCircleBackGradient, Prop_LoadingCircleBackGradientMode,
+                   Prop_LoadingCircleHot1, Prop_LoadingCircleHot2, Prop_LoadingCircleHotGradient, Prop_LoadingCircleHotGradientMode,
+                   Prop_LineThickness, Prop_Scale)
+
+        DoubleBuffered = True
+
+        Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
+
+        Dim CenterRect As New Rectangle(MainRect.X + (MainRect.Width - bmp.Width) / 2,
+                                        MainRect.Y + (MainRect.Height - bmp.Height) / 2,
+                                         bmp.Width, bmp.Height)
+
+        e.Graphics.Clear(GetParentColor(Me))
+        FillRect(e.Graphics, New SolidBrush(If(_Focused, ColorPalette.Color_Back_Checked, ColorPalette.Color_Back)), MainRect)
+        DrawRect_LikeW11(e.Graphics, If(_Focused, ColorPalette.Color_Border_Checked_Hover, ColorPalette.Color_Border), MainRect)
+        e.Graphics.DrawImage(bmp, CenterRect)
+
+    End Sub
+
+    Private Sub CursorControl_Click(sender As Object, e As EventArgs) Handles Me.Click
+
+        For Each c As CursorControl In Parent.Controls.OfType(Of CursorControl)
+            If c Is sender Then
+                c._Focused = True
+                c.Invalidate()
+            Else
+                c._Focused = False
+                c.Invalidate()
+            End If
+        Next
+
+    End Sub
 End Class
