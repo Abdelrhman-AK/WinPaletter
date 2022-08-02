@@ -3898,4 +3898,238 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
     End Sub
 End Class
+
+<DefaultEvent("Scroll")>
+Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Object)
+
+#Region "Properties"
+    Private _Minimum As Integer
+    Property Minimum() As Integer
+        Get
+            Return _Minimum
+        End Get
+        Set(ByVal value As Integer)
+            If value < 0 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _Minimum = value
+            If value > _Value Then _Value = value
+            If value > _Maximum Then _Maximum = value
+
+            InvalidateLayout()
+        End Set
+    End Property
+
+    Private _Maximum As Integer = 100
+    Property Maximum() As Integer
+        Get
+            Return _Maximum
+        End Get
+        Set(ByVal value As Integer)
+            If value < 0 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _Maximum = value
+            If value < _Value Then _Value = value
+            If value < _Minimum Then _Minimum = value
+
+            InvalidateLayout()
+        End Set
+    End Property
+
+    Private _Value As Integer
+    Property Value() As Integer
+        Get
+
+            Return _Value
+        End Get
+        Set(ByVal value As Integer)
+            If value = _Value Then Return
+
+            If value > _Maximum Then
+                value = _Maximum
+            End If
+
+            If value < _Minimum Then
+                value = _Minimum
+            End If
+
+
+
+            _Value = value
+            InvalidatePosition()
+
+            RaiseEvent Scroll(Me)
+        End Set
+    End Property
+
+    Private _SmallChange As Integer = 1
+    Public Property SmallChange() As Integer
+        Get
+            Return _SmallChange
+        End Get
+        Set(ByVal value As Integer)
+            If value < 1 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _SmallChange = value
+        End Set
+    End Property
+
+    Private _LargeChange As Integer = 10
+    Public Property LargeChange() As Integer
+        Get
+            Return _LargeChange
+        End Get
+        Set(ByVal value As Integer)
+            If value < 1 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _LargeChange = value
+        End Set
+    End Property
+#End Region
+
+    Private ButtonSize As Integer = 0
+    Private ThumbSize As Integer = 15 ' 14 minimum
+    Private LSA As Rectangle
+    Private RSA As Rectangle
+    Private Shaft As Rectangle
+    Private Thumb As Rectangle
+    Private ThumbDown As Boolean
+
+    Enum MouseState
+        None
+        Over
+        Down
+    End Enum
+
+    Public State As MouseState = MouseState.None
+
+    Sub New()
+        SetStyle(DirectCast(139286, ControlStyles), True)
+        SetStyle(ControlStyles.Selectable, False)
+    End Sub
+
+    Dim I1 As Integer
+
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+        DoubleBuffered = True
+        G.Clear(BackColor)
+
+        Dim c_back As Color = If(GetDarkMode(), Color.FromArgb(45, 45, 45), Color.FromArgb(200, 200, 200))
+        Dim C As Color
+        Select Case State
+            Case MouseState.None
+                C = Color.FromArgb(135, 135, 135)
+            Case MouseState.Down
+                C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), -0.1, 0.1))
+            Case MouseState.Over
+                C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), 0.35, -0.35))
+        End Select
+
+        FillRect(G, New SolidBrush(c_back), New Rectangle(0, 0, Width - 1, Height - 1), 2)
+        FillRect(G, New SolidBrush(C), Thumb, 2)
+
+    End Sub
+
+    Protected Overrides Sub OnSizeChanged(e As EventArgs)
+        InvalidateLayout()
+    End Sub
+
+    Private Sub InvalidateLayout()
+        LSA = New Rectangle(0, 0, ButtonSize, Height)
+        RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
+        Shaft = New Rectangle(LSA.Right + 1, 0, Width - (ButtonSize * 2) - 1, Height)
+        Thumb = New Rectangle(0, 1, (Value / Maximum) * Width, Height - 3)
+        RaiseEvent Scroll(Me)
+        InvalidatePosition()
+    End Sub
+
+    Private Sub InvalidatePosition()
+        Thumb.Width = (Value / Maximum) * Width
+        Refresh()
+    End Sub
+
+    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            State = MouseState.Down
+            If LSA.Contains(e.Location) Then
+                I1 = _Value - _SmallChange
+            ElseIf RSA.Contains(e.Location) Then
+                I1 = _Value + _SmallChange
+            Else
+                If Thumb.Contains(e.Location) Then
+                    ThumbDown = True
+                    Return
+                Else
+                    If e.X < Thumb.X Then
+                        I1 = _Value - _LargeChange
+                    Else
+                        I1 = _Value + _LargeChange
+                    End If
+                End If
+            End If
+            Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+            InvalidatePosition()
+        End If
+    End Sub
+
+    Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
+        If Thumb.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
+            State = MouseState.Over
+        Else
+            If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
+        End If
+
+        Invalidate()
+
+        If ThumbDown Then
+            Dim ThumbPosition As Integer = e.X - LSA.Width - (ThumbSize \ 2)
+            Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
+
+            I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
+
+            Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+            InvalidatePosition()
+        End If
+    End Sub
+
+    Private Function GetProgress() As Double
+        Return (_Value - _Minimum) / (_Maximum - _Minimum)
+    End Function
+
+    Private Sub NSVScrollBar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        ThumbDown = False
+        State = MouseState.None
+        Invalidate()
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        If Thumb.Contains(MousePosition) Then
+            State = MouseState.Over
+            Invalidate()
+        End If
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        State = MouseState.None
+        Invalidate()
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        If e.Delta > 0 Then
+            If e.Delta <= -240 Then Value = Value + LargeChange Else Value = Value + SmallChange
+        Else
+            If e.Delta >= 240 Then Value = Value - LargeChange Else Value = Value - SmallChange
+        End If
+    End Sub
+End Class
 #End Region

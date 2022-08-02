@@ -32,7 +32,7 @@ Public Module Paths
                          [LoadingCircleHot1] As Color, [LoadingCircleHot2] As Color, [LoadingCircleHotGradient] As Boolean, [LoadingCircleHotGradientMode] As LinearGradientMode,
                          [PrimaryNoise] As Boolean, [PrimaryNoiseOpacity] As Single, [SecondaryNoise] As Boolean, [SecondaryNoiseOpacity] As Single,
                          [LoadingCircleBackNoise] As Boolean, [LoadingCircleBackNoiseOpacity] As Single, [LoadingCircleHotNoise] As Boolean, [LoadingCircleHotNoiseOpacity] As Single,
-                         [LineThickness] As Single, Optional Scale As Single = 1) As Bitmap
+                         [LineThickness] As Single, Optional Scale As Single = 1, Optional ByVal _Angle As Single = 180) As Bitmap
 
 
         Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
@@ -44,7 +44,6 @@ Public Module Paths
         Dim _Arrow As New Rectangle(0, 0, b.Width, b.Height)
         Dim _Help As New Rectangle(11, 6, b.Width, b.Height)
         Dim _Busy As New Rectangle(0, 0, 22, 22)
-        Dim _Angle As Single = 180
         Dim _CurRect As New Rectangle(0, 8, b.Width, b.Height)
         Dim _LoadRect As New Rectangle(6, 0, 15, 15)
         Dim _Pin As New Rectangle(15, 11, b.Width, b.Height)
@@ -118,12 +117,12 @@ Public Module Paths
 
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
-                    BC = New LinearGradientBrush(_Busy, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                    BC = New LinearGradientBrush(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
                 Else
                     BC = New SolidBrush([LoadingCircleBack1])
                 End If
                 If [LoadingCircleHotGradient] Then
-                    BH = New LinearGradientBrush(_Busy, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                    BH = New LinearGradientBrush(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
                 Else
                     BH = New SolidBrush([LoadingCircleHot1])
                 End If
@@ -134,12 +133,12 @@ Public Module Paths
             Case CursorType.AppLoading
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_CurRect, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_CurRect, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -147,12 +146,12 @@ Public Module Paths
 
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
-                    BC = New LinearGradientBrush(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                    BC = New LinearGradientBrush(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
                 Else
                     BC = New SolidBrush([LoadingCircleBack1])
                 End If
                 If [LoadingCircleHotGradient] Then
-                    BH = New LinearGradientBrush(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                    BH = New LinearGradientBrush(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
                 Else
                     BH = New SolidBrush([LoadingCircleHot1])
                 End If
@@ -1265,6 +1264,8 @@ Public Class CursorControl : Inherits ContainerControl
 
     Dim bmp As Bitmap
 
+    Public Angle As Single = 180
+
     Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
         Try
@@ -1306,7 +1307,7 @@ Public Class CursorControl : Inherits ContainerControl
                    Prop_LoadingCircleHot1, Prop_LoadingCircleHot2, Prop_LoadingCircleHotGradient, Prop_LoadingCircleHotGradientMode,
                    Prop_PrimaryNoise, Prop_PrimaryNoiseOpacity, Prop_SecondaryNoise, Prop_SecondaryNoiseOpacity,
                    Prop_LoadingCircleBackNoise, Prop_LoadingCircleBackNoiseOpacity, Prop_LoadingCircleHotNoise, Prop_LoadingCircleHotNoiseOpacity,
-                   Prop_LineThickness, Prop_Scale)
+                   Prop_LineThickness, Prop_Scale, Angle)
 
         DoubleBuffered = True
 

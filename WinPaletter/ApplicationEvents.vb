@@ -340,7 +340,6 @@ Namespace My
             allForms.Add(Updates)
             allForms.Add(Win32UI)
             allForms.Add(SettingsX)
-            allForms.Add(OTVDM)
 
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)

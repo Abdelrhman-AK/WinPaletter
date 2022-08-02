@@ -80,6 +80,7 @@
     <Reference Include="AnimCur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\AnimCur.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\References\ColorThief.Desktop.v46.dll</HintPath>
@@ -211,12 +212,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
-    <Compile Include="OTVDM.Designer.vb">
-      <DependentUpon>OTVDM.vb</DependentUpon>
-    </Compile>
-    <Compile Include="OTVDM.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -290,9 +285,6 @@
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OTVDM.resx">
-      <DependentUpon>OTVDM.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
