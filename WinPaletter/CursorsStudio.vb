@@ -6,15 +6,20 @@ Imports Microsoft.Win32
 Imports System.Text
 
 Public Class CursorsStudio
-
+    Private _Shown As Boolean = False
     Private _SelectedControl As CursorControl
     Private _CopiedControl As CursorControl
-
     Private AnimateList As New List(Of CursorControl)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         AnimateList.Clear()
         _CopiedControl = Nothing
+        _Shown = False
+
+        Angle = 180
+        Cycles = 0
+        Timer1.Enabled = False
+        Timer1.Stop()
 
         For Each i As CursorControl In FlowLayoutPanel1.Controls
             If TypeOf i Is CursorControl Then
@@ -22,7 +27,10 @@ Public Class CursorsStudio
                 If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
             End If
         Next
+    End Sub
 
+    Private Sub CursorsStudio_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        _Shown = True
     End Sub
 
     Sub Clicked(sender As Object, e As MouseEventArgs)
@@ -37,29 +45,29 @@ Public Class CursorsStudio
             XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
             XenonComboBox1.SelectedIndex = .Prop_PrimaryColorGradientMode
             XenonCheckBox5.Checked = .Prop_PrimaryNoise
-            XenonNumericUpDown2.Value = .Prop_PrimaryNoiseOpacity * 100
+            XenonNumericUpDown2.Text = .Prop_PrimaryNoiseOpacity * 100
 
             XenonGroupBox5.BackColor = .Prop_SecondaryColor1
             XenonGroupBox4.BackColor = .Prop_SecondaryColor2
             XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
             XenonComboBox2.SelectedIndex = .Prop_SecondaryColorGradientMode
             XenonCheckBox3.Checked = .Prop_SecondaryNoise
-            XenonNumericUpDown1.Value = .Prop_SecondaryNoiseOpacity * 100
-            XenonNumericUpDown3.Value = .Prop_LineThickness
+            XenonNumericUpDown1.Text = .Prop_SecondaryNoiseOpacity * 100
+            XenonNumericUpDown3.Value = .Prop_LineThickness * 10
 
             XenonGroupBox10.BackColor = .Prop_LoadingCircleBack1
             XenonGroupBox9.BackColor = .Prop_LoadingCircleBack2
             XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
             XenonComboBox4.SelectedIndex = .Prop_LoadingCircleBackGradientMode
             XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
-            XenonNumericUpDown6.Value = .Prop_LoadingCircleBackNoiseOpacity * 100
+            XenonNumericUpDown6.Text = .Prop_LoadingCircleBackNoiseOpacity * 100
 
             XenonGroupBox8.BackColor = .Prop_LoadingCircleHot1
             XenonGroupBox7.BackColor = .Prop_LoadingCircleHot2
             XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
             XenonComboBox3.SelectedIndex = .Prop_LoadingCircleHotGradientMode
             XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
-            XenonNumericUpDown4.Value = .Prop_LoadingCircleHotNoiseOpacity * 100
+            XenonNumericUpDown4.Text = .Prop_LoadingCircleHotNoiseOpacity * 100
         End With
 
     End Sub
@@ -71,34 +79,35 @@ Public Class CursorsStudio
             .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
             .Prop_PrimaryColorGradientMode = XenonComboBox1.SelectedIndex
             .Prop_PrimaryNoise = XenonCheckBox5.Checked
-            .Prop_PrimaryNoiseOpacity = XenonNumericUpDown2.Value / 100
+            .Prop_PrimaryNoiseOpacity = Val(XenonNumericUpDown2.Text) / 100
 
             .Prop_SecondaryColor1 = XenonGroupBox5.BackColor
             .Prop_SecondaryColor2 = XenonGroupBox4.BackColor
             .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
             .Prop_SecondaryColorGradientMode = XenonComboBox2.SelectedIndex
             .Prop_SecondaryNoise = XenonCheckBox3.Checked
-            .Prop_SecondaryNoiseOpacity = XenonNumericUpDown1.Value / 100
-            .Prop_LineThickness = XenonNumericUpDown3.Value
+            .Prop_SecondaryNoiseOpacity = Val(XenonNumericUpDown1.Text) / 100
+            .Prop_LineThickness = XenonNumericUpDown3.Value / 10
 
             .Prop_LoadingCircleBack1 = XenonGroupBox10.BackColor
             .Prop_LoadingCircleBack2 = XenonGroupBox9.BackColor
             .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
             .Prop_LoadingCircleBackGradientMode = XenonComboBox4.SelectedIndex
             .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
-            .Prop_LoadingCircleBackNoiseOpacity = XenonNumericUpDown6.Value / 100
+            .Prop_LoadingCircleBackNoiseOpacity = Val(XenonNumericUpDown6.Text) / 100
 
             .Prop_LoadingCircleHot1 = XenonGroupBox8.BackColor
             .Prop_LoadingCircleHot2 = XenonGroupBox7.BackColor
             .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
             .Prop_LoadingCircleHotGradientMode = XenonComboBox3.SelectedIndex
             .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
-            .Prop_LoadingCircleHotNoiseOpacity = XenonNumericUpDown4.Value / 100
+            .Prop_LoadingCircleHotNoiseOpacity = Val(XenonNumericUpDown4.Text) / 100
         End With
 
     End Sub
 
     Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -175,31 +184,33 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_PrimaryColorGradient = If(XenonCheckBox1.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox1.Invalidate()
     End Sub
 
     Private Sub XenonCheckBox4_CheckedChanged(sender As Object) Handles XenonCheckBox4.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_SecondaryColorGradient = If(XenonCheckBox4.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox4.Invalidate()
 
     End Sub
 
-    Private Sub XenonNumericUpDown2_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.Click
-        _SelectedControl.Prop_PrimaryNoiseOpacity = sender.Value / 100
-        _SelectedControl.Invalidate()
-
-    End Sub
-
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_PrimaryColorGradientMode = sender.SelectedIndex
         _SelectedControl.Invalidate()
 
     End Sub
 
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_SecondaryColorGradientMode = sender.SelectedIndex
         _SelectedControl.Invalidate()
 
@@ -207,6 +218,8 @@ Public Class CursorsStudio
 
 
     Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_PrimaryNoise = If(XenonCheckBox5.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox5.Invalidate()
@@ -214,6 +227,8 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_SecondaryNoise = If(XenonCheckBox3.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox3.Invalidate()
@@ -221,23 +236,18 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonNumericUpDown3_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown3.Click
-        _SelectedControl.Prop_LineThickness = sender.Value
+        _SelectedControl.Prop_LineThickness = sender.Value / 10
         _SelectedControl.Invalidate()
-    End Sub
-
-    Private Sub XenonNumericUpDown1_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown1.Click
-        _SelectedControl.Prop_SecondaryNoiseOpacity = sender.Value / 100
-        _SelectedControl.Invalidate()
-
     End Sub
 
     Private Sub XenonScrollBarHMini1_Scroll(sender As Object) Handles XenonScrollBarHMini1.Scroll
+        If Not _Shown Then Exit Sub
+
         For Each i As CursorControl In FlowLayoutPanel1.Controls
             i.Prop_Scale = sender.value / 100
             i.Width = 32 * i.Prop_Scale + 32
             i.Height = i.Width
             i.Refresh()
-
         Next
     End Sub
 
@@ -245,6 +255,8 @@ Public Class CursorsStudio
     Dim Increment As Single = 5
     Dim Cycles As Integer = 0
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If Not _Shown Then Exit Sub
+
         Try
             For Each i As CursorControl In AnimateList
                 i.Angle = Angle
@@ -319,13 +331,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonCheckBox8_CheckedChanged(sender As Object) Handles XenonCheckBox8.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_LoadingCircleBackGradient = If(XenonCheckBox8.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox8.Invalidate()
     End Sub
 
     Private Sub XenonCheckBox2_CheckedChanged(sender As Object) Handles XenonCheckBox2.CheckedChanged
-        '### add if _shown then ...........
+        If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_LoadingCircleHotGradient = If(XenonCheckBox2.Checked, True, False)
         _SelectedControl.Invalidate()
@@ -333,6 +347,8 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonCheckBox7_CheckedChanged(sender As Object) Handles XenonCheckBox7.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_LoadingCircleBackNoise = If(XenonCheckBox7.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox7.Invalidate()
@@ -340,31 +356,25 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_LoadingCircleHotNoise = If(XenonCheckBox6.Checked, True, False)
         _SelectedControl.Invalidate()
         XenonCheckBox6.Invalidate()
 
     End Sub
 
-    Private Sub XenonNumericUpDown6_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown6.Click
-        _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = sender.Value / 100
-        _SelectedControl.Invalidate()
-
-    End Sub
-
-    Private Sub XenonNumericUpDown4_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown4.Click
-        _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = sender.Value / 100
-        _SelectedControl.Invalidate()
-
-    End Sub
-
     Private Sub XenonComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox4.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_LoadingCircleBackGradientMode = sender.SelectedIndex
         _SelectedControl.Invalidate()
 
     End Sub
 
     Private Sub XenonComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox3.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
         _SelectedControl.Prop_LoadingCircleHotGradientMode = sender.SelectedIndex
         _SelectedControl.Invalidate()
 
@@ -372,12 +382,91 @@ Public Class CursorsStudio
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         _CopiedControl = _SelectedControl
+        XenonButton2.Enabled = True
+        XenonButton6.Enabled = True
+
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         ApplyColorsFromCursor(_CopiedControl)
         ApplyColorsToPreview(_SelectedControl)
     End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        For Each i As CursorControl In FlowLayoutPanel1.Controls
+            If TypeOf i Is CursorControl Then
+                ApplyColorsFromCursor(_CopiedControl)
+                ApplyColorsToPreview(i)
+                i.Invalidate()
+            End If
+        Next
+    End Sub
+
+
+
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.TextChanged
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = Val(sender.Text)
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_PrimaryNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged_1(sender As Object, e As EventArgs) Handles XenonNumericUpDown6.TextChanged
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = Val(sender.Text)
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged_2(sender As Object, e As EventArgs) Handles XenonNumericUpDown1.TextChanged
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = Val(sender.Text)
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_SecondaryNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged_3(sender As Object, e As EventArgs) Handles XenonNumericUpDown4.TextChanged
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = Val(sender.Text)
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        Me.Close()
+    End Sub
+
+
 
     'Dim fs As FileStream = New FileStream("D:\cur.cur", FileMode.Create)
     'Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)

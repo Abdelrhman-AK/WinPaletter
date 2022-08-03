@@ -45,13 +45,14 @@ Public Module Paths
         Dim _Help As New Rectangle(11, 6, b.Width, b.Height)
         Dim _Busy As New Rectangle(0, 0, 22, 22)
         Dim _CurRect As New Rectangle(0, 8, b.Width, b.Height)
-        Dim _LoadRect As New Rectangle(6, 0, 15, 15)
+        Dim _LoadRect As New Rectangle(6, 0, 22 * Scale, 22 * Scale)
         Dim _Pin As New Rectangle(15, 11, b.Width, b.Height)
         Dim _Person As New Rectangle(19, 17, b.Width, b.Height)
 #End Region
 
         Select Case [Cursor]
             Case CursorType.Arrow
+#Region "Arrow"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -64,7 +65,6 @@ Public Module Paths
                     BL = New SolidBrush([SecondaryColor1])
                 End If
                 Dim PL As New Pen(BL, [LineThickness])
-
 
                 G.FillPath(BB, DefaultCursor(_Arrow, Scale))
 
@@ -79,8 +79,9 @@ Public Module Paths
                     Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
                 End If
-
+#End Region
             Case CursorType.Help
+#Region "Help"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -107,14 +108,40 @@ Public Module Paths
                 End If
                 Dim PL_H As New Pen(BL_H, [LineThickness])
 
+
                 G.FillPath(BB, DefaultCursor(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, DefaultCursor(_Arrow, Scale))
+                End If
+
+
                 G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
+                End If
+
+
                 G.FillPath(BB_H, Help(_Help, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Help(_Help, Scale))
+                End If
+
                 G.DrawPath(PL_H, Help(_Help, Scale))
 
-            Case CursorType.Busy
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Help(_Help, Scale))
+                End If
 
+#End Region
+            Case CursorType.Busy
+#Region "Busy"
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
                     BC = New LinearGradientBrush(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
@@ -128,9 +155,21 @@ Public Module Paths
                 End If
 
                 G.FillPath(BC, Busy(_Busy, Scale))
+
+                If [LoadingCircleBackNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleBackNoiseOpacity]))
+                    G.FillPath(Noise, Busy(_Busy, Scale))
+                End If
+
                 G.FillPath(BH, BusyLoader(_Busy, _Angle, Scale))
 
+                If [LoadingCircleHotNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleHotNoiseOpacity]))
+                    G.FillPath(Noise, BusyLoader(_Busy, _Angle, Scale))
+                End If
+#End Region
             Case CursorType.AppLoading
+#Region "AppLoading"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -146,23 +185,47 @@ Public Module Paths
 
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
-                    BC = New LinearGradientBrush(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                    BC = New LinearGradientBrush(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
                 Else
                     BC = New SolidBrush([LoadingCircleBack1])
                 End If
                 If [LoadingCircleHotGradient] Then
-                    BH = New LinearGradientBrush(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                    BH = New LinearGradientBrush(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
                 Else
                     BH = New SolidBrush([LoadingCircleHot1])
                 End If
 
                 G.FillPath(BB, DefaultCursor(_CurRect, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, DefaultCursor(_CurRect, Scale))
+                End If
+
                 G.DrawPath(PL, DefaultCursor(_CurRect, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_CurRect, Scale))
+                End If
+
                 G.FillPath(BC, AppLoading(_LoadRect, Scale))
+
+                If [LoadingCircleBackNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleBackNoiseOpacity]))
+                    G.FillPath(Noise, AppLoading(_LoadRect, Scale))
+                End If
+
                 G.FillPath(BH, AppLoaderCircle(_LoadRect, _Angle, Scale))
 
+                If [LoadingCircleHotNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleHotNoiseOpacity]))
+                    G.FillPath(Noise, AppLoaderCircle(_LoadRect, _Angle, Scale))
+                End If
+
+#End Region
             Case CursorType.None
+#Region "None"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -176,10 +239,23 @@ Public Module Paths
                 End If
                 Dim PL As New Pen(BL, [LineThickness])
 
+
                 G.FillPath(BB, NoneBackground(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NoneBackground(_Arrow, Scale))
+                End If
+
                 G.FillPath(BL, None(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.FillPath(Noise, None(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Move
+#Region "Move"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -194,9 +270,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, Move(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Move(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Move(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Move(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Up
+#Region "Up"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -211,9 +299,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, Up(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Up(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Up(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Up(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.NS
+#Region "NS"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -228,9 +328,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, NS(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NS(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, NS(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), NS(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.EW
+#Region "EW"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -245,9 +357,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, EW(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, EW(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, EW(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), EW(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.NESW
+#Region "NESW"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -262,9 +386,22 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, NESW(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NESW(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, NESW(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), NESW(_Arrow, Scale))
+                End If
+
+#End Region
             Case CursorType.NWSE
+#Region "NWSE"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -279,9 +416,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, NWSE(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NWSE(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, NWSE(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), NWSE(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Pen
+#Region "Pen"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -296,9 +445,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, PenBackground(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, PenBackground(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Pen(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Pen(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Link
+#Region "Link"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -313,9 +474,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, Hand(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Hand(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Pin
+#Region "Pin"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -342,12 +515,42 @@ Public Module Paths
                 End If
 
                 G.FillPath(BB, Hand(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Hand(_Arrow, Scale))
+
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                End If
+
                 G.FillPath(BB_P, Pin(_Pin, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Pin(_Pin, Scale))
+                End If
+
                 G.FillPath(BL_P, Pin_CenterPoint(_Pin, Scale))
+
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Pin_CenterPoint(_Pin, Scale))
+                End If
+
                 G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Pin(_Pin, Scale))
+                End If
+#End Region
             Case CursorType.Person
+#Region "Person"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -374,11 +577,35 @@ Public Module Paths
                 End If
 
                 G.FillPath(BB, Hand(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Hand(_Arrow, Scale))
+
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                End If
+
                 G.FillPath(BB_P, Person(_Person, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Person(_Person, Scale))
+                End If
+
                 G.DrawPath(New Pen(BL_P, 2), Person(_Person, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Person(_Person, Scale))
+                End If
+#End Region
             Case CursorType.IBeam
+#Region "IBeam"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -393,9 +620,21 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, IBeam(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, IBeam(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, IBeam(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), IBeam(_Arrow, Scale))
+                End If
+#End Region
             Case CursorType.Cross
+#Region "Cross"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
                     BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
@@ -410,10 +649,20 @@ Public Module Paths
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, Cross(_Arrow, Scale))
+
+                If [PrimaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Cross(_Arrow, Scale))
+                End If
+
                 G.DrawPath(PL, Cross(_Arrow, Scale))
 
+                If [SecondaryNoise] Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, LineThickness), Cross(_Arrow, Scale))
+                End If
+#End Region
         End Select
-
 
         G.Flush()
         G.Save()
@@ -1229,14 +1478,14 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_PrimaryColorGradient As Boolean = False
     Public Property Prop_PrimaryColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
     Public Property Prop_PrimaryNoise As Boolean = False
-    Public Property Prop_PrimaryNoiseOpacity As Single = 1
+    Public Property Prop_PrimaryNoiseOpacity As Single = 0.25
 
     Public Property Prop_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
     Public Property Prop_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
     Public Property Prop_SecondaryColorGradient As Boolean = False
     Public Property Prop_SecondaryColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
     Public Property Prop_SecondaryNoise As Boolean = False
-    Public Property Prop_SecondaryNoiseOpacity As Single = 1
+    Public Property Prop_SecondaryNoiseOpacity As Single = 0.25
     Public Property Prop_LineThickness As Single = 1
 
 
@@ -1245,14 +1494,14 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_LoadingCircleBackGradient As Boolean = False
     Public Property Prop_LoadingCircleBackGradientMode As LinearGradientMode = LinearGradientMode.Vertical
     Public Property Prop_LoadingCircleBackNoise As Boolean = False
-    Public Property Prop_LoadingCircleBackNoiseOpacity As Single = 1
+    Public Property Prop_LoadingCircleBackNoiseOpacity As Single = 0.25
 
     Public Property Prop_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
     Public Property Prop_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
     Public Property Prop_LoadingCircleHotGradient As Boolean = False
     Public Property Prop_LoadingCircleHotGradientMode As LinearGradientMode = LinearGradientMode.Vertical
     Public Property Prop_LoadingCircleHotNoise As Boolean = False
-    Public Property Prop_LoadingCircleHotNoiseOpacity As Single = 1
+    Public Property Prop_LoadingCircleHotNoiseOpacity As Single = 0.25
 
     Public Property Prop_Scale As Single = 1
 

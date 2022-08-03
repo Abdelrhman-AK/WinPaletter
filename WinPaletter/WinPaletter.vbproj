@@ -242,6 +242,8 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
@@ -285,6 +287,7 @@
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

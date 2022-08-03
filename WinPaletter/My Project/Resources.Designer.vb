@@ -569,16 +569,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Public ReadOnly Property OTVDM_Scr() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("OTVDM_Scr", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
         Public ReadOnly Property settingsfile() As System.Drawing.Icon

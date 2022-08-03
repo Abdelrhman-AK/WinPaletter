@@ -833,7 +833,10 @@ Public Class XenonRadioButton
                 AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-
+                AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+                AddHandler VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler EnabledChanged, AddressOf RefreshColorPalette
             End If
         Catch
         End Try
@@ -1129,6 +1132,10 @@ Public Class XenonCheckBox
                     AddHandler FindForm.Load, AddressOf Loaded
                     AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                    AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                    AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+
+
                 Catch
                 End Try
             End If
@@ -2825,6 +2832,10 @@ Public Class XenonComboBox : Inherits ComboBox
                     AddHandler FindForm.Load, AddressOf Loaded
                     AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                    AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                    AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+
+
                 Catch
                 End Try
             End If
@@ -4035,8 +4046,8 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
                 C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), 0.35, -0.35))
         End Select
 
-        FillRect(G, New SolidBrush(c_back), New Rectangle(0, 0, Width - 1, Height - 1), 2)
-        FillRect(G, New SolidBrush(C), Thumb, 2)
+        FillRect(G, New SolidBrush(c_back), New Rectangle(0, 0, Width - 1, Height - 1))
+        FillRect(G, New SolidBrush(C), Thumb)
 
     End Sub
 
