@@ -463,19 +463,68 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        Me.Close()
+
+        Dim BMPList As New List(Of Bitmap)
+
+        Dim PList As New List(Of Point)
+
+        BMPList.Clear()
+
+
+#Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
+
+        For ang As Integer = 180 To 360 Step +10
+            Dim bm As Bitmap
+
+            bm = New Bitmap(Draw(CursorType.Busy, Color.Black, Color.Black, False, Drawing2D.LinearGradientMode.Vertical, Color.White, Color.White, False, Drawing2D.LinearGradientMode.Vertical,
+                            Color.Red, Color.Red, False, Drawing2D.LinearGradientMode.Vertical, Color.Maroon, Color.Maroon, False, Drawing2D.LinearGradientMode.Vertical, False, 0, False, 0, False, 0, False, 0,
+                             1, 1, ang))
+
+            BMPList.Add(bm)
+        Next
+
+        For ang As Integer = 0 To 180 Step +10
+            Dim bm As Bitmap
+
+            bm = New Bitmap(Draw(CursorType.Busy, Color.Black, Color.Black, False, Drawing2D.LinearGradientMode.Vertical, Color.White, Color.White, False, Drawing2D.LinearGradientMode.Vertical,
+                            Color.Red, Color.Red, False, Drawing2D.LinearGradientMode.Vertical, Color.Maroon, Color.Maroon, False, Drawing2D.LinearGradientMode.Vertical, False, 0, False, 0, False, 0, False, 0,
+                             1, 1, ang))
+
+            BMPList.Add(bm)
+        Next
+#End Region
+
+        Dim Count As Integer = BMPList.Count
+        Dim frameRates As UInteger() = New UInteger(Count - 1) {}
+        Dim seqNums As UInteger() = New UInteger(Count - 1) {}
+
+        For i = 0 To Count - 1
+            frameRates(i) = Convert.ToUInt32(2)
+            seqNums(i) = CUInt(i)
+        Next
+
+
+        Dim fs As New FileStream(String.Format("D:\ani\{0}.ani", 0), FileMode.Create)
+
+        Dim AN As New EOANIWriter(fs, Count, 2, frameRates, seqNums, Nothing, Nothing, New Point(1, 1))
+
+        For i = 0 To Count - 1
+            AN.WriteFrame32(BMPList(i))
+        Next
+
+        fs.Close()
+
+        'Me.Close()
     End Sub
 
 
-
     'Dim fs As FileStream = New FileStream("D:\cur.cur", FileMode.Create)
-    'Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
+    'Dim EO As New EOIcoCurWriter(fs, 8, EOIcoCurWriter.IcoCurType.Cursor)
 
     'For i As Single = 1 To 4 Step 0.5
     'EO.WriteBitmap(Draw(i), Nothing, New Point(5 * i - 0.5 * i, 10 * i - 0.5 * i)) 'New Point(1, 1)
     'Next
 
     'fs.Close()
-
 
 End Class

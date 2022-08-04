@@ -666,7 +666,7 @@ Public Module Paths
 
         G.Flush()
         G.Save()
-        Return b
+        Return New Bitmap(b)
         b.Dispose()
         G.Dispose()
     End Function

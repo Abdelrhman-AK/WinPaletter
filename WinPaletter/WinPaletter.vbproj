@@ -79,7 +79,7 @@
     </Reference>
     <Reference Include="AnimCur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\AnimCur.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Codes\AnimCur\AnimCur\bin\Release\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -211,6 +211,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -285,7 +290,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
