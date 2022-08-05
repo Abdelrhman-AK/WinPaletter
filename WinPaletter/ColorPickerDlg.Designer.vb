@@ -101,8 +101,7 @@ Partial Class ColorPickerDlg
         Me.ColorEditor1.Location = New System.Drawing.Point(217, 35)
         Me.ColorEditor1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorEditor1.Name = "ColorEditor1"
-        Me.ColorEditor1.ShowAlphaChannel = False
-        Me.ColorEditor1.Size = New System.Drawing.Size(235, 233)
+        Me.ColorEditor1.Size = New System.Drawing.Size(235, 267)
         Me.ColorEditor1.TabIndex = 0
         '
         'ColorGrid1
@@ -122,9 +121,9 @@ Partial Class ColorPickerDlg
         Me.ColorWheel1.Alpha = 1.0R
         Me.ColorWheel1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorWheel1.Lightness = 0.37647059559822083R
-        Me.ColorWheel1.Location = New System.Drawing.Point(217, 274)
+        Me.ColorWheel1.Location = New System.Drawing.Point(217, 308)
         Me.ColorWheel1.Name = "ColorWheel1"
-        Me.ColorWheel1.Size = New System.Drawing.Size(235, 232)
+        Me.ColorWheel1.Size = New System.Drawing.Size(235, 198)
         Me.ColorWheel1.TabIndex = 2
         '
         'ScreenColorPicker1

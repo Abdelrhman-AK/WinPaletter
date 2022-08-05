@@ -2565,6 +2565,7 @@ End Class
                         AddHandler FindForm.Load, AddressOf Loaded
                         AddHandler FindForm.Shown, AddressOf Showed
                         AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                        AddHandler EnabledChanged, AddressOf RefreshColorPalette
                     Catch
                     End Try
                 End If

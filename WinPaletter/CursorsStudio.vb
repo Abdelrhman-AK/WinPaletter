@@ -1,9 +1,5 @@
 ﻿Imports WinPaletter.XenonCore
 Imports System.IO
-Imports System.Drawing.Imaging
-Imports AnimCur
-Imports Microsoft.Win32
-Imports System.Text
 
 Public Class CursorsStudio
     Private _Shown As Boolean = False
@@ -36,6 +32,24 @@ Public Class CursorsStudio
     Sub Clicked(sender As Object, e As MouseEventArgs)
         _SelectedControl = DirectCast(sender, CursorControl)
         ApplyColorsFromCursor(_SelectedControl)
+
+        XenonGroupBox2.Enabled = True
+        XenonGroupBox11.Enabled = True
+
+        If _SelectedControl.Prop_Cursor = CursorType.AppLoading Or _SelectedControl.Prop_Cursor = CursorType.Busy Then
+
+            If _SelectedControl.Prop_Cursor = CursorType.Busy Then
+                XenonGroupBox2.Enabled = False
+                XenonGroupBox11.Enabled = False
+            End If
+
+            XenonGroupBox6.Enabled = True
+            XenonGroupBox12.Enabled = True
+        Else
+            XenonGroupBox6.Enabled = False
+            XenonGroupBox12.Enabled = False
+        End If
+
     End Sub
 
     Sub ApplyColorsFromCursor([CursorControl] As CursorControl)
@@ -43,29 +57,29 @@ Public Class CursorsStudio
             TaskbarFrontAndFoldersOnStart_picker.BackColor = .Prop_PrimaryColor1
             XenonGroupBox3.BackColor = .Prop_PrimaryColor2
             XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
-            XenonComboBox1.SelectedIndex = .Prop_PrimaryColorGradientMode
+            XenonComboBox1.SelectedItem = RetrunStringFromGradientMode(.Prop_PrimaryColorGradientMode)
             XenonCheckBox5.Checked = .Prop_PrimaryNoise
             XenonNumericUpDown2.Text = .Prop_PrimaryNoiseOpacity * 100
 
             XenonGroupBox5.BackColor = .Prop_SecondaryColor1
             XenonGroupBox4.BackColor = .Prop_SecondaryColor2
             XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
-            XenonComboBox2.SelectedIndex = .Prop_SecondaryColorGradientMode
+            XenonComboBox2.SelectedItem = RetrunStringFromGradientMode(.Prop_SecondaryColorGradientMode)
             XenonCheckBox3.Checked = .Prop_SecondaryNoise
             XenonNumericUpDown1.Text = .Prop_SecondaryNoiseOpacity * 100
-            XenonNumericUpDown3.Value = .Prop_LineThickness * 10
+            'XenonNumericUpDown3.Value = .Prop_LineThickness * 10
 
             XenonGroupBox10.BackColor = .Prop_LoadingCircleBack1
             XenonGroupBox9.BackColor = .Prop_LoadingCircleBack2
             XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
-            XenonComboBox4.SelectedIndex = .Prop_LoadingCircleBackGradientMode
+            XenonComboBox4.SelectedItem = RetrunStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
             XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
             XenonNumericUpDown6.Text = .Prop_LoadingCircleBackNoiseOpacity * 100
 
             XenonGroupBox8.BackColor = .Prop_LoadingCircleHot1
             XenonGroupBox7.BackColor = .Prop_LoadingCircleHot2
             XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
-            XenonComboBox3.SelectedIndex = .Prop_LoadingCircleHotGradientMode
+            XenonComboBox3.SelectedItem = RetrunStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
             XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
             XenonNumericUpDown4.Text = .Prop_LoadingCircleHotNoiseOpacity * 100
         End With
@@ -77,29 +91,29 @@ Public Class CursorsStudio
             .Prop_PrimaryColor1 = TaskbarFrontAndFoldersOnStart_picker.BackColor
             .Prop_PrimaryColor2 = XenonGroupBox3.BackColor
             .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
-            .Prop_PrimaryColorGradientMode = XenonComboBox1.SelectedIndex
+            .Prop_PrimaryColorGradientMode = RetrunGradientModeFromString(XenonComboBox1.SelectedItem)
             .Prop_PrimaryNoise = XenonCheckBox5.Checked
             .Prop_PrimaryNoiseOpacity = Val(XenonNumericUpDown2.Text) / 100
 
             .Prop_SecondaryColor1 = XenonGroupBox5.BackColor
             .Prop_SecondaryColor2 = XenonGroupBox4.BackColor
             .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
-            .Prop_SecondaryColorGradientMode = XenonComboBox2.SelectedIndex
+            .Prop_SecondaryColorGradientMode = RetrunGradientModeFromString(XenonComboBox2.SelectedItem)
             .Prop_SecondaryNoise = XenonCheckBox3.Checked
             .Prop_SecondaryNoiseOpacity = Val(XenonNumericUpDown1.Text) / 100
-            .Prop_LineThickness = XenonNumericUpDown3.Value / 10
+            '.Prop_LineThickness = XenonNumericUpDown3.Value / 10
 
             .Prop_LoadingCircleBack1 = XenonGroupBox10.BackColor
             .Prop_LoadingCircleBack2 = XenonGroupBox9.BackColor
             .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
-            .Prop_LoadingCircleBackGradientMode = XenonComboBox4.SelectedIndex
+            .Prop_LoadingCircleBackGradientMode = RetrunGradientModeFromString(XenonComboBox4.SelectedItem)
             .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
             .Prop_LoadingCircleBackNoiseOpacity = Val(XenonNumericUpDown6.Text) / 100
 
             .Prop_LoadingCircleHot1 = XenonGroupBox8.BackColor
             .Prop_LoadingCircleHot2 = XenonGroupBox7.BackColor
             .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
-            .Prop_LoadingCircleHotGradientMode = XenonComboBox3.SelectedIndex
+            .Prop_LoadingCircleHotGradientMode = RetrunGradientModeFromString(XenonComboBox3.SelectedItem)
             .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
             .Prop_LoadingCircleHotNoiseOpacity = Val(XenonNumericUpDown4.Text) / 100
         End With
@@ -112,7 +126,8 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorBack1 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_PrimaryColor1 = c
         _SelectedControl.Invalidate()
@@ -128,7 +143,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorBack2 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_PrimaryColor2 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -143,7 +160,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorLine1 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_SecondaryColor1 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -158,7 +177,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorLine2 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_SecondaryColor2 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -173,7 +194,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorCircle1 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_LoadingCircleBack1 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -203,7 +226,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_PrimaryColorGradientMode = sender.SelectedIndex
+        _SelectedControl.Prop_PrimaryColorGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -211,7 +234,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryColorGradientMode = sender.SelectedIndex
+        _SelectedControl.Prop_SecondaryColorGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -235,8 +258,8 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonNumericUpDown3_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown3.Click
-        _SelectedControl.Prop_LineThickness = sender.Value / 10
+    Private Sub XenonNumericUpDown3_Click(sender As Object, e As EventArgs)
+        '_SelectedControl.Prop_LineThickness = sender.Value / 10
         _SelectedControl.Invalidate()
     End Sub
 
@@ -249,6 +272,8 @@ Public Class CursorsStudio
             i.Height = i.Width
             i.Refresh()
         Next
+
+        Label5.Text = String.Format("Scaling ({0}x)", sender.value / 100)
     End Sub
 
     Dim Angle As Single = 180
@@ -290,7 +315,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorCircle2 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_LoadingCircleBack2 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -305,7 +332,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorCircleHot1 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_LoadingCircleHot1 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -320,7 +349,9 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim c As Color = ColorPickerDlg.Pick(CList)
+        Dim _Condition As New Conditions With {.CursorCircleHot2 = True}
+        Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
+
         _SelectedControl.Prop_LoadingCircleHot2 = c
         _SelectedControl.Invalidate()
         DirectCast(sender, XenonGroupBox).BackColor = c
@@ -367,7 +398,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox4.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackGradientMode = sender.SelectedIndex
+        _SelectedControl.Prop_LoadingCircleBackGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -375,7 +406,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox3.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleHotGradientMode = sender.SelectedIndex
+        _SelectedControl.Prop_LoadingCircleHotGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub

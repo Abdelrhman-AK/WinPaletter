@@ -60,7 +60,7 @@ Public Class ColorPickerDlg
     Dim fr As Form
 
 
-    Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing) As Color
+    Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing, Optional ShowAlpha As Boolean = False) As Color
         fr = Ctrl(0).FindForm
 
         If fr Is MainFrm Then
@@ -83,6 +83,8 @@ Public Class ColorPickerDlg
         CList = Ctrl
 
         If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
+
+        ColorEditorManager1.ColorEditor.ShowAlphaChannel = ShowAlpha
 
         AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
@@ -204,7 +206,7 @@ Public Class ColorPickerDlg
                 If TypeOf ctrl Is XenonGroupBox Then
                     If DirectCast(ctrl, XenonGroupBox).CustomColor Then Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                 End If
-                    ctrl.Invalidate()
+                ctrl.Invalidate()
 
             ElseIf TypeOf ctrl Is RetroTextBox Then
                 With TryCast(ctrl, RetroTextBox)
@@ -216,8 +218,42 @@ Public Class ColorPickerDlg
                     ctrl.Invalidate()
                 End With
 
+            ElseIf TypeOf ctrl Is CursorControl Then
+
+                With DirectCast(ctrl, CursorControl)
+                    If _Conditions.CursorBack1 Then
+                        .Prop_PrimaryColor1 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorBack2 Then
+                        .Prop_PrimaryColor2 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorLine1 Then
+                        .Prop_SecondaryColor1 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorLine2 Then
+                        .Prop_SecondaryColor2 = ColorEditorManager1.Color
+
+                    ElseIf _Conditions.CursorCircle1 Then
+                        .Prop_LoadingCircleBack1 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorCircle2 Then
+                        .Prop_LoadingCircleBack2 = ColorEditorManager1.Color
+
+                    ElseIf _Conditions.CursorCircleHot1 Then
+                        .Prop_LoadingCircleHot1 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorCircleHot1 Then
+                        .Prop_LoadingCircleHot2 = ColorEditorManager1.Color
+                    End If
+
+                    .Invalidate()
+                End With
+
             Else
-                Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                Try
+                    Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                Catch
+                    Try
+                        ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    Catch
+
+                    End Try
+                End Try
             End If
 
         Next
@@ -385,6 +421,15 @@ Public Class Conditions
     Public Property RetroAppWorkspace As Boolean = False
     Public Property RetroBackground As Boolean = False
     Public Property RetroWindowText As Boolean = False
+
+    Public Property CursorBack1 As Boolean = False
+    Public Property CursorBack2 As Boolean = False
+    Public Property CursorLine1 As Boolean = False
+    Public Property CursorLine2 As Boolean = False
+    Public Property CursorCircle1 As Boolean = False
+    Public Property CursorCircle2 As Boolean = False
+    Public Property CursorCircleHot1 As Boolean = False
+    Public Property CursorCircleHot2 As Boolean = False
 
 End Class
 

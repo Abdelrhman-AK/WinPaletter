@@ -12,6 +12,16 @@ Public Class CP
     End Function
 
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+#Region "General Info"
+    Public Property AppVersion As String
+    Public Property PaletteName As String
+    Public Property PaletteDescription As String
+    Public Property PaletteVersion As String
+    Public Property Author As String
+    Public Property AuthorSocialMediaLink As String
+#End Region
+
+#Region "ModernWindows"
     Public Property Titlebar_Active As Color
     Public Property Titlebar_DWM_Active As Color
     Public Property Titlebar_Inactive As Color
@@ -23,6 +33,12 @@ Public Class CP
     Public Property StartListFolders_TaskbarFront As Color
     Public Property ActionCenter_AppsLinks As Color
     Public Property SettingsIconsAndLinks As Color
+    Public Property WinMode_Light As Boolean
+    Public Property AppMode_Light As Boolean
+    Public Property Transparency As Boolean
+    Public Property ApplyAccentonTitlebars As Boolean
+    Public Property ApplyAccentonTaskbar As Boolean
+#End Region
 
 #Region "LogonUI"
     Public Property LogonUI_Background As Color
@@ -68,17 +84,261 @@ Public Class CP
     Public Property Win32UI_Desktop As Color = Color.FromArgb(0, 0, 0)
 #End Region
 
-    Public Property WinMode_Light As Boolean
-    Public Property AppMode_Light As Boolean
-    Public Property Transparency As Boolean
-    Public Property ApplyAccentonTitlebars As Boolean
-    Public Property ApplyAccentonTaskbar As Boolean
-    Public Property AppVersion As String
-    Public Property PaletteName As String
-    Public Property PaletteDescription As String
-    Public Property PaletteVersion As String
-    Public Property Author As String
-    Public Property AuthorSocialMediaLink As String
+#Region "Cursors"
+    Public Property Cursor_Enabled As Boolean
+
+#Region "Arrow"
+    Public Property Cursor_Arrow_PrimaryColor1 As Color
+    Public Property Cursor_Arrow_PrimaryColor2 As Color
+    Public Property Cursor_Arrow_PrimaryColorGradient As Boolean
+    Public Property Cursor_Arrow_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Arrow_PrimaryColorNoise As Boolean
+    Public Property Cursor_Arrow_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Arrow_SecondaryColor1 As Color
+    Public Property Cursor_Arrow_SecondaryColor2 As Color
+    Public Property Cursor_Arrow_SecondaryColorGradient As Boolean
+    Public Property Cursor_Arrow_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Arrow_SecondaryColorNoise As Boolean
+    Public Property Cursor_Arrow_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Help"
+    Public Property Cursor_Help_PrimaryColor1 As Color
+    Public Property Cursor_Help_PrimaryColor2 As Color
+    Public Property Cursor_Help_PrimaryColorGradient As Boolean
+    Public Property Cursor_Help_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Help_PrimaryColorNoise As Boolean
+    Public Property Cursor_Help_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Help_SecondaryColor1 As Color
+    Public Property Cursor_Help_SecondaryColor2 As Color
+    Public Property Cursor_Help_SecondaryColorGradient As Boolean
+    Public Property Cursor_Help_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Help_SecondaryColorNoise As Boolean
+    Public Property Cursor_Help_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "AppLoading"
+    Public Property Cursor_AppLoading_PrimaryColor1 As Color
+    Public Property Cursor_AppLoading_PrimaryColor2 As Color
+    Public Property Cursor_AppLoading_PrimaryColorGradient As Boolean
+    Public Property Cursor_AppLoading_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_AppLoading_PrimaryColorNoise As Boolean
+    Public Property Cursor_AppLoading_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_AppLoading_SecondaryColor1 As Color
+    Public Property Cursor_AppLoading_SecondaryColor2 As Color
+    Public Property Cursor_AppLoading_SecondaryColorGradient As Boolean
+    Public Property Cursor_AppLoading_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_AppLoading_SecondaryColorNoise As Boolean
+    Public Property Cursor_AppLoading_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_AppLoading_LoadingCircleBack1 As Color
+    Public Property Cursor_AppLoading_LoadingCircleBack2 As Color
+    Public Property Cursor_AppLoading_LoadingCircleBackGradient As Boolean
+    Public Property Cursor_AppLoading_LoadingCircleBackGradientMode As GradientMode
+    Public Property Cursor_AppLoading_LoadingCircleBackNoise As Boolean
+    Public Property Cursor_AppLoading_LoadingCircleBackNoiseOpacity As Single
+    Public Property Cursor_AppLoading_LoadingCircleHot1 As Color
+    Public Property Cursor_AppLoading_LoadingCircleHot2 As Color
+    Public Property Cursor_AppLoading_LoadingCircleHotGradient As Boolean
+    Public Property Cursor_AppLoading_LoadingCircleHotGradientMode As GradientMode
+    Public Property Cursor_AppLoading_LoadingCircleHotNoise As Boolean
+    Public Property Cursor_AppLoading_LoadingCircleHotNoiseOpacity As Single
+#End Region
+
+#Region "Busy"
+    Public Property Cursor_Busy_LoadingCircleBack1 As Color
+    Public Property Cursor_Busy_LoadingCircleBack2 As Color
+    Public Property Cursor_Busy_LoadingCircleBackGradient As Boolean
+    Public Property Cursor_Busy_LoadingCircleBackGradientMode As GradientMode
+    Public Property Cursor_Busy_LoadingCircleBackNoise As Boolean
+    Public Property Cursor_Busy_LoadingCircleBackNoiseOpacity As Single
+    Public Property Cursor_Busy_LoadingCircleHot1 As Color
+    Public Property Cursor_Busy_LoadingCircleHot2 As Color
+    Public Property Cursor_Busy_LoadingCircleHotGradient As Boolean
+    Public Property Cursor_Busy_LoadingCircleHotGradientMode As GradientMode
+    Public Property Cursor_Busy_LoadingCircleHotNoise As Boolean
+    Public Property Cursor_Busy_LoadingCircleHotNoiseOpacity As Single
+#End Region
+
+#Region "Move"
+    Public Property Cursor_Move_PrimaryColor1 As Color
+    Public Property Cursor_Move_PrimaryColor2 As Color
+    Public Property Cursor_Move_PrimaryColorGradient As Boolean
+    Public Property Cursor_Move_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Move_PrimaryColorNoise As Boolean
+    Public Property Cursor_Move_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Move_SecondaryColor1 As Color
+    Public Property Cursor_Move_SecondaryColor2 As Color
+    Public Property Cursor_Move_SecondaryColorGradient As Boolean
+    Public Property Cursor_Move_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Move_SecondaryColorNoise As Boolean
+    Public Property Cursor_Move_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "NS"
+    Public Property Cursor_NS_PrimaryColor1 As Color
+    Public Property Cursor_NS_PrimaryColor2 As Color
+    Public Property Cursor_NS_PrimaryColorGradient As Boolean
+    Public Property Cursor_NS_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_NS_PrimaryColorNoise As Boolean
+    Public Property Cursor_NS_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_NS_SecondaryColor1 As Color
+    Public Property Cursor_NS_SecondaryColor2 As Color
+    Public Property Cursor_NS_SecondaryColorGradient As Boolean
+    Public Property Cursor_NS_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_NS_SecondaryColorNoise As Boolean
+    Public Property Cursor_NS_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "EW"
+    Public Property Cursor_EW_PrimaryColor1 As Color
+    Public Property Cursor_EW_PrimaryColor2 As Color
+    Public Property Cursor_EW_PrimaryColorGradient As Boolean
+    Public Property Cursor_EW_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_EW_PrimaryColorNoise As Boolean
+    Public Property Cursor_EW_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_EW_SecondaryColor1 As Color
+    Public Property Cursor_EW_SecondaryColor2 As Color
+    Public Property Cursor_EW_SecondaryColorGradient As Boolean
+    Public Property Cursor_EW_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_EW_SecondaryColorNoise As Boolean
+    Public Property Cursor_EW_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "NESW"
+    Public Property Cursor_NESW_PrimaryColor1 As Color
+    Public Property Cursor_NESW_PrimaryColor2 As Color
+    Public Property Cursor_NESW_PrimaryColorGradient As Boolean
+    Public Property Cursor_NESW_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_NESW_PrimaryColorNoise As Boolean
+    Public Property Cursor_NESW_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_NESW_SecondaryColor1 As Color
+    Public Property Cursor_NESW_SecondaryColor2 As Color
+    Public Property Cursor_NESW_SecondaryColorGradient As Boolean
+    Public Property Cursor_NESW_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_NESW_SecondaryColorNoise As Boolean
+    Public Property Cursor_NESW_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "NWSE"
+    Public Property Cursor_NWSE_PrimaryColor1 As Color
+    Public Property Cursor_NWSE_PrimaryColor2 As Color
+    Public Property Cursor_NWSE_PrimaryColorGradient As Boolean
+    Public Property Cursor_NWSE_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_NWSE_PrimaryColorNoise As Boolean
+    Public Property Cursor_NWSE_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_NWSE_SecondaryColor1 As Color
+    Public Property Cursor_NWSE_SecondaryColor2 As Color
+    Public Property Cursor_NWSE_SecondaryColorGradient As Boolean
+    Public Property Cursor_NWSE_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_NWSE_SecondaryColorNoise As Boolean
+    Public Property Cursor_NWSE_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Up"
+    Public Property Cursor_Up_PrimaryColor1 As Color
+    Public Property Cursor_Up_PrimaryColor2 As Color
+    Public Property Cursor_Up_PrimaryColorGradient As Boolean
+    Public Property Cursor_Up_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Up_PrimaryColorNoise As Boolean
+    Public Property Cursor_Up_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Up_SecondaryColor1 As Color
+    Public Property Cursor_Up_SecondaryColor2 As Color
+    Public Property Cursor_Up_SecondaryColorGradient As Boolean
+    Public Property Cursor_Up_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Up_SecondaryColorNoise As Boolean
+    Public Property Cursor_Up_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Pen"
+    Public Property Cursor_Pen_PrimaryColor1 As Color
+    Public Property Cursor_Pen_PrimaryColor2 As Color
+    Public Property Cursor_Pen_PrimaryColorGradient As Boolean
+    Public Property Cursor_Pen_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Pen_PrimaryColorNoise As Boolean
+    Public Property Cursor_Pen_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Pen_SecondaryColor1 As Color
+    Public Property Cursor_Pen_SecondaryColor2 As Color
+    Public Property Cursor_Pen_SecondaryColorGradient As Boolean
+    Public Property Cursor_Pen_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Pen_SecondaryColorNoise As Boolean
+    Public Property Cursor_Pen_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "None"
+    Public Property Cursor_None_PrimaryColor1 As Color
+    Public Property Cursor_None_PrimaryColor2 As Color
+    Public Property Cursor_None_PrimaryColorGradient As Boolean
+    Public Property Cursor_None_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_None_PrimaryColorNoise As Boolean
+    Public Property Cursor_None_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_None_SecondaryColor1 As Color
+    Public Property Cursor_None_SecondaryColor2 As Color
+    Public Property Cursor_None_SecondaryColorGradient As Boolean
+    Public Property Cursor_None_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_None_SecondaryColorNoise As Boolean
+    Public Property Cursor_None_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Link"
+    Public Property Cursor_Link_PrimaryColor1 As Color
+    Public Property Cursor_Link_PrimaryColor2 As Color
+    Public Property Cursor_Link_PrimaryColorGradient As Boolean
+    Public Property Cursor_Link_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Link_PrimaryColorNoise As Boolean
+    Public Property Cursor_Link_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Link_SecondaryColor1 As Color
+    Public Property Cursor_Link_SecondaryColor2 As Color
+    Public Property Cursor_Link_SecondaryColorGradient As Boolean
+    Public Property Cursor_Link_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Link_SecondaryColorNoise As Boolean
+    Public Property Cursor_Link_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Pin"
+    Public Property Cursor_Pin_PrimaryColor1 As Color
+    Public Property Cursor_Pin_PrimaryColor2 As Color
+    Public Property Cursor_Pin_PrimaryColorGradient As Boolean
+    Public Property Cursor_Pin_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Pin_PrimaryColorNoise As Boolean
+    Public Property Cursor_Pin_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Pin_SecondaryColor1 As Color
+    Public Property Cursor_Pin_SecondaryColor2 As Color
+    Public Property Cursor_Pin_SecondaryColorGradient As Boolean
+    Public Property Cursor_Pin_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Pin_SecondaryColorNoise As Boolean
+    Public Property Cursor_Pin_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Person"
+    Public Property Cursor_Person_PrimaryColor1 As Color
+    Public Property Cursor_Person_PrimaryColor2 As Color
+    Public Property Cursor_Person_PrimaryColorGradient As Boolean
+    Public Property Cursor_Person_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Person_PrimaryColorNoise As Boolean
+    Public Property Cursor_Person_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Person_SecondaryColor1 As Color
+    Public Property Cursor_Person_SecondaryColor2 As Color
+    Public Property Cursor_Person_SecondaryColorGradient As Boolean
+    Public Property Cursor_Person_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Person_SecondaryColorNoise As Boolean
+    Public Property Cursor_Person_SecondaryColorNoiseOpacity As Single
+#End Region
+
+#Region "Cross"
+    Public Property Cursor_Cross_PrimaryColor1 As Color
+    Public Property Cursor_Cross_PrimaryColor2 As Color
+    Public Property Cursor_Cross_PrimaryColorGradient As Boolean
+    Public Property Cursor_Cross_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_Cross_PrimaryColorNoise As Boolean
+    Public Property Cursor_Cross_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_Cross_SecondaryColor1 As Color
+    Public Property Cursor_Cross_SecondaryColor2 As Color
+    Public Property Cursor_Cross_SecondaryColorGradient As Boolean
+    Public Property Cursor_Cross_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_Cross_SecondaryColorNoise As Boolean
+    Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single
+#End Region
+#End Region
 
     Enum Mode
         Registry
@@ -280,6 +540,261 @@ Public Class CP
                 End With
 #End Region
 
+#Region "Cursors"
+                Cursor_Enabled = False
+
+#Region "Arrow"
+                Cursor_Arrow_PrimaryColor1 = Color.White
+                Cursor_Arrow_PrimaryColor2 = Color.White
+                Cursor_Arrow_PrimaryColorGradient = False
+                Cursor_Arrow_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_PrimaryColorNoise = False
+                Cursor_Arrow_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColorGradient = False
+                Cursor_Arrow_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_SecondaryColorNoise = False
+                Cursor_Arrow_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Help"
+                Cursor_Help_PrimaryColor1 = Color.White
+                Cursor_Help_PrimaryColor2 = Color.White
+                Cursor_Help_PrimaryColorGradient = False
+                Cursor_Help_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_PrimaryColorNoise = False
+                Cursor_Help_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Help_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColorGradient = False
+                Cursor_Help_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_SecondaryColorNoise = False
+                Cursor_Help_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "AppLoading"
+                Cursor_AppLoading_PrimaryColor1 = Color.White
+                Cursor_AppLoading_PrimaryColor2 = Color.White
+                Cursor_AppLoading_PrimaryColorGradient = False
+                Cursor_AppLoading_PrimaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_PrimaryColorNoise = False
+                Cursor_AppLoading_PrimaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColorGradient = False
+                Cursor_AppLoading_SecondaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_SecondaryColorNoise = False
+                Cursor_AppLoading_SecondaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBackGradient = False
+                Cursor_AppLoading_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleBackNoise = False
+                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHotGradient = False
+                Cursor_AppLoading_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleHotNoise = False
+                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Busy"
+                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBackGradient = False
+                Cursor_Busy_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleBackNoise = False
+                Cursor_Busy_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHotGradient = False
+                Cursor_Busy_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleHotNoise = False
+                Cursor_Busy_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Move"
+                Cursor_Move_PrimaryColor1 = Color.White
+                Cursor_Move_PrimaryColor2 = Color.White
+                Cursor_Move_PrimaryColorGradient = False
+                Cursor_Move_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_PrimaryColorNoise = False
+                Cursor_Move_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Move_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColorGradient = False
+                Cursor_Move_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_SecondaryColorNoise = False
+                Cursor_Move_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NS"
+                Cursor_NS_PrimaryColor1 = Color.White
+                Cursor_NS_PrimaryColor2 = Color.White
+                Cursor_NS_PrimaryColorGradient = False
+                Cursor_NS_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_PrimaryColorNoise = False
+                Cursor_NS_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NS_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColorGradient = False
+                Cursor_NS_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_SecondaryColorNoise = False
+                Cursor_NS_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "EW"
+                Cursor_EW_PrimaryColor1 = Color.White
+                Cursor_EW_PrimaryColor2 = Color.White
+                Cursor_EW_PrimaryColorGradient = False
+                Cursor_EW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_PrimaryColorNoise = False
+                Cursor_EW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_EW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColorGradient = False
+                Cursor_EW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_SecondaryColorNoise = False
+                Cursor_EW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NESW"
+                Cursor_NESW_PrimaryColor1 = Color.White
+                Cursor_NESW_PrimaryColor2 = Color.White
+                Cursor_NESW_PrimaryColorGradient = False
+                Cursor_NESW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_PrimaryColorNoise = False
+                Cursor_NESW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NESW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColorGradient = False
+                Cursor_NESW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_SecondaryColorNoise = False
+                Cursor_NESW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NWSE"
+                Cursor_NWSE_PrimaryColor1 = Color.White
+                Cursor_NWSE_PrimaryColor2 = Color.White
+                Cursor_NWSE_PrimaryColorGradient = False
+                Cursor_NWSE_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_PrimaryColorNoise = False
+                Cursor_NWSE_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColorGradient = False
+                Cursor_NWSE_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_SecondaryColorNoise = False
+                Cursor_NWSE_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Up"
+                Cursor_Up_PrimaryColor1 = Color.White
+                Cursor_Up_PrimaryColor2 = Color.White
+                Cursor_Up_PrimaryColorGradient = False
+                Cursor_Up_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_PrimaryColorNoise = False
+                Cursor_Up_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Up_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColorGradient = False
+                Cursor_Up_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_SecondaryColorNoise = False
+                Cursor_Up_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pen"
+                Cursor_Pen_PrimaryColor1 = Color.White
+                Cursor_Pen_PrimaryColor2 = Color.White
+                Cursor_Pen_PrimaryColorGradient = False
+                Cursor_Pen_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_PrimaryColorNoise = False
+                Cursor_Pen_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pen_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColorGradient = False
+                Cursor_Pen_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_SecondaryColorNoise = False
+                Cursor_Pen_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "None"
+                Cursor_None_PrimaryColor1 = Color.White
+                Cursor_None_PrimaryColor2 = Color.White
+                Cursor_None_PrimaryColorGradient = False
+                Cursor_None_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_PrimaryColorNoise = False
+                Cursor_None_PrimaryColorNoiseOpacity = 0.25
+                Cursor_None_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColorGradient = False
+                Cursor_None_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_SecondaryColorNoise = False
+                Cursor_None_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Link"
+                Cursor_Link_PrimaryColor1 = Color.White
+                Cursor_Link_PrimaryColor2 = Color.White
+                Cursor_Link_PrimaryColorGradient = False
+                Cursor_Link_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_PrimaryColorNoise = False
+                Cursor_Link_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Link_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColorGradient = False
+                Cursor_Link_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_SecondaryColorNoise = False
+                Cursor_Link_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pin"
+                Cursor_Pin_PrimaryColor1 = Color.White
+                Cursor_Pin_PrimaryColor2 = Color.White
+                Cursor_Pin_PrimaryColorGradient = False
+                Cursor_Pin_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_PrimaryColorNoise = False
+                Cursor_Pin_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pin_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColorGradient = False
+                Cursor_Pin_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_SecondaryColorNoise = False
+                Cursor_Pin_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Person"
+                Cursor_Person_PrimaryColor1 = Color.White
+                Cursor_Person_PrimaryColor2 = Color.White
+                Cursor_Person_PrimaryColorGradient = False
+                Cursor_Person_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_PrimaryColorNoise = False
+                Cursor_Person_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Person_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColorGradient = False
+                Cursor_Person_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_SecondaryColorNoise = False
+                Cursor_Person_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Cross"
+                Cursor_Cross_PrimaryColor1 = Color.Transparent
+                Cursor_Cross_PrimaryColor2 = Color.Transparent
+                Cursor_Cross_PrimaryColorGradient = False
+                Cursor_Cross_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_PrimaryColorNoise = False
+                Cursor_Cross_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Cross_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColorGradient = False
+                Cursor_Cross_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_SecondaryColorNoise = False
+                Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
+#End Region
+#End Region
 
             Case Mode.File
                 Dim txt As New List(Of String)
@@ -356,6 +871,280 @@ Public Class CP
                     If lin.StartsWith("*Win32UI_MenuHilight= ") Then Win32UI_MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
                     If lin.StartsWith("*Win32UI_Desktop= ") Then Win32UI_Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
+
+#Region "Cursors"
+                    If lin.StartsWith("*Cursor_Enabled= ") Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
+
+#Region "Arrow"
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColor1= ") Then Cursor_Arrow_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColor2= ") Then Cursor_Arrow_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorGradient= ") Then Cursor_Arrow_PrimaryColorGradient = lin.Remove(0, "*Cursor_Arrow_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorGradientMode= ") Then Cursor_Arrow_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Arrow_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorNoise= ") Then Cursor_Arrow_PrimaryColorNoise = lin.Remove(0, "*Cursor_Arrow_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorNoiseOpacity= ") Then Cursor_Arrow_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Arrow_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColor1= ") Then Cursor_Arrow_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColor2= ") Then Cursor_Arrow_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorGradient= ") Then Cursor_Arrow_SecondaryColorGradient = lin.Remove(0, "*Cursor_Arrow_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorGradientMode= ") Then Cursor_Arrow_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Arrow_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoise= ") Then Cursor_Arrow_SecondaryColorNoise = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoiseOpacity= ") Then Cursor_Arrow_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoiseOpacity= ".Count)
+
+
+#End Region
+
+#Region "Help"
+                    If lin.StartsWith("*Cursor_Help_PrimaryColor1= ") Then Cursor_Help_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Help_PrimaryColor2= ") Then Cursor_Help_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Help_PrimaryColorGradient= ") Then Cursor_Help_PrimaryColorGradient = lin.Remove(0, "*Cursor_Help_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Help_PrimaryColorGradientMode= ") Then Cursor_Help_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Help_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Help_PrimaryColorNoise= ") Then Cursor_Help_PrimaryColorNoise = lin.Remove(0, "*Cursor_Help_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Help_PrimaryColorNoiseOpacity= ") Then Cursor_Help_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Help_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Help_SecondaryColor1= ") Then Cursor_Help_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Help_SecondaryColor2= ") Then Cursor_Help_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Help_SecondaryColorGradient= ") Then Cursor_Help_SecondaryColorGradient = lin.Remove(0, "*Cursor_Help_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Help_SecondaryColorGradientMode= ") Then Cursor_Help_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Help_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Help_SecondaryColorNoise= ") Then Cursor_Help_SecondaryColorNoise = lin.Remove(0, "*Cursor_Help_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Help_SecondaryColorNoiseOpacity= ") Then Cursor_Help_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Help_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "AppLoading"
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColor1= ") Then Cursor_AppLoading_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColor2= ") Then Cursor_AppLoading_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorGradient= ") Then Cursor_AppLoading_PrimaryColorGradient = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorGradientMode= ") Then Cursor_AppLoading_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorNoise= ") Then Cursor_AppLoading_PrimaryColorNoise = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorNoiseOpacity= ") Then Cursor_AppLoading_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColor1= ") Then Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColor2= ") Then Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorGradient= ") Then Cursor_AppLoading_SecondaryColorGradient = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorGradientMode= ") Then Cursor_AppLoading_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorNoise= ") Then Cursor_AppLoading_SecondaryColorNoise = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorNoiseOpacity= ") Then Cursor_AppLoading_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBack1= ") Then Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBack1= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBack2= ") Then Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBack2= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackGradient= ") Then Cursor_AppLoading_LoadingCircleBackGradient = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackGradient= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackGradientMode= ") Then Cursor_AppLoading_LoadingCircleBackGradientMode = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackNoise= ") Then Cursor_AppLoading_LoadingCircleBackNoise = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackNoise= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= ") Then Cursor_AppLoading_LoadingCircleBackNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHot1= ") Then Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHot1= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHot2= ") Then Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHot2= ".Count))
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotGradient= ") Then Cursor_AppLoading_LoadingCircleHotGradient = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotGradient= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotGradientMode= ") Then Cursor_AppLoading_LoadingCircleHotGradientMode = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotNoise= ") Then Cursor_AppLoading_LoadingCircleHotNoise = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotNoise= ".Count)
+                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= ") Then Cursor_AppLoading_LoadingCircleHotNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Busy"
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBack1= ") Then Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleBack1= ".Count))
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBack2= ") Then Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleBack2= ".Count))
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackGradient= ") Then Cursor_Busy_LoadingCircleBackGradient = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackGradientMode= ") Then Cursor_Busy_LoadingCircleBackGradientMode = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackNoise= ") Then Cursor_Busy_LoadingCircleBackNoise = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackNoiseOpacity= ") Then Cursor_Busy_LoadingCircleBackNoiseOpacity = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHot1= ") Then Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleHot1= ".Count))
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHot2= ") Then Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleHot2= ".Count))
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotGradient= ") Then Cursor_Busy_LoadingCircleHotGradient = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotGradientMode= ") Then Cursor_Busy_LoadingCircleHotGradientMode = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotNoise= ") Then Cursor_Busy_LoadingCircleHotNoise = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotNoiseOpacity= ") Then Cursor_Busy_LoadingCircleHotNoiseOpacity = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Move"
+                    If lin.StartsWith("*Cursor_Move_PrimaryColor1= ") Then Cursor_Move_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Move_PrimaryColor2= ") Then Cursor_Move_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Move_PrimaryColorGradient= ") Then Cursor_Move_PrimaryColorGradient = lin.Remove(0, "*Cursor_Move_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Move_PrimaryColorGradientMode= ") Then Cursor_Move_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Move_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Move_PrimaryColorNoise= ") Then Cursor_Move_PrimaryColorNoise = lin.Remove(0, "*Cursor_Move_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Move_PrimaryColorNoiseOpacity= ") Then Cursor_Move_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Move_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Move_SecondaryColor1= ") Then Cursor_Move_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Move_SecondaryColor2= ") Then Cursor_Move_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Move_SecondaryColorGradient= ") Then Cursor_Move_SecondaryColorGradient = lin.Remove(0, "*Cursor_Move_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Move_SecondaryColorGradientMode= ") Then Cursor_Move_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Move_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Move_SecondaryColorNoise= ") Then Cursor_Move_SecondaryColorNoise = lin.Remove(0, "*Cursor_Move_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Move_SecondaryColorNoiseOpacity= ") Then Cursor_Move_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Move_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "NS"
+                    If lin.StartsWith("*Cursor_NS_PrimaryColor1= ") Then Cursor_NS_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NS_PrimaryColor2= ") Then Cursor_NS_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NS_PrimaryColorGradient= ") Then Cursor_NS_PrimaryColorGradient = lin.Remove(0, "*Cursor_NS_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NS_PrimaryColorGradientMode= ") Then Cursor_NS_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NS_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NS_PrimaryColorNoise= ") Then Cursor_NS_PrimaryColorNoise = lin.Remove(0, "*Cursor_NS_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NS_PrimaryColorNoiseOpacity= ") Then Cursor_NS_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NS_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_NS_SecondaryColor1= ") Then Cursor_NS_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NS_SecondaryColor2= ") Then Cursor_NS_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NS_SecondaryColorGradient= ") Then Cursor_NS_SecondaryColorGradient = lin.Remove(0, "*Cursor_NS_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NS_SecondaryColorGradientMode= ") Then Cursor_NS_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NS_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NS_SecondaryColorNoise= ") Then Cursor_NS_SecondaryColorNoise = lin.Remove(0, "*Cursor_NS_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NS_SecondaryColorNoiseOpacity= ") Then Cursor_NS_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NS_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "EW"
+                    If lin.StartsWith("*Cursor_EW_PrimaryColor1= ") Then Cursor_EW_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_EW_PrimaryColor2= ") Then Cursor_EW_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_EW_PrimaryColorGradient= ") Then Cursor_EW_PrimaryColorGradient = lin.Remove(0, "*Cursor_EW_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_EW_PrimaryColorGradientMode= ") Then Cursor_EW_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_EW_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_EW_PrimaryColorNoise= ") Then Cursor_EW_PrimaryColorNoise = lin.Remove(0, "*Cursor_EW_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_EW_PrimaryColorNoiseOpacity= ") Then Cursor_EW_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_EW_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_EW_SecondaryColor1= ") Then Cursor_EW_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_EW_SecondaryColor2= ") Then Cursor_EW_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_EW_SecondaryColorGradient= ") Then Cursor_EW_SecondaryColorGradient = lin.Remove(0, "*Cursor_EW_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_EW_SecondaryColorGradientMode= ") Then Cursor_EW_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_EW_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_EW_SecondaryColorNoise= ") Then Cursor_EW_SecondaryColorNoise = lin.Remove(0, "*Cursor_EW_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_EW_SecondaryColorNoiseOpacity= ") Then Cursor_EW_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_EW_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "NESW"
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColor1= ") Then Cursor_NESW_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColor2= ") Then Cursor_NESW_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColorGradient= ") Then Cursor_NESW_PrimaryColorGradient = lin.Remove(0, "*Cursor_NESW_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColorGradientMode= ") Then Cursor_NESW_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NESW_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColorNoise= ") Then Cursor_NESW_PrimaryColorNoise = lin.Remove(0, "*Cursor_NESW_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_PrimaryColorNoiseOpacity= ") Then Cursor_NESW_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NESW_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColor1= ") Then Cursor_NESW_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColor2= ") Then Cursor_NESW_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColorGradient= ") Then Cursor_NESW_SecondaryColorGradient = lin.Remove(0, "*Cursor_NESW_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColorGradientMode= ") Then Cursor_NESW_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NESW_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColorNoise= ") Then Cursor_NESW_SecondaryColorNoise = lin.Remove(0, "*Cursor_NESW_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NESW_SecondaryColorNoiseOpacity= ") Then Cursor_NESW_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NESW_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "NWSE"
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColor1= ") Then Cursor_NWSE_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColor2= ") Then Cursor_NWSE_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorGradient= ") Then Cursor_NWSE_PrimaryColorGradient = lin.Remove(0, "*Cursor_NWSE_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorGradientMode= ") Then Cursor_NWSE_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NWSE_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorNoise= ") Then Cursor_NWSE_PrimaryColorNoise = lin.Remove(0, "*Cursor_NWSE_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorNoiseOpacity= ") Then Cursor_NWSE_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NWSE_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColor1= ") Then Cursor_NWSE_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColor2= ") Then Cursor_NWSE_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorGradient= ") Then Cursor_NWSE_SecondaryColorGradient = lin.Remove(0, "*Cursor_NWSE_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorGradientMode= ") Then Cursor_NWSE_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NWSE_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorNoise= ") Then Cursor_NWSE_SecondaryColorNoise = lin.Remove(0, "*Cursor_NWSE_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorNoiseOpacity= ") Then Cursor_NWSE_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NWSE_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Up"
+                    If lin.StartsWith("*Cursor_Up_PrimaryColor1= ") Then Cursor_Up_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Up_PrimaryColor2= ") Then Cursor_Up_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Up_PrimaryColorGradient= ") Then Cursor_Up_PrimaryColorGradient = lin.Remove(0, "*Cursor_Up_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Up_PrimaryColorGradientMode= ") Then Cursor_Up_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Up_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Up_PrimaryColorNoise= ") Then Cursor_Up_PrimaryColorNoise = lin.Remove(0, "*Cursor_Up_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Up_PrimaryColorNoiseOpacity= ") Then Cursor_Up_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Up_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Up_SecondaryColor1= ") Then Cursor_Up_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Up_SecondaryColor2= ") Then Cursor_Up_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Up_SecondaryColorGradient= ") Then Cursor_Up_SecondaryColorGradient = lin.Remove(0, "*Cursor_Up_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Up_SecondaryColorGradientMode= ") Then Cursor_Up_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Up_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Up_SecondaryColorNoise= ") Then Cursor_Up_SecondaryColorNoise = lin.Remove(0, "*Cursor_Up_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Up_SecondaryColorNoiseOpacity= ") Then Cursor_Up_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Up_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Pen"
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColor1= ") Then Cursor_Pen_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColor2= ") Then Cursor_Pen_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColorGradient= ") Then Cursor_Pen_PrimaryColorGradient = lin.Remove(0, "*Cursor_Pen_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColorGradientMode= ") Then Cursor_Pen_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Pen_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColorNoise= ") Then Cursor_Pen_PrimaryColorNoise = lin.Remove(0, "*Cursor_Pen_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_PrimaryColorNoiseOpacity= ") Then Cursor_Pen_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pen_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColor1= ") Then Cursor_Pen_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColor2= ") Then Cursor_Pen_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColorGradient= ") Then Cursor_Pen_SecondaryColorGradient = lin.Remove(0, "*Cursor_Pen_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColorGradientMode= ") Then Cursor_Pen_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Pen_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColorNoise= ") Then Cursor_Pen_SecondaryColorNoise = lin.Remove(0, "*Cursor_Pen_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Pen_SecondaryColorNoiseOpacity= ") Then Cursor_Pen_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pen_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "None"
+                    If lin.StartsWith("*Cursor_None_PrimaryColor1= ") Then Cursor_None_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_None_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_None_PrimaryColor2= ") Then Cursor_None_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_None_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_None_PrimaryColorGradient= ") Then Cursor_None_PrimaryColorGradient = lin.Remove(0, "*Cursor_None_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_None_PrimaryColorGradientMode= ") Then Cursor_None_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_None_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_None_PrimaryColorNoise= ") Then Cursor_None_PrimaryColorNoise = lin.Remove(0, "*Cursor_None_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_None_PrimaryColorNoiseOpacity= ") Then Cursor_None_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_None_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_None_SecondaryColor1= ") Then Cursor_None_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_None_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_None_SecondaryColor2= ") Then Cursor_None_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_None_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_None_SecondaryColorGradient= ") Then Cursor_None_SecondaryColorGradient = lin.Remove(0, "*Cursor_None_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_None_SecondaryColorGradientMode= ") Then Cursor_None_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_None_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_None_SecondaryColorNoise= ") Then Cursor_None_SecondaryColorNoise = lin.Remove(0, "*Cursor_None_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_None_SecondaryColorNoiseOpacity= ") Then Cursor_None_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_None_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Link"
+                    If lin.StartsWith("*Cursor_Link_PrimaryColor1= ") Then Cursor_Link_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Link_PrimaryColor2= ") Then Cursor_Link_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Link_PrimaryColorGradient= ") Then Cursor_Link_PrimaryColorGradient = lin.Remove(0, "*Cursor_Link_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Link_PrimaryColorGradientMode= ") Then Cursor_Link_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Link_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Link_PrimaryColorNoise= ") Then Cursor_Link_PrimaryColorNoise = lin.Remove(0, "*Cursor_Link_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Link_PrimaryColorNoiseOpacity= ") Then Cursor_Link_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Link_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Link_SecondaryColor1= ") Then Cursor_Link_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Link_SecondaryColor2= ") Then Cursor_Link_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Link_SecondaryColorGradient= ") Then Cursor_Link_SecondaryColorGradient = lin.Remove(0, "*Cursor_Link_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Link_SecondaryColorGradientMode= ") Then Cursor_Link_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Link_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Link_SecondaryColorNoise= ") Then Cursor_Link_SecondaryColorNoise = lin.Remove(0, "*Cursor_Link_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Link_SecondaryColorNoiseOpacity= ") Then Cursor_Link_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Link_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Pin"
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColor1= ") Then Cursor_Pin_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColor2= ") Then Cursor_Pin_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColorGradient= ") Then Cursor_Pin_PrimaryColorGradient = lin.Remove(0, "*Cursor_Pin_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColorGradientMode= ") Then Cursor_Pin_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Pin_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColorNoise= ") Then Cursor_Pin_PrimaryColorNoise = lin.Remove(0, "*Cursor_Pin_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_PrimaryColorNoiseOpacity= ") Then Cursor_Pin_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pin_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColor1= ") Then Cursor_Pin_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColor2= ") Then Cursor_Pin_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColorGradient= ") Then Cursor_Pin_SecondaryColorGradient = lin.Remove(0, "*Cursor_Pin_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColorGradientMode= ") Then Cursor_Pin_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Pin_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColorNoise= ") Then Cursor_Pin_SecondaryColorNoise = lin.Remove(0, "*Cursor_Pin_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Pin_SecondaryColorNoiseOpacity= ") Then Cursor_Pin_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pin_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Person"
+                    If lin.StartsWith("*Cursor_Person_PrimaryColor1= ") Then Cursor_Person_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Person_PrimaryColor2= ") Then Cursor_Person_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Person_PrimaryColorGradient= ") Then Cursor_Person_PrimaryColorGradient = lin.Remove(0, "*Cursor_Person_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Person_PrimaryColorGradientMode= ") Then Cursor_Person_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Person_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Person_PrimaryColorNoise= ") Then Cursor_Person_PrimaryColorNoise = lin.Remove(0, "*Cursor_Person_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Person_PrimaryColorNoiseOpacity= ") Then Cursor_Person_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Person_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Person_SecondaryColor1= ") Then Cursor_Person_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Person_SecondaryColor2= ") Then Cursor_Person_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Person_SecondaryColorGradient= ") Then Cursor_Person_SecondaryColorGradient = lin.Remove(0, "*Cursor_Person_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Person_SecondaryColorGradientMode= ") Then Cursor_Person_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Person_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Person_SecondaryColorNoise= ") Then Cursor_Person_SecondaryColorNoise = lin.Remove(0, "*Cursor_Person_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Person_SecondaryColorNoiseOpacity= ") Then Cursor_Person_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Person_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+
+#Region "Cross"
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColor1= ") Then Cursor_Cross_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColor2= ") Then Cursor_Cross_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColorGradient= ") Then Cursor_Cross_PrimaryColorGradient = lin.Remove(0, "*Cursor_Cross_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColorGradientMode= ") Then Cursor_Cross_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Cross_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColorNoise= ") Then Cursor_Cross_PrimaryColorNoise = lin.Remove(0, "*Cursor_Cross_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_PrimaryColorNoiseOpacity= ") Then Cursor_Cross_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Cross_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColor1= ") Then Cursor_Cross_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColor2= ") Then Cursor_Cross_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColorGradient= ") Then Cursor_Cross_SecondaryColorGradient = lin.Remove(0, "*Cursor_Cross_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColorGradientMode= ") Then Cursor_Cross_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Cross_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColorNoise= ") Then Cursor_Cross_SecondaryColorNoise = lin.Remove(0, "*Cursor_Cross_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_Cross_SecondaryColorNoiseOpacity= ") Then Cursor_Cross_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Cross_SecondaryColorNoiseOpacity= ".Count)
+
+#End Region
+#End Region
+
                 Next
 
             Case Mode.Init
@@ -414,6 +1203,262 @@ Public Class CP
                 Win32UI_Hilight = Color.FromArgb(0, 120, 215)
                 Win32UI_MenuHilight = Color.FromArgb(0, 120, 215)
                 Win32UI_Desktop = Color.FromArgb(0, 0, 0)
+
+#Region "Cursors"
+                Cursor_Enabled = False
+
+#Region "Arrow"
+                Cursor_Arrow_PrimaryColor1 = Color.White
+                Cursor_Arrow_PrimaryColor2 = Color.White
+                Cursor_Arrow_PrimaryColorGradient = False
+                Cursor_Arrow_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_PrimaryColorNoise = False
+                Cursor_Arrow_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColorGradient = False
+                Cursor_Arrow_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_SecondaryColorNoise = False
+                Cursor_Arrow_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Help"
+                Cursor_Help_PrimaryColor1 = Color.White
+                Cursor_Help_PrimaryColor2 = Color.White
+                Cursor_Help_PrimaryColorGradient = False
+                Cursor_Help_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_PrimaryColorNoise = False
+                Cursor_Help_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Help_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColorGradient = False
+                Cursor_Help_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_SecondaryColorNoise = False
+                Cursor_Help_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "AppLoading"
+                Cursor_AppLoading_PrimaryColor1 = Color.White
+                Cursor_AppLoading_PrimaryColor2 = Color.White
+                Cursor_AppLoading_PrimaryColorGradient = False
+                Cursor_AppLoading_PrimaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_PrimaryColorNoise = False
+                Cursor_AppLoading_PrimaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColorGradient = False
+                Cursor_AppLoading_SecondaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_SecondaryColorNoise = False
+                Cursor_AppLoading_SecondaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBackGradient = False
+                Cursor_AppLoading_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleBackNoise = False
+                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHotGradient = False
+                Cursor_AppLoading_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleHotNoise = False
+                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Busy"
+                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBackGradient = False
+                Cursor_Busy_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleBackNoise = False
+                Cursor_Busy_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHotGradient = False
+                Cursor_Busy_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleHotNoise = False
+                Cursor_Busy_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Move"
+                Cursor_Move_PrimaryColor1 = Color.White
+                Cursor_Move_PrimaryColor2 = Color.White
+                Cursor_Move_PrimaryColorGradient = False
+                Cursor_Move_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_PrimaryColorNoise = False
+                Cursor_Move_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Move_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColorGradient = False
+                Cursor_Move_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_SecondaryColorNoise = False
+                Cursor_Move_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NS"
+                Cursor_NS_PrimaryColor1 = Color.White
+                Cursor_NS_PrimaryColor2 = Color.White
+                Cursor_NS_PrimaryColorGradient = False
+                Cursor_NS_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_PrimaryColorNoise = False
+                Cursor_NS_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NS_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColorGradient = False
+                Cursor_NS_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_SecondaryColorNoise = False
+                Cursor_NS_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "EW"
+                Cursor_EW_PrimaryColor1 = Color.White
+                Cursor_EW_PrimaryColor2 = Color.White
+                Cursor_EW_PrimaryColorGradient = False
+                Cursor_EW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_PrimaryColorNoise = False
+                Cursor_EW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_EW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColorGradient = False
+                Cursor_EW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_SecondaryColorNoise = False
+                Cursor_EW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NESW"
+                Cursor_NESW_PrimaryColor1 = Color.White
+                Cursor_NESW_PrimaryColor2 = Color.White
+                Cursor_NESW_PrimaryColorGradient = False
+                Cursor_NESW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_PrimaryColorNoise = False
+                Cursor_NESW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NESW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColorGradient = False
+                Cursor_NESW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_SecondaryColorNoise = False
+                Cursor_NESW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NWSE"
+                Cursor_NWSE_PrimaryColor1 = Color.White
+                Cursor_NWSE_PrimaryColor2 = Color.White
+                Cursor_NWSE_PrimaryColorGradient = False
+                Cursor_NWSE_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_PrimaryColorNoise = False
+                Cursor_NWSE_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColorGradient = False
+                Cursor_NWSE_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_SecondaryColorNoise = False
+                Cursor_NWSE_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Up"
+                Cursor_Up_PrimaryColor1 = Color.White
+                Cursor_Up_PrimaryColor2 = Color.White
+                Cursor_Up_PrimaryColorGradient = False
+                Cursor_Up_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_PrimaryColorNoise = False
+                Cursor_Up_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Up_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColorGradient = False
+                Cursor_Up_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_SecondaryColorNoise = False
+                Cursor_Up_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pen"
+                Cursor_Pen_PrimaryColor1 = Color.White
+                Cursor_Pen_PrimaryColor2 = Color.White
+                Cursor_Pen_PrimaryColorGradient = False
+                Cursor_Pen_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_PrimaryColorNoise = False
+                Cursor_Pen_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pen_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColorGradient = False
+                Cursor_Pen_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_SecondaryColorNoise = False
+                Cursor_Pen_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "None"
+                Cursor_None_PrimaryColor1 = Color.White
+                Cursor_None_PrimaryColor2 = Color.White
+                Cursor_None_PrimaryColorGradient = False
+                Cursor_None_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_PrimaryColorNoise = False
+                Cursor_None_PrimaryColorNoiseOpacity = 0.25
+                Cursor_None_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColorGradient = False
+                Cursor_None_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_SecondaryColorNoise = False
+                Cursor_None_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Link"
+                Cursor_Link_PrimaryColor1 = Color.White
+                Cursor_Link_PrimaryColor2 = Color.White
+                Cursor_Link_PrimaryColorGradient = False
+                Cursor_Link_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_PrimaryColorNoise = False
+                Cursor_Link_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Link_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColorGradient = False
+                Cursor_Link_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_SecondaryColorNoise = False
+                Cursor_Link_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pin"
+                Cursor_Pin_PrimaryColor1 = Color.White
+                Cursor_Pin_PrimaryColor2 = Color.White
+                Cursor_Pin_PrimaryColorGradient = False
+                Cursor_Pin_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_PrimaryColorNoise = False
+                Cursor_Pin_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pin_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColorGradient = False
+                Cursor_Pin_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_SecondaryColorNoise = False
+                Cursor_Pin_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Person"
+                Cursor_Person_PrimaryColor1 = Color.White
+                Cursor_Person_PrimaryColor2 = Color.White
+                Cursor_Person_PrimaryColorGradient = False
+                Cursor_Person_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_PrimaryColorNoise = False
+                Cursor_Person_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Person_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColorGradient = False
+                Cursor_Person_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_SecondaryColorNoise = False
+                Cursor_Person_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Cross"
+                Cursor_Cross_PrimaryColor1 = Color.Transparent
+                Cursor_Cross_PrimaryColor2 = Color.Transparent
+                Cursor_Cross_PrimaryColorGradient = False
+                Cursor_Cross_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_PrimaryColorNoise = False
+                Cursor_Cross_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Cross_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColorGradient = False
+                Cursor_Cross_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_SecondaryColorNoise = False
+                Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
+#End Region
+#End Region
 
                 WinMode_Light = False
                 AppMode_Light = False
@@ -642,6 +1687,263 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32UI_Desktop.R, Win32UI_Desktop.G, Win32UI_Desktop.B), False, True)
 #End Region
 
+#Region "Cursors"
+                Registry.CurrentUser.OpenSubKey("HKEY_CURRENT_USER\Software\WinPaletter\Settings").OpenSubKey("").SetValue("", "")
+                Cursor_Enabled = False
+
+#Region "Arrow"
+                Cursor_Arrow_PrimaryColor1 = Color.White
+                Cursor_Arrow_PrimaryColor2 = Color.White
+                Cursor_Arrow_PrimaryColorGradient = False
+                Cursor_Arrow_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_PrimaryColorNoise = False
+                Cursor_Arrow_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Arrow_SecondaryColorGradient = False
+                Cursor_Arrow_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Arrow_SecondaryColorNoise = False
+                Cursor_Arrow_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Help"
+                Cursor_Help_PrimaryColor1 = Color.White
+                Cursor_Help_PrimaryColor2 = Color.White
+                Cursor_Help_PrimaryColorGradient = False
+                Cursor_Help_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_PrimaryColorNoise = False
+                Cursor_Help_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Help_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Help_SecondaryColorGradient = False
+                Cursor_Help_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Help_SecondaryColorNoise = False
+                Cursor_Help_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "AppLoading"
+                Cursor_AppLoading_PrimaryColor1 = Color.White
+                Cursor_AppLoading_PrimaryColor2 = Color.White
+                Cursor_AppLoading_PrimaryColorGradient = False
+                Cursor_AppLoading_PrimaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_PrimaryColorNoise = False
+                Cursor_AppLoading_PrimaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_AppLoading_SecondaryColorGradient = False
+                Cursor_AppLoading_SecondaryColorGradientMode = GradientMode.Circle
+                Cursor_AppLoading_SecondaryColorNoise = False
+                Cursor_AppLoading_SecondaryColorNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_AppLoading_LoadingCircleBackGradient = False
+                Cursor_AppLoading_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleBackNoise = False
+                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_AppLoading_LoadingCircleHotGradient = False
+                Cursor_AppLoading_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_AppLoading_LoadingCircleHotNoise = False
+                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Busy"
+                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
+                Cursor_Busy_LoadingCircleBackGradient = False
+                Cursor_Busy_LoadingCircleBackGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleBackNoise = False
+                Cursor_Busy_LoadingCircleBackNoiseOpacity = 0.25
+                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
+                Cursor_Busy_LoadingCircleHotGradient = False
+                Cursor_Busy_LoadingCircleHotGradientMode = GradientMode.Circle
+                Cursor_Busy_LoadingCircleHotNoise = False
+                Cursor_Busy_LoadingCircleHotNoiseOpacity = 0.25
+#End Region
+
+#Region "Move"
+                Cursor_Move_PrimaryColor1 = Color.White
+                Cursor_Move_PrimaryColor2 = Color.White
+                Cursor_Move_PrimaryColorGradient = False
+                Cursor_Move_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_PrimaryColorNoise = False
+                Cursor_Move_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Move_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Move_SecondaryColorGradient = False
+                Cursor_Move_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Move_SecondaryColorNoise = False
+                Cursor_Move_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NS"
+                Cursor_NS_PrimaryColor1 = Color.White
+                Cursor_NS_PrimaryColor2 = Color.White
+                Cursor_NS_PrimaryColorGradient = False
+                Cursor_NS_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_PrimaryColorNoise = False
+                Cursor_NS_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NS_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NS_SecondaryColorGradient = False
+                Cursor_NS_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NS_SecondaryColorNoise = False
+                Cursor_NS_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "EW"
+                Cursor_EW_PrimaryColor1 = Color.White
+                Cursor_EW_PrimaryColor2 = Color.White
+                Cursor_EW_PrimaryColorGradient = False
+                Cursor_EW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_PrimaryColorNoise = False
+                Cursor_EW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_EW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_EW_SecondaryColorGradient = False
+                Cursor_EW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_EW_SecondaryColorNoise = False
+                Cursor_EW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NESW"
+                Cursor_NESW_PrimaryColor1 = Color.White
+                Cursor_NESW_PrimaryColor2 = Color.White
+                Cursor_NESW_PrimaryColorGradient = False
+                Cursor_NESW_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_PrimaryColorNoise = False
+                Cursor_NESW_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NESW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NESW_SecondaryColorGradient = False
+                Cursor_NESW_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NESW_SecondaryColorNoise = False
+                Cursor_NESW_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "NWSE"
+                Cursor_NWSE_PrimaryColor1 = Color.White
+                Cursor_NWSE_PrimaryColor2 = Color.White
+                Cursor_NWSE_PrimaryColorGradient = False
+                Cursor_NWSE_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_PrimaryColorNoise = False
+                Cursor_NWSE_PrimaryColorNoiseOpacity = 0.25
+                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_NWSE_SecondaryColorGradient = False
+                Cursor_NWSE_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_NWSE_SecondaryColorNoise = False
+                Cursor_NWSE_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Up"
+                Cursor_Up_PrimaryColor1 = Color.White
+                Cursor_Up_PrimaryColor2 = Color.White
+                Cursor_Up_PrimaryColorGradient = False
+                Cursor_Up_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_PrimaryColorNoise = False
+                Cursor_Up_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Up_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Up_SecondaryColorGradient = False
+                Cursor_Up_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Up_SecondaryColorNoise = False
+                Cursor_Up_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pen"
+                Cursor_Pen_PrimaryColor1 = Color.White
+                Cursor_Pen_PrimaryColor2 = Color.White
+                Cursor_Pen_PrimaryColorGradient = False
+                Cursor_Pen_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_PrimaryColorNoise = False
+                Cursor_Pen_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pen_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pen_SecondaryColorGradient = False
+                Cursor_Pen_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pen_SecondaryColorNoise = False
+                Cursor_Pen_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "None"
+                Cursor_None_PrimaryColor1 = Color.White
+                Cursor_None_PrimaryColor2 = Color.White
+                Cursor_None_PrimaryColorGradient = False
+                Cursor_None_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_PrimaryColorNoise = False
+                Cursor_None_PrimaryColorNoiseOpacity = 0.25
+                Cursor_None_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_None_SecondaryColorGradient = False
+                Cursor_None_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_None_SecondaryColorNoise = False
+                Cursor_None_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Link"
+                Cursor_Link_PrimaryColor1 = Color.White
+                Cursor_Link_PrimaryColor2 = Color.White
+                Cursor_Link_PrimaryColorGradient = False
+                Cursor_Link_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_PrimaryColorNoise = False
+                Cursor_Link_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Link_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Link_SecondaryColorGradient = False
+                Cursor_Link_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Link_SecondaryColorNoise = False
+                Cursor_Link_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Pin"
+                Cursor_Pin_PrimaryColor1 = Color.White
+                Cursor_Pin_PrimaryColor2 = Color.White
+                Cursor_Pin_PrimaryColorGradient = False
+                Cursor_Pin_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_PrimaryColorNoise = False
+                Cursor_Pin_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Pin_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Pin_SecondaryColorGradient = False
+                Cursor_Pin_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Pin_SecondaryColorNoise = False
+                Cursor_Pin_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Person"
+                Cursor_Person_PrimaryColor1 = Color.White
+                Cursor_Person_PrimaryColor2 = Color.White
+                Cursor_Person_PrimaryColorGradient = False
+                Cursor_Person_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_PrimaryColorNoise = False
+                Cursor_Person_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Person_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Person_SecondaryColorGradient = False
+                Cursor_Person_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Person_SecondaryColorNoise = False
+                Cursor_Person_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
+#Region "Cross"
+                Cursor_Cross_PrimaryColor1 = Color.Transparent
+                Cursor_Cross_PrimaryColor2 = Color.Transparent
+                Cursor_Cross_PrimaryColorGradient = False
+                Cursor_Cross_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_PrimaryColorNoise = False
+                Cursor_Cross_PrimaryColorNoiseOpacity = 0.25
+                Cursor_Cross_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_Cross_SecondaryColorGradient = False
+                Cursor_Cross_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_Cross_SecondaryColorNoise = False
+                Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
+#End Region
+#End Region
+
             Case SavingMode.File
 
                 Dim tx As New List(Of String)
@@ -649,6 +1951,7 @@ Public Class CP
                 tx.Add("<WinPaletter - Programmed by Abdelrhman_AK>")
                 tx.Add("*Created from App Version= " & AppVersion & vbCrLf)
 
+#Region "General Info"
                 tx.Add("<General>")
                 tx.Add("*Palette Name= " & PaletteName)
                 If String.IsNullOrWhiteSpace(PaletteDescription) Then
@@ -660,7 +1963,9 @@ Public Class CP
                 tx.Add("*Author= " & Author)
                 tx.Add("*AuthorSocialMediaLink= " & AuthorSocialMediaLink)
                 tx.Add("</General>" & vbCrLf)
+#End Region
 
+#Region "Modern Windows"
                 tx.Add("<Toggles>")
                 tx.Add("*WinMode_Light= " & WinMode_Light)
                 tx.Add("*AppMode_Light= " & AppMode_Light)
@@ -682,6 +1987,7 @@ Public Class CP
                 tx.Add("*StartMenu_Accent= " & StartMenu_Accent.ToArgb)
                 tx.Add("*Undefined= " & Color.FromArgb(255, 0, 0, 0).ToArgb)
                 tx.Add("</UWP>" & vbCrLf)
+#End Region
 
 #Region "LogonUI"
                 tx.Add("<LogonUI>")
@@ -730,6 +2036,280 @@ Public Class CP
                 tx.Add("*Win32UI_Desktop= " & Win32UI_Desktop.ToArgb)
                 tx.Add("</Win32UI>" & vbCrLf)
 #End Region
+
+#Region "Cursors"
+                tx.Add("<Cursors>")
+                tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
+
+#Region "Arrow"
+                tx.Add("*Cursor_Arrow_PrimaryColor1= " & Cursor_Arrow_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Arrow_PrimaryColor2= " & Cursor_Arrow_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Arrow_PrimaryColorGradient= " & Cursor_Arrow_PrimaryColorGradient)
+                tx.Add("*Cursor_Arrow_PrimaryColorGradientMode= " & Cursor_Arrow_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Arrow_PrimaryColorNoise= " & Cursor_Arrow_PrimaryColorNoise)
+                tx.Add("*Cursor_Arrow_PrimaryColorNoiseOpacity= " & Cursor_Arrow_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Arrow_SecondaryColor1= " & Cursor_Arrow_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Arrow_SecondaryColor2= " & Cursor_Arrow_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Arrow_SecondaryColorGradient= " & Cursor_Arrow_SecondaryColorGradient)
+                tx.Add("*Cursor_Arrow_SecondaryColorGradientMode= " & Cursor_Arrow_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Arrow_SecondaryColorNoise= " & Cursor_Arrow_SecondaryColorNoise)
+                tx.Add("*Cursor_Arrow_SecondaryColorNoiseOpacity= " & Cursor_Arrow_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Help"
+                tx.Add("*Cursor_Help_PrimaryColor1= " & Cursor_Help_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Help_PrimaryColor2= " & Cursor_Help_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Help_PrimaryColorGradient= " & Cursor_Help_PrimaryColorGradient)
+                tx.Add("*Cursor_Help_PrimaryColorGradientMode= " & Cursor_Help_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Help_PrimaryColorNoise= " & Cursor_Help_PrimaryColorNoise)
+                tx.Add("*Cursor_Help_PrimaryColorNoiseOpacity= " & Cursor_Help_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Help_SecondaryColor1= " & Cursor_Help_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Help_SecondaryColor2= " & Cursor_Help_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Help_SecondaryColorGradient= " & Cursor_Help_SecondaryColorGradient)
+                tx.Add("*Cursor_Help_SecondaryColorGradientMode= " & Cursor_Help_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Help_SecondaryColorNoise= " & Cursor_Help_SecondaryColorNoise)
+                tx.Add("*Cursor_Help_SecondaryColorNoiseOpacity= " & Cursor_Help_SecondaryColorNoiseOpacity)
+#End Region
+
+#Region "AppLoading"
+                tx.Add("*Cursor_AppLoading_PrimaryColor1= " & Cursor_AppLoading_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_AppLoading_PrimaryColor2= " & Cursor_AppLoading_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_AppLoading_PrimaryColorGradient= " & Cursor_AppLoading_PrimaryColorGradient)
+                tx.Add("*Cursor_AppLoading_PrimaryColorGradientMode= " & Cursor_AppLoading_PrimaryColorGradientMode)
+                tx.Add("*Cursor_AppLoading_PrimaryColorNoise= " & Cursor_AppLoading_PrimaryColorNoise)
+                tx.Add("*Cursor_AppLoading_PrimaryColorNoiseOpacity= " & Cursor_AppLoading_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_AppLoading_SecondaryColor1= " & Cursor_AppLoading_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_AppLoading_SecondaryColor2= " & Cursor_AppLoading_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_AppLoading_SecondaryColorGradient= " & Cursor_AppLoading_SecondaryColorGradient)
+                tx.Add("*Cursor_AppLoading_SecondaryColorGradientMode= " & Cursor_AppLoading_SecondaryColorGradientMode)
+                tx.Add("*Cursor_AppLoading_SecondaryColorNoise= " & Cursor_AppLoading_SecondaryColorNoise)
+                tx.Add("*Cursor_AppLoading_SecondaryColorNoiseOpacity= " & Cursor_AppLoading_SecondaryColorNoiseOpacity)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBack1= " & Cursor_AppLoading_LoadingCircleBack1.ToArgb)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBack2= " & Cursor_AppLoading_LoadingCircleBack2.ToArgb)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBackGradient= " & Cursor_AppLoading_LoadingCircleBackGradient)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBackGradientMode= " & Cursor_AppLoading_LoadingCircleBackGradientMode)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBackNoise= " & Cursor_AppLoading_LoadingCircleBackNoise)
+                tx.Add("*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= " & Cursor_AppLoading_LoadingCircleBackNoiseOpacity)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHot1= " & Cursor_AppLoading_LoadingCircleHot1.ToArgb)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHot2= " & Cursor_AppLoading_LoadingCircleHot2.ToArgb)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHotGradient= " & Cursor_AppLoading_LoadingCircleHotGradient)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHotGradientMode= " & Cursor_AppLoading_LoadingCircleHotGradientMode)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHotNoise= " & Cursor_AppLoading_LoadingCircleHotNoise)
+                tx.Add("*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= " & Cursor_AppLoading_LoadingCircleHotNoiseOpacity)
+
+#End Region
+
+#Region "Busy"
+                tx.Add("*Cursor_Busy_LoadingCircleBack1= " & Cursor_Busy_LoadingCircleBack1.ToArgb)
+                tx.Add("*Cursor_Busy_LoadingCircleBack2= " & Cursor_Busy_LoadingCircleBack2.ToArgb)
+                tx.Add("*Cursor_Busy_LoadingCircleBackGradient= " & Cursor_Busy_LoadingCircleBackGradient)
+                tx.Add("*Cursor_Busy_LoadingCircleBackGradientMode= " & Cursor_Busy_LoadingCircleBackGradientMode)
+                tx.Add("*Cursor_Busy_LoadingCircleBackNoise= " & Cursor_Busy_LoadingCircleBackNoise)
+                tx.Add("*Cursor_Busy_LoadingCircleBackNoiseOpacity= " & Cursor_Busy_LoadingCircleBackNoiseOpacity)
+                tx.Add("*Cursor_Busy_LoadingCircleHot1= " & Cursor_Busy_LoadingCircleHot1.ToArgb)
+                tx.Add("*Cursor_Busy_LoadingCircleHot2= " & Cursor_Busy_LoadingCircleHot2.ToArgb)
+                tx.Add("*Cursor_Busy_LoadingCircleHotGradient= " & Cursor_Busy_LoadingCircleHotGradient)
+                tx.Add("*Cursor_Busy_LoadingCircleHotGradientMode= " & Cursor_Busy_LoadingCircleHotGradientMode)
+                tx.Add("*Cursor_Busy_LoadingCircleHotNoise= " & Cursor_Busy_LoadingCircleHotNoise)
+                tx.Add("*Cursor_Busy_LoadingCircleHotNoiseOpacity= " & Cursor_Busy_LoadingCircleHotNoiseOpacity)
+
+#End Region
+
+#Region "Move"
+                tx.Add("*Cursor_Move_PrimaryColor1= " & Cursor_Move_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Move_PrimaryColor2= " & Cursor_Move_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Move_PrimaryColorGradient= " & Cursor_Move_PrimaryColorGradient)
+                tx.Add("*Cursor_Move_PrimaryColorGradientMode= " & Cursor_Move_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Move_PrimaryColorNoise= " & Cursor_Move_PrimaryColorNoise)
+                tx.Add("*Cursor_Move_PrimaryColorNoiseOpacity= " & Cursor_Move_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Move_SecondaryColor1= " & Cursor_Move_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Move_SecondaryColor2= " & Cursor_Move_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Move_SecondaryColorGradient= " & Cursor_Move_SecondaryColorGradient)
+                tx.Add("*Cursor_Move_SecondaryColorGradientMode= " & Cursor_Move_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Move_SecondaryColorNoise= " & Cursor_Move_SecondaryColorNoise)
+                tx.Add("*Cursor_Move_SecondaryColorNoiseOpacity= " & Cursor_Move_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "NS"
+                tx.Add("*Cursor_NS_PrimaryColor1= " & Cursor_NS_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_NS_PrimaryColor2= " & Cursor_NS_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_NS_PrimaryColorGradient= " & Cursor_NS_PrimaryColorGradient)
+                tx.Add("*Cursor_NS_PrimaryColorGradientMode= " & Cursor_NS_PrimaryColorGradientMode)
+                tx.Add("*Cursor_NS_PrimaryColorNoise= " & Cursor_NS_PrimaryColorNoise)
+                tx.Add("*Cursor_NS_PrimaryColorNoiseOpacity= " & Cursor_NS_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_NS_SecondaryColor1= " & Cursor_NS_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_NS_SecondaryColor2= " & Cursor_NS_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_NS_SecondaryColorGradient= " & Cursor_NS_SecondaryColorGradient)
+                tx.Add("*Cursor_NS_SecondaryColorGradientMode= " & Cursor_NS_SecondaryColorGradientMode)
+                tx.Add("*Cursor_NS_SecondaryColorNoise= " & Cursor_NS_SecondaryColorNoise)
+                tx.Add("*Cursor_NS_SecondaryColorNoiseOpacity= " & Cursor_NS_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "EW"
+                tx.Add("*Cursor_EW_PrimaryColor1= " & Cursor_EW_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_EW_PrimaryColor2= " & Cursor_EW_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_EW_PrimaryColorGradient= " & Cursor_EW_PrimaryColorGradient)
+                tx.Add("*Cursor_EW_PrimaryColorGradientMode= " & Cursor_EW_PrimaryColorGradientMode)
+                tx.Add("*Cursor_EW_PrimaryColorNoise= " & Cursor_EW_PrimaryColorNoise)
+                tx.Add("*Cursor_EW_PrimaryColorNoiseOpacity= " & Cursor_EW_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_EW_SecondaryColor1= " & Cursor_EW_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_EW_SecondaryColor2= " & Cursor_EW_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_EW_SecondaryColorGradient= " & Cursor_EW_SecondaryColorGradient)
+                tx.Add("*Cursor_EW_SecondaryColorGradientMode= " & Cursor_EW_SecondaryColorGradientMode)
+                tx.Add("*Cursor_EW_SecondaryColorNoise= " & Cursor_EW_SecondaryColorNoise)
+                tx.Add("*Cursor_EW_SecondaryColorNoiseOpacity= " & Cursor_EW_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "NESW"
+                tx.Add("*Cursor_NESW_PrimaryColor1= " & Cursor_NESW_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_NESW_PrimaryColor2= " & Cursor_NESW_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_NESW_PrimaryColorGradient= " & Cursor_NESW_PrimaryColorGradient)
+                tx.Add("*Cursor_NESW_PrimaryColorGradientMode= " & Cursor_NESW_PrimaryColorGradientMode)
+                tx.Add("*Cursor_NESW_PrimaryColorNoise= " & Cursor_NESW_PrimaryColorNoise)
+                tx.Add("*Cursor_NESW_PrimaryColorNoiseOpacity= " & Cursor_NESW_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_NESW_SecondaryColor1= " & Cursor_NESW_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_NESW_SecondaryColor2= " & Cursor_NESW_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_NESW_SecondaryColorGradient= " & Cursor_NESW_SecondaryColorGradient)
+                tx.Add("*Cursor_NESW_SecondaryColorGradientMode= " & Cursor_NESW_SecondaryColorGradientMode)
+                tx.Add("*Cursor_NESW_SecondaryColorNoise= " & Cursor_NESW_SecondaryColorNoise)
+                tx.Add("*Cursor_NESW_SecondaryColorNoiseOpacity= " & Cursor_NESW_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "NWSE"
+                tx.Add("*Cursor_NWSE_PrimaryColor1= " & Cursor_NWSE_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_NWSE_PrimaryColor2= " & Cursor_NWSE_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_NWSE_PrimaryColorGradient= " & Cursor_NWSE_PrimaryColorGradient)
+                tx.Add("*Cursor_NWSE_PrimaryColorGradientMode= " & Cursor_NWSE_PrimaryColorGradientMode)
+                tx.Add("*Cursor_NWSE_PrimaryColorNoise= " & Cursor_NWSE_PrimaryColorNoise)
+                tx.Add("*Cursor_NWSE_PrimaryColorNoiseOpacity= " & Cursor_NWSE_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_NWSE_SecondaryColor1= " & Cursor_NWSE_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_NWSE_SecondaryColor2= " & Cursor_NWSE_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_NWSE_SecondaryColorGradient= " & Cursor_NWSE_SecondaryColorGradient)
+                tx.Add("*Cursor_NWSE_SecondaryColorGradientMode= " & Cursor_NWSE_SecondaryColorGradientMode)
+                tx.Add("*Cursor_NWSE_SecondaryColorNoise= " & Cursor_NWSE_SecondaryColorNoise)
+                tx.Add("*Cursor_NWSE_SecondaryColorNoiseOpacity= " & Cursor_NWSE_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Up"
+                tx.Add("*Cursor_Up_PrimaryColor1= " & Cursor_Up_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Up_PrimaryColor2= " & Cursor_Up_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Up_PrimaryColorGradient= " & Cursor_Up_PrimaryColorGradient)
+                tx.Add("*Cursor_Up_PrimaryColorGradientMode= " & Cursor_Up_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Up_PrimaryColorNoise= " & Cursor_Up_PrimaryColorNoise)
+                tx.Add("*Cursor_Up_PrimaryColorNoiseOpacity= " & Cursor_Up_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Up_SecondaryColor1= " & Cursor_Up_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Up_SecondaryColor2= " & Cursor_Up_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Up_SecondaryColorGradient= " & Cursor_Up_SecondaryColorGradient)
+                tx.Add("*Cursor_Up_SecondaryColorGradientMode= " & Cursor_Up_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Up_SecondaryColorNoise= " & Cursor_Up_SecondaryColorNoise)
+                tx.Add("*Cursor_Up_SecondaryColorNoiseOpacity= " & Cursor_Up_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Pen"
+                tx.Add("*Cursor_Pen_PrimaryColor1= " & Cursor_Pen_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Pen_PrimaryColor2= " & Cursor_Pen_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Pen_PrimaryColorGradient= " & Cursor_Pen_PrimaryColorGradient)
+                tx.Add("*Cursor_Pen_PrimaryColorGradientMode= " & Cursor_Pen_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Pen_PrimaryColorNoise= " & Cursor_Pen_PrimaryColorNoise)
+                tx.Add("*Cursor_Pen_PrimaryColorNoiseOpacity= " & Cursor_Pen_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Pen_SecondaryColor1= " & Cursor_Pen_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Pen_SecondaryColor2= " & Cursor_Pen_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Pen_SecondaryColorGradient= " & Cursor_Pen_SecondaryColorGradient)
+                tx.Add("*Cursor_Pen_SecondaryColorGradientMode= " & Cursor_Pen_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Pen_SecondaryColorNoise= " & Cursor_Pen_SecondaryColorNoise)
+                tx.Add("*Cursor_Pen_SecondaryColorNoiseOpacity= " & Cursor_Pen_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "None"
+                tx.Add("*Cursor_None_PrimaryColor1= " & Cursor_None_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_None_PrimaryColor2= " & Cursor_None_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_None_PrimaryColorGradient= " & Cursor_None_PrimaryColorGradient)
+                tx.Add("*Cursor_None_PrimaryColorGradientMode= " & Cursor_None_PrimaryColorGradientMode)
+                tx.Add("*Cursor_None_PrimaryColorNoise= " & Cursor_None_PrimaryColorNoise)
+                tx.Add("*Cursor_None_PrimaryColorNoiseOpacity= " & Cursor_None_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_None_SecondaryColor1= " & Cursor_None_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_None_SecondaryColor2= " & Cursor_None_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_None_SecondaryColorGradient= " & Cursor_None_SecondaryColorGradient)
+                tx.Add("*Cursor_None_SecondaryColorGradientMode= " & Cursor_None_SecondaryColorGradientMode)
+                tx.Add("*Cursor_None_SecondaryColorNoise= " & Cursor_None_SecondaryColorNoise)
+                tx.Add("*Cursor_None_SecondaryColorNoiseOpacity= " & Cursor_None_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Link"
+                tx.Add("*Cursor_Link_PrimaryColor1= " & Cursor_Link_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Link_PrimaryColor2= " & Cursor_Link_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Link_PrimaryColorGradient= " & Cursor_Link_PrimaryColorGradient)
+                tx.Add("*Cursor_Link_PrimaryColorGradientMode= " & Cursor_Link_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Link_PrimaryColorNoise= " & Cursor_Link_PrimaryColorNoise)
+                tx.Add("*Cursor_Link_PrimaryColorNoiseOpacity= " & Cursor_Link_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Link_SecondaryColor1= " & Cursor_Link_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Link_SecondaryColor2= " & Cursor_Link_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Link_SecondaryColorGradient= " & Cursor_Link_SecondaryColorGradient)
+                tx.Add("*Cursor_Link_SecondaryColorGradientMode= " & Cursor_Link_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Link_SecondaryColorNoise= " & Cursor_Link_SecondaryColorNoise)
+                tx.Add("*Cursor_Link_SecondaryColorNoiseOpacity= " & Cursor_Link_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Pin"
+                tx.Add("*Cursor_Pin_PrimaryColor1= " & Cursor_Pin_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Pin_PrimaryColor2= " & Cursor_Pin_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Pin_PrimaryColorGradient= " & Cursor_Pin_PrimaryColorGradient)
+                tx.Add("*Cursor_Pin_PrimaryColorGradientMode= " & Cursor_Pin_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Pin_PrimaryColorNoise= " & Cursor_Pin_PrimaryColorNoise)
+                tx.Add("*Cursor_Pin_PrimaryColorNoiseOpacity= " & Cursor_Pin_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Pin_SecondaryColor1= " & Cursor_Pin_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Pin_SecondaryColor2= " & Cursor_Pin_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Pin_SecondaryColorGradient= " & Cursor_Pin_SecondaryColorGradient)
+                tx.Add("*Cursor_Pin_SecondaryColorGradientMode= " & Cursor_Pin_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Pin_SecondaryColorNoise= " & Cursor_Pin_SecondaryColorNoise)
+                tx.Add("*Cursor_Pin_SecondaryColorNoiseOpacity= " & Cursor_Pin_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Person"
+                tx.Add("*Cursor_Person_PrimaryColor1= " & Cursor_Person_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Person_PrimaryColor2= " & Cursor_Person_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Person_PrimaryColorGradient= " & Cursor_Person_PrimaryColorGradient)
+                tx.Add("*Cursor_Person_PrimaryColorGradientMode= " & Cursor_Person_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Person_PrimaryColorNoise= " & Cursor_Person_PrimaryColorNoise)
+                tx.Add("*Cursor_Person_PrimaryColorNoiseOpacity= " & Cursor_Person_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Person_SecondaryColor1= " & Cursor_Person_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Person_SecondaryColor2= " & Cursor_Person_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Person_SecondaryColorGradient= " & Cursor_Person_SecondaryColorGradient)
+                tx.Add("*Cursor_Person_SecondaryColorGradientMode= " & Cursor_Person_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Person_SecondaryColorNoise= " & Cursor_Person_SecondaryColorNoise)
+                tx.Add("*Cursor_Person_SecondaryColorNoiseOpacity= " & Cursor_Person_SecondaryColorNoiseOpacity)
+
+#End Region
+
+#Region "Cross"
+                tx.Add("*Cursor_Cross_PrimaryColor1= " & Cursor_Cross_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_Cross_PrimaryColor2= " & Cursor_Cross_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_Cross_PrimaryColorGradient= " & Cursor_Cross_PrimaryColorGradient)
+                tx.Add("*Cursor_Cross_PrimaryColorGradientMode= " & Cursor_Cross_PrimaryColorGradientMode)
+                tx.Add("*Cursor_Cross_PrimaryColorNoise= " & Cursor_Cross_PrimaryColorNoise)
+                tx.Add("*Cursor_Cross_PrimaryColorNoiseOpacity= " & Cursor_Cross_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_Cross_SecondaryColor1= " & Cursor_Cross_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_Cross_SecondaryColor2= " & Cursor_Cross_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_Cross_SecondaryColorGradient= " & Cursor_Cross_SecondaryColorGradient)
+                tx.Add("*Cursor_Cross_SecondaryColorGradientMode= " & Cursor_Cross_SecondaryColorGradientMode)
+                tx.Add("*Cursor_Cross_SecondaryColorNoise= " & Cursor_Cross_SecondaryColorNoise)
+                tx.Add("*Cursor_Cross_SecondaryColorNoiseOpacity= " & Cursor_Cross_SecondaryColorNoiseOpacity)
+
+#End Region
+                tx.Add("</Cursors>")
+#End Region
+
                 tx.Add(vbCrLf & "</WinPaletter>")
 
                 IO.File.WriteAllText(FileLocation, CStr_FromList(tx))

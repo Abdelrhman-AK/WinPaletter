@@ -23,16 +23,94 @@ Public Module Paths
         Cross
     End Enum
 
+    Enum GradientMode
+        Vertical
+        Horizontal
+        ForwardDiagonal
+        BackwardDiagonal
+        Circle
+    End Enum
+
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
+    Function RetrunGradientModeFromString([String] As String) As GradientMode
+        If [String].Trim.ToLower = "vertical" Then
+            Return GradientMode.Vertical
+
+        ElseIf [String].Trim.ToLower = "horizontal" Then
+            Return GradientMode.Horizontal
+
+        ElseIf [String].Trim.ToLower = "forward diagonal" Then
+            Return GradientMode.ForwardDiagonal
+
+        ElseIf [String].Trim.ToLower = "backward diagonal" Then
+            Return GradientMode.BackwardDiagonal
+
+        ElseIf [String].Trim.ToLower = "circle" Then
+            Return GradientMode.Circle
+
+        Else
+            Return Nothing
+
+        End If
+
+    End Function
+
+    Function RetrunStringFromGradientMode([GradientMode] As GradientMode) As String
+        If [GradientMode] = GradientMode.Horizontal Then
+            Return "Horizontal"
+
+        ElseIf [GradientMode] = GradientMode.Vertical Then
+            Return "Vertical"
+
+        ElseIf [GradientMode] = GradientMode.ForwardDiagonal Then
+            Return "Forward Diagonal"
+
+        ElseIf [GradientMode] = GradientMode.BackwardDiagonal Then
+            Return "Backward Diagonal"
+
+        ElseIf [GradientMode] = GradientMode.Circle Then
+            Return "Circle"
+
+        Else
+            Return Nothing
+
+        End If
+
+    End Function
+
+    Function ReturnGradience([Rectangle] As [Rectangle], [Color1] As Color, [Color2] As Color, [GradientMode] As GradientMode, Optional Angle As Single = 0) As Brush
+
+        If [GradientMode] = GradientMode.Horizontal Then
+            Return New LinearGradientBrush([Rectangle], [Color1], [Color2], LinearGradientMode.Horizontal)
+
+        ElseIf [GradientMode] = GradientMode.Vertical Then
+            Return New LinearGradientBrush([Rectangle], [Color1], [Color2], LinearGradientMode.Vertical)
+
+        ElseIf [GradientMode] = GradientMode.ForwardDiagonal Then
+            Return New LinearGradientBrush([Rectangle], [Color1], [Color2], LinearGradientMode.ForwardDiagonal)
+
+        ElseIf [GradientMode] = GradientMode.BackwardDiagonal Then
+            Return New LinearGradientBrush([Rectangle], [Color1], [Color2], LinearGradientMode.BackwardDiagonal)
+
+        ElseIf [GradientMode] = GradientMode.Circle Then
+            Return New LinearGradientBrush([Rectangle], [Color1], [Color2], Angle, True)
+
+        Else
+            Return New SolidBrush([Color1])
+
+        End If
+
+    End Function
+
     Public Function Draw([Cursor] As CursorType,
-                         [PrimaryColor1] As Color, [PrimaryColor2] As Color, [PrimaryColorGradient] As Boolean, [PrimaryColorGradientMode] As LinearGradientMode,
-                         [SecondaryColor1] As Color, [SecondaryColor2] As Color, [SecondaryColorGradient] As Boolean, [SecondaryColorGradientMode] As LinearGradientMode,
-                         [LoadingCircleBack1] As Color, [LoadingCircleBack2] As Color, [LoadingCircleBackGradient] As Boolean, [LoadingCircleBackGradientMode] As LinearGradientMode,
-                         [LoadingCircleHot1] As Color, [LoadingCircleHot2] As Color, [LoadingCircleHotGradient] As Boolean, [LoadingCircleHotGradientMode] As LinearGradientMode,
+                         [PrimaryColor1] As Color, [PrimaryColor2] As Color, [PrimaryColorGradient] As Boolean, [PrimaryColorGradientMode] As GradientMode,
+                         [SecondaryColor1] As Color, [SecondaryColor2] As Color, [SecondaryColorGradient] As Boolean, [SecondaryColorGradientMode] As GradientMode,
+                         [LoadingCircleBack1] As Color, [LoadingCircleBack2] As Color, [LoadingCircleBackGradient] As Boolean, [LoadingCircleBackGradientMode] As GradientMode,
+                         [LoadingCircleHot1] As Color, [LoadingCircleHot2] As Color, [LoadingCircleHotGradient] As Boolean, [LoadingCircleHotGradientMode] As GradientMode,
                          [PrimaryNoise] As Boolean, [PrimaryNoiseOpacity] As Single, [SecondaryNoise] As Boolean, [SecondaryNoiseOpacity] As Single,
                          [LoadingCircleBackNoise] As Boolean, [LoadingCircleBackNoiseOpacity] As Single, [LoadingCircleHotNoise] As Boolean, [LoadingCircleHotNoiseOpacity] As Single,
-                         [LineThickness] As Single, Optional Scale As Single = 1, Optional ByVal _Angle As Single = 180) As Bitmap
+                         Optional [LineThickness] As Single = 1, Optional Scale As Single = 1, Optional ByVal _Angle As Single = 180) As Bitmap
 
 
         Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
@@ -55,12 +133,12 @@ Public Module Paths
 #Region "Arrow"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -84,12 +162,12 @@ Public Module Paths
 #Region "Help"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -97,12 +175,12 @@ Public Module Paths
 
                 Dim BB_H, BL_H As Brush
                 If [PrimaryColorGradient] Then
-                    BB_H = New LinearGradientBrush(_Help, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB_H = ReturnGradience(_Help, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB_H = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL_H = New LinearGradientBrush(_Help, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL_H = ReturnGradience(_Help, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL_H = New SolidBrush([SecondaryColor1])
                 End If
@@ -144,12 +222,12 @@ Public Module Paths
 #Region "Busy"
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
-                    BC = New LinearGradientBrush(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                    BC = ReturnGradience(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode], _Angle)
                 Else
                     BC = New SolidBrush([LoadingCircleBack1])
                 End If
                 If [LoadingCircleHotGradient] Then
-                    BH = New LinearGradientBrush(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                    BH = ReturnGradience(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode], _Angle)
                 Else
                     BH = New SolidBrush([LoadingCircleHot1])
                 End If
@@ -172,12 +250,12 @@ Public Module Paths
 #Region "AppLoading"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode], _Angle)
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode], _Angle)
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -185,12 +263,12 @@ Public Module Paths
 
                 Dim BC, BH As Brush
                 If [LoadingCircleBackGradient] Then
-                    BC = New LinearGradientBrush(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode])
+                    BC = ReturnGradience(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode], _Angle)
                 Else
                     BC = New SolidBrush([LoadingCircleBack1])
                 End If
                 If [LoadingCircleHotGradient] Then
-                    BH = New LinearGradientBrush(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode])
+                    BH = ReturnGradience(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode], _Angle)
                 Else
                     BH = New SolidBrush([LoadingCircleHot1])
                 End If
@@ -228,12 +306,12 @@ Public Module Paths
 #Region "None"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -258,12 +336,12 @@ Public Module Paths
 #Region "Move"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -287,12 +365,12 @@ Public Module Paths
 #Region "Up"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -316,12 +394,12 @@ Public Module Paths
 #Region "NS"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -345,12 +423,12 @@ Public Module Paths
 #Region "EW"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -374,12 +452,12 @@ Public Module Paths
 #Region "NESW"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -404,12 +482,12 @@ Public Module Paths
 #Region "NWSE"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -433,12 +511,12 @@ Public Module Paths
 #Region "Pen"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -462,12 +540,12 @@ Public Module Paths
 #Region "Link"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -491,12 +569,12 @@ Public Module Paths
 #Region "Pin"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -504,12 +582,12 @@ Public Module Paths
 
                 Dim BB_P, BL_P As Brush
                 If [PrimaryColorGradient] Then
-                    BB_P = New LinearGradientBrush(_Pin, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB_P = ReturnGradience(_Pin, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB_P = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL_P = New LinearGradientBrush(_Pin, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL_P = ReturnGradience(_Pin, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL_P = New SolidBrush([SecondaryColor1])
                 End If
@@ -553,12 +631,12 @@ Public Module Paths
 #Region "Person"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -566,12 +644,12 @@ Public Module Paths
 
                 Dim BB_P, BL_P As Brush
                 If [PrimaryColorGradient] Then
-                    BB_P = New LinearGradientBrush(_Person, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB_P = ReturnGradience(_Person, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB_P = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL_P = New LinearGradientBrush(_Person, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL_P = ReturnGradience(_Person, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL_P = New SolidBrush([SecondaryColor1])
                 End If
@@ -608,12 +686,12 @@ Public Module Paths
 #Region "IBeam"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -637,12 +715,12 @@ Public Module Paths
 #Region "Cross"
                 Dim BB, BL As Brush
                 If [PrimaryColorGradient] Then
-                    BB = New LinearGradientBrush(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
                 Else
                     BB = New SolidBrush([PrimaryColor1])
                 End If
                 If [SecondaryColorGradient] Then
-                    BL = New LinearGradientBrush(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
@@ -1466,7 +1544,6 @@ Public Module Paths
 
 End Module
 
-
 Public Class CursorControl : Inherits ContainerControl
     Sub New()
 
@@ -1476,30 +1553,28 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_PrimaryColor1 As Color = Color.White
     Public Property Prop_PrimaryColor2 As Color = Color.White
     Public Property Prop_PrimaryColorGradient As Boolean = False
-    Public Property Prop_PrimaryColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
     Public Property Prop_PrimaryNoise As Boolean = False
     Public Property Prop_PrimaryNoiseOpacity As Single = 0.25
 
     Public Property Prop_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
     Public Property Prop_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
     Public Property Prop_SecondaryColorGradient As Boolean = False
-    Public Property Prop_SecondaryColorGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
     Public Property Prop_SecondaryNoise As Boolean = False
     Public Property Prop_SecondaryNoiseOpacity As Single = 0.25
-    Public Property Prop_LineThickness As Single = 1
-
 
     Public Property Prop_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
     Public Property Prop_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
     Public Property Prop_LoadingCircleBackGradient As Boolean = False
-    Public Property Prop_LoadingCircleBackGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_LoadingCircleBackGradientMode As GradientMode = GradientMode.Vertical
     Public Property Prop_LoadingCircleBackNoise As Boolean = False
     Public Property Prop_LoadingCircleBackNoiseOpacity As Single = 0.25
 
     Public Property Prop_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
     Public Property Prop_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
     Public Property Prop_LoadingCircleHotGradient As Boolean = False
-    Public Property Prop_LoadingCircleHotGradientMode As LinearGradientMode = LinearGradientMode.Vertical
+    Public Property Prop_LoadingCircleHotGradientMode As GradientMode = GradientMode.Vertical
     Public Property Prop_LoadingCircleHotNoise As Boolean = False
     Public Property Prop_LoadingCircleHotNoiseOpacity As Single = 0.25
 
@@ -1556,7 +1631,7 @@ Public Class CursorControl : Inherits ContainerControl
                    Prop_LoadingCircleHot1, Prop_LoadingCircleHot2, Prop_LoadingCircleHotGradient, Prop_LoadingCircleHotGradientMode,
                    Prop_PrimaryNoise, Prop_PrimaryNoiseOpacity, Prop_SecondaryNoise, Prop_SecondaryNoiseOpacity,
                    Prop_LoadingCircleBackNoise, Prop_LoadingCircleBackNoiseOpacity, Prop_LoadingCircleHotNoise, Prop_LoadingCircleHotNoiseOpacity,
-                   Prop_LineThickness, Prop_Scale, Angle)
+                   1, Prop_Scale, Angle)
 
         DoubleBuffered = True
 
