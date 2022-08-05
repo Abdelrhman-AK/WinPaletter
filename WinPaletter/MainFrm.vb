@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
@@ -1497,6 +1498,12 @@ Public Class MainFrm
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
+        MsgBox(CP.Cursor_Enabled)
+
+        'CursorsStudio.ShowDialog()
     End Sub
 
 #Region "Notifications Base"
