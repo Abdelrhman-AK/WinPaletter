@@ -257,6 +257,21 @@ Public Class CursorsStudio
 
 #End Region
 
+#Region "IBeam"
+        IBeam.Prop_PrimaryColor1 = [CP].Cursor_IBeam_PrimaryColor1
+        IBeam.Prop_PrimaryColor2 = [CP].Cursor_IBeam_PrimaryColor2
+        IBeam.Prop_PrimaryColorGradient = [CP].Cursor_IBeam_PrimaryColorGradient
+        IBeam.Prop_PrimaryColorGradientMode = [CP].Cursor_IBeam_PrimaryColorGradientMode
+        IBeam.Prop_PrimaryNoise = [CP].Cursor_IBeam_PrimaryColorNoise
+        IBeam.Prop_PrimaryNoiseOpacity = [CP].Cursor_IBeam_PrimaryColorNoiseOpacity
+        IBeam.Prop_SecondaryColor1 = [CP].Cursor_IBeam_SecondaryColor1
+        IBeam.Prop_SecondaryColor2 = [CP].Cursor_IBeam_SecondaryColor2
+        IBeam.Prop_SecondaryColorGradient = [CP].Cursor_IBeam_SecondaryColorGradient
+        IBeam.Prop_SecondaryColorGradientMode = [CP].Cursor_IBeam_SecondaryColorGradientMode
+        IBeam.Prop_SecondaryNoise = [CP].Cursor_IBeam_SecondaryColorNoise
+        IBeam.Prop_SecondaryNoiseOpacity = [CP].Cursor_IBeam_SecondaryColorNoiseOpacity
+#End Region
+
 #Region "Cross"
         Cross.Prop_PrimaryColor1 = [CP].Cursor_Cross_PrimaryColor1
         Cross.Prop_PrimaryColor2 = [CP].Cursor_Cross_PrimaryColor2
@@ -527,6 +542,21 @@ Public Class CursorsStudio
         [CP].Cursor_Person_SecondaryColorNoise = Person.Prop_SecondaryNoise
         [CP].Cursor_Person_SecondaryColorNoiseOpacity = Person.Prop_SecondaryNoiseOpacity
 
+#End Region
+
+#Region "IBeam"
+        [CP].Cursor_IBeam_PrimaryColor1 = IBeam.Prop_PrimaryColor1
+        [CP].Cursor_IBeam_PrimaryColor2 = IBeam.Prop_PrimaryColor2
+        [CP].Cursor_IBeam_PrimaryColorGradient = IBeam.Prop_PrimaryColorGradient
+        [CP].Cursor_IBeam_PrimaryColorGradientMode = IBeam.Prop_PrimaryColorGradientMode
+        [CP].Cursor_IBeam_PrimaryColorNoise = IBeam.Prop_PrimaryNoise
+        [CP].Cursor_IBeam_PrimaryColorNoiseOpacity = IBeam.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_IBeam_SecondaryColor1 = IBeam.Prop_SecondaryColor1
+        [CP].Cursor_IBeam_SecondaryColor2 = IBeam.Prop_SecondaryColor2
+        [CP].Cursor_IBeam_SecondaryColorGradient = IBeam.Prop_SecondaryColorGradient
+        [CP].Cursor_IBeam_SecondaryColorGradientMode = IBeam.Prop_SecondaryColorGradientMode
+        [CP].Cursor_IBeam_SecondaryColorNoise = IBeam.Prop_SecondaryNoise
+        [CP].Cursor_IBeam_SecondaryColorNoiseOpacity = IBeam.Prop_SecondaryNoiseOpacity
 #End Region
 
 #Region "Cross"

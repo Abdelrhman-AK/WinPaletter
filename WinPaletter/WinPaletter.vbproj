@@ -79,7 +79,7 @@
     </Reference>
     <Reference Include="AnimCur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Codes\AnimCur\AnimCur\bin\Release\AnimCur.dll</HintPath>
+      <HintPath>..\References\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -250,6 +250,10 @@
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">

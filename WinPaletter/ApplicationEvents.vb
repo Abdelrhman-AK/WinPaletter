@@ -35,7 +35,7 @@ Namespace My
         Public LanguageHelper As New Localizer
         Public allForms As List(Of Form)
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
-        Public curPath As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Cursors\WinPaletter"
+        Public curPath As String = appData & "\Cursors"
 
 #End Region
 

@@ -1,4 +1,6 @@
-﻿Imports System.Globalization
+﻿Imports System.Drawing.Imaging
+Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
@@ -325,6 +327,21 @@ Public Class CP
     Public Property Cursor_Person_SecondaryColorNoiseOpacity As Single
 #End Region
 
+#Region "IBeam"
+    Public Property Cursor_IBeam_PrimaryColor1 As Color
+    Public Property Cursor_IBeam_PrimaryColor2 As Color
+    Public Property Cursor_IBeam_PrimaryColorGradient As Boolean
+    Public Property Cursor_IBeam_PrimaryColorGradientMode As GradientMode
+    Public Property Cursor_IBeam_PrimaryColorNoise As Boolean
+    Public Property Cursor_IBeam_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_IBeam_SecondaryColor1 As Color
+    Public Property Cursor_IBeam_SecondaryColor2 As Color
+    Public Property Cursor_IBeam_SecondaryColorGradient As Boolean
+    Public Property Cursor_IBeam_SecondaryColorGradientMode As GradientMode
+    Public Property Cursor_IBeam_SecondaryColorNoise As Boolean
+    Public Property Cursor_IBeam_SecondaryColorNoiseOpacity As Single
+#End Region
+
 #Region "Cross"
     Public Property Cursor_Cross_PrimaryColor1 As Color
     Public Property Cursor_Cross_PrimaryColor2 As Color
@@ -570,6 +587,7 @@ Public Class CP
                 r = rMain.CreateSubKey("Link")
                 r = rMain.CreateSubKey("Pin")
                 r = rMain.CreateSubKey("Person")
+                r = rMain.CreateSubKey("IBeam")
                 r = rMain.CreateSubKey("Cross")
 
 #Region "Arrow"
@@ -868,6 +886,25 @@ Public Class CP
 
                 Cursor_Person_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Person_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
+#End Region
+
+#Region "IBeam"
+                r = rMain.OpenSubKey("IBeam")
+                Cursor_IBeam_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_IBeam_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_IBeam_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_IBeam_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_IBeam_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_IBeam_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_IBeam_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_IBeam_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_IBeam_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_IBeam_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_IBeam_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_IBeam_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Cross"
@@ -1232,6 +1269,21 @@ Public Class CP
 
 #End Region
 
+#Region "IBeam"
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColor1= ") Then Cursor_IBeam_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_PrimaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColor2= ") Then Cursor_IBeam_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_PrimaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorGradient= ") Then Cursor_IBeam_PrimaryColorGradient = lin.Remove(0, "*Cursor_IBeam_PrimaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorGradientMode= ") Then Cursor_IBeam_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_IBeam_PrimaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorNoise= ") Then Cursor_IBeam_PrimaryColorNoise = lin.Remove(0, "*Cursor_IBeam_PrimaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorNoiseOpacity= ") Then Cursor_IBeam_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_IBeam_PrimaryColorNoiseOpacity= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColor1= ") Then Cursor_IBeam_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_SecondaryColor1= ".Count))
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColor2= ") Then Cursor_IBeam_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_SecondaryColor2= ".Count))
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorGradient= ") Then Cursor_IBeam_SecondaryColorGradient = lin.Remove(0, "*Cursor_IBeam_SecondaryColorGradient= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorGradientMode= ") Then Cursor_IBeam_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_IBeam_SecondaryColorGradientMode= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorNoise= ") Then Cursor_IBeam_SecondaryColorNoise = lin.Remove(0, "*Cursor_IBeam_SecondaryColorNoise= ".Count)
+                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorNoiseOpacity= ") Then Cursor_IBeam_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_IBeam_SecondaryColorNoiseOpacity= ".Count)
+#End Region
+
 #Region "Cross"
                     If lin.StartsWith("*Cursor_Cross_PrimaryColor1= ") Then Cursor_Cross_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor1= ".Count))
                     If lin.StartsWith("*Cursor_Cross_PrimaryColor2= ") Then Cursor_Cross_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor2= ".Count))
@@ -1563,6 +1615,21 @@ Public Class CP
                 Cursor_Person_SecondaryColorNoiseOpacity = 0.25
 #End Region
 
+#Region "IBeam"
+                Cursor_IBeam_PrimaryColor1 = Color.White
+                Cursor_IBeam_PrimaryColor2 = Color.White
+                Cursor_IBeam_PrimaryColorGradient = False
+                Cursor_IBeam_PrimaryColorGradientMode = GradientMode.Vertical
+                Cursor_IBeam_PrimaryColorNoise = False
+                Cursor_IBeam_PrimaryColorNoiseOpacity = 0.25
+                Cursor_IBeam_SecondaryColor1 = Color.FromArgb(64, 65, 75)
+                Cursor_IBeam_SecondaryColor2 = Color.FromArgb(64, 65, 75)
+                Cursor_IBeam_SecondaryColorGradient = False
+                Cursor_IBeam_SecondaryColorGradientMode = GradientMode.Vertical
+                Cursor_IBeam_SecondaryColorNoise = False
+                Cursor_IBeam_SecondaryColorNoiseOpacity = 0.25
+#End Region
+
 #Region "Cross"
                 Cursor_Cross_PrimaryColor1 = Color.Transparent
                 Cursor_Cross_PrimaryColor2 = Color.Transparent
@@ -1584,14 +1651,542 @@ Public Class CP
 
     End Sub
 
-    Sub ExportCursors()
-        Dim Path As String = My.Application.curPath
+    Sub ExportCursors([CP] As CP)
+        Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.AppLoading, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Busy, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Pen, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.None, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Move, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Up, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NS, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.EW, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NESW, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NWSE, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Link, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Pin, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Person, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.IBeam, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Cross, [CP]) : Catch : End Try
+    End Sub
+
+    Sub RenderCursor([Type] As CursorType, [CP] As CP)
+
+        Dim CurName As String = ""
+
+
+        Select Case [Type]
+            Case CursorType.Arrow
+                CurName = "Arrow"
+
+            Case CursorType.Help
+                CurName = "Help"
+
+            Case CursorType.Busy
+                CurName = "Busy"
+
+            Case CursorType.AppLoading
+                CurName = "AppLoading"
+
+            Case CursorType.None
+                CurName = "None"
+
+            Case CursorType.Move
+                CurName = "Move"
+
+            Case CursorType.Up
+                CurName = "Up"
+
+            Case CursorType.NS
+                CurName = "NS"
+
+            Case CursorType.EW
+                CurName = "EW"
+
+            Case CursorType.NESW
+                CurName = "NESW"
+
+            Case CursorType.NWSE
+                CurName = "NWSE"
+
+            Case CursorType.Pen
+                CurName = "Pen"
+
+            Case CursorType.Link
+                CurName = "Link"
+
+            Case CursorType.Pin
+                CurName = "Pin"
+
+            Case CursorType.Person
+                CurName = "Person"
+
+            Case CursorType.IBeam
+                CurName = "IBeam"
+
+            Case CursorType.Cross
+                CurName = "Cross"
+
+        End Select
+
+        If Not [Type] = CursorType.Busy And Not [Type] = CursorType.AppLoading Then
+
+            If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
+            Dim Path As String = String.Format(My.Application.curPath & "\{0}.cur", CurName)
+
+            Dim fs As New FileStream(Path, FileMode.Create)
+            Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
+
+            For i As Single = 1 To 4 Step 0.5
+                Dim bmp As New Bitmap(32 * i, 32 * i, PixelFormat.Format32bppPArgb)
+                Dim HotPoint As New Point(1, 1)
+
+                Select Case [Type]
+                    Case CursorType.Arrow
+#Region "Arrow"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Arrow_PrimaryColor1, .Cursor_Arrow_PrimaryColor2, .Cursor_Arrow_PrimaryColorGradient, .Cursor_Arrow_PrimaryColorGradientMode,
+                               .Cursor_Arrow_SecondaryColor1, .Cursor_Arrow_SecondaryColor2, .Cursor_Arrow_SecondaryColorGradient, .Cursor_Arrow_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Arrow_PrimaryColorNoise, .Cursor_Arrow_PrimaryColorNoiseOpacity, .Cursor_Arrow_SecondaryColorNoise, .Cursor_Arrow_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.Help
+#Region "Help"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Help_PrimaryColor1, .Cursor_Help_PrimaryColor2, .Cursor_Help_PrimaryColorGradient, .Cursor_Help_PrimaryColorGradientMode,
+                               .Cursor_Help_SecondaryColor1, .Cursor_Help_SecondaryColor2, .Cursor_Help_SecondaryColorGradient, .Cursor_Help_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Help_PrimaryColorNoise, .Cursor_Help_PrimaryColorNoiseOpacity, .Cursor_Help_SecondaryColorNoise, .Cursor_Help_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.None
+#Region "None"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_None_PrimaryColor1, .Cursor_None_PrimaryColor2, .Cursor_None_PrimaryColorGradient, .Cursor_None_PrimaryColorGradientMode,
+                               .Cursor_None_SecondaryColor1, .Cursor_None_SecondaryColor2, .Cursor_None_SecondaryColorGradient, .Cursor_None_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_None_PrimaryColorNoise, .Cursor_None_PrimaryColorNoiseOpacity, .Cursor_None_SecondaryColorNoise, .Cursor_None_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.Move
+#Region "Move"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Move_PrimaryColor1, .Cursor_Move_PrimaryColor2, .Cursor_Move_PrimaryColorGradient, .Cursor_Move_PrimaryColorGradientMode,
+                               .Cursor_Move_SecondaryColor1, .Cursor_Move_SecondaryColor2, .Cursor_Move_SecondaryColorGradient, .Cursor_Move_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Move_PrimaryColorNoise, .Cursor_Move_PrimaryColorNoiseOpacity, .Cursor_Move_SecondaryColorNoise, .Cursor_Move_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+#End Region
+                    Case CursorType.Up
+#Region "Up"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Up_PrimaryColor1, .Cursor_Up_PrimaryColor2, .Cursor_Up_PrimaryColorGradient, .Cursor_Up_PrimaryColorGradientMode,
+                               .Cursor_Up_SecondaryColor1, .Cursor_Up_SecondaryColor2, .Cursor_Up_SecondaryColorGradient, .Cursor_Up_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Up_PrimaryColorNoise, .Cursor_Up_PrimaryColorNoiseOpacity, .Cursor_Up_SecondaryColorNoise, .Cursor_Up_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(4 * i), 1)
+#End Region
+                    Case CursorType.NS
+#Region "NS"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NS_PrimaryColor1, .Cursor_NS_PrimaryColor2, .Cursor_NS_PrimaryColorGradient, .Cursor_NS_PrimaryColorGradientMode,
+                               .Cursor_NS_SecondaryColor1, .Cursor_NS_SecondaryColor2, .Cursor_NS_SecondaryColorGradient, .Cursor_NS_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NS_PrimaryColorNoise, .Cursor_NS_PrimaryColorNoiseOpacity, .Cursor_NS_SecondaryColorNoise, .Cursor_NS_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(11 * i))
+#End Region
+                    Case CursorType.EW
+#Region "EW"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_EW_PrimaryColor1, .Cursor_EW_PrimaryColor2, .Cursor_EW_PrimaryColorGradient, .Cursor_EW_PrimaryColorGradientMode,
+                               .Cursor_EW_SecondaryColor1, .Cursor_EW_SecondaryColor2, .Cursor_EW_SecondaryColorGradient, .Cursor_EW_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_EW_PrimaryColorNoise, .Cursor_EW_PrimaryColorNoiseOpacity, .Cursor_EW_SecondaryColorNoise, .Cursor_EW_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + 11 * i, 1 + 4 * i)
+#End Region
+                    Case CursorType.NESW
+#Region "NESW"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NESW_PrimaryColor1, .Cursor_NESW_PrimaryColor2, .Cursor_NESW_PrimaryColorGradient, .Cursor_NESW_PrimaryColorGradientMode,
+                               .Cursor_NESW_SecondaryColor1, .Cursor_NESW_SecondaryColor2, .Cursor_NESW_SecondaryColorGradient, .Cursor_NESW_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NESW_PrimaryColorNoise, .Cursor_NESW_PrimaryColorNoiseOpacity, .Cursor_NESW_SecondaryColorNoise, .Cursor_NESW_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.NWSE
+#Region "NWSE"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NWSE_PrimaryColor1, .Cursor_NWSE_PrimaryColor2, .Cursor_NWSE_PrimaryColorGradient, .Cursor_NWSE_PrimaryColorGradientMode,
+                               .Cursor_NWSE_SecondaryColor1, .Cursor_NWSE_SecondaryColor2, .Cursor_NWSE_SecondaryColorGradient, .Cursor_NWSE_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NWSE_PrimaryColorNoise, .Cursor_NWSE_PrimaryColorNoiseOpacity, .Cursor_NWSE_SecondaryColorNoise, .Cursor_NWSE_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.Pen
+#Region "Pen"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Pen_PrimaryColor1, .Cursor_Pen_PrimaryColor2, .Cursor_Pen_PrimaryColorGradient, .Cursor_Pen_PrimaryColorGradientMode,
+                               .Cursor_Pen_SecondaryColor1, .Cursor_Pen_SecondaryColor2, .Cursor_Pen_SecondaryColorGradient, .Cursor_Pen_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Pen_PrimaryColorNoise, .Cursor_Pen_PrimaryColorNoiseOpacity, .Cursor_Pen_SecondaryColorNoise, .Cursor_Pen_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.Link
+#Region "Link"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Link_PrimaryColor1, .Cursor_Link_PrimaryColor2, .Cursor_Link_PrimaryColorGradient, .Cursor_Link_PrimaryColorGradientMode,
+                               .Cursor_Link_SecondaryColor1, .Cursor_Link_SecondaryColor2, .Cursor_Link_SecondaryColorGradient, .Cursor_Link_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Link_PrimaryColorNoise, .Cursor_Link_PrimaryColorNoiseOpacity, .Cursor_Link_SecondaryColorNoise, .Cursor_Link_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.Pin
+#Region "Pin"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Pin_PrimaryColor1, .Cursor_Pin_PrimaryColor2, .Cursor_Pin_PrimaryColorGradient, .Cursor_Pin_PrimaryColorGradientMode,
+                               .Cursor_Pin_SecondaryColor1, .Cursor_Pin_SecondaryColor2, .Cursor_Pin_SecondaryColorGradient, .Cursor_Pin_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Pin_PrimaryColorNoise, .Cursor_Pin_PrimaryColorNoiseOpacity, .Cursor_Pin_SecondaryColorNoise, .Cursor_Pin_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.Person
+#Region "Person"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Person_PrimaryColor1, .Cursor_Person_PrimaryColor2, .Cursor_Person_PrimaryColorGradient, .Cursor_Person_PrimaryColorGradientMode,
+                               .Cursor_Person_SecondaryColor1, .Cursor_Person_SecondaryColor2, .Cursor_Person_SecondaryColorGradient, .Cursor_Person_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Person_PrimaryColorNoise, .Cursor_Person_PrimaryColorNoiseOpacity, .Cursor_Person_SecondaryColorNoise, .Cursor_Person_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.IBeam
+#Region "IBeam"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_IBeam_PrimaryColor1, .Cursor_IBeam_PrimaryColor2, .Cursor_IBeam_PrimaryColorGradient, .Cursor_IBeam_PrimaryColorGradientMode,
+                               .Cursor_IBeam_SecondaryColor1, .Cursor_IBeam_SecondaryColor2, .Cursor_IBeam_SecondaryColorGradient, .Cursor_IBeam_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_IBeam_PrimaryColorNoise, .Cursor_IBeam_PrimaryColorNoiseOpacity, .Cursor_IBeam_SecondaryColorNoise, .Cursor_IBeam_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(5 * i), 1 + CInt(9 * i))
+#End Region
+                    Case CursorType.Cross
+#Region "Cross"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Cross_PrimaryColor1, .Cursor_Cross_PrimaryColor2, .Cursor_Cross_PrimaryColorGradient, .Cursor_Cross_PrimaryColorGradientMode,
+                               .Cursor_Cross_SecondaryColor1, .Cursor_Cross_SecondaryColor2, .Cursor_Cross_SecondaryColorGradient, .Cursor_Cross_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Cross_PrimaryColorNoise, .Cursor_Cross_PrimaryColorNoiseOpacity, .Cursor_Cross_SecondaryColorNoise, .Cursor_Cross_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(9 * i), 1 + CInt(9 * i))
+#End Region
+                End Select
+
+                EO.WriteBitmap(bmp, Nothing, HotPoint)
+
+            Next
+
+            fs.Close()
+
+        Else
+            Dim HotPoint As New Point(1, 1)
+
+            For i As Single = 1 To 4 Step 1
+                Dim BMPList As New List(Of Bitmap)
+                BMPList.Clear()
+
+#Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
+                With [CP]
+                    For ang As Integer = 180 To 360 Step +10
+                        Dim bm As Bitmap
+
+                        If [Type] = CursorType.AppLoading Then
+                            bm = New Bitmap(Draw([Type],
+                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
+                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                             1, i, ang))
+
+                            HotPoint = New Point(1, 1 + CInt(8 * i))
+                        Else
+                            bm = New Bitmap(Draw([Type],
+                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
+                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            1, i, ang))
+
+                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+                        End If
+
+                        BMPList.Add(bm)
+                    Next
+
+                    For ang As Integer = 0 To 180 Step +10
+                        Dim bm As Bitmap
+
+                        If [Type] = CursorType.AppLoading Then
+                            bm = New Bitmap(Draw([Type],
+                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
+                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                             1, i, ang))
+
+                            HotPoint = New Point(1, 1 + CInt(8 * i))
+                        Else
+                            bm = New Bitmap(Draw([Type],
+                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
+                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            1, i, ang))
+
+                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+                        End If
+
+                        BMPList.Add(bm)
+                    Next
+                End With
+#End Region
+
+                Dim Count As Integer = BMPList.Count
+                Dim frameRates As UInteger() = New UInteger(Count - 1) {}
+                Dim seqNums As UInteger() = New UInteger(Count - 1) {}
+                Dim Speed As Integer = 2
+
+                For ixx = 0 To Count - 1
+                    frameRates(ixx) = Convert.ToUInt32(Speed)
+                    seqNums(ixx) = CUInt(ixx)
+                Next
+
+                If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
+                Dim fs As New FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), FileMode.Create)
+
+                Dim AN As New EOANIWriter(fs, Count, Speed, frameRates, seqNums, Nothing, Nothing, HotPoint)
+
+                For ix = 0 To Count - 1
+                    AN.WriteFrame32(BMPList(ix))
+                Next
+
+                fs.Close()
+            Next
+
+        End If
 
     End Sub
 
     Sub ApplyCursorsToReg()
+        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors\Schemes")
+        Dim RegValue As String
+        Dim Path As String = My.Application.curPath
+        RegValue = String.Format("{0}\{1}", Path, "Arrow.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Help.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "AppLoading_1x.ani")
+        RegValue &= String.Format(",{0}\{1}", Path, "Busy_1x.ani")
+        RegValue &= String.Format(",{0}\{1}", Path, "Cross.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "IBeam.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Pen.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "None.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NS.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "EW.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NWSE.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NESW.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Move.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Up.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Link.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Pin.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Person.cur")
+        rMain.SetValue("WinPaletter", RegValue, RegistryValueKind.String)
 
+        rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors")
+        rMain.SetValue("", "WinPaletter")
+
+        Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
+        rMain.SetValue("AppStarting", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Arrow.cur")
+        rMain.SetValue("Arrow", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NORMAL)
+
+        x = String.Format("{0}\{1}", Path, "Cross.cur")
+        rMain.SetValue("Crosshair", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_CROSS)
+
+        x = String.Format("{0}\{1}", Path, "Link.cur")
+        rMain.SetValue("Hand", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HAND)
+
+        x = String.Format("{0}\{1}", Path, "Help.cur")
+        rMain.SetValue("Help", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HELP)
+
+        x = String.Format("{0}\{1}", Path, "IBeam.cur")
+        rMain.SetValue("IBeam", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_IBEAM)
+
+        x = String.Format("{0}\{1}", Path, "None.cur")
+        rMain.SetValue("No", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NO)
+
+        x = String.Format("{0}\{1}", Path, "Pen.cur")
+        rMain.SetValue("NWPen", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
+
+        x = String.Format("{0}\{1}", Path, "Person.cur")
+        rMain.SetValue("Person", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Pin.cur")
+        rMain.SetValue("Pin", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Move.cur")
+        rMain.SetValue("SizeAll", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+
+        x = String.Format("{0}\{1}", Path, "NESW.cur")
+        rMain.SetValue("SizeNESW", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+
+        x = String.Format("{0}\{1}", Path, "NS.cur")
+        rMain.SetValue("SizeNS", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENS)
+
+        x = String.Format("{0}\{1}", Path, "NWSE.cur")
+        rMain.SetValue("SizeNWSE", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+
+        x = String.Format("{0}\{1}", Path, "EW.cur")
+        rMain.SetValue("SizeWE", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+
+        x = String.Format("{0}\{1}", Path, "Up.cur")
+        rMain.SetValue("UpArrow", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_UP)
+
+        x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
+        rMain.SetValue("Wait", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_WAIT)
+
+        rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
     End Sub
+    <DllImport("user32.dll")>
+    Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As UInteger) As Boolean
+    End Function
+
+    Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
+
+    Enum OCR_SYSTEM_CURSORS As UInteger
+
+        ' Standard arrow And small hourglass
+        OCR_APPSTARTING = 32650
+
+        'Standard arrow
+        OCR_NORMAL = 32512
+
+        'Crosshair
+        OCR_CROSS = 32515
+
+        'Windows 2000/XP: Hand
+        OCR_HAND = 32649
+
+        'Arrow And question mark
+        OCR_HELP = 32651
+
+        'I-beam
+        OCR_IBEAM = 32513
+
+        'Slashed circle
+        OCR_NO = 32648
+
+        'Four-pointed arrow pointing north south east And west
+        OCR_SIZEALL = 32646
+
+        'Double-pointed arrow pointing northeast And southwest
+        OCR_SIZENESW = 32643
+
+        'Double-pointed arrow pointing north And south
+        OCR_SIZENS = 32645
+
+        'Double-pointed arrow pointing northwest And southeast
+        OCR_SIZENWSE = 32642
+
+        'Double-pointed arrow pointing west And east
+        OCR_SIZEWE = 32644
+
+        'Vertical arrow
+        OCR_UP = 32516
+
+        'Hourglass
+        OCR_WAIT = 32514
+    End Enum
 
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
@@ -2070,6 +2665,22 @@ Public Class CP
                     .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
+                r = rMain.CreateSubKey("IBeam")
+                With r
+                    .SetValue("PrimaryColor1", Cursor_IBeam_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColor2", Cursor_IBeam_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorGradient", If(Cursor_IBeam_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorGradientMode", Cursor_IBeam_PrimaryColorGradientMode, RegistryValueKind.String)
+                    .SetValue("PrimaryColorNoise", If(Cursor_IBeam_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_IBeam_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColor1", Cursor_IBeam_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColor2", Cursor_IBeam_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorGradient", If(Cursor_IBeam_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorGradientMode", Cursor_IBeam_SecondaryColorGradientMode, RegistryValueKind.String)
+                    .SetValue("SecondaryColorNoise", If(Cursor_IBeam_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_IBeam_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+                End With
+
                 r = rMain.CreateSubKey("Cross")
                 With r
                     .SetValue("PrimaryColor1", Cursor_Cross_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
@@ -2089,8 +2700,10 @@ Public Class CP
                 r.Close()
                 rMain.Close()
 
-                ExportCursors()
-                ApplyCursorsToReg()
+                If Cursor_Enabled Then
+                    ExportCursors(MainFrm.CP)
+                    If My.Application._Settings.AutoApplyCursors Then ApplyCursorsToReg()
+                End If
 #End Region
 
 
@@ -2442,6 +3055,21 @@ Public Class CP
                 tx.Add("*Cursor_Person_SecondaryColorNoise= " & Cursor_Person_SecondaryColorNoise)
                 tx.Add("*Cursor_Person_SecondaryColorNoiseOpacity= " & Cursor_Person_SecondaryColorNoiseOpacity)
 
+#End Region
+
+#Region "IBeam"
+                tx.Add("*Cursor_IBeam_PrimaryColor1= " & Cursor_IBeam_PrimaryColor1.ToArgb)
+                tx.Add("*Cursor_IBeam_PrimaryColor2= " & Cursor_IBeam_PrimaryColor2.ToArgb)
+                tx.Add("*Cursor_IBeam_PrimaryColorGradient= " & Cursor_IBeam_PrimaryColorGradient)
+                tx.Add("*Cursor_IBeam_PrimaryColorGradientMode= " & Cursor_IBeam_PrimaryColorGradientMode)
+                tx.Add("*Cursor_IBeam_PrimaryColorNoise= " & Cursor_IBeam_PrimaryColorNoise)
+                tx.Add("*Cursor_IBeam_PrimaryColorNoiseOpacity= " & Cursor_IBeam_PrimaryColorNoiseOpacity)
+                tx.Add("*Cursor_IBeam_SecondaryColor1= " & Cursor_IBeam_SecondaryColor1.ToArgb)
+                tx.Add("*Cursor_IBeam_SecondaryColor2= " & Cursor_IBeam_SecondaryColor2.ToArgb)
+                tx.Add("*Cursor_IBeam_SecondaryColorGradient= " & Cursor_IBeam_SecondaryColorGradient)
+                tx.Add("*Cursor_IBeam_SecondaryColorGradientMode= " & Cursor_IBeam_SecondaryColorGradientMode)
+                tx.Add("*Cursor_IBeam_SecondaryColorNoise= " & Cursor_IBeam_SecondaryColorNoise)
+                tx.Add("*Cursor_IBeam_SecondaryColorNoiseOpacity= " & Cursor_IBeam_SecondaryColorNoiseOpacity)
 #End Region
 
 #Region "Cross"
