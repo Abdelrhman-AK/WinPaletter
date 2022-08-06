@@ -30,7 +30,7 @@ Public Class Whatsnew
     End Sub
 
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs)
         Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
     End Sub
 End Class

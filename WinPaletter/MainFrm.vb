@@ -1344,10 +1344,6 @@ Public Class MainFrm
         MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
 
-    Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
-        Process.Start(My.Resources.Link_Telegram)
-    End Sub
-
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
         If Not CP.Equals(CP_Original) Then
             Select Case ComplexSave.ShowDialog
@@ -1501,9 +1497,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
-        MsgBox(CP.Cursor_Enabled)
-
-        'CursorsStudio.ShowDialog()
+        CursorsStudio.ShowDialog()
     End Sub
 
 #Region "Notifications Base"

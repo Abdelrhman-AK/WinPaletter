@@ -34,6 +34,9 @@ Namespace My
         Public processStartMenuExperienceHost As Process
         Public LanguageHelper As New Localizer
         Public allForms As List(Of Form)
+        Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
+        Public curPath As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Cursors\WinPaletter"
+
 #End Region
 
 #Region "File Association"
@@ -70,7 +73,6 @@ Namespace My
                 ' associate file icon
                 key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
 
-                Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
                 If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
                 key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", If(className = "WinPaletter.ThemeFile", appData & "\fileextension.ico", appData & "\settingsfile.ico"))
@@ -410,7 +412,6 @@ Namespace My
 #End Region
 
             If _Settings.AutoAddExt Then
-                Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
                 If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
                 Dim file As System.IO.FileStream = New System.IO.FileStream(appData & "\fileextension.ico", System.IO.FileMode.OpenOrCreate)

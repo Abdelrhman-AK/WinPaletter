@@ -29,6 +29,7 @@ Public Class SettingsX
             If .DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
             If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
             If .AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
+            If .AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then Changed = True
             If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then Changed = True
@@ -68,11 +69,13 @@ Public Class SettingsX
 
         With sets
             XenonCheckBox1.Checked = .AutoAddExt
+
             XenonCheckBox3.Checked = .DragAndDropPreview
             XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
             XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
 
             XenonCheckBox2.Checked = .AutoRestartExplorer
+            XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
@@ -105,6 +108,7 @@ Public Class SettingsX
             .DragAndDropPreview = XenonCheckBox3.Checked
             .OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
             .AutoRestartExplorer = XenonCheckBox2.Checked
+            .AutoApplyCursors = XenonCheckBox7.Checked
             .AutoUpdatesChecking = XenonCheckBox5.Checked
             .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
             .CustomPreviewConfig = XenonComboBox1.SelectedIndex
@@ -144,6 +148,7 @@ Public Class SettingsX
                 .DragAndDropPreview = XenonCheckBox3.Checked
                 .OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
                 .AutoRestartExplorer = XenonCheckBox2.Checked
+                .AutoApplyCursors = XenonCheckBox7.Checked
                 .AutoUpdatesChecking = XenonCheckBox5.Checked
                 .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
                 .CustomPreviewConfig = XenonComboBox1.SelectedIndex
@@ -170,6 +175,7 @@ Public Class SettingsX
                 XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
 
                 XenonCheckBox2.Checked = .AutoRestartExplorer
+                XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
@@ -206,6 +212,7 @@ Public Class SettingsX
             XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
 
             XenonCheckBox2.Checked = .AutoRestartExplorer
+            XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
@@ -238,9 +245,9 @@ Public Class SettingsX
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
 
-            Dim key1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\WinPaletter", True)
-            key1.DeleteSubKeyTree("Settings", False)
-            If key1 IsNot Nothing Then key1.Close()
+            Try : Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", True) : Catch : End Try
+
+            IO.Directory.Delete(My.Application.appData, True)
 
             Application.[Exit]()
         End If

@@ -114,6 +114,8 @@ Partial Class SettingsX
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -146,6 +148,7 @@ Partial Class SettingsX
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label17
@@ -1236,6 +1239,8 @@ Partial Class SettingsX
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.PictureBox14)
+        Me.TabPage5.Controls.Add(Me.XenonCheckBox7)
         Me.TabPage5.Controls.Add(Me.XenonSeparator6)
         Me.TabPage5.Controls.Add(Me.PictureBox8)
         Me.TabPage5.Controls.Add(Me.Label2)
@@ -1303,6 +1308,31 @@ Partial Class SettingsX
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
         '
+        'PictureBox14
+        '
+        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
+        Me.PictureBox14.Location = New System.Drawing.Point(51, 121)
+        Me.PictureBox14.Name = "PictureBox14"
+        Me.PictureBox14.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox14.TabIndex = 20
+        Me.PictureBox14.TabStop = False
+        '
+        'XenonCheckBox7
+        '
+        Me.XenonCheckBox7.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox7.Checked = False
+        Me.XenonCheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox7.Location = New System.Drawing.Point(87, 121)
+        Me.XenonCheckBox7.Name = "XenonCheckBox7"
+        Me.XenonCheckBox7.Size = New System.Drawing.Size(719, 26)
+        Me.XenonCheckBox7.TabIndex = 21
+        Me.XenonCheckBox7.Text = "Automatic Apply Custom Cursors (Overrides Aero Scheme)"
+        '
         'SettingsX
         '
         Me.AllowDrop = True
@@ -1363,6 +1393,7 @@ Partial Class SettingsX
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1456,4 +1487,6 @@ Partial Class SettingsX
     Friend WithEvents XenonAlertBox9 As XenonAlertBox
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents PictureBox14 As PictureBox
+    Friend WithEvents XenonCheckBox7 As XenonCheckBox
 End Class

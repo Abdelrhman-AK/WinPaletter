@@ -5,13 +5,14 @@ Public Class XeSettings
 
 #Region "Settings"
     Public Property AutoAddExt As Boolean = True
+    Public Property AutoApplyCursors As Boolean = False
     Public Property DragAndDropPreview As Boolean = True
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
     Public Property WhatsNewRecord As String() = {""}
@@ -43,6 +44,7 @@ Public Class XeSettings
         Key = Registry.CurrentUser.CreateSubKey(AppReg)
 
         If Key.GetValue("AutoAddExt", Nothing) Is Nothing Then Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
+        If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
         If Key.GetValue("DragAndDropPreview", Nothing) Is Nothing Then Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
         If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
         If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
@@ -65,6 +67,7 @@ Public Class XeSettings
                 Dim AppReg As String = "Software\WinPaletter\Settings"
                 Key = Registry.CurrentUser.CreateSubKey(AppReg)
                 AutoAddExt = Key.GetValue("AutoAddExt", Nothing)
+                AutoApplyCursors = Key.GetValue("AutoApplyCursors", Nothing)
                 DragAndDropPreview = Key.GetValue("DragAndDropPreview", Nothing)
                 OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing)
                 AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", Nothing)
@@ -83,6 +86,7 @@ Public Class XeSettings
                 CList_FromStr(l, IO.File.ReadAllText(File))
                 For Each x As String In l
                     If x.StartsWith("AutoAddExt= ") Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
+                    If x.StartsWith("AutoApplyCursors= ") Then AutoApplyCursors = x.Remove(0, "AutoApplyCursors= ".Count)
                     If x.StartsWith("DragAndDropPreview= ") Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
                     If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ") Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
                     If x.StartsWith("AutoRestartExplorer= ") Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
@@ -106,6 +110,7 @@ Public Class XeSettings
                 Dim AppReg As String = "Software\WinPaletter\Settings"
                 Key = Registry.CurrentUser.CreateSubKey(AppReg)
                 Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
+                Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
                 Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
                 Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
@@ -126,6 +131,7 @@ Public Class XeSettings
                 l.Add(String.Format("Date: {0}", Now))
                 l.Add("")
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))
+                l.Add(String.Format("AutoApplyCursors= {0}", AutoApplyCursors))
                 l.Add(String.Format("DragAndDropPreview= {0}", DragAndDropPreview))
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))

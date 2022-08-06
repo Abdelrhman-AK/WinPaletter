@@ -6,6 +6,545 @@ Public Class CursorsStudio
     Private _SelectedControl As CursorControl
     Private _CopiedControl As CursorControl
     Private AnimateList As New List(Of CursorControl)
+
+    Sub LoadFromCP([CP] As CP)
+        XenonToggle1.Checked = [CP].Cursor_Enabled
+
+#Region "Arrow"
+        Arrow.Prop_PrimaryColor1 = [CP].Cursor_Arrow_PrimaryColor1
+        Arrow.Prop_PrimaryColor2 = [CP].Cursor_Arrow_PrimaryColor2
+        Arrow.Prop_PrimaryColorGradient = [CP].Cursor_Arrow_PrimaryColorGradient
+        Arrow.Prop_PrimaryColorGradientMode = [CP].Cursor_Arrow_PrimaryColorGradientMode
+        Arrow.Prop_PrimaryNoise = [CP].Cursor_Arrow_PrimaryColorNoise
+        Arrow.Prop_PrimaryNoiseOpacity = [CP].Cursor_Arrow_PrimaryColorNoiseOpacity
+        Arrow.Prop_SecondaryColor1 = [CP].Cursor_Arrow_SecondaryColor1
+        Arrow.Prop_SecondaryColor2 = [CP].Cursor_Arrow_SecondaryColor2
+        Arrow.Prop_SecondaryColorGradient = [CP].Cursor_Arrow_SecondaryColorGradient
+        Arrow.Prop_SecondaryColorGradientMode = [CP].Cursor_Arrow_SecondaryColorGradientMode
+        Arrow.Prop_SecondaryNoise = [CP].Cursor_Arrow_SecondaryColorNoise
+        Arrow.Prop_SecondaryNoiseOpacity = [CP].Cursor_Arrow_SecondaryColorNoiseOpacity
+#End Region
+
+#Region "Help"
+        Help.Prop_PrimaryColor1 = [CP].Cursor_Help_PrimaryColor1
+        Help.Prop_PrimaryColor2 = [CP].Cursor_Help_PrimaryColor2
+        Help.Prop_PrimaryColorGradient = [CP].Cursor_Help_PrimaryColorGradient
+        Help.Prop_PrimaryColorGradientMode = [CP].Cursor_Help_PrimaryColorGradientMode
+        Help.Prop_PrimaryNoise = [CP].Cursor_Help_PrimaryColorNoise
+        Help.Prop_PrimaryNoiseOpacity = [CP].Cursor_Help_PrimaryColorNoiseOpacity
+        Help.Prop_SecondaryColor1 = [CP].Cursor_Help_SecondaryColor1
+        Help.Prop_SecondaryColor2 = [CP].Cursor_Help_SecondaryColor2
+        Help.Prop_SecondaryColorGradient = [CP].Cursor_Help_SecondaryColorGradient
+        Help.Prop_SecondaryColorGradientMode = [CP].Cursor_Help_SecondaryColorGradientMode
+        Help.Prop_SecondaryNoise = [CP].Cursor_Help_SecondaryColorNoise
+        Help.Prop_SecondaryNoiseOpacity = [CP].Cursor_Help_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "AppLoading"
+        AppLoading.Prop_PrimaryColor1 = [CP].Cursor_AppLoading_PrimaryColor1
+        AppLoading.Prop_PrimaryColor2 = [CP].Cursor_AppLoading_PrimaryColor2
+        AppLoading.Prop_PrimaryColorGradient = [CP].Cursor_AppLoading_PrimaryColorGradient
+        AppLoading.Prop_PrimaryColorGradientMode = [CP].Cursor_AppLoading_PrimaryColorGradientMode
+        AppLoading.Prop_PrimaryNoise = [CP].Cursor_AppLoading_PrimaryColorNoise
+        AppLoading.Prop_PrimaryNoiseOpacity = [CP].Cursor_AppLoading_PrimaryColorNoiseOpacity
+        AppLoading.Prop_SecondaryColor1 = [CP].Cursor_AppLoading_SecondaryColor1
+        AppLoading.Prop_SecondaryColor2 = [CP].Cursor_AppLoading_SecondaryColor2
+        AppLoading.Prop_SecondaryColorGradient = [CP].Cursor_AppLoading_SecondaryColorGradient
+        AppLoading.Prop_SecondaryColorGradientMode = [CP].Cursor_AppLoading_SecondaryColorGradientMode
+        AppLoading.Prop_SecondaryNoise = [CP].Cursor_AppLoading_SecondaryColorNoise
+        AppLoading.Prop_SecondaryNoiseOpacity = [CP].Cursor_AppLoading_SecondaryColorNoiseOpacity
+        AppLoading.Prop_LoadingCircleBack1 = [CP].Cursor_AppLoading_LoadingCircleBack1
+        AppLoading.Prop_LoadingCircleBack2 = [CP].Cursor_AppLoading_LoadingCircleBack2
+        AppLoading.Prop_LoadingCircleBackGradient = [CP].Cursor_AppLoading_LoadingCircleBackGradient
+        AppLoading.Prop_LoadingCircleBackGradientMode = [CP].Cursor_AppLoading_LoadingCircleBackGradientMode
+        AppLoading.Prop_LoadingCircleBackNoise = [CP].Cursor_AppLoading_LoadingCircleBackNoise
+        AppLoading.Prop_LoadingCircleBackNoiseOpacity = [CP].Cursor_AppLoading_LoadingCircleBackNoiseOpacity
+        AppLoading.Prop_LoadingCircleHot1 = [CP].Cursor_AppLoading_LoadingCircleHot1
+        AppLoading.Prop_LoadingCircleHot2 = [CP].Cursor_AppLoading_LoadingCircleHot2
+        AppLoading.Prop_LoadingCircleHotGradient = [CP].Cursor_AppLoading_LoadingCircleHotGradient
+        AppLoading.Prop_LoadingCircleHotGradientMode = [CP].Cursor_AppLoading_LoadingCircleHotGradientMode
+        AppLoading.Prop_LoadingCircleHotNoise = [CP].Cursor_AppLoading_LoadingCircleHotNoise
+        AppLoading.Prop_LoadingCircleHotNoiseOpacity = [CP].Cursor_AppLoading_LoadingCircleHotNoiseOpacity
+
+#End Region
+
+#Region "Busy"
+        Busy.Prop_LoadingCircleBack1 = [CP].Cursor_Busy_LoadingCircleBack1
+        Busy.Prop_LoadingCircleBack2 = [CP].Cursor_Busy_LoadingCircleBack2
+        Busy.Prop_LoadingCircleBackGradient = [CP].Cursor_Busy_LoadingCircleBackGradient
+        Busy.Prop_LoadingCircleBackGradientMode = [CP].Cursor_Busy_LoadingCircleBackGradientMode
+        Busy.Prop_LoadingCircleBackNoise = [CP].Cursor_Busy_LoadingCircleBackNoise
+        Busy.Prop_LoadingCircleBackNoiseOpacity = [CP].Cursor_Busy_LoadingCircleBackNoiseOpacity
+        Busy.Prop_LoadingCircleHot1 = [CP].Cursor_Busy_LoadingCircleHot1
+        Busy.Prop_LoadingCircleHot2 = [CP].Cursor_Busy_LoadingCircleHot2
+        Busy.Prop_LoadingCircleHotGradient = [CP].Cursor_Busy_LoadingCircleHotGradient
+        Busy.Prop_LoadingCircleHotGradientMode = [CP].Cursor_Busy_LoadingCircleHotGradientMode
+        Busy.Prop_LoadingCircleHotNoise = [CP].Cursor_Busy_LoadingCircleHotNoise
+        Busy.Prop_LoadingCircleHotNoiseOpacity = [CP].Cursor_Busy_LoadingCircleHotNoiseOpacity
+
+#End Region
+
+#Region "Move"
+        Move.Prop_PrimaryColor1 = [CP].Cursor_Move_PrimaryColor1
+        Move.Prop_PrimaryColor2 = [CP].Cursor_Move_PrimaryColor2
+        Move.Prop_PrimaryColorGradient = [CP].Cursor_Move_PrimaryColorGradient
+        Move.Prop_PrimaryColorGradientMode = [CP].Cursor_Move_PrimaryColorGradientMode
+        Move.Prop_PrimaryNoise = [CP].Cursor_Move_PrimaryColorNoise
+        Move.Prop_PrimaryNoiseOpacity = [CP].Cursor_Move_PrimaryColorNoiseOpacity
+        Move.Prop_SecondaryColor1 = [CP].Cursor_Move_SecondaryColor1
+        Move.Prop_SecondaryColor2 = [CP].Cursor_Move_SecondaryColor2
+        Move.Prop_SecondaryColorGradient = [CP].Cursor_Move_SecondaryColorGradient
+        Move.Prop_SecondaryColorGradientMode = [CP].Cursor_Move_SecondaryColorGradientMode
+        Move.Prop_SecondaryNoise = [CP].Cursor_Move_SecondaryColorNoise
+        Move.Prop_SecondaryNoiseOpacity = [CP].Cursor_Move_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "NS"
+        NS.Prop_PrimaryColor1 = [CP].Cursor_NS_PrimaryColor1
+        NS.Prop_PrimaryColor2 = [CP].Cursor_NS_PrimaryColor2
+        NS.Prop_PrimaryColorGradient = [CP].Cursor_NS_PrimaryColorGradient
+        NS.Prop_PrimaryColorGradientMode = [CP].Cursor_NS_PrimaryColorGradientMode
+        NS.Prop_PrimaryNoise = [CP].Cursor_NS_PrimaryColorNoise
+        NS.Prop_PrimaryNoiseOpacity = [CP].Cursor_NS_PrimaryColorNoiseOpacity
+        NS.Prop_SecondaryColor1 = [CP].Cursor_NS_SecondaryColor1
+        NS.Prop_SecondaryColor2 = [CP].Cursor_NS_SecondaryColor2
+        NS.Prop_SecondaryColorGradient = [CP].Cursor_NS_SecondaryColorGradient
+        NS.Prop_SecondaryColorGradientMode = [CP].Cursor_NS_SecondaryColorGradientMode
+        NS.Prop_SecondaryNoise = [CP].Cursor_NS_SecondaryColorNoise
+        NS.Prop_SecondaryNoiseOpacity = [CP].Cursor_NS_SecondaryColorNoiseOpacity
+#End Region
+
+#Region "EW"
+        EW.Prop_PrimaryColor1 = [CP].Cursor_EW_PrimaryColor1
+        EW.Prop_PrimaryColor2 = [CP].Cursor_EW_PrimaryColor2
+        EW.Prop_PrimaryColorGradient = [CP].Cursor_EW_PrimaryColorGradient
+        EW.Prop_PrimaryColorGradientMode = [CP].Cursor_EW_PrimaryColorGradientMode
+        EW.Prop_PrimaryNoise = [CP].Cursor_EW_PrimaryColorNoise
+        EW.Prop_PrimaryNoiseOpacity = [CP].Cursor_EW_PrimaryColorNoiseOpacity
+        EW.Prop_SecondaryColor1 = [CP].Cursor_EW_SecondaryColor1
+        EW.Prop_SecondaryColor2 = [CP].Cursor_EW_SecondaryColor2
+        EW.Prop_SecondaryColorGradient = [CP].Cursor_EW_SecondaryColorGradient
+        EW.Prop_SecondaryColorGradientMode = [CP].Cursor_EW_SecondaryColorGradientMode
+        EW.Prop_SecondaryNoise = [CP].Cursor_EW_SecondaryColorNoise
+        EW.Prop_SecondaryNoiseOpacity = [CP].Cursor_EW_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "NESW"
+        NESW.Prop_PrimaryColor1 = [CP].Cursor_NESW_PrimaryColor1
+        NESW.Prop_PrimaryColor2 = [CP].Cursor_NESW_PrimaryColor2
+        NESW.Prop_PrimaryColorGradient = [CP].Cursor_NESW_PrimaryColorGradient
+        NESW.Prop_PrimaryColorGradientMode = [CP].Cursor_NESW_PrimaryColorGradientMode
+        NESW.Prop_PrimaryNoise = [CP].Cursor_NESW_PrimaryColorNoise
+        NESW.Prop_PrimaryNoiseOpacity = [CP].Cursor_NESW_PrimaryColorNoiseOpacity
+        NESW.Prop_SecondaryColor1 = [CP].Cursor_NESW_SecondaryColor1
+        NESW.Prop_SecondaryColor2 = [CP].Cursor_NESW_SecondaryColor2
+        NESW.Prop_SecondaryColorGradient = [CP].Cursor_NESW_SecondaryColorGradient
+        NESW.Prop_SecondaryColorGradientMode = [CP].Cursor_NESW_SecondaryColorGradientMode
+        NESW.Prop_SecondaryNoise = [CP].Cursor_NESW_SecondaryColorNoise
+        NESW.Prop_SecondaryNoiseOpacity = [CP].Cursor_NESW_SecondaryColorNoiseOpacity
+#End Region
+
+#Region "NWSE"
+        NWSE.Prop_PrimaryColor1 = [CP].Cursor_NWSE_PrimaryColor1
+        NWSE.Prop_PrimaryColor2 = [CP].Cursor_NWSE_PrimaryColor2
+        NWSE.Prop_PrimaryColorGradient = [CP].Cursor_NWSE_PrimaryColorGradient
+        NWSE.Prop_PrimaryColorGradientMode = [CP].Cursor_NWSE_PrimaryColorGradientMode
+        NWSE.Prop_PrimaryNoise = [CP].Cursor_NWSE_PrimaryColorNoise
+        NWSE.Prop_PrimaryNoiseOpacity = [CP].Cursor_NWSE_PrimaryColorNoiseOpacity
+        NWSE.Prop_SecondaryColor1 = [CP].Cursor_NWSE_SecondaryColor1
+        NWSE.Prop_SecondaryColor2 = [CP].Cursor_NWSE_SecondaryColor2
+        NWSE.Prop_SecondaryColorGradient = [CP].Cursor_NWSE_SecondaryColorGradient
+        NWSE.Prop_SecondaryColorGradientMode = [CP].Cursor_NWSE_SecondaryColorGradientMode
+        NWSE.Prop_SecondaryNoise = [CP].Cursor_NWSE_SecondaryColorNoise
+        NWSE.Prop_SecondaryNoiseOpacity = [CP].Cursor_NWSE_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "Up"
+        Up.Prop_PrimaryColor1 = [CP].Cursor_Up_PrimaryColor1
+        Up.Prop_PrimaryColor2 = [CP].Cursor_Up_PrimaryColor2
+        Up.Prop_PrimaryColorGradient = [CP].Cursor_Up_PrimaryColorGradient
+        Up.Prop_PrimaryColorGradientMode = [CP].Cursor_Up_PrimaryColorGradientMode
+        Up.Prop_PrimaryNoise = [CP].Cursor_Up_PrimaryColorNoise
+        Up.Prop_PrimaryNoiseOpacity = [CP].Cursor_Up_PrimaryColorNoiseOpacity
+        Up.Prop_SecondaryColor1 = [CP].Cursor_Up_SecondaryColor1
+        Up.Prop_SecondaryColor2 = [CP].Cursor_Up_SecondaryColor2
+        Up.Prop_SecondaryColorGradient = [CP].Cursor_Up_SecondaryColorGradient
+        Up.Prop_SecondaryColorGradientMode = [CP].Cursor_Up_SecondaryColorGradientMode
+        Up.Prop_SecondaryNoise = [CP].Cursor_Up_SecondaryColorNoise
+        Up.Prop_SecondaryNoiseOpacity = [CP].Cursor_Up_SecondaryColorNoiseOpacity
+#End Region
+
+#Region "Pen"
+        Pen.Prop_PrimaryColor1 = [CP].Cursor_Pen_PrimaryColor1
+        Pen.Prop_PrimaryColor2 = [CP].Cursor_Pen_PrimaryColor2
+        Pen.Prop_PrimaryColorGradient = [CP].Cursor_Pen_PrimaryColorGradient
+        Pen.Prop_PrimaryColorGradientMode = [CP].Cursor_Pen_PrimaryColorGradientMode
+        Pen.Prop_PrimaryNoise = [CP].Cursor_Pen_PrimaryColorNoise
+        Pen.Prop_PrimaryNoiseOpacity = [CP].Cursor_Pen_PrimaryColorNoiseOpacity
+        Pen.Prop_SecondaryColor1 = [CP].Cursor_Pen_SecondaryColor1
+        Pen.Prop_SecondaryColor2 = [CP].Cursor_Pen_SecondaryColor2
+        Pen.Prop_SecondaryColorGradient = [CP].Cursor_Pen_SecondaryColorGradient
+        Pen.Prop_SecondaryColorGradientMode = [CP].Cursor_Pen_SecondaryColorGradientMode
+        Pen.Prop_SecondaryNoise = [CP].Cursor_Pen_SecondaryColorNoise
+        Pen.Prop_SecondaryNoiseOpacity = [CP].Cursor_Pen_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "None"
+        None.Prop_PrimaryColor1 = [CP].Cursor_None_PrimaryColor1
+        None.Prop_PrimaryColor2 = [CP].Cursor_None_PrimaryColor2
+        None.Prop_PrimaryColorGradient = [CP].Cursor_None_PrimaryColorGradient
+        None.Prop_PrimaryColorGradientMode = [CP].Cursor_None_PrimaryColorGradientMode
+        None.Prop_PrimaryNoise = [CP].Cursor_None_PrimaryColorNoise
+        None.Prop_PrimaryNoiseOpacity = [CP].Cursor_None_PrimaryColorNoiseOpacity
+        None.Prop_SecondaryColor1 = [CP].Cursor_None_SecondaryColor1
+        None.Prop_SecondaryColor2 = [CP].Cursor_None_SecondaryColor2
+        None.Prop_SecondaryColorGradient = [CP].Cursor_None_SecondaryColorGradient
+        None.Prop_SecondaryColorGradientMode = [CP].Cursor_None_SecondaryColorGradientMode
+        None.Prop_SecondaryNoise = [CP].Cursor_None_SecondaryColorNoise
+        None.Prop_SecondaryNoiseOpacity = [CP].Cursor_None_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "Link"
+        Link.Prop_PrimaryColor1 = [CP].Cursor_Link_PrimaryColor1
+        Link.Prop_PrimaryColor2 = [CP].Cursor_Link_PrimaryColor2
+        Link.Prop_PrimaryColorGradient = [CP].Cursor_Link_PrimaryColorGradient
+        Link.Prop_PrimaryColorGradientMode = [CP].Cursor_Link_PrimaryColorGradientMode
+        Link.Prop_PrimaryNoise = [CP].Cursor_Link_PrimaryColorNoise
+        Link.Prop_PrimaryNoiseOpacity = [CP].Cursor_Link_PrimaryColorNoiseOpacity
+        Link.Prop_SecondaryColor1 = [CP].Cursor_Link_SecondaryColor1
+        Link.Prop_SecondaryColor2 = [CP].Cursor_Link_SecondaryColor2
+        Link.Prop_SecondaryColorGradient = [CP].Cursor_Link_SecondaryColorGradient
+        Link.Prop_SecondaryColorGradientMode = [CP].Cursor_Link_SecondaryColorGradientMode
+        Link.Prop_SecondaryNoise = [CP].Cursor_Link_SecondaryColorNoise
+        Link.Prop_SecondaryNoiseOpacity = [CP].Cursor_Link_SecondaryColorNoiseOpacity
+#End Region
+
+#Region "Pin"
+        Pin.Prop_PrimaryColor1 = [CP].Cursor_Pin_PrimaryColor1
+        Pin.Prop_PrimaryColor2 = [CP].Cursor_Pin_PrimaryColor2
+        Pin.Prop_PrimaryColorGradient = [CP].Cursor_Pin_PrimaryColorGradient
+        Pin.Prop_PrimaryColorGradientMode = [CP].Cursor_Pin_PrimaryColorGradientMode
+        Pin.Prop_PrimaryNoise = [CP].Cursor_Pin_PrimaryColorNoise
+        Pin.Prop_PrimaryNoiseOpacity = [CP].Cursor_Pin_PrimaryColorNoiseOpacity
+        Pin.Prop_SecondaryColor1 = [CP].Cursor_Pin_SecondaryColor1
+        Pin.Prop_SecondaryColor2 = [CP].Cursor_Pin_SecondaryColor2
+        Pin.Prop_SecondaryColorGradient = [CP].Cursor_Pin_SecondaryColorGradient
+        Pin.Prop_SecondaryColorGradientMode = [CP].Cursor_Pin_SecondaryColorGradientMode
+        Pin.Prop_SecondaryNoise = [CP].Cursor_Pin_SecondaryColorNoise
+        Pin.Prop_SecondaryNoiseOpacity = [CP].Cursor_Pin_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "Person"
+        Person.Prop_PrimaryColor1 = [CP].Cursor_Person_PrimaryColor1
+        Person.Prop_PrimaryColor2 = [CP].Cursor_Person_PrimaryColor2
+        Person.Prop_PrimaryColorGradient = [CP].Cursor_Person_PrimaryColorGradient
+        Person.Prop_PrimaryColorGradientMode = [CP].Cursor_Person_PrimaryColorGradientMode
+        Person.Prop_PrimaryNoise = [CP].Cursor_Person_PrimaryColorNoise
+        Person.Prop_PrimaryNoiseOpacity = [CP].Cursor_Person_PrimaryColorNoiseOpacity
+        Person.Prop_SecondaryColor1 = [CP].Cursor_Person_SecondaryColor1
+        Person.Prop_SecondaryColor2 = [CP].Cursor_Person_SecondaryColor2
+        Person.Prop_SecondaryColorGradient = [CP].Cursor_Person_SecondaryColorGradient
+        Person.Prop_SecondaryColorGradientMode = [CP].Cursor_Person_SecondaryColorGradientMode
+        Person.Prop_SecondaryNoise = [CP].Cursor_Person_SecondaryColorNoise
+        Person.Prop_SecondaryNoiseOpacity = [CP].Cursor_Person_SecondaryColorNoiseOpacity
+
+#End Region
+
+#Region "Cross"
+        Cross.Prop_PrimaryColor1 = [CP].Cursor_Cross_PrimaryColor1
+        Cross.Prop_PrimaryColor2 = [CP].Cursor_Cross_PrimaryColor2
+        Cross.Prop_PrimaryColorGradient = [CP].Cursor_Cross_PrimaryColorGradient
+        Cross.Prop_PrimaryColorGradientMode = [CP].Cursor_Cross_PrimaryColorGradientMode
+        Cross.Prop_PrimaryNoise = [CP].Cursor_Cross_PrimaryColorNoise
+        Cross.Prop_PrimaryNoiseOpacity = [CP].Cursor_Cross_PrimaryColorNoiseOpacity
+        Cross.Prop_SecondaryColor1 = [CP].Cursor_Cross_SecondaryColor1
+        Cross.Prop_SecondaryColor2 = [CP].Cursor_Cross_SecondaryColor2
+        Cross.Prop_SecondaryColorGradient = [CP].Cursor_Cross_SecondaryColorGradient
+        Cross.Prop_SecondaryColorGradientMode = [CP].Cursor_Cross_SecondaryColorGradientMode
+        Cross.Prop_SecondaryNoise = [CP].Cursor_Cross_SecondaryColorNoise
+        Cross.Prop_SecondaryNoiseOpacity = [CP].Cursor_Cross_SecondaryColorNoiseOpacity
+#End Region
+
+        For Each i As CursorControl In FlowLayoutPanel1.Controls
+            If TypeOf i Is CursorControl Then
+                i.Invalidate()
+            End If
+        Next
+    End Sub
+
+    Sub SaveToCP([CP] As CP)
+        [CP].Cursor_Enabled = XenonToggle1.Checked
+
+#Region "Arrow"
+        [CP].Cursor_Arrow_PrimaryColor1 = Arrow.Prop_PrimaryColor1
+        [CP].Cursor_Arrow_PrimaryColor2 = Arrow.Prop_PrimaryColor2
+        [CP].Cursor_Arrow_PrimaryColorGradient = Arrow.Prop_PrimaryColorGradient
+        [CP].Cursor_Arrow_PrimaryColorGradientMode = Arrow.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Arrow_PrimaryColorNoise = Arrow.Prop_PrimaryNoise
+        [CP].Cursor_Arrow_PrimaryColorNoiseOpacity = Arrow.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Arrow_SecondaryColor1 = Arrow.Prop_SecondaryColor1
+        [CP].Cursor_Arrow_SecondaryColor2 = Arrow.Prop_SecondaryColor2
+        [CP].Cursor_Arrow_SecondaryColorGradient = Arrow.Prop_SecondaryColorGradient
+        [CP].Cursor_Arrow_SecondaryColorGradientMode = Arrow.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Arrow_SecondaryColorNoise = Arrow.Prop_SecondaryNoise
+        [CP].Cursor_Arrow_SecondaryColorNoiseOpacity = Arrow.Prop_SecondaryNoiseOpacity
+#End Region
+
+#Region "Help"
+        [CP].Cursor_Help_PrimaryColor1 = Help.Prop_PrimaryColor1
+        [CP].Cursor_Help_PrimaryColor2 = Help.Prop_PrimaryColor2
+        [CP].Cursor_Help_PrimaryColorGradient = Help.Prop_PrimaryColorGradient
+        [CP].Cursor_Help_PrimaryColorGradientMode = Help.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Help_PrimaryColorNoise = Help.Prop_PrimaryNoise
+        [CP].Cursor_Help_PrimaryColorNoiseOpacity = Help.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Help_SecondaryColor1 = Help.Prop_SecondaryColor1
+        [CP].Cursor_Help_SecondaryColor2 = Help.Prop_SecondaryColor2
+        [CP].Cursor_Help_SecondaryColorGradient = Help.Prop_SecondaryColorGradient
+        [CP].Cursor_Help_SecondaryColorGradientMode = Help.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Help_SecondaryColorNoise = Help.Prop_SecondaryNoise
+        [CP].Cursor_Help_SecondaryColorNoiseOpacity = Help.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "AppLoading"
+        [CP].Cursor_AppLoading_PrimaryColor1 = AppLoading.Prop_PrimaryColor1
+        [CP].Cursor_AppLoading_PrimaryColor2 = AppLoading.Prop_PrimaryColor2
+        [CP].Cursor_AppLoading_PrimaryColorGradient = AppLoading.Prop_PrimaryColorGradient
+        [CP].Cursor_AppLoading_PrimaryColorGradientMode = AppLoading.Prop_PrimaryColorGradientMode
+        [CP].Cursor_AppLoading_PrimaryColorNoise = AppLoading.Prop_PrimaryNoise
+        [CP].Cursor_AppLoading_PrimaryColorNoiseOpacity = AppLoading.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_AppLoading_SecondaryColor1 = AppLoading.Prop_SecondaryColor1
+        [CP].Cursor_AppLoading_SecondaryColor2 = AppLoading.Prop_SecondaryColor2
+        [CP].Cursor_AppLoading_SecondaryColorGradient = AppLoading.Prop_SecondaryColorGradient
+        [CP].Cursor_AppLoading_SecondaryColorGradientMode = AppLoading.Prop_SecondaryColorGradientMode
+        [CP].Cursor_AppLoading_SecondaryColorNoise = AppLoading.Prop_SecondaryNoise
+        [CP].Cursor_AppLoading_SecondaryColorNoiseOpacity = AppLoading.Prop_SecondaryNoiseOpacity
+        [CP].Cursor_AppLoading_LoadingCircleBack1 = AppLoading.Prop_LoadingCircleBack1
+        [CP].Cursor_AppLoading_LoadingCircleBack2 = AppLoading.Prop_LoadingCircleBack2
+        [CP].Cursor_AppLoading_LoadingCircleBackGradient = AppLoading.Prop_LoadingCircleBackGradient
+        [CP].Cursor_AppLoading_LoadingCircleBackGradientMode = AppLoading.Prop_LoadingCircleBackGradientMode
+        [CP].Cursor_AppLoading_LoadingCircleBackNoise = AppLoading.Prop_LoadingCircleBackNoise
+        [CP].Cursor_AppLoading_LoadingCircleBackNoiseOpacity = AppLoading.Prop_LoadingCircleBackNoiseOpacity
+        [CP].Cursor_AppLoading_LoadingCircleHot1 = AppLoading.Prop_LoadingCircleHot1
+        [CP].Cursor_AppLoading_LoadingCircleHot2 = AppLoading.Prop_LoadingCircleHot2
+        [CP].Cursor_AppLoading_LoadingCircleHotGradient = AppLoading.Prop_LoadingCircleHotGradient
+        [CP].Cursor_AppLoading_LoadingCircleHotGradientMode = AppLoading.Prop_LoadingCircleHotGradientMode
+        [CP].Cursor_AppLoading_LoadingCircleHotNoise = AppLoading.Prop_LoadingCircleHotNoise
+        [CP].Cursor_AppLoading_LoadingCircleHotNoiseOpacity = AppLoading.Prop_LoadingCircleHotNoiseOpacity
+
+#End Region
+
+#Region "Busy"
+        [CP].Cursor_Busy_LoadingCircleBack1 = Busy.Prop_LoadingCircleBack1
+        [CP].Cursor_Busy_LoadingCircleBack2 = Busy.Prop_LoadingCircleBack2
+        [CP].Cursor_Busy_LoadingCircleBackGradient = Busy.Prop_LoadingCircleBackGradient
+        [CP].Cursor_Busy_LoadingCircleBackGradientMode = Busy.Prop_LoadingCircleBackGradientMode
+        [CP].Cursor_Busy_LoadingCircleBackNoise = Busy.Prop_LoadingCircleBackNoise
+        [CP].Cursor_Busy_LoadingCircleBackNoiseOpacity = Busy.Prop_LoadingCircleBackNoiseOpacity
+        [CP].Cursor_Busy_LoadingCircleHot1 = Busy.Prop_LoadingCircleHot1
+        [CP].Cursor_Busy_LoadingCircleHot2 = Busy.Prop_LoadingCircleHot2
+        [CP].Cursor_Busy_LoadingCircleHotGradient = Busy.Prop_LoadingCircleHotGradient
+        [CP].Cursor_Busy_LoadingCircleHotGradientMode = Busy.Prop_LoadingCircleHotGradientMode
+        [CP].Cursor_Busy_LoadingCircleHotNoise = Busy.Prop_LoadingCircleHotNoise
+        [CP].Cursor_Busy_LoadingCircleHotNoiseOpacity = Busy.Prop_LoadingCircleHotNoiseOpacity
+
+#End Region
+
+#Region "Move"
+        [CP].Cursor_Move_PrimaryColor1 = Move.Prop_PrimaryColor1
+        [CP].Cursor_Move_PrimaryColor2 = Move.Prop_PrimaryColor2
+        [CP].Cursor_Move_PrimaryColorGradient = Move.Prop_PrimaryColorGradient
+        [CP].Cursor_Move_PrimaryColorGradientMode = Move.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Move_PrimaryColorNoise = Move.Prop_PrimaryNoise
+        [CP].Cursor_Move_PrimaryColorNoiseOpacity = Move.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Move_SecondaryColor1 = Move.Prop_SecondaryColor1
+        [CP].Cursor_Move_SecondaryColor2 = Move.Prop_SecondaryColor2
+        [CP].Cursor_Move_SecondaryColorGradient = Move.Prop_SecondaryColorGradient
+        [CP].Cursor_Move_SecondaryColorGradientMode = Move.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Move_SecondaryColorNoise = Move.Prop_SecondaryNoise
+        [CP].Cursor_Move_SecondaryColorNoiseOpacity = Move.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "NS"
+        [CP].Cursor_NS_PrimaryColor1 = NS.Prop_PrimaryColor1
+        [CP].Cursor_NS_PrimaryColor2 = NS.Prop_PrimaryColor2
+        [CP].Cursor_NS_PrimaryColorGradient = NS.Prop_PrimaryColorGradient
+        [CP].Cursor_NS_PrimaryColorGradientMode = NS.Prop_PrimaryColorGradientMode
+        [CP].Cursor_NS_PrimaryColorNoise = NS.Prop_PrimaryNoise
+        [CP].Cursor_NS_PrimaryColorNoiseOpacity = NS.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_NS_SecondaryColor1 = NS.Prop_SecondaryColor1
+        [CP].Cursor_NS_SecondaryColor2 = NS.Prop_SecondaryColor2
+        [CP].Cursor_NS_SecondaryColorGradient = NS.Prop_SecondaryColorGradient
+        [CP].Cursor_NS_SecondaryColorGradientMode = NS.Prop_SecondaryColorGradientMode
+        [CP].Cursor_NS_SecondaryColorNoise = NS.Prop_SecondaryNoise
+        [CP].Cursor_NS_SecondaryColorNoiseOpacity = NS.Prop_SecondaryNoiseOpacity
+#End Region
+
+#Region "EW"
+        [CP].Cursor_EW_PrimaryColor1 = EW.Prop_PrimaryColor1
+        [CP].Cursor_EW_PrimaryColor2 = EW.Prop_PrimaryColor2
+        [CP].Cursor_EW_PrimaryColorGradient = EW.Prop_PrimaryColorGradient
+        [CP].Cursor_EW_PrimaryColorGradientMode = EW.Prop_PrimaryColorGradientMode
+        [CP].Cursor_EW_PrimaryColorNoise = EW.Prop_PrimaryNoise
+        [CP].Cursor_EW_PrimaryColorNoiseOpacity = EW.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_EW_SecondaryColor1 = EW.Prop_SecondaryColor1
+        [CP].Cursor_EW_SecondaryColor2 = EW.Prop_SecondaryColor2
+        [CP].Cursor_EW_SecondaryColorGradient = EW.Prop_SecondaryColorGradient
+        [CP].Cursor_EW_SecondaryColorGradientMode = EW.Prop_SecondaryColorGradientMode
+        [CP].Cursor_EW_SecondaryColorNoise = EW.Prop_SecondaryNoise
+        [CP].Cursor_EW_SecondaryColorNoiseOpacity = EW.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "NESW"
+        [CP].Cursor_NESW_PrimaryColor1 = NESW.Prop_PrimaryColor1
+        [CP].Cursor_NESW_PrimaryColor2 = NESW.Prop_PrimaryColor2
+        [CP].Cursor_NESW_PrimaryColorGradient = NESW.Prop_PrimaryColorGradient
+        [CP].Cursor_NESW_PrimaryColorGradientMode = NESW.Prop_PrimaryColorGradientMode
+        [CP].Cursor_NESW_PrimaryColorNoise = NESW.Prop_PrimaryNoise
+        [CP].Cursor_NESW_PrimaryColorNoiseOpacity = NESW.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_NESW_SecondaryColor1 = NESW.Prop_SecondaryColor1
+        [CP].Cursor_NESW_SecondaryColor2 = NESW.Prop_SecondaryColor2
+        [CP].Cursor_NESW_SecondaryColorGradient = NESW.Prop_SecondaryColorGradient
+        [CP].Cursor_NESW_SecondaryColorGradientMode = NESW.Prop_SecondaryColorGradientMode
+        [CP].Cursor_NESW_SecondaryColorNoise = NESW.Prop_SecondaryNoise
+        [CP].Cursor_NESW_SecondaryColorNoiseOpacity = NESW.Prop_SecondaryNoiseOpacity
+#End Region
+
+#Region "NWSE"
+        [CP].Cursor_NWSE_PrimaryColor1 = NWSE.Prop_PrimaryColor1
+        [CP].Cursor_NWSE_PrimaryColor2 = NWSE.Prop_PrimaryColor2
+        [CP].Cursor_NWSE_PrimaryColorGradient = NWSE.Prop_PrimaryColorGradient
+        [CP].Cursor_NWSE_PrimaryColorGradientMode = NWSE.Prop_PrimaryColorGradientMode
+        [CP].Cursor_NWSE_PrimaryColorNoise = NWSE.Prop_PrimaryNoise
+        [CP].Cursor_NWSE_PrimaryColorNoiseOpacity = NWSE.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_NWSE_SecondaryColor1 = NWSE.Prop_SecondaryColor1
+        [CP].Cursor_NWSE_SecondaryColor2 = NWSE.Prop_SecondaryColor2
+        [CP].Cursor_NWSE_SecondaryColorGradient = NWSE.Prop_SecondaryColorGradient
+        [CP].Cursor_NWSE_SecondaryColorGradientMode = NWSE.Prop_SecondaryColorGradientMode
+        [CP].Cursor_NWSE_SecondaryColorNoise = NWSE.Prop_SecondaryNoise
+        [CP].Cursor_NWSE_SecondaryColorNoiseOpacity = NWSE.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "Up"
+        [CP].Cursor_Up_PrimaryColor1 = Up.Prop_PrimaryColor1
+        [CP].Cursor_Up_PrimaryColor2 = Up.Prop_PrimaryColor2
+        [CP].Cursor_Up_PrimaryColorGradient = Up.Prop_PrimaryColorGradient
+        [CP].Cursor_Up_PrimaryColorGradientMode = Up.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Up_PrimaryColorNoise = Up.Prop_PrimaryNoise
+        [CP].Cursor_Up_PrimaryColorNoiseOpacity = Up.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Up_SecondaryColor1 = Up.Prop_SecondaryColor1
+        [CP].Cursor_Up_SecondaryColor2 = Up.Prop_SecondaryColor2
+        [CP].Cursor_Up_SecondaryColorGradient = Up.Prop_SecondaryColorGradient
+        [CP].Cursor_Up_SecondaryColorGradientMode = Up.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Up_SecondaryColorNoise = Up.Prop_SecondaryNoise
+        [CP].Cursor_Up_SecondaryColorNoiseOpacity = Up.Prop_SecondaryNoiseOpacity
+#End Region
+
+#Region "Pen"
+        [CP].Cursor_Pen_PrimaryColor1 = Pen.Prop_PrimaryColor1
+        [CP].Cursor_Pen_PrimaryColor2 = Pen.Prop_PrimaryColor2
+        [CP].Cursor_Pen_PrimaryColorGradient = Pen.Prop_PrimaryColorGradient
+        [CP].Cursor_Pen_PrimaryColorGradientMode = Pen.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Pen_PrimaryColorNoise = Pen.Prop_PrimaryNoise
+        [CP].Cursor_Pen_PrimaryColorNoiseOpacity = Pen.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Pen_SecondaryColor1 = Pen.Prop_SecondaryColor1
+        [CP].Cursor_Pen_SecondaryColor2 = Pen.Prop_SecondaryColor2
+        [CP].Cursor_Pen_SecondaryColorGradient = Pen.Prop_SecondaryColorGradient
+        [CP].Cursor_Pen_SecondaryColorGradientMode = Pen.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Pen_SecondaryColorNoise = Pen.Prop_SecondaryNoise
+        [CP].Cursor_Pen_SecondaryColorNoiseOpacity = Pen.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "None"
+        [CP].Cursor_None_PrimaryColor1 = None.Prop_PrimaryColor1
+        [CP].Cursor_None_PrimaryColor2 = None.Prop_PrimaryColor2
+        [CP].Cursor_None_PrimaryColorGradient = None.Prop_PrimaryColorGradient
+        [CP].Cursor_None_PrimaryColorGradientMode = None.Prop_PrimaryColorGradientMode
+        [CP].Cursor_None_PrimaryColorNoise = None.Prop_PrimaryNoise
+        [CP].Cursor_None_PrimaryColorNoiseOpacity = None.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_None_SecondaryColor1 = None.Prop_SecondaryColor1
+        [CP].Cursor_None_SecondaryColor2 = None.Prop_SecondaryColor2
+        [CP].Cursor_None_SecondaryColorGradient = None.Prop_SecondaryColorGradient
+        [CP].Cursor_None_SecondaryColorGradientMode = None.Prop_SecondaryColorGradientMode
+        [CP].Cursor_None_SecondaryColorNoise = None.Prop_SecondaryNoise
+        [CP].Cursor_None_SecondaryColorNoiseOpacity = None.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "Link"
+        [CP].Cursor_Link_PrimaryColor1 = Link.Prop_PrimaryColor1
+        [CP].Cursor_Link_PrimaryColor2 = Link.Prop_PrimaryColor2
+        [CP].Cursor_Link_PrimaryColorGradient = Link.Prop_PrimaryColorGradient
+        [CP].Cursor_Link_PrimaryColorGradientMode = Link.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Link_PrimaryColorNoise = Link.Prop_PrimaryNoise
+        [CP].Cursor_Link_PrimaryColorNoiseOpacity = Link.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Link_SecondaryColor1 = Link.Prop_SecondaryColor1
+        [CP].Cursor_Link_SecondaryColor2 = Link.Prop_SecondaryColor2
+        [CP].Cursor_Link_SecondaryColorGradient = Link.Prop_SecondaryColorGradient
+        [CP].Cursor_Link_SecondaryColorGradientMode = Link.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Link_SecondaryColorNoise = Link.Prop_SecondaryNoise
+        [CP].Cursor_Link_SecondaryColorNoiseOpacity = Link.Prop_SecondaryNoiseOpacity
+#End Region
+
+#Region "Pin"
+        [CP].Cursor_Pin_PrimaryColor1 = Pin.Prop_PrimaryColor1
+        [CP].Cursor_Pin_PrimaryColor2 = Pin.Prop_PrimaryColor2
+        [CP].Cursor_Pin_PrimaryColorGradient = Pin.Prop_PrimaryColorGradient
+        [CP].Cursor_Pin_PrimaryColorGradientMode = Pin.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Pin_PrimaryColorNoise = Pin.Prop_PrimaryNoise
+        [CP].Cursor_Pin_PrimaryColorNoiseOpacity = Pin.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Pin_SecondaryColor1 = Pin.Prop_SecondaryColor1
+        [CP].Cursor_Pin_SecondaryColor2 = Pin.Prop_SecondaryColor2
+        [CP].Cursor_Pin_SecondaryColorGradient = Pin.Prop_SecondaryColorGradient
+        [CP].Cursor_Pin_SecondaryColorGradientMode = Pin.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Pin_SecondaryColorNoise = Pin.Prop_SecondaryNoise
+        [CP].Cursor_Pin_SecondaryColorNoiseOpacity = Pin.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "Person"
+        [CP].Cursor_Person_PrimaryColor1 = Person.Prop_PrimaryColor1
+        [CP].Cursor_Person_PrimaryColor2 = Person.Prop_PrimaryColor2
+        [CP].Cursor_Person_PrimaryColorGradient = Person.Prop_PrimaryColorGradient
+        [CP].Cursor_Person_PrimaryColorGradientMode = Person.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Person_PrimaryColorNoise = Person.Prop_PrimaryNoise
+        [CP].Cursor_Person_PrimaryColorNoiseOpacity = Person.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Person_SecondaryColor1 = Person.Prop_SecondaryColor1
+        [CP].Cursor_Person_SecondaryColor2 = Person.Prop_SecondaryColor2
+        [CP].Cursor_Person_SecondaryColorGradient = Person.Prop_SecondaryColorGradient
+        [CP].Cursor_Person_SecondaryColorGradientMode = Person.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Person_SecondaryColorNoise = Person.Prop_SecondaryNoise
+        [CP].Cursor_Person_SecondaryColorNoiseOpacity = Person.Prop_SecondaryNoiseOpacity
+
+#End Region
+
+#Region "Cross"
+        [CP].Cursor_Cross_PrimaryColor1 = Cross.Prop_PrimaryColor1
+        [CP].Cursor_Cross_PrimaryColor2 = Cross.Prop_PrimaryColor2
+        [CP].Cursor_Cross_PrimaryColorGradient = Cross.Prop_PrimaryColorGradient
+        [CP].Cursor_Cross_PrimaryColorGradientMode = Cross.Prop_PrimaryColorGradientMode
+        [CP].Cursor_Cross_PrimaryColorNoise = Cross.Prop_PrimaryNoise
+        [CP].Cursor_Cross_PrimaryColorNoiseOpacity = Cross.Prop_PrimaryNoiseOpacity
+        [CP].Cursor_Cross_SecondaryColor1 = Cross.Prop_SecondaryColor1
+        [CP].Cursor_Cross_SecondaryColor2 = Cross.Prop_SecondaryColor2
+        [CP].Cursor_Cross_SecondaryColorGradient = Cross.Prop_SecondaryColorGradient
+        [CP].Cursor_Cross_SecondaryColorGradientMode = Cross.Prop_SecondaryColorGradientMode
+        [CP].Cursor_Cross_SecondaryColorNoise = Cross.Prop_SecondaryNoise
+        [CP].Cursor_Cross_SecondaryColorNoiseOpacity = Cross.Prop_SecondaryNoiseOpacity
+#End Region
+    End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         AnimateList.Clear()
@@ -23,6 +562,8 @@ Public Class CursorsStudio
                 If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
             End If
         Next
+
+        LoadFromCP(MainFrm.CP)
     End Sub
 
     Private Sub CursorsStudio_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -239,7 +780,6 @@ Public Class CursorsStudio
 
     End Sub
 
-
     Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
         If Not _Shown Then Exit Sub
 
@@ -433,8 +973,6 @@ Public Class CursorsStudio
         Next
     End Sub
 
-
-
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.TextChanged
         If Not _Shown Then Exit Sub
 
@@ -494,68 +1032,11 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-
-        Dim BMPList As New List(Of Bitmap)
-
-        Dim PList As New List(Of Point)
-
-        BMPList.Clear()
-
-
-#Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
-
-        For ang As Integer = 180 To 360 Step +10
-            Dim bm As Bitmap
-
-            bm = New Bitmap(Draw(CursorType.Busy, Color.Black, Color.Black, False, Drawing2D.LinearGradientMode.Vertical, Color.White, Color.White, False, Drawing2D.LinearGradientMode.Vertical,
-                            Color.Red, Color.Red, False, Drawing2D.LinearGradientMode.Vertical, Color.Maroon, Color.Maroon, False, Drawing2D.LinearGradientMode.Vertical, False, 0, False, 0, False, 0, False, 0,
-                             1, 1, ang))
-
-            BMPList.Add(bm)
-        Next
-
-        For ang As Integer = 0 To 180 Step +10
-            Dim bm As Bitmap
-
-            bm = New Bitmap(Draw(CursorType.Busy, Color.Black, Color.Black, False, Drawing2D.LinearGradientMode.Vertical, Color.White, Color.White, False, Drawing2D.LinearGradientMode.Vertical,
-                            Color.Red, Color.Red, False, Drawing2D.LinearGradientMode.Vertical, Color.Maroon, Color.Maroon, False, Drawing2D.LinearGradientMode.Vertical, False, 0, False, 0, False, 0, False, 0,
-                             1, 1, ang))
-
-            BMPList.Add(bm)
-        Next
-#End Region
-
-        Dim Count As Integer = BMPList.Count
-        Dim frameRates As UInteger() = New UInteger(Count - 1) {}
-        Dim seqNums As UInteger() = New UInteger(Count - 1) {}
-
-        For i = 0 To Count - 1
-            frameRates(i) = Convert.ToUInt32(2)
-            seqNums(i) = CUInt(i)
-        Next
-
-
-        Dim fs As New FileStream(String.Format("D:\ani\{0}.ani", 0), FileMode.Create)
-
-        Dim AN As New EOANIWriter(fs, Count, 2, frameRates, seqNums, Nothing, Nothing, New Point(1, 1))
-
-        For i = 0 To Count - 1
-            AN.WriteFrame32(BMPList(i))
-        Next
-
-        fs.Close()
-
-        'Me.Close()
+        Me.Close()
     End Sub
 
-
-    'Dim fs As FileStream = New FileStream("D:\cur.cur", FileMode.Create)
-    'Dim EO As New EOIcoCurWriter(fs, 8, EOIcoCurWriter.IcoCurType.Cursor)
-
-    'For i As Single = 1 To 4 Step 0.5
-    'EO.WriteBitmap(Draw(i), Nothing, New Point(5 * i - 0.5 * i, 10 * i - 0.5 * i)) 'New Point(1, 1)
-    'Next
-
-    'fs.Close()
-
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        SaveToCP(MainFrm.CP)
+        Me.Close()
+    End Sub
 End Class

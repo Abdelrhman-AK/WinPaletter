@@ -99,23 +99,23 @@ Partial Class CursorsStudio
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.CursorControl1 = New WinPaletter.CursorControl()
-        Me.CursorControl2 = New WinPaletter.CursorControl()
-        Me.CursorControl3 = New WinPaletter.CursorControl()
-        Me.CursorControl4 = New WinPaletter.CursorControl()
-        Me.CursorControl5 = New WinPaletter.CursorControl()
-        Me.CursorControl6 = New WinPaletter.CursorControl()
-        Me.CursorControl7 = New WinPaletter.CursorControl()
-        Me.CursorControl8 = New WinPaletter.CursorControl()
-        Me.CursorControl9 = New WinPaletter.CursorControl()
-        Me.CursorControl10 = New WinPaletter.CursorControl()
-        Me.CursorControl11 = New WinPaletter.CursorControl()
-        Me.CursorControl12 = New WinPaletter.CursorControl()
-        Me.CursorControl13 = New WinPaletter.CursorControl()
-        Me.CursorControl14 = New WinPaletter.CursorControl()
-        Me.CursorControl15 = New WinPaletter.CursorControl()
-        Me.CursorControl16 = New WinPaletter.CursorControl()
-        Me.CursorControl17 = New WinPaletter.CursorControl()
+        Me.Arrow = New WinPaletter.CursorControl()
+        Me.Help = New WinPaletter.CursorControl()
+        Me.AppLoading = New WinPaletter.CursorControl()
+        Me.Busy = New WinPaletter.CursorControl()
+        Me.Move = New WinPaletter.CursorControl()
+        Me.Up = New WinPaletter.CursorControl()
+        Me.NS = New WinPaletter.CursorControl()
+        Me.EW = New WinPaletter.CursorControl()
+        Me.NESW = New WinPaletter.CursorControl()
+        Me.NWSE = New WinPaletter.CursorControl()
+        Me.Pen = New WinPaletter.CursorControl()
+        Me.None = New WinPaletter.CursorControl()
+        Me.Link = New WinPaletter.CursorControl()
+        Me.Pin = New WinPaletter.CursorControl()
+        Me.Person = New WinPaletter.CursorControl()
+        Me.IBeam = New WinPaletter.CursorControl()
+        Me.Cross = New WinPaletter.CursorControl()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox13.SuspendLayout()
@@ -1169,605 +1169,605 @@ Partial Class CursorsStudio
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FlowLayoutPanel1.AutoScroll = True
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl1)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl2)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl3)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl4)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl5)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl6)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl7)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl8)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl9)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl10)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl11)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl12)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl13)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl14)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl15)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl16)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CursorControl17)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Arrow)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Help)
+        Me.FlowLayoutPanel1.Controls.Add(Me.AppLoading)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Busy)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Move)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Up)
+        Me.FlowLayoutPanel1.Controls.Add(Me.NS)
+        Me.FlowLayoutPanel1.Controls.Add(Me.EW)
+        Me.FlowLayoutPanel1.Controls.Add(Me.NESW)
+        Me.FlowLayoutPanel1.Controls.Add(Me.NWSE)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Pen)
+        Me.FlowLayoutPanel1.Controls.Add(Me.None)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Link)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Pin)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Person)
+        Me.FlowLayoutPanel1.Controls.Add(Me.IBeam)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Cross)
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 41)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(302, 421)
         Me.FlowLayoutPanel1.TabIndex = 6
         '
-        'CursorControl1
+        'Arrow
         '
-        Me.CursorControl1.Location = New System.Drawing.Point(3, 3)
-        Me.CursorControl1.Name = "CursorControl1"
-        Me.CursorControl1.Prop_Cursor = WinPaletter.Paths.CursorType.Arrow
-        Me.CursorControl1.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl1.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl1.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl1.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl1.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl1.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl1.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl1.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl1.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl1.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl1.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl1.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl1.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl1.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl1.Prop_PrimaryColorGradient = False
-        Me.CursorControl1.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl1.Prop_PrimaryNoise = False
-        Me.CursorControl1.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl1.Prop_Scale = 1.0!
-        Me.CursorControl1.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl1.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl1.Prop_SecondaryColorGradient = False
-        Me.CursorControl1.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl1.Prop_SecondaryNoise = False
-        Me.CursorControl1.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl1.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl1.TabIndex = 5
-        Me.CursorControl1.Text = "CursorControl1"
+        Me.Arrow.Location = New System.Drawing.Point(3, 3)
+        Me.Arrow.Name = "Arrow"
+        Me.Arrow.Prop_Cursor = WinPaletter.Paths.CursorType.Arrow
+        Me.Arrow.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleBackGradient = False
+        Me.Arrow.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_LoadingCircleBackNoise = False
+        Me.Arrow.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Arrow.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleHotGradient = False
+        Me.Arrow.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_LoadingCircleHotNoise = False
+        Me.Arrow.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Arrow.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Arrow.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Arrow.Prop_PrimaryColorGradient = False
+        Me.Arrow.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_PrimaryNoise = False
+        Me.Arrow.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Arrow.Prop_Scale = 1.0!
+        Me.Arrow.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Arrow.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Arrow.Prop_SecondaryColorGradient = False
+        Me.Arrow.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_SecondaryNoise = False
+        Me.Arrow.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Arrow.Size = New System.Drawing.Size(64, 64)
+        Me.Arrow.TabIndex = 5
+        Me.Arrow.Text = "CursorControl1"
         '
-        'CursorControl2
+        'Help
         '
-        Me.CursorControl2.Location = New System.Drawing.Point(73, 3)
-        Me.CursorControl2.Name = "CursorControl2"
-        Me.CursorControl2.Prop_Cursor = WinPaletter.Paths.CursorType.Help
-        Me.CursorControl2.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl2.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl2.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl2.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl2.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl2.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl2.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl2.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl2.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl2.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl2.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl2.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl2.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl2.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl2.Prop_PrimaryColorGradient = False
-        Me.CursorControl2.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl2.Prop_PrimaryNoise = False
-        Me.CursorControl2.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl2.Prop_Scale = 1.0!
-        Me.CursorControl2.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl2.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl2.Prop_SecondaryColorGradient = False
-        Me.CursorControl2.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl2.Prop_SecondaryNoise = False
-        Me.CursorControl2.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl2.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl2.TabIndex = 6
-        Me.CursorControl2.Text = "CursorControl2"
+        Me.Help.Location = New System.Drawing.Point(73, 3)
+        Me.Help.Name = "Help"
+        Me.Help.Prop_Cursor = WinPaletter.Paths.CursorType.Help
+        Me.Help.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Help.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Help.Prop_LoadingCircleBackGradient = False
+        Me.Help.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_LoadingCircleBackNoise = False
+        Me.Help.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Help.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Help.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Help.Prop_LoadingCircleHotGradient = False
+        Me.Help.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_LoadingCircleHotNoise = False
+        Me.Help.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Help.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Help.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Help.Prop_PrimaryColorGradient = False
+        Me.Help.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_PrimaryNoise = False
+        Me.Help.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Help.Prop_Scale = 1.0!
+        Me.Help.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Help.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Help.Prop_SecondaryColorGradient = False
+        Me.Help.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_SecondaryNoise = False
+        Me.Help.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Help.Size = New System.Drawing.Size(64, 64)
+        Me.Help.TabIndex = 6
+        Me.Help.Text = "CursorControl2"
         '
-        'CursorControl3
+        'AppLoading
         '
-        Me.CursorControl3.Location = New System.Drawing.Point(143, 3)
-        Me.CursorControl3.Name = "CursorControl3"
-        Me.CursorControl3.Prop_Cursor = WinPaletter.Paths.CursorType.AppLoading
-        Me.CursorControl3.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl3.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl3.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl3.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl3.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl3.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl3.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl3.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl3.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl3.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl3.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl3.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl3.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl3.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl3.Prop_PrimaryColorGradient = False
-        Me.CursorControl3.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl3.Prop_PrimaryNoise = False
-        Me.CursorControl3.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl3.Prop_Scale = 1.0!
-        Me.CursorControl3.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl3.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl3.Prop_SecondaryColorGradient = False
-        Me.CursorControl3.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl3.Prop_SecondaryNoise = False
-        Me.CursorControl3.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl3.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl3.TabIndex = 6
-        Me.CursorControl3.Text = "CursorControl3"
+        Me.AppLoading.Location = New System.Drawing.Point(143, 3)
+        Me.AppLoading.Name = "AppLoading"
+        Me.AppLoading.Prop_Cursor = WinPaletter.Paths.CursorType.AppLoading
+        Me.AppLoading.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleBackGradient = False
+        Me.AppLoading.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_LoadingCircleBackNoise = False
+        Me.AppLoading.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleHotGradient = False
+        Me.AppLoading.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_LoadingCircleHotNoise = False
+        Me.AppLoading.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.AppLoading.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.AppLoading.Prop_PrimaryColorGradient = False
+        Me.AppLoading.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_PrimaryNoise = False
+        Me.AppLoading.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_Scale = 1.0!
+        Me.AppLoading.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.AppLoading.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.AppLoading.Prop_SecondaryColorGradient = False
+        Me.AppLoading.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_SecondaryNoise = False
+        Me.AppLoading.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.AppLoading.Size = New System.Drawing.Size(64, 64)
+        Me.AppLoading.TabIndex = 6
+        Me.AppLoading.Text = "CursorControl3"
         '
-        'CursorControl4
+        'Busy
         '
-        Me.CursorControl4.Location = New System.Drawing.Point(213, 3)
-        Me.CursorControl4.Name = "CursorControl4"
-        Me.CursorControl4.Prop_Cursor = WinPaletter.Paths.CursorType.Busy
-        Me.CursorControl4.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl4.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl4.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl4.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl4.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl4.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl4.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl4.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl4.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl4.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl4.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl4.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl4.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl4.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl4.Prop_PrimaryColorGradient = False
-        Me.CursorControl4.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl4.Prop_PrimaryNoise = False
-        Me.CursorControl4.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl4.Prop_Scale = 1.0!
-        Me.CursorControl4.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl4.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl4.Prop_SecondaryColorGradient = False
-        Me.CursorControl4.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
-        Me.CursorControl4.Prop_SecondaryNoise = False
-        Me.CursorControl4.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl4.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl4.TabIndex = 7
-        Me.CursorControl4.Text = "CursorControl4"
+        Me.Busy.Location = New System.Drawing.Point(213, 3)
+        Me.Busy.Name = "Busy"
+        Me.Busy.Prop_Cursor = WinPaletter.Paths.CursorType.Busy
+        Me.Busy.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleBackGradient = False
+        Me.Busy.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_LoadingCircleBackNoise = False
+        Me.Busy.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Busy.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleHotGradient = False
+        Me.Busy.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_LoadingCircleHotNoise = False
+        Me.Busy.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Busy.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Busy.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Busy.Prop_PrimaryColorGradient = False
+        Me.Busy.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_PrimaryNoise = False
+        Me.Busy.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Busy.Prop_Scale = 1.0!
+        Me.Busy.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Busy.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Busy.Prop_SecondaryColorGradient = False
+        Me.Busy.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_SecondaryNoise = False
+        Me.Busy.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Busy.Size = New System.Drawing.Size(64, 64)
+        Me.Busy.TabIndex = 7
+        Me.Busy.Text = "CursorControl4"
         '
-        'CursorControl5
+        'Move
         '
-        Me.CursorControl5.Location = New System.Drawing.Point(3, 73)
-        Me.CursorControl5.Name = "CursorControl5"
-        Me.CursorControl5.Prop_Cursor = WinPaletter.Paths.CursorType.Move
-        Me.CursorControl5.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl5.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl5.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl5.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl5.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl5.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl5.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl5.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl5.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl5.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl5.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl5.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl5.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl5.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl5.Prop_PrimaryColorGradient = False
-        Me.CursorControl5.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl5.Prop_PrimaryNoise = False
-        Me.CursorControl5.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl5.Prop_Scale = 1.0!
-        Me.CursorControl5.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl5.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl5.Prop_SecondaryColorGradient = False
-        Me.CursorControl5.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl5.Prop_SecondaryNoise = False
-        Me.CursorControl5.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl5.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl5.TabIndex = 8
-        Me.CursorControl5.Text = "CursorControl5"
+        Me.Move.Location = New System.Drawing.Point(3, 73)
+        Me.Move.Name = "Move"
+        Me.Move.Prop_Cursor = WinPaletter.Paths.CursorType.Move
+        Me.Move.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move.Prop_LoadingCircleBackGradient = False
+        Me.Move.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move.Prop_LoadingCircleBackNoise = False
+        Me.Move.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Move.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move.Prop_LoadingCircleHotGradient = False
+        Me.Move.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move.Prop_LoadingCircleHotNoise = False
+        Me.Move.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Move.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Move.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Move.Prop_PrimaryColorGradient = False
+        Me.Move.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move.Prop_PrimaryNoise = False
+        Me.Move.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Move.Prop_Scale = 1.0!
+        Me.Move.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move.Prop_SecondaryColorGradient = False
+        Me.Move.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move.Prop_SecondaryNoise = False
+        Me.Move.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Move.Size = New System.Drawing.Size(64, 64)
+        Me.Move.TabIndex = 8
+        Me.Move.Text = "CursorControl5"
         '
-        'CursorControl6
+        'Up
         '
-        Me.CursorControl6.Location = New System.Drawing.Point(73, 73)
-        Me.CursorControl6.Name = "CursorControl6"
-        Me.CursorControl6.Prop_Cursor = WinPaletter.Paths.CursorType.Up
-        Me.CursorControl6.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl6.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl6.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl6.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl6.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl6.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl6.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl6.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl6.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl6.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl6.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl6.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl6.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl6.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl6.Prop_PrimaryColorGradient = False
-        Me.CursorControl6.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl6.Prop_PrimaryNoise = False
-        Me.CursorControl6.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl6.Prop_Scale = 1.0!
-        Me.CursorControl6.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl6.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl6.Prop_SecondaryColorGradient = False
-        Me.CursorControl6.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl6.Prop_SecondaryNoise = False
-        Me.CursorControl6.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl6.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl6.TabIndex = 9
-        Me.CursorControl6.Text = "CursorControl6"
+        Me.Up.Location = New System.Drawing.Point(73, 73)
+        Me.Up.Name = "Up"
+        Me.Up.Prop_Cursor = WinPaletter.Paths.CursorType.Up
+        Me.Up.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Up.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Up.Prop_LoadingCircleBackGradient = False
+        Me.Up.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_LoadingCircleBackNoise = False
+        Me.Up.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Up.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Up.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Up.Prop_LoadingCircleHotGradient = False
+        Me.Up.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_LoadingCircleHotNoise = False
+        Me.Up.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Up.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Up.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Up.Prop_PrimaryColorGradient = False
+        Me.Up.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_PrimaryNoise = False
+        Me.Up.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Up.Prop_Scale = 1.0!
+        Me.Up.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Up.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Up.Prop_SecondaryColorGradient = False
+        Me.Up.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_SecondaryNoise = False
+        Me.Up.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Up.Size = New System.Drawing.Size(64, 64)
+        Me.Up.TabIndex = 9
+        Me.Up.Text = "CursorControl6"
         '
-        'CursorControl7
+        'NS
         '
-        Me.CursorControl7.Location = New System.Drawing.Point(143, 73)
-        Me.CursorControl7.Name = "CursorControl7"
-        Me.CursorControl7.Prop_Cursor = WinPaletter.Paths.CursorType.NS
-        Me.CursorControl7.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl7.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl7.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl7.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl7.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl7.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl7.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl7.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl7.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl7.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl7.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl7.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl7.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl7.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl7.Prop_PrimaryColorGradient = False
-        Me.CursorControl7.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl7.Prop_PrimaryNoise = False
-        Me.CursorControl7.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl7.Prop_Scale = 1.0!
-        Me.CursorControl7.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl7.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl7.Prop_SecondaryColorGradient = False
-        Me.CursorControl7.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl7.Prop_SecondaryNoise = False
-        Me.CursorControl7.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl7.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl7.TabIndex = 10
-        Me.CursorControl7.Text = "CursorControl7"
+        Me.NS.Location = New System.Drawing.Point(143, 73)
+        Me.NS.Name = "NS"
+        Me.NS.Prop_Cursor = WinPaletter.Paths.CursorType.NS
+        Me.NS.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NS.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NS.Prop_LoadingCircleBackGradient = False
+        Me.NS.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_LoadingCircleBackNoise = False
+        Me.NS.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NS.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NS.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NS.Prop_LoadingCircleHotGradient = False
+        Me.NS.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_LoadingCircleHotNoise = False
+        Me.NS.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NS.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NS.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NS.Prop_PrimaryColorGradient = False
+        Me.NS.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_PrimaryNoise = False
+        Me.NS.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NS.Prop_Scale = 1.0!
+        Me.NS.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NS.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NS.Prop_SecondaryColorGradient = False
+        Me.NS.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_SecondaryNoise = False
+        Me.NS.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NS.Size = New System.Drawing.Size(64, 64)
+        Me.NS.TabIndex = 10
+        Me.NS.Text = "CursorControl7"
         '
-        'CursorControl8
+        'EW
         '
-        Me.CursorControl8.Location = New System.Drawing.Point(213, 73)
-        Me.CursorControl8.Name = "CursorControl8"
-        Me.CursorControl8.Prop_Cursor = WinPaletter.Paths.CursorType.EW
-        Me.CursorControl8.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl8.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl8.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl8.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl8.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl8.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl8.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl8.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl8.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl8.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl8.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl8.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl8.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl8.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl8.Prop_PrimaryColorGradient = False
-        Me.CursorControl8.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl8.Prop_PrimaryNoise = False
-        Me.CursorControl8.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl8.Prop_Scale = 1.0!
-        Me.CursorControl8.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl8.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl8.Prop_SecondaryColorGradient = False
-        Me.CursorControl8.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl8.Prop_SecondaryNoise = False
-        Me.CursorControl8.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl8.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl8.TabIndex = 11
-        Me.CursorControl8.Text = "CursorControl8"
+        Me.EW.Location = New System.Drawing.Point(213, 73)
+        Me.EW.Name = "EW"
+        Me.EW.Prop_Cursor = WinPaletter.Paths.CursorType.EW
+        Me.EW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.EW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.EW.Prop_LoadingCircleBackGradient = False
+        Me.EW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_LoadingCircleBackNoise = False
+        Me.EW.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.EW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.EW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.EW.Prop_LoadingCircleHotGradient = False
+        Me.EW.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_LoadingCircleHotNoise = False
+        Me.EW.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.EW.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.EW.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.EW.Prop_PrimaryColorGradient = False
+        Me.EW.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_PrimaryNoise = False
+        Me.EW.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.EW.Prop_Scale = 1.0!
+        Me.EW.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.EW.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.EW.Prop_SecondaryColorGradient = False
+        Me.EW.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_SecondaryNoise = False
+        Me.EW.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.EW.Size = New System.Drawing.Size(64, 64)
+        Me.EW.TabIndex = 11
+        Me.EW.Text = "CursorControl8"
         '
-        'CursorControl9
+        'NESW
         '
-        Me.CursorControl9.Location = New System.Drawing.Point(3, 143)
-        Me.CursorControl9.Name = "CursorControl9"
-        Me.CursorControl9.Prop_Cursor = WinPaletter.Paths.CursorType.NESW
-        Me.CursorControl9.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl9.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl9.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl9.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl9.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl9.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl9.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl9.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl9.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl9.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl9.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl9.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl9.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl9.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl9.Prop_PrimaryColorGradient = False
-        Me.CursorControl9.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl9.Prop_PrimaryNoise = False
-        Me.CursorControl9.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl9.Prop_Scale = 1.0!
-        Me.CursorControl9.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl9.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl9.Prop_SecondaryColorGradient = False
-        Me.CursorControl9.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl9.Prop_SecondaryNoise = False
-        Me.CursorControl9.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl9.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl9.TabIndex = 12
-        Me.CursorControl9.Text = "CursorControl9"
+        Me.NESW.Location = New System.Drawing.Point(3, 143)
+        Me.NESW.Name = "NESW"
+        Me.NESW.Prop_Cursor = WinPaletter.Paths.CursorType.NESW
+        Me.NESW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleBackGradient = False
+        Me.NESW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_LoadingCircleBackNoise = False
+        Me.NESW.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NESW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleHotGradient = False
+        Me.NESW.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_LoadingCircleHotNoise = False
+        Me.NESW.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NESW.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NESW.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NESW.Prop_PrimaryColorGradient = False
+        Me.NESW.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_PrimaryNoise = False
+        Me.NESW.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NESW.Prop_Scale = 1.0!
+        Me.NESW.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NESW.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NESW.Prop_SecondaryColorGradient = False
+        Me.NESW.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_SecondaryNoise = False
+        Me.NESW.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NESW.Size = New System.Drawing.Size(64, 64)
+        Me.NESW.TabIndex = 12
+        Me.NESW.Text = "CursorControl9"
         '
-        'CursorControl10
+        'NWSE
         '
-        Me.CursorControl10.Location = New System.Drawing.Point(73, 143)
-        Me.CursorControl10.Name = "CursorControl10"
-        Me.CursorControl10.Prop_Cursor = WinPaletter.Paths.CursorType.NWSE
-        Me.CursorControl10.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl10.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl10.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl10.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl10.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl10.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl10.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl10.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl10.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl10.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl10.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl10.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl10.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl10.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl10.Prop_PrimaryColorGradient = False
-        Me.CursorControl10.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl10.Prop_PrimaryNoise = False
-        Me.CursorControl10.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl10.Prop_Scale = 1.0!
-        Me.CursorControl10.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl10.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl10.Prop_SecondaryColorGradient = False
-        Me.CursorControl10.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl10.Prop_SecondaryNoise = False
-        Me.CursorControl10.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl10.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl10.TabIndex = 13
-        Me.CursorControl10.Text = "CursorControl10"
+        Me.NWSE.Location = New System.Drawing.Point(73, 143)
+        Me.NWSE.Name = "NWSE"
+        Me.NWSE.Prop_Cursor = WinPaletter.Paths.CursorType.NWSE
+        Me.NWSE.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleBackGradient = False
+        Me.NWSE.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_LoadingCircleBackNoise = False
+        Me.NWSE.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NWSE.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleHotGradient = False
+        Me.NWSE.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_LoadingCircleHotNoise = False
+        Me.NWSE.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NWSE.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NWSE.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NWSE.Prop_PrimaryColorGradient = False
+        Me.NWSE.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_PrimaryNoise = False
+        Me.NWSE.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NWSE.Prop_Scale = 1.0!
+        Me.NWSE.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NWSE.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NWSE.Prop_SecondaryColorGradient = False
+        Me.NWSE.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_SecondaryNoise = False
+        Me.NWSE.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NWSE.Size = New System.Drawing.Size(64, 64)
+        Me.NWSE.TabIndex = 13
+        Me.NWSE.Text = "CursorControl10"
         '
-        'CursorControl11
+        'Pen
         '
-        Me.CursorControl11.Location = New System.Drawing.Point(143, 143)
-        Me.CursorControl11.Name = "CursorControl11"
-        Me.CursorControl11.Prop_Cursor = WinPaletter.Paths.CursorType.Pen
-        Me.CursorControl11.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl11.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl11.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl11.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl11.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl11.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl11.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl11.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl11.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl11.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl11.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl11.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl11.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl11.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl11.Prop_PrimaryColorGradient = False
-        Me.CursorControl11.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl11.Prop_PrimaryNoise = False
-        Me.CursorControl11.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl11.Prop_Scale = 1.0!
-        Me.CursorControl11.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl11.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl11.Prop_SecondaryColorGradient = False
-        Me.CursorControl11.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl11.Prop_SecondaryNoise = False
-        Me.CursorControl11.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl11.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl11.TabIndex = 14
-        Me.CursorControl11.Text = "CursorControl11"
+        Me.Pen.Location = New System.Drawing.Point(143, 143)
+        Me.Pen.Name = "Pen"
+        Me.Pen.Prop_Cursor = WinPaletter.Paths.CursorType.Pen
+        Me.Pen.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleBackGradient = False
+        Me.Pen.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_LoadingCircleBackNoise = False
+        Me.Pen.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Pen.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleHotGradient = False
+        Me.Pen.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_LoadingCircleHotNoise = False
+        Me.Pen.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Pen.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Pen.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Pen.Prop_PrimaryColorGradient = False
+        Me.Pen.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_PrimaryNoise = False
+        Me.Pen.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Pen.Prop_Scale = 1.0!
+        Me.Pen.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pen.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pen.Prop_SecondaryColorGradient = False
+        Me.Pen.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_SecondaryNoise = False
+        Me.Pen.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Pen.Size = New System.Drawing.Size(64, 64)
+        Me.Pen.TabIndex = 14
+        Me.Pen.Text = "CursorControl11"
         '
-        'CursorControl12
+        'None
         '
-        Me.CursorControl12.Location = New System.Drawing.Point(213, 143)
-        Me.CursorControl12.Name = "CursorControl12"
-        Me.CursorControl12.Prop_Cursor = WinPaletter.Paths.CursorType.None
-        Me.CursorControl12.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl12.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl12.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl12.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl12.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl12.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl12.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl12.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl12.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl12.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl12.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl12.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl12.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl12.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl12.Prop_PrimaryColorGradient = False
-        Me.CursorControl12.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl12.Prop_PrimaryNoise = False
-        Me.CursorControl12.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl12.Prop_Scale = 1.0!
-        Me.CursorControl12.Prop_SecondaryColor1 = System.Drawing.Color.Red
-        Me.CursorControl12.Prop_SecondaryColor2 = System.Drawing.Color.Red
-        Me.CursorControl12.Prop_SecondaryColorGradient = False
-        Me.CursorControl12.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl12.Prop_SecondaryNoise = False
-        Me.CursorControl12.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl12.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl12.TabIndex = 15
-        Me.CursorControl12.Text = "CursorControl12"
+        Me.None.Location = New System.Drawing.Point(213, 143)
+        Me.None.Name = "None"
+        Me.None.Prop_Cursor = WinPaletter.Paths.CursorType.None
+        Me.None.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.None.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.None.Prop_LoadingCircleBackGradient = False
+        Me.None.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_LoadingCircleBackNoise = False
+        Me.None.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.None.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.None.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.None.Prop_LoadingCircleHotGradient = False
+        Me.None.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_LoadingCircleHotNoise = False
+        Me.None.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.None.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.None.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.None.Prop_PrimaryColorGradient = False
+        Me.None.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_PrimaryNoise = False
+        Me.None.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.None.Prop_Scale = 1.0!
+        Me.None.Prop_SecondaryColor1 = System.Drawing.Color.Red
+        Me.None.Prop_SecondaryColor2 = System.Drawing.Color.Red
+        Me.None.Prop_SecondaryColorGradient = False
+        Me.None.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_SecondaryNoise = False
+        Me.None.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.None.Size = New System.Drawing.Size(64, 64)
+        Me.None.TabIndex = 15
+        Me.None.Text = "CursorControl12"
         '
-        'CursorControl13
+        'Link
         '
-        Me.CursorControl13.Location = New System.Drawing.Point(3, 213)
-        Me.CursorControl13.Name = "CursorControl13"
-        Me.CursorControl13.Prop_Cursor = WinPaletter.Paths.CursorType.Link
-        Me.CursorControl13.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl13.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl13.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl13.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl13.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl13.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl13.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl13.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl13.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl13.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl13.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl13.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl13.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl13.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl13.Prop_PrimaryColorGradient = False
-        Me.CursorControl13.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl13.Prop_PrimaryNoise = False
-        Me.CursorControl13.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl13.Prop_Scale = 1.0!
-        Me.CursorControl13.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl13.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl13.Prop_SecondaryColorGradient = False
-        Me.CursorControl13.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl13.Prop_SecondaryNoise = False
-        Me.CursorControl13.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl13.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl13.TabIndex = 16
-        Me.CursorControl13.Text = "CursorControl13"
+        Me.Link.Location = New System.Drawing.Point(3, 213)
+        Me.Link.Name = "Link"
+        Me.Link.Prop_Cursor = WinPaletter.Paths.CursorType.Link
+        Me.Link.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Link.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Link.Prop_LoadingCircleBackGradient = False
+        Me.Link.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_LoadingCircleBackNoise = False
+        Me.Link.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Link.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Link.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Link.Prop_LoadingCircleHotGradient = False
+        Me.Link.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_LoadingCircleHotNoise = False
+        Me.Link.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Link.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Link.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Link.Prop_PrimaryColorGradient = False
+        Me.Link.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_PrimaryNoise = False
+        Me.Link.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Link.Prop_Scale = 1.0!
+        Me.Link.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Link.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Link.Prop_SecondaryColorGradient = False
+        Me.Link.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_SecondaryNoise = False
+        Me.Link.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Link.Size = New System.Drawing.Size(64, 64)
+        Me.Link.TabIndex = 16
+        Me.Link.Text = "CursorControl13"
         '
-        'CursorControl14
+        'Pin
         '
-        Me.CursorControl14.Location = New System.Drawing.Point(73, 213)
-        Me.CursorControl14.Name = "CursorControl14"
-        Me.CursorControl14.Prop_Cursor = WinPaletter.Paths.CursorType.Pin
-        Me.CursorControl14.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl14.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl14.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl14.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl14.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl14.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl14.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl14.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl14.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl14.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl14.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl14.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl14.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl14.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl14.Prop_PrimaryColorGradient = False
-        Me.CursorControl14.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl14.Prop_PrimaryNoise = False
-        Me.CursorControl14.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl14.Prop_Scale = 1.0!
-        Me.CursorControl14.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl14.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl14.Prop_SecondaryColorGradient = False
-        Me.CursorControl14.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl14.Prop_SecondaryNoise = False
-        Me.CursorControl14.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl14.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl14.TabIndex = 17
-        Me.CursorControl14.Text = "CursorControl14"
+        Me.Pin.Location = New System.Drawing.Point(73, 213)
+        Me.Pin.Name = "Pin"
+        Me.Pin.Prop_Cursor = WinPaletter.Paths.CursorType.Pin
+        Me.Pin.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleBackGradient = False
+        Me.Pin.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_LoadingCircleBackNoise = False
+        Me.Pin.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Pin.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleHotGradient = False
+        Me.Pin.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_LoadingCircleHotNoise = False
+        Me.Pin.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Pin.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Pin.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Pin.Prop_PrimaryColorGradient = False
+        Me.Pin.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_PrimaryNoise = False
+        Me.Pin.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Pin.Prop_Scale = 1.0!
+        Me.Pin.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pin.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pin.Prop_SecondaryColorGradient = False
+        Me.Pin.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_SecondaryNoise = False
+        Me.Pin.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Pin.Size = New System.Drawing.Size(64, 64)
+        Me.Pin.TabIndex = 17
+        Me.Pin.Text = "CursorControl14"
         '
-        'CursorControl15
+        'Person
         '
-        Me.CursorControl15.Location = New System.Drawing.Point(143, 213)
-        Me.CursorControl15.Name = "CursorControl15"
-        Me.CursorControl15.Prop_Cursor = WinPaletter.Paths.CursorType.Person
-        Me.CursorControl15.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl15.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl15.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl15.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl15.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl15.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl15.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl15.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl15.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl15.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl15.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl15.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl15.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl15.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl15.Prop_PrimaryColorGradient = False
-        Me.CursorControl15.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl15.Prop_PrimaryNoise = False
-        Me.CursorControl15.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl15.Prop_Scale = 1.0!
-        Me.CursorControl15.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl15.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl15.Prop_SecondaryColorGradient = False
-        Me.CursorControl15.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl15.Prop_SecondaryNoise = False
-        Me.CursorControl15.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl15.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl15.TabIndex = 18
-        Me.CursorControl15.Text = "CursorControl15"
+        Me.Person.Location = New System.Drawing.Point(143, 213)
+        Me.Person.Name = "Person"
+        Me.Person.Prop_Cursor = WinPaletter.Paths.CursorType.Person
+        Me.Person.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Person.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Person.Prop_LoadingCircleBackGradient = False
+        Me.Person.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_LoadingCircleBackNoise = False
+        Me.Person.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Person.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Person.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Person.Prop_LoadingCircleHotGradient = False
+        Me.Person.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_LoadingCircleHotNoise = False
+        Me.Person.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Person.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Person.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Person.Prop_PrimaryColorGradient = False
+        Me.Person.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_PrimaryNoise = False
+        Me.Person.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Person.Prop_Scale = 1.0!
+        Me.Person.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Person.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Person.Prop_SecondaryColorGradient = False
+        Me.Person.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_SecondaryNoise = False
+        Me.Person.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Person.Size = New System.Drawing.Size(64, 64)
+        Me.Person.TabIndex = 18
+        Me.Person.Text = "CursorControl15"
         '
-        'CursorControl16
+        'IBeam
         '
-        Me.CursorControl16.Location = New System.Drawing.Point(213, 213)
-        Me.CursorControl16.Name = "CursorControl16"
-        Me.CursorControl16.Prop_Cursor = WinPaletter.Paths.CursorType.IBeam
-        Me.CursorControl16.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl16.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl16.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl16.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl16.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl16.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl16.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl16.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl16.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl16.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl16.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl16.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl16.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl16.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl16.Prop_PrimaryColorGradient = False
-        Me.CursorControl16.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl16.Prop_PrimaryNoise = False
-        Me.CursorControl16.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl16.Prop_Scale = 1.0!
-        Me.CursorControl16.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl16.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl16.Prop_SecondaryColorGradient = False
-        Me.CursorControl16.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl16.Prop_SecondaryNoise = False
-        Me.CursorControl16.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl16.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl16.TabIndex = 19
-        Me.CursorControl16.Text = "CursorControl16"
+        Me.IBeam.Location = New System.Drawing.Point(213, 213)
+        Me.IBeam.Name = "IBeam"
+        Me.IBeam.Prop_Cursor = WinPaletter.Paths.CursorType.IBeam
+        Me.IBeam.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleBackGradient = False
+        Me.IBeam.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_LoadingCircleBackNoise = False
+        Me.IBeam.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.IBeam.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleHotGradient = False
+        Me.IBeam.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_LoadingCircleHotNoise = False
+        Me.IBeam.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.IBeam.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.IBeam.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.IBeam.Prop_PrimaryColorGradient = False
+        Me.IBeam.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_PrimaryNoise = False
+        Me.IBeam.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.IBeam.Prop_Scale = 1.0!
+        Me.IBeam.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.IBeam.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.IBeam.Prop_SecondaryColorGradient = False
+        Me.IBeam.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_SecondaryNoise = False
+        Me.IBeam.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.IBeam.Size = New System.Drawing.Size(64, 64)
+        Me.IBeam.TabIndex = 19
+        Me.IBeam.Text = "CursorControl16"
         '
-        'CursorControl17
+        'Cross
         '
-        Me.CursorControl17.Location = New System.Drawing.Point(3, 283)
-        Me.CursorControl17.Name = "CursorControl17"
-        Me.CursorControl17.Prop_Cursor = WinPaletter.Paths.CursorType.Cross
-        Me.CursorControl17.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl17.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CursorControl17.Prop_LoadingCircleBackGradient = False
-        Me.CursorControl17.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl17.Prop_LoadingCircleBackNoise = False
-        Me.CursorControl17.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.CursorControl17.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl17.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CursorControl17.Prop_LoadingCircleHotGradient = False
-        Me.CursorControl17.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl17.Prop_LoadingCircleHotNoise = False
-        Me.CursorControl17.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.CursorControl17.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.CursorControl17.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.CursorControl17.Prop_PrimaryColorGradient = False
-        Me.CursorControl17.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl17.Prop_PrimaryNoise = False
-        Me.CursorControl17.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.CursorControl17.Prop_Scale = 1.0!
-        Me.CursorControl17.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl17.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.CursorControl17.Prop_SecondaryColorGradient = False
-        Me.CursorControl17.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.CursorControl17.Prop_SecondaryNoise = False
-        Me.CursorControl17.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.CursorControl17.Size = New System.Drawing.Size(64, 64)
-        Me.CursorControl17.TabIndex = 20
-        Me.CursorControl17.Text = "CursorControl17"
+        Me.Cross.Location = New System.Drawing.Point(3, 283)
+        Me.Cross.Name = "Cross"
+        Me.Cross.Prop_Cursor = WinPaletter.Paths.CursorType.Cross
+        Me.Cross.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleBackGradient = False
+        Me.Cross.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_LoadingCircleBackNoise = False
+        Me.Cross.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Cross.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleHotGradient = False
+        Me.Cross.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_LoadingCircleHotNoise = False
+        Me.Cross.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Cross.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Cross.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Cross.Prop_PrimaryColorGradient = False
+        Me.Cross.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_PrimaryNoise = False
+        Me.Cross.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Cross.Prop_Scale = 1.0!
+        Me.Cross.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Cross.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Cross.Prop_SecondaryColorGradient = False
+        Me.Cross.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_SecondaryNoise = False
+        Me.Cross.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Cross.Size = New System.Drawing.Size(64, 64)
+        Me.Cross.TabIndex = 20
+        Me.Cross.Text = "CursorControl17"
         '
         'XenonButton1
         '
@@ -1846,24 +1846,24 @@ Partial Class CursorsStudio
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents CursorControl1 As CursorControl
+    Friend WithEvents Arrow As CursorControl
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-    Friend WithEvents CursorControl2 As CursorControl
-    Friend WithEvents CursorControl3 As CursorControl
-    Friend WithEvents CursorControl4 As CursorControl
-    Friend WithEvents CursorControl5 As CursorControl
-    Friend WithEvents CursorControl6 As CursorControl
-    Friend WithEvents CursorControl7 As CursorControl
-    Friend WithEvents CursorControl8 As CursorControl
-    Friend WithEvents CursorControl9 As CursorControl
-    Friend WithEvents CursorControl10 As CursorControl
-    Friend WithEvents CursorControl11 As CursorControl
-    Friend WithEvents CursorControl12 As CursorControl
-    Friend WithEvents CursorControl13 As CursorControl
-    Friend WithEvents CursorControl14 As CursorControl
-    Friend WithEvents CursorControl15 As CursorControl
-    Friend WithEvents CursorControl16 As CursorControl
-    Friend WithEvents CursorControl17 As CursorControl
+    Friend WithEvents Help As CursorControl
+    Friend WithEvents AppLoading As CursorControl
+    Friend WithEvents Busy As CursorControl
+    Friend WithEvents Move As CursorControl
+    Friend WithEvents Up As CursorControl
+    Friend WithEvents NS As CursorControl
+    Friend WithEvents EW As CursorControl
+    Friend WithEvents NESW As CursorControl
+    Friend WithEvents NWSE As CursorControl
+    Friend WithEvents Pen As CursorControl
+    Friend WithEvents None As CursorControl
+    Friend WithEvents Link As CursorControl
+    Friend WithEvents Pin As CursorControl
+    Friend WithEvents Person As CursorControl
+    Friend WithEvents IBeam As CursorControl
+    Friend WithEvents Cross As CursorControl
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label

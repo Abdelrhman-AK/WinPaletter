@@ -12,6 +12,7 @@ Public Class CP
     End Function
 
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+
 #Region "General Info"
     Public Property AppVersion As String
     Public Property PaletteName As String
@@ -345,17 +346,25 @@ Public Class CP
         Init
         File
     End Enum
-
+    Enum SavingMode
+        Registry
+        File
+    End Enum
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "")
         Select Case [Mode]
             Case Mode.Registry
+#Region "Registry"
                 Dim Colors As New List(Of Color)
                 Colors.Clear()
 
+#Region "Personal Info"
                 Author = Environment.UserName
                 AppVersion = My.Application.Info.Version.ToString
                 PaletteVersion = "1.0"
                 PaletteName = My.Application.LanguageHelper.CurrentMode
+#End Region
+
+#Region "Modern Windows"
 
                 Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
                 Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
@@ -393,6 +402,7 @@ Public Class CP
                 Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
                 ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", False)
                 ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", False)
+#End Region
 
 #Region "LogonUI"
                 With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0")
@@ -543,269 +553,355 @@ Public Class CP
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 Cursor_Enabled = rMain.GetValue("", False)
+                Dim r As RegistryKey = rMain
 
-                Dim r As RegistryKey
+                r = rMain.CreateSubKey("Arrow")
+                r = rMain.CreateSubKey("Help")
+                r = rMain.CreateSubKey("AppLoading")
+                r = rMain.CreateSubKey("Busy")
+                r = rMain.CreateSubKey("Move")
+                r = rMain.CreateSubKey("NS")
+                r = rMain.CreateSubKey("EW")
+                r = rMain.CreateSubKey("NESW")
+                r = rMain.CreateSubKey("NWSE")
+                r = rMain.CreateSubKey("Up")
+                r = rMain.CreateSubKey("Pen")
+                r = rMain.CreateSubKey("None")
+                r = rMain.CreateSubKey("Link")
+                r = rMain.CreateSubKey("Pin")
+                r = rMain.CreateSubKey("Person")
+                r = rMain.CreateSubKey("Cross")
 
-                r = rMain.OpenSubKey("Arrow")
 #Region "Arrow"
-                Cursor_Arrow_PrimaryColor1 = Color.White
-                Cursor_Arrow_PrimaryColor2 = Color.White
-                Cursor_Arrow_PrimaryColorGradient = False
-                Cursor_Arrow_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Arrow_PrimaryColorNoise = False
-                Cursor_Arrow_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Arrow_SecondaryColorGradient = False
-                Cursor_Arrow_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Arrow_SecondaryColorNoise = False
-                Cursor_Arrow_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Arrow")
+                Cursor_Arrow_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Arrow_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Arrow_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Arrow_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Arrow_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Arrow_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Arrow_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Arrow_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Arrow_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Arrow_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Help"
-                Cursor_Help_PrimaryColor1 = Color.White
-                Cursor_Help_PrimaryColor2 = Color.White
-                Cursor_Help_PrimaryColorGradient = False
-                Cursor_Help_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Help_PrimaryColorNoise = False
-                Cursor_Help_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Help_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Help_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Help_SecondaryColorGradient = False
-                Cursor_Help_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Help_SecondaryColorNoise = False
-                Cursor_Help_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Help")
+                Cursor_Help_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Help_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Help_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Help_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Help_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Help_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Help_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Help_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Help_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Help_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Help_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Help_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "AppLoading"
-                Cursor_AppLoading_PrimaryColor1 = Color.White
-                Cursor_AppLoading_PrimaryColor2 = Color.White
-                Cursor_AppLoading_PrimaryColorGradient = False
-                Cursor_AppLoading_PrimaryColorGradientMode = GradientMode.Circle
-                Cursor_AppLoading_PrimaryColorNoise = False
-                Cursor_AppLoading_PrimaryColorNoiseOpacity = 0.25
-                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_AppLoading_SecondaryColorGradient = False
-                Cursor_AppLoading_SecondaryColorGradientMode = GradientMode.Circle
-                Cursor_AppLoading_SecondaryColorNoise = False
-                Cursor_AppLoading_SecondaryColorNoiseOpacity = 0.25
-                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
-                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
-                Cursor_AppLoading_LoadingCircleBackGradient = False
-                Cursor_AppLoading_LoadingCircleBackGradientMode = GradientMode.Circle
-                Cursor_AppLoading_LoadingCircleBackNoise = False
-                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = 0.25
-                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
-                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
-                Cursor_AppLoading_LoadingCircleHotGradient = False
-                Cursor_AppLoading_LoadingCircleHotGradientMode = GradientMode.Circle
-                Cursor_AppLoading_LoadingCircleHotNoise = False
-                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("AppLoading")
+                Cursor_AppLoading_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_AppLoading_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
+                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
+                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
+                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
+
+                Cursor_AppLoading_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_AppLoading_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_AppLoading_LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
+                Cursor_AppLoading_LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
+                Cursor_AppLoading_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_AppLoading_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+                Cursor_AppLoading_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
+                Cursor_AppLoading_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
+
+                Cursor_AppLoading_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
+                Cursor_AppLoading_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Circle"))
+                Cursor_AppLoading_LoadingCircleBackGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
+                Cursor_AppLoading_LoadingCircleHotGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
+
+                Cursor_AppLoading_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_AppLoading_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
+                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
+                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Busy"
-                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
-                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
-                Cursor_Busy_LoadingCircleBackGradient = False
-                Cursor_Busy_LoadingCircleBackGradientMode = GradientMode.Circle
-                Cursor_Busy_LoadingCircleBackNoise = False
-                Cursor_Busy_LoadingCircleBackNoiseOpacity = 0.25
-                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
-                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
-                Cursor_Busy_LoadingCircleHotGradient = False
-                Cursor_Busy_LoadingCircleHotGradientMode = GradientMode.Circle
-                Cursor_Busy_LoadingCircleHotNoise = False
-                Cursor_Busy_LoadingCircleHotNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Busy")
+                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
+                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
+                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
+                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
+
+                Cursor_Busy_LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
+                Cursor_Busy_LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
+                Cursor_Busy_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
+                Cursor_Busy_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
+
+                Cursor_Busy_LoadingCircleBackGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
+                Cursor_Busy_LoadingCircleHotGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
+
+                Cursor_Busy_LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
+                Cursor_Busy_LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Move"
-                Cursor_Move_PrimaryColor1 = Color.White
-                Cursor_Move_PrimaryColor2 = Color.White
-                Cursor_Move_PrimaryColorGradient = False
-                Cursor_Move_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Move_PrimaryColorNoise = False
-                Cursor_Move_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Move_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Move_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Move_SecondaryColorGradient = False
-                Cursor_Move_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Move_SecondaryColorNoise = False
-                Cursor_Move_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Move")
+                Cursor_Move_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Move_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Move_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Move_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Move_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Move_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Move_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Move_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Move_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Move_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Move_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Move_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "NS"
-                Cursor_NS_PrimaryColor1 = Color.White
-                Cursor_NS_PrimaryColor2 = Color.White
-                Cursor_NS_PrimaryColorGradient = False
-                Cursor_NS_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NS_PrimaryColorNoise = False
-                Cursor_NS_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NS_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NS_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NS_SecondaryColorGradient = False
-                Cursor_NS_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NS_SecondaryColorNoise = False
-                Cursor_NS_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("NS")
+                Cursor_NS_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_NS_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_NS_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_NS_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_NS_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_NS_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_NS_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_NS_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_NS_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NS_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_NS_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_NS_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "EW"
-                Cursor_EW_PrimaryColor1 = Color.White
-                Cursor_EW_PrimaryColor2 = Color.White
-                Cursor_EW_PrimaryColorGradient = False
-                Cursor_EW_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_EW_PrimaryColorNoise = False
-                Cursor_EW_PrimaryColorNoiseOpacity = 0.25
-                Cursor_EW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_EW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_EW_SecondaryColorGradient = False
-                Cursor_EW_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_EW_SecondaryColorNoise = False
-                Cursor_EW_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("EW")
+                Cursor_EW_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_EW_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_EW_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_EW_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_EW_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_EW_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_EW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_EW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_EW_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_EW_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_EW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_EW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "NESW"
-                Cursor_NESW_PrimaryColor1 = Color.White
-                Cursor_NESW_PrimaryColor2 = Color.White
-                Cursor_NESW_PrimaryColorGradient = False
-                Cursor_NESW_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NESW_PrimaryColorNoise = False
-                Cursor_NESW_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NESW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NESW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NESW_SecondaryColorGradient = False
-                Cursor_NESW_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NESW_SecondaryColorNoise = False
-                Cursor_NESW_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("NESW")
+                Cursor_NESW_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_NESW_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_NESW_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_NESW_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_NESW_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_NESW_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_NESW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_NESW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_NESW_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NESW_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_NESW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_NESW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "NWSE"
-                Cursor_NWSE_PrimaryColor1 = Color.White
-                Cursor_NWSE_PrimaryColor2 = Color.White
-                Cursor_NWSE_PrimaryColorGradient = False
-                Cursor_NWSE_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NWSE_PrimaryColorNoise = False
-                Cursor_NWSE_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NWSE_SecondaryColorGradient = False
-                Cursor_NWSE_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NWSE_SecondaryColorNoise = False
-                Cursor_NWSE_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("NWSE")
+                Cursor_NWSE_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_NWSE_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_NWSE_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_NWSE_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_NWSE_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_NWSE_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_NWSE_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NWSE_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_NWSE_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_NWSE_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Up"
-                Cursor_Up_PrimaryColor1 = Color.White
-                Cursor_Up_PrimaryColor2 = Color.White
-                Cursor_Up_PrimaryColorGradient = False
-                Cursor_Up_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Up_PrimaryColorNoise = False
-                Cursor_Up_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Up_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Up_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Up_SecondaryColorGradient = False
-                Cursor_Up_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Up_SecondaryColorNoise = False
-                Cursor_Up_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Up")
+                Cursor_Up_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Up_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Up_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Up_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Up_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Up_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Up_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Up_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Up_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Up_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Up_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Up_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Pen"
-                Cursor_Pen_PrimaryColor1 = Color.White
-                Cursor_Pen_PrimaryColor2 = Color.White
-                Cursor_Pen_PrimaryColorGradient = False
-                Cursor_Pen_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pen_PrimaryColorNoise = False
-                Cursor_Pen_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Pen_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Pen_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Pen_SecondaryColorGradient = False
-                Cursor_Pen_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pen_SecondaryColorNoise = False
-                Cursor_Pen_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Pen")
+                Cursor_Pen_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Pen_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Pen_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Pen_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Pen_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Pen_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Pen_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Pen_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Pen_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Pen_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Pen_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Pen_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
+
 #End Region
 
 #Region "None"
-                Cursor_None_PrimaryColor1 = Color.White
-                Cursor_None_PrimaryColor2 = Color.White
-                Cursor_None_PrimaryColorGradient = False
-                Cursor_None_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_None_PrimaryColorNoise = False
-                Cursor_None_PrimaryColorNoiseOpacity = 0.25
-                Cursor_None_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_None_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_None_SecondaryColorGradient = False
-                Cursor_None_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_None_SecondaryColorNoise = False
-                Cursor_None_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("None")
+                Cursor_None_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_None_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_None_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.Red.ToArgb))
+                Cursor_None_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.Red.ToArgb))
+
+                Cursor_None_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_None_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_None_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_None_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_None_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_None_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_None_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_None_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Link"
-                Cursor_Link_PrimaryColor1 = Color.White
-                Cursor_Link_PrimaryColor2 = Color.White
-                Cursor_Link_PrimaryColorGradient = False
-                Cursor_Link_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Link_PrimaryColorNoise = False
-                Cursor_Link_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Link_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Link_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Link_SecondaryColorGradient = False
-                Cursor_Link_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Link_SecondaryColorNoise = False
-                Cursor_Link_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Link")
+                Cursor_Link_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Link_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Link_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Link_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Link_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Link_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Link_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Link_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Link_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Link_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Link_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Link_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Pin"
-                Cursor_Pin_PrimaryColor1 = Color.White
-                Cursor_Pin_PrimaryColor2 = Color.White
-                Cursor_Pin_PrimaryColorGradient = False
-                Cursor_Pin_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pin_PrimaryColorNoise = False
-                Cursor_Pin_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Pin_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Pin_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Pin_SecondaryColorGradient = False
-                Cursor_Pin_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pin_SecondaryColorNoise = False
-                Cursor_Pin_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Pin")
+                Cursor_Pin_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Pin_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Pin_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Pin_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Pin_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Pin_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Pin_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Pin_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Pin_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Pin_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Pin_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Pin_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Person"
-                Cursor_Person_PrimaryColor1 = Color.White
-                Cursor_Person_PrimaryColor2 = Color.White
-                Cursor_Person_PrimaryColorGradient = False
-                Cursor_Person_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Person_PrimaryColorNoise = False
-                Cursor_Person_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Person_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Person_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Person_SecondaryColorGradient = False
-                Cursor_Person_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Person_SecondaryColorNoise = False
-                Cursor_Person_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Person")
+                Cursor_Person_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Person_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Person_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Person_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Person_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Person_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Person_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Person_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Person_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Person_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Person_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Person_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
 #End Region
 
 #Region "Cross"
-                Cursor_Cross_PrimaryColor1 = Color.Transparent
-                Cursor_Cross_PrimaryColor2 = Color.Transparent
-                Cursor_Cross_PrimaryColorGradient = False
-                Cursor_Cross_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Cross_PrimaryColorNoise = False
-                Cursor_Cross_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Cross_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Cross_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Cross_SecondaryColorGradient = False
-                Cursor_Cross_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Cross_SecondaryColorNoise = False
-                Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
+                r = rMain.OpenSubKey("Cross")
+                Cursor_Cross_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+                Cursor_Cross_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+                Cursor_Cross_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
+                Cursor_Cross_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
+
+                Cursor_Cross_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+                Cursor_Cross_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
+                Cursor_Cross_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+                Cursor_Cross_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+
+                Cursor_Cross_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Cross_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+
+                Cursor_Cross_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+                Cursor_Cross_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
+#End Region
+
+                rMain.Close()
+                r.Close()
 #End Region
 #End Region
 
             Case Mode.File
+#Region "File"
                 Dim txt As New List(Of String)
                 txt.Clear()
                 CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
 
                 For Each lin As String In txt
+#Region "Personal Info"
                     If lin.StartsWith("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
                     If lin.StartsWith("*Palette Name= ") Then PaletteName = lin.Remove(0, "*Palette Name= ".Count)
                     If lin.StartsWith("*Palette Description= ") Then PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
@@ -813,6 +909,9 @@ Public Class CP
                     If lin.StartsWith("*Author= ") Then Author = lin.Remove(0, "*Author= ".Count)
                     If lin.StartsWith("*AuthorSocialMediaLink= ") Then AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
                     If lin.StartsWith("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+#End Region
+
+#Region "Modern Windows"
                     If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
                     If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
                     If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
@@ -831,6 +930,7 @@ Public Class CP
                     If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
                     If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
                     If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+#End Region
 
 #Region "LogonUI"
                     If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
@@ -1150,14 +1250,18 @@ Public Class CP
 #End Region
 
                 Next
-
+#End Region
 
             Case Mode.Init
+#Region "Init"
+#Region "Personal Info"
                 Author = Environment.UserName
                 AppVersion = My.Application.Info.Version.ToString
                 PaletteVersion = "1.0"
                 PaletteName = "Init"
+#End Region
 
+#Region "Modern Windows"
                 Titlebar_Active = Color.Black
                 Titlebar_Inactive = Color.Black
                 StartMenu_Accent = Color.Black
@@ -1168,14 +1272,23 @@ Public Class CP
                 StartListFolders_TaskbarFront = Color.Black
                 SettingsIconsAndLinks = Color.Black
                 ActionCenter_AppsLinks = Color.Black
+                WinMode_Light = False
+                AppMode_Light = False
+                Transparency = True
+                ApplyAccentonTitlebars = False
+                ApplyAccentonTaskbar = False
+#End Region
 
+#Region "LogonUI"
                 LogonUI_Background = Color.Black
                 LogonUI_PersonalColors_Background = Color.Black
                 LogonUI_PersonalColors_Accent = Color.Black
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
                 LogonUI_NoLockScreen = False
+#End Region
 
+#Region "Win32UI"
                 Win32UI_ActiveBorder = Color.FromArgb(180, 180, 180)
                 Win32UI_ActiveTitle = Color.FromArgb(153, 180, 209)
                 Win32UI_AppWorkspace = Color.FromArgb(171, 171, 171)
@@ -1208,6 +1321,7 @@ Public Class CP
                 Win32UI_Hilight = Color.FromArgb(0, 120, 215)
                 Win32UI_MenuHilight = Color.FromArgb(0, 120, 215)
                 Win32UI_Desktop = Color.FromArgb(0, 0, 0)
+#End Region
 
 #Region "Cursors"
                 Cursor_Enabled = False
@@ -1464,20 +1578,27 @@ Public Class CP
                 Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
 #End Region
 #End Region
+#End Region
 
-                WinMode_Light = False
-                AppMode_Light = False
-                Transparency = True
-                ApplyAccentonTitlebars = False
-                ApplyAccentonTaskbar = False
         End Select
+
+    End Sub
+
+    Sub ExportCursors()
+        Dim Path As String = My.Application.curPath
+
+    End Sub
+
+    Sub ApplyCursorsToReg()
 
     End Sub
 
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
+#Region "Registry"
 
+#Region "Modern Windows"
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
                 Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
@@ -1500,6 +1621,7 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", If(ApplyAccentonTaskbar, 1, 0))
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
+#End Region
 
 #Region "LogonUI"
                 If isElevated Then
@@ -1529,10 +1651,9 @@ Public Class CP
 
                     Dim result As String = CStr_FromList(ls)
 
-                    Dim appData As String = System.Windows.Forms.Application.LocalUserAppDataPath
-                    If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
 
-                    Dim tempreg As String = appData & "\tempreg.reg"
+                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
 
                     IO.File.WriteAllText(tempreg, result)
 
@@ -1704,13 +1825,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Arrow_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Arrow_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Arrow_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Arrow_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Arrow_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Arrow_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Arrow_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Arrow_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Arrow_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Arrow_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Arrow_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Arrow_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Help")
@@ -1720,13 +1841,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Help_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Help_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Help_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Help_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Help_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Help_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Help_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Help_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Help_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Help_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Help_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Help_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("AppLoading")
@@ -1736,25 +1857,25 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_AppLoading_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_AppLoading_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_AppLoading_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_AppLoading_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_AppLoading_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_AppLoading_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_AppLoading_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_AppLoading_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_AppLoading_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_AppLoading_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_AppLoading_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_AppLoading_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleBack1", Cursor_AppLoading_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleBack2", Cursor_AppLoading_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleBackGradient", If(Cursor_AppLoading_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("LoadingCircleBackGradientMode", Cursor_AppLoading_LoadingCircleBackGradientMode, RegistryValueKind.String)
                     .SetValue("LoadingCircleBackNoise", If(Cursor_AppLoading_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_AppLoading_LoadingCircleBackNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_AppLoading_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHot1", Cursor_AppLoading_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHot2", Cursor_AppLoading_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHotGradient", If(Cursor_AppLoading_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHotGradientMode", Cursor_AppLoading_LoadingCircleHotGradientMode, RegistryValueKind.String)
                     .SetValue("LoadingCircleHotNoise", If(Cursor_AppLoading_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_AppLoading_LoadingCircleHotNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_AppLoading_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Busy")
@@ -1764,13 +1885,13 @@ Public Class CP
                     .SetValue("LoadingCircleBackGradient", If(Cursor_Busy_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("LoadingCircleBackGradientMode", Cursor_Busy_LoadingCircleBackGradientMode, RegistryValueKind.String)
                     .SetValue("LoadingCircleBackNoise", If(Cursor_Busy_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_Busy_LoadingCircleBackNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_Busy_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHot1", Cursor_Busy_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHot2", Cursor_Busy_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHotGradient", If(Cursor_Busy_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("LoadingCircleHotGradientMode", Cursor_Busy_LoadingCircleHotGradientMode, RegistryValueKind.String)
                     .SetValue("LoadingCircleHotNoise", If(Cursor_Busy_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_Busy_LoadingCircleHotNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_Busy_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Move")
@@ -1780,13 +1901,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Move_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Move_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Move_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Move_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Move_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Move_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Move_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Move_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Move_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Move_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Move_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Move_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("NS")
@@ -1796,13 +1917,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_NS_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_NS_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_NS_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NS_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NS_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_NS_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_NS_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_NS_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_NS_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_NS_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NS_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NS_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("EW")
@@ -1812,13 +1933,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_EW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_EW_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_EW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_EW_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_EW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_EW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_EW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_EW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_EW_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_EW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_EW_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_EW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("NESW")
@@ -1828,13 +1949,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_NESW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_NESW_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_NESW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NESW_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NESW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_NESW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_NESW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_NESW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_NESW_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_NESW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NESW_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NESW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("NWSE")
@@ -1844,13 +1965,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_NWSE_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_NWSE_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_NWSE_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NWSE_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NWSE_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_NWSE_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_NWSE_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_NWSE_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_NWSE_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_NWSE_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NWSE_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NWSE_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Up")
@@ -1860,13 +1981,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Up_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Up_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Up_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Up_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Up_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Up_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Up_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Up_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Up_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Up_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Up_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Up_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Pen")
@@ -1876,13 +1997,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Pen_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Pen_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Pen_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pen_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pen_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Pen_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Pen_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Pen_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Pen_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Pen_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pen_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pen_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("None")
@@ -1892,13 +2013,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_None_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_None_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_None_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_None_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_None_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_None_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_None_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_None_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_None_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_None_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_None_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_None_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Link")
@@ -1908,13 +2029,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Link_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Link_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Link_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Link_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Link_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Link_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Link_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Link_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Link_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Link_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Link_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Link_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Pin")
@@ -1924,13 +2045,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Pin_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Pin_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Pin_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pin_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pin_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Pin_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Pin_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Pin_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Pin_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Pin_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pin_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pin_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Person")
@@ -1940,13 +2061,13 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Person_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Person_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Person_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Person_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Person_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Person_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Person_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Person_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Person_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Person_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
 
                 r = rMain.CreateSubKey("Cross")
@@ -1956,22 +2077,27 @@ Public Class CP
                     .SetValue("PrimaryColorGradient", If(Cursor_Cross_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradientMode", Cursor_Cross_PrimaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("PrimaryColorNoise", If(Cursor_Cross_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Cross_PrimaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Cross_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor1", Cursor_Cross_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColor2", Cursor_Cross_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradient", If(Cursor_Cross_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
                     .SetValue("SecondaryColorGradientMode", Cursor_Cross_SecondaryColorGradientMode, RegistryValueKind.String)
                     .SetValue("SecondaryColorNoise", If(Cursor_Cross_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Cross_SecondaryColorNoiseOpacity, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Cross_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 End With
-
 
                 r.Close()
                 rMain.Close()
+
+                ExportCursors()
+                ApplyCursorsToReg()
+#End Region
+
+
 #End Region
 
             Case SavingMode.File
-
+#Region "File"
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add("<WinPaletter - Programmed by Abdelrhman_AK>")
@@ -2339,6 +2465,8 @@ Public Class CP
                 tx.Add(vbCrLf & "</WinPaletter>")
 
                 IO.File.WriteAllText(FileLocation, CStr_FromList(tx))
+#End Region
+
         End Select
 
     End Sub
@@ -2383,11 +2511,6 @@ Public Class CP
         End Try
 
     End Sub
-
-    Enum SavingMode
-        Registry
-        File
-    End Enum
 
     Function RGB2HEX(ByVal [Color] As Color) As List(Of String)
         Dim sb As New List(Of String)
@@ -2444,8 +2567,6 @@ Public Class CP
     End Function
 
     Public Overrides Function Equals(obj As Object) As Boolean
-        'obj = TryCast(obj, CP)
-
         Dim _Equals As Boolean = True
 
         Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
