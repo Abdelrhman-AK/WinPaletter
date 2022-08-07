@@ -274,4 +274,5 @@ Public Class SettingsX
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
     End Sub
+
 End Class

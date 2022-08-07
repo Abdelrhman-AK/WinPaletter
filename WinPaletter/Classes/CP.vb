@@ -1923,7 +1923,7 @@ Public Class CP
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
-                        HotPoint = New Point(1 + CInt(5 * i), 1 + CInt(9 * i))
+                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(9 * i))
 #End Region
                     Case CursorType.Cross
 #Region "Cross"
@@ -2066,6 +2066,7 @@ Public Class CP
 
         rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors")
         rMain.SetValue("", "WinPaletter")
+        rMain.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
 
         Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
         rMain.SetValue("AppStarting", x)
@@ -2136,6 +2137,7 @@ Public Class CP
         SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_WAIT)
 
         rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
+        rMain.Close()
     End Sub
     <DllImport("user32.dll")>
     Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As UInteger) As Boolean
