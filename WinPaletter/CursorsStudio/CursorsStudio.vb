@@ -1077,4 +1077,17 @@ Public Class CursorsStudio
         Me.Close()
     End Sub
 
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            LoadFromCP(New CP(CP.Mode.File, OpenFileDialog1.FileName))
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        LoadFromCP(New CP(CP.Mode.Registry))
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        LoadFromCP(New CP(CP.Mode.Init))
+    End Sub
 End Class

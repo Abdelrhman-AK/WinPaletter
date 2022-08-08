@@ -882,6 +882,7 @@ Public Class RetroPanel : Inherits Panel
         BorderStyle = BorderStyle.None
     End Sub
 
+    Public Property Flat As Boolean = False
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
 
@@ -896,12 +897,17 @@ Public Class RetroPanel : Inherits Panel
         '#################################################################################
         G.Clear(BackColor)
 
-        With Rect
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
-        End With
+        If Not Flat Then
+            With Rect
+                G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
+                G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
+                G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
+            End With
+        Else
+            G.DrawRectangle(New Pen(ButtonShadow), Rect)
+        End If
+
     End Sub
 End Class
 Public Class RetroPanelRaised : Inherits Panel
@@ -912,7 +918,7 @@ Public Class RetroPanelRaised : Inherits Panel
         ForeColor = Color.Black
         BorderStyle = BorderStyle.None
     End Sub
-
+    Public Property Flat As Boolean = False
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
 
@@ -927,12 +933,17 @@ Public Class RetroPanelRaised : Inherits Panel
         '#################################################################################
         G.Clear(BackColor)
 
-        With Rect
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ButtonShadow), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Height), New Point(.Width, .Height))
-        End With
+        If Not Flat Then
+            With Rect
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.Width - 1, .Y))
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.X, .Height - 1))
+                G.DrawLine(New Pen(ButtonShadow), New Point(.Width, .X), New Point(.Width, .Height))
+                G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Height), New Point(.Width, .Height))
+            End With
+        Else
+            G.DrawRectangle(New Pen(ButtonShadow), Rect)
+        End If
+
     End Sub
 End Class
 Public Class RetroWindow : Inherits Panel

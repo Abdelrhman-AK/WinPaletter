@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
+Imports System.Text
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
@@ -53,6 +54,7 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
+    Public Property Win32UI_EnableTheming As Boolean = True
     Public Property Win32UI_ActiveBorder As Color = Color.FromArgb(180, 180, 180)
     Public Property Win32UI_ActiveTitle As Color = Color.FromArgb(153, 180, 209)
     Public Property Win32UI_AppWorkspace As Color = Color.FromArgb(171, 171, 171)
@@ -438,9 +440,10 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "180 180 180")
-                    Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
-                End With
+                Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+                Dim En As Boolean = If(binarystring(binarystring.Count - 1 - 17) = CChar("1"), True, False)
+                Win32UI_EnableTheming = En
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
                     Win32UI_ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
@@ -979,6 +982,7 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
+                    If lin.StartsWith("*Win32UI_EnableTheming= ") Then Win32UI_EnableTheming = lin.Remove(0, "*Win32UI_EnableTheming= ".Count)
                     If lin.StartsWith("*Win32UI_ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
                     If lin.StartsWith("*Win32UI_ActiveTitle= ") Then Win32UI_ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
                     If lin.StartsWith("*Win32UI_AppWorkspace= ") Then Win32UI_AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
@@ -1341,6 +1345,7 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
+                Win32UI_EnableTheming = True
                 Win32UI_ActiveBorder = Color.FromArgb(180, 180, 180)
                 Win32UI_ActiveTitle = Color.FromArgb(153, 180, 209)
                 Win32UI_AppWorkspace = Color.FromArgb(171, 171, 171)
@@ -2376,6 +2381,23 @@ Public Class CP
 
                 SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
+#Region "Win32UI_EnableTheming"
+                Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+                Dim EnableThemeIndex As Integer = binarystring.Count - 1 - 17
+                binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Win32UI_EnableTheming, 1, 0))
+                Dim binaryStr As String = binarystring
+                Dim ar As Byte()
+                ar = StringToBytesArray(binaryStr)
+                If ar.Count < 8 Then
+                    For i = 0 To 7 - ar.Count
+                        ar = AddByteToArray(ar, 0)
+                    Next
+                End If
+                ar = ar.Reverse.ToArray
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", ar, RegistryValueKind.Binary)
+#End Region
+
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
@@ -2769,6 +2791,7 @@ Public Class CP
 
 #Region "Win32UI"
                 tx.Add("<Win32UI>")
+                tx.Add("*Win32UI_EnableTheming= " & Win32UI_EnableTheming)
                 tx.Add("*Win32UI_ActiveBorder= " & Win32UI_ActiveBorder.ToArgb)
                 tx.Add("*Win32UI_ActiveTitle= " & Win32UI_ActiveTitle.ToArgb)
                 tx.Add("*Win32UI_AppWorkspace= " & Win32UI_AppWorkspace.ToArgb)
@@ -3212,5 +3235,45 @@ Public Class CP
         Return _Equals
     End Function
 
+    Public Shared Function ByteArrayToString(ByVal ba As Byte()) As String
+        Dim hex As StringBuilder = New StringBuilder(ba.Length * 2)
+
+        For Each b As Byte In ba
+            hex.AppendFormat("{0:x1}", b)
+        Next
+
+        Return hex.ToString()
+    End Function
+
+    Public Shared Function Reverse(ByVal s As String) As String
+        Dim charArray As Char() = s.ToCharArray()
+        Array.Reverse(charArray)
+        Return New String(charArray)
+    End Function
+
+    Public Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
+        Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
+        bArray.CopyTo(newArray, 1)
+        newArray(0) = newByte
+        Return newArray
+    End Function
+
+    Private Function StringToBytesArray(ByVal str As String) As Byte()
+        Dim bitsToPad = 8 - str.Length Mod 8
+
+        If bitsToPad <> 8 Then
+            Dim neededLength = bitsToPad + str.Length
+            str = str.PadLeft(neededLength, "0"c)
+        End If
+
+        Dim size As Integer = str.Length / 8
+        Dim arr As Byte() = New Byte(size - 1) {}
+
+        For a As Integer = 0 To size - 1
+            arr(a) = Convert.ToByte(str.Substring(a * 8, 8), 2)
+        Next
+
+        Return arr
+    End Function
 End Class
 

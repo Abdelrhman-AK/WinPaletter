@@ -163,10 +163,10 @@
     <Compile Include="ComplexSave.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CursorsStudio.Designer.vb">
+    <Compile Include="CursorsStudio\CursorsStudio.Designer.vb">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
     </Compile>
-    <Compile Include="CursorsStudio.vb">
+    <Compile Include="CursorsStudio\CursorsStudio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DragPreviewer.Designer.vb">
@@ -181,10 +181,10 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\CursorsCustomizer.Designer.vb">
+    <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
       <DependentUpon>CursorsCustomizer.vb</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CursorsCustomizer.vb">
+    <Compile Include="CursorsStudio\CursorsCustomizer.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\RetroUI.Designer.vb">
@@ -268,7 +268,7 @@
     <EmbeddedResource Include="ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CursorsStudio.resx">
+    <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DragPreviewer.resx">

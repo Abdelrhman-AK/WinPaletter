@@ -189,6 +189,20 @@ Public Class ColorPickerDlg
                     .Invalidate()
                 End With
 
+            ElseIf TypeOf ctrl Is RetroTextBox Then
+                With TryCast(ctrl, RetroTextBox)
+
+                    If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroBackground Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    .Invalidate()
+                End With
+
             ElseIf TypeOf ctrl Is RetroButton Then
                 With TryCast(ctrl, RetroButton)
                     If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -202,7 +216,13 @@ Public Class ColorPickerDlg
                 End With
 
             ElseIf TypeOf ctrl Is Panel Then
-                If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
+                    DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                Else
+                    If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                End If
+
                 If TypeOf ctrl Is XenonGroupBox Then
                     If DirectCast(ctrl, XenonGroupBox).CustomColor Then Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                 End If
@@ -421,6 +441,7 @@ Public Class Conditions
     Public Property RetroAppWorkspace As Boolean = False
     Public Property RetroBackground As Boolean = False
     Public Property RetroWindowText As Boolean = False
+    Public Property RetroHighlight17BitFixer As Boolean = False
 
     Public Property CursorBack1 As Boolean = False
     Public Property CursorBack2 As Boolean = False

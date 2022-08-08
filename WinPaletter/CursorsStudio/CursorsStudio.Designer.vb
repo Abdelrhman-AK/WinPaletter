@@ -117,6 +117,7 @@ Partial Class CursorsStudio
         Me.IBeam = New WinPaletter.CursorControl()
         Me.Cross = New WinPaletter.CursorControl()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox13.SuspendLayout()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1785,6 +1786,11 @@ Partial Class CursorsStudio
         Me.XenonButton1.Text = "Copy from selection"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "wpt"
+        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
+        '
         'CursorsStudio
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1939,4 +1945,5 @@ Partial Class CursorsStudio
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents XenonButton9 As XenonButton
     Friend WithEvents Label12 As Label
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class
