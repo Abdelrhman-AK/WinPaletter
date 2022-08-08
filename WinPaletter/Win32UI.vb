@@ -434,7 +434,6 @@ Public Class Win32UI
 
     End Sub
 
-
     Private Sub Win32UI_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         MainFrm.Visible = True
     End Sub

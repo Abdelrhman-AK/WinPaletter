@@ -577,6 +577,9 @@ Public Class CursorsStudio
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        MainFrm.Visible = False
+        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+
         AnimateList.Clear()
         _CopiedControl = Nothing
         _Shown = False
@@ -594,6 +597,10 @@ Public Class CursorsStudio
         Next
 
         LoadFromCP(MainFrm.CP)
+    End Sub
+
+    Private Sub CursorsStudio_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
     End Sub
 
     Private Sub CursorsStudio_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1069,4 +1076,5 @@ Public Class CursorsStudio
         SaveToCP(MainFrm.CP)
         Me.Close()
     End Sub
+
 End Class
