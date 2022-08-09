@@ -837,7 +837,7 @@ Partial Class CursorsStudio
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(149, 30)
         Me.XenonButton5.TabIndex = 66
-        Me.XenonButton5.Text = "Animate for once"
+        Me.XenonButton5.Text = "Animate (3 Cycles)"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonGroupBox6

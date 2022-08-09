@@ -90,273 +90,273 @@ Public Class CP
 #End Region
 
 #Region "Cursors"
-    Public Property Cursor_Enabled As Boolean
+    Public Property Cursor_Enabled As Boolean = False
 
 #Region "Arrow"
-    Public Property Cursor_Arrow_PrimaryColor1 As Color
-    Public Property Cursor_Arrow_PrimaryColor2 As Color
-    Public Property Cursor_Arrow_PrimaryColorGradient As Boolean
-    Public Property Cursor_Arrow_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Arrow_PrimaryColorNoise As Boolean
-    Public Property Cursor_Arrow_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Arrow_SecondaryColor1 As Color
-    Public Property Cursor_Arrow_SecondaryColor2 As Color
-    Public Property Cursor_Arrow_SecondaryColorGradient As Boolean
-    Public Property Cursor_Arrow_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Arrow_SecondaryColorNoise As Boolean
-    Public Property Cursor_Arrow_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Arrow_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Arrow_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Arrow_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Arrow_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Arrow_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Arrow_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Arrow_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Arrow_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Arrow_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Arrow_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Arrow_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Arrow_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Help"
-    Public Property Cursor_Help_PrimaryColor1 As Color
-    Public Property Cursor_Help_PrimaryColor2 As Color
-    Public Property Cursor_Help_PrimaryColorGradient As Boolean
-    Public Property Cursor_Help_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Help_PrimaryColorNoise As Boolean
-    Public Property Cursor_Help_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Help_SecondaryColor1 As Color
-    Public Property Cursor_Help_SecondaryColor2 As Color
-    Public Property Cursor_Help_SecondaryColorGradient As Boolean
-    Public Property Cursor_Help_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Help_SecondaryColorNoise As Boolean
-    Public Property Cursor_Help_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Help_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Help_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Help_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Help_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Help_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Help_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Help_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Help_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Help_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Help_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Help_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Help_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "AppLoading"
-    Public Property Cursor_AppLoading_PrimaryColor1 As Color
-    Public Property Cursor_AppLoading_PrimaryColor2 As Color
-    Public Property Cursor_AppLoading_PrimaryColorGradient As Boolean
-    Public Property Cursor_AppLoading_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_AppLoading_PrimaryColorNoise As Boolean
-    Public Property Cursor_AppLoading_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_AppLoading_SecondaryColor1 As Color
-    Public Property Cursor_AppLoading_SecondaryColor2 As Color
-    Public Property Cursor_AppLoading_SecondaryColorGradient As Boolean
-    Public Property Cursor_AppLoading_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_AppLoading_SecondaryColorNoise As Boolean
-    Public Property Cursor_AppLoading_SecondaryColorNoiseOpacity As Single
-    Public Property Cursor_AppLoading_LoadingCircleBack1 As Color
-    Public Property Cursor_AppLoading_LoadingCircleBack2 As Color
-    Public Property Cursor_AppLoading_LoadingCircleBackGradient As Boolean
-    Public Property Cursor_AppLoading_LoadingCircleBackGradientMode As GradientMode
-    Public Property Cursor_AppLoading_LoadingCircleBackNoise As Boolean
-    Public Property Cursor_AppLoading_LoadingCircleBackNoiseOpacity As Single
-    Public Property Cursor_AppLoading_LoadingCircleHot1 As Color
-    Public Property Cursor_AppLoading_LoadingCircleHot2 As Color
-    Public Property Cursor_AppLoading_LoadingCircleHotGradient As Boolean
-    Public Property Cursor_AppLoading_LoadingCircleHotGradientMode As GradientMode
-    Public Property Cursor_AppLoading_LoadingCircleHotNoise As Boolean
-    Public Property Cursor_AppLoading_LoadingCircleHotNoiseOpacity As Single
+    Public Property Cursor_AppLoading_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_AppLoading_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_AppLoading_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_AppLoading_PrimaryColorGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_AppLoading_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_AppLoading_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_AppLoading_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_AppLoading_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_AppLoading_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_AppLoading_SecondaryColorGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_AppLoading_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_AppLoading_SecondaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_AppLoading_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Cursor_AppLoading_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Cursor_AppLoading_LoadingCircleBackGradient As Boolean = False
+    Public Property Cursor_AppLoading_LoadingCircleBackGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_AppLoading_LoadingCircleBackNoise As Boolean = False
+    Public Property Cursor_AppLoading_LoadingCircleBackNoiseOpacity As Single = 0.25
+    Public Property Cursor_AppLoading_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Cursor_AppLoading_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Cursor_AppLoading_LoadingCircleHotGradient As Boolean = False
+    Public Property Cursor_AppLoading_LoadingCircleHotGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_AppLoading_LoadingCircleHotNoise As Boolean = False
+    Public Property Cursor_AppLoading_LoadingCircleHotNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Busy"
-    Public Property Cursor_Busy_LoadingCircleBack1 As Color
-    Public Property Cursor_Busy_LoadingCircleBack2 As Color
-    Public Property Cursor_Busy_LoadingCircleBackGradient As Boolean
-    Public Property Cursor_Busy_LoadingCircleBackGradientMode As GradientMode
-    Public Property Cursor_Busy_LoadingCircleBackNoise As Boolean
-    Public Property Cursor_Busy_LoadingCircleBackNoiseOpacity As Single
-    Public Property Cursor_Busy_LoadingCircleHot1 As Color
-    Public Property Cursor_Busy_LoadingCircleHot2 As Color
-    Public Property Cursor_Busy_LoadingCircleHotGradient As Boolean
-    Public Property Cursor_Busy_LoadingCircleHotGradientMode As GradientMode
-    Public Property Cursor_Busy_LoadingCircleHotNoise As Boolean
-    Public Property Cursor_Busy_LoadingCircleHotNoiseOpacity As Single
+    Public Property Cursor_Busy_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Cursor_Busy_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
+    Public Property Cursor_Busy_LoadingCircleBackGradient As Boolean = False
+    Public Property Cursor_Busy_LoadingCircleBackGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_Busy_LoadingCircleBackNoise As Boolean = False
+    Public Property Cursor_Busy_LoadingCircleBackNoiseOpacity As Single = 0.25
+    Public Property Cursor_Busy_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Cursor_Busy_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
+    Public Property Cursor_Busy_LoadingCircleHotGradient As Boolean = False
+    Public Property Cursor_Busy_LoadingCircleHotGradientMode As GradientMode = GradientMode.Circle
+    Public Property Cursor_Busy_LoadingCircleHotNoise As Boolean = False
+    Public Property Cursor_Busy_LoadingCircleHotNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Move"
-    Public Property Cursor_Move_PrimaryColor1 As Color
-    Public Property Cursor_Move_PrimaryColor2 As Color
-    Public Property Cursor_Move_PrimaryColorGradient As Boolean
-    Public Property Cursor_Move_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Move_PrimaryColorNoise As Boolean
-    Public Property Cursor_Move_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Move_SecondaryColor1 As Color
-    Public Property Cursor_Move_SecondaryColor2 As Color
-    Public Property Cursor_Move_SecondaryColorGradient As Boolean
-    Public Property Cursor_Move_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Move_SecondaryColorNoise As Boolean
-    Public Property Cursor_Move_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Move_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Move_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Move_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Move_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Move_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Move_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Move_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Move_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Move_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Move_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Move_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Move_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "NS"
-    Public Property Cursor_NS_PrimaryColor1 As Color
-    Public Property Cursor_NS_PrimaryColor2 As Color
-    Public Property Cursor_NS_PrimaryColorGradient As Boolean
-    Public Property Cursor_NS_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_NS_PrimaryColorNoise As Boolean
-    Public Property Cursor_NS_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_NS_SecondaryColor1 As Color
-    Public Property Cursor_NS_SecondaryColor2 As Color
-    Public Property Cursor_NS_SecondaryColorGradient As Boolean
-    Public Property Cursor_NS_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_NS_SecondaryColorNoise As Boolean
-    Public Property Cursor_NS_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_NS_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_NS_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_NS_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_NS_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NS_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_NS_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_NS_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NS_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NS_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_NS_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NS_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_NS_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "EW"
-    Public Property Cursor_EW_PrimaryColor1 As Color
-    Public Property Cursor_EW_PrimaryColor2 As Color
-    Public Property Cursor_EW_PrimaryColorGradient As Boolean
-    Public Property Cursor_EW_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_EW_PrimaryColorNoise As Boolean
-    Public Property Cursor_EW_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_EW_SecondaryColor1 As Color
-    Public Property Cursor_EW_SecondaryColor2 As Color
-    Public Property Cursor_EW_SecondaryColorGradient As Boolean
-    Public Property Cursor_EW_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_EW_SecondaryColorNoise As Boolean
-    Public Property Cursor_EW_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_EW_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_EW_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_EW_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_EW_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_EW_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_EW_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_EW_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_EW_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_EW_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_EW_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_EW_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_EW_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "NESW"
-    Public Property Cursor_NESW_PrimaryColor1 As Color
-    Public Property Cursor_NESW_PrimaryColor2 As Color
-    Public Property Cursor_NESW_PrimaryColorGradient As Boolean
-    Public Property Cursor_NESW_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_NESW_PrimaryColorNoise As Boolean
-    Public Property Cursor_NESW_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_NESW_SecondaryColor1 As Color
-    Public Property Cursor_NESW_SecondaryColor2 As Color
-    Public Property Cursor_NESW_SecondaryColorGradient As Boolean
-    Public Property Cursor_NESW_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_NESW_SecondaryColorNoise As Boolean
-    Public Property Cursor_NESW_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_NESW_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_NESW_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_NESW_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_NESW_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NESW_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_NESW_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_NESW_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NESW_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NESW_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_NESW_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NESW_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_NESW_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "NWSE"
-    Public Property Cursor_NWSE_PrimaryColor1 As Color
-    Public Property Cursor_NWSE_PrimaryColor2 As Color
-    Public Property Cursor_NWSE_PrimaryColorGradient As Boolean
-    Public Property Cursor_NWSE_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_NWSE_PrimaryColorNoise As Boolean
-    Public Property Cursor_NWSE_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_NWSE_SecondaryColor1 As Color
-    Public Property Cursor_NWSE_SecondaryColor2 As Color
-    Public Property Cursor_NWSE_SecondaryColorGradient As Boolean
-    Public Property Cursor_NWSE_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_NWSE_SecondaryColorNoise As Boolean
-    Public Property Cursor_NWSE_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_NWSE_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_NWSE_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_NWSE_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_NWSE_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NWSE_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_NWSE_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_NWSE_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NWSE_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_NWSE_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_NWSE_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_NWSE_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_NWSE_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Up"
-    Public Property Cursor_Up_PrimaryColor1 As Color
-    Public Property Cursor_Up_PrimaryColor2 As Color
-    Public Property Cursor_Up_PrimaryColorGradient As Boolean
-    Public Property Cursor_Up_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Up_PrimaryColorNoise As Boolean
-    Public Property Cursor_Up_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Up_SecondaryColor1 As Color
-    Public Property Cursor_Up_SecondaryColor2 As Color
-    Public Property Cursor_Up_SecondaryColorGradient As Boolean
-    Public Property Cursor_Up_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Up_SecondaryColorNoise As Boolean
-    Public Property Cursor_Up_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Up_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Up_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Up_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Up_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Up_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Up_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Up_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Up_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Up_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Up_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Up_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Up_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Pen"
-    Public Property Cursor_Pen_PrimaryColor1 As Color
-    Public Property Cursor_Pen_PrimaryColor2 As Color
-    Public Property Cursor_Pen_PrimaryColorGradient As Boolean
-    Public Property Cursor_Pen_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Pen_PrimaryColorNoise As Boolean
-    Public Property Cursor_Pen_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Pen_SecondaryColor1 As Color
-    Public Property Cursor_Pen_SecondaryColor2 As Color
-    Public Property Cursor_Pen_SecondaryColorGradient As Boolean
-    Public Property Cursor_Pen_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Pen_SecondaryColorNoise As Boolean
-    Public Property Cursor_Pen_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Pen_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Pen_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Pen_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Pen_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Pen_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Pen_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Pen_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Pen_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Pen_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Pen_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Pen_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Pen_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "None"
-    Public Property Cursor_None_PrimaryColor1 As Color
-    Public Property Cursor_None_PrimaryColor2 As Color
-    Public Property Cursor_None_PrimaryColorGradient As Boolean
-    Public Property Cursor_None_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_None_PrimaryColorNoise As Boolean
-    Public Property Cursor_None_PrimaryColorNoiseOpacity As Single
+    Public Property Cursor_None_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_None_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_None_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_None_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_None_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_None_PrimaryColorNoiseOpacity As Single = 0.25
     Public Property Cursor_None_SecondaryColor1 As Color = Color.Red
     Public Property Cursor_None_SecondaryColor2 As Color = Color.Red
-    Public Property Cursor_None_SecondaryColorGradient As Boolean
-    Public Property Cursor_None_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_None_SecondaryColorNoise As Boolean
-    Public Property Cursor_None_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_None_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_None_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_None_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_None_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Link"
-    Public Property Cursor_Link_PrimaryColor1 As Color
-    Public Property Cursor_Link_PrimaryColor2 As Color
-    Public Property Cursor_Link_PrimaryColorGradient As Boolean
-    Public Property Cursor_Link_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Link_PrimaryColorNoise As Boolean
-    Public Property Cursor_Link_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Link_SecondaryColor1 As Color
-    Public Property Cursor_Link_SecondaryColor2 As Color
-    Public Property Cursor_Link_SecondaryColorGradient As Boolean
-    Public Property Cursor_Link_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Link_SecondaryColorNoise As Boolean
-    Public Property Cursor_Link_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Link_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Link_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Link_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Link_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Link_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Link_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Link_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Link_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Link_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Link_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Link_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Link_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Pin"
-    Public Property Cursor_Pin_PrimaryColor1 As Color
-    Public Property Cursor_Pin_PrimaryColor2 As Color
-    Public Property Cursor_Pin_PrimaryColorGradient As Boolean
-    Public Property Cursor_Pin_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Pin_PrimaryColorNoise As Boolean
-    Public Property Cursor_Pin_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Pin_SecondaryColor1 As Color
-    Public Property Cursor_Pin_SecondaryColor2 As Color
-    Public Property Cursor_Pin_SecondaryColorGradient As Boolean
-    Public Property Cursor_Pin_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Pin_SecondaryColorNoise As Boolean
-    Public Property Cursor_Pin_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Pin_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Pin_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Pin_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Pin_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Pin_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Pin_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Pin_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Pin_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Pin_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Pin_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Pin_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Pin_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Person"
-    Public Property Cursor_Person_PrimaryColor1 As Color
-    Public Property Cursor_Person_PrimaryColor2 As Color
-    Public Property Cursor_Person_PrimaryColorGradient As Boolean
-    Public Property Cursor_Person_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Person_PrimaryColorNoise As Boolean
-    Public Property Cursor_Person_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Person_SecondaryColor1 As Color
-    Public Property Cursor_Person_SecondaryColor2 As Color
-    Public Property Cursor_Person_SecondaryColorGradient As Boolean
-    Public Property Cursor_Person_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Person_SecondaryColorNoise As Boolean
-    Public Property Cursor_Person_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Person_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Person_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Person_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Person_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Person_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Person_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Person_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Person_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Person_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Person_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Person_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Person_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "IBeam"
-    Public Property Cursor_IBeam_PrimaryColor1 As Color
-    Public Property Cursor_IBeam_PrimaryColor2 As Color
-    Public Property Cursor_IBeam_PrimaryColorGradient As Boolean
-    Public Property Cursor_IBeam_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_IBeam_PrimaryColorNoise As Boolean
-    Public Property Cursor_IBeam_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_IBeam_SecondaryColor1 As Color
-    Public Property Cursor_IBeam_SecondaryColor2 As Color
-    Public Property Cursor_IBeam_SecondaryColorGradient As Boolean
-    Public Property Cursor_IBeam_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_IBeam_SecondaryColorNoise As Boolean
-    Public Property Cursor_IBeam_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_IBeam_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_IBeam_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_IBeam_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_IBeam_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_IBeam_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_IBeam_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_IBeam_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_IBeam_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_IBeam_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_IBeam_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_IBeam_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_IBeam_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 
 #Region "Cross"
-    Public Property Cursor_Cross_PrimaryColor1 As Color
-    Public Property Cursor_Cross_PrimaryColor2 As Color
-    Public Property Cursor_Cross_PrimaryColorGradient As Boolean
-    Public Property Cursor_Cross_PrimaryColorGradientMode As GradientMode
-    Public Property Cursor_Cross_PrimaryColorNoise As Boolean
-    Public Property Cursor_Cross_PrimaryColorNoiseOpacity As Single
-    Public Property Cursor_Cross_SecondaryColor1 As Color
-    Public Property Cursor_Cross_SecondaryColor2 As Color
-    Public Property Cursor_Cross_SecondaryColorGradient As Boolean
-    Public Property Cursor_Cross_SecondaryColorGradientMode As GradientMode
-    Public Property Cursor_Cross_SecondaryColorNoise As Boolean
-    Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single
+    Public Property Cursor_Cross_PrimaryColor1 As Color = Color.White
+    Public Property Cursor_Cross_PrimaryColor2 As Color = Color.White
+    Public Property Cursor_Cross_PrimaryColorGradient As Boolean = False
+    Public Property Cursor_Cross_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Cross_PrimaryColorNoise As Boolean = False
+    Public Property Cursor_Cross_PrimaryColorNoiseOpacity As Single = 0.25
+    Public Property Cursor_Cross_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Cross_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
+    Public Property Cursor_Cross_SecondaryColorGradient As Boolean = False
+    Public Property Cursor_Cross_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
+    Public Property Cursor_Cross_SecondaryColorNoise As Boolean = False
+    Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 #End Region
 
