@@ -7,6 +7,7 @@ Public Class ColorPickerDlg
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        CP.PopulateThemeToListbox(XenonComboBox1)
         Me.Left = fr.Right - 14
         Me.Top = fr.Top
         Me.Height = fr.Height
@@ -245,6 +246,7 @@ Public Class ColorPickerDlg
                         .Prop_PrimaryColor1 = ColorEditorManager1.Color
                     ElseIf _Conditions.CursorBack2 Then
                         .Prop_PrimaryColor2 = ColorEditorManager1.Color
+
                     ElseIf _Conditions.CursorLine1 Then
                         .Prop_SecondaryColor1 = ColorEditorManager1.Color
                     ElseIf _Conditions.CursorLine2 Then
@@ -257,7 +259,7 @@ Public Class ColorPickerDlg
 
                     ElseIf _Conditions.CursorCircleHot1 Then
                         .Prop_LoadingCircleHot1 = ColorEditorManager1.Color
-                    ElseIf _Conditions.CursorCircleHot1 Then
+                    ElseIf _Conditions.CursorCircleHot2 Then
                         .Prop_LoadingCircleHot2 = ColorEditorManager1.Color
                     End If
 
@@ -404,6 +406,21 @@ Public Class ColorPickerDlg
         Else
             MsgBox(My.Application.LanguageHelper.ThemeNotExist, MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        ThemePaletteContainer.Controls.Clear()
+
+        Try
+            For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+                Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
+                pnl.BackColor = Color.FromArgb(255, C)
+                ThemePaletteContainer.Controls.Add(pnl)
+                AddHandler pnl.Click, AddressOf Pnl_click
+            Next
+        Catch
+
+        End Try
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

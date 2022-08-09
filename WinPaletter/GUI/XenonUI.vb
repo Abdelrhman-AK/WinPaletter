@@ -1340,6 +1340,7 @@ Public Class XenonGroupBox
     Public Property LineSize As Integer = 1
     Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
     Public Property CustomColor As Boolean = False
+
 #End Region
 
 #Region "Events"
@@ -1406,6 +1407,9 @@ Public Class XenonGroupBox
                 Case MouseState.Down
                     LineColor = CCB(BackColor, If(IsColorDark(BackColor), 0.17, -0.17))
             End Select
+
+            LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
+
             FillRect(G, New SolidBrush(BackColor), Rect)
             DrawRect_LikeW11(G, LineColor, Rect)
         End If

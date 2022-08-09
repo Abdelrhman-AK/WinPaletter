@@ -55,6 +55,7 @@ Public Class CP
 
 #Region "Win32UI"
     Public Property Win32UI_EnableTheming As Boolean = True
+    Public Property Win32UI_EnableGradient As Boolean = True
     Public Property Win32UI_ActiveBorder As Color = Color.FromArgb(180, 180, 180)
     Public Property Win32UI_ActiveTitle As Color = Color.FromArgb(153, 180, 209)
     Public Property Win32UI_AppWorkspace As Color = Color.FromArgb(171, 171, 171)
@@ -360,6 +361,8 @@ Public Class CP
 #End Region
 #End Region
 
+
+
     Enum Mode
         Registry
         Init
@@ -440,10 +443,9 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-                Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-                Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-                Dim En As Boolean = If(binarystring(binarystring.Count - 1 - 17) = CChar("1"), True, False)
-                Win32UI_EnableTheming = En
+
+                Win32UI_EnableTheming = GetUserPreferencesMask(17)
+                Win32UI_EnableGradient = GetUserPreferencesMask(4)
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
                     Win32UI_ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
@@ -983,6 +985,7 @@ Public Class CP
 
 #Region "Win32UI"
                     If lin.StartsWith("*Win32UI_EnableTheming= ") Then Win32UI_EnableTheming = lin.Remove(0, "*Win32UI_EnableTheming= ".Count)
+                    If lin.StartsWith("*Win32UI_EnableGradient= ") Then Win32UI_EnableGradient = lin.Remove(0, "*Win32UI_EnableGradient= ".Count)
                     If lin.StartsWith("*Win32UI_ActiveBorder= ") Then Win32UI_ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
                     If lin.StartsWith("*Win32UI_ActiveTitle= ") Then Win32UI_ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
                     If lin.StartsWith("*Win32UI_AppWorkspace= ") Then Win32UI_AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
@@ -1346,6 +1349,7 @@ Public Class CP
 
 #Region "Win32UI"
                 Win32UI_EnableTheming = True
+                Win32UI_EnableGradient = True
                 Win32UI_ActiveBorder = Color.FromArgb(180, 180, 180)
                 Win32UI_ActiveTitle = Color.FromArgb(153, 180, 209)
                 Win32UI_AppWorkspace = Color.FromArgb(171, 171, 171)
@@ -1655,7 +1659,34 @@ Public Class CP
         End Select
 
     End Sub
+    Function GetUserPreferencesMask(Bit As Integer) As Boolean
 
+        Try
+            Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+            Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+            Return If(binarystring(binarystring.Count - 1 - Bit) = CChar("1"), True, False)
+        Catch
+            Return False
+        End Try
+
+    End Function
+
+    Function SetUserPreferenceMask(Bit As Integer, Value As Boolean) As Byte()
+        Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+        Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+        Dim EnableThemeIndex As Integer = binarystring.Count - 1 - Bit
+        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Value, 1, 0))
+        Dim binaryStr As String = binarystring
+        Dim ar As Byte()
+        ar = StringToBytesArray(binaryStr)
+        If ar.Count < 8 Then
+            For i = 0 To 7 - ar.Count
+                ar = AddByteToArray(ar, 0)
+            Next
+        End If
+        ar = ar.Reverse.ToArray
+        Return ar
+    End Function
     Sub ExportCursors([CP] As CP)
         Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
         Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
@@ -2381,23 +2412,8 @@ Public Class CP
 
                 SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
-#Region "Win32UI_EnableTheming"
-                Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-                Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-                Dim EnableThemeIndex As Integer = binarystring.Count - 1 - 17
-                binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Win32UI_EnableTheming, 1, 0))
-                Dim binaryStr As String = binarystring
-                Dim ar As Byte()
-                ar = StringToBytesArray(binaryStr)
-                If ar.Count < 8 Then
-                    For i = 0 To 7 - ar.Count
-                        ar = AddByteToArray(ar, 0)
-                    Next
-                End If
-                ar = ar.Reverse.ToArray
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", ar, RegistryValueKind.Binary)
-#End Region
-
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
@@ -2435,6 +2451,7 @@ Public Class CP
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
+
                 Dim r As RegistryKey
 
                 r = rMain.CreateSubKey("Arrow")
@@ -2792,6 +2809,7 @@ Public Class CP
 #Region "Win32UI"
                 tx.Add("<Win32UI>")
                 tx.Add("*Win32UI_EnableTheming= " & Win32UI_EnableTheming)
+                tx.Add("*Win32UI_EnableGradient= " & Win32UI_EnableGradient)
                 tx.Add("*Win32UI_ActiveBorder= " & Win32UI_ActiveBorder.ToArgb)
                 tx.Add("*Win32UI_ActiveTitle= " & Win32UI_ActiveTitle.ToArgb)
                 tx.Add("*Win32UI_AppWorkspace= " & Win32UI_AppWorkspace.ToArgb)
@@ -3186,39 +3204,6 @@ Public Class CP
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
 
-    Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
-        If IO.File.Exists(Filename) Then
-
-            Dim ls As New List(Of Color)
-            ls.Clear()
-
-            Dim tx As New List(Of String)
-            CList_FromStr(tx, IO.File.ReadAllText(Filename))
-
-            For Each x As String In tx
-                Try
-                    If x.Contains("=") Then
-                        If x.Split("=")(1).Contains(" ") Then
-                            If x.Split("=")(1).Split(" ").Count = 3 Then
-                                Dim c As String = x.Split("=")(1)
-                                Dim inx As Boolean = True
-                                For Each u In c.Split(" ")
-                                    If Not IsNumeric(u) Then inx = False
-                                Next
-                                If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
-                            End If
-                        End If
-                    End If
-                Catch
-                End Try
-            Next
-
-            Return ls.Distinct.ToList
-        Else
-            Return Nothing
-        End If
-    End Function
-
     Public Overrides Function Equals(obj As Object) As Boolean
         Dim _Equals As Boolean = True
 
@@ -3275,5 +3260,113 @@ Public Class CP
 
         Return arr
     End Function
+
+    Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
+        If IO.File.Exists(Filename) Then
+
+            Dim ls As New List(Of Color)
+            ls.Clear()
+
+            Dim tx As New List(Of String)
+            CList_FromStr(tx, IO.File.ReadAllText(Filename))
+
+            For Each x As String In tx
+                Try
+                    If x.Contains("=") Then
+                        If x.Split("=")(1).Contains(" ") Then
+                            If x.Split("=")(1).Split(" ").Count = 3 Then
+                                Dim c As String = x.Split("=")(1)
+                                Dim inx As Boolean = True
+                                For Each u In c.Split(" ")
+                                    If Not IsNumeric(u) Then inx = False
+                                Next
+                                If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
+                            End If
+                        End If
+                    End If
+                Catch
+                End Try
+            Next
+
+            Return ls.Distinct.ToList
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Shared Function GetPaletteFromString([String] As String, ThemeName As String) As List(Of Color)
+
+        If String.IsNullOrWhiteSpace([String]) Then
+            Return Nothing
+            Exit Function
+        End If
+
+        If Not [String].Contains("|") Then
+            Return Nothing
+            Exit Function
+        End If
+
+        If String.IsNullOrWhiteSpace(ThemeName) Then
+            Return Nothing
+            Exit Function
+        End If
+
+        Dim ls As New List(Of Color)
+        ls.Clear()
+
+        Dim AllThemes As New List(Of String)
+        Dim SelectedTheme As String = ""
+        Dim SelectedThemeList As New List(Of String)
+
+        CList_FromStr(AllThemes, [String])
+        Dim Found As Boolean = False
+
+        For Each th As String In AllThemes
+            If th.Split("|")(0).ToLower = ThemeName.ToLower Then
+                SelectedTheme = th.Replace("|", vbCrLf)
+                Found = True
+                Exit For
+            End If
+        Next
+
+        If Not Found Then
+            Return Nothing
+            Exit Function
+        End If
+
+        CList_FromStr(SelectedThemeList, SelectedTheme)
+
+
+        For Each x As String In SelectedThemeList
+            Try
+                If x.Contains("=") Then
+                    If x.Split("=")(1).Contains(" ") Then
+                        If x.Split("=")(1).Split(" ").Count = 3 Then
+                            Dim c As String = x.Split("=")(1)
+                            Dim inx As Boolean = True
+                            For Each u In c.Split(" ")
+                                If Not IsNumeric(u) Then inx = False
+                            Next
+                            If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
+                        End If
+                    End If
+                End If
+            Catch
+            End Try
+        Next
+
+        Return ls.Distinct.ToList
+    End Function
+
+    Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
+        [ComboBox].Items.Clear()
+        Dim ls As New List(Of String)
+        CList_FromStr(ls, My.Resources.RetroThemesDB)
+
+        For Each x As String In ls
+            [ComboBox].Items.Add(x.Split("|")(0))
+        Next
+
+    End Sub
 End Class
 

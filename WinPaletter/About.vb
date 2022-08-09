@@ -38,4 +38,12 @@ Public Class About
         Process.Start("https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent/?utm_medium=android_app&utm_source=share")
         Process.Start("https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well/?utm_medium=android_app&utm_source=share")
     End Sub
+
+    Private Sub LinkLabel7_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel7.LinkClicked
+        Process.Start("https://github.com/evanolds/AnimCur")
+    End Sub
+
+    Private Sub LinkLabel6_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel6.LinkClicked
+        Process.Start("https://www.microsoft.com")
+    End Sub
 End Class

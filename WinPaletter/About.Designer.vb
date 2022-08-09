@@ -44,18 +44,24 @@ Partial Class About
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LinkLabel5 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel6 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel7 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(104, 17)
+        Me.PictureBox1.Location = New System.Drawing.Point(151, 17)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(64, 64)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -66,7 +72,7 @@ Partial Class About
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(174, 28)
+        Me.Label17.Location = New System.Drawing.Point(221, 28)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(117, 25)
         Me.Label17.TabIndex = 1
@@ -77,7 +83,7 @@ Partial Class About
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(177, 56)
+        Me.Label1.Location = New System.Drawing.Point(224, 56)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(109, 15)
         Me.Label1.TabIndex = 2
@@ -88,7 +94,7 @@ Partial Class About
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(287, 37)
+        Me.Label2.Location = New System.Drawing.Point(334, 37)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(40, 13)
         Me.Label2.TabIndex = 3
@@ -101,7 +107,7 @@ Partial Class About
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 137)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(390, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(501, 1)
         Me.XenonSeparator1.TabIndex = 4
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -142,7 +148,7 @@ Partial Class About
         Me.LinkLabel1.LinkColor = System.Drawing.Color.White
         Me.LinkLabel1.Location = New System.Drawing.Point(42, 226)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(360, 24)
+        Me.LinkLabel1.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel1.TabIndex = 11
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "Icons by Pichon"
@@ -157,7 +163,7 @@ Partial Class About
         Me.LinkLabel2.LinkColor = System.Drawing.Color.White
         Me.LinkLabel2.Location = New System.Drawing.Point(42, 256)
         Me.LinkLabel2.Name = "LinkLabel2"
-        Me.LinkLabel2.Size = New System.Drawing.Size(360, 24)
+        Me.LinkLabel2.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel2.TabIndex = 12
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "Color Picking Controls by Cyotek"
@@ -172,7 +178,7 @@ Partial Class About
         Me.LinkLabel3.LinkColor = System.Drawing.Color.White
         Me.LinkLabel3.Location = New System.Drawing.Point(42, 286)
         Me.LinkLabel3.Name = "LinkLabel3"
-        Me.LinkLabel3.Size = New System.Drawing.Size(360, 24)
+        Me.LinkLabel3.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel3.TabIndex = 13
         Me.LinkLabel3.TabStop = True
         Me.LinkLabel3.Text = "Image to Palette Mechanism by KSemenenko/ColorThief"
@@ -182,9 +188,9 @@ Partial Class About
         '
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 347)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 416)
         Me.XenonSeparator2.Name = "XenonSeparator2"
-        Me.XenonSeparator2.Size = New System.Drawing.Size(390, 1)
+        Me.XenonSeparator2.Size = New System.Drawing.Size(501, 1)
         Me.XenonSeparator2.TabIndex = 14
         Me.XenonSeparator2.TabStop = False
         Me.XenonSeparator2.Text = "XenonSeparator2"
@@ -195,7 +201,7 @@ Partial Class About
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Gray
-        Me.Label3.Location = New System.Drawing.Point(18, 375)
+        Me.Label3.Location = New System.Drawing.Point(18, 438)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(229, 15)
         Me.Label3.TabIndex = 15
@@ -211,7 +217,7 @@ Partial Class About
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(104, 93)
+        Me.XenonButton1.Location = New System.Drawing.Point(151, 93)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(101, 30)
         Me.XenonButton1.TabIndex = 16
@@ -227,7 +233,7 @@ Partial Class About
         Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(211, 93)
+        Me.XenonButton2.Location = New System.Drawing.Point(258, 93)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(101, 30)
         Me.XenonButton2.TabIndex = 17
@@ -243,7 +249,7 @@ Partial Class About
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(309, 366)
+        Me.XenonButton3.Location = New System.Drawing.Point(420, 429)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(93, 33)
         Me.XenonButton3.TabIndex = 18
@@ -259,7 +265,7 @@ Partial Class About
         Me.LinkLabel4.LinkColor = System.Drawing.Color.White
         Me.LinkLabel4.Location = New System.Drawing.Point(42, 316)
         Me.LinkLabel4.Name = "LinkLabel4"
-        Me.LinkLabel4.Size = New System.Drawing.Size(360, 24)
+        Me.LinkLabel4.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel4.TabIndex = 20
         Me.LinkLabel4.TabStop = True
         Me.LinkLabel4.Text = "Animaton for Controls by Pavel Torgashov"
@@ -281,7 +287,7 @@ Partial Class About
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(12, 141)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(390, 44)
+        Me.Label4.Size = New System.Drawing.Size(501, 44)
         Me.Label4.TabIndex = 21
         Me.Label4.Text = "The following components are used to increase the functionality of the program, a" &
     "ll rights go to their owners."
@@ -296,10 +302,10 @@ Partial Class About
         Me.LinkLabel5.LinkColor = System.Drawing.Color.White
         Me.LinkLabel5.Location = New System.Drawing.Point(42, 196)
         Me.LinkLabel5.Name = "LinkLabel5"
-        Me.LinkLabel5.Size = New System.Drawing.Size(360, 24)
+        Me.LinkLabel5.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel5.TabIndex = 23
         Me.LinkLabel5.TabStop = True
-        Me.LinkLabel5.Text = "Inspired by u/aveyo and u/Egg-Tricky on Reddit"
+        Me.LinkLabel5.Text = "Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit"
         Me.LinkLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox6
@@ -311,12 +317,64 @@ Partial Class About
         Me.PictureBox6.TabIndex = 22
         Me.PictureBox6.TabStop = False
         '
+        'LinkLabel6
+        '
+        Me.LinkLabel6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel6.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel6.LinkColor = System.Drawing.Color.White
+        Me.LinkLabel6.Location = New System.Drawing.Point(42, 378)
+        Me.LinkLabel6.Name = "LinkLabel6"
+        Me.LinkLabel6.Size = New System.Drawing.Size(471, 35)
+        Me.LinkLabel6.TabIndex = 25
+        Me.LinkLabel6.TabStop = True
+        Me.LinkLabel6.Text = "Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows X" &
+    "P Classic Themes)"
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
+        Me.PictureBox7.Location = New System.Drawing.Point(12, 376)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox7.TabIndex = 24
+        Me.PictureBox7.TabStop = False
+        '
+        'LinkLabel7
+        '
+        Me.LinkLabel7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel7.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel7.LinkColor = System.Drawing.Color.White
+        Me.LinkLabel7.Location = New System.Drawing.Point(42, 346)
+        Me.LinkLabel7.Name = "LinkLabel7"
+        Me.LinkLabel7.Size = New System.Drawing.Size(471, 24)
+        Me.LinkLabel7.TabIndex = 27
+        Me.LinkLabel7.TabStop = True
+        Me.LinkLabel7.Text = "Bitmaps to Cursors Conversion Mechanism by Evan Olds"
+        Me.LinkLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
+        Me.PictureBox8.Location = New System.Drawing.Point(12, 346)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox8.TabIndex = 26
+        Me.PictureBox8.TabStop = False
+        '
         'About
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(414, 411)
+        Me.ClientSize = New System.Drawing.Size(525, 474)
+        Me.Controls.Add(Me.LinkLabel7)
+        Me.Controls.Add(Me.PictureBox8)
+        Me.Controls.Add(Me.LinkLabel6)
+        Me.Controls.Add(Me.PictureBox7)
         Me.Controls.Add(Me.LinkLabel5)
         Me.Controls.Add(Me.PictureBox6)
         Me.Controls.Add(Me.Label4)
@@ -355,6 +413,8 @@ Partial Class About
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -381,4 +441,8 @@ Partial Class About
     Friend WithEvents Label4 As Label
     Friend WithEvents LinkLabel5 As LinkLabel
     Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents LinkLabel6 As LinkLabel
+    Friend WithEvents PictureBox7 As PictureBox
+    Friend WithEvents LinkLabel7 As LinkLabel
+    Friend WithEvents PictureBox8 As PictureBox
 End Class

@@ -435,6 +435,9 @@ Namespace My
 
             DetectOS()
 
+            CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
+            CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
+
             ChangeLogImgLst.ColorDepth = ColorDepth.Depth32Bit
             ChangeLogImgLst.ImageSize = New Size(24, 24)
             ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)

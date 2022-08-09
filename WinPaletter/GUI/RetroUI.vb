@@ -958,6 +958,7 @@ Public Class RetroWindow : Inherits Panel
 
     Public Property Color1 As Color = Color.FromArgb(0, 0, 128)
     Public Property Color2 As Color = Color.FromArgb(16, 132, 208)
+    Public Property ColorGradient As Boolean = True
     Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
     Public Property TitlebarText As String = "New Window"
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
@@ -993,7 +994,14 @@ Public Class RetroWindow : Inherits Panel
 
         Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
 
-        G.FillRectangle(gr, TRect)
+
+        If ColorGradient Then
+            G.FillRectangle(gr, TRect)
+        Else
+            G.FillRectangle(New SolidBrush(Color1), TRect)
+        End If
+
         G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
+
     End Sub
 End Class

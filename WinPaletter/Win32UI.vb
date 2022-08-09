@@ -7,6 +7,9 @@ Public Class Win32UI
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+
+        CP.PopulateThemeToListbox(XenonComboBox1)
+
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         loadCP(MainFrm.CP)
@@ -20,6 +23,7 @@ Public Class Win32UI
 
     Sub ApplyCPValues(ByVal [CP] As CP)
         XenonToggle1.Checked = [CP].Win32UI_EnableTheming
+        XenonToggle2.Checked = [CP].Win32UI_EnableGradient
         ActiveBorder_pick.BackColor = [CP].Win32UI_ActiveBorder
         activetitle_pick.BackColor = [CP].Win32UI_ActiveTitle
         AppWorkspace_pick.BackColor = [CP].Win32UI_AppWorkspace
@@ -56,6 +60,7 @@ Public Class Win32UI
 
     Sub ApplyToCP(ByVal [CP] As CP)
         [CP].Win32UI_EnableTheming = XenonToggle1.Checked
+        [CP].Win32UI_EnableGradient = XenonToggle2.Checked
         [CP].Win32UI_ActiveBorder = ActiveBorder_pick.BackColor
         [CP].Win32UI_ActiveTitle = activetitle_pick.BackColor
         [CP].Win32UI_AppWorkspace = AppWorkspace_pick.BackColor
@@ -562,7 +567,104 @@ Public Class Win32UI
         ApplyRetroPreview()
     End Sub
 
+    Sub LoadFromWinThemeString([String] As String, ThemeName As String)
+
+        If String.IsNullOrWhiteSpace([String]) Then
+            Exit Sub
+        End If
+
+        If Not [String].Contains("|") Then
+            Exit Sub
+        End If
+
+        If String.IsNullOrWhiteSpace(ThemeName) Then
+            Exit Sub
+        End If
+
+        Dim ls As New List(Of Color)
+        ls.Clear()
+
+        Dim AllThemes As New List(Of String)
+        Dim SelectedTheme As String = ""
+        Dim SelectedThemeList As New List(Of String)
+
+        CList_FromStr(AllThemes, [String])
+        Dim Found As Boolean = False
+
+        For Each th As String In AllThemes
+            If th.Split("|")(0).ToLower = ThemeName.ToLower Then
+                SelectedTheme = th.Replace("|", vbCrLf)
+                Found = True
+                Exit For
+            End If
+        Next
+
+        If Not Found Then
+            Exit Sub
+        End If
+
+        CList_FromStr(SelectedThemeList, SelectedTheme)
+
+        Dim FoundGradientActive As Boolean = False
+        Dim FoundGradientInactive As Boolean = False
+
+        For Each x As String In SelectedThemeList
+
+            If x.ToLower.StartsWith("activetitle=") Then
+                activetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If Not FoundGradientActive Then GActivetitle_pick.BackColor = activetitle_pick.BackColor
+            End If
+
+            If x.ToLower.StartsWith("gradientactivetitle=") Then
+                GActivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                FoundGradientActive = True
+            End If
+
+            If x.ToLower.StartsWith("inactivetitle=") Then
+                InactiveTitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If Not FoundGradientInactive Then GInactivetitle_pick.BackColor = InactiveTitle_pick.BackColor
+
+            End If
+
+            If x.ToLower.StartsWith("gradientinactivetitle=") Then
+                GInactivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                FoundGradientInactive = True
+            End If
+
+            If x.ToLower.StartsWith("background=") Then background_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("hilight=") Then hilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("hilighttext=") Then hilighttext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("titletext=") Then TitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("window=") Then Window_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("windowtext=") Then WindowText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("scrollbar=") Then Scrollbar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menu=") Then menu_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("windowframe=") Then Frame_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menutext=") Then menutext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("activeborder=") Then ActiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("inactiveborder=") Then InactiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("appworkspace=") Then AppWorkspace_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonface=") Then btnface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonshadow=") Then btnshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("graytext=") Then GrayText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttontext=") Then btntext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("inactivetitletext=") Then InactivetitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonhilight=") Then btnhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttondkShadow=") Then btndkshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonlight=") Then btnlight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("infotext=") Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("infowindow=") Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+        Next
+
+        ApplyRetroPreview()
+    End Sub
+
     Sub ApplyRetroPreview()
+        RetroWindow1.ColorGradient = XenonToggle2.Checked
+        RetroWindow2.ColorGradient = XenonToggle2.Checked
+        RetroWindow3.ColorGradient = XenonToggle2.Checked
+        RetroWindow4.ColorGradient = XenonToggle2.Checked
+
         Dim c As Color
         c = activetitle_pick.BackColor
         RetroWindow2.Color1 = c
@@ -803,5 +905,20 @@ Public Class Win32UI
         Process.Start("https://www.neowin.net/forum/topic/624901-windows-colors-explained/")
     End Sub
 
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        XenonToggle1.Checked = False
+        LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+    End Sub
 
+    Private Sub XenonToggle2_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle2.CheckedChanged
+        RetroWindow1.ColorGradient = XenonToggle2.Checked
+        RetroWindow2.ColorGradient = XenonToggle2.Checked
+        RetroWindow3.ColorGradient = XenonToggle2.Checked
+        RetroWindow4.ColorGradient = XenonToggle2.Checked
+
+        RetroWindow1.Invalidate()
+        RetroWindow2.Invalidate()
+        RetroWindow3.Invalidate()
+        RetroWindow4.Invalidate()
+    End Sub
 End Class

@@ -613,6 +613,7 @@ Public Class CursorsStudio
 
         XenonGroupBox2.Enabled = True
         XenonGroupBox11.Enabled = True
+        XenonButton1.Enabled = True
 
         If _SelectedControl.Prop_Cursor = CursorType.AppLoading Or _SelectedControl.Prop_Cursor = CursorType.Busy Then
 
@@ -709,6 +710,7 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_PrimaryColor1 = c
         _SelectedControl.Invalidate()
+
         DirectCast(sender, XenonGroupBox).BackColor = c
         DirectCast(sender, XenonGroupBox).Invalidate()
 
@@ -1089,5 +1091,9 @@ Public Class CursorsStudio
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         LoadFromCP(New CP(CP.Mode.Init))
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        MsgBox(My.Application.LanguageHelper.ScalingTip, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
 End Class

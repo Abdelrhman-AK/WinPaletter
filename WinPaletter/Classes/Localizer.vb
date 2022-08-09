@@ -102,6 +102,7 @@ Public Class Localizer
     Property MenuNativeWin As String
     Property MenuInit As String
     Property MenuAppliedReg As String
+    Property ScalingTip As String
 
 #End Region
 
