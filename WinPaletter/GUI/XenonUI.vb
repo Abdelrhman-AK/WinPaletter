@@ -1719,7 +1719,6 @@ Public Class XenonButton : Inherits Button
         DrawRect_LikeW11(G, c1, InnerRect)
         DrawRect_LikeW11(G, c1x, Rect)
 
-
         Select Case State
             Case MouseState.Over
                 If GetDarkMode() Then
@@ -1752,7 +1751,7 @@ Public Class XenonButton : Inherits Button
                 If Focused Then c2 = Color.FromArgb(255 - alpha, LineColor)
 
                 DrawRect_LikeW11(G, c2, InnerRect)
-                ForeColor = If(IsColorDark(BC), Color.White, Color.Black)
+                ForeColor = If(GetDarkMode(), Color.White, Color.Black)
         End Select
 
 

@@ -391,6 +391,7 @@ Namespace My
 
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
+            ApplyDarkMode()
 
 #Region "WhatsNew"
 
@@ -476,6 +477,7 @@ Namespace My
 
             Catch
             End Try
+
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance

@@ -364,6 +364,7 @@ Public Class XenonCore
 
         If TypeOf ctrl Is XenonButton Then
             ctrl.BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.04, -0.04))
+            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
         End If
 
         If TypeOf ctrl Is RichTextBox Then
