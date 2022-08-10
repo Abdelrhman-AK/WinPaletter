@@ -29,13 +29,16 @@ Partial Class Whatsnew
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
-        Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.XenonTabControl1.SuspendLayout()
-        Me.TabPage10.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage10.SuspendLayout()
         Me.SuspendLayout()
         '
         'XenonButton3
@@ -106,7 +109,7 @@ Partial Class Whatsnew
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(3, 53)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(661, 209)
+        Me.Label14.Size = New System.Drawing.Size(661, 96)
         Me.Label14.TabIndex = 25
         Me.Label14.Text = resources.GetString("Label14.Text")
         '
@@ -128,21 +131,11 @@ Partial Class Whatsnew
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 4
         '
-        'TabPage10
-        '
-        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage10.Controls.Add(Me.Label13)
-        Me.TabPage10.Controls.Add(Me.Label14)
-        Me.TabPage10.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(667, 307)
-        Me.TabPage10.TabIndex = 4
-        Me.TabPage10.Text = "Tweaks & Fixes"
-        '
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.PictureBox1)
+        Me.TabPage6.Controls.Add(Me.XenonAlertBox1)
         Me.TabPage6.Controls.Add(Me.Label1)
         Me.TabPage6.Controls.Add(Me.Label3)
         Me.TabPage6.Location = New System.Drawing.Point(154, 4)
@@ -151,6 +144,46 @@ Partial Class Whatsnew
         Me.TabPage6.Size = New System.Drawing.Size(667, 307)
         Me.TabPage6.TabIndex = 0
         Me.TabPage6.Text = "Colorize Cursors!"
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(462, 102)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(200, 200)
+        Me.PictureBox1.TabIndex = 74
+        Me.PictureBox1.TabStop = False
+        '
+        'XenonAlertBox1
+        '
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox1.CenterText = False
+        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(8, 157)
+        Me.XenonAlertBox1.Name = "XenonAlertBox1"
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(356, 70)
+        Me.XenonAlertBox1.TabIndex = 73
+        Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = "To apply cursors, you should enable the toggle in its form, and activate ""Automat" &
+    "ic Apply Custom Cursors"" from Settings > Theme applying behaviour"
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(3, 53)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(661, 96)
+        Me.Label1.TabIndex = 26
+        Me.Label1.Text = "- Now you can colorize Windows Cursors as you need with any color, gradient effec" &
+    "ts and more." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- This is even applicable to the animated loading cursors."
         '
         'Label3
         '
@@ -164,17 +197,17 @@ Partial Class Whatsnew
         Me.Label3.Text = "Colorize Cursors! (Beta)"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label1
+        'TabPage10
         '
-        Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(3, 53)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(661, 209)
-        Me.Label1.TabIndex = 26
-        Me.Label1.Text = "- Now you can colorize Windows Cursors as you need with any color, gradient effec" &
-    "ts and more." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- This is even applicable to the animated loading cursors."
+        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage10.Controls.Add(Me.Label13)
+        Me.TabPage10.Controls.Add(Me.Label14)
+        Me.TabPage10.Location = New System.Drawing.Point(154, 4)
+        Me.TabPage10.Name = "TabPage10"
+        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage10.Size = New System.Drawing.Size(667, 307)
+        Me.TabPage10.TabIndex = 4
+        Me.TabPage10.Text = "Tweaks & Fixes"
         '
         'Whatsnew
         '
@@ -198,8 +231,9 @@ Partial Class Whatsnew
         Me.Text = "What's new!"
         Me.TopMost = True
         Me.XenonTabControl1.ResumeLayout(False)
-        Me.TabPage10.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage10.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -213,4 +247,6 @@ Partial Class Whatsnew
     Friend WithEvents TabPage10 As TabPage
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

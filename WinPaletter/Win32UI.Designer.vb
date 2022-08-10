@@ -218,7 +218,6 @@ Partial Class Win32UI
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2523,7 +2522,6 @@ Partial Class Win32UI
         'XenonGroupBox8
         '
         Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox8.Controls.Add(Me.XenonButton10)
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
         Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
@@ -2553,7 +2551,7 @@ Partial Class Win32UI
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.Location = New System.Drawing.Point(44, 3)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(202, 35)
+        Me.Label41.Size = New System.Drawing.Size(306, 35)
         Me.Label41.TabIndex = 0
         Me.Label41.Text = "Preview"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3169,24 +3167,6 @@ Partial Class Win32UI
         Me.SaveFileDialog2.DefaultExt = "wpt"
         Me.SaveFileDialog2.Filter = "PNG File|*.png"
         '
-        'XenonButton10
-        '
-        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton10.ForeColor = System.Drawing.Color.White
-        Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
-        Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
-        Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(253, 8)
-        Me.XenonButton10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(96, 24)
-        Me.XenonButton10.TabIndex = 5
-        Me.XenonButton10.Text = "Thumbnail"
-        Me.XenonButton10.UseVisualStyleBackColor = False
-        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3505,5 +3485,4 @@ Partial Class Win32UI
     Friend WithEvents Label30 As Label
     Friend WithEvents XenonAlertBox3 As XenonAlertBox
     Friend WithEvents SaveFileDialog2 As SaveFileDialog
-    Friend WithEvents XenonButton10 As XenonButton
 End Class

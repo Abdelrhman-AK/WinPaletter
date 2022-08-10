@@ -946,9 +946,4 @@ Public Class Win32UI
         RetroWindow4.Invalidate()
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
-        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
-            GetControlImage(pnl_preview).Save(SaveFileDialog2.FileName)
-        End If
-    End Sub
 End Class

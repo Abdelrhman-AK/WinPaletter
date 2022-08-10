@@ -1001,7 +1001,7 @@ Partial Class CursorsStudio
         Me.XenonAlertBox1.Size = New System.Drawing.Size(586, 47)
         Me.XenonAlertBox1.TabIndex = 72
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "To apply curosrs, you should enable the toggle below, and activate ""Automatic App" &
+        Me.XenonAlertBox1.Text = "To apply cursors, you should enable the toggle below, and activate ""Automatic App" &
     "ly Custom Cursors"" from Settings > Theme applying behaviour"
         '
         'XenonButton3
