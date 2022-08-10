@@ -238,6 +238,7 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
+
                 CList.Add(RetroTextBox1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonDkShadow = True}
@@ -252,6 +253,7 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     RB.ButtonDkShadow = C
                 Next
+
                 RetroTextBox1.ButtonDkShadow = C
 
             Case "btnhilight_pick"
@@ -264,6 +266,10 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
+                For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+                    CList.Add(RB)
+                Next
+
                 CList.Add(RetroTextBox1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonHilight = True}
@@ -278,6 +284,9 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     RB.ButtonHilight = C
                 Next
+                For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+                    RB.ButtonHilight = C
+                Next
                 RetroTextBox1.ButtonHilight = C
 
             Case "btnlight_pick"
@@ -290,6 +299,7 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
+
                 CList.Add(RetroTextBox1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonLight = True}
@@ -316,6 +326,10 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
+                For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+                    CList.Add(RB)
+                Next
+
                 CList.Add(RetroTextBox1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonShadow = True}
@@ -330,6 +344,10 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     RB.ButtonShadow = C
                 Next
+                For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+                    RB.ButtonShadow = C
+                Next
+
                 RetroTextBox1.ButtonShadow = C
 
             Case "btntext_pick"
@@ -742,6 +760,9 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonHilight = c
         Next
+        For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+            RB.ButtonHilight = c
+        Next
 
         c = btnlight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -764,7 +785,9 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonShadow = c
         Next
-
+        For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+            RB.ButtonShadow = c
+        Next
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -797,6 +820,7 @@ Public Class Win32UI
 
         c = menutext_pick.BackColor
         RetroLabel6.ForeColor = c
+        RetroLabel1.ForeColor = c
 
         c = hilighttext_pick.BackColor
         RetroLabel5.ForeColor = c
@@ -920,5 +944,11 @@ Public Class Win32UI
         RetroWindow2.Invalidate()
         RetroWindow3.Invalidate()
         RetroWindow4.Invalidate()
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            GetControlImage(pnl_preview).Save(SaveFileDialog2.FileName)
+        End If
     End Sub
 End Class

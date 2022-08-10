@@ -246,6 +246,7 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\CodeStr.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">

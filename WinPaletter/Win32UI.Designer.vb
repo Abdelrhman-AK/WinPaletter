@@ -217,6 +217,8 @@ Partial Class Win32UI
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
+        Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
+        Me.XenonButton10 = New WinPaletter.XenonButton()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1117,10 +1119,10 @@ Partial Class Win32UI
         Me.XenonGroupBox4.CustomColor = False
         Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox4.LineSize = 1
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(3, 3)
+        Me.XenonGroupBox4.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 55)
+        Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 54)
         Me.XenonGroupBox4.TabIndex = 44
         Me.XenonGroupBox4.Text = "XenonGroupBox25"
         '
@@ -1173,7 +1175,7 @@ Partial Class Win32UI
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(206, 16)
         Me.Label30.TabIndex = 3
-        Me.Label30.Text = "Gradient Titlebar on classic apps"
+        Me.Label30.Text = "Gradient Titlebar for classic apps"
         Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'pnl10
@@ -1188,7 +1190,7 @@ Partial Class Win32UI
         Me.pnl10.CustomColor = False
         Me.pnl10.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl10.LineSize = 1
-        Me.pnl10.Location = New System.Drawing.Point(3, 61)
+        Me.pnl10.Location = New System.Drawing.Point(3, 3)
         Me.pnl10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl10.Name = "pnl10"
         Me.pnl10.Size = New System.Drawing.Size(301, 30)
@@ -1260,7 +1262,7 @@ Partial Class Win32UI
         Me.XenonGroupBox53.CustomColor = False
         Me.XenonGroupBox53.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox53.LineSize = 1
-        Me.XenonGroupBox53.Location = New System.Drawing.Point(3, 127)
+        Me.XenonGroupBox53.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox53.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox53.Name = "XenonGroupBox53"
         Me.XenonGroupBox53.Size = New System.Drawing.Size(301, 30)
@@ -1318,7 +1320,7 @@ Partial Class Win32UI
         Me.pnl9.CustomColor = False
         Me.pnl9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl9.LineSize = 1
-        Me.pnl9.Location = New System.Drawing.Point(3, 193)
+        Me.pnl9.Location = New System.Drawing.Point(3, 135)
         Me.pnl9.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl9.Name = "pnl9"
         Me.pnl9.Size = New System.Drawing.Size(301, 30)
@@ -1376,7 +1378,7 @@ Partial Class Win32UI
         Me.XenonGroupBox19.CustomColor = False
         Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox19.LineSize = 1
-        Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 160)
+        Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
         Me.XenonGroupBox19.Size = New System.Drawing.Size(301, 30)
@@ -1435,7 +1437,7 @@ Partial Class Win32UI
         Me.XenonGroupBox21.CustomColor = False
         Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox21.LineSize = 1
-        Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 94)
+        Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
         Me.XenonGroupBox21.Size = New System.Drawing.Size(301, 30)
@@ -1507,7 +1509,7 @@ Partial Class Win32UI
         Me.XenonGroupBox23.CustomColor = False
         Me.XenonGroupBox23.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox23.LineSize = 1
-        Me.XenonGroupBox23.Location = New System.Drawing.Point(3, 226)
+        Me.XenonGroupBox23.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox23.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox23.Name = "XenonGroupBox23"
         Me.XenonGroupBox23.Size = New System.Drawing.Size(301, 30)
@@ -2521,6 +2523,7 @@ Partial Class Win32UI
         'XenonGroupBox8
         '
         Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox8.Controls.Add(Me.XenonButton10)
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
         Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
@@ -2550,7 +2553,7 @@ Partial Class Win32UI
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.Location = New System.Drawing.Point(44, 3)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(308, 35)
+        Me.Label41.Size = New System.Drawing.Size(202, 35)
         Me.Label41.TabIndex = 0
         Me.Label41.Text = "Preview"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2596,7 +2599,7 @@ Partial Class Win32UI
         Me.Menu.Flat = False
         Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu.ForeColor = System.Drawing.Color.Black
-        Me.Menu.Location = New System.Drawing.Point(206, 134)
+        Me.Menu.Location = New System.Drawing.Point(206, 133)
         Me.Menu.Name = "Menu"
         Me.Menu.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu.Size = New System.Drawing.Size(116, 66)
@@ -3161,6 +3164,29 @@ Partial Class Win32UI
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
         '
+        'SaveFileDialog2
+        '
+        Me.SaveFileDialog2.DefaultExt = "wpt"
+        Me.SaveFileDialog2.Filter = "PNG File|*.png"
+        '
+        'XenonButton10
+        '
+        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton10.ForeColor = System.Drawing.Color.White
+        Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
+        Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonButton10.LineSize = 1
+        Me.XenonButton10.Location = New System.Drawing.Point(253, 8)
+        Me.XenonButton10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonButton10.Name = "XenonButton10"
+        Me.XenonButton10.Size = New System.Drawing.Size(96, 24)
+        Me.XenonButton10.TabIndex = 5
+        Me.XenonButton10.Text = "Thumbnail"
+        Me.XenonButton10.UseVisualStyleBackColor = False
+        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3478,4 +3504,6 @@ Partial Class Win32UI
     Friend WithEvents PictureBox34 As PictureBox
     Friend WithEvents Label30 As Label
     Friend WithEvents XenonAlertBox3 As XenonAlertBox
+    Friend WithEvents SaveFileDialog2 As SaveFileDialog
+    Friend WithEvents XenonButton10 As XenonButton
 End Class

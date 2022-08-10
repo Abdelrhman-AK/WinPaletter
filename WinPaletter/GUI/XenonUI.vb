@@ -2742,7 +2742,7 @@ Public Class XenonComboBox : Inherits ComboBox
 
 #Region "Subs"
     Sub ReplaceItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles Me.DrawItem
-        BackColor = ColorPalette.Color_Back_Checked
+        BackColor = ColorPalette.Color_Back
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
         e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         e.DrawBackground()
@@ -2755,10 +2755,9 @@ Public Class XenonComboBox : Inherits ComboBox
 
         Try
             e.Graphics.FillRectangle(New SolidBrush(BackColor), e.Bounds)
-            Dim Rect As New Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height)
 
             If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-                e.Graphics.FillRectangle(New SolidBrush(ColorPalette.Color_Border_Checked_Hover), Rect)
+                e.Graphics.FillRectangle(New SolidBrush(ColorPalette.Color_Border_Checked_Hover), e.Bounds)
             End If
 
             e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
