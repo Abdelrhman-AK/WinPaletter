@@ -257,6 +257,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>

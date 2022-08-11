@@ -73,7 +73,7 @@ Public Class RetroButton : Inherits Button
     Public Property ButtonDkShadow As Color = Color.Black
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-
+    Public Property UseItAsScrollbar As Boolean = False
 #End Region
 
 #Region "Events"
@@ -140,33 +140,45 @@ Public Class RetroButton : Inherits Button
         G.Clear(BackColor)
 
 #Region "Button Render"
-        If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
-            If Not Focused Then
-                G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
-                G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
-                G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
-                G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
-                G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
-                G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
-                G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
-            Else
-                G.DrawRectangle(New Pen(ButtonDkShadow), rect)
-                G.DrawLine(New Pen(ButtonHilight), New Point(1, 1), New Point(Width - 2, 1))
-                G.DrawLine(New Pen(ButtonHilight), New Point(1, 2), New Point(1, Height - 2))
-                G.DrawLine(New Pen(ButtonDkShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
-                G.DrawLine(New Pen(ButtonLight), New Point(2, 2), New Point(Width - 3, 2))
-                G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
-                G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
-                G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
-                If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
-            End If
+        If UseItAsScrollbar Then
+            G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
+            G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
+            G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
+            G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
+            G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
+            G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+            G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
         Else
-            G.DrawRectangle(New Pen(WindowFrame), rect)
-            G.DrawRectangle(New Pen(ButtonShadow), rectinner)
-            If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+            If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
+                If Not Focused Then
+                    G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
+                    G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
+                    G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
+                    G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
+                    G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
+                    G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                Else
+                    G.DrawRectangle(New Pen(ButtonDkShadow), rect)
+                    G.DrawLine(New Pen(ButtonHilight), New Point(1, 1), New Point(Width - 2, 1))
+                    G.DrawLine(New Pen(ButtonHilight), New Point(1, 2), New Point(1, Height - 2))
+                    G.DrawLine(New Pen(ButtonDkShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                    G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                    G.DrawLine(New Pen(ButtonLight), New Point(2, 2), New Point(Width - 3, 2))
+                    G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
+                    If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+                End If
+            Else
+                G.DrawRectangle(New Pen(WindowFrame), rect)
+                G.DrawRectangle(New Pen(ButtonShadow), rectinner)
+                If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+            End If
         End If
+
 #End Region
 
 #Region "Text and Image Render"
@@ -961,6 +973,9 @@ Public Class RetroWindow : Inherits Panel
     Public Property ColorGradient As Boolean = True
     Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
     Public Property TitlebarText As String = "New Window"
+    Public Property UseItAsMenu As Boolean = False
+
+    Public Property Flat As Boolean = False
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
     Public Property ButtonDkShadow As Color = Color.Black
     Public Property ButtonHilight As Color = Color.White
@@ -978,30 +993,33 @@ Public Class RetroWindow : Inherits Panel
         '#################################################################################
         G.Clear(BackColor)
 
-        With Rect
-            G.DrawLine(New Pen(ButtonShadow), New Point(.Width - 1, .X + 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X + 1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.Width - 2, .Y + 1))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.X + 1, .Height - 2))
-            G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ButtonDkShadow), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Height), New Point(.Width, .Height))
-        End With
-
-        G.DrawRectangle(New Pen(ColorBorder), ARect)
-        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
-
-        Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
-
-
-        If ColorGradient Then
-            G.FillRectangle(gr, TRect)
+        If Not Flat Then
+            With Rect
+                G.DrawLine(New Pen(ButtonShadow), New Point(.Width - 1, .X + 1), New Point(.Width - 1, .Height - 1))
+                G.DrawLine(New Pen(ButtonShadow), New Point(.X + 1, .Height - 1), New Point(.Width - 1, .Height - 1))
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.Width - 2, .Y + 1))
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.X + 1, .Height - 2))
+                G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.Width - 1, .Y))
+                G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.X, .Height - 1))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(.Width, .X), New Point(.Width, .Height))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Height), New Point(.Width, .Height))
+            End With
         Else
-            G.FillRectangle(New SolidBrush(Color1), TRect)
+            G.DrawRectangle(New Pen(ButtonShadow), Rect)
         End If
 
-        G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
+        If Not Flat And Not UseItAsMenu Then G.DrawRectangle(New Pen(ColorBorder), ARect)
+
+        If Not UseItAsMenu Then
+            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+            Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
+            If ColorGradient Then
+                G.FillRectangle(gr, TRect)
+            Else
+                G.FillRectangle(New SolidBrush(Color1), TRect)
+            End If
+            G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
+        End If
 
     End Sub
 End Class

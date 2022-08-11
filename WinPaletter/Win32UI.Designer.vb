@@ -29,7 +29,7 @@ Partial Class Win32UI
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.XenonToggle1 = New WinPaletter.XenonToggle()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -81,7 +81,6 @@ Partial Class Win32UI
         Me.btnhilight_pick = New WinPaletter.XenonGroupBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         Me.XenonToggle2 = New WinPaletter.XenonToggle()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -182,7 +181,7 @@ Partial Class Win32UI
         Me.Label41 = New System.Windows.Forms.Label()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.RetroLabel13 = New WinPaletter.RetroLabel()
-        Me.Menu = New WinPaletter.RetroPanelRaised()
+        Me.Menu = New WinPaletter.RetroWindow()
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.RetroLabel9 = New WinPaletter.RetroLabel()
         Me.highlight = New System.Windows.Forms.Panel()
@@ -210,14 +209,14 @@ Partial Class Win32UI
         Me.RetroButton8 = New WinPaletter.RetroButton()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.RetroPanel2 = New WinPaletter.RetroPanel()
+        Me.RetroPanel2 = New System.Windows.Forms.Panel()
+        Me.RetroButton12 = New WinPaletter.RetroButton()
         Me.RetroButton11 = New WinPaletter.RetroButton()
         Me.RetroButton10 = New WinPaletter.RetroButton()
         Me.RetroButton9 = New WinPaletter.RetroButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -347,23 +346,10 @@ Partial Class Win32UI
         Me.Label16.Text = "Enable Flat Menus ?"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonAlertBox2
+        'SaveFileDialog2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Success
-        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(79, Byte), Integer))
-        Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox2.CenterText = True
-        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(190, 419)
-        Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(332, 24)
-        Me.XenonAlertBox2.TabIndex = 81
-        Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "Requires logging off and on to apply effect of this toggle"
+        Me.SaveFileDialog2.DefaultExt = "wpt"
+        Me.SaveFileDialog2.Filter = "PNG File|*.png"
         '
         'XenonToggle1
         '
@@ -372,7 +358,7 @@ Partial Class Win32UI
         Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonToggle1.Checked = True
         Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(531, 419)
+        Me.XenonToggle1.Location = New System.Drawing.Point(194, 419)
         Me.XenonToggle1.Name = "XenonToggle1"
         Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
         Me.XenonToggle1.TabIndex = 80
@@ -1111,7 +1097,6 @@ Partial Class Win32UI
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox4.Controls.Add(Me.XenonAlertBox3)
         Me.XenonGroupBox4.Controls.Add(Me.XenonToggle2)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox34)
         Me.XenonGroupBox4.Controls.Add(Me.Label30)
@@ -1121,26 +1106,9 @@ Partial Class Win32UI
         Me.XenonGroupBox4.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 54)
+        Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 30)
         Me.XenonGroupBox4.TabIndex = 44
         Me.XenonGroupBox4.Text = "XenonGroupBox25"
-        '
-        'XenonAlertBox3
-        '
-        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Success
-        Me.XenonAlertBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(79, Byte), Integer))
-        Me.XenonAlertBox3.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox3.CenterText = True
-        Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox3.Image = Nothing
-        Me.XenonAlertBox3.Location = New System.Drawing.Point(39, 30)
-        Me.XenonAlertBox3.Name = "XenonAlertBox3"
-        Me.XenonAlertBox3.Size = New System.Drawing.Size(258, 20)
-        Me.XenonAlertBox3.TabIndex = 82
-        Me.XenonAlertBox3.TabStop = False
-        Me.XenonAlertBox3.Text = "Requires logging off and on to apply effect"
         '
         'XenonToggle2
         '
@@ -2589,19 +2557,27 @@ Partial Class Win32UI
         'Menu
         '
         Me.Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu.ButtonDkShadow = System.Drawing.Color.Black
         Me.Menu.ButtonHilight = System.Drawing.Color.White
+        Me.Menu.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.Menu.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu.ColorGradient = True
         Me.Menu.Controls.Add(Me.Panel8)
         Me.Menu.Controls.Add(Me.highlight)
         Me.Menu.Controls.Add(Me.Panel4)
         Me.Menu.Flat = False
         Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu.ForeColor = System.Drawing.Color.Black
-        Me.Menu.Location = New System.Drawing.Point(206, 133)
+        Me.Menu.Location = New System.Drawing.Point(207, 135)
         Me.Menu.Name = "Menu"
         Me.Menu.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu.Size = New System.Drawing.Size(116, 66)
         Me.Menu.TabIndex = 4
+        Me.Menu.TitlebarText = "New Window"
+        Me.Menu.UseItAsMenu = True
         '
         'Panel8
         '
@@ -2703,6 +2679,7 @@ Partial Class Win32UI
         Me.RetroWindow3.Controls.Add(Me.RetroButton2)
         Me.RetroWindow3.Controls.Add(Me.RetroButton1)
         Me.RetroWindow3.Controls.Add(Me.RetroLabel4)
+        Me.RetroWindow3.Flat = False
         Me.RetroWindow3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow3.ForeColor = System.Drawing.Color.White
         Me.RetroWindow3.Location = New System.Drawing.Point(110, 159)
@@ -2710,6 +2687,7 @@ Partial Class Win32UI
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 77)
         Me.RetroWindow3.TabIndex = 2
         Me.RetroWindow3.TitlebarText = "Message Box"
+        Me.RetroWindow3.UseItAsMenu = False
         '
         'RetroButton2
         '
@@ -2727,6 +2705,7 @@ Partial Class Win32UI
         Me.RetroButton2.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton2.TabIndex = 3
         Me.RetroButton2.Text = "r"
+        Me.RetroButton2.UseItAsScrollbar = False
         Me.RetroButton2.UseVisualStyleBackColor = False
         Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
@@ -2746,6 +2725,7 @@ Partial Class Win32UI
         Me.RetroButton1.Size = New System.Drawing.Size(75, 23)
         Me.RetroButton1.TabIndex = 2
         Me.RetroButton1.Text = "OK"
+        Me.RetroButton1.UseItAsScrollbar = False
         Me.RetroButton1.UseVisualStyleBackColor = False
         Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
         '
@@ -2778,6 +2758,7 @@ Partial Class Win32UI
         Me.RetroWindow2.Controls.Add(Me.RetroButton4)
         Me.RetroWindow2.Controls.Add(Me.RetroButton3)
         Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
+        Me.RetroWindow2.Flat = False
         Me.RetroWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow2.ForeColor = System.Drawing.Color.White
         Me.RetroWindow2.Location = New System.Drawing.Point(100, 94)
@@ -2785,6 +2766,7 @@ Partial Class Win32UI
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
         Me.RetroWindow2.TabIndex = 1
         Me.RetroWindow2.TitlebarText = "Active Window"
+        Me.RetroWindow2.UseItAsMenu = False
         '
         'Panel3
         '
@@ -2866,6 +2848,7 @@ Partial Class Win32UI
         Me.RetroButton5.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton5.TabIndex = 6
         Me.RetroButton5.Text = "0"
+        Me.RetroButton5.UseItAsScrollbar = False
         Me.RetroButton5.UseVisualStyleBackColor = False
         Me.RetroButton5.WindowFrame = System.Drawing.Color.Black
         '
@@ -2885,6 +2868,7 @@ Partial Class Win32UI
         Me.RetroButton4.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton4.TabIndex = 5
         Me.RetroButton4.Text = "1"
+        Me.RetroButton4.UseItAsScrollbar = False
         Me.RetroButton4.UseVisualStyleBackColor = False
         Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
         '
@@ -2904,6 +2888,7 @@ Partial Class Win32UI
         Me.RetroButton3.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton3.TabIndex = 4
         Me.RetroButton3.Text = "r"
+        Me.RetroButton3.UseItAsScrollbar = False
         Me.RetroButton3.UseVisualStyleBackColor = False
         Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
         '
@@ -2946,6 +2931,7 @@ Partial Class Win32UI
         Me.RetroWindow1.Controls.Add(Me.RetroButton6)
         Me.RetroWindow1.Controls.Add(Me.RetroButton7)
         Me.RetroWindow1.Controls.Add(Me.RetroButton8)
+        Me.RetroWindow1.Flat = False
         Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow1.ForeColor = System.Drawing.Color.White
         Me.RetroWindow1.Location = New System.Drawing.Point(94, 71)
@@ -2954,6 +2940,7 @@ Partial Class Win32UI
         Me.RetroWindow1.TabIndex = 0
         Me.RetroWindow1.Text = "New Window"
         Me.RetroWindow1.TitlebarText = "Inactive Window"
+        Me.RetroWindow1.UseItAsMenu = False
         '
         'RetroButton6
         '
@@ -2971,6 +2958,7 @@ Partial Class Win32UI
         Me.RetroButton6.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton6.TabIndex = 9
         Me.RetroButton6.Text = "0"
+        Me.RetroButton6.UseItAsScrollbar = False
         Me.RetroButton6.UseVisualStyleBackColor = False
         Me.RetroButton6.WindowFrame = System.Drawing.Color.Black
         '
@@ -2990,6 +2978,7 @@ Partial Class Win32UI
         Me.RetroButton7.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton7.TabIndex = 8
         Me.RetroButton7.Text = "1"
+        Me.RetroButton7.UseItAsScrollbar = False
         Me.RetroButton7.UseVisualStyleBackColor = False
         Me.RetroButton7.WindowFrame = System.Drawing.Color.Black
         '
@@ -3009,6 +2998,7 @@ Partial Class Win32UI
         Me.RetroButton8.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton8.TabIndex = 7
         Me.RetroButton8.Text = "r"
+        Me.RetroButton8.UseItAsScrollbar = False
         Me.RetroButton8.UseVisualStyleBackColor = False
         Me.RetroButton8.WindowFrame = System.Drawing.Color.Black
         '
@@ -3025,6 +3015,7 @@ Partial Class Win32UI
         Me.RetroWindow4.ColorGradient = True
         Me.RetroWindow4.Controls.Add(Me.Panel2)
         Me.RetroWindow4.Controls.Add(Me.RetroButton9)
+        Me.RetroWindow4.Flat = False
         Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow4.ForeColor = System.Drawing.Color.White
         Me.RetroWindow4.Location = New System.Drawing.Point(48, 27)
@@ -3033,6 +3024,7 @@ Partial Class Win32UI
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
         Me.RetroWindow4.TabIndex = 3
         Me.RetroWindow4.TitlebarText = "Programs Container"
+        Me.RetroWindow4.UseItAsMenu = False
         '
         'Panel2
         '
@@ -3048,18 +3040,34 @@ Partial Class Win32UI
         'RetroPanel2
         '
         Me.RetroPanel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanel2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanel2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroPanel2.Controls.Add(Me.RetroButton12)
         Me.RetroPanel2.Controls.Add(Me.RetroButton11)
         Me.RetroPanel2.Controls.Add(Me.RetroButton10)
         Me.RetroPanel2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroPanel2.Flat = False
         Me.RetroPanel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroPanel2.ForeColor = System.Drawing.Color.Black
         Me.RetroPanel2.Location = New System.Drawing.Point(0, 0)
         Me.RetroPanel2.Name = "RetroPanel2"
         Me.RetroPanel2.Size = New System.Drawing.Size(16, 107)
         Me.RetroPanel2.TabIndex = 0
+        '
+        'RetroButton12
+        '
+        Me.RetroButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton12.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton12.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton12.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton12.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton12.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton12.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton12.Image = Nothing
+        Me.RetroButton12.Location = New System.Drawing.Point(0, 29)
+        Me.RetroButton12.Name = "RetroButton12"
+        Me.RetroButton12.Size = New System.Drawing.Size(16, 31)
+        Me.RetroButton12.TabIndex = 7
+        Me.RetroButton12.UseItAsScrollbar = True
+        Me.RetroButton12.UseVisualStyleBackColor = False
+        Me.RetroButton12.WindowFrame = System.Drawing.Color.Black
         '
         'RetroButton11
         '
@@ -3077,6 +3085,7 @@ Partial Class Win32UI
         Me.RetroButton11.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton11.TabIndex = 6
         Me.RetroButton11.Text = "u"
+        Me.RetroButton11.UseItAsScrollbar = False
         Me.RetroButton11.UseVisualStyleBackColor = False
         Me.RetroButton11.WindowFrame = System.Drawing.Color.Black
         '
@@ -3096,6 +3105,7 @@ Partial Class Win32UI
         Me.RetroButton10.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton10.TabIndex = 5
         Me.RetroButton10.Text = "t"
+        Me.RetroButton10.UseItAsScrollbar = False
         Me.RetroButton10.UseVisualStyleBackColor = False
         Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
         '
@@ -3115,6 +3125,7 @@ Partial Class Win32UI
         Me.RetroButton9.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton9.TabIndex = 3
         Me.RetroButton9.Text = "r"
+        Me.RetroButton9.UseItAsScrollbar = False
         Me.RetroButton9.UseVisualStyleBackColor = False
         Me.RetroButton9.WindowFrame = System.Drawing.Color.Black
         '
@@ -3162,18 +3173,12 @@ Partial Class Win32UI
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
         '
-        'SaveFileDialog2
-        '
-        Me.SaveFileDialog2.DefaultExt = "wpt"
-        Me.SaveFileDialog2.Filter = "PNG File|*.png"
-        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(840, 542)
-        Me.Controls.Add(Me.XenonAlertBox2)
         Me.Controls.Add(Me.XenonToggle1)
         Me.Controls.Add(Me.PictureBox16)
         Me.Controls.Add(Me.Label16)
@@ -3440,7 +3445,7 @@ Partial Class Win32UI
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents Panel2 As Panel
     Friend WithEvents RetroButton9 As RetroButton
-    Friend WithEvents Menu As RetroPanelRaised
+    Friend WithEvents Menu As RetroWindow
     Friend WithEvents Panel8 As Panel
     Friend WithEvents RetroLabel9 As RetroLabel
     Friend WithEvents highlight As Panel
@@ -3448,7 +3453,7 @@ Partial Class Win32UI
     Friend WithEvents RetroLabel6 As RetroLabel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents RetroLabel13 As RetroLabel
-    Friend WithEvents RetroPanel2 As RetroPanel
+    Friend WithEvents RetroPanel2 As Panel
     Friend WithEvents RetroButton11 As RetroButton
     Friend WithEvents RetroButton10 As RetroButton
     Friend WithEvents XenonTabControl1 As XenonTabControl
@@ -3474,7 +3479,6 @@ Partial Class Win32UI
     Friend WithEvents XenonToggle1 As XenonToggle
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label16 As Label
-    Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents XenonButton9 As XenonButton
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents PictureBox33 As PictureBox
@@ -3483,6 +3487,6 @@ Partial Class Win32UI
     Friend WithEvents XenonToggle2 As XenonToggle
     Friend WithEvents PictureBox34 As PictureBox
     Friend WithEvents Label30 As Label
-    Friend WithEvents XenonAlertBox3 As XenonAlertBox
     Friend WithEvents SaveFileDialog2 As SaveFileDialog
+    Friend WithEvents RetroButton12 As RetroButton
 End Class

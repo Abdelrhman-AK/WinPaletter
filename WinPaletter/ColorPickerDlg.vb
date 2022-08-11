@@ -221,7 +221,13 @@ Public Class ColorPickerDlg
                 If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
                     DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                 Else
-                    If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If Not TypeOf ctrl Is XenonGroupBox Then
+                        If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                        If TypeOf ctrl Is RetroPanel Then
+                            If _Conditions.RetroButtonHilight Then DirectCast(ctrl, RetroPanel).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                            If _Conditions.RetroButtonShadow Then DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                        End If
+                    End If
                 End If
 
                 If TypeOf ctrl Is XenonGroupBox Then

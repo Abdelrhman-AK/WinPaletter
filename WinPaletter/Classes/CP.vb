@@ -362,7 +362,6 @@ Public Class CP
 #End Region
 
 
-
     Enum Mode
         Registry
         Init
@@ -505,6 +504,10 @@ Public Class CP
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204")
                     Win32UI_HotTrackingColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                End With
+
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252")
+                    Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252")
@@ -1659,6 +1662,8 @@ Public Class CP
         End Select
 
     End Sub
+
+#Region "UserPreferenceMask"
     Function GetUserPreferencesMask(Bit As Integer) As Boolean
 
         Try
@@ -1687,6 +1692,21 @@ Public Class CP
         ar = ar.Reverse.ToArray
         Return ar
     End Function
+
+    Private Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (ByVal uAction As Integer,
+      ByVal uParam As Integer, ByVal lpvParam As Integer,
+      ByVal fuWinIni As Integer) As Integer
+
+    <DllImport("user32", CharSet:=CharSet.Auto)>
+    Public Shared Function SystemParametersInfo(
+            ByVal intAction As Integer,
+            ByVal intParam As Integer,
+            ByVal strParam As String,
+            ByVal intWinIniFlag As Integer) As Integer
+    End Function
+#End Region
+
+#Region "Cursors Render"
     Sub ExportCursors([CP] As CP)
         Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
         Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
@@ -2175,6 +2195,7 @@ Public Class CP
         rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
         rMain.Close()
     End Sub
+
     <DllImport("user32.dll")>
     Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As UInteger) As Boolean
     End Function
@@ -2225,6 +2246,7 @@ Public Class CP
         'Hourglass
         OCR_WAIT = 32514
     End Enum
+#End Region
 
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
@@ -2412,8 +2434,13 @@ Public Class CP
 
                 SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
+
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
+
+                SystemParametersInfo(&H1023, 0, If(Win32UI_EnableTheming, 1, 0), 0)
+                SystemParametersInfo(&H1009, 0, If(Win32UI_EnableGradient, 1, 0), 0)
+
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)

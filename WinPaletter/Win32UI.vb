@@ -271,6 +271,7 @@ Public Class Win32UI
                 Next
 
                 CList.Add(RetroTextBox1)
+                CList.Add(RetroPanel1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonHilight = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -288,6 +289,7 @@ Public Class Win32UI
                     RB.ButtonHilight = C
                 Next
                 RetroTextBox1.ButtonHilight = C
+                RetroPanel1.ButtonHilight = C
 
             Case "btnlight_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -331,6 +333,7 @@ Public Class Win32UI
                 Next
 
                 CList.Add(RetroTextBox1)
+                CList.Add(RetroPanel1)
 
                 Dim _Conditions As New Conditions With {.RetroButtonShadow = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -349,6 +352,7 @@ Public Class Win32UI
                 Next
 
                 RetroTextBox1.ButtonShadow = C
+                RetroPanel1.ButtonShadow = C
 
             Case "btntext_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -556,29 +560,30 @@ Public Class Win32UI
                     FoundGradientInactive = True
                 End If
 
-                If x.ToLower.StartsWith("background=") Then background_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("hilight=") Then hilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("hilighttext=") Then hilighttext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("titletext=") Then TitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("window=") Then Window_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("windowtext=") Then WindowText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("scrollbar=") Then Scrollbar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("menu=") Then menu_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("windowframe=") Then Frame_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("menutext=") Then menutext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("activeborder=") Then ActiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("inactiveborder=") Then InactiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("appworkspace=") Then AppWorkspace_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttonface=") Then btnface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttonshadow=") Then btnshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("graytext=") Then GrayText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttontext=") Then btntext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("inactivetitletext=") Then InactivetitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttonhilight=") Then btnhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttondkShadow=") Then btndkshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("buttonlight=") Then btnlight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("infotext=") Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-                If x.ToLower.StartsWith("infowindow=") Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("background=".ToLower) Then background_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("hilight=".ToLower) Then hilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("hilighttext=".ToLower) Then hilighttext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("titletext=".ToLower) Then TitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("window=".ToLower) Then Window_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("windowtext=".ToLower) Then WindowText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("scrollbar=".ToLower) Then Scrollbar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("menu=".ToLower) Then menu_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("windowframe=".ToLower) Then Frame_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("menutext=".ToLower) Then menutext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("activeborder=".ToLower) Then ActiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("inactiveborder=".ToLower) Then InactiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("appworkspace=".ToLower) Then AppWorkspace_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttonface=".ToLower) Then btnface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttonshadow=".ToLower) Then btnshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("graytext=".ToLower) Then GrayText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttontext=".ToLower) Then btntext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("inactivetitletext=".ToLower) Then InactivetitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttonhilight=".ToLower) Then btnhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttondkshadow=".ToLower) Then btndkshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("buttonlight=".ToLower) Then btnlight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("infotext=".ToLower) Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("infowindow=".ToLower) Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("hottrackingcolor=".ToLower) Then hottracking_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
             Next
         End If
 
@@ -649,29 +654,30 @@ Public Class Win32UI
                 FoundGradientInactive = True
             End If
 
-            If x.ToLower.StartsWith("background=") Then background_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("hilight=") Then hilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("hilighttext=") Then hilighttext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("titletext=") Then TitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("window=") Then Window_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("windowtext=") Then WindowText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("scrollbar=") Then Scrollbar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("menu=") Then menu_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("windowframe=") Then Frame_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("menutext=") Then menutext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("activeborder=") Then ActiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("inactiveborder=") Then InactiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("appworkspace=") Then AppWorkspace_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttonface=") Then btnface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttonshadow=") Then btnshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("graytext=") Then GrayText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttontext=") Then btntext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("inactivetitletext=") Then InactivetitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttonhilight=") Then btnhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttondkShadow=") Then btndkshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("buttonlight=") Then btnlight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("infotext=") Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
-            If x.ToLower.StartsWith("infowindow=") Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("background=".ToLower) Then background_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("hilight=".ToLower) Then hilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("hilighttext=".ToLower) Then hilighttext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("titletext=".ToLower) Then TitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("window=".ToLower) Then Window_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("windowtext=".ToLower) Then WindowText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("scrollbar=".ToLower) Then Scrollbar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menu=".ToLower) Then menu_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("windowframe=".ToLower) Then Frame_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menutext=".ToLower) Then menutext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("activeborder=".ToLower) Then ActiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("inactiveborder=".ToLower) Then InactiveBorder_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("appworkspace=".ToLower) Then AppWorkspace_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonface=".ToLower) Then btnface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonshadow=".ToLower) Then btnshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("graytext=".ToLower) Then GrayText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttontext=".ToLower) Then btntext_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("inactivetitletext=".ToLower) Then InactivetitleText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonhilight=".ToLower) Then btnhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttondkshadow=".ToLower) Then btndkshadow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("buttonlight=".ToLower) Then btnlight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("infotext=".ToLower) Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("infowindow=".ToLower) Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("hottrackingcolor=".ToLower) Then hottracking_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
         Next
 
         ApplyRetroPreview()
@@ -763,6 +769,8 @@ Public Class Win32UI
         For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
             RB.ButtonHilight = c
         Next
+        RetroTextBox1.ButtonHilight = c
+        RetroPanel1.ButtonHilight = c
 
         c = btnlight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -788,6 +796,8 @@ Public Class Win32UI
         For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
             RB.ButtonShadow = c
         Next
+        RetroTextBox1.ButtonShadow = c
+        RetroPanel1.ButtonShadow = c
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -898,8 +908,6 @@ Public Class Win32UI
 
     End Sub
 
-
-
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         btndkshadow_pick.BackColor = Color.Black
         btnshadow_pick.BackColor = Color.FromArgb(128, 128, 128)
@@ -946,4 +954,15 @@ Public Class Win32UI
         RetroWindow4.Invalidate()
     End Sub
 
+    Private Sub RetroButton10_Click(sender As Object, e As EventArgs) Handles RetroButton10.Click
+        'If RetroButton10.Bottom < RetroButton12.Top Then RetroButton12.Top -= 5
+    End Sub
+
+    Private Sub RetroButton11_Click(sender As Object, e As EventArgs) Handles RetroButton11.Click
+        'If RetroButton12.Bottom < RetroButton11.Top Then RetroButton12.Top += 5
+    End Sub
+
+    Private Sub RetroButton12_MouseMove(sender As Object, e As MouseEventArgs)
+
+    End Sub
 End Class
