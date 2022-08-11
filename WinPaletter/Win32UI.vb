@@ -782,6 +782,7 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonLight = c
         Next
+        RetroTextBox1.ButtonLight = c
 
         c = btnshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)

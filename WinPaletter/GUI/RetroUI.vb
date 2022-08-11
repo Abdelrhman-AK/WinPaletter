@@ -988,7 +988,7 @@ Public Class RetroWindow : Inherits Panel
 
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim TRect As New Rectangle(3, 3, Width - 6, 18)
+        Dim TRect As New Rectangle(4, 4, Width - 8, 18)
         Dim ARect As New Rectangle(2, 2, Width - 5, Height - 5)
         '#################################################################################
         G.Clear(BackColor)

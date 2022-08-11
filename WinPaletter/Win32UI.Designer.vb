@@ -2547,7 +2547,7 @@ Partial Class Win32UI
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel13.Location = New System.Drawing.Point(195, 43)
+        Me.RetroLabel13.Location = New System.Drawing.Point(192, 43)
         Me.RetroLabel13.Name = "RetroLabel13"
         Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
         Me.RetroLabel13.TabIndex = 5
@@ -2571,7 +2571,7 @@ Partial Class Win32UI
         Me.Menu.Flat = False
         Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu.ForeColor = System.Drawing.Color.Black
-        Me.Menu.Location = New System.Drawing.Point(207, 135)
+        Me.Menu.Location = New System.Drawing.Point(209, 135)
         Me.Menu.Name = "Menu"
         Me.Menu.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu.Size = New System.Drawing.Size(116, 66)
@@ -2684,6 +2684,7 @@ Partial Class Win32UI
         Me.RetroWindow3.ForeColor = System.Drawing.Color.White
         Me.RetroWindow3.Location = New System.Drawing.Point(110, 159)
         Me.RetroWindow3.Name = "RetroWindow3"
+        Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 77)
         Me.RetroWindow3.TabIndex = 2
         Me.RetroWindow3.TitlebarText = "Message Box"
@@ -2700,7 +2701,7 @@ Partial Class Win32UI
         Me.RetroButton2.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton2.ForeColor = System.Drawing.Color.Black
         Me.RetroButton2.Image = Nothing
-        Me.RetroButton2.Location = New System.Drawing.Point(126, 5)
+        Me.RetroButton2.Location = New System.Drawing.Point(122, 5)
         Me.RetroButton2.Name = "RetroButton2"
         Me.RetroButton2.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton2.TabIndex = 3
@@ -2720,7 +2721,7 @@ Partial Class Win32UI
         Me.RetroButton1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton1.ForeColor = System.Drawing.Color.Black
         Me.RetroButton1.Image = Nothing
-        Me.RetroButton1.Location = New System.Drawing.Point(36, 47)
+        Me.RetroButton1.Location = New System.Drawing.Point(37, 47)
         Me.RetroButton1.Name = "RetroButton1"
         Me.RetroButton1.Size = New System.Drawing.Size(75, 23)
         Me.RetroButton1.TabIndex = 2
@@ -2735,7 +2736,7 @@ Partial Class Win32UI
         Me.RetroLabel4.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel4.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel4.Location = New System.Drawing.Point(7, 26)
+        Me.RetroLabel4.Location = New System.Drawing.Point(9, 28)
         Me.RetroLabel4.Name = "RetroLabel4"
         Me.RetroLabel4.Size = New System.Drawing.Size(74, 13)
         Me.RetroLabel4.TabIndex = 1
@@ -2763,6 +2764,7 @@ Partial Class Win32UI
         Me.RetroWindow2.ForeColor = System.Drawing.Color.White
         Me.RetroWindow2.Location = New System.Drawing.Point(100, 94)
         Me.RetroWindow2.Name = "RetroWindow2"
+        Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
         Me.RetroWindow2.TabIndex = 1
         Me.RetroWindow2.TitlebarText = "Active Window"
@@ -2774,33 +2776,31 @@ Partial Class Win32UI
         Me.Panel3.Controls.Add(Me.RetroLabel1)
         Me.Panel3.Controls.Add(Me.RetroLabel2)
         Me.Panel3.Controls.Add(Me.RetroPanel1)
-        Me.Panel3.Location = New System.Drawing.Point(3, 21)
+        Me.Panel3.Location = New System.Drawing.Point(5, 23)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(190, 20)
+        Me.Panel3.Size = New System.Drawing.Size(186, 18)
         Me.Panel3.TabIndex = 5
         '
         'RetroLabel1
         '
-        Me.RetroLabel1.AutoSize = True
         Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel1.Location = New System.Drawing.Point(3, 4)
+        Me.RetroLabel1.Location = New System.Drawing.Point(3, 3)
         Me.RetroLabel1.Name = "RetroLabel1"
-        Me.RetroLabel1.Size = New System.Drawing.Size(40, 13)
+        Me.RetroLabel1.Size = New System.Drawing.Size(40, 12)
         Me.RetroLabel1.TabIndex = 0
         Me.RetroLabel1.Text = "Normal"
         Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroLabel2
         '
-        Me.RetroLabel2.AutoSize = True
         Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.RetroLabel2.Location = New System.Drawing.Point(49, 4)
+        Me.RetroLabel2.Location = New System.Drawing.Point(49, 3)
         Me.RetroLabel2.Name = "RetroLabel2"
-        Me.RetroLabel2.Size = New System.Drawing.Size(48, 13)
+        Me.RetroLabel2.Size = New System.Drawing.Size(48, 12)
         Me.RetroLabel2.TabIndex = 1
         Me.RetroLabel2.Text = "Disabled"
         Me.RetroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2814,20 +2814,21 @@ Partial Class Win32UI
         Me.RetroPanel1.Flat = False
         Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanel1.Location = New System.Drawing.Point(103, 2)
+        Me.RetroPanel1.Location = New System.Drawing.Point(103, 1)
         Me.RetroPanel1.Name = "RetroPanel1"
-        Me.RetroPanel1.Size = New System.Drawing.Size(52, 17)
+        Me.RetroPanel1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 4)
+        Me.RetroPanel1.Size = New System.Drawing.Size(50, 16)
         Me.RetroPanel1.TabIndex = 2
         '
         'RetroLabel3
         '
-        Me.RetroLabel3.AutoSize = True
         Me.RetroLabel3.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RetroLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel3.Location = New System.Drawing.Point(3, 2)
+        Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
         Me.RetroLabel3.Name = "RetroLabel3"
-        Me.RetroLabel3.Size = New System.Drawing.Size(49, 13)
+        Me.RetroLabel3.Size = New System.Drawing.Size(48, 9)
         Me.RetroLabel3.TabIndex = 1
         Me.RetroLabel3.Text = "Selected"
         Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2843,7 +2844,7 @@ Partial Class Win32UI
         Me.RetroButton5.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton5.ForeColor = System.Drawing.Color.Black
         Me.RetroButton5.Image = Nothing
-        Me.RetroButton5.Location = New System.Drawing.Point(141, 5)
+        Me.RetroButton5.Location = New System.Drawing.Point(140, 6)
         Me.RetroButton5.Name = "RetroButton5"
         Me.RetroButton5.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton5.TabIndex = 6
@@ -2863,7 +2864,7 @@ Partial Class Win32UI
         Me.RetroButton4.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton4.ForeColor = System.Drawing.Color.Black
         Me.RetroButton4.Image = Nothing
-        Me.RetroButton4.Location = New System.Drawing.Point(157, 5)
+        Me.RetroButton4.Location = New System.Drawing.Point(156, 6)
         Me.RetroButton4.Name = "RetroButton4"
         Me.RetroButton4.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton4.TabIndex = 5
@@ -2883,7 +2884,7 @@ Partial Class Win32UI
         Me.RetroButton3.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton3.ForeColor = System.Drawing.Color.Black
         Me.RetroButton3.Image = Nothing
-        Me.RetroButton3.Location = New System.Drawing.Point(175, 5)
+        Me.RetroButton3.Location = New System.Drawing.Point(174, 6)
         Me.RetroButton3.Name = "RetroButton3"
         Me.RetroButton3.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton3.TabIndex = 4
@@ -2905,12 +2906,12 @@ Partial Class Win32UI
         Me.RetroTextBox1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroTextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RetroTextBox1.Location = New System.Drawing.Point(5, 41)
+        Me.RetroTextBox1.Location = New System.Drawing.Point(4, 42)
         Me.RetroTextBox1.MaxLength = 32767
         Me.RetroTextBox1.Multiline = True
         Me.RetroTextBox1.Name = "RetroTextBox1"
         Me.RetroTextBox1.ReadOnly = True
-        Me.RetroTextBox1.Size = New System.Drawing.Size(187, 64)
+        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 63)
         Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
         Me.RetroTextBox1.Text = "Window Text"
@@ -2936,6 +2937,7 @@ Partial Class Win32UI
         Me.RetroWindow1.ForeColor = System.Drawing.Color.White
         Me.RetroWindow1.Location = New System.Drawing.Point(94, 71)
         Me.RetroWindow1.Name = "RetroWindow1"
+        Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
         Me.RetroWindow1.TabIndex = 0
         Me.RetroWindow1.Text = "New Window"
@@ -2953,7 +2955,7 @@ Partial Class Win32UI
         Me.RetroButton6.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton6.ForeColor = System.Drawing.Color.Black
         Me.RetroButton6.Image = Nothing
-        Me.RetroButton6.Location = New System.Drawing.Point(125, 5)
+        Me.RetroButton6.Location = New System.Drawing.Point(123, 6)
         Me.RetroButton6.Name = "RetroButton6"
         Me.RetroButton6.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton6.TabIndex = 9
@@ -2973,7 +2975,7 @@ Partial Class Win32UI
         Me.RetroButton7.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton7.ForeColor = System.Drawing.Color.Black
         Me.RetroButton7.Image = Nothing
-        Me.RetroButton7.Location = New System.Drawing.Point(141, 5)
+        Me.RetroButton7.Location = New System.Drawing.Point(139, 6)
         Me.RetroButton7.Name = "RetroButton7"
         Me.RetroButton7.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton7.TabIndex = 8
@@ -2993,7 +2995,7 @@ Partial Class Win32UI
         Me.RetroButton8.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton8.ForeColor = System.Drawing.Color.Black
         Me.RetroButton8.Image = Nothing
-        Me.RetroButton8.Location = New System.Drawing.Point(159, 5)
+        Me.RetroButton8.Location = New System.Drawing.Point(157, 6)
         Me.RetroButton8.Name = "RetroButton8"
         Me.RetroButton8.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton8.TabIndex = 7
@@ -3020,7 +3022,7 @@ Partial Class Win32UI
         Me.RetroWindow4.ForeColor = System.Drawing.Color.White
         Me.RetroWindow4.Location = New System.Drawing.Point(48, 27)
         Me.RetroWindow4.Name = "RetroWindow4"
-        Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(3, 0, 3, 3)
+        Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
         Me.RetroWindow4.TabIndex = 3
         Me.RetroWindow4.TitlebarText = "Programs Container"
@@ -3031,10 +3033,10 @@ Partial Class Win32UI
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Panel2.Controls.Add(Me.RetroPanel2)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel2.Location = New System.Drawing.Point(3, 22)
+        Me.Panel2.Location = New System.Drawing.Point(4, 25)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Padding = New System.Windows.Forms.Padding(0, 0, 1, 0)
-        Me.Panel2.Size = New System.Drawing.Size(150, 107)
+        Me.Panel2.Size = New System.Drawing.Size(148, 103)
         Me.Panel2.TabIndex = 4
         '
         'RetroPanel2
@@ -3048,7 +3050,7 @@ Partial Class Win32UI
         Me.RetroPanel2.ForeColor = System.Drawing.Color.Black
         Me.RetroPanel2.Location = New System.Drawing.Point(0, 0)
         Me.RetroPanel2.Name = "RetroPanel2"
-        Me.RetroPanel2.Size = New System.Drawing.Size(16, 107)
+        Me.RetroPanel2.Size = New System.Drawing.Size(16, 103)
         Me.RetroPanel2.TabIndex = 0
         '
         'RetroButton12
@@ -3080,7 +3082,7 @@ Partial Class Win32UI
         Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton11.ForeColor = System.Drawing.Color.Black
         Me.RetroButton11.Image = Nothing
-        Me.RetroButton11.Location = New System.Drawing.Point(0, 93)
+        Me.RetroButton11.Location = New System.Drawing.Point(0, 89)
         Me.RetroButton11.Name = "RetroButton11"
         Me.RetroButton11.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton11.TabIndex = 6
@@ -3120,7 +3122,7 @@ Partial Class Win32UI
         Me.RetroButton9.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton9.ForeColor = System.Drawing.Color.Black
         Me.RetroButton9.Image = Nothing
-        Me.RetroButton9.Location = New System.Drawing.Point(135, 5)
+        Me.RetroButton9.Location = New System.Drawing.Point(134, 6)
         Me.RetroButton9.Name = "RetroButton9"
         Me.RetroButton9.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton9.TabIndex = 3
@@ -3285,9 +3287,7 @@ Partial Class Win32UI
         Me.RetroWindow3.PerformLayout()
         Me.RetroWindow2.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout()
         Me.RetroPanel1.ResumeLayout(False)
-        Me.RetroPanel1.PerformLayout()
         Me.RetroWindow1.ResumeLayout(False)
         Me.RetroWindow4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
@@ -3441,7 +3441,6 @@ Partial Class Win32UI
     Friend WithEvents RetroButton3 As RetroButton
     Friend WithEvents RetroButton6 As RetroButton
     Friend WithEvents RetroButton7 As RetroButton
-    Friend WithEvents RetroButton8 As RetroButton
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents Panel2 As Panel
     Friend WithEvents RetroButton9 As RetroButton
@@ -3489,4 +3488,5 @@ Partial Class Win32UI
     Friend WithEvents Label30 As Label
     Friend WithEvents SaveFileDialog2 As SaveFileDialog
     Friend WithEvents RetroButton12 As RetroButton
+    Friend WithEvents RetroButton8 As RetroButton
 End Class
