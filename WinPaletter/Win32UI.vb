@@ -215,6 +215,9 @@ Public Class Win32UI
                     CList.Add(RB)
                 Next
 
+                CList.Add(RetroPanel2)
+
+
                 Dim _Conditions As New Conditions With {.RetroButtonFace = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
@@ -227,6 +230,8 @@ Public Class Win32UI
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     RB.BackColor = C
                 Next
+
+                RetroPanel2.BackColor = C
 
             Case "btndkshadow_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -272,6 +277,7 @@ Public Class Win32UI
 
                 CList.Add(RetroTextBox1)
                 CList.Add(RetroPanel1)
+                CList.Add(RetroPanel2)
 
                 Dim _Conditions As New Conditions With {.RetroButtonHilight = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -290,6 +296,7 @@ Public Class Win32UI
                 Next
                 RetroTextBox1.ButtonHilight = C
                 RetroPanel1.ButtonHilight = C
+                RetroPanel2.ButtonHilight = C
 
             Case "btnlight_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -499,10 +506,10 @@ Public Class Win32UI
                 RetroLabel13.ForeColor = C
 
             Case "Scrollbar_pick"
-                CList.Add(RetroPanel2)
-                Dim _Conditions As New Conditions With {.RetroBackground = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroPanel2.BackColor = C
+                'CList.Add(RetroPanel2)
+                'Dim _Conditions As New Conditions With {.RetroBackground = True}
+                C = ColorPickerDlg.Pick(CList) ', _Conditions)
+                'RetroPanel2.BackColor = C
 
             Case Else
                 C = ColorPickerDlg.Pick(CList)
@@ -743,7 +750,7 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.BackColor = c
         Next
-
+        RetroPanel2.BackColor = c
 
         c = btndkshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -771,6 +778,7 @@ Public Class Win32UI
         Next
         RetroTextBox1.ButtonHilight = c
         RetroPanel1.ButtonHilight = c
+        RetroPanel2.ButtonHilight = c
 
         c = btnlight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -799,6 +807,7 @@ Public Class Win32UI
         Next
         RetroTextBox1.ButtonShadow = c
         RetroPanel1.ButtonShadow = c
+        RetroTextBox1.Invalidate()
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -852,9 +861,6 @@ Public Class Win32UI
 
         c = InfoText_pick.BackColor
         RetroLabel13.ForeColor = c
-
-        c = Scrollbar_pick.BackColor
-        RetroPanel2.BackColor = c
 
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
             RW.Invalidate()
@@ -963,7 +969,17 @@ Public Class Win32UI
         'If RetroButton12.Bottom < RetroButton11.Top Then RetroButton12.Top += 5
     End Sub
 
-    Private Sub RetroButton12_MouseMove(sender As Object, e As MouseEventArgs)
+    'Private Sub XenonToggle3_CheckedChanged(sender As Object, e As EventArgs)
+    'If XenonToggle3.Checked Then My.Application.TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit Else My.Application.TextRenderingHint = Drawing.Text.TextRenderingHint.SystemDefault
+    'RevalidateEverything(pnl_preview)
+    'End Sub
 
+    Sub RevalidateEverything([Control] As Control)
+        For Each c As Control In Control.Controls
+            If c.HasChildren Then RevalidateEverything(c)
+            c.Invalidate()
+        Next
+        [Control].Invalidate()
     End Sub
+
 End Class

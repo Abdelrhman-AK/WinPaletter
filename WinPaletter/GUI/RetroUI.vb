@@ -125,8 +125,8 @@ Public Class RetroButton : Inherits Button
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -303,8 +303,8 @@ Public Class RetroCheckBox
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -412,8 +412,8 @@ Public Class RetroRadioButton
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -715,8 +715,8 @@ End Class
         Dim G As Graphics = Graphics.FromImage(B)
         G = Graphics.FromImage(B)
         DoubleBuffered = True
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
 
         MyBase.OnPaint(e)
         TB.ForeColor = ForeColor
@@ -777,25 +777,6 @@ Public Class RetroLabel : Inherits Label
         DoubleBuffered = True
     End Sub
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
-        Dim B As New Bitmap(Width, Height)
-        Dim G As Graphics = Graphics.FromImage(B)
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
-        DoubleBuffered = True
-
-        G.Clear(BackColor)
-
-        Dim FColor As Color
-        If Enabled Then FColor = ForeColor Else FColor = ChangeColorBrightness(BackColor, -0.2)
-
-        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(ChangeColorBrightness(BackColor, 0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
-        G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
-
-        e.Graphics.DrawImage(B, New Point(0, 0))
-        G.Dispose() : B.Dispose()
-    End Sub
-
 End Class
 Public Class RetroGroupBox : Inherits GroupBox
     Public Sub New()
@@ -811,8 +792,8 @@ Public Class RetroGroupBox : Inherits GroupBox
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
         G.Clear(BackColor)
 
@@ -849,7 +830,7 @@ Public Class RetroSeparatorH : Inherits Control
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
-        G.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
+        G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         DoubleBuffered = True
         MyBase.OnPaint(e)
 
@@ -874,7 +855,7 @@ Public Class RetroSeparatorV : Inherits Control
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         G = e.Graphics
-        G.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
+        G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
         DoubleBuffered = True
         MyBase.OnPaint(e)
         G.DrawLine(New Pen(ButtonShadow), New Point(0, 0), New Point(0, Height))
@@ -900,8 +881,8 @@ Public Class RetroPanel : Inherits Panel
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -936,8 +917,8 @@ Public Class RetroPanelRaised : Inherits Panel
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -982,8 +963,8 @@ Public Class RetroWindow : Inherits Panel
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -1010,6 +991,13 @@ Public Class RetroWindow : Inherits Panel
 
         If Not Flat And Not UseItAsMenu Then G.DrawRectangle(New Pen(ColorBorder), ARect)
 
+        Dim F As Font
+        If My.Application.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
+            F = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+        Else
+            F = New Font("Segoe UI", 9, FontStyle.Regular)
+        End If
+
         If Not UseItAsMenu Then
             Dim RTL As Boolean = If(RightToLeft = 1, True, False)
             Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
@@ -1018,8 +1006,30 @@ Public Class RetroWindow : Inherits Panel
             Else
                 G.FillRectangle(New SolidBrush(Color1), TRect)
             End If
-            G.DrawString(TitlebarText, New Font("Microsoft Sans Serif", 8, FontStyle.Bold), New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
+            G.DrawString(TitlebarText, F, New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
         End If
 
+    End Sub
+End Class
+Public Class RetroScrollBar : Inherits Panel
+    Sub New()
+        DoubleBuffered = True
+        BackColor = Color.FromArgb(192, 192, 192)
+        BorderStyle = BorderStyle.None
+    End Sub
+
+    Public Property ButtonHilight As Color = Color.White
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.Application.TextRenderingHint
+        DoubleBuffered = True
+
+        '################################################################################# Customizer
+        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        '#################################################################################
+        G.Clear(BackColor)
+        Dim b As New HatchBrush(HatchStyle.Percent50, ButtonHilight, BackColor)
+        G.FillRectangle(b, Rect)
     End Sub
 End Class

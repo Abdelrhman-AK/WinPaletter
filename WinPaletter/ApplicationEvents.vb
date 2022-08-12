@@ -7,6 +7,7 @@ Imports WinPaletter.XenonCore
 Imports WinPaletter.Localizer
 Imports System.ComponentModel
 Imports System.Globalization
+Imports System.Drawing.Text
 
 Namespace My
     Public Module WindowsVersions
@@ -36,6 +37,7 @@ Namespace My
         Public allForms As List(Of Form)
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
+        Public TextRenderingHint As TextRenderingHint = TextRenderingHint.SystemDefault
 
 #End Region
 

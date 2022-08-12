@@ -216,6 +216,12 @@ Public Class ColorPickerDlg
                     .Invalidate()
                 End With
 
+            ElseIf TypeOf ctrl Is RetroScrollBar Then
+                With TryCast(ctrl, RetroScrollBar)
+                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color) Else .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    .Invalidate()
+                End With
+
             ElseIf TypeOf ctrl Is Panel Then
 
                 If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
