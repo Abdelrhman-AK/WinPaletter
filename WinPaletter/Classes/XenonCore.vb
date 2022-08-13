@@ -326,8 +326,6 @@ Public Class XenonCore
         MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
 
     End Sub
-
-
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
 
         Dim b As Boolean = False

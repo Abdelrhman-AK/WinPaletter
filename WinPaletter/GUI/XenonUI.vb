@@ -91,9 +91,9 @@ Module XenonModule
             If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
                 Return False
             Else
-                If My.WindowsVersions.W11 Then
+                If My.WindowsVersions.W11 Or My.WindowsVersions.W7 Then
                     Return True
-                ElseIf My.WindowsVersions.W10 Then
+                ElseIf My.WindowsVersions.W10 Or My.WindowsVersions.W8 Then
                     Return False
                 Else
                     Return False

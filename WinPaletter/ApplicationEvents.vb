@@ -13,6 +13,8 @@ Namespace My
     Public Module WindowsVersions
         Public W11 As Boolean
         Public W10 As Boolean
+        Public W8 As Boolean
+        Public W7 As Boolean
     End Module
 
     Partial Friend Class MyApplication
@@ -129,43 +131,59 @@ Namespace My
 #Region "Wallpaper Change Detector"
         Sub Monitor()
             Dim currentUser = WindowsIdentity.GetCurrent()
+            Dim KeyPath As String
+            Dim valueName As String
+            Dim Base As String
 
-            Dim KeyPath As String = "Control Panel\Desktop"
-            Dim valueName As String = "Wallpaper"
-            Dim Base As String = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query1 = New WqlEventQuery(Base)
-            WallMon_Watcher1 = New ManagementEventWatcher(query1)
+            Try
+                KeyPath = "Control Panel\Desktop"
+                valueName = "Wallpaper"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query1 = New WqlEventQuery(Base)
+                WallMon_Watcher1 = New ManagementEventWatcher(query1)
+            Catch
+            End Try
 
 
-            KeyPath = "Control Panel\Colors"
-            valueName = "Background"
-            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query2 = New WqlEventQuery(Base)
-            WallMon_Watcher2 = New ManagementEventWatcher(query2)
+            Try
+                KeyPath = "Control Panel\Colors"
+                valueName = "Background"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query2 = New WqlEventQuery(Base)
+                WallMon_Watcher2 = New ManagementEventWatcher(query2)
+            Catch
+            End Try
 
 
-            KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
-            valueName = "BackgroundType"
-            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query3 = New WqlEventQuery(Base)
-            WallMon_Watcher3 = New ManagementEventWatcher(query3)
+            Try
+                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
+                valueName = "BackgroundType"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query3 = New WqlEventQuery(Base)
+                WallMon_Watcher3 = New ManagementEventWatcher(query3)
+            Catch
+            End Try
 
-            KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-            valueName = "AppsUseLightTheme"
-            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query4 = New WqlEventQuery(Base)
-            WallMon_Watcher4 = New ManagementEventWatcher(query4)
+            Try
+                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+                valueName = "AppsUseLightTheme"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query4 = New WqlEventQuery(Base)
+                WallMon_Watcher4 = New ManagementEventWatcher(query4)
+            Catch
+            End Try
 
-            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
-            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
-            AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed
-            AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed
+            Try : AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
+            Try : AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
+            Try : AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed : Catch : End Try
+            Try : AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed : Catch : End Try
 
-            WallMon_Watcher1.Start()
-            WallMon_Watcher2.Start()
-            WallMon_Watcher3.Start()
-            WallMon_Watcher4.Start()
+            Try : WallMon_Watcher1.Start() : Catch : End Try
+            Try : WallMon_Watcher2.Start() : Catch : End Try
+            Try : WallMon_Watcher3.Start() : Catch : End Try
+            Try : WallMon_Watcher4.Start() : Catch : End Try
         End Sub
+
         Sub DarkMode_Changed()
             Dim UpdateDarkModeX As UpdateDarkModeDelegate = AddressOf UpdateDarkMode
             MainForm.Invoke(UpdateDarkModeX)
@@ -194,6 +212,8 @@ Namespace My
 
         Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
             Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+
             Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim S As New Stopwatch
 
@@ -220,6 +240,7 @@ Namespace My
         Public Function GetCurrentWallpaper() As Bitmap
             Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+            If R2.GetValue("BackgroundType", 0) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
 
             Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
             Dim WallpaperType As Integer = R2.GetValue("BackgroundType")
@@ -247,17 +268,10 @@ Namespace My
         End Function
 
         Sub DetectOS()
-            Try
-                W11 = My.Computer.Info.OSFullName.Contains("11")
-            Catch
-                W11 = False
-            End Try
-
-            Try
-                W10 = My.Computer.Info.OSFullName.Contains("10")
-            Catch
-                W10 = False
-            End Try
+            W11 = My.Computer.Info.OSFullName.Contains("11")
+            W10 = My.Computer.Info.OSFullName.Contains("10")
+            W8 = My.Computer.Info.OSFullName.Contains("8")
+            W7 = My.Computer.Info.OSFullName.Contains("7")
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown

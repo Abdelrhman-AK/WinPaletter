@@ -546,23 +546,23 @@ Public Class Win32UI
             CList_FromStr(s, IO.File.ReadAllText(File))
             For Each x As String In s
 
-                If x.ToLower.StartsWith("activetitle=") Then
+                If x.ToLower.StartsWith("activetitle=".ToLower) Then
                     activetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                     If Not FoundGradientActive Then GActivetitle_pick.BackColor = activetitle_pick.BackColor
                 End If
 
-                If x.ToLower.StartsWith("gradientactivetitle=") Then
+                If x.ToLower.StartsWith("gradientactivetitle=".ToLower) Then
                     GActivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                     FoundGradientActive = True
                 End If
 
-                If x.ToLower.StartsWith("inactivetitle=") Then
+                If x.ToLower.StartsWith("inactivetitle=".ToLower) Then
                     InactiveTitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                     If Not FoundGradientInactive Then GInactivetitle_pick.BackColor = InactiveTitle_pick.BackColor
 
                 End If
 
-                If x.ToLower.StartsWith("gradientinactivetitle=") Then
+                If x.ToLower.StartsWith("gradientinactivetitle=".ToLower) Then
                     GInactivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                     FoundGradientInactive = True
                 End If
@@ -640,23 +640,23 @@ Public Class Win32UI
 
         For Each x As String In SelectedThemeList
 
-            If x.ToLower.StartsWith("activetitle=") Then
+            If x.ToLower.StartsWith("activetitle=".ToLower) Then
                 activetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 If Not FoundGradientActive Then GActivetitle_pick.BackColor = activetitle_pick.BackColor
             End If
 
-            If x.ToLower.StartsWith("gradientactivetitle=") Then
+            If x.ToLower.StartsWith("gradientactivetitle=".ToLower) Then
                 GActivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 FoundGradientActive = True
             End If
 
-            If x.ToLower.StartsWith("inactivetitle=") Then
+            If x.ToLower.StartsWith("inactivetitle=".ToLower) Then
                 InactiveTitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 If Not FoundGradientInactive Then GInactivetitle_pick.BackColor = InactiveTitle_pick.BackColor
 
             End If
 
-            If x.ToLower.StartsWith("gradientinactivetitle=") Then
+            If x.ToLower.StartsWith("gradientinactivetitle=".ToLower) Then
                 GInactivetitle_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 FoundGradientInactive = True
             End If
