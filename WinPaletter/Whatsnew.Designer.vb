@@ -109,7 +109,7 @@ Partial Class Whatsnew
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(3, 53)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(661, 96)
+        Me.Label14.Size = New System.Drawing.Size(661, 176)
         Me.Label14.TabIndex = 25
         Me.Label14.Text = resources.GetString("Label14.Text")
         '
@@ -165,9 +165,9 @@ Partial Class Whatsnew
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(8, 157)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(8, 127)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(356, 70)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(385, 70)
         Me.XenonAlertBox1.TabIndex = 73
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "To apply cursors, you should enable the toggle in its form, and activate ""Automat" &
@@ -180,7 +180,7 @@ Partial Class Whatsnew
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(3, 53)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(661, 96)
+        Me.Label1.Size = New System.Drawing.Size(661, 71)
         Me.Label1.TabIndex = 26
         Me.Label1.Text = "- Now you can colorize Windows Cursors as you need with any color, gradient effec" &
     "ts and more." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- This is even applicable to the animated loading cursors."
@@ -194,7 +194,7 @@ Partial Class Whatsnew
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(661, 50)
         Me.Label3.TabIndex = 25
-        Me.Label3.Text = "Colorize Cursors! (Beta)"
+        Me.Label3.Text = "Colorize Cursors! (Stable)"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage10

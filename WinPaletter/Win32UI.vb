@@ -9,6 +9,7 @@ Public Class Win32UI
         ApplyDarkMode(Me)
 
         CP.PopulateThemeToListbox(XenonComboBox1)
+        RevalidateEverything(pnl_preview)
 
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)

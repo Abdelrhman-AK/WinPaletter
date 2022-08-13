@@ -126,7 +126,7 @@ Public Class RetroButton : Inherits Button
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -304,7 +304,7 @@ Public Class RetroCheckBox
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -413,7 +413,7 @@ Public Class RetroRadioButton
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -716,7 +716,7 @@ End Class
         G = Graphics.FromImage(B)
         DoubleBuffered = True
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
         MyBase.OnPaint(e)
         TB.ForeColor = ForeColor
@@ -793,7 +793,7 @@ Public Class RetroGroupBox : Inherits GroupBox
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
         G.Clear(BackColor)
 
@@ -882,7 +882,7 @@ Public Class RetroPanel : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -918,7 +918,7 @@ Public Class RetroPanelRaised : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -964,7 +964,7 @@ Public Class RetroWindow : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -992,7 +992,7 @@ Public Class RetroWindow : Inherits Panel
         If Not Flat And Not UseItAsMenu Then G.DrawRectangle(New Pen(ColorBorder), ARect)
 
         Dim F As Font
-        If My.Application.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
+        If G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
             F = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
         Else
             F = New Font("Segoe UI", 9, FontStyle.Regular)
@@ -1022,7 +1022,7 @@ Public Class RetroScrollBar : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = My.Application.TextRenderingHint
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
         '################################################################################# Customizer

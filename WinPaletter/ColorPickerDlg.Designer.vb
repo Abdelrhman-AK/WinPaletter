@@ -127,9 +127,7 @@ Partial Class ColorPickerDlg
         '
         'ColorWheel1
         '
-        Me.ColorWheel1.Alpha = 1.0R
         Me.ColorWheel1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ColorWheel1.Lightness = 0.37647059559822083R
         Me.ColorWheel1.Location = New System.Drawing.Point(217, 308)
         Me.ColorWheel1.Name = "ColorWheel1"
         Me.ColorWheel1.Size = New System.Drawing.Size(235, 198)

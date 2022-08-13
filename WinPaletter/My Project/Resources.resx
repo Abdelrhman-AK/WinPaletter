@@ -179,7 +179,7 @@
     <value>..\..\References\ColorThief.Desktop.v46.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Cyotek_Windows_Forms_ColorPicker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\References\Cyotek.Windows.Forms.ColorPicker.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\Cyotek.Windows.Forms.ColorPicker.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="darkmode_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\darkmode_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -39,8 +39,6 @@ Namespace My
         Public allForms As List(Of Form)
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
-        Public TextRenderingHint As TextRenderingHint = TextRenderingHint.SystemDefault
-
 #End Region
 
 #Region "File Association"
@@ -156,32 +154,43 @@ Namespace My
 
 
             Try
-                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
-                valueName = "BackgroundType"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query3 = New WqlEventQuery(Base)
-                WallMon_Watcher3 = New ManagementEventWatcher(query3)
+                If Not My.W7 And Not My.W8 Then
+                    KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
+                    valueName = "BackgroundType"
+                    Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                    Dim query3 = New WqlEventQuery(Base)
+                    WallMon_Watcher3 = New ManagementEventWatcher(query3)
+                End If
             Catch
             End Try
 
             Try
-                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-                valueName = "AppsUseLightTheme"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query4 = New WqlEventQuery(Base)
-                WallMon_Watcher4 = New ManagementEventWatcher(query4)
+                If Not My.W7 And Not My.W8 Then
+                    KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+                    valueName = "AppsUseLightTheme"
+                    Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                    Dim query4 = New WqlEventQuery(Base)
+                    WallMon_Watcher4 = New ManagementEventWatcher(query4)
+                End If
             Catch
             End Try
 
             Try : AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
             Try : AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
-            Try : AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed : Catch : End Try
-            Try : AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed : Catch : End Try
+
+            If Not My.W7 And Not My.W8 Then
+                Try : AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed : Catch : End Try
+                Try : AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed : Catch : End Try
+            End If
 
             Try : WallMon_Watcher1.Start() : Catch : End Try
             Try : WallMon_Watcher2.Start() : Catch : End Try
-            Try : WallMon_Watcher3.Start() : Catch : End Try
-            Try : WallMon_Watcher4.Start() : Catch : End Try
+
+            If Not My.W7 And Not My.W8 Then
+                Try : WallMon_Watcher3.Start() : Catch : End Try
+                Try : WallMon_Watcher4.Start() : Catch : End Try
+            End If
+
         End Sub
 
         Sub DarkMode_Changed()
@@ -197,9 +206,12 @@ Namespace My
         Delegate Sub UpdateDarkModeDelegate()
 
         Sub Wallpaper_Changed(sender As Object, e As EventArrivedEventArgs)
-            Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-            Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
-            MainForm.Invoke(updateBkX, Wallpaper)
+            Try
+                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
+                MainForm.Invoke(updateBkX, Wallpaper)
+            Catch
+            End Try
         End Sub
 
         Private Sub UpdateBK(ByVal [Image] As Image)
@@ -211,39 +223,58 @@ Namespace My
         Delegate Sub UpdateBKDelegate(ByVal [Image] As Image)
 
         Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
-            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+            Dim R1 As RegistryKey
+            If Not My.W7 And Not My.W8 Then
+                R1 = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+                If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+            End If
+
 
             Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim S As New Stopwatch
 
-            If R1.GetValue("BackgroundType") = 0 Then
-                S.Reset()
-                S.Start()
+            If Not My.W7 And Not My.W8 Then
+                If R1.GetValue("BackgroundType") = 0 Then
+                    S.Reset()
+                    S.Start()
 
-                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
-                    If S.ElapsedMilliseconds > 5000 Then Exit Do
-                Loop
+                    Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
+                        If S.ElapsedMilliseconds > 5000 Then Exit Do
+                    Loop
 
-                S.Stop()
+                    S.Stop()
 
-                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
-                Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
-                MainForm.Invoke(updateBkX, Wallpaper)
+                    Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                    Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
+                    MainForm.Invoke(updateBkX, Wallpaper)
 
+                End If
             End If
+
 
             R1.Close()
             R2.Close()
         End Sub
 #End Region
         Public Function GetCurrentWallpaper() As Bitmap
+            If My.W7 Then
+                Try : WallMon_Watcher1.Stop() : Catch : End Try
+                Try : WallMon_Watcher2.Stop() : Catch : End Try
+            End If
+
+
             Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
-            If R2.GetValue("BackgroundType", 0) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+            Dim R2 As RegistryKey
+
+            If Not My.W7 And Not My.W8 Then
+                R2 = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+                If R2.GetValue("BackgroundType", 0) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+            End If
 
             Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
-            Dim WallpaperType As Integer = R2.GetValue("BackgroundType")
+            Dim WallpaperType As Integer
+
+            If Not My.W7 And Not My.W8 Then WallpaperType = R2.GetValue("BackgroundType")
 
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
                 Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
@@ -265,6 +296,10 @@ Namespace My
             R1.Close()
             R2.Close()
 
+            If My.W7 Then
+                Try : WallMon_Watcher1.Start() : Catch : End Try
+                Try : WallMon_Watcher2.Start() : Catch : End Try
+            End If
         End Function
 
         Sub DetectOS()
@@ -277,8 +312,11 @@ Namespace My
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
             WallMon_Watcher1.Stop()
             WallMon_Watcher2.Stop()
-            WallMon_Watcher3.Stop()
-            WallMon_Watcher4.Stop()
+
+            If Not My.W7 And Not My.W8 Then
+                WallMon_Watcher3.Stop()
+                WallMon_Watcher4.Stop()
+            End If
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
@@ -366,10 +404,6 @@ Namespace My
                 My.Application.LanguageHelper.LoadInternal()
             End If
 
-            For i = 0 To allForms.Count - 1
-                If SettingsX.Name = allForms(i).Name Then SettingsX = allForms(i)
-            Next
-
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     Dim arg As String = Environment.GetCommandLineArgs(x)
@@ -382,6 +416,15 @@ Namespace My
                 Next
             Catch
             End Try
+
+            DetectOS()
+
+            If My.W7 Or My.W8 Then
+                MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
+                       "You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
+                       , MsgBoxStyle.Exclamation + MsgboxRt())
+            End If
+
 
             Dim ProcessKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
@@ -449,8 +492,6 @@ Namespace My
             ExternalLink = False
             ExternalLink_File = ""
             ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
-
-            DetectOS()
 
             CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
             CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
@@ -604,7 +645,6 @@ Namespace My
 
 #Disable Warning BC42105
         End Function
-
 #Enable Warning BC42105
 
     End Class

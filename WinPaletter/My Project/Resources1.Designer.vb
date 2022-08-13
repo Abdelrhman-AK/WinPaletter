@@ -569,7 +569,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Windows Classic - Brick|[Control Panel\Colors]|Scrollbar=212 208 200|Background=128 0 0|ActiveTitle=128 0 0|InactiveTitle=141 137 97|Menu=212 208 200|Window=255 255 255|WindowFrame=0 0 0|MenuText=0 0 0|WindowText=0 0 0|TitleText=255 255 255|ActiveBorder=212 208 200|InactiveBorder=192 192 192|AppWorkspace=128 128 128|Hilight=141 137 97|HilightText=255 255 255|ButtonFace=212 208 200|ButtonShadow=128 128 128|GrayText=128 128 128|ButtonText=0 0 0|InactiveTitleText=212 208 200|ButtonHilight=255 255 255|ButtonDkS [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to Windows Classic (3.1)|Background=192 192 192|AppWorkspace=255 255 255|Window=255 255 255|WindowText=0 0 0|MenuBar=255 255 255|Menu=255 255 255|MenuText=0 0 0|ActiveTitle=0 0 128|InactiveTitle=255 255 255|TitleText=255 255 255|ActiveBorder=192 192 192|InactiveBorder=192 192 192|WindowFrame=0 0 0|Scrollbar=192 192 192|ButtonFace=192 192 192|ButtonShadow=128 128 128|ButtonText=0 0 0|GrayText=192 192 192|Hilight=0 0 128|HotTrackingColor=0 0 128|MenuHilight=0 0 128|HilightText=255 255 255|InactiveTitleText=0 0 0 [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property RetroThemesDB() As String
             Get

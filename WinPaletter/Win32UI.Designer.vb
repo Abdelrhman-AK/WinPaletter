@@ -2548,7 +2548,7 @@ Partial Class Win32UI
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel13.Location = New System.Drawing.Point(193, 46)
+        Me.RetroLabel13.Location = New System.Drawing.Point(192, 45)
         Me.RetroLabel13.Name = "RetroLabel13"
         Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
         Me.RetroLabel13.TabIndex = 5
@@ -2815,7 +2815,7 @@ Partial Class Win32UI
         Me.RetroPanel1.Location = New System.Drawing.Point(98, 0)
         Me.RetroPanel1.Name = "RetroPanel1"
         Me.RetroPanel1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 4)
-        Me.RetroPanel1.Size = New System.Drawing.Size(52, 18)
+        Me.RetroPanel1.Size = New System.Drawing.Size(51, 18)
         Me.RetroPanel1.TabIndex = 2
         '
         'RetroLabel3
@@ -2826,7 +2826,7 @@ Partial Class Win32UI
         Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
         Me.RetroLabel3.Name = "RetroLabel3"
-        Me.RetroLabel3.Size = New System.Drawing.Size(50, 11)
+        Me.RetroLabel3.Size = New System.Drawing.Size(49, 11)
         Me.RetroLabel3.TabIndex = 1
         Me.RetroLabel3.Text = "Selected"
         Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

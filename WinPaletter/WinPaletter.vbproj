@@ -75,8 +75,7 @@
       <HintPath>..\References\Animator.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AnimCur, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="AnimCur">
       <HintPath>..\References\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -87,7 +86,6 @@
     <Reference Include="Cyotek.Windows.Forms.ColorPicker">
       <HintPath>..\References\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -247,6 +245,7 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <None Include="Resources\CodeStr.txt" />
   </ItemGroup>
   <ItemGroup>
