@@ -982,4 +982,10 @@ Public Class Win32UI
         [Control].Invalidate()
     End Sub
 
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        Dim CPx As New CP(CP.Mode.Registry)
+        ApplyToCP(CPx)
+        ApplyToCP(MainFrm.CP)
+        CPx.Save(CP.SavingMode.Registry)
+    End Sub
 End Class

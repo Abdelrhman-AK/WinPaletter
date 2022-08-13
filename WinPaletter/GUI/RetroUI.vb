@@ -125,7 +125,7 @@ Public Class RetroButton : Inherits Button
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -303,7 +303,7 @@ Public Class RetroCheckBox
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -412,7 +412,7 @@ Public Class RetroRadioButton
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -715,7 +715,7 @@ End Class
         Dim G As Graphics = Graphics.FromImage(B)
         G = Graphics.FromImage(B)
         DoubleBuffered = True
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
 
         MyBase.OnPaint(e)
@@ -792,7 +792,7 @@ Public Class RetroGroupBox : Inherits GroupBox
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
         G.Clear(BackColor)
@@ -881,7 +881,7 @@ Public Class RetroPanel : Inherits Panel
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -917,7 +917,7 @@ Public Class RetroPanelRaised : Inherits Panel
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -963,7 +963,7 @@ Public Class RetroWindow : Inherits Panel
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
@@ -1021,7 +1021,7 @@ Public Class RetroScrollBar : Inherits Panel
     Public Property ButtonHilight As Color = Color.White
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighSpeed
         G.TextRenderingHint = My.Application.TextRenderingHint
         DoubleBuffered = True
 
