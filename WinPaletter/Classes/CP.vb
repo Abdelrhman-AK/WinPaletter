@@ -44,6 +44,22 @@ Public Class CP
     Public Property ApplyAccentonTaskbar As Boolean
 #End Region
 
+#Region "Aero"
+    Public Property Aero_ColorizationColor As Color
+    Public Property Aero_ColorizationAfterglow As Color
+    Public Property Aero_Composition As Boolean
+    Public Property Aero_ColorizationOpaqueBlend As Integer
+    Public Property Aero_EnableAeroPeek As Boolean
+    Public Property Aero_CompositionPolicy As Integer = 2
+    Public Property Aero_AlwaysHibernateThumbnails As Boolean
+    Public Property Aero_ColorizationColorBalance As Integer = 8
+    Public Property Aero_ColorizationAfterglowBalance As Integer
+    Public Property Aero_ColorizationBlurBalance As Integer = 31
+    Public Property Aero_ColorizationGlassReflectionIntensity As Integer
+    Public Property Aero_LastDisqualifiedCompositionSignature As Integer
+    Public Property Aero_EnableWindowColorization As Boolean = True
+#End Region
+
 #Region "LogonUI"
     Public Property LogonUI_Background As Color
     Public Property LogonUI_PersonalColors_Background As Color
@@ -423,6 +439,46 @@ Public Class CP
                     Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
                     ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", False)
                     ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", False)
+                End If
+
+#End Region
+
+#Region "Aero"
+                If My.W7 Or My.W8 Then
+                    Dim y As Integer
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Nothing)
+                    Aero_ColorizationColor = Color.FromArgb(y)
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Nothing)
+                    Aero_ColorizationAfterglow = Color.FromArgb(y)
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Nothing)
+                    Aero_ColorizationColorBalance = y
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Nothing)
+                    Aero_ColorizationAfterglowBalance = y
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Nothing)
+                    Aero_ColorizationBlurBalance = y
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Nothing)
+                    Aero_ColorizationGlassReflectionIntensity = y
+
+                    Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", True)
+                    Aero_Composition = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", True)
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", Nothing)
+                    Aero_CompositionPolicy = y
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", Nothing)
+                    Aero_ColorizationOpaqueBlend = y
+
+                    Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", False)
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "LastDisqualifiedCompositionSignature", Nothing)
+                    Aero_LastDisqualifiedCompositionSignature = y
+
+                    Aero_EnableWindowColorization = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", True)
                 End If
 
 #End Region
@@ -2292,6 +2348,29 @@ Public Class CP
                 End If
 #End Region
 
+#Region "Aero"
+                If My.W7 Or My.W8 Then
+                    If My.W8 Then EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", Aero_CompositionPolicy)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", Aero_ColorizationOpaqueBlend)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "LastDisqualifiedCompositionSignature", Aero_LastDisqualifiedCompositionSignature)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", If(Aero_Composition, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", If(Aero_EnableWindowColorization, 1, 0))
+                End If
+
+
+#End Region
+
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
                     If isElevated Then
@@ -3217,7 +3296,8 @@ Public Class CP
             Else
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
             End If
-        Catch
+        Catch 'ex As Exception
+            'MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
             'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
         Finally
             If R IsNot Nothing Then

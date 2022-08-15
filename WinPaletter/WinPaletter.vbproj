@@ -245,6 +245,10 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
+    </None>
     <None Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <None Include="Resources\CodeStr.txt" />
   </ItemGroup>

@@ -69,7 +69,6 @@ Public Class XenonCore
     Public Shared Sub RestartExplorer()
         With My.Application
             Try
-                Try : .processStartMenuExperienceHost = Process.GetProcessesByName("StartMenuExperienceHost")(0) : Catch : End Try
                 .processKiller.Start()
                 .processKiller.WaitForExit()
                 .processExplorer.Start()

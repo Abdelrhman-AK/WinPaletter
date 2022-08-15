@@ -967,7 +967,15 @@ Public Module Paths
         [Rectangle].X = 11
         [Rectangle].Y = 6
 
-        path.AddString("?", New FontFamily("Segoe UI Black"), FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
+        Dim F As FontFamily
+
+        If My.W7 Then
+            F = New FontFamily("Segoe UI")
+        Else
+            F = New FontFamily("Segoe UI Black")
+        End If
+
+        path.AddString("?", F, FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)

@@ -65,7 +65,7 @@ Public Class ColorPickerDlg
         fr = Ctrl(0).FindForm
 
         If fr Is MainFrm Then
-            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer, True)
+            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W1x, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonGroupBox2, True)
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
@@ -102,7 +102,7 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm Then
             MainFrm.Width = PreviousWidth
-            My.Application.AnimatorX.Show(MainFrm.PaletteContainer, True)
+            My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W1x, True)
             My.Application.AnimatorX.Show(MainFrm.XenonGroupBox2, True)
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)

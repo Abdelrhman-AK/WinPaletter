@@ -403,6 +403,20 @@ Public Class MainFrm
         TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
         ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
         SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
+
+        Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
+        Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Aero_ColorizationAfterglow
+        Aero_ColorizationColorBalance_txt.Text = ColorPalette.Aero_ColorizationColorBalance
+        Aero_ColorizationAfterglowBalance_txt.Text = ColorPalette.Aero_ColorizationAfterglowBalance
+        Aero_ColorizationBlurBalance_txt.Text = ColorPalette.Aero_ColorizationBlurBalance
+        Aero_ColorizationGlassReflectionIntensity_txt.Text = ColorPalette.Aero_ColorizationGlassReflectionIntensity
+        Aero_CompositionPolicy_txt.Text = ColorPalette.Aero_CompositionPolicy
+        Aero_ColorizationOpaqueBlend_txt.Text = ColorPalette.Aero_ColorizationOpaqueBlend
+        Aero_LastDisqualifiedCompositionSignature_txt.Text = ColorPalette.Aero_LastDisqualifiedCompositionSignature
+        Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Aero_EnableAeroPeek
+        Aero_Composition_toggle.Checked = ColorPalette.Aero_Composition
+        Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Aero_AlwaysHibernateThumbnails
+        Aero_EnableWindowColorization_toggle.Checked = ColorPalette.Aero_EnableWindowColorization
     End Sub
 #End Region
 
@@ -486,6 +500,17 @@ Public Class MainFrm
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
+
+        If My.W10 Or My.W11 Then
+            PaletteContainer_W1x.Visible = True
+            PaletteContainer_W7x.Visible = False
+        End If
+
+
+        If My.W7 Or My.W8 Then
+            PaletteContainer_W1x.Visible = False
+            PaletteContainer_W7x.Visible = True
+        End If
 
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
@@ -826,6 +851,14 @@ Public Class MainFrm
 
         RefreshRegisrty()
 
+        If My.W7 Or My.W8 Then
+            Visible = False
+            My.Application.AeroKiller.Start()
+            My.Application.AeroKiller.WaitForExit()
+            My.Application.AeroStarter.Start()
+            Visible = True
+        End If
+
         If My.Application._Settings.AutoRestartExplorer Then RestartExplorer() Else Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
     End Sub
 
@@ -1008,7 +1041,7 @@ Public Class MainFrm
     Dim DragAccepted As Boolean
 
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, XenonGroupBox8.DragEnter, pnl_preview.DragEnter,
-        PaletteContainer.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
+        PaletteContainer_W1x.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
@@ -1044,12 +1077,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, XenonGroupBox8.DragOver, pnl_preview.DragOver,
-        PaletteContainer.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, XenonGroupBox2.DragOver, XenonGroupBox13.DragOver
+        PaletteContainer_W1x.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, XenonGroupBox2.DragOver, XenonGroupBox13.DragOver
         If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
     Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, XenonGroupBox8.DragDrop, pnl_preview.DragDrop,
-        PaletteContainer.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
+        PaletteContainer_W1x.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
@@ -1498,6 +1531,78 @@ Public Class MainFrm
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
         CursorsStudio.ShowDialog()
+    End Sub
+
+    Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Aero_ColorizationColor = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub Aero_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglow_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Aero_ColorizationAfterglow = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub Aero_Composition_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_Composition_toggle.CheckedChanged
+        If _Shown Then CP.Aero_Composition = Aero_Composition_toggle.Checked
+    End Sub
+
+    Private Sub Aero_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableAeroPeek_toggle.CheckedChanged
+        If _Shown Then CP.Aero_EnableAeroPeek = Aero_EnableAeroPeek_toggle.Checked
+    End Sub
+
+    Private Sub Aero_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_AlwaysHibernateThumbnails_Toggle.CheckedChanged
+        If _Shown Then CP.Aero_AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
+    End Sub
+
+    Private Sub Aero_EnableWindowColorization_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableWindowColorization_toggle.CheckedChanged
+        If _Shown Then CP.Aero_EnableWindowColorization = Aero_EnableWindowColorization_toggle.Checked
+    End Sub
+
+    Private Sub Aero_ColorizationOpaqueBlend_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationOpaqueBlend_txt.TextChanged
+        If _Shown Then CP.Aero_ColorizationOpaqueBlend = Val(Aero_ColorizationOpaqueBlend_txt.Text)
+    End Sub
+
+    Private Sub Aero_CompositionPolicy_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_CompositionPolicy_txt.TextChanged
+        If _Shown Then CP.Aero_CompositionPolicy = Val(Aero_CompositionPolicy_txt.Text)
+    End Sub
+
+    Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationColorBalance_txt.TextChanged
+        If _Shown Then CP.Aero_ColorizationColorBalance = Val(Aero_ColorizationColorBalance_txt.Text)
+    End Sub
+
+    Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglowBalance_txt.TextChanged
+        If _Shown Then CP.Aero_ColorizationAfterglowBalance = Val(Aero_ColorizationAfterglowBalance_txt.Text)
+    End Sub
+
+    Private Sub Aero_ColorizationBlurBalance_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationBlurBalance_txt.TextChanged
+        If _Shown Then CP.Aero_ColorizationBlurBalance = Val(Aero_ColorizationBlurBalance_txt.Text)
+    End Sub
+
+    Private Sub Aero_ColorizationGlassReflectionIntensity_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationGlassReflectionIntensity_txt.TextChanged
+        If _Shown Then CP.Aero_ColorizationGlassReflectionIntensity = Val(Aero_ColorizationGlassReflectionIntensity_txt.Text)
+    End Sub
+
+    Private Sub Aero_LastDisqualifiedCompositionSignature_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_LastDisqualifiedCompositionSignature_txt.TextChanged
+        If _Shown Then CP.Aero_LastDisqualifiedCompositionSignature = Val(Aero_LastDisqualifiedCompositionSignature_txt.Text)
     End Sub
 
 #Region "Notifications Base"
