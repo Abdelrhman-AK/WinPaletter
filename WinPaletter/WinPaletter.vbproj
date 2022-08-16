@@ -245,6 +245,17 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\Taskbar_InactiveApp8.png" />
+    <None Include="Resources\Win8ORB.png" />
+    <None Include="Resources\Taskbar_InactiveApp7.png" />
+    <None Include="Resources\Taskbar_ActiveApp8.png" />
+    <None Include="Resources\Taskbar_ActiveApp7.png" />
+    <None Include="Resources\Win7ORB.png" />
+    <None Include="Resources\AeroGlass.jpg" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application1.Designer.vb</LastGenOutput>

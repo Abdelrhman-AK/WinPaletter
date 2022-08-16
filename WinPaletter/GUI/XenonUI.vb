@@ -3191,8 +3191,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
     Public Property BackColorAlpha As Byte = 130
 
-    Public Property BlurPower As Integer = 8
-
     Public Property Radius As Integer = 5
 
     Public Property Borders As Boolean = True
@@ -3209,6 +3207,24 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
     Public Property RoundedCorners As Boolean = False
 
+    Private _BlurPower As Integer = 8
+    Public Event BlurPowerChanged As PropertyChangedEventHandler
+    Private Sub NotifyBlurPowerChanged(ByVal info As String)
+        RaiseEvent BlurPowerChanged(Me, New PropertyChangedEventArgs(info))
+    End Sub
+    Public Property BlurPower() As Integer
+        Get
+            Return _BlurPower
+        End Get
+
+        Set(ByVal value As Integer)
+            If Not (value = _BlurPower) Then
+                Me._BlurPower = value
+                NotifyBlurPowerChanged("BlurPower")
+                Invalidate()
+            End If
+        End Set
+    End Property
 
     Public Event TransparencyChanged As PropertyChangedEventHandler _
         Implements INotifyPropertyChanged.PropertyChanged
@@ -3409,7 +3425,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         End Set
     End Property
 
-
     Public Sub DrawRR(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1)
         Try
             [Radius_willbe_x2] *= 2
@@ -3438,6 +3453,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     Enum TaskbarVersion
         Eleven
         Ten
+        Eight
+        Seven
     End Enum
 
     Sub New()
@@ -3456,27 +3473,29 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     Dim Button2 As Rectangle
 
     Private Sub XenonAcrylic_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
+        If UseItAsActionCenter And UseItAsTaskbar_Version = TaskbarVersion.Eleven Then
 
-        If Button1.Contains(PointToClient(MousePosition)) Then
-            If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
-            Invalidate()
-        Else
-            If Not _State_Btn1 = MouseState.Normal Then
-                _State_Btn1 = MouseState.Normal
+            If Button1.Contains(PointToClient(MousePosition)) Then
+                If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
                 Invalidate()
+            Else
+                If Not _State_Btn1 = MouseState.Normal Then
+                    _State_Btn1 = MouseState.Normal
+                    Invalidate()
+                End If
             End If
-        End If
 
-        If Button2.Contains(PointToClient(MousePosition)) Then
-            If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
-            Invalidate()
-        Else
-            If Not _State_Btn2 = MouseState.Normal Then
-                _State_Btn2 = MouseState.Normal
+            If Button2.Contains(PointToClient(MousePosition)) Then
+                If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
                 Invalidate()
+            Else
+                If Not _State_Btn2 = MouseState.Normal Then
+                    _State_Btn2 = MouseState.Normal
+                    Invalidate()
+                End If
             End If
-        End If
 
+        End If
     End Sub
 
     Private Sub XenonAcrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
@@ -3492,7 +3511,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
         Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
         Dim RRect As New Rectangle(0, 0, Width, Height)
-
         G.Clear(Color.Transparent)
 
         Try
@@ -3646,19 +3664,69 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.FillRectangle(New SolidBrush(ControlPaint.Light(_AppUnderline)), App2BtnRectUnderline)
                     G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
 
+                Case TaskbarVersion.Seven
+                    G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+
+                    Dim StartORB As New Bitmap(My.Resources.Win7ORB)
+                    StartORB.MakeTransparent(Color.Black)
+
+                    Dim StartBtnRect As New Rectangle(0, 0, 35, 35)
+
+                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+
+                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+
+
+                    G.DrawImage(StartORB, StartBtnRect)
+
+                    DrawRect(G, New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
+                    G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
+                    G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
+
+                    DrawRect(G, New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
+                    G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
+                    G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
+
+                Case TaskbarVersion.Eight
+                    G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+
+                    Dim StartORB As New Bitmap(My.Resources.Win8ORB)
+
+                    Dim StartBtnRect As New Rectangle((35 - 32) / 2, (35 - 32) / 2, 32, 32)
+
+
+                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, 34)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+
+                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, 34)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+
+
+                    G.DrawImage(StartORB, StartBtnRect)
+
+                    G.DrawImage(My.Resources.Taskbar_ActiveApp8, AppBtnRect)
+                    G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
+
+                    G.DrawImage(My.Resources.Taskbar_InactiveApp8, App2BtnRect)
+                    G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
+
             End Select
         End If
 
     End Sub
 
+
     Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler BlurPowerChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+            ProcessBack()
         End If
-        ProcessBack()
     End Sub
 
     Sub ProcessBack()
@@ -3668,7 +3736,15 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Catch : End Try
 
         Try
-            If Transparency Then Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, NoisePower))
+            If Transparency Then
+
+                If UseItAsTaskbar_Version = TaskbarVersion.Eleven Or UseItAsTaskbar_Version = TaskbarVersion.Ten Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, NoisePower))
+                ElseIf UseItAsTaskbar_Version = TaskbarVersion.Seven Then
+                    Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, NoisePower))
+                End If
+
+            End If
         Catch : End Try
     End Sub
 End Class

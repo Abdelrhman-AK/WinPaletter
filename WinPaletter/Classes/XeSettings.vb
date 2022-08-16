@@ -24,6 +24,8 @@ Public Class XeSettings
     Public Enum WinVer
         Eleven
         Ten
+        Eight
+        Seven
     End Enum
 
     Public Enum UpdateChannels

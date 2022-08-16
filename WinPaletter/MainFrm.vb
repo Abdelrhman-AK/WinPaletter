@@ -340,6 +340,7 @@ Public Class MainFrm
 
         Select Case PreviewConfig
             Case WinVer.Eleven
+                ActionCenter.Visible = True
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
                 ActionCenter.Dock = Nothing
@@ -347,7 +348,9 @@ Public Class MainFrm
 
                 taskbar.Height = 42
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                taskbar.BlurPower = 12
 
+                start.Visible = True
                 start.Size = New Size(135, 200)
                 start.Location = New Point(7, 46)
                 start.RoundedCorners = True
@@ -356,18 +359,44 @@ Public Class MainFrm
                 XenonWindow2.RoundedCorners = True
 
             Case WinVer.Ten
+                ActionCenter.Visible = True
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
 
                 taskbar.Height = 35
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                taskbar.BlurPower = 12
 
+                start.Visible = True
                 start.Size = New Size(182, 201)
                 start.Location = New Point(0, 59)
                 start.RoundedCorners = False
 
                 XenonWindow1.RoundedCorners = False
                 XenonWindow2.RoundedCorners = False
+
+            Case WinVer.Eight
+                ActionCenter.Visible = False
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
+                taskbar.BlurPower = 0
+                taskbar.Height = 34
+
+                start.Visible = False
+                start.BlurPower = 0
+                start.Top = taskbar.Top - start.Height
+                start.Left = 0
+
+            Case WinVer.Seven
+                ActionCenter.Visible = False
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+                taskbar.BlurPower = 1
+                taskbar.NoisePower = 0.2
+                taskbar.Height = 34
+
+                start.Visible = True
+                start.BlurPower = 1
+                start.Top = taskbar.Top - start.Height
+                start.Left = 0
         End Select
 
         XenonWindow1.Top = start.Top
@@ -424,6 +453,8 @@ Public Class MainFrm
     Enum WinVer
         Eleven
         Ten
+        Eight
+        Seven
     End Enum
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
@@ -506,7 +537,6 @@ Public Class MainFrm
             PaletteContainer_W7x.Visible = False
         End If
 
-
         If My.W7 Or My.W8 Then
             PaletteContainer_W1x.Visible = False
             PaletteContainer_W7x.Visible = True
@@ -514,11 +544,8 @@ Public Class MainFrm
 
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
-
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
-
         My.Application.AdjustFonts()
+        XenonButton20.Image = If(My.W11, My.Resources.Native11, My.Resources.Native10)
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -526,13 +553,6 @@ Public Class MainFrm
             AddHandler btn.MouseLeave, AddressOf EraseHint
             AddHandler btn.Leave, AddressOf EraseHint
         Next
-
-        If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            PreviewConfig = My.Application._Settings.CustomPreviewConfig
-        Else
-            If My.W11 Then PreviewConfig = WinVer.Eleven Else PreviewConfig = WinVer.Ten
-        End If
-
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
@@ -548,12 +568,23 @@ Public Class MainFrm
             My.Application.ExternalLink_File = ""
         End If
 
-        XenonButton20.Image = If(My.W11, My.Resources.Native11, My.Resources.Native10)
+        If My.Application._Settings.CustomPreviewConfig_Enabled Then
+            PreviewConfig = My.Application._Settings.CustomPreviewConfig
+        Else
+            If My.W11 Then PreviewConfig = WinVer.Eleven
+            If My.W10 Then PreviewConfig = WinVer.Ten
+            If My.W8 Then PreviewConfig = WinVer.Eight
+            If My.W7 Then PreviewConfig = WinVer.Seven
+        End If
+
+        PreviewConfig = WinVer.Eight
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
         Adjust_Preview()
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
-
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
