@@ -730,7 +730,6 @@ Public Class Win32UI
         c = InactiveBorder_pick.BackColor
         RetroWindow1.ColorBorder = c
 
-
         c = Frame_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -763,6 +762,8 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonDkShadow = c
         Next
+        RetroTextBox1.ButtonDkShadow = c
+        Menu.ButtonDkShadow = c
 
         c = btnhilight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -780,6 +781,7 @@ Public Class Win32UI
         RetroTextBox1.ButtonHilight = c
         RetroPanel1.ButtonHilight = c
         RetroPanel2.ButtonHilight = c
+        Menu.ButtonHilight = c
 
         c = btnlight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -792,6 +794,7 @@ Public Class Win32UI
             RB.ButtonLight = c
         Next
         RetroTextBox1.ButtonLight = c
+        Menu.ButtonLight = c
 
         c = btnshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -809,6 +812,8 @@ Public Class Win32UI
         RetroTextBox1.ButtonShadow = c
         RetroPanel1.ButtonShadow = c
         RetroTextBox1.Invalidate()
+        Menu.ButtonShadow = c
+        Menu.Invalidate()
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)

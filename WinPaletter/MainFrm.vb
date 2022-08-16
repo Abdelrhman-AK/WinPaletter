@@ -338,6 +338,9 @@ Public Class MainFrm
     Sub Adjust_Preview()
         If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
 
+        Panel3.Visible = True
+        Label12.Visible = True
+
         Select Case PreviewConfig
             Case WinVer.Eleven
                 ActionCenter.Visible = True
@@ -376,6 +379,8 @@ Public Class MainFrm
                 XenonWindow2.RoundedCorners = False
 
             Case WinVer.Eight
+                Panel3.Visible = False
+                Label12.Visible = False
                 ActionCenter.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
                 taskbar.BlurPower = 0
@@ -386,7 +391,10 @@ Public Class MainFrm
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
 
+
             Case WinVer.Seven
+                Panel3.Visible = False
+                Label12.Visible = False
                 ActionCenter.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
@@ -394,6 +402,8 @@ Public Class MainFrm
                 taskbar.Height = 34
 
                 start.Visible = True
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+                start.RoundedCorners = True
                 start.BlurPower = 1
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
@@ -577,7 +587,7 @@ Public Class MainFrm
             If My.W7 Then PreviewConfig = WinVer.Seven
         End If
 
-        PreviewConfig = WinVer.Eight
+        PreviewConfig = WinVer.Seven
 
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper

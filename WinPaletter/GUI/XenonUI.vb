@@ -3514,11 +3514,11 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         G.Clear(Color.Transparent)
 
         Try
-            If RoundedCorners Then G.DrawImage(adaptedBack, RRect)
+            If RoundedCorners Or UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.DrawImage(adaptedBack, RRect)
         Catch : End Try
 
         Try
-            If Transparency Then
+            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then
                 If RoundedCorners Then
                     FillImg(G, adaptedBackBlurred, RRect, Radius, True)
                 Else
@@ -3527,62 +3527,72 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             End If
         Catch : End Try
 
+
         If RoundedCorners Then
-            FillRect(G, New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
-            FillRect(G, New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
-            If Transparency Then FillRect(G, Noise, RRect, Radius, True)
 
-            If UseItAsStartMenu Then
-                Dim SearchRect As New Rectangle(7, 10, 120, 18)
-                Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
-                Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
+            If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
 
-                FillImg(G, If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
-                FillRect(G, New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
-                FillRect(G, New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
-                G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
-                DrawRect(G, New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+
+            Else
+
+                FillRect(G, New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
+                FillRect(G, New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
+                If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then FillRect(G, Noise, RRect, Radius, True)
+
+                If UseItAsStartMenu Then
+                    Dim SearchRect As New Rectangle(7, 10, 120, 18)
+                    Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
+                    Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
+
+                    FillImg(G, If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+
+                    FillRect(G, New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
+                    FillRect(G, New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
+                    G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
+                    DrawRect(G, New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+                End If
+
+                If UseItAsActionCenter Then
+                    Button1 = New Rectangle(8, 8, 49, 20)
+                    Button2 = New Rectangle(62, 8, 49, 20)
+
+                    FillImg(G, If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+
+                    Dim Cx1, Cx2 As Color
+
+                    Select Case _State_Btn1
+                        Case MouseState.Normal
+                            Cx1 = ActionCenterButton_Normal
+                        Case MouseState.Hover
+                            Cx1 = ActionCenterButton_Hover
+                        Case MouseState.Pressed
+                            Cx1 = ActionCenterButton_Pressed
+                    End Select
+
+                    Select Case _State_Btn2
+                        Case MouseState.Normal
+                            Cx2 = If(DarkMode, Color.FromArgb(190, 70, 70, 70), Color.FromArgb(180, 140, 140, 140))
+                        Case MouseState.Hover
+                            Cx2 = If(DarkMode, Color.FromArgb(190, 90, 90, 90), Color.FromArgb(210, 230, 230, 230))
+                        Case MouseState.Pressed
+                            Cx2 = If(DarkMode, Color.FromArgb(190, 75, 75, 75), Color.FromArgb(210, 210, 210, 210))
+                    End Select
+
+                    FillRect(G, New SolidBrush(Cx1), Button1, Radius, True)
+                    DrawRR(G, Cx1, Button1, Radius)
+
+                    FillRect(G, New SolidBrush(Cx2), Button2, Radius, True)
+                    DrawRect(G, New Pen(CCB(Cx2, If(DarkMode, 0.05, -0.05))), Button2, Radius)
+                End If
+
+                If Borders Then DrawRect(G, New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+
             End If
-
-            If UseItAsActionCenter Then
-                Button1 = New Rectangle(8, 8, 49, 20)
-                Button2 = New Rectangle(62, 8, 49, 20)
-
-                FillImg(G, If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
-
-                Dim Cx1, Cx2 As Color
-
-                Select Case _State_Btn1
-                    Case MouseState.Normal
-                        Cx1 = ActionCenterButton_Normal
-                    Case MouseState.Hover
-                        Cx1 = ActionCenterButton_Hover
-                    Case MouseState.Pressed
-                        Cx1 = ActionCenterButton_Pressed
-                End Select
-
-                Select Case _State_Btn2
-                    Case MouseState.Normal
-                        Cx2 = If(DarkMode, Color.FromArgb(190, 70, 70, 70), Color.FromArgb(180, 140, 140, 140))
-                    Case MouseState.Hover
-                        Cx2 = If(DarkMode, Color.FromArgb(190, 90, 90, 90), Color.FromArgb(210, 230, 230, 230))
-                    Case MouseState.Pressed
-                        Cx2 = If(DarkMode, Color.FromArgb(190, 75, 75, 75), Color.FromArgb(210, 210, 210, 210))
-                End Select
-
-                FillRect(G, New SolidBrush(Cx1), Button1, Radius, True)
-                DrawRR(G, Cx1, Button1, Radius)
-
-                FillRect(G, New SolidBrush(Cx2), Button2, Radius, True)
-                DrawRect(G, New Pen(CCB(Cx2, If(DarkMode, 0.05, -0.05))), Button2, Radius)
-            End If
-
-            If Borders Then DrawRect(G, New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
         Else
             G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
-            If Transparency Then G.FillRectangle(Noise, Rect)
+            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.FillRectangle(Noise, Rect)
             If UseItAsStartMenu Then G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
 
             If UseItAsActionCenter Then
@@ -3668,9 +3678,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
 
                     Dim StartORB As New Bitmap(My.Resources.Win7ORB)
-                    StartORB.MakeTransparent(Color.Black)
 
-                    Dim StartBtnRect As New Rectangle(0, 0, 35, 35)
+                    Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
                     Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
@@ -3694,7 +3703,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                     Dim StartORB As New Bitmap(My.Resources.Win8ORB)
 
-                    Dim StartBtnRect As New Rectangle((35 - 32) / 2, (35 - 32) / 2, 32, 32)
+                    Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2, 27, 27)
 
 
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, 34)
@@ -3742,6 +3751,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, NoisePower))
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Seven Then
                     Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, NoisePower))
+                ElseIf UseItAsTaskbar_Version = TaskbarVersion.Eight Then
+                    Noise = Nothing
                 End If
 
             End If
