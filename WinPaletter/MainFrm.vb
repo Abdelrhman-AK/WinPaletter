@@ -405,8 +405,10 @@ Public Class MainFrm
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.RoundedCorners = True
                 start.BlurPower = 1
-                start.Top = taskbar.Top - start.Height
                 start.Left = 0
+                start.Width = 136
+                start.Height = 191
+                start.Top = taskbar.Top - start.Height
         End Select
 
         XenonWindow1.Top = start.Top

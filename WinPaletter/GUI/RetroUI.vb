@@ -6,6 +6,8 @@ Imports System.Windows.Forms
 Imports System
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonCore
+Imports System.IO
+Imports System.Text
 
 Public Module Helpers
     Private ReadOnly TextGraphics As Graphics
@@ -955,12 +957,13 @@ Public Class RetroWindow : Inherits Panel
     Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
     Public Property TitlebarText As String = "New Window"
     Public Property UseItAsMenu As Boolean = False
-
     Public Property Flat As Boolean = False
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
     Public Property ButtonDkShadow As Color = Color.Black
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
+    Public Property ButtonFace As Color = Color.FromArgb(192, 192, 192)
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
@@ -987,21 +990,36 @@ Public Class RetroWindow : Inherits Panel
 
                 G.DrawLine(New Pen(ButtonDkShadow), New Point(.Width, .X), New Point(.Width, .Height))
                 G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Height), New Point(.Width, .Height))
+
+                G.DrawRectangle(New Pen(ButtonFace), New Rectangle(2, 2, Width - 5, Height - 5))
             End With
         Else
             G.DrawRectangle(New Pen(ButtonShadow), Rect)
         End If
 
         If Not Flat And Not UseItAsMenu Then G.DrawRectangle(New Pen(ColorBorder), ARect)
-
         Dim F As Font
-        If G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
-            F = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
-        Else
-            F = New Font("Segoe UI", 9, FontStyle.Regular)
-        End If
 
         If Not UseItAsMenu Then
+            If G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
+                F = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
+            Else
+                Try
+                    Dim b As Byte() = My.Computer.Registry.CurrentUser.OpenSubKey("Control Panel\Desktop\WindowMetrics").GetValue("CaptionFont")
+                    Dim xf As LOGFONT = byteToLogfont(b)
+                    Dim bold As Boolean = False
+                    If xf.lfWeight >= 0 And xf.lfWeight <= 400 Then
+                        bold = False
+                    ElseIf xf.lfWeight > 400 Then
+                        bold = True
+                    End If
+
+                    F = New Font("Segoe UI", 9, If(bold, FontStyle.Bold, FontStyle.Regular))
+                Catch
+                    F = New Font("Segoe UI", 9, FontStyle.Regular)
+                End Try
+            End If
+
             Dim RTL As Boolean = If(RightToLeft = 1, True, False)
             Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
             If ColorGradient Then
@@ -1013,7 +1031,53 @@ Public Class RetroWindow : Inherits Panel
         End If
 
     End Sub
+
+    Private Shared Function byteToLogfont(ByVal fontBytes As Byte()) As LOGFONT
+        Dim lOGFONT As LOGFONT = New LOGFONT()
+        lOGFONT.lfHeight = BitConverter.ToInt32(fontBytes, 0)
+        lOGFONT.lfWidth = 0
+        lOGFONT.lfEscapement = 0
+        lOGFONT.lfOrientation = 0
+        lOGFONT.lfWeight = BitConverter.ToInt32(fontBytes, 16)
+        lOGFONT.lfItalic = fontBytes(20)
+        lOGFONT.lfUnderline = fontBytes(21)
+        lOGFONT.lfStrikeOut = fontBytes(22)
+        lOGFONT.lfCharSet = fontBytes(23)
+        lOGFONT.lfOutPrecision = fontBytes(24)
+        lOGFONT.lfClipPrecision = fontBytes(25)
+        lOGFONT.lfQuality = fontBytes(26)
+        lOGFONT.lfClipPrecision = fontBytes(27)
+        Dim array As Byte() = New Byte(63) {}
+
+        For i As Integer = 0 To 64 - 1
+            array(i) = fontBytes(i + 28)
+        Next
+
+        lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(Nothing)
+        Return lOGFONT
+    End Function
+
 End Class
+
+<StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
+Public Class LOGFONT
+    Public lfHeight As Integer
+    Public lfWidth As Integer
+    Public lfEscapement As Integer
+    Public lfOrientation As Integer
+    Public lfWeight As Integer
+    Public lfItalic As Byte
+    Public lfUnderline As Byte
+    Public lfStrikeOut As Byte
+    Public lfCharSet As Byte
+    Public lfOutPrecision As Byte
+    Public lfClipPrecision As Byte
+    Public lfQuality As Byte
+    Public lfPitchAndFamily As Byte
+    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
+    Public lfFaceName As String = String.Empty
+End Class
+
 Public Class RetroScrollBar : Inherits Panel
     Sub New()
         DoubleBuffered = True

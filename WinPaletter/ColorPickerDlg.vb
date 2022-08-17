@@ -186,7 +186,14 @@ Public Class ColorPickerDlg
                     If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroButtonFace Then
+                        If ctrl IsNot Win32UI.Menu Then
+                            .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                        Else
+                            .ButtonFace = Color.FromArgb(255, ColorEditorManager1.Color)
+                        End If
+                    End If
+                    If _Conditions.RetroBackground Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Invalidate()
                 End With
 

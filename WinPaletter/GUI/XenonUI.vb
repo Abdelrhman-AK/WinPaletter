@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports WinPaletter.XenonCore
 
 #Region "Helpers"
@@ -3531,8 +3532,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         If RoundedCorners Then
 
             If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-
-
+                'Dim UserImage As Bitmap = GetUserTile(System.Security.Principal.WindowsIdentity.GetCurrent().Name)
+                'G.DrawImage(UserImage, New Rectangle(96, 2, 22, 22))
+                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
+                FillImg(G, My.Resources.Start7, New Rectangle(0, 0, Width, Height), 2, True)
 
             Else
 

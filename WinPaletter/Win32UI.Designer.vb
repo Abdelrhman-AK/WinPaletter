@@ -30,6 +30,7 @@ Partial Class Win32UI
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
+        Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonToggle1 = New WinPaletter.XenonToggle()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -217,7 +218,6 @@ Partial Class Win32UI
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -351,6 +351,23 @@ Partial Class Win32UI
         '
         Me.SaveFileDialog2.DefaultExt = "wpt"
         Me.SaveFileDialog2.Filter = "PNG File|*.png"
+        '
+        'XenonButton10
+        '
+        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton10.ForeColor = System.Drawing.Color.White
+        Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
+        Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.XenonButton10.LineSize = 1
+        Me.XenonButton10.Location = New System.Drawing.Point(488, 502)
+        Me.XenonButton10.Name = "XenonButton10"
+        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.TabIndex = 81
+        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonToggle1
         '
@@ -2559,6 +2576,7 @@ Partial Class Win32UI
         '
         Me.Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu.ButtonDkShadow = System.Drawing.Color.Black
+        Me.Menu.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu.ButtonHilight = System.Drawing.Color.White
         Me.Menu.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
@@ -2599,6 +2617,7 @@ Partial Class Win32UI
         Me.RetroLabel9.ForeColor = System.Drawing.Color.DimGray
         Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel9.Name = "RetroLabel9"
+        Me.RetroLabel9.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.RetroLabel9.Size = New System.Drawing.Size(81, 20)
         Me.RetroLabel9.TabIndex = 3
         Me.RetroLabel9.Text = "Disabled item"
@@ -2634,6 +2653,7 @@ Partial Class Win32UI
         Me.RetroLabel5.ForeColor = System.Drawing.Color.White
         Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel5.Name = "RetroLabel5"
+        Me.RetroLabel5.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.RetroLabel5.Size = New System.Drawing.Size(78, 18)
         Me.RetroLabel5.TabIndex = 3
         Me.RetroLabel5.Text = "Hovered item"
@@ -2658,6 +2678,7 @@ Partial Class Win32UI
         Me.RetroLabel6.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel6.Name = "RetroLabel6"
+        Me.RetroLabel6.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.RetroLabel6.Size = New System.Drawing.Size(81, 20)
         Me.RetroLabel6.TabIndex = 3
         Me.RetroLabel6.Text = "Menu item"
@@ -2667,6 +2688,7 @@ Partial Class Win32UI
         '
         Me.RetroWindow3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow3.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow3.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
@@ -2745,6 +2767,7 @@ Partial Class Win32UI
         '
         Me.RetroWindow2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow2.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
@@ -2921,6 +2944,7 @@ Partial Class Win32UI
         '
         Me.RetroWindow1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow1.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow1.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
@@ -3008,6 +3032,7 @@ Partial Class Win32UI
         '
         Me.RetroWindow4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroWindow4.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
@@ -3051,7 +3076,7 @@ Partial Class Win32UI
         Me.RetroPanel2.ForeColor = System.Drawing.Color.Black
         Me.RetroPanel2.Location = New System.Drawing.Point(0, 0)
         Me.RetroPanel2.Name = "RetroPanel2"
-        Me.RetroPanel2.Size = New System.Drawing.Size(15, 103)
+        Me.RetroPanel2.Size = New System.Drawing.Size(16, 103)
         Me.RetroPanel2.TabIndex = 0
         '
         'RetroButton12
@@ -3066,7 +3091,7 @@ Partial Class Win32UI
         Me.RetroButton12.Image = Nothing
         Me.RetroButton12.Location = New System.Drawing.Point(0, 29)
         Me.RetroButton12.Name = "RetroButton12"
-        Me.RetroButton12.Size = New System.Drawing.Size(15, 31)
+        Me.RetroButton12.Size = New System.Drawing.Size(16, 31)
         Me.RetroButton12.TabIndex = 7
         Me.RetroButton12.UseItAsScrollbar = True
         Me.RetroButton12.UseVisualStyleBackColor = False
@@ -3080,14 +3105,15 @@ Partial Class Win32UI
         Me.RetroButton11.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton11.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton11.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
         Me.RetroButton11.ForeColor = System.Drawing.Color.Black
         Me.RetroButton11.Image = Nothing
         Me.RetroButton11.Location = New System.Drawing.Point(0, 89)
         Me.RetroButton11.Name = "RetroButton11"
-        Me.RetroButton11.Size = New System.Drawing.Size(15, 14)
+        Me.RetroButton11.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton11.TabIndex = 6
         Me.RetroButton11.Text = "u"
+        Me.RetroButton11.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.RetroButton11.UseItAsScrollbar = False
         Me.RetroButton11.UseVisualStyleBackColor = False
         Me.RetroButton11.WindowFrame = System.Drawing.Color.Black
@@ -3100,14 +3126,15 @@ Partial Class Win32UI
         Me.RetroButton10.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton10.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton10.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
         Me.RetroButton10.ForeColor = System.Drawing.Color.Black
         Me.RetroButton10.Image = Nothing
         Me.RetroButton10.Location = New System.Drawing.Point(0, 0)
         Me.RetroButton10.Name = "RetroButton10"
-        Me.RetroButton10.Size = New System.Drawing.Size(15, 14)
+        Me.RetroButton10.Size = New System.Drawing.Size(16, 14)
         Me.RetroButton10.TabIndex = 5
         Me.RetroButton10.Text = "t"
+        Me.RetroButton10.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.RetroButton10.UseItAsScrollbar = False
         Me.RetroButton10.UseVisualStyleBackColor = False
         Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
@@ -3176,23 +3203,6 @@ Partial Class Win32UI
         Me.XenonSeparator1.TabIndex = 62
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
-        '
-        'XenonButton10
-        '
-        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton10.ForeColor = System.Drawing.Color.White
-        Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
-        Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(488, 502)
-        Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
-        Me.XenonButton10.TabIndex = 81
-        Me.XenonButton10.Text = "Quick Apply"
-        Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'Win32UI
         '

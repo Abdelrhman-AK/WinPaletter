@@ -213,7 +213,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -249,6 +249,7 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <None Include="Resources\Win7ORB.png" />
+    <None Include="Resources\Start7.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Taskbar_ActiveApp8.png" />
@@ -292,7 +293,7 @@
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

@@ -101,7 +101,6 @@ Public Class Win32UI
         Me.Close()
     End Sub
 
-
     Private Sub X_pick_Click(sender As Object, e As EventArgs) Handles ActiveBorder_pick.Click, activetitle_pick.Click, AppWorkspace_pick.Click, background_pick.Click,
             btnaltface_pick.Click, btndkshadow_pick.Click, btnface_pick.Click, btnhilight_pick.Click, btnlight_pick.Click, btnshadow_pick.Click, btntext_pick.Click, GActivetitle_pick.Click,
             GInactivetitle_pick.Click, GrayText_pick.Click, hilighttext_pick.Click, hottracking_pick.Click, InactiveBorder_pick.Click, InactiveTitle_pick.Click, InactivetitleText_pick.Click,
@@ -211,19 +210,15 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-
                 For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
                     CList.Add(RB)
                 Next
-
                 CList.Add(RetroPanel2)
-
-
                 Dim _Conditions As New Conditions With {.RetroButtonFace = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-                    RW.BackColor = C
+                    If RW IsNot Menu Then RW.BackColor = C Else RW.ButtonFace = C
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                         RB.BackColor = C
                     Next
@@ -398,12 +393,16 @@ Public Class Win32UI
 
             Case "menu_pick"
                 CList.Add(Menu)
-                CList.Add(RetroPanel1)
+
+                If Not XenonToggle1.Checked Then CList.Add(RetroPanel1)
                 If Not XenonToggle1.Checked Then CList.Add(Panel3)
+
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
                 Menu.BackColor = C
-                RetroPanel1.BackColor = C
+                Menu.Invalidate()
+
+                If Not XenonToggle1.Checked Then RetroPanel1.BackColor = C
                 If Not XenonToggle1.Checked Then Panel3.BackColor = C
 
             Case "menubar_pick"
@@ -742,7 +741,7 @@ Public Class Win32UI
 
         c = btnface_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.BackColor = c
+            If RW IsNot Menu Then RW.BackColor = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.BackColor = c
             Next
@@ -751,6 +750,7 @@ Public Class Win32UI
             RB.BackColor = c
         Next
         RetroPanel2.BackColor = c
+        Menu.ButtonFace = c
 
         c = btndkshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -813,7 +813,6 @@ Public Class Win32UI
         RetroPanel1.ButtonShadow = c
         RetroTextBox1.Invalidate()
         Menu.ButtonShadow = c
-        Menu.Invalidate()
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -834,6 +833,7 @@ Public Class Win32UI
         c = menu_pick.BackColor
         Menu.BackColor = c
         RetroPanel1.BackColor = c
+        Menu.Invalidate()
 
         c = menubar_pick.BackColor
         Panel3.BackColor = c
