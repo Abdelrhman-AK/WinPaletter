@@ -345,6 +345,9 @@ Public Class MainFrm
                             .Win7Alpha = 90
                         End With
 
+                        XenonWindow1.AccentColor_Active = Aero_ColorizationColor_pick.BackColor
+                        XenonWindow2.AccentColor_Inactive = Aero_ColorizationColor_pick.BackColor
+
                         With Aero_ColorizationColor_pick.BackColor : taskbar.BackColor = Color.FromArgb(255, .R, .G, .B) : End With
                         taskbar.BackColorAlpha = 100
 
@@ -376,6 +379,9 @@ Public Class MainFrm
                         taskbar.BackColor = Color.White
                         taskbar.BackColorAlpha = 255
 
+                        XenonWindow1.AccentColor_Active = Color.White
+                        XenonWindow2.AccentColor_Inactive = Color.White
+
                         start.BackColor = Color.White
                         start.BackColorAlpha = 255
 
@@ -392,6 +398,7 @@ Public Class MainFrm
                             .Win7AeroOpaque = False
                             .Win7Basic = True
                             .Win7Alpha = 255
+                            .AccentColor_Active = Color.FromArgb(166, 190, 218)
                         End With
 
                         With XenonWindow2
@@ -400,6 +407,7 @@ Public Class MainFrm
                             .Win7AeroOpaque = False
                             .Win7Basic = True
                             .Win7Alpha = 255
+                            .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
                         End With
 
                         start.Transparency = False

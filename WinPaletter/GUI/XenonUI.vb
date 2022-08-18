@@ -4187,8 +4187,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 If Not Win7Basic Then
                     If Win7AeroOpaque Then
                         G.DrawImage(AdaptedBack, Rect7)
+                        FillRect(G, New SolidBrush(Color.FromArgb(255, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 2, True)
                         FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
-                        FillRect(G, New SolidBrush(Color.FromArgb(255, AccentColor_Active)), Rect7, 2, True)
                         DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
 
                         DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
@@ -4199,7 +4199,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         G.DrawImage(AdaptedBack, Rect7)
                         FillImg(G, AdaptedBackBlurred, Rect7, 2, True)
 
-                        FillRect(G, New SolidBrush(Color.FromArgb(Win7Alpha, AccentColor_Active)), Rect7, 2, True)
+                        FillRect(G, New SolidBrush(Color.FromArgb(Win7Alpha, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 2, True)
                         FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
                         DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
 
