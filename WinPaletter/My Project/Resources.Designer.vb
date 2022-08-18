@@ -121,6 +121,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property AeroPeek() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("AeroPeek", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
         Friend ReadOnly Property Animator() As Byte()
@@ -156,6 +166,16 @@ Namespace My.Resources
         Friend ReadOnly Property AppPreviewInActive() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("AppPreviewInActive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property BasicTaskbar() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BasicTaskbar", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -650,6 +670,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Start7Basic() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Start7Basic", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property StartBtn_10Dark() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("StartBtn_10Dark", resourceCulture)
@@ -784,6 +814,26 @@ Namespace My.Resources
         Friend ReadOnly Property W11_Init() As String
             Get
                 Return ResourceManager.GetString("W11_Init", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Win7_Close_Active() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Win7_Close_Active", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Win7_Close_inactive() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Win7_Close_inactive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         

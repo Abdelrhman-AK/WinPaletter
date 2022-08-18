@@ -320,6 +320,99 @@ Public Class MainFrm
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
+
+            Case WinVer.Seven
+                Select Case [CP].Aero_Theme
+                    Case CP.AeroTheme.Aero
+                        start.Transparency = True
+                        start.Basic = False
+                        taskbar.Transparency = True
+                        taskbar.Basic = False
+
+                        With XenonWindow1
+                            .Win7 = True
+                            .Win7Aero = True
+                            .Win7AeroOpaque = False
+                            .Win7Basic = False
+                            .Win7Alpha = 180
+                        End With
+
+                        With XenonWindow2
+                            .Win7 = True
+                            .Win7Aero = True
+                            .Win7AeroOpaque = False
+                            .Win7Basic = False
+                            .Win7Alpha = 90
+                        End With
+
+                        With Aero_ColorizationColor_pick.BackColor : taskbar.BackColor = Color.FromArgb(255, .R, .G, .B) : End With
+                        taskbar.BackColorAlpha = 100
+
+                        With Aero_ColorizationColor_pick.BackColor : start.BackColor = Color.FromArgb(255, .R, .G, .B) : End With
+                        start.BackColorAlpha = 100
+
+                    Case CP.AeroTheme.AeroOpaque
+                        start.Transparency = False
+                        start.Basic = False
+                        taskbar.Transparency = False
+                        taskbar.Basic = False
+
+                        With XenonWindow1
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = True
+                            .Win7Basic = False
+                            .Win7Alpha = 255
+                        End With
+
+                        With XenonWindow2
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = True
+                            .Win7Basic = False
+                            .Win7Alpha = 255
+                        End With
+
+                        taskbar.BackColor = Color.White
+                        taskbar.BackColorAlpha = 255
+
+                        start.BackColor = Color.White
+                        start.BackColorAlpha = 255
+
+                    Case CP.AeroTheme.Basic
+                        taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        taskbar.BackColorAlpha = 255
+
+                        start.BackColor = Color.FromArgb(166, 190, 218)
+                        start.BackColorAlpha = 255
+
+                        With XenonWindow1
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = False
+                            .Win7Basic = True
+                            .Win7Alpha = 255
+                        End With
+
+                        With XenonWindow2
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = False
+                            .Win7Basic = True
+                            .Win7Alpha = 255
+                        End With
+
+                        start.Transparency = False
+                        start.Basic = True
+                        taskbar.Transparency = False
+                        taskbar.Basic = True
+
+                    Case CP.AeroTheme.Classic
+
+                End Select
+
+                ReValidateLivePreview(pnl_preview)
+
         End Select
     End Sub
 
@@ -398,24 +491,33 @@ Public Class MainFrm
                 ActionCenter.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
-                taskbar.NoisePower = 0.2
+                taskbar.NoisePower = 0.5
                 taskbar.Height = 34
 
                 start.Visible = True
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.RoundedCorners = True
                 start.BlurPower = 1
+                start.NoisePower = 0.5
                 start.Left = 0
                 start.Width = 136
                 start.Height = 191
                 start.Top = taskbar.Top - start.Height
         End Select
 
-        XenonWindow1.Top = start.Top
-        XenonWindow1.Left = start.Right + 5
+        If PreviewConfig = WinVer.Ten Or PreviewConfig = WinVer.Eleven Then
+            XenonWindow1.Top = start.Top
+            XenonWindow1.Left = start.Right + 5
 
-        XenonWindow2.Top = XenonWindow1.Bottom + 5
-        XenonWindow2.Left = XenonWindow1.Left
+            XenonWindow2.Top = XenonWindow1.Bottom + 5
+            XenonWindow2.Left = XenonWindow1.Left
+        Else
+            XenonWindow1.Top = 10
+            XenonWindow1.Left = XenonWindow1.Parent.Right - XenonWindow1.Width - 15
+
+            XenonWindow2.Top = XenonWindow1.Bottom + 5
+            XenonWindow2.Left = XenonWindow2.Parent.Right - XenonWindow2.Width - 15
+        End If
 
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()
@@ -451,13 +553,24 @@ Public Class MainFrm
         Aero_ColorizationAfterglowBalance_txt.Text = ColorPalette.Aero_ColorizationAfterglowBalance
         Aero_ColorizationBlurBalance_txt.Text = ColorPalette.Aero_ColorizationBlurBalance
         Aero_ColorizationGlassReflectionIntensity_txt.Text = ColorPalette.Aero_ColorizationGlassReflectionIntensity
-        Aero_CompositionPolicy_txt.Text = ColorPalette.Aero_CompositionPolicy
-        Aero_ColorizationOpaqueBlend_txt.Text = ColorPalette.Aero_ColorizationOpaqueBlend
-        Aero_LastDisqualifiedCompositionSignature_txt.Text = ColorPalette.Aero_LastDisqualifiedCompositionSignature
         Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Aero_EnableAeroPeek
-        Aero_Composition_toggle.Checked = ColorPalette.Aero_Composition
         Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Aero_AlwaysHibernateThumbnails
-        Aero_EnableWindowColorization_toggle.Checked = ColorPalette.Aero_EnableWindowColorization
+
+        Select Case ColorPalette.Aero_Theme
+            Case CP.AeroTheme.Aero
+                theme_aero.Checked = True
+
+            Case CP.AeroTheme.AeroOpaque
+                theme_aeroopaque.Checked = True
+
+            Case CP.AeroTheme.Basic
+                theme_basic.Checked = True
+
+            Case CP.AeroTheme.Classic
+                theme_classic.Checked = True
+
+        End Select
+
     End Sub
 #End Region
 
@@ -1604,28 +1717,12 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub Aero_Composition_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_Composition_toggle.CheckedChanged
-        If _Shown Then CP.Aero_Composition = Aero_Composition_toggle.Checked
-    End Sub
-
     Private Sub Aero_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableAeroPeek_toggle.CheckedChanged
         If _Shown Then CP.Aero_EnableAeroPeek = Aero_EnableAeroPeek_toggle.Checked
     End Sub
 
     Private Sub Aero_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_AlwaysHibernateThumbnails_Toggle.CheckedChanged
         If _Shown Then CP.Aero_AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
-    End Sub
-
-    Private Sub Aero_EnableWindowColorization_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableWindowColorization_toggle.CheckedChanged
-        If _Shown Then CP.Aero_EnableWindowColorization = Aero_EnableWindowColorization_toggle.Checked
-    End Sub
-
-    Private Sub Aero_ColorizationOpaqueBlend_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationOpaqueBlend_txt.TextChanged
-        If _Shown Then CP.Aero_ColorizationOpaqueBlend = Val(Aero_ColorizationOpaqueBlend_txt.Text)
-    End Sub
-
-    Private Sub Aero_CompositionPolicy_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_CompositionPolicy_txt.TextChanged
-        If _Shown Then CP.Aero_CompositionPolicy = Val(Aero_CompositionPolicy_txt.Text)
     End Sub
 
     Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationColorBalance_txt.TextChanged
@@ -1644,9 +1741,35 @@ Public Class MainFrm
         If _Shown Then CP.Aero_ColorizationGlassReflectionIntensity = Val(Aero_ColorizationGlassReflectionIntensity_txt.Text)
     End Sub
 
-    Private Sub Aero_LastDisqualifiedCompositionSignature_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_LastDisqualifiedCompositionSignature_txt.TextChanged
-        If _Shown Then CP.Aero_LastDisqualifiedCompositionSignature = Val(Aero_LastDisqualifiedCompositionSignature_txt.Text)
+    Private Sub theme_classic_CheckedChanged(sender As Object) Handles theme_classic.CheckedChanged
+        If theme_classic.Checked Then
+            CP.Aero_Theme = CP.AeroTheme.Classic
+            ApplyLivePreviewFromCP(CP)
+        End If
+
     End Sub
+
+    Private Sub theme_basic_CheckedChanged(sender As Object) Handles theme_basic.CheckedChanged
+        If theme_basic.Checked Then
+            CP.Aero_Theme = CP.AeroTheme.Basic
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub theme_aeroopaque_CheckedChanged(sender As Object) Handles theme_aeroopaque.CheckedChanged
+        If theme_aeroopaque.Checked Then
+            CP.Aero_Theme = CP.AeroTheme.AeroOpaque
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub theme_aero_CheckedChanged(sender As Object) Handles theme_aero.CheckedChanged
+        If theme_aero.Checked Then
+            CP.Aero_Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

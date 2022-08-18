@@ -1020,6 +1020,247 @@ Public Class XenonRadioButton
 End Class
 
 <DefaultEvent("CheckedChanged")>
+Public Class XenonRadioImage
+    Inherits Control
+    Event CheckedChanged(sender As Object)
+    Public ColorPalette As New XenonColorPalette()
+
+    Sub New()
+        SetStyle(DirectCast(139286, ControlStyles), True)
+        SetStyle(ControlStyles.Selectable, False)
+        DoubleBuffered = True
+        AccentColor = Color.DodgerBlue
+        Font = New Font("Segoe UI", 9)
+        ForeColor = Color.White
+
+    End Sub
+
+#Region "Properties"
+    Private Sub InvalidateParent()
+        If Parent Is Nothing Then Return
+
+        For Each C As Control In Parent.Controls
+            If Not (C Is Me) AndAlso (TypeOf C Is XenonRadioImage) Then
+                DirectCast(C, XenonRadioImage).Checked = False
+            End If
+        Next
+    End Sub
+
+    Public Property Checked() As Boolean
+        Get
+            Return _Checked
+        End Get
+        Set(ByVal value As Boolean)
+            Try
+                _Checked = value
+
+                If _Checked Then
+                    InvalidateParent()
+                End If
+
+                RaiseEvent CheckedChanged(Me)
+
+                If _Shown Then
+                    Invalidate()
+                End If
+
+            Catch
+            End Try
+        End Set
+    End Property
+
+    Public Property Image As Image
+    Private _Checked As Boolean
+    Private _Shown As Boolean = False
+#Region "Accent Color Property"
+    Private AccentColorValue As Color = Color.DodgerBlue
+    Public Event AccentColorChanged As PropertyChangedEventHandler
+
+    Private Sub AccentColorNotifyPropertyChanged(ByVal info As String)
+        RaiseEvent AccentColorChanged(Me, New PropertyChangedEventArgs(info))
+    End Sub
+
+    Public Property AccentColor() As Color
+        Get
+            Return AccentColorValue
+        End Get
+
+        Set(ByVal AccentColor As Color)
+            If Not (AccentColor = AccentColorValue) Then
+                AccentColorValue = AccentColor
+                AccentColorNotifyPropertyChanged("ControlColorChanged")
+            End If
+        End Set
+    End Property
+#End Region
+#End Region
+
+#Region "Events"
+    Enum MouseState
+        None
+        Over
+        Down
+    End Enum
+
+    Public State As MouseState = MouseState.None
+
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+        Checked = True
+        State = MouseState.Down
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+        MyBase.OnMouseDown(e)
+    End Sub
+
+    Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+        State = MouseState.Over
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        State = MouseState.Over
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        State = MouseState.None
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+                AddHandler VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler EnabledChanged, AddressOf RefreshColorPalette
+            End If
+        Catch
+        End Try
+
+        Try
+            alpha = 0
+            ColorPalette = New XenonColorPalette(Me)
+        Catch
+        End Try
+    End Sub
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
+        ColorPalette = New XenonColorPalette(Me)
+        Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            ColorPalette = New XenonColorPalette(Me)
+            Invalidate()
+        End If
+    End Sub
+#End Region
+
+#Region "Animator"
+    Dim alpha As Integer
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        If Not DesignMode Then
+
+            If State = MouseState.Over Then
+                If alpha + Factor <= 255 Then
+                    alpha += Factor
+                ElseIf alpha + Factor > 255 Then
+                    alpha = 255
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+
+            If Not State = MouseState.Over Then
+                If alpha - Factor >= 0 Then
+                    alpha -= Factor
+                ElseIf alpha - Factor < 0 Then
+                    alpha = 0
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+        End If
+    End Sub
+#End Region
+
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Try
+            Dim G As Graphics = e.Graphics
+            If Parent Is Nothing Then Exit Sub
+            G.Clear(GetParentColor(Me))
+
+            G = e.Graphics
+            G.SmoothingMode = SmoothingMode.AntiAlias
+            G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+            DoubleBuffered = True
+
+            Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
+            Dim MainRectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+            Dim CenterRect As New Rectangle
+
+            If Image IsNot Nothing Then CenterRect = New Rectangle(MainRect.X + (MainRect.Width - Image.Width) / 2,
+                                        MainRect.Y + (MainRect.Height - Image.Height) / 2,
+                                         Image.Width, Image.Height)
+
+            Dim bkC As Color = If(_Checked, ColorPalette.Color_Back_Checked, ColorPalette.Color_Back)
+            Dim bkCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Back_Checked)
+
+            FillRect(G, New SolidBrush(bkC), MainRect)
+            FillRect(G, New SolidBrush(bkCC), MainRect)
+
+            Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, ColorPalette.Color_Border_Checked_Hover, ColorPalette.Color_Border))
+            Dim lCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
+
+            DrawRect_LikeW11(G, lC, MainRectInner)
+            DrawRect_LikeW11(G, lCC, MainRect)
+
+            If Image IsNot Nothing Then G.DrawImage(Image, CenterRect)
+
+        Catch
+
+        End Try
+    End Sub
+
+
+End Class
+
+<DefaultEvent("CheckedChanged")>
 Public Class XenonCheckBox
     Inherits Control
     Event CheckedChanged(sender As Object)
@@ -3181,33 +3422,20 @@ End Class
 Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyPropertyChanged
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
-
     Dim adaptedBack As Bitmap
-
     Dim adaptedBackBlurred As Bitmap
-
     Private _Transparency As Boolean = True
-
     Public Property NoisePower As Decimal = 0.15
-
     Public Property BackColorAlpha As Byte = 130
-
     Public Property Radius As Integer = 5
-
+    Public Property Basic As Boolean = False
     Public Property Borders As Boolean = True
-
     Public Property UseItAsStartMenu As Boolean = False
-
     Public Property UseItAsTaskbar As Boolean = False
-
     Public Property UseItAsTaskbar_Version As TaskbarVersion = TaskbarVersion.Eleven
-
     Public Property UseItAsActionCenter As Boolean = False
-
     Public Property DropShadow As Boolean = True
-
     Public Property RoundedCorners As Boolean = False
-
     Private _BlurPower As Integer = 8
     Public Event BlurPowerChanged As PropertyChangedEventHandler
     Private Sub NotifyBlurPowerChanged(ByVal info As String)
@@ -3532,15 +3760,21 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         If RoundedCorners Then
 
             If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                'Dim UserImage As Bitmap = GetUserTile(System.Security.Principal.WindowsIdentity.GetCurrent().Name)
-                'G.DrawImage(UserImage, New Rectangle(96, 2, 22, 22))
-                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
-                FillImg(G, My.Resources.Start7, New Rectangle(0, 0, Width, Height), 2, True)
+
+                If Not Basic Then
+                    Dim RestRect As New Rectangle(0, 16, Width, Height - 16)
+                    G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
+                    FillRect(G, New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RestRect, 2, True)
+                    FillImg(G, My.Resources.Start7, New Rectangle(0, 0, Width, Height), 2, True)
+                Else
+                    FillImg(G, My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
+                End If
 
             Else
 
                 FillRect(G, New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
                 FillRect(G, New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
+
                 If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then FillRect(G, Noise, RRect, Radius, True)
 
                 If UseItAsStartMenu Then
@@ -3680,6 +3914,18 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 Case TaskbarVersion.Seven
                     G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
 
+
+                    If Basic Then
+                        G.DrawImage(My.Resources.BasicTaskbar, Rect)
+                    Else
+                        If Not Transparency And MainFrm.CP.Aero_Theme = CP.AeroTheme.AeroOpaque Then
+                            G.FillRectangle(New TextureBrush(My.Resources.AeroGlass), Rect)
+                        End If
+                    End If
+
+                    G.DrawImage(My.Resources.AeroPeek, New Rectangle(Width - 10, 0, 10, Height))
+
+
                     Dim StartORB As New Bitmap(My.Resources.Win7ORB)
 
                     Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
@@ -3689,7 +3935,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
                     Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
-
 
                     G.DrawImage(StartORB, StartBtnRect)
 
@@ -3837,8 +4082,14 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property Active As Boolean = True
 
     Public Property RoundedCorners As Boolean = False
+    Public Property Win7 As Boolean = False
+    Public Property Win8 As Boolean = False
+    Public Property Win7Aero As Boolean = False
+    Public Property Win7AeroOpaque As Boolean = False
+    Public Property Win7Basic As Boolean = False
+    Public Property Win7Alpha As Byte = 100
 
-    Dim AdaptedBack As Bitmap
+    Dim AdaptedBack, AdaptedBackBlurred As Bitmap
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -3856,73 +4107,122 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim RectClip As Rectangle = Bounds
         G.Clear(Color.Transparent)
 
-        If RoundedCorners Then
-            Try
-                G.DrawImage(AdaptedBack, RectBK)
-            Catch
-            End Try
+        If Not Win7 And Not Win8 Then
+            If RoundedCorners Then
+                Try
+                    G.DrawImage(AdaptedBack, RectBK)
+                Catch
+                End Try
 
-            If DarkMode Then
-                FillRect(G, New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
-            Else
-                FillRect(G, New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
-            End If
-
-            If AccentColor_Enabled Then
-                If Active Then
-                    DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Active)), Rect, Radius, True)
+                If DarkMode Then
+                    FillRect(G, New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
                 Else
-                    DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect, Radius, True)
+                    FillRect(G, New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
                 End If
+
+                If AccentColor_Enabled Then
+                    If Active Then
+                        DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Active)), Rect, Radius, True)
+                    Else
+                        DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect, Radius, True)
+                    End If
+                Else
+                    If DarkMode Then
+                        DrawRect(G, New Pen(Color.FromArgb(100, 90, 90, 90)), Rect, Radius, True)
+                    Else
+                        DrawRect(G, New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
+                    End If
+                End If
+
+
+                If AccentColor_Enabled Then
+                    If Active Then
+                        FillSemiRect(G, New SolidBrush(AccentColor_Active), TitlebarRect, Radius)
+                    Else
+                        FillSemiRect(G, New SolidBrush(AccentColor_Inactive), TitlebarRect, Radius)
+                    End If
+                Else
+                    FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
+                End If
+
             Else
                 If DarkMode Then
-                    DrawRect(G, New Pen(Color.FromArgb(100, 90, 90, 90)), Rect, Radius, True)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect)
                 Else
-                    DrawRect(G, New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect)
                 End If
-            End If
+
+                If AccentColor_Enabled Then
+                    If Active Then
+                        G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Active)), Rect)
+                    Else
+                        G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect)
+                    End If
+                Else
+                    If DarkMode Then
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, 90, 90, 90)), Rect)
+                    Else
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, 220, 220, 220)), Rect)
+                    End If
+                End If
 
 
-            If AccentColor_Enabled Then
-                If Active Then
-                    FillSemiRect(G, New SolidBrush(AccentColor_Active), TitlebarRect, Radius)
+                If AccentColor_Enabled Then
+                    If Active Then
+                        G.FillRectangle(New SolidBrush(AccentColor_Active), TitlebarRect)
+                    Else
+                        G.FillRectangle(New SolidBrush(AccentColor_Inactive), TitlebarRect)
+                    End If
                 Else
-                    FillSemiRect(G, New SolidBrush(AccentColor_Inactive), TitlebarRect, Radius)
+                    G.FillRectangle(Brushes.White, TitlebarRect)
                 End If
-            Else
-                FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
             End If
 
         Else
-            If DarkMode Then
-                G.FillRectangle(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect)
-            Else
-                G.FillRectangle(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect)
-            End If
+            If Win7 Then
+                Dim Rect7 As New Rectangle(0, 0, Width, Height)
+                Dim InnerWindow_1 As New Rectangle(6, 22, Width - 12, Height - 22 - 7)
+                Dim InnerWindow_2 As New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
 
-            If AccentColor_Enabled Then
-                If Active Then
-                    G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Active)), Rect)
-                Else
-                    G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect)
-                End If
-            Else
-                If DarkMode Then
-                    G.DrawRectangle(New Pen(Color.FromArgb(100, 90, 90, 90)), Rect)
-                Else
-                    G.DrawRectangle(New Pen(Color.FromArgb(100, 220, 220, 220)), Rect)
-                End If
-            End If
+                If Not Win7Basic Then
+                    If Win7AeroOpaque Then
+                        G.DrawImage(AdaptedBack, Rect7)
+                        FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
+                        FillRect(G, New SolidBrush(Color.FromArgb(255, AccentColor_Active)), Rect7, 2, True)
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
 
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
+                        FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor))), InnerWindow_2, 1, True)
 
-            If AccentColor_Enabled Then
-                If Active Then
-                    G.FillRectangle(New SolidBrush(AccentColor_Active), TitlebarRect)
+                    ElseIf Win7Aero Then
+                        G.DrawImage(AdaptedBack, Rect7)
+                        FillImg(G, AdaptedBackBlurred, Rect7, 2, True)
+
+                        FillRect(G, New SolidBrush(Color.FromArgb(Win7Alpha, AccentColor_Active)), Rect7, 2, True)
+                        FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
+
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
+                        FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
+                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), InnerWindow_2, 1, True)
+                    End If
+
+                    If Active Then
+                        With My.Resources.Win7_Close_Active
+                            G.DrawImage(My.Resources.Win7_Close_Active, New Rectangle(Width - .Width - 5, 0, .Width, .Height - 1))
+                        End With
+                    Else
+                        With My.Resources.Win7_Close_inactive
+                            G.DrawImage(My.Resources.Win7_Close_inactive, New Rectangle(Width - .Width - 5, 0, .Width, .Height - 1))
+                        End With
+                    End If
                 Else
-                    G.FillRectangle(New SolidBrush(AccentColor_Inactive), TitlebarRect)
+
                 End If
-            Else
-                G.FillRectangle(Brushes.White, TitlebarRect)
+
+            ElseIf Win8 Then
+
             End If
         End If
 
@@ -3945,8 +4245,17 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         G.DrawImage(If(Active, My.Resources.AppPreview, My.Resources.AppPreviewInActive), IconRect)
 
-        G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
-        G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
+        If Not Win7 And Not Win8 Then
+            G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+            G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
+        Else
+            If Win7 Then
+
+            ElseIf Win8 Then
+
+            End If
+        End If
+
 
     End Sub
 
@@ -3990,7 +4299,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
     Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         If Not DesignMode Then
-            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler FindForm.Load, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
@@ -4000,6 +4309,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
     Sub ProcessBack()
         Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
+        Try : AdaptedBackBlurred = BlurBitmap(New Bitmap(AdaptedBack), 1) : Catch : End Try
     End Sub
 End Class
 
