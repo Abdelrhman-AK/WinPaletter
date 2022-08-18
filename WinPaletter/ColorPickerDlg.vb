@@ -124,11 +124,17 @@ Public Class ColorPickerDlg
 
             If TypeOf ctrl Is XenonWindow Then
                 With TryCast(ctrl, XenonWindow)
-                    If Not _Conditions.Window_InactiveTitlebar Then
+
+                    If _Conditions.Window_ActiveTitlebar Then
                         .AccentColor_Active = ColorEditorManager1.Color
-                    Else
-                        .AccentColor_Inactive = ColorEditorManager1.Color
                     End If
+
+                    If _Conditions.Window_InactiveTitlebar Then
+                        .AccentColor_Inactive = ColorEditorManager1.Color
+                    Else
+                        .AccentColor_Active = ColorEditorManager1.Color
+                    End If
+
                     .Invalidate()
                 End With
 
@@ -446,8 +452,6 @@ Public Class ColorPickerDlg
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub
-
-
 End Class
 
 Public Class Conditions
@@ -456,7 +460,9 @@ Public Class Conditions
 
     End Sub
 
+
     Public Property Window_InactiveTitlebar As Boolean = False
+    Public Property Window_ActiveTitlebar As Boolean = True
     Public Property AppUnderlineOnly As Boolean = False
     Public Property AppBackgroundOnly As Boolean = False
     Public Property StartColorOnly As Boolean = False

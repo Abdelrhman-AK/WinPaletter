@@ -4076,11 +4076,10 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property Radius As Integer = 5
 
     Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
-
     Public Property AccentColor_Inactive As Color = Color.FromArgb(32, 32, 32)
-
+    Public Property AccentColor2_Active As Color = Color.FromArgb(0, 120, 212)
+    Public Property AccentColor2_Inactive As Color = Color.FromArgb(32, 32, 32)
     Public Property Active As Boolean = True
-
     Public Property RoundedCorners As Boolean = False
     Public Property Win7 As Boolean = False
     Public Property Win8 As Boolean = False
@@ -4185,40 +4184,28 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Dim InnerWindow_2 As New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
 
                 If Not Win7Basic Then
-                    If Win7AeroOpaque Then
-                        G.DrawImage(AdaptedBack, Rect7)
-                        FillRect(G, New SolidBrush(Color.FromArgb(255, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 2, True)
-                        FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
+                    G.DrawImage(AdaptedBack, Rect7)
+                    If Not Win7AeroOpaque Then FillImg(G, AdaptedBackBlurred, Rect7, 2, True)
 
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
-                        FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor))), InnerWindow_2, 1, True)
+                    FillRect(G, New SolidBrush(Color.FromArgb(Win7Alpha, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 2, True)
+                    FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
 
-                    ElseIf Win7Aero Then
-                        G.DrawImage(AdaptedBack, Rect7)
-                        FillImg(G, AdaptedBackBlurred, Rect7, 2, True)
+                    Dim closeBtn As Image = If(Active, My.Resources.Win7_Close_Active, My.Resources.Win7_Close_inactive)
+                    G.DrawImage(closeBtn, New Rectangle(Width - closeBtn.Width - 5, 0, closeBtn.Width, closeBtn.Height))
 
-                        FillRect(G, New SolidBrush(Color.FromArgb(Win7Alpha, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 2, True)
-                        FillRect(G, New TextureBrush(My.Resources.AeroGlass), Rect7, 2, True)
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
+                    DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
 
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
-                        FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
-                        DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), InnerWindow_2, 1, True)
-                    End If
+                    DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
+                    FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
+                    DrawRect(G, New Drawing.Pen(Color.FromArgb(Win7Alpha, ControlPaint.Dark(BackColor, 0.2))), InnerWindow_2, 1, True)
+                Else
+                    G.DrawImage(AdaptedBack, Rect7)
 
                     If Active Then
-                        With My.Resources.Win7_Close_Active
-                            G.DrawImage(My.Resources.Win7_Close_Active, New Rectangle(Width - .Width - 5, 0, .Width, .Height - 1))
-                        End With
+                        G.DrawImage(My.Resources.Win7BasicActive, New Point(0, 0))
                     Else
-                        With My.Resources.Win7_Close_inactive
-                            G.DrawImage(My.Resources.Win7_Close_inactive, New Rectangle(Width - .Width - 5, 0, .Width, .Height - 1))
-                        End With
+                        G.DrawImage(My.Resources.Win7BasicInactive, New Point(0, 0))
                     End If
-                Else
-
                 End If
 
             ElseIf Win8 Then
@@ -4250,15 +4237,40 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
         Else
             If Win7 Then
-
+                If Not Win7Basic Then
+                    Font = New Font("Segoe UI", 8, FontStyle.Regular)
+                    Dim LabelRectModified As Rectangle = LabelRect
+                    LabelRectModified.X -= 2
+                    LabelRectModified.Y -= 2
+                    GlowString(G, 1, Me, Color.Black, Color.FromArgb(120, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
+                Else
+                    G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+                End If
             ElseIf Win8 Then
-
+                G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleCenter))
             End If
         End If
 
 
     End Sub
 
+    Public Sub GlowString(ByVal G As Graphics, ByVal GlowSize As Integer, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
+        Dim bm As Bitmap = New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
+        Dim g2 As Graphics = Graphics.FromImage(bm)
+        Dim pth As GraphicsPath = New GraphicsPath()
+        pth.AddString(Ctrl.Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.Size + 3, Rect, FormatX)
+        Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+        g2.SmoothingMode = SmoothingMode.AntiAlias
+        g2.Transform = mx
+        Dim p As Pen = New Pen(GlowColor, GlowSize)
+        g2.DrawPath(p, pth)
+        g2.FillPath(New SolidBrush(GlowColor), pth)
+        G.InterpolationMode = InterpolationMode.HighQualityBicubic
+        G.DrawImage(bm, Ctrl.ClientRectangle, 0, 0, bm.Width, bm.Height, GraphicsUnit.Pixel)
+        G.FillPath(New SolidBrush([ForeColor]), pth)
+        g2.Dispose()
+        pth.Dispose()
+    End Sub
     Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
         Try
             If [Radius] = -1 Then [Radius] = 6

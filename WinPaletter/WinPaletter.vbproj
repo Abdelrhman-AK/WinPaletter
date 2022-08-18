@@ -254,8 +254,10 @@
     <None Include="Resources\Start7Basic.png" />
     <None Include="Resources\Start7.png" />
     <None Include="Resources\AeroPeek.png" />
-    <None Include="Resources\Win7_Close_Active.png" />
     <None Include="Resources\Win7_Close_inactive.png" />
+    <None Include="Resources\Win7_Close_Active.png" />
+    <None Include="Resources\Win7BasicActive.png" />
+    <None Include="Resources\Win7BasicInactive.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Taskbar_ActiveApp8.png" />

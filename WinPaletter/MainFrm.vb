@@ -334,7 +334,7 @@ Public Class MainFrm
                             .Win7Aero = True
                             .Win7AeroOpaque = False
                             .Win7Basic = False
-                            .Win7Alpha = 180
+                            .Win7Alpha = 100
                         End With
 
                         With XenonWindow2
@@ -342,16 +342,16 @@ Public Class MainFrm
                             .Win7Aero = True
                             .Win7AeroOpaque = False
                             .Win7Basic = False
-                            .Win7Alpha = 90
+                            .Win7Alpha = 80
                         End With
 
-                        XenonWindow1.AccentColor_Active = Aero_ColorizationColor_pick.BackColor
-                        XenonWindow2.AccentColor_Inactive = Aero_ColorizationColor_pick.BackColor
+                        XenonWindow1.AccentColor_Active = Aero_ColorizationAfterglow_pick.BackColor
+                        XenonWindow2.AccentColor_Inactive = Aero_ColorizationAfterglow_pick.BackColor
 
-                        With Aero_ColorizationColor_pick.BackColor : taskbar.BackColor = Color.FromArgb(255, .R, .G, .B) : End With
+                        taskbar.BackColor = Color.FromArgb(255, Aero_ColorizationAfterglow_pick.BackColor)
                         taskbar.BackColorAlpha = 100
 
-                        With Aero_ColorizationColor_pick.BackColor : start.BackColor = Color.FromArgb(255, .R, .G, .B) : End With
+                        start.BackColor = Color.FromArgb(255, Aero_ColorizationAfterglow_pick.BackColor)
                         start.BackColorAlpha = 100
 
                     Case CP.AeroTheme.AeroOpaque
@@ -376,13 +376,13 @@ Public Class MainFrm
                             .Win7Alpha = 255
                         End With
 
-                        taskbar.BackColor = Color.White
+                        taskbar.BackColor = Aero_ColorizationColor_pick.BackColor
                         taskbar.BackColorAlpha = 255
 
-                        XenonWindow1.AccentColor_Active = Color.White
-                        XenonWindow2.AccentColor_Inactive = Color.White
+                        XenonWindow1.AccentColor_Active = Aero_ColorizationColor_pick.BackColor
+                        XenonWindow2.AccentColor_Inactive = Aero_ColorizationColor_pick.BackColor
 
-                        start.BackColor = Color.White
+                        start.BackColor = Aero_ColorizationColor_pick.BackColor
                         start.BackColorAlpha = 255
 
                     Case CP.AeroTheme.Basic
@@ -1697,12 +1697,22 @@ Public Class MainFrm
         CursorsStudio.ShowDialog()
     End Sub
 
+
     Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
         Dim CList As New List(Of Control) From {sender}
+        Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
 
-        Dim C As Color = ColorPickerDlg.Pick(CList)
+        If CP.Aero_Theme = CP.AeroTheme.AeroOpaque Then
+            CList.Add(start)
+            CList.Add(taskbar)
+            CList.Add(XenonWindow1)
+            CList.Add(XenonWindow2)
+        End If
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Aero_ColorizationColor = Color.FromArgb(255, C)
+
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1712,11 +1722,22 @@ Public Class MainFrm
     End Sub
 
     Private Sub Aero_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglow_pick.Click
+
         Dim CList As New List(Of Control) From {sender}
 
-        Dim C As Color = ColorPickerDlg.Pick(CList)
+        If CP.Aero_Theme = CP.AeroTheme.Aero Then
+            CList.Add(start)
+            CList.Add(taskbar)
+            CList.Add(XenonWindow1)
+            CList.Add(XenonWindow2)
+        End If
+
+        Dim _Conditions As New Conditions With {.Window_ActiveTitlebar = True, .Window_InactiveTitlebar = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Aero_ColorizationAfterglow = Color.FromArgb(255, C)
+
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
