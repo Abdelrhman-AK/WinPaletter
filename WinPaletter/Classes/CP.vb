@@ -5,6 +5,7 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports System.Text
+Imports AnimCur
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
@@ -50,7 +51,7 @@ Public Class CP
     Public Property Aero_EnableAeroPeek As Boolean = True
     Public Property Aero_AlwaysHibernateThumbnails As Boolean = False
     Public Property Aero_ColorizationColorBalance As Integer = 8
-    Public Property Aero_ColorizationAfterglowBalance As Integer
+    Public Property Aero_ColorizationAfterglowBalance As Integer = 31
     Public Property Aero_ColorizationBlurBalance As Integer = 31
     Public Property Aero_ColorizationGlassReflectionIntensity As Integer
     Public Property Aero_EnableWindowColorization As Boolean = True
@@ -473,7 +474,16 @@ Public Class CP
                     Dim Com As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", True)
                     Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
-                    If Com Or ComPol = 0 Or ComPol = 2 Then
+                    Dim Classic As Boolean = False
+                    Try
+                        Classic = My.Computer.FileSystem.GetFileInfo(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", Nothing)).Name.ToLower = "classic"
+                    Catch
+                        Classic = False
+                    End Try
+
+                    If Classic Then
+                        Aero_Theme = AeroTheme.Classic
+                    ElseIf Com Or ComPol = 0 Or ComPol = 2 Then
                         If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
                     ElseIf Not Com Or ComPol = 1 Then
                         Aero_Theme = AeroTheme.Basic
@@ -2367,19 +2377,27 @@ Public Class CP
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
 
                         Case AeroTheme.AeroOpaque
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
 
                         Case AeroTheme.Basic
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
 
                         Case AeroTheme.Classic
-
+                            If IO.File.Exists("C:\Windows\resources\Ease of Access Themes\classic.theme") Then
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Ease of Access Themes\classic.theme")
+                            End If
                     End Select
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))

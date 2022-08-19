@@ -125,17 +125,30 @@ Public Class ColorPickerDlg
             If TypeOf ctrl Is XenonWindow Then
                 With TryCast(ctrl, XenonWindow)
 
-                    If _Conditions.Window_ActiveTitlebar Then
-                        .AccentColor_Active = ColorEditorManager1.Color
-                    End If
+                    If Not _Conditions.Win7 Then
+                        If _Conditions.Window_ActiveTitlebar Then
+                            .AccentColor_Active = ColorEditorManager1.Color
+                        End If
 
-                    If _Conditions.Window_InactiveTitlebar Then
-                        .AccentColor_Inactive = ColorEditorManager1.Color
+                        If _Conditions.Window_InactiveTitlebar Then
+                            .AccentColor_Inactive = ColorEditorManager1.Color
+                        Else
+                            .AccentColor_Active = ColorEditorManager1.Color
+                        End If
+
                     Else
-                        .AccentColor_Active = ColorEditorManager1.Color
+
+                        If _Conditions.Color1 Then
+                            .AccentColor_Active = ColorEditorManager1.Color
+                            .AccentColor_Inactive = ColorEditorManager1.Color
+                        ElseIf _Conditions.Color2 Then
+                            .AccentColor2_Active = ColorEditorManager1.Color
+                            .AccentColor2_Inactive = ColorEditorManager1.Color
+                        End If
+
                     End If
 
-                    .Invalidate()
+                        .Invalidate()
                 End With
 
             ElseIf TypeOf ctrl Is XenonAcrylic Then
@@ -153,7 +166,13 @@ Public Class ColorPickerDlg
                             Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                             .Invalidate()
                         Else
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            If _Conditions.BackColor1 Then
+                                .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
+                            ElseIf _Conditions.BackColor2 Then
+                                .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
+                            Else
+                                Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            End If
                             .Invalidate()
                         End If
                         .Invalidate()
@@ -170,7 +189,14 @@ Public Class ColorPickerDlg
                         Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Invalidate()
                     Else
-                        Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        If _Conditions.BackColor1 Then
+                            .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
+                        ElseIf _Conditions.BackColor2 Then
+                            .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
+                        Else
+                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        End If
+
                         .Invalidate()
                     End If
                 End With
@@ -460,7 +486,11 @@ Public Class Conditions
 
     End Sub
 
-
+    Public Property Win7 As Boolean = False
+    Public Property Color1 As Boolean = False
+    Public Property Color2 As Boolean = False
+    Public Property BackColor1 As Boolean = False
+    Public Property BackColor2 As Boolean = False
     Public Property Window_InactiveTitlebar As Boolean = False
     Public Property Window_ActiveTitlebar As Boolean = True
     Public Property AppUnderlineOnly As Boolean = False
@@ -484,7 +514,6 @@ Public Class Conditions
     Public Property RetroBackground As Boolean = False
     Public Property RetroWindowText As Boolean = False
     Public Property RetroHighlight17BitFixer As Boolean = False
-
     Public Property CursorBack1 As Boolean = False
     Public Property CursorBack2 As Boolean = False
     Public Property CursorLine1 As Boolean = False
