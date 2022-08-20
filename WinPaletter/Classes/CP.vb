@@ -5,16 +5,35 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports System.Text
+Imports System.Windows.Forms.VisualStyles
 Imports AnimCur
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
 
+#Region "System DLLs Functions"
     <DllImport("user32.dll")>
     Private Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
     End Function
 
+    <DllImport("UxTheme.DLL", BestFitMapping:=False, CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="#65")>
+    Shared Function SetSystemVisualStyle(ByVal pszFilename As String, ByVal pszColor As String, ByVal pszSize As String, ByVal dwReserved As Integer) As Integer
+    End Function
+
+    <DllImport("uxtheme", ExactSpelling:=True)>
+    Public Shared Function EnableTheming(ByVal fEnable As Integer) As Integer
+    End Function
+
+    Declare Unicode Function GetCurrentThemeName Lib "uxtheme" (ByVal stringThemeName As StringBuilder, ByVal lengthThemeName As Integer, ByVal stringColorName As StringBuilder, ByVal lengthColorName As Integer, ByVal stringSizeName As StringBuilder, ByVal lengthSizeName As Integer) As Int32
+
+    <DllImport("user32", CharSet:=CharSet.Auto)>
+    Public Shared Function SystemParametersInfo(intAction As Integer, intParam As Integer, strParam As String, intWinIniFlag As Integer) As Integer
+    End Function
+    Private Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByVal lpvParam As Integer, fuWinIni As Integer) As Integer
+#End Region
+
+#Region "Properties"
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
 #Region "General Info"
@@ -382,8 +401,6 @@ Public Class CP
     Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 #End Region
-
-
     Enum Mode
         Registry
         Init
@@ -393,6 +410,237 @@ Public Class CP
         Registry
         File
     End Enum
+#End Region
+
+#Region "Functions"
+#Region "UserPreferenceMask"
+    Function GetUserPreferencesMask(Bit As Integer) As Boolean
+
+        Try
+            Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+            Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+            Return If(binarystring(binarystring.Count - 1 - Bit) = CChar("1"), True, False)
+        Catch
+            Return False
+        End Try
+
+    End Function
+
+    Function SetUserPreferenceMask(Bit As Integer, Value As Boolean) As Byte()
+        Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+        Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
+        Dim EnableThemeIndex As Integer = binarystring.Count - 1 - Bit
+        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Value, 1, 0))
+        Dim binaryStr As String = binarystring
+        Dim ar As Byte()
+        ar = StringToBytesArray(binaryStr)
+        If ar.Count < 8 Then
+            For i = 0 To 7 - ar.Count
+                ar = AddByteToArray(ar, 0)
+            Next
+        End If
+        ar = ar.Reverse.ToArray
+        Return ar
+    End Function
+#End Region
+
+    Function HexStringToBinary(ByVal hexString As String) As String
+        Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
+        Return Convert.ToString(num, 2)
+    End Function
+
+    Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
+        Dim R As RegistryKey = Nothing
+
+        If KeyName.Contains("HKEY_CURRENT_USER") Then
+            R = Registry.CurrentUser
+            KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
+        ElseIf KeyName.Contains("HKEY_LOCAL_MACHINE") Then
+            R = Registry.LocalMachine
+            KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
+        End If
+
+        Try
+            If Binary Then
+                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.Binary)
+            ElseIf [String] Then
+                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.String)
+            Else
+                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
+            End If
+        Catch 'ex As Exception
+            'MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
+            'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
+        Finally
+            If R IsNot Nothing Then
+                R.Flush()
+                R.Close()
+            End If
+        End Try
+
+        Try
+            R.Flush()
+            R.Close()
+        Catch
+        End Try
+
+    End Sub
+
+    Function RGB2HEX(ByVal [Color] As Color) As List(Of String)
+        Dim sb As New List(Of String)
+        sb.Clear()
+
+        sb.Add(String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B))
+        sb.Add(String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B))
+        sb.Add(String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B))
+        sb.Add(String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))
+
+        Return sb
+    End Function
+
+    Function RGB2HEX_oneline(ByVal [Color] As Color) As String
+        Return String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
+            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
+    End Function
+
+    Function BizareColorInvertor([Color] As Color) As Color
+        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
+    End Function
+
+    Public Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
+        Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
+        bArray.CopyTo(newArray, 1)
+        newArray(0) = newByte
+        Return newArray
+    End Function
+
+    Private Function StringToBytesArray(ByVal str As String) As Byte()
+        Dim bitsToPad = 8 - str.Length Mod 8
+
+        If bitsToPad <> 8 Then
+            Dim neededLength = bitsToPad + str.Length
+            str = str.PadLeft(neededLength, "0"c)
+        End If
+
+        Dim size As Integer = str.Length / 8
+        Dim arr As Byte() = New Byte(size - 1) {}
+
+        For a As Integer = 0 To size - 1
+            arr(a) = Convert.ToByte(str.Substring(a * 8, 8), 2)
+        Next
+
+        Return arr
+    End Function
+
+    Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
+        If IO.File.Exists(Filename) Then
+
+            Dim ls As New List(Of Color)
+            ls.Clear()
+
+            Dim tx As New List(Of String)
+            CList_FromStr(tx, IO.File.ReadAllText(Filename))
+
+            For Each x As String In tx
+                Try
+                    If x.Contains("=") Then
+                        If x.Split("=")(1).Contains(" ") Then
+                            If x.Split("=")(1).Split(" ").Count = 3 Then
+                                Dim c As String = x.Split("=")(1)
+                                Dim inx As Boolean = True
+                                For Each u In c.Split(" ")
+                                    If Not IsNumeric(u) Then inx = False
+                                Next
+                                If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
+                            End If
+                        End If
+                    End If
+                Catch
+                End Try
+            Next
+
+            Return ls.Distinct.ToList
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Shared Function GetPaletteFromString([String] As String, ThemeName As String) As List(Of Color)
+
+        If String.IsNullOrWhiteSpace([String]) Then
+            Return Nothing
+            Exit Function
+        End If
+
+        If Not [String].Contains("|") Then
+            Return Nothing
+            Exit Function
+        End If
+
+        If String.IsNullOrWhiteSpace(ThemeName) Then
+            Return Nothing
+            Exit Function
+        End If
+
+        Dim ls As New List(Of Color)
+        ls.Clear()
+
+        Dim AllThemes As New List(Of String)
+        Dim SelectedTheme As String = ""
+        Dim SelectedThemeList As New List(Of String)
+
+        CList_FromStr(AllThemes, [String])
+        Dim Found As Boolean = False
+
+        For Each th As String In AllThemes
+            If th.Split("|")(0).ToLower = ThemeName.ToLower Then
+                SelectedTheme = th.Replace("|", vbCrLf)
+                Found = True
+                Exit For
+            End If
+        Next
+
+        If Not Found Then
+            Return Nothing
+            Exit Function
+        End If
+
+        CList_FromStr(SelectedThemeList, SelectedTheme)
+
+
+        For Each x As String In SelectedThemeList
+            Try
+                If x.Contains("=") Then
+                    If x.Split("=")(1).Contains(" ") Then
+                        If x.Split("=")(1).Split(" ").Count = 3 Then
+                            Dim c As String = x.Split("=")(1)
+                            Dim inx As Boolean = True
+                            For Each u In c.Split(" ")
+                                If Not IsNumeric(u) Then inx = False
+                            Next
+                            If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
+                        End If
+                    End If
+                End If
+            Catch
+            End Try
+        Next
+
+        Return ls.Distinct.ToList
+    End Function
+
+    Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
+        [ComboBox].Items.Clear()
+        Dim ls As New List(Of String)
+        CList_FromStr(ls, My.Resources.RetroThemesDB)
+
+        For Each x As String In ls
+            [ComboBox].Items.Add(x.Split("|")(0))
+        Next
+
+    End Sub
+#End Region
+
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "")
         Select Case [Mode]
             Case Mode.Registry
@@ -453,10 +701,10 @@ Public Class CP
                 If My.W7 Or My.W8 Then
                     Dim y As Integer
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Nothing)
-                    Aero_ColorizationColor = Color.FromArgb(y)
+                    Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
 
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Nothing)
-                    Aero_ColorizationAfterglow = Color.FromArgb(y)
+                    Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
 
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Nothing)
                     Aero_ColorizationColorBalance = y
@@ -475,8 +723,11 @@ Public Class CP
                     Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
                     Dim Classic As Boolean = False
+
                     Try
-                        Classic = My.Computer.FileSystem.GetFileInfo(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", Nothing)).Name.ToLower = "classic"
+                        Dim stringThemeName As StringBuilder = New StringBuilder(260)
+                        GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                        Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not File.Exists(stringThemeName.ToString)
                     Catch
                         Classic = False
                     End Try
@@ -1744,591 +1995,6 @@ Public Class CP
 
     End Sub
 
-#Region "UserPreferenceMask"
-    Function GetUserPreferencesMask(Bit As Integer) As Boolean
-
-        Try
-            Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-            Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-            Return If(binarystring(binarystring.Count - 1 - Bit) = CChar("1"), True, False)
-        Catch
-            Return False
-        End Try
-
-    End Function
-
-    Function SetUserPreferenceMask(Bit As Integer, Value As Boolean) As Byte()
-        Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-        Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-        Dim EnableThemeIndex As Integer = binarystring.Count - 1 - Bit
-        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Value, 1, 0))
-        Dim binaryStr As String = binarystring
-        Dim ar As Byte()
-        ar = StringToBytesArray(binaryStr)
-        If ar.Count < 8 Then
-            For i = 0 To 7 - ar.Count
-                ar = AddByteToArray(ar, 0)
-            Next
-        End If
-        ar = ar.Reverse.ToArray
-        Return ar
-    End Function
-
-    Private Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (ByVal uAction As Integer,
-      ByVal uParam As Integer, ByVal lpvParam As Integer,
-      ByVal fuWinIni As Integer) As Integer
-
-    <DllImport("user32", CharSet:=CharSet.Auto)>
-    Public Shared Function SystemParametersInfo(
-            ByVal intAction As Integer,
-            ByVal intParam As Integer,
-            ByVal strParam As String,
-            ByVal intWinIniFlag As Integer) As Integer
-    End Function
-#End Region
-
-#Region "Cursors Render"
-    Sub ExportCursors([CP] As CP)
-        Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.AppLoading, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Busy, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Pen, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.None, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Move, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Up, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NS, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.EW, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NESW, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NWSE, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Link, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Pin, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Person, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.IBeam, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Cross, [CP]) : Catch : End Try
-    End Sub
-
-    Sub RenderCursor([Type] As CursorType, [CP] As CP)
-
-        Dim CurName As String = ""
-
-
-        Select Case [Type]
-            Case CursorType.Arrow
-                CurName = "Arrow"
-
-            Case CursorType.Help
-                CurName = "Help"
-
-            Case CursorType.Busy
-                CurName = "Busy"
-
-            Case CursorType.AppLoading
-                CurName = "AppLoading"
-
-            Case CursorType.None
-                CurName = "None"
-
-            Case CursorType.Move
-                CurName = "Move"
-
-            Case CursorType.Up
-                CurName = "Up"
-
-            Case CursorType.NS
-                CurName = "NS"
-
-            Case CursorType.EW
-                CurName = "EW"
-
-            Case CursorType.NESW
-                CurName = "NESW"
-
-            Case CursorType.NWSE
-                CurName = "NWSE"
-
-            Case CursorType.Pen
-                CurName = "Pen"
-
-            Case CursorType.Link
-                CurName = "Link"
-
-            Case CursorType.Pin
-                CurName = "Pin"
-
-            Case CursorType.Person
-                CurName = "Person"
-
-            Case CursorType.IBeam
-                CurName = "IBeam"
-
-            Case CursorType.Cross
-                CurName = "Cross"
-
-        End Select
-
-        If Not [Type] = CursorType.Busy And Not [Type] = CursorType.AppLoading Then
-
-            If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
-            Dim Path As String = String.Format(My.Application.curPath & "\{0}.cur", CurName)
-
-            Dim fs As New FileStream(Path, FileMode.Create)
-            Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
-
-            For i As Single = 1 To 4 Step 0.5
-                Dim bmp As New Bitmap(32 * i, 32 * i, PixelFormat.Format32bppPArgb)
-                Dim HotPoint As New Point(1, 1)
-
-                Select Case [Type]
-                    Case CursorType.Arrow
-#Region "Arrow"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Arrow_PrimaryColor1, .Cursor_Arrow_PrimaryColor2, .Cursor_Arrow_PrimaryColorGradient, .Cursor_Arrow_PrimaryColorGradientMode,
-                               .Cursor_Arrow_SecondaryColor1, .Cursor_Arrow_SecondaryColor2, .Cursor_Arrow_SecondaryColorGradient, .Cursor_Arrow_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Arrow_PrimaryColorNoise, .Cursor_Arrow_PrimaryColorNoiseOpacity, .Cursor_Arrow_SecondaryColorNoise, .Cursor_Arrow_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1, 1)
-#End Region
-                    Case CursorType.Help
-#Region "Help"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Help_PrimaryColor1, .Cursor_Help_PrimaryColor2, .Cursor_Help_PrimaryColorGradient, .Cursor_Help_PrimaryColorGradientMode,
-                               .Cursor_Help_SecondaryColor1, .Cursor_Help_SecondaryColor2, .Cursor_Help_SecondaryColorGradient, .Cursor_Help_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Help_PrimaryColorNoise, .Cursor_Help_PrimaryColorNoiseOpacity, .Cursor_Help_SecondaryColorNoise, .Cursor_Help_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1, 1)
-#End Region
-                    Case CursorType.None
-#Region "None"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_None_PrimaryColor1, .Cursor_None_PrimaryColor2, .Cursor_None_PrimaryColorGradient, .Cursor_None_PrimaryColorGradientMode,
-                               .Cursor_None_SecondaryColor1, .Cursor_None_SecondaryColor2, .Cursor_None_SecondaryColorGradient, .Cursor_None_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_None_PrimaryColorNoise, .Cursor_None_PrimaryColorNoiseOpacity, .Cursor_None_SecondaryColorNoise, .Cursor_None_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
-                    Case CursorType.Move
-#Region "Move"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Move_PrimaryColor1, .Cursor_Move_PrimaryColor2, .Cursor_Move_PrimaryColorGradient, .Cursor_Move_PrimaryColorGradientMode,
-                               .Cursor_Move_SecondaryColor1, .Cursor_Move_SecondaryColor2, .Cursor_Move_SecondaryColorGradient, .Cursor_Move_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Move_PrimaryColorNoise, .Cursor_Move_PrimaryColorNoiseOpacity, .Cursor_Move_SecondaryColorNoise, .Cursor_Move_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
-#End Region
-                    Case CursorType.Up
-#Region "Up"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Up_PrimaryColor1, .Cursor_Up_PrimaryColor2, .Cursor_Up_PrimaryColorGradient, .Cursor_Up_PrimaryColorGradientMode,
-                               .Cursor_Up_SecondaryColor1, .Cursor_Up_SecondaryColor2, .Cursor_Up_SecondaryColorGradient, .Cursor_Up_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Up_PrimaryColorNoise, .Cursor_Up_PrimaryColorNoiseOpacity, .Cursor_Up_SecondaryColorNoise, .Cursor_Up_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(4 * i), 1)
-#End Region
-                    Case CursorType.NS
-#Region "NS"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NS_PrimaryColor1, .Cursor_NS_PrimaryColor2, .Cursor_NS_PrimaryColorGradient, .Cursor_NS_PrimaryColorGradientMode,
-                               .Cursor_NS_SecondaryColor1, .Cursor_NS_SecondaryColor2, .Cursor_NS_SecondaryColorGradient, .Cursor_NS_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NS_PrimaryColorNoise, .Cursor_NS_PrimaryColorNoiseOpacity, .Cursor_NS_SecondaryColorNoise, .Cursor_NS_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(11 * i))
-#End Region
-                    Case CursorType.EW
-#Region "EW"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_EW_PrimaryColor1, .Cursor_EW_PrimaryColor2, .Cursor_EW_PrimaryColorGradient, .Cursor_EW_PrimaryColorGradientMode,
-                               .Cursor_EW_SecondaryColor1, .Cursor_EW_SecondaryColor2, .Cursor_EW_SecondaryColorGradient, .Cursor_EW_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_EW_PrimaryColorNoise, .Cursor_EW_PrimaryColorNoiseOpacity, .Cursor_EW_SecondaryColorNoise, .Cursor_EW_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + 11 * i, 1 + 4 * i)
-#End Region
-                    Case CursorType.NESW
-#Region "NESW"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NESW_PrimaryColor1, .Cursor_NESW_PrimaryColor2, .Cursor_NESW_PrimaryColorGradient, .Cursor_NESW_PrimaryColorGradientMode,
-                               .Cursor_NESW_SecondaryColor1, .Cursor_NESW_SecondaryColor2, .Cursor_NESW_SecondaryColorGradient, .Cursor_NESW_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NESW_PrimaryColorNoise, .Cursor_NESW_PrimaryColorNoiseOpacity, .Cursor_NESW_SecondaryColorNoise, .Cursor_NESW_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
-                    Case CursorType.NWSE
-#Region "NWSE"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NWSE_PrimaryColor1, .Cursor_NWSE_PrimaryColor2, .Cursor_NWSE_PrimaryColorGradient, .Cursor_NWSE_PrimaryColorGradientMode,
-                               .Cursor_NWSE_SecondaryColor1, .Cursor_NWSE_SecondaryColor2, .Cursor_NWSE_SecondaryColorGradient, .Cursor_NWSE_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NWSE_PrimaryColorNoise, .Cursor_NWSE_PrimaryColorNoiseOpacity, .Cursor_NWSE_SecondaryColorNoise, .Cursor_NWSE_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
-                    Case CursorType.Pen
-#Region "Pen"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Pen_PrimaryColor1, .Cursor_Pen_PrimaryColor2, .Cursor_Pen_PrimaryColorGradient, .Cursor_Pen_PrimaryColorGradientMode,
-                               .Cursor_Pen_SecondaryColor1, .Cursor_Pen_SecondaryColor2, .Cursor_Pen_SecondaryColorGradient, .Cursor_Pen_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pen_PrimaryColorNoise, .Cursor_Pen_PrimaryColorNoiseOpacity, .Cursor_Pen_SecondaryColorNoise, .Cursor_Pen_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1, 1)
-#End Region
-                    Case CursorType.Link
-#Region "Link"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Link_PrimaryColor1, .Cursor_Link_PrimaryColor2, .Cursor_Link_PrimaryColorGradient, .Cursor_Link_PrimaryColorGradientMode,
-                               .Cursor_Link_SecondaryColor1, .Cursor_Link_SecondaryColor2, .Cursor_Link_SecondaryColorGradient, .Cursor_Link_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Link_PrimaryColorNoise, .Cursor_Link_PrimaryColorNoiseOpacity, .Cursor_Link_SecondaryColorNoise, .Cursor_Link_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
-                    Case CursorType.Pin
-#Region "Pin"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Pin_PrimaryColor1, .Cursor_Pin_PrimaryColor2, .Cursor_Pin_PrimaryColorGradient, .Cursor_Pin_PrimaryColorGradientMode,
-                               .Cursor_Pin_SecondaryColor1, .Cursor_Pin_SecondaryColor2, .Cursor_Pin_SecondaryColorGradient, .Cursor_Pin_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pin_PrimaryColorNoise, .Cursor_Pin_PrimaryColorNoiseOpacity, .Cursor_Pin_SecondaryColorNoise, .Cursor_Pin_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
-                    Case CursorType.Person
-#Region "Person"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Person_PrimaryColor1, .Cursor_Person_PrimaryColor2, .Cursor_Person_PrimaryColorGradient, .Cursor_Person_PrimaryColorGradientMode,
-                               .Cursor_Person_SecondaryColor1, .Cursor_Person_SecondaryColor2, .Cursor_Person_SecondaryColorGradient, .Cursor_Person_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Person_PrimaryColorNoise, .Cursor_Person_PrimaryColorNoiseOpacity, .Cursor_Person_SecondaryColorNoise, .Cursor_Person_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
-                    Case CursorType.IBeam
-#Region "IBeam"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_IBeam_PrimaryColor1, .Cursor_IBeam_PrimaryColor2, .Cursor_IBeam_PrimaryColorGradient, .Cursor_IBeam_PrimaryColorGradientMode,
-                               .Cursor_IBeam_SecondaryColor1, .Cursor_IBeam_SecondaryColor2, .Cursor_IBeam_SecondaryColorGradient, .Cursor_IBeam_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_IBeam_PrimaryColorNoise, .Cursor_IBeam_PrimaryColorNoiseOpacity, .Cursor_IBeam_SecondaryColorNoise, .Cursor_IBeam_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(9 * i))
-#End Region
-                    Case CursorType.Cross
-#Region "Cross"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Cross_PrimaryColor1, .Cursor_Cross_PrimaryColor2, .Cursor_Cross_PrimaryColorGradient, .Cursor_Cross_PrimaryColorGradientMode,
-                               .Cursor_Cross_SecondaryColor1, .Cursor_Cross_SecondaryColor2, .Cursor_Cross_SecondaryColorGradient, .Cursor_Cross_SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Cross_PrimaryColorNoise, .Cursor_Cross_PrimaryColorNoiseOpacity, .Cursor_Cross_SecondaryColorNoise, .Cursor_Cross_SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
-                        HotPoint = New Point(1 + CInt(9 * i), 1 + CInt(9 * i))
-#End Region
-                End Select
-
-                EO.WriteBitmap(bmp, Nothing, HotPoint)
-
-            Next
-
-            fs.Close()
-
-        Else
-            Dim HotPoint As New Point(1, 1)
-
-            For i As Single = 1 To 4 Step 1
-                Dim BMPList As New List(Of Bitmap)
-                BMPList.Clear()
-
-#Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
-                With [CP]
-                    For ang As Integer = 180 To 360 Step +10
-                        Dim bm As Bitmap
-
-                        If [Type] = CursorType.AppLoading Then
-                            bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
-                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
-                                             1, i, ang))
-
-                            HotPoint = New Point(1, 1 + CInt(8 * i))
-                        Else
-                            bm = New Bitmap(Draw([Type],
-                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
-                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
-                                            Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
-                                            1, i, ang))
-
-                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
-                        End If
-
-                        BMPList.Add(bm)
-                    Next
-
-                    For ang As Integer = 0 To 180 Step +10
-                        Dim bm As Bitmap
-
-                        If [Type] = CursorType.AppLoading Then
-                            bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
-                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
-                                             1, i, ang))
-
-                            HotPoint = New Point(1, 1 + CInt(8 * i))
-                        Else
-                            bm = New Bitmap(Draw([Type],
-                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
-                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
-                                            Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
-                                            1, i, ang))
-
-                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
-                        End If
-
-                        BMPList.Add(bm)
-                    Next
-                End With
-#End Region
-
-                Dim Count As Integer = BMPList.Count
-                Dim frameRates As UInteger() = New UInteger(Count - 1) {}
-                Dim seqNums As UInteger() = New UInteger(Count - 1) {}
-                Dim Speed As Integer = 2
-
-                For ixx = 0 To Count - 1
-                    frameRates(ixx) = Convert.ToUInt32(Speed)
-                    seqNums(ixx) = CUInt(ixx)
-                Next
-
-                If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
-                Dim fs As New FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), FileMode.Create)
-
-                Dim AN As New EOANIWriter(fs, Count, Speed, frameRates, seqNums, Nothing, Nothing, HotPoint)
-
-                For ix = 0 To Count - 1
-                    AN.WriteFrame32(BMPList(ix))
-                Next
-
-                fs.Close()
-            Next
-
-        End If
-
-    End Sub
-
-    Sub ApplyCursorsToReg()
-        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors\Schemes")
-        Dim RegValue As String
-        Dim Path As String = My.Application.curPath
-        RegValue = String.Format("{0}\{1}", Path, "Arrow.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Help.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "AppLoading_1x.ani")
-        RegValue &= String.Format(",{0}\{1}", Path, "Busy_1x.ani")
-        RegValue &= String.Format(",{0}\{1}", Path, "Cross.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "IBeam.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Pen.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "None.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "NS.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "EW.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "NWSE.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "NESW.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Move.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Up.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Link.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Pin.cur")
-        RegValue &= String.Format(",{0}\{1}", Path, "Person.cur")
-        rMain.SetValue("WinPaletter", RegValue, RegistryValueKind.String)
-
-        rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors")
-        rMain.SetValue("", "WinPaletter")
-        rMain.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
-
-        Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
-        rMain.SetValue("AppStarting", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
-
-        x = String.Format("{0}\{1}", Path, "Arrow.cur")
-        rMain.SetValue("Arrow", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NORMAL)
-
-        x = String.Format("{0}\{1}", Path, "Cross.cur")
-        rMain.SetValue("Crosshair", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_CROSS)
-
-        x = String.Format("{0}\{1}", Path, "Link.cur")
-        rMain.SetValue("Hand", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HAND)
-
-        x = String.Format("{0}\{1}", Path, "Help.cur")
-        rMain.SetValue("Help", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HELP)
-
-        x = String.Format("{0}\{1}", Path, "IBeam.cur")
-        rMain.SetValue("IBeam", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_IBEAM)
-
-        x = String.Format("{0}\{1}", Path, "None.cur")
-        rMain.SetValue("No", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NO)
-
-        x = String.Format("{0}\{1}", Path, "Pen.cur")
-        rMain.SetValue("NWPen", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
-
-        x = String.Format("{0}\{1}", Path, "Person.cur")
-        rMain.SetValue("Person", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
-
-        x = String.Format("{0}\{1}", Path, "Pin.cur")
-        rMain.SetValue("Pin", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
-
-        x = String.Format("{0}\{1}", Path, "Move.cur")
-        rMain.SetValue("SizeAll", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEALL)
-
-        x = String.Format("{0}\{1}", Path, "NESW.cur")
-        rMain.SetValue("SizeNESW", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENESW)
-
-        x = String.Format("{0}\{1}", Path, "NS.cur")
-        rMain.SetValue("SizeNS", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENS)
-
-        x = String.Format("{0}\{1}", Path, "NWSE.cur")
-        rMain.SetValue("SizeNWSE", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
-
-        x = String.Format("{0}\{1}", Path, "EW.cur")
-        rMain.SetValue("SizeWE", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEWE)
-
-        x = String.Format("{0}\{1}", Path, "Up.cur")
-        rMain.SetValue("UpArrow", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_UP)
-
-        x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
-        rMain.SetValue("Wait", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_WAIT)
-
-        rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
-        rMain.Close()
-    End Sub
-
-    <DllImport("user32.dll")>
-    Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As UInteger) As Boolean
-    End Function
-
-    Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
-
-    Enum OCR_SYSTEM_CURSORS As UInteger
-
-        ' Standard arrow And small hourglass
-        OCR_APPSTARTING = 32650
-
-        'Standard arrow
-        OCR_NORMAL = 32512
-
-        'Crosshair
-        OCR_CROSS = 32515
-
-        'Windows 2000/XP: Hand
-        OCR_HAND = 32649
-
-        'Arrow And question mark
-        OCR_HELP = 32651
-
-        'I-beam
-        OCR_IBEAM = 32513
-
-        'Slashed circle
-        OCR_NO = 32648
-
-        'Four-pointed arrow pointing north south east And west
-        OCR_SIZEALL = 32646
-
-        'Double-pointed arrow pointing northeast And southwest
-        OCR_SIZENESW = 32643
-
-        'Double-pointed arrow pointing north And south
-        OCR_SIZENS = 32645
-
-        'Double-pointed arrow pointing northwest And southeast
-        OCR_SIZENWSE = 32642
-
-        'Double-pointed arrow pointing west And east
-        OCR_SIZEWE = 32644
-
-        'Vertical arrow
-        OCR_UP = 32516
-
-        'Hourglass
-        OCR_WAIT = 32514
-    End Enum
-#End Region
-
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
@@ -2365,40 +2031,42 @@ Public Class CP
                 If My.W7 Or My.W8 Then
                     If My.W8 Then EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
+                    Select Case Aero_Theme
+                        Case AeroTheme.Aero
+                            EnableTheming(1)
+                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                        Case AeroTheme.AeroOpaque
+                            EnableTheming(1)
+                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+
+                        Case AeroTheme.Basic
+                            EnableTheming(1)
+                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+
+                        Case AeroTheme.Classic
+                            EnableTheming(0)
+                    End Select
+
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
-
-                    Select Case Aero_Theme
-                        Case AeroTheme.Aero
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
-
-                        Case AeroTheme.AeroOpaque
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
-
-                        Case AeroTheme.Basic
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Themes\aero.theme")
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", "%SystemRoot%\resources\Themes\Aero\Aero.msstyles")
-
-                        Case AeroTheme.Classic
-                            If IO.File.Exists("C:\Windows\resources\Ease of Access Themes\classic.theme") Then
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "C:\Windows\resources\Ease of Access Themes\classic.theme")
-                            End If
-                    End Select
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
@@ -3309,68 +2977,548 @@ Public Class CP
 
     End Sub
 
-    Function HexStringToBinary(ByVal hexString As String) As String
-        Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
-        Return Convert.ToString(num, 2)
-    End Function
 
-    Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
-        Dim R As RegistryKey = Nothing
+#Region "Cursors Render"
+    Sub ExportCursors([CP] As CP)
+        Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.AppLoading, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Busy, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Pen, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.None, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Move, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Up, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NS, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.EW, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NESW, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.NWSE, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Link, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Pin, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Person, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.IBeam, [CP]) : Catch : End Try
+        Try : RenderCursor(CursorType.Cross, [CP]) : Catch : End Try
+    End Sub
 
-        If KeyName.Contains("HKEY_CURRENT_USER") Then
-            R = Registry.CurrentUser
-            KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
-        ElseIf KeyName.Contains("HKEY_LOCAL_MACHINE") Then
-            R = Registry.LocalMachine
-            KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
+    Sub RenderCursor([Type] As CursorType, [CP] As CP)
+
+        Dim CurName As String = ""
+
+
+        Select Case [Type]
+            Case CursorType.Arrow
+                CurName = "Arrow"
+
+            Case CursorType.Help
+                CurName = "Help"
+
+            Case CursorType.Busy
+                CurName = "Busy"
+
+            Case CursorType.AppLoading
+                CurName = "AppLoading"
+
+            Case CursorType.None
+                CurName = "None"
+
+            Case CursorType.Move
+                CurName = "Move"
+
+            Case CursorType.Up
+                CurName = "Up"
+
+            Case CursorType.NS
+                CurName = "NS"
+
+            Case CursorType.EW
+                CurName = "EW"
+
+            Case CursorType.NESW
+                CurName = "NESW"
+
+            Case CursorType.NWSE
+                CurName = "NWSE"
+
+            Case CursorType.Pen
+                CurName = "Pen"
+
+            Case CursorType.Link
+                CurName = "Link"
+
+            Case CursorType.Pin
+                CurName = "Pin"
+
+            Case CursorType.Person
+                CurName = "Person"
+
+            Case CursorType.IBeam
+                CurName = "IBeam"
+
+            Case CursorType.Cross
+                CurName = "Cross"
+
+        End Select
+
+        If Not [Type] = CursorType.Busy And Not [Type] = CursorType.AppLoading Then
+
+            If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
+            Dim Path As String = String.Format(My.Application.curPath & "\{0}.cur", CurName)
+
+            Dim fs As New FileStream(Path, FileMode.Create)
+            Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
+
+            For i As Single = 1 To 4 Step 0.5
+                Dim bmp As New Bitmap(32 * i, 32 * i, PixelFormat.Format32bppPArgb)
+                Dim HotPoint As New Point(1, 1)
+
+                Select Case [Type]
+                    Case CursorType.Arrow
+#Region "Arrow"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Arrow_PrimaryColor1, .Cursor_Arrow_PrimaryColor2, .Cursor_Arrow_PrimaryColorGradient, .Cursor_Arrow_PrimaryColorGradientMode,
+                               .Cursor_Arrow_SecondaryColor1, .Cursor_Arrow_SecondaryColor2, .Cursor_Arrow_SecondaryColorGradient, .Cursor_Arrow_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Arrow_PrimaryColorNoise, .Cursor_Arrow_PrimaryColorNoiseOpacity, .Cursor_Arrow_SecondaryColorNoise, .Cursor_Arrow_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.Help
+#Region "Help"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Help_PrimaryColor1, .Cursor_Help_PrimaryColor2, .Cursor_Help_PrimaryColorGradient, .Cursor_Help_PrimaryColorGradientMode,
+                               .Cursor_Help_SecondaryColor1, .Cursor_Help_SecondaryColor2, .Cursor_Help_SecondaryColorGradient, .Cursor_Help_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Help_PrimaryColorNoise, .Cursor_Help_PrimaryColorNoiseOpacity, .Cursor_Help_SecondaryColorNoise, .Cursor_Help_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.None
+#Region "None"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_None_PrimaryColor1, .Cursor_None_PrimaryColor2, .Cursor_None_PrimaryColorGradient, .Cursor_None_PrimaryColorGradientMode,
+                               .Cursor_None_SecondaryColor1, .Cursor_None_SecondaryColor2, .Cursor_None_SecondaryColorGradient, .Cursor_None_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_None_PrimaryColorNoise, .Cursor_None_PrimaryColorNoiseOpacity, .Cursor_None_SecondaryColorNoise, .Cursor_None_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.Move
+#Region "Move"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Move_PrimaryColor1, .Cursor_Move_PrimaryColor2, .Cursor_Move_PrimaryColorGradient, .Cursor_Move_PrimaryColorGradientMode,
+                               .Cursor_Move_SecondaryColor1, .Cursor_Move_SecondaryColor2, .Cursor_Move_SecondaryColorGradient, .Cursor_Move_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Move_PrimaryColorNoise, .Cursor_Move_PrimaryColorNoiseOpacity, .Cursor_Move_SecondaryColorNoise, .Cursor_Move_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+#End Region
+                    Case CursorType.Up
+#Region "Up"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Up_PrimaryColor1, .Cursor_Up_PrimaryColor2, .Cursor_Up_PrimaryColorGradient, .Cursor_Up_PrimaryColorGradientMode,
+                               .Cursor_Up_SecondaryColor1, .Cursor_Up_SecondaryColor2, .Cursor_Up_SecondaryColorGradient, .Cursor_Up_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Up_PrimaryColorNoise, .Cursor_Up_PrimaryColorNoiseOpacity, .Cursor_Up_SecondaryColorNoise, .Cursor_Up_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(4 * i), 1)
+#End Region
+                    Case CursorType.NS
+#Region "NS"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NS_PrimaryColor1, .Cursor_NS_PrimaryColor2, .Cursor_NS_PrimaryColorGradient, .Cursor_NS_PrimaryColorGradientMode,
+                               .Cursor_NS_SecondaryColor1, .Cursor_NS_SecondaryColor2, .Cursor_NS_SecondaryColorGradient, .Cursor_NS_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NS_PrimaryColorNoise, .Cursor_NS_PrimaryColorNoiseOpacity, .Cursor_NS_SecondaryColorNoise, .Cursor_NS_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(11 * i))
+#End Region
+                    Case CursorType.EW
+#Region "EW"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_EW_PrimaryColor1, .Cursor_EW_PrimaryColor2, .Cursor_EW_PrimaryColorGradient, .Cursor_EW_PrimaryColorGradientMode,
+                               .Cursor_EW_SecondaryColor1, .Cursor_EW_SecondaryColor2, .Cursor_EW_SecondaryColorGradient, .Cursor_EW_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_EW_PrimaryColorNoise, .Cursor_EW_PrimaryColorNoiseOpacity, .Cursor_EW_SecondaryColorNoise, .Cursor_EW_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + 11 * i, 1 + 4 * i)
+#End Region
+                    Case CursorType.NESW
+#Region "NESW"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NESW_PrimaryColor1, .Cursor_NESW_PrimaryColor2, .Cursor_NESW_PrimaryColorGradient, .Cursor_NESW_PrimaryColorGradientMode,
+                               .Cursor_NESW_SecondaryColor1, .Cursor_NESW_SecondaryColor2, .Cursor_NESW_SecondaryColorGradient, .Cursor_NESW_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NESW_PrimaryColorNoise, .Cursor_NESW_PrimaryColorNoiseOpacity, .Cursor_NESW_SecondaryColorNoise, .Cursor_NESW_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.NWSE
+#Region "NWSE"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_NWSE_PrimaryColor1, .Cursor_NWSE_PrimaryColor2, .Cursor_NWSE_PrimaryColorGradient, .Cursor_NWSE_PrimaryColorGradientMode,
+                               .Cursor_NWSE_SecondaryColor1, .Cursor_NWSE_SecondaryColor2, .Cursor_NWSE_SecondaryColorGradient, .Cursor_NWSE_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_NWSE_PrimaryColorNoise, .Cursor_NWSE_PrimaryColorNoiseOpacity, .Cursor_NWSE_SecondaryColorNoise, .Cursor_NWSE_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
+#End Region
+                    Case CursorType.Pen
+#Region "Pen"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Pen_PrimaryColor1, .Cursor_Pen_PrimaryColor2, .Cursor_Pen_PrimaryColorGradient, .Cursor_Pen_PrimaryColorGradientMode,
+                               .Cursor_Pen_SecondaryColor1, .Cursor_Pen_SecondaryColor2, .Cursor_Pen_SecondaryColorGradient, .Cursor_Pen_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Pen_PrimaryColorNoise, .Cursor_Pen_PrimaryColorNoiseOpacity, .Cursor_Pen_SecondaryColorNoise, .Cursor_Pen_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1, 1)
+#End Region
+                    Case CursorType.Link
+#Region "Link"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Link_PrimaryColor1, .Cursor_Link_PrimaryColor2, .Cursor_Link_PrimaryColorGradient, .Cursor_Link_PrimaryColorGradientMode,
+                               .Cursor_Link_SecondaryColor1, .Cursor_Link_SecondaryColor2, .Cursor_Link_SecondaryColorGradient, .Cursor_Link_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Link_PrimaryColorNoise, .Cursor_Link_PrimaryColorNoiseOpacity, .Cursor_Link_SecondaryColorNoise, .Cursor_Link_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.Pin
+#Region "Pin"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Pin_PrimaryColor1, .Cursor_Pin_PrimaryColor2, .Cursor_Pin_PrimaryColorGradient, .Cursor_Pin_PrimaryColorGradientMode,
+                               .Cursor_Pin_SecondaryColor1, .Cursor_Pin_SecondaryColor2, .Cursor_Pin_SecondaryColorGradient, .Cursor_Pin_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Pin_PrimaryColorNoise, .Cursor_Pin_PrimaryColorNoiseOpacity, .Cursor_Pin_SecondaryColorNoise, .Cursor_Pin_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.Person
+#Region "Person"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Person_PrimaryColor1, .Cursor_Person_PrimaryColor2, .Cursor_Person_PrimaryColorGradient, .Cursor_Person_PrimaryColorGradientMode,
+                               .Cursor_Person_SecondaryColor1, .Cursor_Person_SecondaryColor2, .Cursor_Person_SecondaryColorGradient, .Cursor_Person_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Person_PrimaryColorNoise, .Cursor_Person_PrimaryColorNoiseOpacity, .Cursor_Person_SecondaryColorNoise, .Cursor_Person_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(6 * i), 1)
+#End Region
+                    Case CursorType.IBeam
+#Region "IBeam"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_IBeam_PrimaryColor1, .Cursor_IBeam_PrimaryColor2, .Cursor_IBeam_PrimaryColorGradient, .Cursor_IBeam_PrimaryColorGradientMode,
+                               .Cursor_IBeam_SecondaryColor1, .Cursor_IBeam_SecondaryColor2, .Cursor_IBeam_SecondaryColorGradient, .Cursor_IBeam_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_IBeam_PrimaryColorNoise, .Cursor_IBeam_PrimaryColorNoiseOpacity, .Cursor_IBeam_SecondaryColorNoise, .Cursor_IBeam_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(9 * i))
+#End Region
+                    Case CursorType.Cross
+#Region "Cross"
+                        With [CP]
+                            bmp = Draw([Type],
+                               .Cursor_Cross_PrimaryColor1, .Cursor_Cross_PrimaryColor2, .Cursor_Cross_PrimaryColorGradient, .Cursor_Cross_PrimaryColorGradientMode,
+                               .Cursor_Cross_SecondaryColor1, .Cursor_Cross_SecondaryColor2, .Cursor_Cross_SecondaryColorGradient, .Cursor_Cross_SecondaryColorGradientMode,
+                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                               .Cursor_Cross_PrimaryColorNoise, .Cursor_Cross_PrimaryColorNoiseOpacity, .Cursor_Cross_SecondaryColorNoise, .Cursor_Cross_SecondaryColorNoiseOpacity,
+                               Nothing, Nothing, Nothing, Nothing,
+                               1, i, 0)
+                        End With
+                        HotPoint = New Point(1 + CInt(9 * i), 1 + CInt(9 * i))
+#End Region
+                End Select
+
+                EO.WriteBitmap(bmp, Nothing, HotPoint)
+
+            Next
+
+            fs.Close()
+
+        Else
+            Dim HotPoint As New Point(1, 1)
+
+            For i As Single = 1 To 4 Step 1
+                Dim BMPList As New List(Of Bitmap)
+                BMPList.Clear()
+
+#Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
+                With [CP]
+                    For ang As Integer = 180 To 360 Step +10
+                        Dim bm As Bitmap
+
+                        If [Type] = CursorType.AppLoading Then
+                            bm = New Bitmap(Draw([Type],
+                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
+                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                             1, i, ang))
+
+                            HotPoint = New Point(1, 1 + CInt(8 * i))
+                        Else
+                            bm = New Bitmap(Draw([Type],
+                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
+                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            1, i, ang))
+
+                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+                        End If
+
+                        BMPList.Add(bm)
+                    Next
+
+                    For ang As Integer = 0 To 180 Step +10
+                        Dim bm As Bitmap
+
+                        If [Type] = CursorType.AppLoading Then
+                            bm = New Bitmap(Draw([Type],
+                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
+                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                             1, i, ang))
+
+                            HotPoint = New Point(1, 1 + CInt(8 * i))
+                        Else
+                            bm = New Bitmap(Draw([Type],
+                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
+                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            Nothing, Nothing, Nothing, Nothing,
+                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            1, i, ang))
+
+                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+                        End If
+
+                        BMPList.Add(bm)
+                    Next
+                End With
+#End Region
+
+                Dim Count As Integer = BMPList.Count
+                Dim frameRates As UInteger() = New UInteger(Count - 1) {}
+                Dim seqNums As UInteger() = New UInteger(Count - 1) {}
+                Dim Speed As Integer = 2
+
+                For ixx = 0 To Count - 1
+                    frameRates(ixx) = Convert.ToUInt32(Speed)
+                    seqNums(ixx) = CUInt(ixx)
+                Next
+
+                If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
+                Dim fs As New FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), FileMode.Create)
+
+                Dim AN As New EOANIWriter(fs, Count, Speed, frameRates, seqNums, Nothing, Nothing, HotPoint)
+
+                For ix = 0 To Count - 1
+                    AN.WriteFrame32(BMPList(ix))
+                Next
+
+                fs.Close()
+            Next
+
         End If
-
-        Try
-            If Binary Then
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.Binary)
-            ElseIf [String] Then
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.String)
-            Else
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
-            End If
-        Catch 'ex As Exception
-            'MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
-            'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
-        Finally
-            If R IsNot Nothing Then
-                R.Flush()
-                R.Close()
-            End If
-        End Try
-
-        Try
-            R.Flush()
-            R.Close()
-        Catch
-        End Try
 
     End Sub
 
-    Function RGB2HEX(ByVal [Color] As Color) As List(Of String)
-        Dim sb As New List(Of String)
-        sb.Clear()
+    Sub ApplyCursorsToReg()
+        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors\Schemes")
+        Dim RegValue As String
+        Dim Path As String = My.Application.curPath
+        RegValue = String.Format("{0}\{1}", Path, "Arrow.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Help.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "AppLoading_1x.ani")
+        RegValue &= String.Format(",{0}\{1}", Path, "Busy_1x.ani")
+        RegValue &= String.Format(",{0}\{1}", Path, "Cross.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "IBeam.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Pen.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "None.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NS.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "EW.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NWSE.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "NESW.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Move.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Up.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Link.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Pin.cur")
+        RegValue &= String.Format(",{0}\{1}", Path, "Person.cur")
+        rMain.SetValue("WinPaletter", RegValue, RegistryValueKind.String)
 
-        sb.Add(String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))
+        rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors")
+        rMain.SetValue("", "WinPaletter")
+        rMain.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
 
-        Return sb
+        Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
+        rMain.SetValue("AppStarting", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Arrow.cur")
+        rMain.SetValue("Arrow", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NORMAL)
+
+        x = String.Format("{0}\{1}", Path, "Cross.cur")
+        rMain.SetValue("Crosshair", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_CROSS)
+
+        x = String.Format("{0}\{1}", Path, "Link.cur")
+        rMain.SetValue("Hand", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HAND)
+
+        x = String.Format("{0}\{1}", Path, "Help.cur")
+        rMain.SetValue("Help", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HELP)
+
+        x = String.Format("{0}\{1}", Path, "IBeam.cur")
+        rMain.SetValue("IBeam", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_IBEAM)
+
+        x = String.Format("{0}\{1}", Path, "None.cur")
+        rMain.SetValue("No", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NO)
+
+        x = String.Format("{0}\{1}", Path, "Pen.cur")
+        rMain.SetValue("NWPen", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
+
+        x = String.Format("{0}\{1}", Path, "Person.cur")
+        rMain.SetValue("Person", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Pin.cur")
+        rMain.SetValue("Pin", x)
+        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", Path, "Move.cur")
+        rMain.SetValue("SizeAll", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+
+        x = String.Format("{0}\{1}", Path, "NESW.cur")
+        rMain.SetValue("SizeNESW", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+
+        x = String.Format("{0}\{1}", Path, "NS.cur")
+        rMain.SetValue("SizeNS", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENS)
+
+        x = String.Format("{0}\{1}", Path, "NWSE.cur")
+        rMain.SetValue("SizeNWSE", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+
+        x = String.Format("{0}\{1}", Path, "EW.cur")
+        rMain.SetValue("SizeWE", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+
+        x = String.Format("{0}\{1}", Path, "Up.cur")
+        rMain.SetValue("UpArrow", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_UP)
+
+        x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
+        rMain.SetValue("Wait", x)
+        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_WAIT)
+
+        rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
+        rMain.Close()
+    End Sub
+
+    <DllImport("user32.dll")>
+    Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As UInteger) As Boolean
     End Function
 
-    Function RGB2HEX_oneline(ByVal [Color] As Color) As String
-        Return String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
-            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
-    End Function
+    Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
 
-    Function BizareColorInvertor([Color] As Color) As Color
-        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
-    End Function
+    Enum OCR_SYSTEM_CURSORS As UInteger
+
+        ' Standard arrow And small hourglass
+        OCR_APPSTARTING = 32650
+
+        'Standard arrow
+        OCR_NORMAL = 32512
+
+        'Crosshair
+        OCR_CROSS = 32515
+
+        'Windows 2000/XP: Hand
+        OCR_HAND = 32649
+
+        'Arrow And question mark
+        OCR_HELP = 32651
+
+        'I-beam
+        OCR_IBEAM = 32513
+
+        'Slashed circle
+        OCR_NO = 32648
+
+        'Four-pointed arrow pointing north south east And west
+        OCR_SIZEALL = 32646
+
+        'Double-pointed arrow pointing northeast And southwest
+        OCR_SIZENESW = 32643
+
+        'Double-pointed arrow pointing north And south
+        OCR_SIZENS = 32645
+
+        'Double-pointed arrow pointing northwest And southeast
+        OCR_SIZENWSE = 32642
+
+        'Double-pointed arrow pointing west And east
+        OCR_SIZEWE = 32644
+
+        'Vertical arrow
+        OCR_UP = 32516
+
+        'Hourglass
+        OCR_WAIT = 32514
+    End Enum
+#End Region
 
     Public Overrides Function Equals(obj As Object) As Boolean
         Dim _Equals As Boolean = True
@@ -3387,154 +3535,4 @@ Public Class CP
 
         Return _Equals
     End Function
-
-    Public Shared Function ByteArrayToString(ByVal ba As Byte()) As String
-        Dim hex As StringBuilder = New StringBuilder(ba.Length * 2)
-
-        For Each b As Byte In ba
-            hex.AppendFormat("{0:x1}", b)
-        Next
-
-        Return hex.ToString()
-    End Function
-
-    Public Shared Function Reverse(ByVal s As String) As String
-        Dim charArray As Char() = s.ToCharArray()
-        Array.Reverse(charArray)
-        Return New String(charArray)
-    End Function
-
-    Public Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
-        Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
-        bArray.CopyTo(newArray, 1)
-        newArray(0) = newByte
-        Return newArray
-    End Function
-
-    Private Function StringToBytesArray(ByVal str As String) As Byte()
-        Dim bitsToPad = 8 - str.Length Mod 8
-
-        If bitsToPad <> 8 Then
-            Dim neededLength = bitsToPad + str.Length
-            str = str.PadLeft(neededLength, "0"c)
-        End If
-
-        Dim size As Integer = str.Length / 8
-        Dim arr As Byte() = New Byte(size - 1) {}
-
-        For a As Integer = 0 To size - 1
-            arr(a) = Convert.ToByte(str.Substring(a * 8, 8), 2)
-        Next
-
-        Return arr
-    End Function
-
-    Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
-        If IO.File.Exists(Filename) Then
-
-            Dim ls As New List(Of Color)
-            ls.Clear()
-
-            Dim tx As New List(Of String)
-            CList_FromStr(tx, IO.File.ReadAllText(Filename))
-
-            For Each x As String In tx
-                Try
-                    If x.Contains("=") Then
-                        If x.Split("=")(1).Contains(" ") Then
-                            If x.Split("=")(1).Split(" ").Count = 3 Then
-                                Dim c As String = x.Split("=")(1)
-                                Dim inx As Boolean = True
-                                For Each u In c.Split(" ")
-                                    If Not IsNumeric(u) Then inx = False
-                                Next
-                                If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
-                            End If
-                        End If
-                    End If
-                Catch
-                End Try
-            Next
-
-            Return ls.Distinct.ToList
-        Else
-            Return Nothing
-        End If
-    End Function
-
-    Public Shared Function GetPaletteFromString([String] As String, ThemeName As String) As List(Of Color)
-
-        If String.IsNullOrWhiteSpace([String]) Then
-            Return Nothing
-            Exit Function
-        End If
-
-        If Not [String].Contains("|") Then
-            Return Nothing
-            Exit Function
-        End If
-
-        If String.IsNullOrWhiteSpace(ThemeName) Then
-            Return Nothing
-            Exit Function
-        End If
-
-        Dim ls As New List(Of Color)
-        ls.Clear()
-
-        Dim AllThemes As New List(Of String)
-        Dim SelectedTheme As String = ""
-        Dim SelectedThemeList As New List(Of String)
-
-        CList_FromStr(AllThemes, [String])
-        Dim Found As Boolean = False
-
-        For Each th As String In AllThemes
-            If th.Split("|")(0).ToLower = ThemeName.ToLower Then
-                SelectedTheme = th.Replace("|", vbCrLf)
-                Found = True
-                Exit For
-            End If
-        Next
-
-        If Not Found Then
-            Return Nothing
-            Exit Function
-        End If
-
-        CList_FromStr(SelectedThemeList, SelectedTheme)
-
-
-        For Each x As String In SelectedThemeList
-            Try
-                If x.Contains("=") Then
-                    If x.Split("=")(1).Contains(" ") Then
-                        If x.Split("=")(1).Split(" ").Count = 3 Then
-                            Dim c As String = x.Split("=")(1)
-                            Dim inx As Boolean = True
-                            For Each u In c.Split(" ")
-                                If Not IsNumeric(u) Then inx = False
-                            Next
-                            If inx Then ls.Add(Color.FromArgb(255, c.Split(" ")(0), c.Split(" ")(1), c.Split(" ")(2)))
-                        End If
-                    End If
-                End If
-            Catch
-            End Try
-        Next
-
-        Return ls.Distinct.ToList
-    End Function
-
-    Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
-        [ComboBox].Items.Clear()
-        Dim ls As New List(Of String)
-        CList_FromStr(ls, My.Resources.RetroThemesDB)
-
-        For Each x As String In ls
-            [ComboBox].Items.Add(x.Split("|")(0))
-        Next
-
-    End Sub
 End Class
-

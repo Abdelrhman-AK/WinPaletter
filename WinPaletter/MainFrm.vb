@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
-Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
@@ -1277,15 +1276,6 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs)
-        PreviewConfig = WinVer.Ten
-        Adjust_Preview()
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs)
-        PreviewConfig = WinVer.Eleven
-        Adjust_Preview()
-    End Sub
 
     Dim wpth_or_wpsf As Boolean = True
     Dim DragAccepted As Boolean
@@ -1783,7 +1773,6 @@ Public Class MainFrm
         CursorsStudio.ShowDialog()
     End Sub
 
-
     Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
         Dim CList As New List(Of Control) From {
             sender,
@@ -1893,9 +1882,6 @@ Public Class MainFrm
             CP.Aero_ColorizationAfterglowBalance = Val(Aero_ColorizationAfterglowBalance_txt.Text)
             ApplyLivePreviewFromCP(CP)
         End If
-    End Sub
-
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
     End Sub
 
 

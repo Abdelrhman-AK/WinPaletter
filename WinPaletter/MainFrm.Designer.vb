@@ -102,11 +102,16 @@ Partial Class MainFrm
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.PaletteContainer_W7x = New System.Windows.Forms.Panel()
         Me.XenonGroupBox22 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton23 = New WinPaletter.XenonButton()
+        Me.XenonButton24 = New WinPaletter.XenonButton()
+        Me.XenonButton22 = New WinPaletter.XenonButton()
+        Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.theme_aero = New WinPaletter.XenonRadioImage()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.theme_aeroopaque = New WinPaletter.XenonRadioImage()
         Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.theme_basic = New WinPaletter.XenonRadioImage()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.theme_classic = New WinPaletter.XenonRadioImage()
@@ -173,7 +178,6 @@ Partial Class MainFrm
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.start = New WinPaletter.XenonAcrylic()
         Me.taskbar = New WinPaletter.XenonAcrylic()
-        Me.Label22 = New System.Windows.Forms.Label()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
         Me.themename_lbl = New System.Windows.Forms.Label()
         Me.author_lbl = New System.Windows.Forms.Label()
@@ -1321,6 +1325,10 @@ Partial Class MainFrm
         Me.XenonGroupBox22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox22.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox22.Controls.Add(Me.XenonButton23)
+        Me.XenonGroupBox22.Controls.Add(Me.XenonButton24)
+        Me.XenonGroupBox22.Controls.Add(Me.XenonButton22)
+        Me.XenonGroupBox22.Controls.Add(Me.XenonButton14)
         Me.XenonGroupBox22.Controls.Add(Me.Label23)
         Me.XenonGroupBox22.Controls.Add(Me.theme_aero)
         Me.XenonGroupBox22.Controls.Add(Me.Label25)
@@ -1349,6 +1357,66 @@ Partial Class MainFrm
         Me.XenonGroupBox22.Size = New System.Drawing.Size(450, 420)
         Me.XenonGroupBox22.TabIndex = 12
         Me.XenonGroupBox22.Text = "XenonGroupBox22"
+        '
+        'XenonButton23
+        '
+        Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton23.ForeColor = System.Drawing.Color.White
+        Me.XenonButton23.Image = Nothing
+        Me.XenonButton23.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton23.LineSize = 1
+        Me.XenonButton23.Location = New System.Drawing.Point(49, 328)
+        Me.XenonButton23.Name = "XenonButton23"
+        Me.XenonButton23.Size = New System.Drawing.Size(64, 38)
+        Me.XenonButton23.TabIndex = 43
+        Me.XenonButton23.Text = "XenonButton23"
+        Me.XenonButton23.UseVisualStyleBackColor = False
+        '
+        'XenonButton24
+        '
+        Me.XenonButton24.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton24.ForeColor = System.Drawing.Color.White
+        Me.XenonButton24.Image = Nothing
+        Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton24.LineSize = 1
+        Me.XenonButton24.Location = New System.Drawing.Point(145, 328)
+        Me.XenonButton24.Name = "XenonButton24"
+        Me.XenonButton24.Size = New System.Drawing.Size(64, 38)
+        Me.XenonButton24.TabIndex = 42
+        Me.XenonButton24.Text = "XenonButton24"
+        Me.XenonButton24.UseVisualStyleBackColor = False
+        '
+        'XenonButton22
+        '
+        Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton22.ForeColor = System.Drawing.Color.White
+        Me.XenonButton22.Image = Nothing
+        Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton22.LineSize = 1
+        Me.XenonButton22.Location = New System.Drawing.Point(241, 327)
+        Me.XenonButton22.Name = "XenonButton22"
+        Me.XenonButton22.Size = New System.Drawing.Size(64, 38)
+        Me.XenonButton22.TabIndex = 41
+        Me.XenonButton22.Text = "XenonButton22"
+        Me.XenonButton22.UseVisualStyleBackColor = False
+        '
+        'XenonButton14
+        '
+        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton14.ForeColor = System.Drawing.Color.White
+        Me.XenonButton14.Image = Nothing
+        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton14.LineSize = 1
+        Me.XenonButton14.Location = New System.Drawing.Point(337, 327)
+        Me.XenonButton14.Name = "XenonButton14"
+        Me.XenonButton14.Size = New System.Drawing.Size(64, 38)
+        Me.XenonButton14.TabIndex = 40
+        Me.XenonButton14.Text = "XenonButton14"
+        Me.XenonButton14.UseVisualStyleBackColor = False
         '
         'Label23
         '
@@ -1411,6 +1479,20 @@ Partial Class MainFrm
         Me.Label14.TabIndex = 35
         Me.Label14.Text = "Basic"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label22
+        '
+        Me.Label22.BackColor = System.Drawing.Color.Transparent
+        Me.Label22.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Label22.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.Label22.ForeColor = System.Drawing.Color.White
+        Me.Label22.Location = New System.Drawing.Point(1, 368)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(448, 51)
+        Me.Label22.TabIndex = 6
+        Me.Label22.Text = "Classic theme is editable by Win32UI Editor"
+        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label22.Visible = False
         '
         'theme_basic
         '
@@ -2481,20 +2563,6 @@ Partial Class MainFrm
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
         '
-        'Label22
-        '
-        Me.Label22.BackColor = System.Drawing.Color.Transparent
-        Me.Label22.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Label22.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.Label22.ForeColor = System.Drawing.Color.White
-        Me.Label22.Location = New System.Drawing.Point(1, 368)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(448, 51)
-        Me.Label22.TabIndex = 6
-        Me.Label22.Text = "Classic theme is editable by Win32UI Editor"
-        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.Label22.Visible = False
-        '
         'PictureBox21
         '
         Me.PictureBox21.Image = CType(resources.GetObject("PictureBox21.Image"), System.Drawing.Image)
@@ -3040,4 +3108,8 @@ Partial Class MainFrm
     Friend WithEvents Label6 As Label
     Friend WithEvents theme_classic As XenonRadioImage
     Friend WithEvents Label22 As Label
+    Friend WithEvents XenonButton23 As XenonButton
+    Friend WithEvents XenonButton24 As XenonButton
+    Friend WithEvents XenonButton22 As XenonButton
+    Friend WithEvents XenonButton14 As XenonButton
 End Class
