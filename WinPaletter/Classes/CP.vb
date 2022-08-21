@@ -85,13 +85,28 @@ Public Class CP
 
 #End Region
 
-#Region "LogonUI"
+#Region "LogonUI_Win10"
     Public Property LogonUI_Background As Color
     Public Property LogonUI_PersonalColors_Background As Color
     Public Property LogonUI_PersonalColors_Accent As Color
     Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
     Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
     Public Property LogonUI_NoLockScreen As Boolean = False
+#End Region
+
+#Region "LogonUI_Win7"
+    Public Property LogonUI7_Enabled As Boolean = True
+    Public Property LogonUI7_Mode As LogonUI7_Modes = LogonUI7_Modes.Default_
+    Public Property LogonUI7_ImagePath As String = ""
+    Public Property LogonUI7_Color As Color = Color.Black
+    Public Property LogonUI7_Effect_Blur As Boolean = False
+    Public Property LogonUI7_Effect_Grayscale As Boolean = False
+    Public Property LogonUI7_Effect_Noise As Boolean = False
+    Public Property LogonUI7_Effect_Noise_Intensity As Integer = 0
+#End Region
+
+#Region "LogonUI_Win8"
+
 #End Region
 
 #Region "Win32UI"
@@ -401,6 +416,15 @@ Public Class CP
     Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single = 0.25
 #End Region
 #End Region
+
+    Enum LogonUI7_Modes
+        Default_
+        Wallpaper
+        CustomImage
+        SolidColor
+    End Enum
+
+
     Enum Mode
         Registry
         Init

@@ -371,7 +371,7 @@ Public Class MainFrm
                             .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
                             .AccentColor_Inactive = [CP].Aero_ColorizationColor
                             .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity / 100
+                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With XenonWindow2
@@ -386,7 +386,7 @@ Public Class MainFrm
                             .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
                             .AccentColor_Inactive = [CP].Aero_ColorizationColor
                             .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity / 100
+                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With start
@@ -396,7 +396,7 @@ Public Class MainFrm
                             .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
                             .BackColor = [CP].Aero_ColorizationColor
                             .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity / 100
+                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With taskbar
@@ -406,14 +406,14 @@ Public Class MainFrm
                             .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
                             .BackColor = [CP].Aero_ColorizationColor
                             .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity / 100
+                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
 
                     Case CP.AeroTheme.AeroOpaque
-                        start.Transparency = False
+                        start.Transparency = True
                         start.Basic = False
-                        taskbar.Transparency = False
+                        taskbar.Transparency = True
                         taskbar.Basic = False
 
                         With XenonWindow1
@@ -424,8 +424,7 @@ Public Class MainFrm
                             .Win7Alpha = [CP].Aero_ColorizationColorBalance
                             .AccentColor_Active = [CP].Aero_ColorizationColor
                             .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = 0
-
+                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With XenonWindow2
@@ -436,7 +435,7 @@ Public Class MainFrm
                             .Win7Alpha = [CP].Aero_ColorizationColorBalance
                             .AccentColor_Active = [CP].Aero_ColorizationColor
                             .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = 0
+                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With taskbar
@@ -444,7 +443,7 @@ Public Class MainFrm
                             .BackColorAlpha = [CP].Aero_ColorizationColorBalance
                             .BackColor = [CP].Aero_ColorizationColor
                             .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = 0
+                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                         With start
@@ -452,7 +451,7 @@ Public Class MainFrm
                             .BackColorAlpha = [CP].Aero_ColorizationColorBalance
                             .BackColor = [CP].Aero_ColorizationColor
                             .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = 0
+                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
                     Case CP.AeroTheme.Basic

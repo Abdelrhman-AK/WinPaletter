@@ -133,7 +133,6 @@
       <LastGenOutput>Application1.Designer.vb</LastGenOutput>
     </None>
     <None Include="My Project\Settings.settings" />
-    <None Include="Resources\basic.theme" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +205,12 @@
     <Compile Include="LogonUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogonUI7.Designer.vb">
+      <DependentUpon>LogonUI7.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI7.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainFrm.Designer.vb">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </Compile>
@@ -253,14 +258,12 @@
     <None Include="Resources\Start7.pdn" />
     <None Include="Resources\BasicTaskbar.png" />
     <None Include="Resources\Start7Basic.png" />
-    <None Include="Resources\Start7.png" />
     <None Include="Resources\AeroPeek.png" />
     <None Include="Resources\Win7_Close_inactive.png" />
     <None Include="Resources\Win7_Close_Active.png" />
     <None Include="Resources\Win7BasicActive.png" />
     <None Include="Resources\Win7BasicInactive.png" />
     <None Include="Resources\Start7Glass.png" />
-    <None Include="Resources\Win7TaskbarSides.png" />
     <None Include="Resources\Start7.png" />
     <None Include="Resources\Win7Sides.png" />
     <None Include="Resources\AeroGlass.png" />
@@ -271,6 +274,7 @@
     <None Include="Resources\Taskbar_ActiveApp8.png" />
     <None Include="Resources\Taskbar_InactiveApp7.png" />
     <None Include="Resources\Taskbar_InactiveApp8.png" />
+    <None Include="Resources\Win7TaskbarSides.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win7ORB.png" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI7.resx">
+      <DependentUpon>LogonUI7.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>

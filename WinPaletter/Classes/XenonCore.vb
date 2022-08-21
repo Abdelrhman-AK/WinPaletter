@@ -656,7 +656,7 @@ Public Class Visual
                 curB += bStep
                 curG += gStep
 
-                CType(sender, BackgroundWorker).ReportProgress(0, Color.FromArgb(CInt(curA), CInt(curR), CInt(curG), CInt(curB)))
+                Try : CType(sender, BackgroundWorker).ReportProgress(0, Color.FromArgb(CInt(curA), CInt(curR), CInt(curG), CInt(curB))) : Catch : End Try
 
                 System.Threading.Thread.Sleep(info.Delay)
 
