@@ -3,6 +3,7 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Net
 Imports System.Runtime.InteropServices
+Imports WinPaletter.CP
 
 Public Class XenonCore
 
@@ -181,6 +182,22 @@ Public Class XenonCore
             Return Nothing
         End Try
     End Function
+    Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As LogonUI7_NoiseMode, opacity As Single) As Bitmap
+        Try
+            Dim g As Graphics = Graphics.FromImage(bmp)
+            Dim br As TextureBrush
+            If NoiseMode = LogonUI7_NoiseMode.Acrylic Then br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
+            If NoiseMode = LogonUI7_NoiseMode.Aero Then br = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, opacity))
+            g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
+            g.Save()
+            Return bmp
+            g.Dispose()
+            bmp.Dispose()
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
     Public Shared Function InvertColor(ByVal [Color] As Color) As Color
         Return Color.FromArgb([Color].A, 255 - [Color].R, 255 - [Color].G, 255 - [Color].B)
     End Function

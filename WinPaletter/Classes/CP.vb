@@ -5,8 +5,6 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports System.Text
-Imports System.Windows.Forms.VisualStyles
-Imports AnimCur
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
@@ -100,8 +98,10 @@ Public Class CP
     Public Property LogonUI7_ImagePath As String = ""
     Public Property LogonUI7_Color As Color = Color.Black
     Public Property LogonUI7_Effect_Blur As Boolean = False
+    Public Property LogonUI7_Effect_Blur_Intensity As Integer = 0
     Public Property LogonUI7_Effect_Grayscale As Boolean = False
     Public Property LogonUI7_Effect_Noise As Boolean = False
+    Public Property LogonUI7_Effect_Noise_Mode As LogonUI7_NoiseMode = LogonUI7_NoiseMode.Acrylic
     Public Property LogonUI7_Effect_Noise_Intensity As Integer = 0
 #End Region
 
@@ -424,6 +424,10 @@ Public Class CP
         SolidColor
     End Enum
 
+    Enum LogonUI7_NoiseMode
+        Aero
+        Acrylic
+    End Enum
 
     Enum Mode
         Registry
@@ -467,6 +471,16 @@ Public Class CP
         Return ar
     End Function
 #End Region
+
+    Function ColorToBitmap([Color] As Color, [Size] As Size)
+        Dim b As New Bitmap([Size].Width, [Size].Height)
+        Dim g As Graphics = Graphics.FromImage(b)
+        g.Clear([Color])
+        g.Save()
+        Return b
+        g.Dispose()
+        b.Dispose()
+    End Function
 
     Function HexStringToBinary(ByVal hexString As String) As String
         Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
@@ -790,6 +804,25 @@ Public Class CP
                     LogonUI_NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", False)
                 End If
 
+#End Region
+
+#Region "LogonUI 7"
+                If My.W7 Then
+                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
+                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
+                    LogonUI7_Enabled = b1 And b2
+
+                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI_Win7")
+                    LogonUI7_Mode = rLog.GetValue("Mode", LogonUI7_Modes.Default_)
+                    LogonUI7_ImagePath = rLog.GetValue("ImagePath", Nothing)
+                    LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
+                    LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
+                    LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
+                    LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
+                    LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
+                    LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
+                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+                End If
 #End Region
 
 #Region "Win32UI"
@@ -2156,6 +2189,96 @@ Public Class CP
                 End If
 
 
+#End Region
+
+#Region "LogonUI 7"
+                If My.W7 Then
+
+                    If isElevated Then
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonUI7_Enabled)
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonUI7_Enabled)
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
+                        ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
+                        ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+
+
+                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI_Win7")
+
+                    rLog.SetValue("Mode", LogonUI7_Mode)
+                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
+                    rLog.SetValue("Color", LogonUI7_Color)
+                    rLog.SetValue("Effect_Blur", LogonUI7_Effect_Blur)
+                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
+                    rLog.SetValue("Effect_Grayscale", LogonUI7_Effect_Grayscale)
+                    rLog.SetValue("Effect_Noise", LogonUI7_Effect_Noise)
+                    rLog.SetValue("Noise_Mode", LogonUI7_Effect_Noise_Mode)
+                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
+                    rLog.Flush()
+                    rLog.Close()
+
+                    If LogonUI7_Enabled Then
+                        Dim Dir As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\oobe\info\backgrounds"
+                        If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
+                        Dim bmp As Bitmap = Nothing
+
+                        Select Case LogonUI7_Mode
+                            Case LogonUI7_Modes.Default_
+                                '### get from Imageres.dll
+
+                            Case LogonUI7_Modes.CustomImage
+                                If IO.File.Exists(LogonUI7_ImagePath) Then bmp = Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
+
+                            Case LogonUI7_Modes.SolidColor
+                                bmp = ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size)
+
+                            Case LogonUI7_Modes.Wallpaper
+                                bmp = My.Application.GetCurrentWallpaper
+                        End Select
+
+
+                        If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
+                        If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
+                        If LogonUI7_Effect_Noise Then bmp = NoiseBitmap(bmp, LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity)
+
+                        bmp.Save(Dir & "backgroundDefault.jpg", ImageFormat.Jpeg)
+
+                    End If
+
+                End If
 #End Region
 
 #Region "Win32UI"
