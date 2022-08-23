@@ -95,7 +95,7 @@ Public Class CP
 #Region "LogonUI_Win7"
     Public Property LogonUI7_Enabled As Boolean = True
     Public Property LogonUI7_Mode As LogonUI7_Modes = LogonUI7_Modes.Default_
-    Public Property LogonUI7_ImagePath As String = ""
+    Public Property LogonUI7_ImagePath As String = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
     Public Property LogonUI7_Color As Color = Color.Black
     Public Property LogonUI7_Effect_Blur As Boolean = False
     Public Property LogonUI7_Effect_Blur_Intensity As Integer = 0
@@ -808,20 +808,20 @@ Public Class CP
 
 #Region "LogonUI 7"
                 If My.W7 Then
-                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
-                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
+                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", True)
+                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", True)
                     LogonUI7_Enabled = b1 And b2
 
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI_Win7")
                     LogonUI7_Mode = rLog.GetValue("Mode", LogonUI7_Modes.Default_)
-                    LogonUI7_ImagePath = rLog.GetValue("ImagePath", Nothing)
+                    LogonUI7_ImagePath = rLog.GetValue("ImagePath", "")
                     LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
                     LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
                     LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
                     LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
                     LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
                     LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
-                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0) / 100
                 End If
 #End Region
 
@@ -994,8 +994,8 @@ Public Class CP
                 Cursor_Arrow_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Arrow_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Arrow_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Arrow_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Arrow_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Arrow_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Arrow_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Arrow_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1013,8 +1013,8 @@ Public Class CP
                 Cursor_Help_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
                 Cursor_Help_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Help_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Help_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Help_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Help_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Help_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Help_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1040,10 +1040,10 @@ Public Class CP
                 Cursor_AppLoading_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
                 Cursor_AppLoading_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
 
-                Cursor_AppLoading_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
-                Cursor_AppLoading_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Circle"))
-                Cursor_AppLoading_LoadingCircleBackGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
-                Cursor_AppLoading_LoadingCircleHotGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
+                Cursor_AppLoading_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
+                Cursor_AppLoading_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Circle"))
+                Cursor_AppLoading_LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
+                Cursor_AppLoading_LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
 
                 Cursor_AppLoading_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_AppLoading_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1063,8 +1063,8 @@ Public Class CP
                 Cursor_Busy_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
                 Cursor_Busy_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
 
-                Cursor_Busy_LoadingCircleBackGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
-                Cursor_Busy_LoadingCircleHotGradientMode = RetrunGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
+                Cursor_Busy_LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
+                Cursor_Busy_LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
 
                 Cursor_Busy_LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
                 Cursor_Busy_LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
@@ -1082,8 +1082,8 @@ Public Class CP
                 Cursor_Move_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Move_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Move_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Move_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Move_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Move_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Move_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Move_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1101,8 +1101,8 @@ Public Class CP
                 Cursor_NS_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_NS_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_NS_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NS_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_NS_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NS_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_NS_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_NS_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1120,8 +1120,8 @@ Public Class CP
                 Cursor_EW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_EW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_EW_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_EW_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_EW_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_EW_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_EW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_EW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1139,8 +1139,8 @@ Public Class CP
                 Cursor_NESW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_NESW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_NESW_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NESW_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_NESW_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NESW_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_NESW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_NESW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1158,8 +1158,8 @@ Public Class CP
                 Cursor_NWSE_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_NWSE_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_NWSE_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NWSE_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_NWSE_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_NWSE_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_NWSE_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_NWSE_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1177,8 +1177,8 @@ Public Class CP
                 Cursor_Up_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Up_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Up_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Up_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Up_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Up_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Up_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Up_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1196,8 +1196,8 @@ Public Class CP
                 Cursor_Pen_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Pen_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Pen_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Pen_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Pen_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Pen_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Pen_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Pen_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1216,8 +1216,8 @@ Public Class CP
                 Cursor_None_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_None_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_None_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_None_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_None_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_None_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_None_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_None_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1235,8 +1235,8 @@ Public Class CP
                 Cursor_Link_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Link_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Link_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Link_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Link_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Link_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Link_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Link_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1254,8 +1254,8 @@ Public Class CP
                 Cursor_Pin_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Pin_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Pin_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Pin_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Pin_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Pin_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Pin_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Pin_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1273,8 +1273,8 @@ Public Class CP
                 Cursor_Person_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Person_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Person_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Person_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Person_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Person_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Person_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Person_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1292,8 +1292,8 @@ Public Class CP
                 Cursor_IBeam_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_IBeam_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_IBeam_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_IBeam_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_IBeam_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_IBeam_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_IBeam_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_IBeam_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -1311,8 +1311,8 @@ Public Class CP
                 Cursor_Cross_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
                 Cursor_Cross_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
 
-                Cursor_Cross_PrimaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Cross_SecondaryColorGradientMode = RetrunGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+                Cursor_Cross_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
+                Cursor_Cross_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
 
                 Cursor_Cross_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
                 Cursor_Cross_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
@@ -2084,6 +2084,139 @@ Public Class CP
                 End If
 #End Region
 
+#Region "LogonUI 7"
+                If My.W7 Then
+
+                    If isElevated Then
+                        My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
+
+                        My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7_Enabled, 1, 0))
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
+                        ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
+                        ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+
+                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI_Win7")
+
+                    Select Case LogonUI7_Mode
+                        Case LogonUI7_Modes.Default_
+                            rLog.SetValue("Mode", 0)
+
+                        Case LogonUI7_Modes.Wallpaper
+                            rLog.SetValue("Mode", 1)
+
+                        Case LogonUI7_Modes.CustomImage
+                            rLog.SetValue("Mode", 2)
+
+                        Case LogonUI7_Modes.SolidColor
+                            rLog.SetValue("Mode", 3)
+                    End Select
+
+                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
+                    rLog.SetValue("Color", LogonUI7_Color.ToArgb)
+                    rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
+                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
+                    rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
+                    rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
+
+                    Select Case LogonUI7_Effect_Noise_Mode
+                        Case LogonUI7_NoiseMode.Aero
+                            rLog.SetValue("Noise_Mode", 0)
+
+                        Case LogonUI7_NoiseMode.Acrylic
+                            rLog.SetValue("Noise_Mode", 1)
+                    End Select
+
+                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity * 100)
+                    rLog.Flush()
+                    rLog.Close()
+
+                    If LogonUI7_Enabled Then
+                        Dim Dir As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
+                        Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+
+                        If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
+
+                        For Each fileX As String In My.Computer.FileSystem.GetFiles(Dir)
+                            Try : Kill(fileX) : Catch : End Try
+                        Next
+
+                        Dim bmpList As New List(Of Bitmap)
+                        bmpList.Clear()
+
+                        Select Case LogonUI7_Mode
+                            Case LogonUI7_Modes.Default_
+
+                                For i As Integer = 5031 To 5043 Step +1
+                                    bmpList.Add(LoadFromDLL(imageres, i))
+                                Next
+
+                            Case LogonUI7_Modes.CustomImage
+                                If IO.File.Exists(LogonUI7_ImagePath) Then bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+
+                            Case LogonUI7_Modes.SolidColor
+                                bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
+
+                            Case LogonUI7_Modes.Wallpaper
+                                bmpList.Add(My.Application.GetCurrentWallpaper)
+                        End Select
+
+
+                        For x = 0 To bmpList.Count - 1
+                            If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
+                            If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
+                            If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity)
+                        Next
+
+
+                        If bmpList.Count = 1 Then
+                            bmpList(0).Save(Dir & "\backgroundDefault.jpg", ImageFormat.Jpeg)
+                        Else
+                            For x = 0 To bmpList.Count - 1
+                                bmpList(x).Save(Dir & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), ImageFormat.Jpeg)
+                            Next
+                        End If
+
+                    End If
+
+                End If
+#End Region
+
 #Region "Aero"
                 If My.W7 Or My.W8 Then
                     If My.W8 Then EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
@@ -2191,95 +2324,7 @@ Public Class CP
 
 #End Region
 
-#Region "LogonUI 7"
-                If My.W7 Then
 
-                    If isElevated Then
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonUI7_Enabled)
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonUI7_Enabled)
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
-                        ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
-                        ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-
-
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI_Win7")
-
-                    rLog.SetValue("Mode", LogonUI7_Mode)
-                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
-                    rLog.SetValue("Color", LogonUI7_Color)
-                    rLog.SetValue("Effect_Blur", LogonUI7_Effect_Blur)
-                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
-                    rLog.SetValue("Effect_Grayscale", LogonUI7_Effect_Grayscale)
-                    rLog.SetValue("Effect_Noise", LogonUI7_Effect_Noise)
-                    rLog.SetValue("Noise_Mode", LogonUI7_Effect_Noise_Mode)
-                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
-                    rLog.Flush()
-                    rLog.Close()
-
-                    If LogonUI7_Enabled Then
-                        Dim Dir As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\oobe\info\backgrounds"
-                        If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
-                        Dim bmp As Bitmap = Nothing
-
-                        Select Case LogonUI7_Mode
-                            Case LogonUI7_Modes.Default_
-                                '### get from Imageres.dll
-
-                            Case LogonUI7_Modes.CustomImage
-                                If IO.File.Exists(LogonUI7_ImagePath) Then bmp = Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
-
-                            Case LogonUI7_Modes.SolidColor
-                                bmp = ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size)
-
-                            Case LogonUI7_Modes.Wallpaper
-                                bmp = My.Application.GetCurrentWallpaper
-                        End Select
-
-
-                        If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
-                        If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
-                        If LogonUI7_Effect_Noise Then bmp = NoiseBitmap(bmp, LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity)
-
-                        bmp.Save(Dir & "backgroundDefault.jpg", ImageFormat.Jpeg)
-
-                    End If
-
-                End If
-#End Region
 
 #Region "Win32UI"
                 Dim C1 As New List(Of Integer)

@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
 Imports WinPaletter.CP
@@ -50,6 +51,21 @@ Public Class XenonCore
     Declare Function SHChangeNotify Lib "Shell32.dll" (ByVal wEventID As Int32,
     ByVal uFlags As Int32, ByVal dwItem1 As Int32, ByVal dwItem2 As Int32) As Int32
 
+    <DllImport("kernel32.dll", SetLastError:=True)>
+    Private Shared Function LoadLibraryEx(ByVal lpFileName As String, ByVal hFile As IntPtr, ByVal dwFlags As UInteger) As IntPtr
+    End Function
+    <DllImport("Kernel32.dll", EntryPoint:="LockResource")>
+    Private Shared Function LockResource(ByVal hGlobal As IntPtr) As IntPtr
+    End Function
+    <DllImport("kernel32.dll")>
+    Private Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpID As Integer, ByVal lpType As String) As IntPtr
+    End Function
+    <DllImport("kernel32.dll", SetLastError:=True)>
+    Private Shared Function LoadResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As IntPtr
+    End Function
+    <DllImport("kernel32.dll", SetLastError:=True)>
+    Private Shared Function SizeofResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As UInteger
+    End Function
     Public Shared Sub RefreshRegisrty()
         Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
         Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
@@ -68,7 +84,6 @@ Public Class XenonCore
         'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
         'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     End Sub
-
     Public Shared Sub RestartExplorer()
         With My.Application
             Try
@@ -79,7 +94,24 @@ Public Class XenonCore
             End Try
         End With
     End Sub
+    Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE") As Bitmap
+        Try
+            If IO.File.Exists(File) Then
+                Dim hMod As IntPtr = LoadLibraryEx(File, IntPtr.Zero, &H2)
+                Dim hRes As IntPtr = FindResource(hMod, ResourceID, ResourceType)
+                Dim size As UInteger = SizeofResource(hMod, hRes)
+                Dim pt As IntPtr = LoadResource(hMod, hRes)
+                Dim bPtr As Byte() = New Byte(size - 1) {}
+                Marshal.Copy(pt, bPtr, 0, CInt(size))
+                Return Image.FromStream(New MemoryStream(bPtr))
+            Else
+                Return Nothing
+            End If
+        Catch
+            Return Nothing
+        End Try
 
+    End Function
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
@@ -197,7 +229,6 @@ Public Class XenonCore
             Return Nothing
         End Try
     End Function
-
     Public Shared Function InvertColor(ByVal [Color] As Color) As Color
         Return Color.FromArgb([Color].A, 255 - [Color].R, 255 - [Color].G, 255 - [Color].B)
     End Function

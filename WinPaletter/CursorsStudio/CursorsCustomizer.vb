@@ -33,7 +33,7 @@ Public Module Paths
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
 
-    Function RetrunGradientModeFromString([String] As String) As GradientMode
+    Function ReturnGradientModeFromString([String] As String) As GradientMode
         If [String].Trim.ToLower = "vertical" Then
             Return GradientMode.Vertical
 
@@ -56,7 +56,7 @@ Public Module Paths
 
     End Function
 
-    Function RetrunStringFromGradientMode([GradientMode] As GradientMode) As String
+    Function ReturnStringFromGradientMode([GradientMode] As GradientMode) As String
         If [GradientMode] = GradientMode.Horizontal Then
             Return "Horizontal"
 

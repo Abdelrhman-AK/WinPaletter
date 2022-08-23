@@ -636,14 +636,14 @@ Public Class CursorsStudio
             TaskbarFrontAndFoldersOnStart_picker.BackColor = .Prop_PrimaryColor1
             XenonGroupBox3.BackColor = .Prop_PrimaryColor2
             XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
-            XenonComboBox1.SelectedItem = RetrunStringFromGradientMode(.Prop_PrimaryColorGradientMode)
+            XenonComboBox1.SelectedItem = ReturnStringFromGradientMode(.Prop_PrimaryColorGradientMode)
             XenonCheckBox5.Checked = .Prop_PrimaryNoise
             XenonNumericUpDown2.Text = .Prop_PrimaryNoiseOpacity * 100
 
             XenonGroupBox5.BackColor = .Prop_SecondaryColor1
             XenonGroupBox4.BackColor = .Prop_SecondaryColor2
             XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
-            XenonComboBox2.SelectedItem = RetrunStringFromGradientMode(.Prop_SecondaryColorGradientMode)
+            XenonComboBox2.SelectedItem = ReturnStringFromGradientMode(.Prop_SecondaryColorGradientMode)
             XenonCheckBox3.Checked = .Prop_SecondaryNoise
             XenonNumericUpDown1.Text = .Prop_SecondaryNoiseOpacity * 100
             'XenonNumericUpDown3.Value = .Prop_LineThickness * 10
@@ -651,14 +651,14 @@ Public Class CursorsStudio
             XenonGroupBox10.BackColor = .Prop_LoadingCircleBack1
             XenonGroupBox9.BackColor = .Prop_LoadingCircleBack2
             XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
-            XenonComboBox4.SelectedItem = RetrunStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
+            XenonComboBox4.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
             XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
             XenonNumericUpDown6.Text = .Prop_LoadingCircleBackNoiseOpacity * 100
 
             XenonGroupBox8.BackColor = .Prop_LoadingCircleHot1
             XenonGroupBox7.BackColor = .Prop_LoadingCircleHot2
             XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
-            XenonComboBox3.SelectedItem = RetrunStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
+            XenonComboBox3.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
             XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
             XenonNumericUpDown4.Text = .Prop_LoadingCircleHotNoiseOpacity * 100
         End With
@@ -670,14 +670,14 @@ Public Class CursorsStudio
             .Prop_PrimaryColor1 = TaskbarFrontAndFoldersOnStart_picker.BackColor
             .Prop_PrimaryColor2 = XenonGroupBox3.BackColor
             .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
-            .Prop_PrimaryColorGradientMode = RetrunGradientModeFromString(XenonComboBox1.SelectedItem)
+            .Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox1.SelectedItem)
             .Prop_PrimaryNoise = XenonCheckBox5.Checked
             .Prop_PrimaryNoiseOpacity = Val(XenonNumericUpDown2.Text) / 100
 
             .Prop_SecondaryColor1 = XenonGroupBox5.BackColor
             .Prop_SecondaryColor2 = XenonGroupBox4.BackColor
             .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
-            .Prop_SecondaryColorGradientMode = RetrunGradientModeFromString(XenonComboBox2.SelectedItem)
+            .Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox2.SelectedItem)
             .Prop_SecondaryNoise = XenonCheckBox3.Checked
             .Prop_SecondaryNoiseOpacity = Val(XenonNumericUpDown1.Text) / 100
             '.Prop_LineThickness = XenonNumericUpDown3.Value / 10
@@ -685,14 +685,14 @@ Public Class CursorsStudio
             .Prop_LoadingCircleBack1 = XenonGroupBox10.BackColor
             .Prop_LoadingCircleBack2 = XenonGroupBox9.BackColor
             .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
-            .Prop_LoadingCircleBackGradientMode = RetrunGradientModeFromString(XenonComboBox4.SelectedItem)
+            .Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(XenonComboBox4.SelectedItem)
             .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
             .Prop_LoadingCircleBackNoiseOpacity = Val(XenonNumericUpDown6.Text) / 100
 
             .Prop_LoadingCircleHot1 = XenonGroupBox8.BackColor
             .Prop_LoadingCircleHot2 = XenonGroupBox7.BackColor
             .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
-            .Prop_LoadingCircleHotGradientMode = RetrunGradientModeFromString(XenonComboBox3.SelectedItem)
+            .Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(XenonComboBox3.SelectedItem)
             .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
             .Prop_LoadingCircleHotNoiseOpacity = Val(XenonNumericUpDown4.Text) / 100
         End With
@@ -806,7 +806,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_PrimaryColorGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
+        _SelectedControl.Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -814,7 +814,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryColorGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
+        _SelectedControl.Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -977,7 +977,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox4.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
+        _SelectedControl.Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
@@ -985,7 +985,7 @@ Public Class CursorsStudio
     Private Sub XenonComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox3.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleHotGradientMode = RetrunGradientModeFromString(sender.SelectedItem)
+        _SelectedControl.Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
 
     End Sub
