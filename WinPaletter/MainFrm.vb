@@ -1592,7 +1592,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        LogonUI.ShowDialog()
+        'LogonUI.ShowDialog()
+        LogonUI7.ShowDialog()
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click

@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
@@ -84,6 +85,57 @@ Public Class XenonCore
         'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
         'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     End Sub
+
+    Public Shared Function BitmapFillScaler(ByVal Bitmap As Bitmap, Size As Size) As Bitmap
+        Try
+            Dim sourceWidth As Integer = Bitmap.Width
+            Dim sourceHeight As Integer = Bitmap.Height
+            Dim sourceX As Integer = 0
+            Dim sourceY As Integer = 0
+            Dim destX As Integer = 0
+            Dim destY As Integer = 0
+            Dim nPercent As Single = 0
+            Dim nPercentW As Single = 0
+            Dim nPercentH As Single = 0
+            nPercentW = (CSng(Size.Width) / CSng(sourceWidth))
+            nPercentH = (CSng(Size.Height) / CSng(sourceHeight))
+
+            If nPercentH < nPercentW Then
+                nPercent = nPercentH
+                destX = System.Convert.ToInt16((Size.Width - (sourceWidth * nPercent)) / 2)
+            Else
+                nPercent = nPercentW
+                destY = System.Convert.ToInt16((Size.Height - (sourceHeight * nPercent)) / 2)
+            End If
+
+            Dim destWidth As Integer = CInt((sourceWidth * nPercent))
+            Dim destHeight As Integer = CInt((sourceHeight * nPercent))
+            Dim bmPhoto As Bitmap = New Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb)
+            bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution)
+            Dim grPhoto As Graphics = Graphics.FromImage(bmPhoto)
+            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic
+            grPhoto.DrawImage(Bitmap, New Rectangle(0, 0, destWidth, destHeight))
+            grPhoto.Dispose()
+            Dim bm As Bitmap = bmPhoto.Clone(New Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb)
+            Dim f As Single
+
+            If nPercentH < nPercentW Then
+                f = Size.Width - bm.Width
+                bm = ResizeImage(bm, Size.Width, Size.Height + f)
+                bm = bm.Clone(New Rectangle(0, 1 / 3 * f, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
+            Else
+                f = Size.Height - bm.Height
+                bm = ResizeImage(bm, Size.Width, Size.Height + f)
+                bm = bm.Clone(New Rectangle(1 / 3 * f, 0, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
+            End If
+
+
+            Return bm
+        Catch
+            Return Bitmap
+        End Try
+    End Function
+
     Public Shared Sub RestartExplorer()
         With My.Application
             Try
@@ -116,6 +168,15 @@ Public Class XenonCore
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
         Return bm
+    End Function
+    Public Shared Function ColorToBitmap([Color] As Color, [Size] As Size)
+        Dim b As New Bitmap([Size].Width, [Size].Height)
+        Dim g As Graphics = Graphics.FromImage(b)
+        g.Clear([Color])
+        g.Save()
+        Return b
+        g.Dispose()
+        b.Dispose()
     End Function
     Public Shared Function GetAverageColor(ByVal [Image] As Bitmap) As Color
         Try
@@ -275,11 +336,6 @@ Public Class XenonCore
 #End Region
 
 #Region " ResizeImage "
-    Public Overloads Shared Function ResizeImage(SourceImage As Drawing.Image, TargetWidth As Int32, TargetHeight As Int32) As Drawing.Bitmap
-        Dim bmSource = New Drawing.Bitmap(SourceImage)
-
-        Return ResizeImage(bmSource, TargetWidth, TargetHeight)
-    End Function
 
     Public Overloads Shared Function ResizeImage(bmSource As Drawing.Bitmap, TargetWidth As Int32, TargetHeight As Int32) As Drawing.Bitmap
         Dim bmDest As New Drawing.Bitmap(TargetWidth, TargetHeight, Drawing.Imaging.PixelFormat.Format32bppArgb)

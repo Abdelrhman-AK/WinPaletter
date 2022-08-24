@@ -472,16 +472,6 @@ Public Class CP
     End Function
 #End Region
 
-    Function ColorToBitmap([Color] As Color, [Size] As Size)
-        Dim b As New Bitmap([Size].Width, [Size].Height)
-        Dim g As Graphics = Graphics.FromImage(b)
-        g.Clear([Color])
-        g.Save()
-        Return b
-        g.Dispose()
-        b.Dispose()
-    End Function
-
     Function HexStringToBinary(ByVal hexString As String) As String
         Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
         Return Convert.ToString(num, 2)
@@ -821,7 +811,7 @@ Public Class CP
                     LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
                     LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
                     LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
-                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0) / 100
+                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
                 End If
 #End Region
 
@@ -2162,7 +2152,7 @@ Public Class CP
                             rLog.SetValue("Noise_Mode", 1)
                     End Select
 
-                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity * 100)
+                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
                     rLog.Flush()
                     rLog.Close()
 
@@ -2187,7 +2177,12 @@ Public Class CP
                                 Next
 
                             Case LogonUI7_Modes.CustomImage
-                                If IO.File.Exists(LogonUI7_ImagePath) Then bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+
+                                If IO.File.Exists(LogonUI7_ImagePath) Then
+                                    bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+                                Else
+                                    bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
+                                End If
 
                             Case LogonUI7_Modes.SolidColor
                                 bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
@@ -2200,7 +2195,7 @@ Public Class CP
                         For x = 0 To bmpList.Count - 1
                             If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
                             If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
-                            If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity)
+                            If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
                         Next
 
 
