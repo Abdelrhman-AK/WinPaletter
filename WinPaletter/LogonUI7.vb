@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports WinPaletter.XenonCore
 Public Class LogonUI7
     Private _Shown As Boolean = False
@@ -36,13 +37,13 @@ Public Class LogonUI7
 
         XenonTextBox1.Text = CP.LogonUI7_ImagePath
         color_pick.BackColor = CP.LogonUI7_Color
-
+        pnl_preview.BackColor = CP.LogonUI7_Color
         XenonCheckBox8.Checked = CP.LogonUI7_Effect_Grayscale
         XenonCheckBox7.Checked = CP.LogonUI7_Effect_Blur
         XenonCheckBox6.Checked = CP.LogonUI7_Effect_Noise
 
-        XenonNumericUpDown1.Value = CP.LogonUI7_Effect_Blur_Intensity
-        XenonNumericUpDown2.Value = CP.LogonUI7_Effect_Noise_Intensity
+        XenonTrackbar1.Value = CP.LogonUI7_Effect_Blur_Intensity
+        XenonTrackbar2.Value = CP.LogonUI7_Effect_Noise_Intensity
 
         Select Case CP.LogonUI7_Effect_Noise_Mode
             Case CP.LogonUI7_NoiseMode.Acrylic
@@ -53,6 +54,26 @@ Public Class LogonUI7
 
         End Select
 
+    End Sub
+
+    Sub LoadToCP(CP As CP)
+        CP.LogonUI7_Enabled = XenonToggle1.Checked
+        If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Default_
+        If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Wallpaper
+        If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.SolidColor
+        If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.CustomImage
+        CP.LogonUI7_ImagePath = XenonTextBox1.Text
+        CP.LogonUI7_Color = color_pick.BackColor
+
+        CP.LogonUI7_Effect_Grayscale = XenonCheckBox8.Checked
+        CP.LogonUI7_Effect_Blur = XenonCheckBox7.Checked
+        CP.LogonUI7_Effect_Noise = XenonCheckBox6.Checked
+
+        CP.LogonUI7_Effect_Blur_Intensity = XenonTrackbar1.Value
+        CP.LogonUI7_Effect_Noise_Intensity = XenonTrackbar2.Value
+
+        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic
+        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Aero
     End Sub
 
     Function ReturnBK() As Bitmap
@@ -87,14 +108,14 @@ Public Class LogonUI7
 
         If XenonCheckBox8.Checked Then _bmp = Grayscale(_bmp)
 
-        If XenonCheckBox7.Checked Then _bmp = BlurBitmap(_bmp, XenonNumericUpDown1.Value)
+        If XenonCheckBox7.Checked Then _bmp = BlurBitmap(_bmp, XenonTrackbar1.Value)
 
         If XenonCheckBox6.Checked Then
             Select Case XenonComboBox1.SelectedIndex
                 Case 0
-                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Acrylic, XenonNumericUpDown2.Value / 100)
+                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
                 Case 1
-                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Aero, XenonNumericUpDown2.Value / 100)
+                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Aero, XenonTrackbar2.Value / 100)
             End Select
         End If
 
@@ -133,15 +154,42 @@ Public Class LogonUI7
         If _Shown Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
-    Private Sub XenonNumericUpDown1_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown1.Click
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         If _Shown And XenonCheckBox7.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
-    Private Sub XenonNumericUpDown2_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.Click
+    Private Sub XenonNumericUpDown2_Click(sender As Object) Handles XenonTrackbar2.Scroll
         If _Shown And XenonCheckBox6.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
         If _Shown And XenonCheckBox6.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        LoadToCP(MainFrm.CP)
+        Me.Close()
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenFileDialog1.FileName
+        End If
+    End Sub
+
+    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+        Dim CList As New List(Of Control) From {
+          sender, pnl_preview
+      }
+
+        If XenonRadioButton3.Checked Then pnl_preview.BackgroundImage = Nothing
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        sender.BackColor = Color.FromArgb(255, C)
+
+        pnl_preview.BackgroundImage = ReturnBK()
+
+        CList.Clear()
     End Sub
 End Class

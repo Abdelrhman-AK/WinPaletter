@@ -135,7 +135,6 @@ Public Class XenonCore
             Return Bitmap
         End Try
     End Function
-
     Public Shared Sub RestartExplorer()
         With My.Application
             Try

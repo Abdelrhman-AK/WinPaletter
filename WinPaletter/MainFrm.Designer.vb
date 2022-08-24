@@ -102,10 +102,6 @@ Partial Class MainFrm
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.PaletteContainer_W7x = New System.Windows.Forms.Panel()
         Me.XenonGroupBox22 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton23 = New WinPaletter.XenonButton()
-        Me.XenonButton24 = New WinPaletter.XenonButton()
-        Me.XenonButton22 = New WinPaletter.XenonButton()
-        Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.theme_aero = New WinPaletter.XenonRadioImage()
         Me.Label25 = New System.Windows.Forms.Label()
@@ -120,23 +116,15 @@ Partial Class MainFrm
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.XenonGroupBox19 = New WinPaletter.XenonGroupBox()
-        Me.Aero_ColorizationGlassReflectionIntensity_txt = New WinPaletter.XenonTextBox()
+        Me.Aero_ColorizationGlassReflectionIntensity_bar = New WinPaletter.XenonTrackbar()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.PictureBox39 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.Aero_ColorizationBlurBalance_txt = New WinPaletter.XenonTextBox()
+        Me.Aero_ColorizationBlurBalance_bar = New WinPaletter.XenonTrackbar()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label38 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
-        Me.Aero_ColorizationAfterglowBalance_txt = New WinPaletter.XenonTextBox()
-        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
-        Me.Aero_ColorizationColorBalance_txt = New WinPaletter.XenonTextBox()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.Label20 = New System.Windows.Forms.Label()
         Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
         Me.Aero_EnableAeroPeek_toggle = New WinPaletter.XenonToggle()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
@@ -147,10 +135,12 @@ Partial Class MainFrm
         Me.Aero_AlwaysHibernateThumbnails_lbl = New System.Windows.Forms.Label()
         Me.XenonGroupBox30 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox21 = New WinPaletter.XenonGroupBox()
+        Me.Aero_ColorizationColorBalance_bar = New WinPaletter.XenonTrackbar()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.Aero_ColorizationColor_pick = New WinPaletter.XenonGroupBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.XenonGroupBox26 = New WinPaletter.XenonGroupBox()
+        Me.Aero_ColorizationAfterglowBalance_bar = New WinPaletter.XenonTrackbar()
         Me.Aero_ColorizationAfterglow_pick = New WinPaletter.XenonGroupBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.Label21 = New System.Windows.Forms.Label()
@@ -196,6 +186,13 @@ Partial Class MainFrm
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox11 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
+        Me.XenonTextBox2 = New WinPaletter.XenonTextBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.PaletteContainer_W1x.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -241,10 +238,6 @@ Partial Class MainFrm
         CType(Me.PictureBox39, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox14.SuspendLayout()
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox15.SuspendLayout()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox10.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox7.SuspendLayout()
@@ -263,6 +256,10 @@ Partial Class MainFrm
         Me.Panel3.SuspendLayout()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
+        Me.XenonGroupBox11.SuspendLayout()
+        Me.XenonGroupBox14.SuspendLayout()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PaletteContainer_W1x
@@ -1313,6 +1310,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W7x.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PaletteContainer_W7x.BackColor = System.Drawing.Color.Transparent
+        Me.PaletteContainer_W7x.Controls.Add(Me.XenonGroupBox11)
         Me.PaletteContainer_W7x.Controls.Add(Me.XenonGroupBox22)
         Me.PaletteContainer_W7x.Controls.Add(Me.XenonGroupBox30)
         Me.PaletteContainer_W7x.Location = New System.Drawing.Point(13, 77)
@@ -1325,105 +1323,30 @@ Partial Class MainFrm
         Me.XenonGroupBox22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox22.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonGroupBox22.Controls.Add(Me.XenonButton23)
-        Me.XenonGroupBox22.Controls.Add(Me.XenonButton24)
-        Me.XenonGroupBox22.Controls.Add(Me.XenonButton22)
-        Me.XenonGroupBox22.Controls.Add(Me.XenonButton14)
-        Me.XenonGroupBox22.Controls.Add(Me.Label23)
-        Me.XenonGroupBox22.Controls.Add(Me.theme_aero)
-        Me.XenonGroupBox22.Controls.Add(Me.Label25)
-        Me.XenonGroupBox22.Controls.Add(Me.theme_aeroopaque)
-        Me.XenonGroupBox22.Controls.Add(Me.Label14)
-        Me.XenonGroupBox22.Controls.Add(Me.Label22)
-        Me.XenonGroupBox22.Controls.Add(Me.theme_basic)
-        Me.XenonGroupBox22.Controls.Add(Me.Label6)
-        Me.XenonGroupBox22.Controls.Add(Me.theme_classic)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox25)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox19)
         Me.XenonGroupBox22.Controls.Add(Me.PictureBox39)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox12)
         Me.XenonGroupBox22.Controls.Add(Me.Label38)
-        Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox14)
-        Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox15)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox10)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox7)
         Me.XenonGroupBox22.CustomColor = False
         Me.XenonGroupBox22.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox22.LineSize = 1
-        Me.XenonGroupBox22.Location = New System.Drawing.Point(0, 83)
+        Me.XenonGroupBox22.Location = New System.Drawing.Point(3, 293)
         Me.XenonGroupBox22.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox22.Name = "XenonGroupBox22"
         Me.XenonGroupBox22.Padding = New System.Windows.Forms.Padding(1)
-        Me.XenonGroupBox22.Size = New System.Drawing.Size(450, 420)
+        Me.XenonGroupBox22.Size = New System.Drawing.Size(447, 138)
         Me.XenonGroupBox22.TabIndex = 12
         Me.XenonGroupBox22.Text = "XenonGroupBox22"
-        '
-        'XenonButton23
-        '
-        Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton23.ForeColor = System.Drawing.Color.White
-        Me.XenonButton23.Image = Nothing
-        Me.XenonButton23.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton23.LineSize = 1
-        Me.XenonButton23.Location = New System.Drawing.Point(49, 328)
-        Me.XenonButton23.Name = "XenonButton23"
-        Me.XenonButton23.Size = New System.Drawing.Size(64, 38)
-        Me.XenonButton23.TabIndex = 43
-        Me.XenonButton23.Text = "XenonButton23"
-        Me.XenonButton23.UseVisualStyleBackColor = False
-        '
-        'XenonButton24
-        '
-        Me.XenonButton24.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton24.ForeColor = System.Drawing.Color.White
-        Me.XenonButton24.Image = Nothing
-        Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(145, 328)
-        Me.XenonButton24.Name = "XenonButton24"
-        Me.XenonButton24.Size = New System.Drawing.Size(64, 38)
-        Me.XenonButton24.TabIndex = 42
-        Me.XenonButton24.Text = "XenonButton24"
-        Me.XenonButton24.UseVisualStyleBackColor = False
-        '
-        'XenonButton22
-        '
-        Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton22.ForeColor = System.Drawing.Color.White
-        Me.XenonButton22.Image = Nothing
-        Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(241, 327)
-        Me.XenonButton22.Name = "XenonButton22"
-        Me.XenonButton22.Size = New System.Drawing.Size(64, 38)
-        Me.XenonButton22.TabIndex = 41
-        Me.XenonButton22.Text = "XenonButton22"
-        Me.XenonButton22.UseVisualStyleBackColor = False
-        '
-        'XenonButton14
-        '
-        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton14.ForeColor = System.Drawing.Color.White
-        Me.XenonButton14.Image = Nothing
-        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(337, 327)
-        Me.XenonButton14.Name = "XenonButton14"
-        Me.XenonButton14.Size = New System.Drawing.Size(64, 38)
-        Me.XenonButton14.TabIndex = 40
-        Me.XenonButton14.Text = "XenonButton14"
-        Me.XenonButton14.UseVisualStyleBackColor = False
         '
         'Label23
         '
         Me.Label23.AutoEllipsis = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label23.Location = New System.Drawing.Point(324, 109)
+        Me.Label23.Location = New System.Drawing.Point(324, 103)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(90, 22)
         Me.Label23.TabIndex = 39
@@ -1437,7 +1360,7 @@ Partial Class MainFrm
         Me.theme_aero.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_aero.ForeColor = System.Drawing.Color.White
         Me.theme_aero.Image = CType(resources.GetObject("theme_aero.Image"), System.Drawing.Image)
-        Me.theme_aero.Location = New System.Drawing.Point(337, 42)
+        Me.theme_aero.Location = New System.Drawing.Point(337, 36)
         Me.theme_aero.Name = "theme_aero"
         Me.theme_aero.Size = New System.Drawing.Size(64, 64)
         Me.theme_aero.TabIndex = 38
@@ -1448,7 +1371,7 @@ Partial Class MainFrm
         Me.Label25.AutoEllipsis = True
         Me.Label25.BackColor = System.Drawing.Color.Transparent
         Me.Label25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label25.Location = New System.Drawing.Point(228, 109)
+        Me.Label25.Location = New System.Drawing.Point(228, 103)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(90, 22)
         Me.Label25.TabIndex = 37
@@ -1462,7 +1385,7 @@ Partial Class MainFrm
         Me.theme_aeroopaque.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_aeroopaque.ForeColor = System.Drawing.Color.White
         Me.theme_aeroopaque.Image = CType(resources.GetObject("theme_aeroopaque.Image"), System.Drawing.Image)
-        Me.theme_aeroopaque.Location = New System.Drawing.Point(241, 42)
+        Me.theme_aeroopaque.Location = New System.Drawing.Point(241, 36)
         Me.theme_aeroopaque.Name = "theme_aeroopaque"
         Me.theme_aeroopaque.Size = New System.Drawing.Size(64, 64)
         Me.theme_aeroopaque.TabIndex = 36
@@ -1473,7 +1396,7 @@ Partial Class MainFrm
         Me.Label14.AutoEllipsis = True
         Me.Label14.BackColor = System.Drawing.Color.Transparent
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label14.Location = New System.Drawing.Point(132, 109)
+        Me.Label14.Location = New System.Drawing.Point(132, 103)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(90, 22)
         Me.Label14.TabIndex = 35
@@ -1486,9 +1409,9 @@ Partial Class MainFrm
         Me.Label22.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Label22.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label22.ForeColor = System.Drawing.Color.White
-        Me.Label22.Location = New System.Drawing.Point(1, 368)
+        Me.Label22.Location = New System.Drawing.Point(1, 131)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(448, 51)
+        Me.Label22.Size = New System.Drawing.Size(445, 51)
         Me.Label22.TabIndex = 6
         Me.Label22.Text = "Classic theme is editable by Win32UI Editor"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1501,7 +1424,7 @@ Partial Class MainFrm
         Me.theme_basic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_basic.ForeColor = System.Drawing.Color.White
         Me.theme_basic.Image = CType(resources.GetObject("theme_basic.Image"), System.Drawing.Image)
-        Me.theme_basic.Location = New System.Drawing.Point(145, 42)
+        Me.theme_basic.Location = New System.Drawing.Point(145, 36)
         Me.theme_basic.Name = "theme_basic"
         Me.theme_basic.Size = New System.Drawing.Size(64, 64)
         Me.theme_basic.TabIndex = 34
@@ -1512,7 +1435,7 @@ Partial Class MainFrm
         Me.Label6.AutoEllipsis = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label6.Location = New System.Drawing.Point(36, 109)
+        Me.Label6.Location = New System.Drawing.Point(36, 103)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(90, 22)
         Me.Label6.TabIndex = 33
@@ -1526,7 +1449,7 @@ Partial Class MainFrm
         Me.theme_classic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_classic.ForeColor = System.Drawing.Color.White
         Me.theme_classic.Image = CType(resources.GetObject("theme_classic.Image"), System.Drawing.Image)
-        Me.theme_classic.Location = New System.Drawing.Point(49, 42)
+        Me.theme_classic.Location = New System.Drawing.Point(49, 36)
         Me.theme_classic.Name = "theme_classic"
         Me.theme_classic.Size = New System.Drawing.Size(64, 64)
         Me.theme_classic.TabIndex = 32
@@ -1546,7 +1469,7 @@ Partial Class MainFrm
         Me.XenonGroupBox25.Location = New System.Drawing.Point(5, 424)
         Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox25.Name = "XenonGroupBox25"
-        Me.XenonGroupBox25.Size = New System.Drawing.Size(440, 29)
+        Me.XenonGroupBox25.Size = New System.Drawing.Size(439, 29)
         Me.XenonGroupBox25.TabIndex = 31
         Me.XenonGroupBox25.Text = "XenonGroupBox25"
         '
@@ -1589,7 +1512,7 @@ Partial Class MainFrm
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label4.Location = New System.Drawing.Point(36, 2)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(247, 24)
+        Me.Label4.Size = New System.Drawing.Size(248, 24)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "Aero_LastDisqualifiedCompositionSignature"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1599,37 +1522,33 @@ Partial Class MainFrm
         Me.XenonGroupBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox19.Controls.Add(Me.Aero_ColorizationGlassReflectionIntensity_txt)
+        Me.XenonGroupBox19.Controls.Add(Me.Aero_ColorizationGlassReflectionIntensity_bar)
         Me.XenonGroupBox19.Controls.Add(Me.PictureBox24)
         Me.XenonGroupBox19.Controls.Add(Me.Label26)
         Me.XenonGroupBox19.CustomColor = False
         Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox19.LineSize = 1
-        Me.XenonGroupBox19.Location = New System.Drawing.Point(4, 276)
+        Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 75)
         Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
-        Me.XenonGroupBox19.Size = New System.Drawing.Size(441, 29)
+        Me.XenonGroupBox19.Size = New System.Drawing.Size(442, 29)
         Me.XenonGroupBox19.TabIndex = 30
         Me.XenonGroupBox19.Text = "XenonGroupBox19"
         '
-        'Aero_ColorizationGlassReflectionIntensity_txt
+        'Aero_ColorizationGlassReflectionIntensity_bar
         '
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.ForeColor = System.Drawing.Color.White
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Hint = Nothing
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.LineColor = System.Drawing.Color.DodgerBlue
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Location = New System.Drawing.Point(354, 2)
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.MaxLength = 32767
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Multiline = False
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Name = "Aero_ColorizationGlassReflectionIntensity_txt"
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.ReadOnly = False
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Size = New System.Drawing.Size(85, 24)
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.TabIndex = 5
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.Text = "XenonTextBox1"
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.Aero_ColorizationGlassReflectionIntensity_txt.UseSystemPasswordChar = False
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.LargeChange = 10
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Location = New System.Drawing.Point(227, 5)
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Maximum = 100
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Minimum = 0
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Name = "Aero_ColorizationGlassReflectionIntensity_bar"
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Size = New System.Drawing.Size(212, 19)
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.SmallChange = 1
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.TabIndex = 8
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Text = "XenonTrackbar2"
+        Me.Aero_ColorizationGlassReflectionIntensity_bar.Value = 0
         '
         'PictureBox24
         '
@@ -1653,7 +1572,7 @@ Partial Class MainFrm
         Me.Label26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label26.Location = New System.Drawing.Point(36, 2)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(312, 24)
+        Me.Label26.Size = New System.Drawing.Size(185, 24)
         Me.Label26.TabIndex = 3
         Me.Label26.Text = "Glass Reflection Intensity"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1673,37 +1592,33 @@ Partial Class MainFrm
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox12.Controls.Add(Me.Aero_ColorizationBlurBalance_txt)
+        Me.XenonGroupBox12.Controls.Add(Me.Aero_ColorizationBlurBalance_bar)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox12.Controls.Add(Me.Label15)
         Me.XenonGroupBox12.CustomColor = False
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox12.LineSize = 1
-        Me.XenonGroupBox12.Location = New System.Drawing.Point(4, 245)
+        Me.XenonGroupBox12.Location = New System.Drawing.Point(3, 44)
         Me.XenonGroupBox12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
-        Me.XenonGroupBox12.Size = New System.Drawing.Size(441, 29)
+        Me.XenonGroupBox12.Size = New System.Drawing.Size(442, 29)
         Me.XenonGroupBox12.TabIndex = 29
         Me.XenonGroupBox12.Text = "XenonGroupBox12"
         '
-        'Aero_ColorizationBlurBalance_txt
+        'Aero_ColorizationBlurBalance_bar
         '
-        Me.Aero_ColorizationBlurBalance_txt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Aero_ColorizationBlurBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Aero_ColorizationBlurBalance_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.Aero_ColorizationBlurBalance_txt.ForeColor = System.Drawing.Color.White
-        Me.Aero_ColorizationBlurBalance_txt.Hint = Nothing
-        Me.Aero_ColorizationBlurBalance_txt.LineColor = System.Drawing.Color.DodgerBlue
-        Me.Aero_ColorizationBlurBalance_txt.Location = New System.Drawing.Point(354, 2)
-        Me.Aero_ColorizationBlurBalance_txt.MaxLength = 32767
-        Me.Aero_ColorizationBlurBalance_txt.Multiline = False
-        Me.Aero_ColorizationBlurBalance_txt.Name = "Aero_ColorizationBlurBalance_txt"
-        Me.Aero_ColorizationBlurBalance_txt.ReadOnly = False
-        Me.Aero_ColorizationBlurBalance_txt.Size = New System.Drawing.Size(85, 24)
-        Me.Aero_ColorizationBlurBalance_txt.TabIndex = 6
-        Me.Aero_ColorizationBlurBalance_txt.Text = "XenonTextBox2"
-        Me.Aero_ColorizationBlurBalance_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.Aero_ColorizationBlurBalance_txt.UseSystemPasswordChar = False
+        Me.Aero_ColorizationBlurBalance_bar.LargeChange = 10
+        Me.Aero_ColorizationBlurBalance_bar.Location = New System.Drawing.Point(227, 5)
+        Me.Aero_ColorizationBlurBalance_bar.Maximum = 100
+        Me.Aero_ColorizationBlurBalance_bar.Minimum = 0
+        Me.Aero_ColorizationBlurBalance_bar.Name = "Aero_ColorizationBlurBalance_bar"
+        Me.Aero_ColorizationBlurBalance_bar.Size = New System.Drawing.Size(212, 19)
+        Me.Aero_ColorizationBlurBalance_bar.SmallChange = 1
+        Me.Aero_ColorizationBlurBalance_bar.TabIndex = 7
+        Me.Aero_ColorizationBlurBalance_bar.Text = "XenonTrackbar2"
+        Me.Aero_ColorizationBlurBalance_bar.Value = 0
         '
         'PictureBox8
         '
@@ -1727,9 +1642,9 @@ Partial Class MainFrm
         Me.Label15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label15.Location = New System.Drawing.Point(36, 2)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(311, 24)
+        Me.Label15.Size = New System.Drawing.Size(188, 24)
         Me.Label15.TabIndex = 3
-        Me.Label15.Text = "Colorization Blur Balance (Max 100)"
+        Me.Label15.Text = "Colorization Blur Balance"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label38
@@ -1739,135 +1654,8 @@ Partial Class MainFrm
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(401, 35)
         Me.Label38.TabIndex = 0
-        Me.Label38.Text = "Aero"
+        Me.Label38.Text = "Aero Tweaks"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox14
-        '
-        Me.XenonGroupBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox14.Controls.Add(Me.Aero_ColorizationAfterglowBalance_txt)
-        Me.XenonGroupBox14.Controls.Add(Me.PictureBox9)
-        Me.XenonGroupBox14.Controls.Add(Me.Label18)
-        Me.XenonGroupBox14.CustomColor = False
-        Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
-        Me.XenonGroupBox14.LineSize = 1
-        Me.XenonGroupBox14.Location = New System.Drawing.Point(4, 214)
-        Me.XenonGroupBox14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox14.Name = "XenonGroupBox14"
-        Me.XenonGroupBox14.Size = New System.Drawing.Size(441, 29)
-        Me.XenonGroupBox14.TabIndex = 28
-        Me.XenonGroupBox14.Text = "XenonGroupBox14"
-        '
-        'Aero_ColorizationAfterglowBalance_txt
-        '
-        Me.Aero_ColorizationAfterglowBalance_txt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Aero_ColorizationAfterglowBalance_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.Aero_ColorizationAfterglowBalance_txt.ForeColor = System.Drawing.Color.White
-        Me.Aero_ColorizationAfterglowBalance_txt.Hint = Nothing
-        Me.Aero_ColorizationAfterglowBalance_txt.LineColor = System.Drawing.Color.DodgerBlue
-        Me.Aero_ColorizationAfterglowBalance_txt.Location = New System.Drawing.Point(354, 2)
-        Me.Aero_ColorizationAfterglowBalance_txt.MaxLength = 32767
-        Me.Aero_ColorizationAfterglowBalance_txt.Multiline = False
-        Me.Aero_ColorizationAfterglowBalance_txt.Name = "Aero_ColorizationAfterglowBalance_txt"
-        Me.Aero_ColorizationAfterglowBalance_txt.ReadOnly = False
-        Me.Aero_ColorizationAfterglowBalance_txt.Size = New System.Drawing.Size(85, 24)
-        Me.Aero_ColorizationAfterglowBalance_txt.TabIndex = 6
-        Me.Aero_ColorizationAfterglowBalance_txt.Text = "XenonTextBox3"
-        Me.Aero_ColorizationAfterglowBalance_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.Aero_ColorizationAfterglowBalance_txt.UseSystemPasswordChar = False
-        '
-        'PictureBox9
-        '
-        Me.PictureBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
-        Me.PictureBox9.Location = New System.Drawing.Point(3, 1)
-        Me.PictureBox9.Name = "PictureBox9"
-        Me.PictureBox9.Size = New System.Drawing.Size(30, 27)
-        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox9.TabIndex = 4
-        Me.PictureBox9.TabStop = False
-        '
-        'Label18
-        '
-        Me.Label18.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label18.AutoEllipsis = True
-        Me.Label18.BackColor = System.Drawing.Color.Transparent
-        Me.Label18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label18.Location = New System.Drawing.Point(36, 2)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(311, 24)
-        Me.Label18.TabIndex = 3
-        Me.Label18.Text = "Color After Glow Balance"
-        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox15
-        '
-        Me.XenonGroupBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox15.Controls.Add(Me.Aero_ColorizationColorBalance_txt)
-        Me.XenonGroupBox15.Controls.Add(Me.PictureBox13)
-        Me.XenonGroupBox15.Controls.Add(Me.Label20)
-        Me.XenonGroupBox15.CustomColor = False
-        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
-        Me.XenonGroupBox15.LineSize = 1
-        Me.XenonGroupBox15.Location = New System.Drawing.Point(4, 183)
-        Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox15.Name = "XenonGroupBox15"
-        Me.XenonGroupBox15.Size = New System.Drawing.Size(441, 29)
-        Me.XenonGroupBox15.TabIndex = 27
-        Me.XenonGroupBox15.Text = "XenonGroupBox15"
-        '
-        'Aero_ColorizationColorBalance_txt
-        '
-        Me.Aero_ColorizationColorBalance_txt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Aero_ColorizationColorBalance_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.Aero_ColorizationColorBalance_txt.ForeColor = System.Drawing.Color.White
-        Me.Aero_ColorizationColorBalance_txt.Hint = Nothing
-        Me.Aero_ColorizationColorBalance_txt.LineColor = System.Drawing.Color.DodgerBlue
-        Me.Aero_ColorizationColorBalance_txt.Location = New System.Drawing.Point(353, 2)
-        Me.Aero_ColorizationColorBalance_txt.MaxLength = 32767
-        Me.Aero_ColorizationColorBalance_txt.Multiline = False
-        Me.Aero_ColorizationColorBalance_txt.Name = "Aero_ColorizationColorBalance_txt"
-        Me.Aero_ColorizationColorBalance_txt.ReadOnly = False
-        Me.Aero_ColorizationColorBalance_txt.Size = New System.Drawing.Size(85, 24)
-        Me.Aero_ColorizationColorBalance_txt.TabIndex = 14
-        Me.Aero_ColorizationColorBalance_txt.Text = "XenonTextBox4"
-        Me.Aero_ColorizationColorBalance_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.Aero_ColorizationColorBalance_txt.UseSystemPasswordChar = False
-        '
-        'PictureBox13
-        '
-        Me.PictureBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
-        Me.PictureBox13.Location = New System.Drawing.Point(3, 1)
-        Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(30, 27)
-        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox13.TabIndex = 4
-        Me.PictureBox13.TabStop = False
-        '
-        'Label20
-        '
-        Me.Label20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label20.AutoEllipsis = True
-        Me.Label20.BackColor = System.Drawing.Color.Transparent
-        Me.Label20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label20.Location = New System.Drawing.Point(36, 2)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(311, 24)
-        Me.Label20.TabIndex = 13
-        Me.Label20.Text = "Colorization Color Balance"
-        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox10
         '
@@ -1880,10 +1668,10 @@ Partial Class MainFrm
         Me.XenonGroupBox10.CustomColor = False
         Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox10.LineSize = 1
-        Me.XenonGroupBox10.Location = New System.Drawing.Point(4, 145)
+        Me.XenonGroupBox10.Location = New System.Drawing.Point(3, 106)
         Me.XenonGroupBox10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
-        Me.XenonGroupBox10.Size = New System.Drawing.Size(218, 29)
+        Me.XenonGroupBox10.Size = New System.Drawing.Size(217, 29)
         Me.XenonGroupBox10.TabIndex = 22
         Me.XenonGroupBox10.Text = "XenonGroupBox10"
         '
@@ -1894,7 +1682,7 @@ Partial Class MainFrm
         Me.Aero_EnableAeroPeek_toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.Aero_EnableAeroPeek_toggle.Checked = False
         Me.Aero_EnableAeroPeek_toggle.DarkLight_Toggler = False
-        Me.Aero_EnableAeroPeek_toggle.Location = New System.Drawing.Point(164, 3)
+        Me.Aero_EnableAeroPeek_toggle.Location = New System.Drawing.Point(165, 2)
         Me.Aero_EnableAeroPeek_toggle.Name = "Aero_EnableAeroPeek_toggle"
         Me.Aero_EnableAeroPeek_toggle.Size = New System.Drawing.Size(50, 24)
         Me.Aero_EnableAeroPeek_toggle.TabIndex = 16
@@ -1920,7 +1708,7 @@ Partial Class MainFrm
         Me.Aero_EnableAeroPeek_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Aero_EnableAeroPeek_lbl.Location = New System.Drawing.Point(36, 2)
         Me.Aero_EnableAeroPeek_lbl.Name = "Aero_EnableAeroPeek_lbl"
-        Me.Aero_EnableAeroPeek_lbl.Size = New System.Drawing.Size(122, 24)
+        Me.Aero_EnableAeroPeek_lbl.Size = New System.Drawing.Size(123, 24)
         Me.Aero_EnableAeroPeek_lbl.TabIndex = 13
         Me.Aero_EnableAeroPeek_lbl.Text = "Aero Peek"
         Me.Aero_EnableAeroPeek_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1936,10 +1724,10 @@ Partial Class MainFrm
         Me.XenonGroupBox7.CustomColor = False
         Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox7.LineSize = 1
-        Me.XenonGroupBox7.Location = New System.Drawing.Point(225, 145)
+        Me.XenonGroupBox7.Location = New System.Drawing.Point(222, 106)
         Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
-        Me.XenonGroupBox7.Size = New System.Drawing.Size(221, 29)
+        Me.XenonGroupBox7.Size = New System.Drawing.Size(223, 29)
         Me.XenonGroupBox7.TabIndex = 23
         Me.XenonGroupBox7.Text = "XenonGroupBox7"
         '
@@ -1950,7 +1738,7 @@ Partial Class MainFrm
         Me.Aero_AlwaysHibernateThumbnails_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.Aero_AlwaysHibernateThumbnails_Toggle.Checked = False
         Me.Aero_AlwaysHibernateThumbnails_Toggle.DarkLight_Toggler = False
-        Me.Aero_AlwaysHibernateThumbnails_Toggle.Location = New System.Drawing.Point(167, 3)
+        Me.Aero_AlwaysHibernateThumbnails_Toggle.Location = New System.Drawing.Point(171, 2)
         Me.Aero_AlwaysHibernateThumbnails_Toggle.Name = "Aero_AlwaysHibernateThumbnails_Toggle"
         Me.Aero_AlwaysHibernateThumbnails_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.Aero_AlwaysHibernateThumbnails_Toggle.TabIndex = 17
@@ -1977,7 +1765,7 @@ Partial Class MainFrm
         Me.Aero_AlwaysHibernateThumbnails_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Aero_AlwaysHibernateThumbnails_lbl.Location = New System.Drawing.Point(36, 2)
         Me.Aero_AlwaysHibernateThumbnails_lbl.Name = "Aero_AlwaysHibernateThumbnails_lbl"
-        Me.Aero_AlwaysHibernateThumbnails_lbl.Size = New System.Drawing.Size(125, 24)
+        Me.Aero_AlwaysHibernateThumbnails_lbl.Size = New System.Drawing.Size(129, 24)
         Me.Aero_AlwaysHibernateThumbnails_lbl.TabIndex = 3
         Me.Aero_AlwaysHibernateThumbnails_lbl.Text = "Hibernate Thumbnails"
         Me.Aero_AlwaysHibernateThumbnails_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1997,7 +1785,7 @@ Partial Class MainFrm
         Me.XenonGroupBox30.Location = New System.Drawing.Point(0, 0)
         Me.XenonGroupBox30.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox30.Name = "XenonGroupBox30"
-        Me.XenonGroupBox30.Size = New System.Drawing.Size(450, 78)
+        Me.XenonGroupBox30.Size = New System.Drawing.Size(450, 104)
         Me.XenonGroupBox30.TabIndex = 11
         Me.XenonGroupBox30.Text = "XenonGroupBox30"
         '
@@ -2006,6 +1794,7 @@ Partial Class MainFrm
         Me.XenonGroupBox21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonGroupBox21.Controls.Add(Me.Aero_ColorizationColorBalance_bar)
         Me.XenonGroupBox21.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox21.Controls.Add(Me.Aero_ColorizationColor_pick)
         Me.XenonGroupBox21.Controls.Add(Me.Label16)
@@ -2015,14 +1804,27 @@ Partial Class MainFrm
         Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 44)
         Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
-        Me.XenonGroupBox21.Size = New System.Drawing.Size(220, 29)
+        Me.XenonGroupBox21.Size = New System.Drawing.Size(220, 57)
         Me.XenonGroupBox21.TabIndex = 20
         Me.XenonGroupBox21.Text = "XenonGroupBox3"
         '
+        'Aero_ColorizationColorBalance_bar
+        '
+        Me.Aero_ColorizationColorBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Aero_ColorizationColorBalance_bar.LargeChange = 10
+        Me.Aero_ColorizationColorBalance_bar.Location = New System.Drawing.Point(4, 33)
+        Me.Aero_ColorizationColorBalance_bar.Maximum = 100
+        Me.Aero_ColorizationColorBalance_bar.Minimum = 0
+        Me.Aero_ColorizationColorBalance_bar.Name = "Aero_ColorizationColorBalance_bar"
+        Me.Aero_ColorizationColorBalance_bar.Size = New System.Drawing.Size(212, 19)
+        Me.Aero_ColorizationColorBalance_bar.SmallChange = 1
+        Me.Aero_ColorizationColorBalance_bar.TabIndex = 6
+        Me.Aero_ColorizationColorBalance_bar.Text = "XenonTrackbar2"
+        Me.Aero_ColorizationColorBalance_bar.Value = 0
+        '
         'PictureBox12
         '
-        Me.PictureBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
         Me.PictureBox12.Location = New System.Drawing.Point(3, 1)
         Me.PictureBox12.Name = "PictureBox12"
@@ -2033,8 +1835,7 @@ Partial Class MainFrm
         '
         'Aero_ColorizationColor_pick
         '
-        Me.Aero_ColorizationColor_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Aero_ColorizationColor_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Aero_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Aero_ColorizationColor_pick.CustomColor = True
         Me.Aero_ColorizationColor_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
@@ -2048,8 +1849,7 @@ Partial Class MainFrm
         '
         'Label16
         '
-        Me.Label16.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Label16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoEllipsis = True
         Me.Label16.BackColor = System.Drawing.Color.Transparent
@@ -2066,6 +1866,7 @@ Partial Class MainFrm
         Me.XenonGroupBox26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox26.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonGroupBox26.Controls.Add(Me.Aero_ColorizationAfterglowBalance_bar)
         Me.XenonGroupBox26.Controls.Add(Me.Aero_ColorizationAfterglow_pick)
         Me.XenonGroupBox26.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox26.Controls.Add(Me.Label21)
@@ -2075,14 +1876,28 @@ Partial Class MainFrm
         Me.XenonGroupBox26.Location = New System.Drawing.Point(226, 44)
         Me.XenonGroupBox26.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox26.Name = "XenonGroupBox26"
-        Me.XenonGroupBox26.Size = New System.Drawing.Size(220, 29)
+        Me.XenonGroupBox26.Size = New System.Drawing.Size(220, 57)
         Me.XenonGroupBox26.TabIndex = 21
         Me.XenonGroupBox26.Text = "XenonGroupBox14"
         '
+        'Aero_ColorizationAfterglowBalance_bar
+        '
+        Me.Aero_ColorizationAfterglowBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Aero_ColorizationAfterglowBalance_bar.LargeChange = 10
+        Me.Aero_ColorizationAfterglowBalance_bar.Location = New System.Drawing.Point(4, 33)
+        Me.Aero_ColorizationAfterglowBalance_bar.Maximum = 100
+        Me.Aero_ColorizationAfterglowBalance_bar.Minimum = 0
+        Me.Aero_ColorizationAfterglowBalance_bar.Name = "Aero_ColorizationAfterglowBalance_bar"
+        Me.Aero_ColorizationAfterglowBalance_bar.Size = New System.Drawing.Size(212, 19)
+        Me.Aero_ColorizationAfterglowBalance_bar.SmallChange = 1
+        Me.Aero_ColorizationAfterglowBalance_bar.TabIndex = 5
+        Me.Aero_ColorizationAfterglowBalance_bar.Text = "XenonTrackbar1"
+        Me.Aero_ColorizationAfterglowBalance_bar.Value = 0
+        '
         'Aero_ColorizationAfterglow_pick
         '
-        Me.Aero_ColorizationAfterglow_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Aero_ColorizationAfterglow_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Aero_ColorizationAfterglow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Aero_ColorizationAfterglow_pick.CustomColor = True
         Me.Aero_ColorizationAfterglow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
@@ -2096,8 +1911,6 @@ Partial Class MainFrm
         '
         'PictureBox14
         '
-        Me.PictureBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
         Me.PictureBox14.Location = New System.Drawing.Point(3, 1)
         Me.PictureBox14.Name = "PictureBox14"
@@ -2108,8 +1921,7 @@ Partial Class MainFrm
         '
         'Label21
         '
-        Me.Label21.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Label21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label21.AutoEllipsis = True
         Me.Label21.BackColor = System.Drawing.Color.Transparent
@@ -2845,6 +2657,116 @@ Partial Class MainFrm
         Me.XenonButton2.Tag = "Open a Theme File"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
+        'XenonGroupBox11
+        '
+        Me.XenonGroupBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox11.Controls.Add(Me.XenonGroupBox14)
+        Me.XenonGroupBox11.Controls.Add(Me.Label23)
+        Me.XenonGroupBox11.Controls.Add(Me.Label22)
+        Me.XenonGroupBox11.Controls.Add(Me.PictureBox13)
+        Me.XenonGroupBox11.Controls.Add(Me.theme_aero)
+        Me.XenonGroupBox11.Controls.Add(Me.Label28)
+        Me.XenonGroupBox11.Controls.Add(Me.theme_classic)
+        Me.XenonGroupBox11.Controls.Add(Me.Label25)
+        Me.XenonGroupBox11.Controls.Add(Me.theme_basic)
+        Me.XenonGroupBox11.Controls.Add(Me.Label14)
+        Me.XenonGroupBox11.Controls.Add(Me.theme_aeroopaque)
+        Me.XenonGroupBox11.Controls.Add(Me.Label6)
+        Me.XenonGroupBox11.CustomColor = False
+        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
+        Me.XenonGroupBox11.LineSize = 1
+        Me.XenonGroupBox11.Location = New System.Drawing.Point(3, 107)
+        Me.XenonGroupBox11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonGroupBox11.Name = "XenonGroupBox11"
+        Me.XenonGroupBox11.Padding = New System.Windows.Forms.Padding(1)
+        Me.XenonGroupBox11.Size = New System.Drawing.Size(447, 183)
+        Me.XenonGroupBox11.TabIndex = 40
+        Me.XenonGroupBox11.Text = "XenonGroupBox11"
+        '
+        'XenonGroupBox14
+        '
+        Me.XenonGroupBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonGroupBox14.Controls.Add(Me.XenonTextBox2)
+        Me.XenonGroupBox14.Controls.Add(Me.PictureBox7)
+        Me.XenonGroupBox14.Controls.Add(Me.Label18)
+        Me.XenonGroupBox14.CustomColor = False
+        Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonGroupBox14.LineSize = 1
+        Me.XenonGroupBox14.Location = New System.Drawing.Point(5, 424)
+        Me.XenonGroupBox14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonGroupBox14.Name = "XenonGroupBox14"
+        Me.XenonGroupBox14.Size = New System.Drawing.Size(437, 29)
+        Me.XenonGroupBox14.TabIndex = 31
+        Me.XenonGroupBox14.Text = "XenonGroupBox14"
+        '
+        'XenonTextBox2
+        '
+        Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox2.Hint = Nothing
+        Me.XenonTextBox2.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonTextBox2.Location = New System.Drawing.Point(291, 2)
+        Me.XenonTextBox2.MaxLength = 32767
+        Me.XenonTextBox2.Multiline = False
+        Me.XenonTextBox2.Name = "XenonTextBox2"
+        Me.XenonTextBox2.ReadOnly = False
+        Me.XenonTextBox2.Size = New System.Drawing.Size(148, 24)
+        Me.XenonTextBox2.TabIndex = 5
+        Me.XenonTextBox2.Text = "XenonTextBox7"
+        Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox2.UseSystemPasswordChar = False
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
+        Me.PictureBox7.Location = New System.Drawing.Point(3, 1)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(30, 27)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox7.TabIndex = 4
+        Me.PictureBox7.TabStop = False
+        '
+        'Label18
+        '
+        Me.Label18.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label18.AutoEllipsis = True
+        Me.Label18.BackColor = System.Drawing.Color.Transparent
+        Me.Label18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label18.Location = New System.Drawing.Point(36, 2)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(244, 24)
+        Me.Label18.TabIndex = 3
+        Me.Label18.Text = "Aero_LastDisqualifiedCompositionSignature"
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox13
+        '
+        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
+        Me.PictureBox13.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox13.Name = "PictureBox13"
+        Me.PictureBox13.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox13.TabIndex = 1
+        Me.PictureBox13.TabStop = False
+        '
+        'Label28
+        '
+        Me.Label28.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.Label28.Location = New System.Drawing.Point(44, 3)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(401, 35)
+        Me.Label28.TabIndex = 0
+        Me.Label28.Text = "Theme"
+        Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -2915,10 +2837,6 @@ Partial Class MainFrm
         CType(Me.PictureBox39, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox14.ResumeLayout(False)
-        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox15.ResumeLayout(False)
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox10.ResumeLayout(False)
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox7.ResumeLayout(False)
@@ -2937,6 +2855,10 @@ Partial Class MainFrm
         Me.Panel3.ResumeLayout(False)
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)
+        Me.XenonGroupBox11.ResumeLayout(False)
+        Me.XenonGroupBox14.ResumeLayout(False)
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3082,16 +3004,6 @@ Partial Class MainFrm
     Friend WithEvents XenonGroupBox12 As XenonGroupBox
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents Label15 As Label
-    Friend WithEvents XenonGroupBox14 As XenonGroupBox
-    Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents Label18 As Label
-    Friend WithEvents XenonGroupBox15 As XenonGroupBox
-    Friend WithEvents PictureBox13 As PictureBox
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Aero_ColorizationGlassReflectionIntensity_txt As XenonTextBox
-    Friend WithEvents Aero_ColorizationBlurBalance_txt As XenonTextBox
-    Friend WithEvents Aero_ColorizationAfterglowBalance_txt As XenonTextBox
-    Friend WithEvents Aero_ColorizationColorBalance_txt As XenonTextBox
     Friend WithEvents XenonGroupBox22 As XenonGroupBox
     Friend WithEvents XenonGroupBox25 As XenonGroupBox
     Friend WithEvents XenonTextBox1 As XenonTextBox
@@ -3108,8 +3020,15 @@ Partial Class MainFrm
     Friend WithEvents Label6 As Label
     Friend WithEvents theme_classic As XenonRadioImage
     Friend WithEvents Label22 As Label
-    Friend WithEvents XenonButton23 As XenonButton
-    Friend WithEvents XenonButton24 As XenonButton
-    Friend WithEvents XenonButton22 As XenonButton
-    Friend WithEvents XenonButton14 As XenonButton
+    Friend WithEvents Aero_ColorizationColorBalance_bar As XenonTrackbar
+    Friend WithEvents Aero_ColorizationAfterglowBalance_bar As XenonTrackbar
+    Friend WithEvents Aero_ColorizationBlurBalance_bar As XenonTrackbar
+    Friend WithEvents Aero_ColorizationGlassReflectionIntensity_bar As XenonTrackbar
+    Friend WithEvents XenonGroupBox11 As XenonGroupBox
+    Friend WithEvents XenonGroupBox14 As XenonGroupBox
+    Friend WithEvents XenonTextBox2 As XenonTextBox
+    Friend WithEvents PictureBox7 As PictureBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents PictureBox13 As PictureBox
+    Friend WithEvents Label28 As Label
 End Class

@@ -639,10 +639,10 @@ Public Class MainFrm
 
         Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
         Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Aero_ColorizationAfterglow
-        Aero_ColorizationColorBalance_txt.Text = ColorPalette.Aero_ColorizationColorBalance
-        Aero_ColorizationAfterglowBalance_txt.Text = ColorPalette.Aero_ColorizationAfterglowBalance
-        Aero_ColorizationBlurBalance_txt.Text = ColorPalette.Aero_ColorizationBlurBalance
-        Aero_ColorizationGlassReflectionIntensity_txt.Text = ColorPalette.Aero_ColorizationGlassReflectionIntensity
+        Aero_ColorizationColorBalance_bar.Text = ColorPalette.Aero_ColorizationColorBalance
+        Aero_ColorizationAfterglowBalance_bar.Value = ColorPalette.Aero_ColorizationAfterglowBalance
+        Aero_ColorizationBlurBalance_bar.Value = ColorPalette.Aero_ColorizationBlurBalance
+        Aero_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Aero_ColorizationGlassReflectionIntensity
         Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Aero_EnableAeroPeek
         Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Aero_AlwaysHibernateThumbnails
 
@@ -1827,23 +1827,23 @@ Public Class MainFrm
         If _Shown Then CP.Aero_AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
     End Sub
 
-    Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationColorBalance_txt.TextChanged
+    Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationColorBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationColorBalance = Val(Aero_ColorizationColorBalance_txt.Text)
+            CP.Aero_ColorizationColorBalance = Aero_ColorizationColorBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Aero_ColorizationBlurBalance_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationBlurBalance_txt.TextChanged
+    Private Sub Aero_ColorizationBlurBalance_TextChanged(sender As Object) Handles Aero_ColorizationBlurBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationBlurBalance = Val(Aero_ColorizationBlurBalance_txt.Text)
+            CP.Aero_ColorizationBlurBalance = Aero_ColorizationBlurBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Aero_ColorizationGlassReflectionIntensity_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationGlassReflectionIntensity_txt.TextChanged
+    Private Sub Aero_ColorizationGlassReflectionIntensity_txt_TextChanged(sender As Object) Handles Aero_ColorizationGlassReflectionIntensity_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationGlassReflectionIntensity = Val(Aero_ColorizationGlassReflectionIntensity_txt.Text)
+            CP.Aero_ColorizationGlassReflectionIntensity = Aero_ColorizationGlassReflectionIntensity_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -1877,9 +1877,9 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglowBalance_txt.TextChanged
+    Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationAfterglowBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationAfterglowBalance = Val(Aero_ColorizationAfterglowBalance_txt.Text)
+            CP.Aero_ColorizationAfterglowBalance = Aero_ColorizationAfterglowBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub

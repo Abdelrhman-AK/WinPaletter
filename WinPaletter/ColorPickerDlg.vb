@@ -272,6 +272,9 @@ Public Class ColorPickerDlg
                             If _Conditions.RetroButtonHilight Then DirectCast(ctrl, RetroPanel).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
                             If _Conditions.RetroButtonShadow Then DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                         End If
+                        If TypeOf ctrl Is Panel Then
+                            ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                        End If
                     End If
                 End If
 

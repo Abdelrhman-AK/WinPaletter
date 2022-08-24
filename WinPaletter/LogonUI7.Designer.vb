@@ -26,11 +26,11 @@ Partial Class LogonUI7
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonNumericUpDown2 = New WinPaletter.XenonNumericUpDown()
+        Me.XenonTrackbar2 = New WinPaletter.XenonTrackbar()
+        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.XenonNumericUpDown1 = New WinPaletter.XenonNumericUpDown()
         Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
         Me.XenonCheckBox6 = New WinPaletter.XenonCheckBox()
         Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
@@ -60,7 +60,7 @@ Partial Class LogonUI7
         Me.Label41 = New System.Windows.Forms.Label()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
-        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,7 +89,7 @@ Partial Class LogonUI7
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(577, 457)
+        Me.XenonButton2.Location = New System.Drawing.Point(577, 362)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(80, 36)
         Me.XenonButton2.TabIndex = 66
@@ -106,7 +106,7 @@ Partial Class LogonUI7
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(663, 457)
+        Me.XenonButton1.Location = New System.Drawing.Point(663, 362)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(210, 36)
         Me.XenonButton1.TabIndex = 65
@@ -116,11 +116,11 @@ Partial Class LogonUI7
         'XenonGroupBox3
         '
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox3.Controls.Add(Me.XenonNumericUpDown2)
+        Me.XenonGroupBox3.Controls.Add(Me.XenonTrackbar2)
+        Me.XenonGroupBox3.Controls.Add(Me.XenonTrackbar1)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox10)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox9)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox8)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonNumericUpDown1)
         Me.XenonGroupBox3.Controls.Add(Me.XenonComboBox1)
         Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox6)
         Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox7)
@@ -135,20 +135,31 @@ Partial Class LogonUI7
         Me.XenonGroupBox3.Size = New System.Drawing.Size(324, 156)
         Me.XenonGroupBox3.TabIndex = 18
         '
-        'XenonNumericUpDown2
+        'XenonTrackbar2
         '
-        Me.XenonNumericUpDown2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonNumericUpDown2.EnabledCalc = True
-        Me.XenonNumericUpDown2.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonNumericUpDown2.Location = New System.Drawing.Point(243, 96)
-        Me.XenonNumericUpDown2.Max = 100
-        Me.XenonNumericUpDown2.Min = 0
-        Me.XenonNumericUpDown2.Name = "XenonNumericUpDown2"
-        Me.XenonNumericUpDown2.Size = New System.Drawing.Size(75, 23)
-        Me.XenonNumericUpDown2.TabIndex = 93
-        Me.XenonNumericUpDown2.Text = "XenonNumericUpDown2"
-        Me.XenonNumericUpDown2.UpDownStep = 1
-        Me.XenonNumericUpDown2.Value = 0
+        Me.XenonTrackbar2.LargeChange = 10
+        Me.XenonTrackbar2.Location = New System.Drawing.Point(196, 98)
+        Me.XenonTrackbar2.Maximum = 100
+        Me.XenonTrackbar2.Minimum = 0
+        Me.XenonTrackbar2.Name = "XenonTrackbar2"
+        Me.XenonTrackbar2.Size = New System.Drawing.Size(122, 19)
+        Me.XenonTrackbar2.SmallChange = 1
+        Me.XenonTrackbar2.TabIndex = 93
+        Me.XenonTrackbar2.Text = "XenonTrackbar2"
+        Me.XenonTrackbar2.Value = 50
+        '
+        'XenonTrackbar1
+        '
+        Me.XenonTrackbar1.LargeChange = 4
+        Me.XenonTrackbar1.Location = New System.Drawing.Point(196, 67)
+        Me.XenonTrackbar1.Maximum = 20
+        Me.XenonTrackbar1.Minimum = 0
+        Me.XenonTrackbar1.Name = "XenonTrackbar1"
+        Me.XenonTrackbar1.Size = New System.Drawing.Size(122, 19)
+        Me.XenonTrackbar1.SmallChange = 1
+        Me.XenonTrackbar1.TabIndex = 67
+        Me.XenonTrackbar1.Text = "XenonTrackbar1"
+        Me.XenonTrackbar1.Value = 1
         '
         'PictureBox10
         '
@@ -180,21 +191,6 @@ Partial Class LogonUI7
         Me.PictureBox8.TabIndex = 90
         Me.PictureBox8.TabStop = False
         '
-        'XenonNumericUpDown1
-        '
-        Me.XenonNumericUpDown1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonNumericUpDown1.EnabledCalc = True
-        Me.XenonNumericUpDown1.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonNumericUpDown1.Location = New System.Drawing.Point(243, 65)
-        Me.XenonNumericUpDown1.Max = 15
-        Me.XenonNumericUpDown1.Min = 0
-        Me.XenonNumericUpDown1.Name = "XenonNumericUpDown1"
-        Me.XenonNumericUpDown1.Size = New System.Drawing.Size(75, 23)
-        Me.XenonNumericUpDown1.TabIndex = 86
-        Me.XenonNumericUpDown1.Text = "XenonNumericUpDown1"
-        Me.XenonNumericUpDown1.UpDownStep = 1
-        Me.XenonNumericUpDown1.Value = 0
-        '
         'XenonComboBox1
         '
         Me.XenonComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -223,7 +219,7 @@ Partial Class LogonUI7
         Me.XenonCheckBox6.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox6.Location = New System.Drawing.Point(73, 95)
         Me.XenonCheckBox6.Name = "XenonCheckBox6"
-        Me.XenonCheckBox6.Size = New System.Drawing.Size(164, 25)
+        Me.XenonCheckBox6.Size = New System.Drawing.Size(117, 25)
         Me.XenonCheckBox6.TabIndex = 84
         Me.XenonCheckBox6.Text = "Noise"
         '
@@ -238,7 +234,7 @@ Partial Class LogonUI7
         Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox7.Location = New System.Drawing.Point(73, 64)
         Me.XenonCheckBox7.Name = "XenonCheckBox7"
-        Me.XenonCheckBox7.Size = New System.Drawing.Size(164, 25)
+        Me.XenonCheckBox7.Size = New System.Drawing.Size(117, 25)
         Me.XenonCheckBox7.TabIndex = 83
         Me.XenonCheckBox7.Text = "Blurred"
         '
@@ -534,7 +530,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox8.CustomColor = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.LineSize = 1
-        Me.XenonGroupBox8.Location = New System.Drawing.Point(341, 33)
+        Me.XenonGroupBox8.Location = New System.Drawing.Point(343, 12)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
         Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
@@ -582,26 +578,16 @@ Partial Class LogonUI7
         Me.PictureBox11.TabIndex = 0
         Me.PictureBox11.TabStop = False
         '
-        'XenonTrackbar1
+        'OpenFileDialog1
         '
-        Me.XenonTrackbar1.LargeChange = 10
-        Me.XenonTrackbar1.Location = New System.Drawing.Point(124, 433)
-        Me.XenonTrackbar1.Maximum = 100
-        Me.XenonTrackbar1.Minimum = 0
-        Me.XenonTrackbar1.Name = "XenonTrackbar1"
-        Me.XenonTrackbar1.Size = New System.Drawing.Size(300, 24)
-        Me.XenonTrackbar1.SmallChange = 1
-        Me.XenonTrackbar1.TabIndex = 67
-        Me.XenonTrackbar1.Text = "XenonTrackbar1"
-        Me.XenonTrackbar1.Value = 50
+        Me.OpenFileDialog1.Filter = "Files(*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"
         '
         'LogonUI7
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(885, 505)
-        Me.Controls.Add(Me.XenonTrackbar1)
+        Me.ClientSize = New System.Drawing.Size(885, 410)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.XenonGroupBox3)
@@ -611,6 +597,7 @@ Partial Class LogonUI7
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Name = "LogonUI7"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -655,7 +642,6 @@ Partial Class LogonUI7
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents color_pick As XenonGroupBox
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents XenonNumericUpDown1 As XenonNumericUpDown
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents XenonCheckBox6 As XenonCheckBox
     Friend WithEvents XenonCheckBox7 As XenonCheckBox
@@ -671,7 +657,8 @@ Partial Class LogonUI7
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonNumericUpDown2 As XenonNumericUpDown
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents XenonTrackbar1 As XenonTrackbar
+    Friend WithEvents XenonTrackbar2 As XenonTrackbar
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

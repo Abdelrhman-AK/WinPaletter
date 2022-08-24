@@ -402,7 +402,7 @@ Public Class XenonColorPalette
 End Class
 #End Region
 
-#Region "Xenon UI - Version 3"
+#Region "Xenon UI"
 Public Class TablessControl
     Inherits TabControl
 
@@ -1312,7 +1312,6 @@ Public Class XenonRadioImage
         End If
     End Sub
 #End Region
-
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Try
             Dim G As Graphics = e.Graphics
@@ -4255,7 +4254,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Catch : End Try
     End Sub
 End Class
-
 Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropertyChanged
 
     Private _DarkMode As Boolean = True
@@ -4618,7 +4616,10 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 End Class
 
 <DefaultEvent("Scroll")>
-Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
+Class XenonTrackbar
+    Inherits Control
+
+    Event Scroll(ByVal sender As Object)
 
 #Region "Properties"
     Private _Minimum As Integer
@@ -4674,8 +4675,6 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
                 value = _Minimum
             End If
 
-
-
             _Value = value
             InvalidatePosition()
 
@@ -4713,13 +4712,15 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
 #End Region
 
     Private ButtonSize As Integer = 0
-    Private ThumbSize As Integer = 15 ' 14 minimum
+    Private ThumbSize As Integer = 35 ' 14 minimum
     Private LSA As Rectangle
     Private RSA As Rectangle
     Private Shaft As Rectangle
-    Private FilledRect As Rectangle
-    Private circle As Rectangle
+    Private Thumb As Rectangle
     Private ThumbDown As Boolean
+    Private Circle As Rectangle
+    Dim Colors As XenonColorPalette
+    Private _Shown As Boolean = False
 
     Enum MouseState
         None
@@ -4727,80 +4728,128 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
         Down
     End Enum
 
+#Region "Animator"
+    Dim alpha As Integer
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        If Not DesignMode Then
+
+            If State = MouseState.Over Then
+                If alpha + Factor <= 255 Then
+                    alpha += Factor
+                ElseIf alpha + Factor > 255 Then
+                    alpha = 255
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+
+            If Not State = MouseState.Over Or State = MouseState.Down Then
+                If alpha - Factor >= 0 Then
+                    alpha -= Factor
+                ElseIf alpha - Factor < 0 Then
+                    alpha = 0
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+        End If
+    End Sub
+#End Region
+
     Public State As MouseState = MouseState.None
 
     Sub New()
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
+        Height = 19
+        Colors = New XenonColorPalette(Me)
     End Sub
 
     Dim I1 As Integer
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighQuality
         G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-        DoubleBuffered = True
+
         G.Clear(BackColor)
+        Dim Dark As Boolean = GetDarkMode()
+        Dim c_back As Color = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
+        Dim c_btn As Color = If(Dark, Color.FromArgb(165, 165, 165), Color.FromArgb(100, 100, 100))
 
-        Dim c_back As Color = If(GetDarkMode(), Color.FromArgb(45, 45, 45), Color.FromArgb(200, 200, 200))
-        Dim C As Color
-        Select Case State
-            Case MouseState.None
-                C = Color.FromArgb(135, 135, 135)
-            Case MouseState.Down
-                C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), -0.1, 0.1))
-            Case MouseState.Over
-                C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), 0.35, -0.35))
-        End Select
+        Dim C As Color = Colors.Color_Core
 
-        FillRect(G, New SolidBrush(c_back), New Rectangle(0.5 * Height, 0, Width - 1 - Height, Height - 1))
-        FillRect(G, New SolidBrush(C), FilledRect)
+        Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
 
-        Dim circle As New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
+        FillRect(G, New SolidBrush(c_back), middleRect)
 
-        G.FillEllipse(Brushes.Red, circle)
+        Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
 
-        LogonUI7.Text = Value
+        With Thumb
+            FillRect(G, New SolidBrush(C), New Rectangle(.X + 1, middleRect.Y, Circle.Left + Circle.Width / 2, middleRect.Height))
+        End With
+
+        G.FillRectangle(New SolidBrush(BackColor), New Rectangle(-1, 0, 4, Height))
+
+        G.FillRectangle(New SolidBrush(BackColor), New Rectangle(Width - 4, 0, 4, Height))
+
+        G.FillEllipse(New SolidBrush(Colors.Color_Parent_Hover), Circle)
+
+        Dim smallC1 As New Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10)
+        Dim smallC2 As New Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8)
+
+        G.FillEllipse(New SolidBrush(C), smallC1)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(alpha, C)), smallC2)
+
     End Sub
 
     Protected Overrides Sub OnSizeChanged(e As EventArgs)
+        Height = 19
         InvalidateLayout()
     End Sub
 
     Private Sub InvalidateLayout()
         LSA = New Rectangle(0, 0, ButtonSize, Height)
         RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
-        Shaft = New Rectangle(LSA.Right + 1, 0, Width - (ButtonSize * 2) - 1, Height)
-        FilledRect = New Rectangle(0.5 * Height, 1, (Value / Maximum) * Width - Height, Height - 3)
-        circle = New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
+        Shaft = New Rectangle(LSA.Right + 1 + 0.5 * Height, 0, Width - Height - 1, Height)
+        Thumb = New Rectangle(0, 1, (Value / Maximum) * Shaft.Width, Height - 3)
+        Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
         RaiseEvent Scroll(Me)
         InvalidatePosition()
     End Sub
 
     Private Sub InvalidatePosition()
-        FilledRect.Width = (Value / Maximum) * Width
-        circle = New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
+        Thumb.Width = (Value / Maximum) * Width
         Refresh()
     End Sub
 
     Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Left Then
             State = MouseState.Down
-            If LSA.Contains(e.Location) Then
-                I1 = _Value - _SmallChange
-            ElseIf RSA.Contains(e.Location) Then
-                I1 = _Value + _SmallChange
+            Tmr.Enabled = True
+            Tmr.Start()
+
+            If Circle.Contains(e.Location) Then
+                ThumbDown = True
+                Return
             Else
-                If circle.Contains(e.Location) Then
-                    ThumbDown = True
-                    Return
+                If e.X < Circle.X Then
+                    I1 = _Value - _LargeChange
                 Else
-                    If e.X < circle.X Then
-                        I1 = _Value - _LargeChange
-                    Else
-                        I1 = _Value + _LargeChange
-                    End If
+                    I1 = _Value + _LargeChange
                 End If
             End If
             Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
@@ -4809,23 +4858,27 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
     End Sub
 
     Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
-        If circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
+        If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
             State = MouseState.Over
         Else
             If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
         End If
 
+
         Invalidate()
 
         If ThumbDown Then
-            Dim ThumbPosition As Integer = e.X - LSA.Width - (ThumbSize \ 2)
-            Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
+            'Dim ThumbPosition As Integer = e.X '- LSA.Width - (ThumbSize \ 2)
+            'Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
+            'I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
+            'Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
 
-            I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
-
-            Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+            Value = Math.Min((e.X / Width) * Maximum, _Maximum)
             InvalidatePosition()
         End If
+
+        Tmr.Enabled = True
+        Tmr.Start()
     End Sub
 
     Private Function GetProgress() As Double
@@ -4835,18 +4888,24 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
     Private Sub NSVScrollBar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
         ThumbDown = False
         State = MouseState.None
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
     Private Sub XenonScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        If FilledRect.Contains(MousePosition) Then
+        If Thumb.Contains(MousePosition) Then
             State = MouseState.Over
             Invalidate()
+            Tmr.Enabled = True
+            Tmr.Start()
         End If
     End Sub
 
     Private Sub XenonScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
+        Tmr.Enabled = True
+        Tmr.Start()
         Invalidate()
     End Sub
 
@@ -4855,6 +4914,45 @@ Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
             If e.Delta <= -240 Then Value = Value + LargeChange Else Value = Value + SmallChange
         Else
             If e.Delta >= 240 Then Value = Value - LargeChange Else Value = Value - SmallChange
+        End If
+    End Sub
+
+    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+                AddHandler VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler EnabledChanged, AddressOf RefreshColorPalette
+            End If
+        Catch
+        End Try
+
+        Try
+            alpha = 0
+            Colors = New XenonColorPalette(Me)
+        Catch
+        End Try
+    End Sub
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
+        Colors = New XenonColorPalette(Me)
+        Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+        If _Shown Then
+            Colors = New XenonColorPalette(Me)
+            Invalidate()
         End If
     End Sub
 End Class
