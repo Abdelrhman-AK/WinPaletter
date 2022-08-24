@@ -97,7 +97,7 @@ Partial Class CursorsStudio
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonScrollBarHMini1 = New WinPaletter.XenonScrollBarHMini()
+        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -1046,7 +1046,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox1.Controls.Add(Me.XenonButton2)
         Me.XenonGroupBox1.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox1.Controls.Add(Me.Label5)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonScrollBarHMini1)
+        Me.XenonGroupBox1.Controls.Add(Me.XenonTrackbar1)
         Me.XenonGroupBox1.Controls.Add(Me.XenonButton1)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
@@ -1148,20 +1148,20 @@ Partial Class CursorsStudio
         Me.Label5.Text = "Scaling (1x)"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonScrollBarHMini1
+        'XenonTrackbar1
         '
-        Me.XenonScrollBarHMini1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonTrackbar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonScrollBarHMini1.LargeChange = 50
-        Me.XenonScrollBarHMini1.Location = New System.Drawing.Point(135, 408)
-        Me.XenonScrollBarHMini1.Maximum = 320
-        Me.XenonScrollBarHMini1.Minimum = 100
-        Me.XenonScrollBarHMini1.Name = "XenonScrollBarHMini1"
-        Me.XenonScrollBarHMini1.Size = New System.Drawing.Size(138, 16)
-        Me.XenonScrollBarHMini1.SmallChange = 20
-        Me.XenonScrollBarHMini1.TabIndex = 9
-        Me.XenonScrollBarHMini1.Text = "XenonScrollBarHMini1"
-        Me.XenonScrollBarHMini1.Value = 100
+        Me.XenonTrackbar1.LargeChange = 50
+        Me.XenonTrackbar1.Location = New System.Drawing.Point(135, 408)
+        Me.XenonTrackbar1.Maximum = 320
+        Me.XenonTrackbar1.Minimum = 100
+        Me.XenonTrackbar1.Name = "XenonTrackbar1"
+        Me.XenonTrackbar1.Size = New System.Drawing.Size(138, 16)
+        Me.XenonTrackbar1.SmallChange = 20
+        Me.XenonTrackbar1.TabIndex = 9
+        Me.XenonTrackbar1.Text = "XenonTrackbar1"
+        Me.XenonTrackbar1.Value = 100
         '
         'XenonButton1
         '
@@ -1938,7 +1938,7 @@ Partial Class CursorsStudio
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonScrollBarHMini1 As XenonScrollBarHMini
+    Friend WithEvents XenonTrackbar1 As XenonTrackbar
     Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents Label5 As Label
     Friend WithEvents XenonButton5 As XenonButton

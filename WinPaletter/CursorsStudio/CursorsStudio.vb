@@ -842,7 +842,7 @@ Public Class CursorsStudio
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonScrollBarHMini1_Scroll(sender As Object) Handles XenonScrollBarHMini1.Scroll
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         If Not _Shown Then Exit Sub
 
         For Each i As CursorControl In FlowLayoutPanel1.Controls

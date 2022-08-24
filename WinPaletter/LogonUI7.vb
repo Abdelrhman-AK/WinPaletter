@@ -9,7 +9,7 @@ Public Class LogonUI7
         ApplyDarkMode(Me)
         _Shown = False
         LoadFromCP(MainFrm.CP)
-        'ApplyPreview()
+        ApplyPreview()
     End Sub
 
     Private Sub LogonUI7_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -55,47 +55,93 @@ Public Class LogonUI7
 
     End Sub
 
+    Function ReturnBK() As Bitmap
+        Dim bmpX As Bitmap
+
+        If XenonRadioButton1.Checked Then
+            bmpX = LoadFromDLL(imageres, 5038)
+        ElseIf XenonRadioButton2.Checked Then
+            bmpX = My.Application.GetCurrentWallpaper
+        ElseIf XenonRadioButton3.Checked Then
+            bmpX = ColorToBitmap(color_pick.BackColor, My.Computer.Screen.Bounds.Size)
+        ElseIf XenonRadioButton4.Checked And IO.File.Exists(XenonTextBox1.Text) Then
+            bmpX = Image.FromStream(New FileStream(XenonTextBox1.Text, IO.FileMode.Open, IO.FileAccess.Read))
+        Else
+            bmpX = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+        End If
+
+        Return ApplyEffects(ResizeImage(bmpX, pnl_preview.Width, pnl_preview.Height))
+    End Function
+
     Sub ApplyPreview()
         Cursor = Cursors.AppStarting
 
-        If XenonRadioButton1.Checked Then b = LoadFromDLL(imageres, 5038)
-        If XenonRadioButton2.Checked Then b = My.Application.GetCurrentWallpaper
-        If XenonRadioButton3.Checked Then b = ColorToBitmap(color_pick.BackColor, My.Computer.Screen.Bounds.Size)
-
-        If XenonRadioButton4.Checked Then
-            If IO.File.Exists(XenonTextBox1.Text) Then
-                b = Image.FromStream(New FileStream(XenonTextBox1.Text, IO.FileMode.Open, IO.FileAccess.Read))
-            Else
-                b = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
-            End If
-        End If
-
-        If XenonCheckBox8.Checked Then b = Grayscale(b)
-        If XenonCheckBox7.Checked Then b = BlurBitmap(b, XenonNumericUpDown1.Value)
-
-        If XenonCheckBox6.Checked Then
-            Select Case XenonComboBox1.SelectedIndex
-                Case 0
-                    b = NoiseBitmap(b, CP.LogonUI7_NoiseMode.Acrylic, XenonNumericUpDown2.Value / 100)
-                Case 1
-                    b = NoiseBitmap(b, CP.LogonUI7_NoiseMode.Aero, XenonNumericUpDown2.Value / 100)
-            End Select
-        End If
-
-        b = BitmapFillScaler(b, My.Computer.Screen.Bounds.Size)
-        pnl_preview.BackgroundImage = b
+        pnl_preview.BackgroundImage = ReturnBK()
 
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub XenonRadioButton1_CheckedChanged(sender As Object) Handles XenonRadioButton1.CheckedChanged, XenonRadioButton2.CheckedChanged,
-                                                                           XenonRadioButton3.CheckedChanged, XenonRadioButton4.CheckedChanged,
-                                                                           XenonCheckBox8.CheckedChanged, XenonCheckBox7.CheckedChanged, XenonCheckBox6.CheckedChanged
+    Function ApplyEffects(bmp As Bitmap)
+        Dim _bmp As Bitmap
+        _bmp = bmp
 
-        If _Shown And sender.checked Then ApplyPreview()
+        If XenonCheckBox8.Checked Then _bmp = Grayscale(_bmp)
+
+        If XenonCheckBox7.Checked Then _bmp = BlurBitmap(_bmp, XenonNumericUpDown1.Value)
+
+        If XenonCheckBox6.Checked Then
+            Select Case XenonComboBox1.SelectedIndex
+                Case 0
+                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Acrylic, XenonNumericUpDown2.Value / 100)
+                Case 1
+                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Aero, XenonNumericUpDown2.Value / 100)
+            End Select
+        End If
+
+        Return _bmp
+    End Function
+
+    Private Sub XenonRadioButton1_CheckedChanged(sender As Object) Handles XenonRadioButton1.CheckedChanged
+        If _Shown And XenonRadioButton1.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub XenonRadioButton2_CheckedChanged(sender As Object) Handles XenonRadioButton2.CheckedChanged
+        If _Shown And XenonRadioButton2.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
 
+    Private Sub XenonRadioButton4_CheckedChanged(sender As Object) Handles XenonRadioButton4.CheckedChanged
+        If _Shown And XenonRadioButton4.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+        If _Shown And XenonRadioButton4.Checked And IO.File.Exists(XenonTextBox1.Text) Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonRadioButton3_CheckedChanged(sender As Object) Handles XenonRadioButton3.CheckedChanged
+        If _Shown And XenonRadioButton3.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonCheckBox8_CheckedChanged(sender As Object) Handles XenonCheckBox8.CheckedChanged
+        If _Shown Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonCheckBox7_CheckedChanged(sender As Object) Handles XenonCheckBox7.CheckedChanged
+        If _Shown Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
+        If _Shown Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonNumericUpDown1_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown1.Click
+        If _Shown And XenonCheckBox7.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonNumericUpDown2_Click(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.Click
+        If _Shown And XenonCheckBox6.Checked Then pnl_preview.BackgroundImage = ReturnBK()
+    End Sub
+
+    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+        If _Shown And XenonCheckBox6.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 End Class

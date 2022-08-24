@@ -157,10 +157,10 @@ Public Class XenonCore
                 Marshal.Copy(pt, bPtr, 0, CInt(size))
                 Return Image.FromStream(New MemoryStream(bPtr))
             Else
-                Return Nothing
+                Return ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
             End If
         Catch
-            Return Nothing
+            Return ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
         End Try
 
     End Function

@@ -4618,7 +4618,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 End Class
 
 <DefaultEvent("Scroll")>
-Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Object)
+Class XenonTrackbar : Inherits Control : Event Scroll(ByVal sender As Object)
 
 #Region "Properties"
     Private _Minimum As Integer
@@ -4717,7 +4717,8 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
     Private LSA As Rectangle
     Private RSA As Rectangle
     Private Shaft As Rectangle
-    Private Thumb As Rectangle
+    Private FilledRect As Rectangle
+    Private circle As Rectangle
     Private ThumbDown As Boolean
 
     Enum MouseState
@@ -4753,9 +4754,14 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
                 C = CCB(Color.FromArgb(135, 135, 135), If(GetDarkMode(), 0.35, -0.35))
         End Select
 
-        FillRect(G, New SolidBrush(c_back), New Rectangle(0, 0, Width - 1, Height - 1))
-        FillRect(G, New SolidBrush(C), Thumb)
+        FillRect(G, New SolidBrush(c_back), New Rectangle(0.5 * Height, 0, Width - 1 - Height, Height - 1))
+        FillRect(G, New SolidBrush(C), FilledRect)
 
+        Dim circle As New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
+
+        G.FillEllipse(Brushes.Red, circle)
+
+        LogonUI7.Text = Value
     End Sub
 
     Protected Overrides Sub OnSizeChanged(e As EventArgs)
@@ -4766,13 +4772,15 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
         LSA = New Rectangle(0, 0, ButtonSize, Height)
         RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
         Shaft = New Rectangle(LSA.Right + 1, 0, Width - (ButtonSize * 2) - 1, Height)
-        Thumb = New Rectangle(0, 1, (Value / Maximum) * Width, Height - 3)
+        FilledRect = New Rectangle(0.5 * Height, 1, (Value / Maximum) * Width - Height, Height - 3)
+        circle = New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
         RaiseEvent Scroll(Me)
         InvalidatePosition()
     End Sub
 
     Private Sub InvalidatePosition()
-        Thumb.Width = (Value / Maximum) * Width
+        FilledRect.Width = (Value / Maximum) * Width
+        circle = New Rectangle(FilledRect.Right - 0.5 * Height, 0, Height, Height)
         Refresh()
     End Sub
 
@@ -4784,11 +4792,11 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
             ElseIf RSA.Contains(e.Location) Then
                 I1 = _Value + _SmallChange
             Else
-                If Thumb.Contains(e.Location) Then
+                If circle.Contains(e.Location) Then
                     ThumbDown = True
                     Return
                 Else
-                    If e.X < Thumb.X Then
+                    If e.X < circle.X Then
                         I1 = _Value - _LargeChange
                     Else
                         I1 = _Value + _LargeChange
@@ -4801,7 +4809,7 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
     End Sub
 
     Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
-        If Thumb.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
+        If circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
             State = MouseState.Over
         Else
             If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
@@ -4831,7 +4839,7 @@ Class XenonScrollBarHMini : Inherits Control : Event Scroll(ByVal sender As Obje
     End Sub
 
     Private Sub XenonScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        If Thumb.Contains(MousePosition) Then
+        If FilledRect.Contains(MousePosition) Then
             State = MouseState.Over
             Invalidate()
         End If
