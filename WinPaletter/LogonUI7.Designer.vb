@@ -572,6 +572,7 @@ Partial Class LogonUI7
         '
         Me.PictureBox11.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox11.Image = CType(resources.GetObject("PictureBox11.Image"), System.Drawing.Image)
         Me.PictureBox11.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox11.Name = "PictureBox11"
         Me.PictureBox11.Size = New System.Drawing.Size(528, 297)

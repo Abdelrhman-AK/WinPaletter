@@ -83,6 +83,16 @@ Public Class CP
 
 #End Region
 
+#Region "Metro"
+    Public Property Metro_Start As Integer
+    Public Property Metro_StartColor As Color
+    Public Property Metro_StartColor_Default As Color
+    Public Property Metro_AccentColor As Color
+    Public Property Metro_AccentColor_Default As Color
+    Public Property Metro_PersonalColors_Background As Color
+    Public Property Metro_PersonalColors_Accent As Color
+#End Region
+
 #Region "LogonUI_Win10"
     Public Property LogonUI_Background As Color
     Public Property LogonUI_PersonalColors_Background As Color
@@ -731,41 +741,43 @@ Public Class CP
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Nothing)
                     Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Nothing)
-                    Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
-
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Nothing)
                     Aero_ColorizationColorBalance = y
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Nothing)
-                    Aero_ColorizationAfterglowBalance = y
+                    If Not My.W8 Then
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Nothing)
+                        Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Nothing)
-                    Aero_ColorizationBlurBalance = y
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Nothing)
+                        Aero_ColorizationAfterglowBalance = y
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Nothing)
-                    Aero_ColorizationGlassReflectionIntensity = y
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Nothing)
+                        Aero_ColorizationBlurBalance = y
 
-                    Dim ComPol As Integer = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                    Dim Com As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", True)
-                    Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Nothing)
+                        Aero_ColorizationGlassReflectionIntensity = y
 
-                    Dim Classic As Boolean = False
+                        Dim ComPol As Integer = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        Dim Com As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", True)
+                        Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
-                    Try
-                        Dim stringThemeName As StringBuilder = New StringBuilder(260)
-                        GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
-                        Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not File.Exists(stringThemeName.ToString)
-                    Catch
-                        Classic = False
-                    End Try
+                        Dim Classic As Boolean = False
 
-                    If Classic Then
-                        Aero_Theme = AeroTheme.Classic
-                    ElseIf Com Or ComPol = 0 Or ComPol = 2 Then
-                        If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
-                    ElseIf Not Com Or ComPol = 1 Then
-                        Aero_Theme = AeroTheme.Basic
+                        Try
+                            Dim stringThemeName As StringBuilder = New StringBuilder(260)
+                            GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                            Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not File.Exists(stringThemeName.ToString)
+                        Catch
+                            Classic = False
+                        End Try
+
+                        If Classic Then
+                            Aero_Theme = AeroTheme.Classic
+                        ElseIf Com Or ComPol = 0 Or ComPol = 2 Then
+                            If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
+                        ElseIf Not Com Or ComPol = 1 Then
+                            Aero_Theme = AeroTheme.Basic
+                        End If
                     End If
 
                     Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", True)
@@ -2216,42 +2228,46 @@ Public Class CP
                 If My.W7 Or My.W8 Then
                     If My.W8 Then EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
-                    Select Case Aero_Theme
-                        Case AeroTheme.Aero
-                            EnableTheming(1)
-                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                    If Not My.W8 Then
+                        Select Case Aero_Theme
+                            Case AeroTheme.Aero
+                                EnableTheming(1)
+                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
-                        Case AeroTheme.AeroOpaque
-                            EnableTheming(1)
-                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            Case AeroTheme.AeroOpaque
+                                EnableTheming(1)
+                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
 
-                        Case AeroTheme.Basic
-                            EnableTheming(1)
-                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            Case AeroTheme.Basic
+                                EnableTheming(1)
+                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
 
-                        Case AeroTheme.Classic
-                            EnableTheming(0)
-                    End Select
+                            Case AeroTheme.Classic
+                                EnableTheming(0)
+                        End Select
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+                    End If
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
@@ -2318,8 +2334,6 @@ Public Class CP
 
 
 #End Region
-
-
 
 #Region "Win32UI"
                 Dim C1 As New List(Of Integer)
@@ -2762,8 +2776,6 @@ Public Class CP
                     If My.Application._Settings.AutoApplyCursors Then ApplyCursorsToReg()
                 End If
 #End Region
-
-
 #End Region
 
             Case SavingMode.File

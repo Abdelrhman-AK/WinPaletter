@@ -19,7 +19,6 @@ Public Class MainFrm
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
-        Label22.Visible = True
         start.Visible = False
         taskbar.Visible = False
         XenonWindow1.Visible = False
@@ -337,14 +336,12 @@ Public Class MainFrm
 
             Case WinVer.Seven
                 If CP.Aero_Theme = [CP].AeroTheme.Classic Then
-                    Label22.Visible = True
                     start.Visible = False
                     taskbar.Visible = False
                     XenonWindow1.Visible = False
                     XenonWindow2.Visible = False
                     ActionCenter.Visible = False
                 Else
-                    Label22.Visible = False
                     start.Visible = True
                     taskbar.Visible = True
                     XenonWindow1.Visible = True
@@ -516,7 +513,6 @@ Public Class MainFrm
 
         Panel3.Visible = True
         Label12.Visible = True
-        Label22.Visible = False
         start.Visible = True
         taskbar.Visible = True
         XenonWindow1.Visible = True
@@ -639,7 +635,7 @@ Public Class MainFrm
 
         Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
         Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Aero_ColorizationAfterglow
-        Aero_ColorizationColorBalance_bar.Text = ColorPalette.Aero_ColorizationColorBalance
+        Aero_ColorizationColorBalance_bar.Value = ColorPalette.Aero_ColorizationColorBalance
         Aero_ColorizationAfterglowBalance_bar.Value = ColorPalette.Aero_ColorizationAfterglowBalance
         Aero_ColorizationBlurBalance_bar.Value = ColorPalette.Aero_ColorizationBlurBalance
         Aero_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Aero_ColorizationGlassReflectionIntensity
@@ -1852,6 +1848,7 @@ Public Class MainFrm
         If theme_classic.Checked Then
             CP.Aero_Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
+            Notify("Classic theme is editable by Win32UI Editor", My.Resources.notify_warning, 5000)
         End If
 
     End Sub
