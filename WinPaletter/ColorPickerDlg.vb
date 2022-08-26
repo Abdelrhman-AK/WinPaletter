@@ -22,8 +22,6 @@ Public Class ColorPickerDlg
     Dim ls As New List(Of Control)
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
-        MainFrm.Visible = False
-        Win32UI.Visible = False
 
         ls.Clear()
 
@@ -39,8 +37,6 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub ScreenColorPicker1_MouseUp(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseUp
-        MainFrm.Visible = True
-        Win32UI.Visible = True
 
         For Each ctrl As Control In ls
             ctrl.Visible = True
@@ -475,6 +471,10 @@ Public Class ColorPickerDlg
         Catch
 
         End Try
+    End Sub
+
+    Private Sub ScreenColorPicker1_ColorChanged(sender As Object, e As EventArgs) Handles ScreenColorPicker1.ColorChanged
+
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

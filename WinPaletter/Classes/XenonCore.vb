@@ -363,6 +363,7 @@ Public Class XenonCore
 #Region " ResizeImage "
 
     Public Overloads Shared Function ResizeImage(bmSource As Drawing.Bitmap, TargetWidth As Int32, TargetHeight As Int32) As Drawing.Bitmap
+        If bmSource Is Nothing Then Exit Function
         Dim bmDest As New Drawing.Bitmap(TargetWidth, TargetHeight, Drawing.Imaging.PixelFormat.Format32bppArgb)
 
         Dim nSourceAspectRatio = bmSource.Width / bmSource.Height

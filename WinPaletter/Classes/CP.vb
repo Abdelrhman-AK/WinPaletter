@@ -92,6 +92,9 @@ Public Class CP
     Public Property Metro_LogonUI As Integer
     Public Property Metro_PersonalColors_Background As Color
     Public Property Metro_PersonalColors_Accent As Color
+    Public Property Metro_NoLockScreen As Boolean = False
+    Public Property Metro_LockScreenImage As String = ""
+
 #End Region
 
 #Region "LogonUI_Win10"

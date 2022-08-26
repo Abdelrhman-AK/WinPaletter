@@ -98,7 +98,6 @@ Partial Class ColorPickerDlg
         '
         'ColorEditorManager1
         '
-        Me.ColorEditorManager1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorEditorManager1.ColorEditor = Me.ColorEditor1
         Me.ColorEditorManager1.ColorGrid = Me.ColorGrid1
         Me.ColorEditorManager1.ColorWheel = Me.ColorWheel1

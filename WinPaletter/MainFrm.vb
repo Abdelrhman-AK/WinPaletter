@@ -13,6 +13,7 @@ Public Class MainFrm
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
+    Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
 
 #Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
@@ -337,6 +338,8 @@ Public Class MainFrm
             Case WinVer.Eight
 
 #Region "Win8.1"
+                ApplyMetroStartToButton([CP])
+
                 start.Visible = False
                 taskbar.Visible = True
                 XenonWindow1.Visible = True
@@ -687,10 +690,60 @@ Public Class MainFrm
         accent8_pick.BackColor = ColorPalette.Metro_AccentColor
         personalcls8_background_pick.BackColor = ColorPalette.Metro_PersonalColors_Background
         personalcolor8accent_pick.BackColor = ColorPalette.Metro_PersonalColors_Accent
-        start8_txt.Text = ColorPalette.Metro_Start
+
+        ApplyMetroStartToButton(ColorPalette)
+
         logonui8_txt.Text = ColorPalette.Metro_LogonUI
     End Sub
+
+    Sub ApplyMetroStartToButton(ColorPalette As CP)
+        Select Case ColorPalette.Metro_Start
+            Case 1
+                XenonButton14.Image = ResizeImage(My.Application.Metro_1, 48, 48)
+            Case 2
+                XenonButton14.Image = ResizeImage(My.Application.Metro_2, 48, 48)
+            Case 3
+                XenonButton14.Image = ResizeImage(My.Application.Metro_3, 48, 48)
+            Case 4
+                XenonButton14.Image = ResizeImage(My.Application.Metro_4, 48, 48)
+            Case 5
+                XenonButton14.Image = ResizeImage(My.Application.Metro_5, 48, 48)
+            Case 6
+                XenonButton14.Image = ResizeImage(My.Application.Metro_6, 48, 48)
+            Case 7
+                XenonButton14.Image = ResizeImage(My.Application.Metro_7, 48, 48)
+            Case 8
+                XenonButton14.Image = ResizeImage(My.Application.Metro_8, 48, 48)
+            Case 9
+                XenonButton14.Image = ResizeImage(My.Application.Metro_9, 48, 48)
+            Case 10
+                XenonButton14.Image = ResizeImage(My.Application.Metro_10, 48, 48)
+            Case 11
+                XenonButton14.Image = ResizeImage(My.Application.Metro_11, 48, 48)
+            Case 12
+                XenonButton14.Image = ResizeImage(My.Application.Metro_12, 48, 48)
+            Case 13
+                XenonButton14.Image = ResizeImage(My.Application.Metro_13, 48, 48)
+            Case 14
+                XenonButton14.Image = ResizeImage(My.Application.Metro_14, 48, 48)
+            Case 15
+                XenonButton14.Image = ResizeImage(My.Application.Metro_15, 48, 48)
+            Case 16
+                XenonButton14.Image = ResizeImage(My.Application.Metro_16, 48, 48)
+            Case 17
+                XenonButton14.Image = ResizeImage(My.Application.Metro_17, 48, 48)
+            Case 18
+                XenonButton14.Image = ResizeImage(My.Application.Metro_18, 48, 48)
+            Case 19
+                XenonButton14.Image = ColorToBitmap(ColorPalette.Metro_PersonalColors_Background, New Size(48, 48))
+            Case 20
+                XenonButton14.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
+            Case Else
+                XenonButton14.Image = ResizeImage(My.Application.Metro_1, 48, 48)
+        End Select
+    End Sub
 #End Region
+
 
 #Region "Misc"
     Enum WinVer
@@ -2003,13 +2056,6 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub start8_txt_TextChanged(sender As Object, e As EventArgs) Handles start8_txt.TextChanged
-        If _Shown Then
-            CP.Metro_Start = Val(start8_txt.Text)
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
     Private Sub logonui8_txt_TextChanged(sender As Object, e As EventArgs) Handles logonui8_txt.TextChanged
         If _Shown Then
             CP.Metro_LogonUI = Val(logonui8_txt.Text)
@@ -2029,6 +2075,20 @@ Public Class MainFrm
             CP.Metro_Theme = CP.AeroTheme.AeroLite
             ApplyLivePreviewFromCP(CP)
         End If
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
+        RefreshDWM(CP)
+    End Sub
+
+    Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Start8Selector.ShowDialog()
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+        LogonUI8.ShowDialog()
+        ApplyLivePreviewFromCP(CP)
     End Sub
 
 

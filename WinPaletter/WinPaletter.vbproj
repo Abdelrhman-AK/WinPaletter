@@ -211,6 +211,12 @@
     <Compile Include="LogonUI7.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogonUI8.Designer.vb">
+      <DependentUpon>LogonUI8.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI8.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainFrm.Designer.vb">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </Compile>
@@ -229,6 +235,12 @@
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
     <Compile Include="SettingsX.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Start8Selector.Designer.vb">
+      <DependentUpon>Start8Selector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Updates.Designer.vb">
@@ -310,6 +322,9 @@
     <EmbeddedResource Include="LogonUI7.resx">
       <DependentUpon>LogonUI7.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI8.resx">
+      <DependentUpon>LogonUI8.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Start8Selector.resx">
+      <DependentUpon>Start8Selector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>
