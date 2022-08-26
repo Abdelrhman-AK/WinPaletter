@@ -334,7 +334,19 @@ Public Class MainFrm
                 ReValidateLivePreview(pnl_preview)
 #End Region
 
+            Case WinVer.Eight
+
+#Region "Win8.1"
+                start.Visible = False
+                taskbar.Visible = True
+                XenonWindow1.Visible = True
+                XenonWindow2.Visible = True
+                ActionCenter.Visible = False
+
+#End Region
+
             Case WinVer.Seven
+#Region "Win7"
                 If CP.Aero_Theme = [CP].AeroTheme.Classic Then
                     start.Visible = False
                     taskbar.Visible = False
@@ -493,6 +505,7 @@ Public Class MainFrm
 
                 ReValidateLivePreview(pnl_preview)
 
+#End Region
         End Select
     End Sub
 
@@ -642,21 +655,40 @@ Public Class MainFrm
         Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Aero_EnableAeroPeek
         Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Aero_AlwaysHibernateThumbnails
 
-        Select Case ColorPalette.Aero_Theme
-            Case CP.AeroTheme.Aero
-                theme_aero.Checked = True
+        If PreviewConfig = WinVer.Seven Then
+            Select Case ColorPalette.Aero_Theme
+                Case CP.AeroTheme.Aero
+                    theme_aero.Checked = True
 
-            Case CP.AeroTheme.AeroOpaque
-                theme_aeroopaque.Checked = True
+                Case CP.AeroTheme.AeroOpaque
+                    theme_aeroopaque.Checked = True
 
-            Case CP.AeroTheme.Basic
-                theme_basic.Checked = True
+                Case CP.AeroTheme.Basic
+                    theme_basic.Checked = True
 
-            Case CP.AeroTheme.Classic
-                theme_classic.Checked = True
+                Case CP.AeroTheme.Classic
+                    theme_classic.Checked = True
+            End Select
 
-        End Select
+        ElseIf PreviewConfig = WinVer.Eight Then
+            Select Case ColorPalette.Metro_Theme
+                Case CP.AeroTheme.Aero
+                    XenonRadioImage1.Checked = True
 
+                Case CP.AeroTheme.AeroLite
+                    XenonRadioImage2.Checked = True
+            End Select
+        End If
+
+        ColorizationColor8_pick.BackColor = ColorPalette.Aero_ColorizationColor
+        ColorizationBalance8_track.Value = ColorPalette.Aero_ColorizationColorBalance
+
+        start8_pick.BackColor = ColorPalette.Metro_StartColor
+        accent8_pick.BackColor = ColorPalette.Metro_AccentColor
+        personalcls8_background_pick.BackColor = ColorPalette.Metro_PersonalColors_Background
+        personalcolor8accent_pick.BackColor = ColorPalette.Metro_PersonalColors_Accent
+        start8_txt.Text = ColorPalette.Metro_Start
+        logonui8_txt.Text = ColorPalette.Metro_LogonUI
     End Sub
 #End Region
 
@@ -745,17 +777,26 @@ Public Class MainFrm
 
         If My.W10 Or My.W11 Then
             PaletteContainer_W1x.Visible = True
-            PaletteContainer_W7x.Visible = False
+            PaletteContainer_W8.Visible = False
+            PaletteContainer_W7.Visible = False
         End If
 
-        If My.W7 Or My.W8 Then
+        If My.W7 Then
             PaletteContainer_W1x.Visible = False
-            PaletteContainer_W7x.Visible = True
+            PaletteContainer_W8.Visible = False
+            PaletteContainer_W7.Visible = True
+        End If
+
+        If My.W8 Then
+            PaletteContainer_W1x.Visible = False
+            PaletteContainer_W8.Visible = True
+            PaletteContainer_W7.Visible = False
         End If
 
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
         My.Application.AdjustFonts()
+
         XenonButton20.Image = If(My.W11, My.Resources.Native11, My.Resources.Native10)
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
@@ -788,9 +829,10 @@ Public Class MainFrm
             If My.W7 Then PreviewConfig = WinVer.Seven
         End If
 
-        PreviewConfig = WinVer.Seven
+        PreviewConfig = WinVer.Eight
         PaletteContainer_W1x.Visible = False
-        PaletteContainer_W7x.Visible = True
+        PaletteContainer_W7.Visible = False
+        PaletteContainer_W8.Visible = True
 
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
@@ -1094,14 +1136,6 @@ Public Class MainFrm
         CP.Save(CP.SavingMode.Registry)
 
         RefreshRegisrty()
-
-        If My.W7 Or My.W8 Then
-            Visible = False
-            My.Application.AeroKiller.Start()
-            My.Application.AeroKiller.WaitForExit()
-            My.Application.AeroStarter.Start()
-            Visible = True
-        End If
 
         If My.Application._Settings.AutoRestartExplorer Then RestartExplorer() Else Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
     End Sub
@@ -1877,6 +1911,122 @@ Public Class MainFrm
     Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationAfterglowBalance_bar.Scroll
         If _Shown Then
             CP.Aero_ColorizationAfterglowBalance = Aero_ColorizationAfterglowBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub ColorizationColor8_pick_Click(sender As Object, e As EventArgs) Handles ColorizationColor8_pick.Click
+        Dim CList As New List(Of Control) From {
+           sender,
+           start,
+           taskbar,
+           XenonWindow1,
+           XenonWindow2
+       }
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Aero_ColorizationColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub ColorizationBalance8_track_Scroll(sender As Object) Handles ColorizationBalance8_track.Scroll
+        If _Shown Then
+            CP.Aero_ColorizationColorBalance = ColorizationBalance8_track.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub start8_pick_Click(sender As Object, e As EventArgs) Handles start8_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Metro_StartColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub accent8_pick_Click(sender As Object, e As EventArgs) Handles accent8_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Metro_AccentColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub personalcls8_background_pick_Click(sender As Object, e As EventArgs) Handles personalcls8_background_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Metro_PersonalColors_Background = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub personalcolor8accent_pick_Click(sender As Object, e As EventArgs) Handles personalcolor8accent_pick.Click
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Metro_PersonalColors_Accent = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub start8_txt_TextChanged(sender As Object, e As EventArgs) Handles start8_txt.TextChanged
+        If _Shown Then
+            CP.Metro_Start = Val(start8_txt.Text)
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub logonui8_txt_TextChanged(sender As Object, e As EventArgs) Handles logonui8_txt.TextChanged
+        If _Shown Then
+            CP.Metro_LogonUI = Val(logonui8_txt.Text)
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
+        If XenonRadioImage1.Checked Then
+            CP.Metro_Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub XenonRadioImage2_CheckedChanged(sender As Object) Handles XenonRadioImage2.CheckedChanged
+        If XenonRadioImage2.Checked Then
+            CP.Metro_Theme = CP.AeroTheme.AeroLite
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub

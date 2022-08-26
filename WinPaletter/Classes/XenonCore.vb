@@ -42,6 +42,32 @@ Public Class XenonCore
     Shared MSG_TIMEOUT As Integer = 5000
     Shared RESULT As UIntPtr
 
+    <DllImport("dwmapi.dll", EntryPoint:="#131", PreserveSig:=False)>
+    Private Shared Sub DwmSetColorizationParameters(ByRef parameters As DWM_COLORIZATION_PARAMS, ByVal unknown As Boolean)
+    End Sub
+
+    Private Structure DWM_COLORIZATION_PARAMS
+        Public clrColor As UInteger
+        Public clrAfterGlow As UInteger
+        Public nIntensity As UInteger
+        Public clrAfterGlowBalance As UInteger
+        Public clrBlurBalance As UInteger
+        Public clrGlassReflectionIntensity As UInteger
+        Public fOpaque As Boolean
+    End Structure
+
+    Public Shared Sub RefreshDWM(CP As CP)
+        Dim temp As New DWM_COLORIZATION_PARAMS
+        temp.clrColor = CP.Aero_ColorizationColor.ToArgb
+        temp.clrAfterGlow = CP.Aero_ColorizationAfterglow.ToArgb
+        temp.nIntensity = CP.Aero_ColorizationColorBalance
+        temp.clrAfterGlowBalance = CP.Aero_ColorizationAfterglowBalance
+        temp.clrBlurBalance = CP.Aero_ColorizationBlurBalance
+        temp.clrGlassReflectionIntensity = CP.Aero_ColorizationGlassReflectionIntensity
+        temp.fOpaque = CP.Aero_Theme = AeroTheme.AeroOpaque
+        DwmSetColorizationParameters(temp, False)
+    End Sub
+
     Enum SendMessageTimeoutFlags As UInteger
         SMTO_NORMAL = &H0
         SMTO_BLOCK = &H1

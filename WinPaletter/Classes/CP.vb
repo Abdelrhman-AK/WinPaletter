@@ -76,6 +76,7 @@ Public Class CP
 
     Public Enum AeroTheme
         Aero
+        AeroLite
         AeroOpaque
         Basic
         Classic
@@ -86,9 +87,9 @@ Public Class CP
 #Region "Metro"
     Public Property Metro_Start As Integer
     Public Property Metro_StartColor As Color
-    Public Property Metro_StartColor_Default As Color
     Public Property Metro_AccentColor As Color
-    Public Property Metro_AccentColor_Default As Color
+    Public Property Metro_Theme As AeroTheme = AeroTheme.Aero
+    Public Property Metro_LogonUI As Integer
     Public Property Metro_PersonalColors_Background As Color
     Public Property Metro_PersonalColors_Accent As Color
 #End Region
@@ -113,10 +114,6 @@ Public Class CP
     Public Property LogonUI7_Effect_Noise As Boolean = False
     Public Property LogonUI7_Effect_Noise_Mode As LogonUI7_NoiseMode = LogonUI7_NoiseMode.Acrylic
     Public Property LogonUI7_Effect_Noise_Intensity As Integer = 0
-#End Region
-
-#Region "LogonUI_Win8"
-
 #End Region
 
 #Region "Win32UI"
@@ -536,9 +533,15 @@ Public Class CP
         Return sb
     End Function
 
-    Function RGB2HEX_oneline(ByVal [Color] As Color) As String
-        Return String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
+    Function RGB2HEX_oneline(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
+        Dim S As String
+        If Alpha Then
+            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
             String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
+        Else
+            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
+        End If
+        Return S
     End Function
 
     Function BizareColorInvertor([Color] As Color) As Color
@@ -785,6 +788,37 @@ Public Class CP
                     Aero_EnableWindowColorization = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", True)
                 End If
 
+#End Region
+
+#Region "Metro"
+                If My.W8 Then
+                    Dim stringThemeName As StringBuilder = New StringBuilder(260)
+                    GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+
+                    If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Then
+                        Metro_Theme = AeroTheme.AeroLite
+                    Else
+                        Metro_Theme = AeroTheme.Aero
+                    End If
+
+                    Dim y As Integer
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Nothing)
+                    Metro_StartColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Nothing)
+                    Metro_AccentColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+
+                    Dim S As String
+                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#000000")
+                    Metro_PersonalColors_Background = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+
+                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#000000")
+                    Metro_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+
+                    Metro_Start = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
+
+                    Metro_LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
+                End If
 #End Region
 
 #Region "LogonUI"
@@ -2054,6 +2088,16 @@ Public Class CP
 
     End Sub
 
+    Function ReturnEightDigitsFromInt(int As Integer) As String
+        Dim i As Integer = 8 - int.ToString.Count
+        Dim s As String = ""
+        For i = 1 To i
+            s &= "0"
+        Next
+        s &= int
+        Return s
+    End Function
+
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
@@ -2084,6 +2128,182 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", If(ApplyAccentonTaskbar, 1, 0))
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
                 End If
+#End Region
+
+#Region "Aero"
+                If My.W7 Then
+                    Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
+
+                    Select Case Aero_Theme
+                        Case AeroTheme.Aero
+                            EnableTheming(1)
+                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                        Case AeroTheme.AeroOpaque
+                            EnableTheming(1)
+                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+
+                        Case AeroTheme.Basic
+                            EnableTheming(1)
+                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+
+                        Case AeroTheme.Classic
+                            EnableTheming(0)
+                    End Select
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", If(Aero_EnableWindowColorization, 1, 0))
+                End If
+
+
+#End Region
+
+#Region "Metro"
+                If My.W8 Then
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+
+                    Select Case Metro_Theme
+                        Case AeroTheme.Aero
+                            EnableTheming(1)
+                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        Case AeroTheme.AeroLite
+                            EnableTheming(1)
+                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                    End Select
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", BizareColorInvertor(Metro_AccentColor).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
+
+                    If isElevated Then
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Metro_Start)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False), False, True)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False), False, True)
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
+                        ls.Add(String.Format("""PersonalColors_Background""=#{0}", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False)))
+                        ls.Add(String.Format("""PersonalColors_Accent""=#{0}", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False)))
+                        ls.Add(String.Format("""ForceStartBackground""=dword:{0}", ReturnEightDigitsFromInt(Metro_Start)))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
+                        ls.Add(String.Format("""DefaultColorSet""=dword:{0}", ReturnEightDigitsFromInt(Metro_LogonUI)))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+                End If
+#End Region
+
+#Region "LogonUI"
+                If Not My.W7 And Not My.W8 Then
+                    If isElevated Then
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
+                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(LogonUI_PersonalColors_Background).ToArgb)
+                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(LogonUI_PersonalColors_Accent).ToArgb)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
+                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
+
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]")
+                        ls.Add(String.Format("""Background""=""{0} {1} {2}""", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
+                        ls.Add(String.Format("""PersonalColors_Background""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Background))))
+                        ls.Add(String.Format("""PersonalColors_Accent""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Accent))))
+                        ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
+                        ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0)))
+                        ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+                End If
+
+
 #End Region
 
 #Region "LogonUI 7"
@@ -2222,117 +2442,6 @@ Public Class CP
                     End If
 
                 End If
-#End Region
-
-#Region "Aero"
-                If My.W7 Or My.W8 Then
-                    If My.W8 Then EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
-
-                    If Not My.W8 Then
-                        Select Case Aero_Theme
-                            Case AeroTheme.Aero
-                                EnableTheming(1)
-                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-                            Case AeroTheme.AeroOpaque
-                                EnableTheming(1)
-                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-
-                            Case AeroTheme.Basic
-                                EnableTheming(1)
-                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-
-                            Case AeroTheme.Classic
-                                EnableTheming(0)
-                        End Select
-
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
-                    End If
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
-
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", If(Aero_EnableWindowColorization, 1, 0))
-                End If
-
-
-#End Region
-
-#Region "LogonUI"
-                If Not My.W7 And Not My.W8 Then
-                    If isElevated Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(LogonUI_PersonalColors_Background).ToArgb)
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(LogonUI_PersonalColors_Accent).ToArgb)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
-
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]")
-                        ls.Add(String.Format("""Background""=""{0} {1} {2}""", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""PersonalColors_Background""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Background))))
-                        ls.Add(String.Format("""PersonalColors_Accent""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Accent))))
-                        ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
-                        ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0)))
-                        ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-                End If
-
-
 #End Region
 
 #Region "Win32UI"
@@ -2478,6 +2587,7 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32UI_Desktop.R, Win32UI_Desktop.G, Win32UI_Desktop.B), False, True)
 #End Region
 
+                If My.W7 Or My.W8 Then RefreshDWM(Me)
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
