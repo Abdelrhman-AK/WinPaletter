@@ -357,7 +357,11 @@ Public Class MainFrm
                         XenonWindow2.Win8Lite = True
                 End Select
 
+                XenonWindow1.AccentColor_Active = [CP].Aero_ColorizationColor
+                XenonWindow1.Win7ColorBal = [CP].Aero_ColorizationColorBalance
 
+                XenonWindow2.AccentColor_Active = [CP].Aero_ColorizationColor
+                XenonWindow2.Win7ColorBal = [CP].Aero_ColorizationColorBalance
 
 #End Region
 

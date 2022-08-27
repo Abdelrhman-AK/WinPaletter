@@ -481,7 +481,15 @@ Public Class CP
         Return ar
     End Function
 #End Region
-
+    Function ReturnEightDigitsFromInt(int As Integer) As String
+        Dim i As Integer = 8 - int.ToString.Count
+        Dim s As String = ""
+        For i = 1 To i
+            s &= "0"
+        Next
+        s &= int
+        Return s
+    End Function
     Function HexStringToBinary(ByVal hexString As String) As String
         Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
         Return Convert.ToString(num, 2)
@@ -2091,16 +2099,6 @@ Public Class CP
 
     End Sub
 
-    Function ReturnEightDigitsFromInt(int As Integer) As String
-        Dim i As Integer = 8 - int.ToString.Count
-        Dim s As String = ""
-        For i = 1 To i
-            s &= "0"
-        Next
-        s &= int
-        Return s
-    End Function
-
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
@@ -2311,8 +2309,8 @@ Public Class CP
 
 #Region "LogonUI 7"
                 If My.W7 Then
-
                     If isElevated Then
+
                         My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
                         My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
 

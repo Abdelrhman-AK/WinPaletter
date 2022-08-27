@@ -4504,19 +4504,30 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Dim InnerWindow As New Rectangle(5, 22, Width - 10, Height - 22 - 7)
                 Dim CloseRect As New Rectangle(Width - 35, 0, 30, 15)
                 Dim CloseRectLbl As New Rectangle(Width - 34, 1, 30, 15)
-                Dim c As Color = If(Active, AccentColor_Active, Color.FromArgb(235, 235, 235))
 
+                Dim InC As Color = If(Not Win8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, CCB(AccentColor_Active, 0.8)))
+
+                Dim c As Color = If(Active, Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active), InC)
+
+                Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+                G.FillRectangle(New SolidBrush(bc), Rect8)
                 G.FillRectangle(New SolidBrush(c), Rect8)
+
                 G.FillRectangle(New SolidBrush(Color.White), InnerWindow)
 
                 If Not Win8Lite Then
-                    G.DrawRectangle(New Drawing.Pen(ControlPaint.Dark(c, 0.1)), InnerWindow)
+                    G.DrawRectangle(New Pen(ControlPaint.Dark(bc, 0.1)), InnerWindow)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.Dark(c, 0.1))), InnerWindow)
+
                     G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
                     G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
-                    G.DrawRectangle(New Drawing.Pen(ControlPaint.Dark(c, 0.2)), Rect8)
+
+                    G.DrawRectangle(New Pen(ControlPaint.Dark(bc, 0.2)), Rect8)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.Dark(c, 0.2))), Rect8)
                 Else
-                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(177, 173, 150)), InnerWindow)
-                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.FromArgb(222, 214, 195))), CloseRect)
+                    G.DrawRectangle(New Pen(Color.FromArgb(177, 173, 150)), InnerWindow)
+                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.Transparent)), CloseRect)
                     G.DrawRectangle(New Pen(If(Active, Color.FromArgb(92, 58, 55), Color.FromArgb(93, 96, 102))), CloseRect)
                     G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.Black), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
                     G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect8)
