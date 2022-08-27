@@ -4349,6 +4349,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property RoundedCorners As Boolean = False
     Public Property Win7 As Boolean = False
     Public Property Win8 As Boolean = False
+    Public Property Win8Lite As Boolean = False
     Public Property Win7Aero As Boolean = False
     Public Property Win7AeroOpaque As Boolean = False
     Public Property Win7Basic As Boolean = False
@@ -4369,6 +4370,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim TitlebarRect As New Rectangle(0, 0, Width - 1, 23)
         Dim IconRect As New Rectangle(4, 4, 15, 15)
         Dim LabelRect As New Rectangle(21, 1, TitlebarRect.Width - 21, TitlebarRect.Height)
+        Dim LabelRect8 As New Rectangle(0, 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
+
         Dim XRect As New Rectangle(Rect.Right - 17, 1, 17, TitlebarRect.Height)
 
         Dim RectClip As Rectangle = Bounds
@@ -4497,8 +4500,30 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 End If
 
             ElseIf Win8 Then
+                Dim Rect8 As New Rectangle(0, 0, Width - 1, Height - 1)
+                Dim InnerWindow As New Rectangle(5, 22, Width - 10, Height - 22 - 7)
+                Dim CloseRect As New Rectangle(Width - 35, 0, 30, 15)
+                Dim CloseRectLbl As New Rectangle(Width - 34, 1, 30, 15)
+                Dim c As Color = If(Active, AccentColor_Active, Color.FromArgb(235, 235, 235))
 
+                G.FillRectangle(New SolidBrush(c), Rect8)
+                G.FillRectangle(New SolidBrush(Color.White), InnerWindow)
+
+                If Not Win8Lite Then
+                    G.DrawRectangle(New Drawing.Pen(ControlPaint.Dark(c, 0.1)), InnerWindow)
+                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
+                    G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawRectangle(New Drawing.Pen(ControlPaint.Dark(c, 0.2)), Rect8)
+                Else
+                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(177, 173, 150)), InnerWindow)
+                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.FromArgb(222, 214, 195))), CloseRect)
+                    G.DrawRectangle(New Pen(If(Active, Color.FromArgb(92, 58, 55), Color.FromArgb(93, 96, 102))), CloseRect)
+                    G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.Black), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect8)
+                End If
             End If
+
+
         End If
 
         Dim ForeColorX As Color
@@ -4535,7 +4560,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
                 End If
             ElseIf Win8 Then
-                G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleCenter))
+                G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
             End If
         End If
 

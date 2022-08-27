@@ -99,4 +99,8 @@ Public Class Start8Selector
         If img20.Checked Then MainFrm.CP.Metro_Start = 20
         Me.Close()
     End Sub
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        Me.Close()
+    End Sub
 End Class

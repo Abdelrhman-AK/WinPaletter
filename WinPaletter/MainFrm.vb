@@ -336,180 +336,193 @@ Public Class MainFrm
 #End Region
 
             Case WinVer.Eight
-
 #Region "Win8.1"
                 ApplyMetroStartToButton([CP])
+                ApplyBackLogonUI([CP])
 
                 start.Visible = False
                 taskbar.Visible = True
                 XenonWindow1.Visible = True
                 XenonWindow2.Visible = True
                 ActionCenter.Visible = False
+                XenonWindow1.Win8 = True
+                XenonWindow2.Win8 = True
+
+                Select Case [CP].Metro_Theme
+                    Case CP.AeroTheme.Aero
+                        XenonWindow1.Win8Lite = False
+                        XenonWindow2.Win8Lite = False
+                    Case CP.AeroTheme.AeroLite
+                        XenonWindow1.Win8Lite = True
+                        XenonWindow2.Win8Lite = True
+                End Select
+
+
 
 #End Region
 
             Case WinVer.Seven
 #Region "Win7"
-                If CP.Aero_Theme = [CP].AeroTheme.Classic Then
-                    start.Visible = False
-                    taskbar.Visible = False
-                    XenonWindow1.Visible = False
-                    XenonWindow2.Visible = False
-                    ActionCenter.Visible = False
-                Else
-                    start.Visible = True
-                    taskbar.Visible = True
-                    XenonWindow1.Visible = True
-                    XenonWindow2.Visible = True
-                    ActionCenter.Visible = False
-                End If
+                        If CP.Aero_Theme = [CP].AeroTheme.Classic Then
+                            start.Visible = False
+                            taskbar.Visible = False
+                            XenonWindow1.Visible = False
+                            XenonWindow2.Visible = False
+                            ActionCenter.Visible = False
+                        Else
+                            start.Visible = True
+                            taskbar.Visible = True
+                            XenonWindow1.Visible = True
+                            XenonWindow2.Visible = True
+                            ActionCenter.Visible = False
+                        End If
 
-                Select Case [CP].Aero_Theme
-                    Case CP.AeroTheme.Aero
-                        start.Transparency = True
-                        start.Basic = False
-                        taskbar.Transparency = True
-                        taskbar.Basic = False
+                        Select Case [CP].Aero_Theme
+                            Case CP.AeroTheme.Aero
+                                start.Transparency = True
+                                start.Basic = False
+                                taskbar.Transparency = True
+                                taskbar.Basic = False
 
-                        With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
+                                With XenonWindow1
+                                    .Win7 = True
+                                    .Win7Aero = True
+                                    .Win7AeroOpaque = False
+                                    .Win7Basic = False
+                                    .Win7Alpha = [CP].Aero_ColorizationBlurBalance
+                                    .Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                                    .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
+                                    .AccentColor_Active = [CP].Aero_ColorizationColor
+                                    .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
+                                    .AccentColor_Inactive = [CP].Aero_ColorizationColor
+                                    .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
+                                    .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
 
-                        With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
+                                With XenonWindow2
+                                    .Win7 = True
+                                    .Win7Aero = True
+                                    .Win7AeroOpaque = False
+                                    .Win7Basic = False
+                                    .Win7Alpha = [CP].Aero_ColorizationBlurBalance
+                                    .Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                                    .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
+                                    .AccentColor_Active = [CP].Aero_ColorizationColor
+                                    .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
+                                    .AccentColor_Inactive = [CP].Aero_ColorizationColor
+                                    .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
+                                    .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
 
-                        With start
-                            .Win7AeroOpaque = False
-                            .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
+                                With start
+                                    .Win7AeroOpaque = False
+                                    .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
+                                    .Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                                    .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
+                                    .BackColor = [CP].Aero_ColorizationColor
+                                    .BackColor2 = [CP].Aero_ColorizationAfterglow
+                                    .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
 
-                        With taskbar
-                            .Win7AeroOpaque = False
-                            .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
-
-
-                    Case CP.AeroTheme.AeroOpaque
-                        start.Transparency = True
-                        start.Basic = False
-                        taskbar.Transparency = True
-                        taskbar.Basic = False
-
-                        With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationColorBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
-
-                        With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationColorBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
-
-                        With taskbar
-                            .Win7AeroOpaque = True
-                            .BackColorAlpha = [CP].Aero_ColorizationColorBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
-
-                        With start
-                            .Win7AeroOpaque = True
-                            .BackColorAlpha = [CP].Aero_ColorizationColorBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
-                        End With
-
-                    Case CP.AeroTheme.Basic
-                        taskbar.BackColor = Color.FromArgb(166, 190, 218)
-                        taskbar.BackColorAlpha = 255
-
-                        start.BackColor = Color.FromArgb(166, 190, 218)
-                        start.BackColorAlpha = 255
-
-                        With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
-                            .Win7Alpha = 255
-                            .AccentColor_Active = Color.FromArgb(166, 190, 218)
-                            .Win7Noise = 0
-                        End With
-
-                        With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
-                            .Win7Alpha = 255
-                            .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
-                            .Win7Noise = 0
-                        End With
-
-                        start.Transparency = False
-                        start.Basic = True
-                        start.NoisePower = 0
-
-                        taskbar.Transparency = False
-                        taskbar.Basic = True
-                        start.NoisePower = 0
+                                With taskbar
+                                    .Win7AeroOpaque = False
+                                    .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
+                                    .Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                                    .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
+                                    .BackColor = [CP].Aero_ColorizationColor
+                                    .BackColor2 = [CP].Aero_ColorizationAfterglow
+                                    .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
 
 
-                    Case CP.AeroTheme.Classic
+                            Case CP.AeroTheme.AeroOpaque
+                                start.Transparency = True
+                                start.Basic = False
+                                taskbar.Transparency = True
+                                taskbar.Basic = False
 
-                End Select
+                                With XenonWindow1
+                                    .Win7 = True
+                                    .Win7Aero = False
+                                    .Win7AeroOpaque = True
+                                    .Win7Basic = False
+                                    .Win7Alpha = [CP].Aero_ColorizationColorBalance
+                                    .AccentColor_Active = [CP].Aero_ColorizationColor
+                                    .AccentColor_Inactive = [CP].Aero_ColorizationColor
+                                    .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
 
-                ReValidateLivePreview(pnl_preview)
+                                With XenonWindow2
+                                    .Win7 = True
+                                    .Win7Aero = False
+                                    .Win7AeroOpaque = True
+                                    .Win7Basic = False
+                                    .Win7Alpha = [CP].Aero_ColorizationColorBalance
+                                    .AccentColor_Active = [CP].Aero_ColorizationColor
+                                    .AccentColor_Inactive = [CP].Aero_ColorizationColor
+                                    .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
+
+                                With taskbar
+                                    .Win7AeroOpaque = True
+                                    .BackColorAlpha = [CP].Aero_ColorizationColorBalance
+                                    .BackColor = [CP].Aero_ColorizationColor
+                                    .BackColor2 = [CP].Aero_ColorizationColor
+                                    .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
+
+                                With start
+                                    .Win7AeroOpaque = True
+                                    .BackColorAlpha = [CP].Aero_ColorizationColorBalance
+                                    .BackColor = [CP].Aero_ColorizationColor
+                                    .BackColor2 = [CP].Aero_ColorizationColor
+                                    .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                                End With
+
+                            Case CP.AeroTheme.Basic
+                                taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                                taskbar.BackColorAlpha = 255
+
+                                start.BackColor = Color.FromArgb(166, 190, 218)
+                                start.BackColorAlpha = 255
+
+                                With XenonWindow1
+                                    .Win7 = True
+                                    .Win7Aero = False
+                                    .Win7AeroOpaque = False
+                                    .Win7Basic = True
+                                    .Win7Alpha = 255
+                                    .AccentColor_Active = Color.FromArgb(166, 190, 218)
+                                    .Win7Noise = 0
+                                End With
+
+                                With XenonWindow2
+                                    .Win7 = True
+                                    .Win7Aero = False
+                                    .Win7AeroOpaque = False
+                                    .Win7Basic = True
+                                    .Win7Alpha = 255
+                                    .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
+                                    .Win7Noise = 0
+                                End With
+
+                                start.Transparency = False
+                                start.Basic = True
+                                start.NoisePower = 0
+
+                                taskbar.Transparency = False
+                                taskbar.Basic = True
+                                start.NoisePower = 0
+
+
+                            Case CP.AeroTheme.Classic
+
+                        End Select
+
+                        ReValidateLivePreview(pnl_preview)
 
 #End Region
-        End Select
+                End Select
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -692,8 +705,7 @@ Public Class MainFrm
         personalcolor8accent_pick.BackColor = ColorPalette.Metro_PersonalColors_Accent
 
         ApplyMetroStartToButton(ColorPalette)
-
-        logonui8_txt.Text = ColorPalette.Metro_LogonUI
+        ApplyBackLogonUI(ColorPalette)
     End Sub
 
     Sub ApplyMetroStartToButton(ColorPalette As CP)
@@ -742,7 +754,19 @@ Public Class MainFrm
                 XenonButton14.Image = ResizeImage(My.Application.Metro_1, 48, 48)
         End Select
     End Sub
+
+    Sub ApplyBackLogonUI(ColorPalette As CP)
+
+        For Each ri As XenonRadioImage In LogonUI8Colors.Controls.OfType(Of XenonRadioImage)
+            If ColorPalette.Metro_LogonUI = ri.Name.Replace("color", "") Then
+                XenonButton22.Image = ColorToBitmap(ri.AccentColor, New Size(48, 48))
+                Exit For
+            End If
+        Next
+
+    End Sub
 #End Region
+
 
 
 #Region "Misc"
@@ -2056,13 +2080,6 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub logonui8_txt_TextChanged(sender As Object, e As EventArgs) Handles logonui8_txt.TextChanged
-        If _Shown Then
-            CP.Metro_LogonUI = Val(logonui8_txt.Text)
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
     Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
         If XenonRadioImage1.Checked Then
             CP.Metro_Theme = CP.AeroTheme.Aero
@@ -2087,7 +2104,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
-        LogonUI8.ShowDialog()
+        LogonUI8Colors.ShowDialog()
         ApplyLivePreviewFromCP(CP)
     End Sub
 

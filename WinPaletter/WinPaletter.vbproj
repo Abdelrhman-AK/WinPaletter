@@ -211,10 +211,10 @@
     <Compile Include="LogonUI7.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI8.Designer.vb">
-      <DependentUpon>LogonUI8.vb</DependentUpon>
+    <Compile Include="LogonUI8Colors.Designer.vb">
+      <DependentUpon>LogonUI8Colors.vb</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI8.vb">
+    <Compile Include="LogonUI8Colors.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainFrm.Designer.vb">
@@ -322,8 +322,8 @@
     <EmbeddedResource Include="LogonUI7.resx">
       <DependentUpon>LogonUI7.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI8.resx">
-      <DependentUpon>LogonUI8.vb</DependentUpon>
+    <EmbeddedResource Include="LogonUI8Colors.resx">
+      <DependentUpon>LogonUI8Colors.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>

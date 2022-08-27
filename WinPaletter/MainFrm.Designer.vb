@@ -171,7 +171,6 @@ Partial Class MainFrm
         Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.logonui8_txt = New WinPaletter.XenonTextBox()
         Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
         Me.PictureBox37 = New System.Windows.Forms.PictureBox()
         Me.Label40 = New System.Windows.Forms.Label()
@@ -2281,7 +2280,6 @@ Partial Class MainFrm
         Me.XenonGroupBox17.Controls.Add(Me.XenonButton14)
         Me.XenonGroupBox17.Controls.Add(Me.Label30)
         Me.XenonGroupBox17.Controls.Add(Me.Label24)
-        Me.XenonGroupBox17.Controls.Add(Me.logonui8_txt)
         Me.XenonGroupBox17.Controls.Add(Me.XenonRadioImage2)
         Me.XenonGroupBox17.Controls.Add(Me.PictureBox37)
         Me.XenonGroupBox17.Controls.Add(Me.Label40)
@@ -2365,25 +2363,8 @@ Partial Class MainFrm
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(64, 22)
         Me.Label24.TabIndex = 34
-        Me.Label24.Text = "Aero"
+        Me.Label24.Text = "Aero 8"
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'logonui8_txt
-        '
-        Me.logonui8_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.logonui8_txt.ForeColor = System.Drawing.Color.White
-        Me.logonui8_txt.Hint = Nothing
-        Me.logonui8_txt.LineColor = System.Drawing.Color.DodgerBlue
-        Me.logonui8_txt.Location = New System.Drawing.Point(304, 46)
-        Me.logonui8_txt.MaxLength = 32767
-        Me.logonui8_txt.Multiline = False
-        Me.logonui8_txt.Name = "logonui8_txt"
-        Me.logonui8_txt.ReadOnly = False
-        Me.logonui8_txt.Size = New System.Drawing.Size(50, 24)
-        Me.logonui8_txt.TabIndex = 5
-        Me.logonui8_txt.Text = "XenonTextBox3"
-        Me.logonui8_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.logonui8_txt.UseSystemPasswordChar = False
         '
         'XenonRadioImage2
         '
@@ -2391,7 +2372,7 @@ Partial Class MainFrm
         Me.XenonRadioImage2.Checked = False
         Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage2.Image = Nothing
+        Me.XenonRadioImage2.Image = CType(resources.GetObject("XenonRadioImage2.Image"), System.Drawing.Image)
         Me.XenonRadioImage2.Location = New System.Drawing.Point(154, 38)
         Me.XenonRadioImage2.Name = "XenonRadioImage2"
         Me.XenonRadioImage2.Size = New System.Drawing.Size(64, 64)
@@ -2424,7 +2405,7 @@ Partial Class MainFrm
         Me.XenonRadioImage1.Checked = False
         Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage1.Image = Nothing
+        Me.XenonRadioImage1.Image = CType(resources.GetObject("XenonRadioImage1.Image"), System.Drawing.Image)
         Me.XenonRadioImage1.Location = New System.Drawing.Point(84, 38)
         Me.XenonRadioImage1.Name = "XenonRadioImage1"
         Me.XenonRadioImage1.Size = New System.Drawing.Size(64, 64)
@@ -2443,7 +2424,6 @@ Partial Class MainFrm
         Me.XenonButton22.Name = "XenonButton22"
         Me.XenonButton22.Size = New System.Drawing.Size(64, 64)
         Me.XenonButton22.TabIndex = 37
-        Me.XenonButton22.Text = "XenonButton22"
         Me.XenonButton22.UseVisualStyleBackColor = False
         '
         'XenonGroupBox32
@@ -2519,7 +2499,7 @@ Partial Class MainFrm
         Me.Foregrounds.Name = "Foregrounds"
         Me.Foregrounds.Size = New System.Drawing.Size(343, 24)
         Me.Foregrounds.TabIndex = 3
-        Me.Foregrounds.Text = "Foregrounds"
+        Me.Foregrounds.Text = "Foregrounds (Accents)"
         Me.Foregrounds.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox41
@@ -2946,6 +2926,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Win7GlowBal = 100
         Me.XenonWindow1.Win7Noise = 1.0!
         Me.XenonWindow1.Win8 = False
+        Me.XenonWindow1.Win8Lite = False
         '
         'Label12
         '
@@ -3021,6 +3002,7 @@ Partial Class MainFrm
         Me.XenonWindow2.Win7GlowBal = 100
         Me.XenonWindow2.Win7Noise = 1.0!
         Me.XenonWindow2.Win8 = False
+        Me.XenonWindow2.Win8Lite = False
         '
         'start
         '
@@ -3680,7 +3662,6 @@ Partial Class MainFrm
     Friend WithEvents PictureBox23 As PictureBox
     Friend WithEvents accent8_pick As XenonGroupBox
     Friend WithEvents Label29 As Label
-    Friend WithEvents logonui8_txt As XenonTextBox
     Friend WithEvents XenonRadioImage2 As XenonRadioImage
     Friend WithEvents XenonRadioImage1 As XenonRadioImage
     Friend WithEvents XenonGroupBox17 As XenonGroupBox
