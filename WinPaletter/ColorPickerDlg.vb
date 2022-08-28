@@ -62,6 +62,8 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm Then
             My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W1x, True)
+            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
+            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonGroupBox2, True)
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
@@ -98,7 +100,25 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm Then
             MainFrm.Width = PreviousWidth
-            My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W1x, True)
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W1x, True)
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
+            End If
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W1x, True)
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
+                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W7, True)
+            End If
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W1x, True)
+                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W8, True)
+                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
+            End If
+
             My.Application.AnimatorX.Show(MainFrm.XenonGroupBox2, True)
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
@@ -248,6 +268,7 @@ Public Class ColorPickerDlg
                     If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Invalidate()
                 End With
 

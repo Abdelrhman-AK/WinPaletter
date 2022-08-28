@@ -52,7 +52,18 @@ Public Class XeSettings
         If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
         If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
-        If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
+
+        Select Case CustomPreviewConfig
+            Case WinVer.Eleven
+                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 0)
+            Case WinVer.Ten
+                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 1)
+            Case WinVer.Eight
+                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 2)
+            Case WinVer.Seven
+                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 3)
+        End Select
+
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
         If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
@@ -75,7 +86,18 @@ Public Class XeSettings
                 AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", Nothing)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
-                CustomPreviewConfig = If(Key.GetValue("CustomPreviewConfig", Nothing) = WinVer.Eleven, WinVer.Eleven, WinVer.Ten)
+
+                Select Case Key.GetValue("CustomPreviewConfig", Nothing)
+                    Case 0
+                        CustomPreviewConfig = WinVer.Eleven
+                    Case 1
+                        CustomPreviewConfig = WinVer.Ten
+                    Case 2
+                        CustomPreviewConfig = WinVer.Eight
+                    Case 3
+                        CustomPreviewConfig = WinVer.Seven
+                End Select
+
                 UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
                 Appearance_Dark = Key.GetValue("Appearance_Dark", Nothing)
                 Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
@@ -118,7 +140,18 @@ Public Class XeSettings
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
-                Key.SetValue("CustomPreviewConfig", If(CustomPreviewConfig = WinVer.Eleven, 0, 1))
+
+                Select Case CustomPreviewConfig
+                    Case WinVer.Eleven
+                        Key.SetValue("CustomPreviewConfig", 0)
+                    Case WinVer.Ten
+                        Key.SetValue("CustomPreviewConfig", 1)
+                    Case WinVer.Eight
+                        Key.SetValue("CustomPreviewConfig", 2)
+                    Case WinVer.Seven
+                        Key.SetValue("CustomPreviewConfig", 3)
+                End Select
+
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
                 Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
@@ -139,7 +172,18 @@ Public Class XeSettings
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
-                l.Add(String.Format("CustomPreviewConfig= {0}", If(CustomPreviewConfig = WinVer.Eleven, 0, 1)))
+
+                Select Case CustomPreviewConfig
+                    Case WinVer.Eleven
+                        l.Add(String.Format("CustomPreviewConfig= {0}", 0))
+                    Case WinVer.Ten
+                        l.Add(String.Format("CustomPreviewConfig= {0}", 1))
+                    Case WinVer.Eight
+                        l.Add(String.Format("CustomPreviewConfig= {0}", 2))
+                    Case WinVer.Seven
+                        l.Add(String.Format("CustomPreviewConfig= {0}", 3))
+                End Select
+
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))

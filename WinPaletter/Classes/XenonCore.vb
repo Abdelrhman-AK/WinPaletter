@@ -57,15 +57,18 @@ Public Class XenonCore
     End Structure
 
     Public Shared Sub RefreshDWM(CP As CP)
-        Dim temp As New DWM_COLORIZATION_PARAMS
-        temp.clrColor = CP.Aero_ColorizationColor.ToArgb
-        temp.clrAfterGlow = CP.Aero_ColorizationAfterglow.ToArgb
-        temp.nIntensity = CP.Aero_ColorizationColorBalance
-        temp.clrAfterGlowBalance = CP.Aero_ColorizationAfterglowBalance
-        temp.clrBlurBalance = CP.Aero_ColorizationBlurBalance
-        temp.clrGlassReflectionIntensity = CP.Aero_ColorizationGlassReflectionIntensity
-        temp.fOpaque = CP.Aero_Theme = AeroTheme.AeroOpaque
-        DwmSetColorizationParameters(temp, False)
+        Try
+            Dim temp As New DWM_COLORIZATION_PARAMS
+            temp.clrColor = CP.Aero_ColorizationColor.ToArgb
+            temp.clrAfterGlow = CP.Aero_ColorizationAfterglow.ToArgb
+            temp.nIntensity = CP.Aero_ColorizationColorBalance
+            temp.clrAfterGlowBalance = CP.Aero_ColorizationAfterglowBalance
+            temp.clrBlurBalance = CP.Aero_ColorizationBlurBalance
+            temp.clrGlassReflectionIntensity = CP.Aero_ColorizationGlassReflectionIntensity
+            temp.fOpaque = If(CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
+            DwmSetColorizationParameters(temp, False)
+        Catch
+        End Try
     End Sub
 
     Enum SendMessageTimeoutFlags As UInteger

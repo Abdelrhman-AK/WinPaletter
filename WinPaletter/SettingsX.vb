@@ -78,7 +78,20 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-            XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+
+            Select Case .CustomPreviewConfig
+                Case XeSettings.WinVer.Eleven
+                    XenonComboBox1.SelectedIndex = 0
+                Case XeSettings.WinVer.Ten
+                    XenonComboBox1.SelectedIndex = 1
+                Case XeSettings.WinVer.Eight
+                    XenonComboBox1.SelectedIndex = 2
+                Case XeSettings.WinVer.Seven
+                    XenonComboBox1.SelectedIndex = 3
+                Case Else
+                    XenonComboBox1.SelectedIndex = 0
+            End Select
+
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
             XenonRadioButton3.Checked = .Appearance_Dark
@@ -126,7 +139,34 @@ Public Class SettingsX
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
             MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
         Else
-            If My.W11 Then MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Else MainFrm.PreviewConfig = MainFrm.WinVer.Ten
+
+            If My.W11 Then
+                MainFrm.PreviewConfig = MainFrm.WinVer.Eleven
+            ElseIf My.W10 Then
+                MainFrm.PreviewConfig = MainFrm.WinVer.Ten
+            ElseIf My.W8 Then
+                MainFrm.PreviewConfig = MainFrm.WinVer.Eight
+            ElseIf My.W7 Then
+                MainFrm.PreviewConfig = MainFrm.WinVer.Seven
+            End If
+        End If
+
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+            MainFrm.PaletteContainer_W1x.Visible = True
+            MainFrm.PaletteContainer_W8.Visible = False
+            MainFrm.PaletteContainer_W7.Visible = False
+        End If
+
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+            MainFrm.PaletteContainer_W1x.Visible = False
+            MainFrm.PaletteContainer_W8.Visible = False
+            MainFrm.PaletteContainer_W7.Visible = True
+        End If
+
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+            MainFrm.PaletteContainer_W1x.Visible = False
+            MainFrm.PaletteContainer_W8.Visible = True
+            MainFrm.PaletteContainer_W7.Visible = False
         End If
 
         MainFrm.Adjust_Preview()
@@ -178,7 +218,20 @@ Public Class SettingsX
                 XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-                XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+
+                Select Case .CustomPreviewConfig
+                    Case XeSettings.WinVer.Eleven
+                        XenonComboBox1.SelectedIndex = 0
+                    Case XeSettings.WinVer.Ten
+                        XenonComboBox1.SelectedIndex = 1
+                    Case XeSettings.WinVer.Eight
+                        XenonComboBox1.SelectedIndex = 2
+                    Case XeSettings.WinVer.Seven
+                        XenonComboBox1.SelectedIndex = 3
+                    Case Else
+                        XenonComboBox1.SelectedIndex = 0
+                End Select
+
                 XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
                 XenonRadioButton3.Checked = .Appearance_Dark
@@ -215,7 +268,20 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
-            XenonComboBox1.SelectedIndex = If(.CustomPreviewConfig = .WinVer.Eleven, 0, 1)
+
+            Select Case .CustomPreviewConfig
+                Case XeSettings.WinVer.Eleven
+                    XenonComboBox1.SelectedIndex = 0
+                Case XeSettings.WinVer.Ten
+                    XenonComboBox1.SelectedIndex = 1
+                Case XeSettings.WinVer.Eight
+                    XenonComboBox1.SelectedIndex = 2
+                Case XeSettings.WinVer.Seven
+                    XenonComboBox1.SelectedIndex = 3
+                Case Else
+                    XenonComboBox1.SelectedIndex = 0
+            End Select
+
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
             XenonRadioButton3.Checked = .Appearance_Dark

@@ -902,7 +902,7 @@ Partial Class MainFrm
         Me.AccentOnStartAndTaskbar_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.AccentOnStartAndTaskbar_Toggle.Checked = False
         Me.AccentOnStartAndTaskbar_Toggle.DarkLight_Toggler = False
-        Me.AccentOnStartAndTaskbar_Toggle.Location = New System.Drawing.Point(389, 2)
+        Me.AccentOnStartAndTaskbar_Toggle.Location = New System.Drawing.Point(390, 2)
         Me.AccentOnStartAndTaskbar_Toggle.Name = "AccentOnStartAndTaskbar_Toggle"
         Me.AccentOnStartAndTaskbar_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.AccentOnStartAndTaskbar_Toggle.TabIndex = 17
@@ -3370,9 +3370,9 @@ Partial Class MainFrm
         Me.Controls.Add(Me.NotificationsPanel)
         Me.Controls.Add(Me.XenonGroupBox8)
         Me.Controls.Add(Me.XenonGroupBox2)
+        Me.Controls.Add(Me.PaletteContainer_W1x)
         Me.Controls.Add(Me.PaletteContainer_W8)
         Me.Controls.Add(Me.PaletteContainer_W7)
-        Me.Controls.Add(Me.PaletteContainer_W1x)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle

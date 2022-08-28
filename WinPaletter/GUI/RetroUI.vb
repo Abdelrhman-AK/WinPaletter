@@ -102,7 +102,7 @@ Public Class RetroButton : Inherits Button
 
     Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
         MyBase.OnMouseDown(e)
-        State = MouseState.Down : Invalidate() : Pressed = True
+        State = MouseState.Down : Pressed = True : Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
@@ -111,7 +111,7 @@ Public Class RetroButton : Inherits Button
     End Sub
 
     Private Sub XenonButton_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
-        State = MouseState.None : Invalidate() : Pressed = False
+        State = MouseState.None : Pressed = False : Invalidate()
     End Sub
 
     Enum MouseState
@@ -172,8 +172,12 @@ Public Class RetroButton : Inherits Button
                     G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
                     G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
                     G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
-                    If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+                    If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then
+                        G.DrawRectangle(pendash, rectdash)
+                        G.DrawRectangle(New Pen(WindowFrame), rect)
+                    End If
                 End If
+
             Else
                 G.DrawRectangle(New Pen(WindowFrame), rect)
                 G.DrawRectangle(New Pen(ButtonShadow), rectinner)
@@ -1077,7 +1081,6 @@ Public Class LOGFONT
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public lfFaceName As String = String.Empty
 End Class
-
 Public Class RetroScrollBar : Inherits Panel
     Sub New()
         DoubleBuffered = True

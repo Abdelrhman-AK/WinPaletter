@@ -194,7 +194,7 @@ Module XenonModule
         FillImg(G, bk1, Rect, Radius, True)
 
         Dim bk2 As Bitmap = FadeBitmap(Grayscale(BackgroundBlurred), alpha * GlowBalance)
-        bk2 = FadeBitmap(bk2, 0.5)
+        bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
         FillImg(G, bk2, Rect, Radius, True)
 
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
@@ -3966,6 +3966,9 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         Dim bk As Bitmap = adaptedBackBlurred
 
                         Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
+                        If alphaX < 0 Then alphaX = 0
+                        If alphaX > 1 Then alphaX = 1
+
                         Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
                         Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
                         Dim Color1 As Color = BackColor
@@ -4149,8 +4152,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                         If Not Win7AeroOpaque Then
                             Dim bk As Bitmap = adaptedBackBlurred
-
                             Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
+                            If alphaX < 0 Then alphaX = 0
+                            If alphaX > 1 Then alphaX = 1
+
                             Dim ColBal As Single = Win7ColorBal / 100        'ColorBalance
                             Dim GlowBal As Single = Win7GlowBal / 100        'AfterGlowBalance
                             Dim Color1 As Color = BackColor
@@ -4165,7 +4170,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
                         G.FillRectangle(Noise, Rect)
-
                     End If
 
                     If Not Basic Then
@@ -4196,28 +4200,46 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
 
 
-
                 Case TaskbarVersion.Eight
-                    G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+                    Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
+                    Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+                    If Transparency Then
+                        G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+                    Else
+                        G.DrawRectangle(New Pen(Color.FromArgb(89, 89, 89)), New Rectangle(0, 0, Width - 1, Height - 1))
+                    End If
 
                     Dim StartORB As New Bitmap(My.Resources.Win8ORB)
-
-                    Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2, 27, 27)
-
-
-                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, 34)
+                    Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27)
+                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
                     Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
-
-                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, 34)
+                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
                     Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
 
 
                     G.DrawImage(StartORB, StartBtnRect)
 
-                    G.DrawImage(My.Resources.Taskbar_ActiveApp8, AppBtnRect)
+                    If Transparency Then
+                        G.DrawImage(My.Resources.Taskbar_ActiveApp8, AppBtnRect)
+                    Else
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, CCB(bc, 0.5))), AppBtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), CCB(c, 0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, CCB(bc, -0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), CCB(c, -0.5))), AppBtnRect)
+                    End If
+
                     G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
 
-                    G.DrawImage(My.Resources.Taskbar_InactiveApp8, App2BtnRect)
+                    If Transparency Then
+                        G.DrawImage(My.Resources.Taskbar_InactiveApp8, App2BtnRect)
+                    Else
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, ControlPaint.Light(bc, 0.1))), App2BtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), ControlPaint.Light(c, 0.1))), App2BtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, ControlPaint.Dark(bc, 0.1))), App2BtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), ControlPaint.Dark(c, 0.1))), App2BtnRect)
+                    End If
+
                     G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
 
             End Select
@@ -4229,14 +4251,17 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler BlurPowerChanged, AddressOf ProcessBack : Catch : End Try
+
             Try : AddHandler NoisePowerChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler BackColorChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler BackColor2Changed, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler Win7ColorBalChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler Win7GlowBalChanged, AddressOf ProcessBack : Catch : End Try
+
+            Try : AddHandler BackColorChanged, AddressOf Refresh : Catch : End Try
+            Try : AddHandler BackColor2Changed, AddressOf Refresh : Catch : End Try
+            Try : AddHandler Win7ColorBalChanged, AddressOf Refresh : Catch : End Try
+            Try : AddHandler Win7GlowBalChanged, AddressOf Refresh : Catch : End Try
+
             Try : AddHandler BackColorAlphaChanged, AddressOf ProcessBack : Catch : End Try
             ProcessBack()
         End If
@@ -4265,7 +4290,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, NoisePower / 100))
                     NoiseStart = New TextureBrush(FadeBitmap(My.Resources.Start7Glass, NoisePower / 100))
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Eight Then
-                    Noise = Nothing
+                    Noise = New TextureBrush(adaptedBack)
                 End If
 
             End If
@@ -4589,7 +4614,17 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
                 End If
             ElseIf Win8 Then
-                G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+
+                If Not Win8Lite Then
+                    G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                Else
+                    If Active Then
+                        G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(MainFrm.CP.Win32UI_TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                    Else
+                        G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(MainFrm.CP.Win32UI_InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                    End If
+                End If
+
             End If
         End If
 
@@ -4654,6 +4689,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
         If Not DesignMode Then
+            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler FindForm.Load, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try

@@ -13,20 +13,26 @@ Public Class MainFrm
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
-    Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
 
 #Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
-        start.Visible = False
-        taskbar.Visible = False
-        XenonWindow1.Visible = False
-        XenonWindow2.Visible = False
+        start.Visible = True
+        taskbar.Visible = True
+        XenonWindow1.Visible = True
+        XenonWindow2.Visible = True
         ActionCenter.Visible = True
 
-        If Not PreviewConfig = WinVer.Ten And Not PreviewConfig = WinVer.Eleven Then
+        XenonWindow1.Win7 = False
+        XenonWindow2.Win7 = False
+        XenonWindow1.Win8 = False
+        XenonWindow2.Win8 = False
+        XenonWindow1.Win8Lite = False
+        XenonWindow2.Win8Lite = False
+
+        If Not PreviewConfig = WinVer.Seven And Not PreviewConfig = WinVer.Eight Then
             XenonWindow1.Active = True
             XenonWindow2.Active = False
 
@@ -340,12 +346,12 @@ Public Class MainFrm
                 ApplyMetroStartToButton([CP])
                 ApplyBackLogonUI([CP])
 
-
                 start.Visible = False
                 taskbar.Visible = True
                 XenonWindow1.Visible = True
                 XenonWindow2.Visible = True
                 ActionCenter.Visible = False
+
                 XenonWindow1.Win8 = True
                 XenonWindow2.Win8 = True
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
@@ -371,6 +377,9 @@ Public Class MainFrm
 
                 taskbar.BackColor = [CP].Aero_ColorizationColor
                 taskbar.Win7ColorBal = [CP].Aero_ColorizationColorBalance
+
+                ReValidateLivePreview(pnl_preview)
+
 #End Region
 
             Case WinVer.Seven
@@ -426,17 +435,17 @@ Public Class MainFrm
                                     .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
                                 End With
 
-                                With start
-                                    .Win7AeroOpaque = False
-                                    .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
-                                    .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                                    .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                                    .BackColor = [CP].Aero_ColorizationColor
-                                    .BackColor2 = [CP].Aero_ColorizationAfterglow
-                                    .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
-                                End With
+                        With start
+                            .Win7AeroOpaque = False
+                            .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
+                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
+                            .BackColor = [CP].Aero_ColorizationColor
+                            .BackColor2 = [CP].Aero_ColorizationAfterglow
+                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                        End With
 
-                                With taskbar
+                        With taskbar
                                     .Win7AeroOpaque = False
                                     .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
                                     .Win7ColorBal = [CP].Aero_ColorizationColorBalance
@@ -491,56 +500,60 @@ Public Class MainFrm
                                     .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                                 End With
 
-                            Case CP.AeroTheme.Basic
-                                taskbar.BackColor = Color.FromArgb(166, 190, 218)
-                                taskbar.BackColorAlpha = 255
+                    Case CP.AeroTheme.Basic
 
-                                start.BackColor = Color.FromArgb(166, 190, 218)
-                                start.BackColorAlpha = 255
+#Region "Basic"
+                        taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        taskbar.BackColorAlpha = 255
 
-                                With XenonWindow1
-                                    .Win7 = True
-                                    .Win7Aero = False
-                                    .Win7AeroOpaque = False
-                                    .Win7Basic = True
-                                    .Win7Alpha = 255
-                                    .AccentColor_Active = Color.FromArgb(166, 190, 218)
-                                    .Win7Noise = 0
-                                End With
+                        start.BackColor = Color.FromArgb(166, 190, 218)
+                        start.BackColorAlpha = 255
 
-                                With XenonWindow2
-                                    .Win7 = True
-                                    .Win7Aero = False
-                                    .Win7AeroOpaque = False
-                                    .Win7Basic = True
-                                    .Win7Alpha = 255
-                                    .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
-                                    .Win7Noise = 0
-                                End With
+                        With XenonWindow1
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = False
+                            .Win7Basic = True
+                            .Win7Alpha = 255
+                            .AccentColor_Active = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
 
-                                start.Transparency = False
-                                start.Basic = True
-                                start.NoisePower = 0
+                        With XenonWindow2
+                            .Win7 = True
+                            .Win7Aero = False
+                            .Win7AeroOpaque = False
+                            .Win7Basic = True
+                            .Win7Alpha = 255
+                            .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
 
-                                taskbar.Transparency = False
-                                taskbar.Basic = True
-                                start.NoisePower = 0
+                        start.Transparency = False
+                        start.Basic = True
+                        start.NoisePower = 0
 
+                        taskbar.Transparency = False
+                        taskbar.Basic = True
+                        start.NoisePower = 0
 
-                            Case CP.AeroTheme.Classic
+#End Region
+
+                    Case CP.AeroTheme.Classic
 
                         End Select
 
-                        ReValidateLivePreview(pnl_preview)
-
+                ReValidateLivePreview(pnl_preview)
 #End Region
-                End Select
+        End Select
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
-        Parent.Invalidate()
+        Parent.Refresh()
 
         For Each ctrl As Control In Parent.Controls
+            ctrl.Refresh()
+
             If ctrl.HasChildren Then
                 For Each c As Control In ctrl.Controls
                     ReValidateLivePreview(c)
@@ -576,6 +589,9 @@ Public Class MainFrm
                 start.Size = New Size(135, 200)
                 start.Location = New Point(7, 46)
                 start.RoundedCorners = True
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                start.BlurPower = 7
+                start.NoisePower = 0.2
 
                 XenonWindow1.RoundedCorners = True
                 XenonWindow2.RoundedCorners = True
@@ -593,6 +609,9 @@ Public Class MainFrm
                 start.Size = New Size(182, 201)
                 start.Location = New Point(0, 59)
                 start.RoundedCorners = False
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                start.BlurPower = 7
+                start.NoisePower = 0.2
 
                 XenonWindow1.RoundedCorners = False
                 XenonWindow2.RoundedCorners = False
@@ -779,7 +798,6 @@ Public Class MainFrm
 #End Region
 
 
-
 #Region "Misc"
     Enum WinVer
         Eleven
@@ -863,24 +881,6 @@ Public Class MainFrm
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
 
-        If My.W10 Or My.W11 Then
-            PaletteContainer_W1x.Visible = True
-            PaletteContainer_W8.Visible = False
-            PaletteContainer_W7.Visible = False
-        End If
-
-        If My.W7 Then
-            PaletteContainer_W1x.Visible = False
-            PaletteContainer_W8.Visible = False
-            PaletteContainer_W7.Visible = True
-        End If
-
-        If My.W8 Then
-            PaletteContainer_W1x.Visible = False
-            PaletteContainer_W8.Visible = True
-            PaletteContainer_W7.Visible = False
-        End If
-
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
         My.Application.AdjustFonts()
@@ -917,10 +917,23 @@ Public Class MainFrm
             If My.W7 Then PreviewConfig = WinVer.Seven
         End If
 
-        PreviewConfig = WinVer.Eight
-        PaletteContainer_W1x.Visible = False
-        PaletteContainer_W7.Visible = False
-        PaletteContainer_W8.Visible = True
+        If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
+            PaletteContainer_W1x.Visible = True
+            PaletteContainer_W8.Visible = False
+            PaletteContainer_W7.Visible = False
+        End If
+
+        If PreviewConfig = WinVer.Seven Then
+            PaletteContainer_W1x.Visible = False
+            PaletteContainer_W8.Visible = False
+            PaletteContainer_W7.Visible = True
+        End If
+
+        If PreviewConfig = WinVer.Eight Then
+            PaletteContainer_W1x.Visible = False
+            PaletteContainer_W8.Visible = True
+            PaletteContainer_W7.Visible = False
+        End If
 
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
@@ -973,7 +986,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1221,6 +1234,7 @@ Public Class MainFrm
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         CP_Original = CP
+
         CP.Save(CP.SavingMode.Registry)
 
         RefreshRegisrty()
@@ -1483,7 +1497,7 @@ Public Class MainFrm
                             Select Case r2
                                 Case 1      '' Apply   ' Case 0= Don't Apply
                                     CP.Save(CP.SavingMode.Registry)
-                                    RestartExplorer()
+                                    If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                             End Select
 
                         Case DialogResult.No
@@ -1551,7 +1565,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1613,7 +1627,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1666,7 +1680,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1766,7 +1780,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1812,7 +1826,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No
@@ -1865,7 +1879,7 @@ Public Class MainFrm
                     Select Case r2
                         Case 1      '' Apply   ' Case 0= Don't Apply
                             CP.Save(CP.SavingMode.Registry)
-                            RestartExplorer()
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                     End Select
 
                 Case DialogResult.No

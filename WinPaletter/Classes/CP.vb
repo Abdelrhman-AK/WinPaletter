@@ -2185,14 +2185,17 @@ Public Class CP
                 If My.W8 Then
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
-                    Select Case Metro_Theme
-                        Case AeroTheme.Aero
-                            EnableTheming(1)
-                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-                        Case AeroTheme.AeroLite
-                            EnableTheming(1)
-                            SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
-                    End Select
+                    Try
+                        Select Case Metro_Theme
+                            Case AeroTheme.Aero
+                                EnableTheming(1)
+                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            Case AeroTheme.AeroLite
+                                EnableTheming(1)
+                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                        End Select
+                    Catch
+                    End Try
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
@@ -2201,6 +2204,7 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", BizareColorInvertor(Metro_AccentColor).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
+
 
                     If isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Metro_Start)
@@ -2589,6 +2593,7 @@ Public Class CP
 #End Region
 
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
+
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
