@@ -4043,7 +4043,22 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             End If
 
         Else
-            G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+
+            If Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then
+                G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+            Else
+                Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
+                Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+                If Transparency Then
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, bc)), Rect)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha * (Win7ColorBal / 100), c)), Rect)
+                Else
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc)), Rect)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c)), Rect)
+                End If
+            End If
+
             If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.FillRectangle(Noise, Rect)
             If UseItAsStartMenu Then G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
 
@@ -4228,12 +4243,15 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     End Sub
 
     Sub ProcessBack()
-        Try : adaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
+
+        Try
+            adaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat)
+        Catch : End Try
 
         Try : If Transparency Then
                 If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
                     adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 1)
-                Else
+                ElseIf UseItAsTaskbar_Version <> TaskbarVersion.Seven And UseItAsTaskbar_Version <> TaskbarVersion.Eight Then
                     adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), BlurPower)
                 End If
             End If

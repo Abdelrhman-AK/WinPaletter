@@ -171,7 +171,7 @@ Public Class XenonCore
             End Try
         End With
     End Sub
-    Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE") As Bitmap
+    Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
         Try
             If IO.File.Exists(File) Then
                 Dim hMod As IntPtr = LoadLibraryEx(File, IntPtr.Zero, &H2)
@@ -182,10 +182,10 @@ Public Class XenonCore
                 Marshal.Copy(pt, bPtr, 0, CInt(size))
                 Return Image.FromStream(New MemoryStream(bPtr))
             Else
-                Return ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+                Return ColorToBitmap(Color.Black, New Size(UnfoundW, UnfoundH))
             End If
         Catch
-            Return ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+            Return ColorToBitmap(Color.Black, New Size(UnfoundW, UnfoundH))
         End Try
 
     End Function

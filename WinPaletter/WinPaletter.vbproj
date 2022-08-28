@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\Localizer.vb" />
+    <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />
     <Compile Include="Classes\XeSettings.vb" />
     <Compile Include="ColorPickerDlg.Designer.vb">

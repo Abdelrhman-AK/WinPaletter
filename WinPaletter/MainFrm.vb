@@ -340,6 +340,7 @@ Public Class MainFrm
                 ApplyMetroStartToButton([CP])
                 ApplyBackLogonUI([CP])
 
+
                 start.Visible = False
                 taskbar.Visible = True
                 XenonWindow1.Visible = True
@@ -347,14 +348,19 @@ Public Class MainFrm
                 ActionCenter.Visible = False
                 XenonWindow1.Win8 = True
                 XenonWindow2.Win8 = True
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
 
                 Select Case [CP].Metro_Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Win8Lite = False
                         XenonWindow2.Win8Lite = False
+                        taskbar.Transparency = True
+                        taskbar.BackColorAlpha = 100
                     Case CP.AeroTheme.AeroLite
                         XenonWindow1.Win8Lite = True
                         XenonWindow2.Win8Lite = True
+                        taskbar.Transparency = False
+                        taskbar.BackColorAlpha = 255
                 End Select
 
                 XenonWindow1.AccentColor_Active = [CP].Aero_ColorizationColor
@@ -363,6 +369,8 @@ Public Class MainFrm
                 XenonWindow2.AccentColor_Active = [CP].Aero_ColorizationColor
                 XenonWindow2.Win7ColorBal = [CP].Aero_ColorizationColorBalance
 
+                taskbar.BackColor = [CP].Aero_ColorizationColor
+                taskbar.Win7ColorBal = [CP].Aero_ColorizationColorBalance
 #End Region
 
             Case WinVer.Seven
@@ -602,7 +610,6 @@ Public Class MainFrm
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
 
-
             Case WinVer.Seven
                 Panel3.Visible = False
                 Label12.Visible = False
@@ -715,47 +722,47 @@ Public Class MainFrm
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Metro_Start
             Case 1
-                XenonButton14.Image = ResizeImage(My.Application.Metro_1, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
             Case 2
-                XenonButton14.Image = ResizeImage(My.Application.Metro_2, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_2, 48, 48)
             Case 3
-                XenonButton14.Image = ResizeImage(My.Application.Metro_3, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_3, 48, 48)
             Case 4
-                XenonButton14.Image = ResizeImage(My.Application.Metro_4, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_4, 48, 48)
             Case 5
-                XenonButton14.Image = ResizeImage(My.Application.Metro_5, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_5, 48, 48)
             Case 6
-                XenonButton14.Image = ResizeImage(My.Application.Metro_6, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_6, 48, 48)
             Case 7
-                XenonButton14.Image = ResizeImage(My.Application.Metro_7, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_7, 48, 48)
             Case 8
-                XenonButton14.Image = ResizeImage(My.Application.Metro_8, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_8, 48, 48)
             Case 9
-                XenonButton14.Image = ResizeImage(My.Application.Metro_9, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_9, 48, 48)
             Case 10
-                XenonButton14.Image = ResizeImage(My.Application.Metro_10, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_10, 48, 48)
             Case 11
-                XenonButton14.Image = ResizeImage(My.Application.Metro_11, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_11, 48, 48)
             Case 12
-                XenonButton14.Image = ResizeImage(My.Application.Metro_12, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_12, 48, 48)
             Case 13
-                XenonButton14.Image = ResizeImage(My.Application.Metro_13, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_13, 48, 48)
             Case 14
-                XenonButton14.Image = ResizeImage(My.Application.Metro_14, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_14, 48, 48)
             Case 15
-                XenonButton14.Image = ResizeImage(My.Application.Metro_15, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_15, 48, 48)
             Case 16
-                XenonButton14.Image = ResizeImage(My.Application.Metro_16, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 48, 48)
             Case 17
-                XenonButton14.Image = ResizeImage(My.Application.Metro_17, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 48, 48)
             Case 18
-                XenonButton14.Image = ResizeImage(My.Application.Metro_18, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
             Case 19
                 XenonButton14.Image = ColorToBitmap(ColorPalette.Metro_PersonalColors_Background, New Size(48, 48))
             Case 20
                 XenonButton14.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
             Case Else
-                XenonButton14.Image = ResizeImage(My.Application.Metro_1, 48, 48)
+                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
         End Select
     End Sub
 
@@ -2005,7 +2012,9 @@ Public Class MainFrm
            XenonWindow2
        }
 
-        Dim C As Color = ColorPickerDlg.Pick(CList)
+        Dim _Conditions As New Conditions With {.Window_ActiveTitlebar = True, .Window_InactiveTitlebar = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Aero_ColorizationColor = Color.FromArgb(255, C)
 

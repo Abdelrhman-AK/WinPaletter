@@ -2406,7 +2406,7 @@ Public Class CP
                             Case LogonUI7_Modes.Default_
 
                                 For i As Integer = 5031 To 5043 Step +1
-                                    bmpList.Add(LoadFromDLL(imageres, i))
+                                    bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                                 Next
 
                             Case LogonUI7_Modes.CustomImage

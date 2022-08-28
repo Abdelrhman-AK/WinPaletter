@@ -39,29 +39,9 @@ Namespace My
         Public allForms As List(Of Form)
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
-        Public imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+        Public WinRes As WinResources
 #End Region
 
-#Region "Metro Images"
-        Public Metro_1 As Bitmap
-        Public Metro_2 As Bitmap
-        Public Metro_3 As Bitmap
-        Public Metro_4 As Bitmap
-        Public Metro_5 As Bitmap
-        Public Metro_6 As Bitmap
-        Public Metro_7 As Bitmap
-        Public Metro_8 As Bitmap
-        Public Metro_9 As Bitmap
-        Public Metro_10 As Bitmap
-        Public Metro_11 As Bitmap
-        Public Metro_12 As Bitmap
-        Public Metro_13 As Bitmap
-        Public Metro_14 As Bitmap
-        Public Metro_15 As Bitmap
-        Public Metro_16 As Bitmap
-        Public Metro_17 As Bitmap
-        Public Metro_18 As Bitmap
-#End Region
 
 #Region "File Association"
         <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
@@ -577,27 +557,7 @@ Namespace My
             Catch
             End Try
 
-
-            If My.W8 Then
-                Metro_1 = LoadFromDLL(My.Application.imageres, 22001, "PNG")
-                Metro_2 = LoadFromDLL(My.Application.imageres, 21601, "PNG")
-                Metro_3 = LoadFromDLL(My.Application.imageres, 22101, "PNG")
-                Metro_4 = LoadFromDLL(My.Application.imageres, 21901, "PNG")
-                Metro_5 = LoadFromDLL(My.Application.imageres, 21501, "PNG")
-                Metro_6 = LoadFromDLL(My.Application.imageres, 21701, "PNG")
-                Metro_7 = LoadFromDLL(My.Application.imageres, 21301, "PNG")
-                Metro_8 = LoadFromDLL(My.Application.imageres, 20701, "PNG")
-                Metro_9 = LoadFromDLL(My.Application.imageres, 21201, "PNG")
-                Metro_10 = LoadFromDLL(My.Application.imageres, 20501, "PNG")
-                Metro_11 = LoadFromDLL(My.Application.imageres, 21001, "PNG")
-                Metro_12 = LoadFromDLL(My.Application.imageres, 20801, "PNG")
-                Metro_13 = LoadFromDLL(My.Application.imageres, 20601, "PNG")
-                Metro_14 = LoadFromDLL(My.Application.imageres, 20401, "PNG")
-                Metro_15 = LoadFromDLL(My.Application.imageres, 21401, "PNG")
-                Metro_16 = LoadFromDLL(My.Application.imageres, 21101, "PNG")
-                Metro_17 = LoadFromDLL(My.Application.imageres, 20301, "PNG")
-                Metro_18 = LoadFromDLL(My.Application.imageres, 20201, "PNG")
-            End If
+            WinRes = New WinResources
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
