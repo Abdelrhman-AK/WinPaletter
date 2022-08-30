@@ -47,12 +47,12 @@ Public Class XenonCore
     End Sub
 
     Private Structure DWM_COLORIZATION_PARAMS
-        Public clrColor As UInteger
-        Public clrAfterGlow As UInteger
-        Public nIntensity As UInteger
-        Public clrAfterGlowBalance As UInteger
-        Public clrBlurBalance As UInteger
-        Public clrGlassReflectionIntensity As UInteger
+        Public clrColor As Integer
+        Public clrAfterGlow As Integer
+        Public nIntensity As Integer
+        Public clrAfterGlowBalance As Integer
+        Public clrBlurBalance As Integer
+        Public clrGlassReflectionIntensity As Integer
         Public fOpaque As Boolean
     End Structure
 

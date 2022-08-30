@@ -20,7 +20,15 @@ Public Class WinResources
     Public Property MetroStart_17 As Bitmap
     Public Property MetroStart_18 As Bitmap
 
+    Public Property MetroLock_0 As Bitmap
+    Public Property MetroLock_1 As Bitmap
+    Public Property MetroLock_2 As Bitmap
+    Public Property MetroLock_3 As Bitmap
+    Public Property MetroLock_4 As Bitmap
+    Public Property MetroLock_5 As Bitmap
+
     Private imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+    Private Windows_UI_Immersive_dll As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\Windows.UI.Immersive.dll"
 
     Sub New()
         MetroStart_1 = LoadFromDLL(imageres, 22001, "PNG")
@@ -41,5 +49,13 @@ Public Class WinResources
         MetroStart_16 = LoadFromDLL(imageres, 21101, "PNG")
         MetroStart_17 = LoadFromDLL(imageres, 20301, "PNG")
         MetroStart_18 = LoadFromDLL(imageres, 20201, "PNG")
+
+        MetroLock_0 = LoadFromDLL(Windows_UI_Immersive_dll, 39169)
+        MetroLock_1 = LoadFromDLL(Windows_UI_Immersive_dll, 39172)
+        MetroLock_2 = LoadFromDLL(Windows_UI_Immersive_dll, 39175)
+        MetroLock_3 = LoadFromDLL(Windows_UI_Immersive_dll, 39178)
+        MetroLock_4 = LoadFromDLL(Windows_UI_Immersive_dll, 39181)
+        MetroLock_5 = LoadFromDLL(Windows_UI_Immersive_dll, 39184)
+
     End Sub
 End Class

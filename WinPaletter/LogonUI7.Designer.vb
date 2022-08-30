@@ -38,6 +38,7 @@ Partial Class LogonUI7
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
@@ -278,6 +279,7 @@ Partial Class LogonUI7
         'XenonGroupBox2
         '
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox2.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
@@ -298,6 +300,22 @@ Partial Class LogonUI7
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(324, 186)
         Me.XenonGroupBox2.TabIndex = 17
+        '
+        'XenonButton3
+        '
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton3.ForeColor = System.Drawing.Color.White
+        Me.XenonButton3.Image = Nothing
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton3.LineSize = 1
+        Me.XenonButton3.Location = New System.Drawing.Point(256, 32)
+        Me.XenonButton3.Name = "XenonButton3"
+        Me.XenonButton3.Size = New System.Drawing.Size(62, 25)
+        Me.XenonButton3.TabIndex = 93
+        Me.XenonButton3.Text = "Choose"
+        Me.XenonButton3.UseVisualStyleBackColor = False
+        Me.XenonButton3.Visible = False
         '
         'PictureBox7
         '
@@ -346,10 +364,10 @@ Partial Class LogonUI7
         Me.color_pick.CustomColor = True
         Me.color_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.color_pick.LineSize = 1
-        Me.color_pick.Location = New System.Drawing.Point(268, 94)
+        Me.color_pick.Location = New System.Drawing.Point(256, 94)
         Me.color_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color_pick.Name = "color_pick"
-        Me.color_pick.Size = New System.Drawing.Size(50, 25)
+        Me.color_pick.Size = New System.Drawing.Size(62, 25)
         Me.color_pick.TabIndex = 88
         Me.color_pick.Text = "XenonGroupBox31"
         '
@@ -382,7 +400,7 @@ Partial Class LogonUI7
         Me.XenonRadioButton3.ForeColor = System.Drawing.Color.White
         Me.XenonRadioButton3.Location = New System.Drawing.Point(73, 94)
         Me.XenonRadioButton3.Name = "XenonRadioButton3"
-        Me.XenonRadioButton3.Size = New System.Drawing.Size(188, 25)
+        Me.XenonRadioButton3.Size = New System.Drawing.Size(176, 25)
         Me.XenonRadioButton3.TabIndex = 85
         Me.XenonRadioButton3.Text = "Solid Color"
         '
@@ -604,7 +622,7 @@ Partial Class LogonUI7
         Me.MinimizeBox = False
         Me.Name = "LogonUI7"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "LogonUI - Windows 7"
+        Me.Text = "LogonUI"
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
@@ -664,4 +682,5 @@ Partial Class LogonUI7
     Friend WithEvents XenonTrackbar1 As XenonTrackbar
     Friend WithEvents XenonTrackbar2 As XenonTrackbar
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents XenonButton3 As XenonButton
 End Class

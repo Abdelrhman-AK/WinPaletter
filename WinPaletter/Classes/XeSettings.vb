@@ -10,6 +10,7 @@ Public Class XeSettings
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
+    Public Property Win7LivePreview As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
     Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
@@ -48,6 +49,7 @@ Public Class XeSettings
         If Key.GetValue("AutoUpdatesChecking", Nothing) Is Nothing Then Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
         If Key.GetValue("AutoAddExt", Nothing) Is Nothing Then Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
         If Key.GetValue("DragAndDropPreview", Nothing) Is Nothing Then Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
+        If Key.GetValue("Win7LivePreview", Nothing) Is Nothing Then Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
         If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
         If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
         If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
@@ -84,6 +86,7 @@ Public Class XeSettings
                 DragAndDropPreview = Key.GetValue("DragAndDropPreview", Nothing)
                 OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing)
                 AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", Nothing)
+                Win7LivePreview = Key.GetValue("Win7LivePreview", Nothing)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
 
@@ -115,6 +118,7 @@ Public Class XeSettings
                     If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ") Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
                     If x.StartsWith("AutoRestartExplorer= ") Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
                     If x.StartsWith("AutoUpdatesChecking= ") Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
+                    If x.StartsWith("Win7LivePreview= ") Then Win7LivePreview = x.Remove(0, "Win7LivePreview= ".Count)
                     If x.StartsWith("CustomPreviewConfig_Enabled= ") Then CustomPreviewConfig_Enabled = x.Remove(0, "CustomPreviewConfig_Enabled= ".Count)
                     If x.StartsWith("CustomPreviewConfig= ") Then CustomPreviewConfig = x.Remove(0, "CustomPreviewConfig= ".Count)
                     If x.StartsWith("UpdateChannel= ") Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
@@ -139,6 +143,7 @@ Public Class XeSettings
                 Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
+                Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
 
                 Select Case CustomPreviewConfig
@@ -171,6 +176,7 @@ Public Class XeSettings
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
+                l.Add(String.Format("Win7LivePreview= {0}", Win7LivePreview))
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
 
                 Select Case CustomPreviewConfig

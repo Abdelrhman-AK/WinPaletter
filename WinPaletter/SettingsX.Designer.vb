@@ -116,6 +116,8 @@ Partial Class SettingsX
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -149,6 +151,7 @@ Partial Class SettingsX
         Me.TabPage5.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label17
@@ -1293,6 +1296,8 @@ Partial Class SettingsX
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.PictureBox15)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox9)
         Me.TabPage6.Controls.Add(Me.XenonSeparator7)
         Me.TabPage6.Controls.Add(Me.PictureBox13)
         Me.TabPage6.Controls.Add(Me.Label6)
@@ -1332,6 +1337,31 @@ Partial Class SettingsX
         'OpenFileDialog2
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
+        '
+        'PictureBox15
+        '
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(51, 157)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox15.TabIndex = 20
+        Me.PictureBox15.TabStop = False
+        '
+        'XenonCheckBox9
+        '
+        Me.XenonCheckBox9.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox9.Checked = False
+        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox9.Location = New System.Drawing.Point(87, 157)
+        Me.XenonCheckBox9.Name = "XenonCheckBox9"
+        Me.XenonCheckBox9.Size = New System.Drawing.Size(684, 26)
+        Me.XenonCheckBox9.TabIndex = 21
+        Me.XenonCheckBox9.Text = "Preview every change I make to colors and values in real-time (Windows 7)"
         '
         'SettingsX
         '
@@ -1394,6 +1424,7 @@ Partial Class SettingsX
         Me.TabPage5.ResumeLayout(False)
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1489,4 +1520,6 @@ Partial Class SettingsX
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents PictureBox14 As PictureBox
     Friend WithEvents XenonCheckBox7 As XenonCheckBox
+    Friend WithEvents PictureBox15 As PictureBox
+    Friend WithEvents XenonCheckBox9 As XenonCheckBox
 End Class

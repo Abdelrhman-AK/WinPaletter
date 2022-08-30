@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports Cyotek.Windows.Forms
+Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
@@ -164,7 +166,7 @@ Public Class ColorPickerDlg
 
                     End If
 
-                        .Invalidate()
+                    .Invalidate()
                 End With
 
             ElseIf TypeOf ctrl Is XenonAcrylic Then
@@ -350,7 +352,45 @@ Public Class ColorPickerDlg
             End If
 
         Next
+
+        If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
+            If _Conditions.Win7LivePreview_Colorization Then
+                UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Aero_ColorizationAfterglow)
+            End If
+
+            If _Conditions.Win7LivePreview_AfterGlow Then
+                UpdateWin7Preview(MainFrm.CP.Aero_ColorizationColor, ColorEditorManager1.Color)
+            End If
+        End If
     End Sub
+
+#Region "DWM Windows 7 Live Preview"
+    <DllImport("dwmapi.dll", EntryPoint:="#131", PreserveSig:=False)>
+    Private Shared Sub DwmSetColorizationParameters(ByRef parameters As DWM_COLORIZATION_PARAMS, ByVal unknown As Boolean)
+    End Sub
+
+    Private Structure DWM_COLORIZATION_PARAMS
+        Public clrColor As Integer
+        Public clrAfterGlow As Integer
+        Public nIntensity As Integer
+        Public clrAfterGlowBalance As Integer
+        Public clrBlurBalance As Integer
+        Public clrGlassReflectionIntensity As Integer
+        Public fOpaque As Boolean
+    End Structure
+
+    Public Shared Sub UpdateWin7Preview(Color1 As Color, Color2 As Color)
+        Dim temp As New DWM_COLORIZATION_PARAMS
+        temp.clrColor = Color1.ToArgb
+        temp.clrAfterGlow = Color2.ToArgb
+        temp.nIntensity = MainFrm.CP.Aero_ColorizationColorBalance
+        temp.clrAfterGlowBalance = MainFrm.CP.Aero_ColorizationAfterglowBalance
+        temp.clrBlurBalance = MainFrm.CP.Aero_ColorizationBlurBalance
+        temp.clrGlassReflectionIntensity = MainFrm.CP.Aero_ColorizationGlassReflectionIntensity
+        temp.fOpaque = If(MainFrm.CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
+        DwmSetColorizationParameters(temp, False)
+    End Sub
+#End Region
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         Me.DialogResult = DialogResult.Cancel
@@ -510,6 +550,8 @@ Public Class Conditions
 
     End Sub
 
+    Public Property Win7LivePreview_Colorization As Boolean = False
+    Public Property Win7LivePreview_AfterGlow As Boolean = False
     Public Property Win7 As Boolean = False
     Public Property Color1 As Boolean = False
     Public Property Color2 As Boolean = False

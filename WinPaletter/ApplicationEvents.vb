@@ -4,10 +4,6 @@ Imports System.Security.Principal
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
-Imports WinPaletter.Localizer
-Imports System.ComponentModel
-Imports System.Globalization
-Imports System.Drawing.Text
 
 Namespace My
     Public Module WindowsVersions
@@ -41,7 +37,6 @@ Namespace My
         Public curPath As String = appData & "\Cursors"
         Public WinRes As WinResources
 #End Region
-
 
 #Region "File Association"
         <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
@@ -421,13 +416,13 @@ Namespace My
 
             DetectOS()
 
-#If Not DEBUG Then
-            If My.W7 Or My.W8 Then
-                MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
-                       "You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
-                       , MsgBoxStyle.Exclamation + MsgboxRt())
-            End If
-#End If
+            '#If Not DEBUG Then
+            '           If My.W7 Or My.W8 Then
+            '          MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
+            '                    "You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
+            '                   , MsgBoxStyle.Exclamation + MsgboxRt())
+            '       End If
+            '#End If
 
 
             Dim ProcessKillerInfo As New ProcessStartInfo With {
@@ -668,6 +663,15 @@ Namespace My
 
 #Disable Warning BC42105
         End Function
+
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+
+#If DEBUG Then
+            MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
+#End If
+
+        End Sub
+
 #Enable Warning BC42105
 
     End Class

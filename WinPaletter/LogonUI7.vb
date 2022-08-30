@@ -5,12 +5,24 @@ Public Class LogonUI7
     Private _Shown As Boolean = False
     Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
     Dim b As Bitmap
+    Public ID As Integer
 
     Private Sub LogonUI7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ID = 0
         ApplyDarkMode(Me)
         _Shown = False
         LoadFromCP(MainFrm.CP)
         ApplyPreview()
+
+        If My.W8 Then
+            XenonButton3.Visible = True
+            PictureBox11.Image = My.Resources.LogonUI8
+            If GetDarkMode() Then PictureBox4.Image = My.Resources.StartBtn_10Dark Else PictureBox4.Image = My.Resources.StartBtn_10Light
+        Else
+            XenonButton3.Visible = False
+            PictureBox11.Image = My.Resources.LogonUI7
+            PictureBox4.Image = My.Resources.Win7Logo
+        End If
     End Sub
 
     Private Sub LogonUI7_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -18,22 +30,42 @@ Public Class LogonUI7
     End Sub
 
     Sub LoadFromCP(CP As CP)
-        XenonToggle1.Checked = CP.LogonUI7_Enabled
 
-        Select Case CP.LogonUI7_Mode
-            Case CP.LogonUI7_Modes.Default_
-                XenonRadioButton1.Checked = True
+        If My.W8 Then
+            XenonToggle1.Checked = Not CP.Metro_NoLockScreen
 
-            Case CP.LogonUI7_Modes.Wallpaper
-                XenonRadioButton2.Checked = True
+            Select Case CP.Metro_LockScreenType
+                Case CP.LogonUI8_Modes.System
+                    XenonRadioButton1.Checked = True
 
-            Case CP.LogonUI7_Modes.CustomImage
-                XenonRadioButton4.Checked = True
+                Case CP.LogonUI8_Modes.Wallpaper
+                    XenonRadioButton2.Checked = True
 
-            Case CP.LogonUI7_Modes.SolidColor
-                XenonRadioButton3.Checked = True
+                Case CP.LogonUI8_Modes.CustomImage
+                    XenonRadioButton4.Checked = True
 
-        End Select
+                Case CP.LogonUI8_Modes.SolidColor
+                    XenonRadioButton3.Checked = True
+            End Select
+
+            ID = CP.Metro_LockScreenSystemID
+        Else
+            XenonToggle1.Checked = CP.LogonUI7_Enabled
+
+            Select Case CP.LogonUI7_Mode
+                Case CP.LogonUI7_Modes.Default_
+                    XenonRadioButton1.Checked = True
+
+                Case CP.LogonUI7_Modes.Wallpaper
+                    XenonRadioButton2.Checked = True
+
+                Case CP.LogonUI7_Modes.CustomImage
+                    XenonRadioButton4.Checked = True
+
+                Case CP.LogonUI7_Modes.SolidColor
+                    XenonRadioButton3.Checked = True
+            End Select
+        End If
 
         XenonTextBox1.Text = CP.LogonUI7_ImagePath
         color_pick.BackColor = CP.LogonUI7_Color
@@ -51,17 +83,31 @@ Public Class LogonUI7
 
             Case CP.LogonUI7_NoiseMode.Aero
                 XenonComboBox1.SelectedIndex = 1
-
         End Select
 
     End Sub
 
     Sub LoadToCP(CP As CP)
-        CP.LogonUI7_Enabled = XenonToggle1.Checked
-        If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Default_
-        If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Wallpaper
-        If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.SolidColor
-        If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.CustomImage
+
+        If My.W8 Then
+            CP.Metro_NoLockScreen = Not XenonToggle1.Checked
+
+            If XenonRadioButton1.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.System
+            If XenonRadioButton2.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.CustomImage
+
+            CP.Metro_LockScreenSystemID = ID
+        Else
+            CP.LogonUI7_Enabled = XenonToggle1.Checked
+
+            If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Default_
+            If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.CustomImage
+        End If
+
+
         CP.LogonUI7_ImagePath = XenonTextBox1.Text
         CP.LogonUI7_Color = color_pick.BackColor
 
@@ -80,7 +126,20 @@ Public Class LogonUI7
         Dim bmpX As Bitmap
 
         If XenonRadioButton1.Checked Then
-            bmpX = LoadFromDLL(imageres, 5038)
+            If My.W7 Then
+                bmpX = LoadFromDLL(imageres, 5038)
+            End If
+
+            If My.W8 Then
+                Dim syslock As String
+                If Not ID = 1 And Not ID = 3 Then
+                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", ID)
+                Else
+                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", ID)
+                End If
+                bmpX = Image.FromStream(New FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
+            End If
+
         ElseIf XenonRadioButton2.Checked Then
             bmpX = My.Application.GetCurrentWallpaper
         ElseIf XenonRadioButton3.Checked Then
@@ -195,5 +254,11 @@ Public Class LogonUI7
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        If LogonUI8_Pics.ShowDialog = DialogResult.OK Then
+            ApplyPreview()
+        End If
     End Sub
 End Class

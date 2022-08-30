@@ -133,6 +133,7 @@
       <LastGenOutput>Application1.Designer.vb</LastGenOutput>
     </None>
     <None Include="My Project\Settings.settings" />
+    <None Include="Resources\LogonUI7.pdn" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +219,12 @@
     <Compile Include="LogonUI8Colors.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogonUI8_Pics.Designer.vb">
+      <DependentUpon>LogonUI8_Pics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI8_Pics.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainFrm.Designer.vb">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </Compile>
@@ -288,6 +295,9 @@
     <None Include="Resources\Taskbar_InactiveApp7.png" />
     <None Include="Resources\Taskbar_InactiveApp8.png" />
     <None Include="Resources\Win7TaskbarSides.png" />
+    <None Include="Resources\LogonUI8.png" />
+    <None Include="Resources\LogonUI7.png" />
+    <None Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win7ORB.png" />
@@ -300,6 +310,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Changelog1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -325,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI8Colors.resx">
       <DependentUpon>LogonUI8Colors.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI8_Pics.resx">
+      <DependentUpon>LogonUI8_Pics.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>

@@ -34,6 +34,7 @@ Public Class SettingsX
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then Changed = True
             If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
+            If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
             If .Language <> XenonCheckBox8.Checked Then Changed = True
@@ -78,6 +79,7 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+            XenonCheckBox9.Checked = .Win7LivePreview
 
             Select Case .CustomPreviewConfig
                 Case XeSettings.WinVer.Eleven
@@ -125,6 +127,7 @@ Public Class SettingsX
             .AutoUpdatesChecking = XenonCheckBox5.Checked
             .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
             .CustomPreviewConfig = XenonComboBox1.SelectedIndex
+            .Win7LivePreview = XenonCheckBox9.Checked
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
@@ -192,6 +195,7 @@ Public Class SettingsX
                 .AutoUpdatesChecking = XenonCheckBox5.Checked
                 .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
                 .CustomPreviewConfig = XenonComboBox1.SelectedIndex
+                .Win7LivePreview = XenonCheckBox9.Checked
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
@@ -218,6 +222,7 @@ Public Class SettingsX
                 XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+                XenonCheckBox9.Checked = .Win7LivePreview
 
                 Select Case .CustomPreviewConfig
                     Case XeSettings.WinVer.Eleven
@@ -268,6 +273,7 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
+            XenonCheckBox9.Checked = .Win7LivePreview
 
             Select Case .CustomPreviewConfig
                 Case XeSettings.WinVer.Eleven

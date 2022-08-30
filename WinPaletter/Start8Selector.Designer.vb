@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Start8Selector
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Start8Selector
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Start8Selector))
         Me.img1 = New WinPaletter.XenonRadioImage()
@@ -48,13 +48,8 @@ Partial Class Start8Selector
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox2.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'img1
@@ -326,7 +321,7 @@ Partial Class Start8Selector
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(411, 493)
+        Me.XenonButton2.Location = New System.Drawing.Point(179, 493)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(80, 36)
         Me.XenonButton2.TabIndex = 68
@@ -343,11 +338,11 @@ Partial Class Start8Selector
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(497, 493)
+        Me.XenonButton1.Location = New System.Drawing.Point(265, 493)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(210, 36)
+        Me.XenonButton1.Size = New System.Drawing.Size(92, 36)
         Me.XenonButton1.TabIndex = 67
-        Me.XenonButton1.Text = "Load these into current palette"
+        Me.XenonButton1.Text = "Load"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonGroupBox1
@@ -404,47 +399,12 @@ Partial Class Start8Selector
         Me.Label41.Text = "Start Background"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonGroupBox2
-        '
-        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox1)
-        Me.XenonGroupBox2.Controls.Add(Me.Label1)
-        Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox2.LineSize = 1
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(362, 12)
-        Me.XenonGroupBox2.Name = "XenonGroupBox2"
-        Me.XenonGroupBox2.Size = New System.Drawing.Size(344, 468)
-        Me.XenonGroupBox2.TabIndex = 70
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
-        '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(44, 3)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(297, 35)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Tweaks"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Start8Selector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(719, 541)
-        Me.Controls.Add(Me.XenonGroupBox2)
+        Me.ClientSize = New System.Drawing.Size(369, 541)
         Me.Controls.Add(Me.XenonGroupBox1)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
@@ -460,8 +420,6 @@ Partial Class Start8Selector
         Me.Text = "Windows 8.1 Start"
         Me.XenonGroupBox1.ResumeLayout(False)
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox2.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -491,7 +449,4 @@ Partial Class Start8Selector
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents PictureBox32 As PictureBox
     Friend WithEvents Label41 As Label
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Label1 As Label
 End Class
