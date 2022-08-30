@@ -21,19 +21,6 @@ Public Class MainFrm
         Dim AnimX1 As Integer = 30
         Dim AnimX2 As Integer = 1
 
-        start.Visible = True
-        taskbar.Visible = True
-        XenonWindow1.Visible = True
-        XenonWindow2.Visible = True
-        ActionCenter.Visible = True
-
-        XenonWindow1.Win7 = False
-        XenonWindow2.Win7 = False
-        XenonWindow1.Win8 = False
-        XenonWindow2.Win8 = False
-        XenonWindow1.Win8Lite = False
-        XenonWindow2.Win8Lite = False
-
         If Not PreviewConfig = WinVer.Seven And Not PreviewConfig = WinVer.Eight Then
             XenonWindow1.Active = True
             XenonWindow2.Active = False
@@ -49,9 +36,6 @@ Public Class MainFrm
 
             XenonWindow1.DarkMode = Not [CP].AppMode_Light
             XenonWindow2.DarkMode = Not [CP].AppMode_Light
-
-            XenonWindow1.Invalidate()
-            XenonWindow2.Invalidate()
 
             Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
@@ -351,17 +335,6 @@ Public Class MainFrm
                 ApplyMetroStartToButton([CP])
                 ApplyBackLogonUI([CP])
 
-                start.Visible = False
-                taskbar.Visible = True
-                XenonWindow1.Visible = True
-                XenonWindow2.Visible = True
-                ActionCenter.Visible = False
-                XenonWindow1.Active = True
-                XenonWindow2.Active = False
-                XenonWindow1.Win8 = True
-                XenonWindow2.Win8 = True
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
-
                 Select Case [CP].Metro_Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Win8Lite = False
@@ -385,27 +358,11 @@ Public Class MainFrm
                 taskbar.Win7ColorBal = [CP].Aero_ColorizationColorBalance
 
                 ReValidateLivePreview(pnl_preview)
-
-
 #End Region
             Case WinVer.Seven
 #Region "Win7"
-                If My.W7 And My.Application._Settings.Win7LivePreview Then
+                If My.W7 And My.Application._Settings.Win7LivePreview And _Shown Then
                     UpdateWin7Preview()
-                End If
-
-                If CP.Aero_Theme = [CP].AeroTheme.Classic Then
-                    start.Visible = False
-                    taskbar.Visible = False
-                    XenonWindow1.Visible = False
-                    XenonWindow2.Visible = False
-                    ActionCenter.Visible = False
-                Else
-                    start.Visible = True
-                    taskbar.Visible = True
-                    XenonWindow1.Visible = True
-                    XenonWindow2.Visible = True
-                    ActionCenter.Visible = False
                 End If
 
                 Select Case [CP].Aero_Theme
@@ -461,7 +418,6 @@ Public Class MainFrm
                             .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
                         End With
 
-
                     Case CP.AeroTheme.AeroOpaque
                         start.Transparency = True
                         start.Basic = False
@@ -504,18 +460,18 @@ Public Class MainFrm
                         End With
 
                     Case CP.AeroTheme.Basic
-
 #Region "Basic"
                         taskbar.BackColor = Color.FromArgb(166, 190, 218)
-                        taskbar.BackColorAlpha = 255
+                        taskbar.BackColorAlpha = 100
                         start.BackColor = Color.FromArgb(166, 190, 218)
-                        start.BackColorAlpha = 255
+                        start.BackColorAlpha = 100
+
                         With XenonWindow1
                             .Win7 = True
                             .Win7Aero = False
                             .Win7AeroOpaque = False
                             .Win7Basic = True
-                            .Win7Alpha = 255
+                            .Win7Alpha = 100
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
@@ -525,10 +481,11 @@ Public Class MainFrm
                             .Win7Aero = False
                             .Win7AeroOpaque = False
                             .Win7Basic = True
-                            .Win7Alpha = 255
+                            .Win7Alpha = 100
                             .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
+
                         start.Transparency = False
                         start.Basic = True
                         start.NoisePower = 0
@@ -564,11 +521,21 @@ Public Class MainFrm
         If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
         Panel3.Visible = True
         Label12.Visible = True
+
         start.Visible = True
         taskbar.Visible = True
         XenonWindow1.Visible = True
         XenonWindow2.Visible = True
         ActionCenter.Visible = True
+
+        XenonWindow1.Win7 = False
+        XenonWindow2.Win7 = False
+        XenonWindow1.Win8 = False
+        XenonWindow2.Win8 = False
+        XenonWindow1.Win8Lite = False
+        XenonWindow2.Win8Lite = False
+        XenonButton23.Visible = False
+        pnl_preview.Visible = True
 
         Select Case PreviewConfig
             Case WinVer.Eleven
@@ -616,7 +583,16 @@ Public Class MainFrm
             Case WinVer.Eight
                 Panel3.Visible = False
                 Label12.Visible = False
+
+                start.Visible = False
+                taskbar.Visible = True
+                XenonWindow1.Visible = True
+                XenonWindow2.Visible = True
                 ActionCenter.Visible = False
+                XenonWindow1.Active = True
+                XenonWindow2.Active = False
+                XenonWindow1.Win8 = True
+                XenonWindow2.Win8 = True
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
                 taskbar.BlurPower = 0
                 taskbar.Height = 34
@@ -627,15 +603,29 @@ Public Class MainFrm
                 start.Left = 0
 
             Case WinVer.Seven
+                XenonButton23.Visible = True
+
+                If CP.Aero_Theme = AeroTheme.Classic Then
+                    start.Visible = False
+                    taskbar.Visible = False
+                    XenonWindow1.Visible = False
+                    XenonWindow2.Visible = False
+                    ActionCenter.Visible = False
+                Else
+                    start.Visible = True
+                    taskbar.Visible = True
+                    XenonWindow1.Visible = True
+                    XenonWindow2.Visible = True
+                    ActionCenter.Visible = False
+                End If
+
                 Panel3.Visible = False
                 Label12.Visible = False
-                ActionCenter.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
                 taskbar.NoisePower = CP.Aero_ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
 
-                start.Visible = True
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.RoundedCorners = True
                 start.BlurPower = 1
@@ -661,8 +651,8 @@ Public Class MainFrm
             XenonWindow2.Left = XenonWindow1.Left
         End If
 
-        XenonWindow1.Invalidate()
-        XenonWindow2.Invalidate()
+        XenonWindow1.Refresh()
+        XenonWindow2.Refresh()
 
         ReValidateLivePreview(pnl_preview)
 
@@ -1733,7 +1723,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        Me.Close()
+        Me.close
     End Sub
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -2170,6 +2160,16 @@ Public Class MainFrm
     Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
         LogonUI8Colors.ShowDialog()
         ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
+        If XenonButton23.Text.ToLower = "hide" Then
+            pnl_preview.Visible = False
+            XenonButton23.Text = "Show"
+        Else
+            pnl_preview.Visible = True
+            XenonButton23.Text = "Hide"
+        End If
     End Sub
 
 

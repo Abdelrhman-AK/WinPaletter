@@ -286,15 +286,14 @@ Public Class XenonCore
     End Function
     Public Shared Function FadeBitmap(ByVal bmp As Bitmap, ByVal opacity As Single) As Bitmap
         Try
-            Dim bmp2 As New Bitmap(bmp.Width, bmp.Height, Imaging.PixelFormat.Format32bppArgb)
+            Dim bmp2 As New Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb)
             opacity = Math.Max(0, Math.Min(opacity, 1.0F))
-            Using ia As New Imaging.ImageAttributes
-                Dim cm As New Imaging.ColorMatrix With {.Matrix33 = opacity}
+            Using ia As New ImageAttributes
+                Dim cm As New ColorMatrix With {.Matrix33 = opacity}
                 ia.SetColorMatrix(cm)
                 Dim destpoints() As PointF = {New Point(0, 0), New Point(bmp.Width, 0), New Point(0, bmp.Height)}
                 Using g As Graphics = Graphics.FromImage(bmp2)
-                    g.DrawImage(bmp, destpoints,
-              New RectangleF(Point.Empty, bmp.Size), GraphicsUnit.Pixel, ia)
+                    g.DrawImage(bmp, destpoints, New RectangleF(Point.Empty, bmp.Size), GraphicsUnit.Pixel, ia)
                     g.Dispose()
                 End Using
             End Using

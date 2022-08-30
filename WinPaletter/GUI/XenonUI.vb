@@ -105,7 +105,7 @@ Module XenonModule
         End Try
     End Function
     Public Function BlendedTexture(BaseColor As Color, FrontColor As Color, Optional Fading As Single = 1) As TextureBrush
-        Dim b As New Bitmap(16, 16, Imaging.PixelFormat.Format32bppArgb)
+        Dim b As New Bitmap(5, 5, Imaging.PixelFormat.Format32bppArgb)
         Dim g As Graphics = Graphics.FromImage(b)
         g.FillRectangle(New SolidBrush(BaseColor), New Rectangle(0, 0, b.Width, b.Height))
         g.FillRectangle(New SolidBrush(FrontColor), New Rectangle(0, 0, b.Width, b.Height))
@@ -180,6 +180,7 @@ Module XenonModule
     Public Sub DrawAero(G As Graphics, Rect As Rectangle, BackgroundBlurred As Bitmap, Color1 As Color, ColorBalance As Single, Color2 As Color, GlowBalance As Single, alpha As Single,
                        Radius As Integer)
 
+
         FillImg(G, BackgroundBlurred, Rect, Radius, True)
 
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)), Rect, Radius, True)
@@ -199,6 +200,7 @@ Module XenonModule
 
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), BlendColor(C1, C2, 100))), Rect, Radius, True)
+
     End Sub
 #Region "Rounded Rectangle System"
     Public Sub FillRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
@@ -3512,6 +3514,7 @@ Public Class XenonAlertBox
     End Sub
 
 End Class
+
 Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyPropertyChanged
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
@@ -3546,7 +3549,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _BackColorAlpha) Then
                 Me._BackColorAlpha = value
                 NotifyBackColorAlphaChanged(_BackColorAlpha)
-                Invalidate()
             End If
         End Set
     End Property
@@ -3567,7 +3569,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _NoisePower) Then
                 Me._NoisePower = value
                 NotifyNoisePowerChanged(_NoisePower)
-                Invalidate()
             End If
         End Set
     End Property
@@ -3587,7 +3588,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _BlurPower) Then
                 Me._BlurPower = value
                 NotifyBlurPowerChanged("BlurPower")
-                Invalidate()
             End If
         End Set
     End Property
@@ -3607,7 +3607,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 Me._Transparency = value
                 NotifyTransparencyChanged("Transparency")
                 ProcessBack()
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3647,7 +3647,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _AppUnderline) Then
                 Me._AppUnderline = value
                 NotifyAppUnderlineChanged("AppUnderline")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3667,7 +3667,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _AppBackground) Then
                 Me._AppBackground = value
                 NotifyAppBackgroundChanged("AppBackground")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3687,7 +3687,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _SearchBoxAccent) Then
                 Me._SearchBoxAccent = value
                 NotifySearchBoxAccentChanged("SearchBoxAccent")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3707,7 +3707,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Normal) Then
                 Me._ActionCenterButton_Normal = value
                 NotifyActionCenterButton_NormalChanged("ActionCenterButton_Normal")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3727,7 +3727,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Hover) Then
                 Me._ActionCenterButton_Hover = value
                 NotifyActionCenterButton_HoverChanged("ActionCenterButton_Hover")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3747,7 +3747,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Pressed) Then
                 Me._ActionCenterButton_Pressed = value
                 NotifyActionCenterButton_PressedChanged("ActionCenterButton_Pressed")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3767,7 +3767,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _StartColor) Then
                 Me._StartColor = value
                 NotifyStartColorChanged("StartColor")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3786,7 +3786,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _LinkColor) Then
                 Me._LinkColor = value
                 NotifyLinkColorChanged("LinkColor")
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
@@ -3805,7 +3805,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _BackColor2) Then
                 Me._BackColor2 = value
                 NotifyBackColor2Changed("BackColor2")
-                Invalidate()
             End If
         End Set
     End Property
@@ -3825,7 +3824,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _Win7ColorBal) Then
                 Me._Win7ColorBal = value
                 NotifyWin7ColorBalChanged(_Win7ColorBal)
-                Invalidate()
             End If
         End Set
     End Property
@@ -3845,7 +3843,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _Win7GlowBal) Then
                 Me._Win7GlowBal = value
                 NotifyWin7GlowBalChanged(_Win7GlowBal)
-                Invalidate()
             End If
         End Set
     End Property
@@ -3924,12 +3921,16 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     End Sub
 
     Private Sub XenonAcrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-        _State_Btn1 = MouseState.Normal
-        _State_Btn2 = MouseState.Normal
-        Invalidate()
+        If UseItAsActionCenter And UseItAsTaskbar_Version = TaskbarVersion.Eleven Then
+            _State_Btn1 = MouseState.Normal
+            _State_Btn2 = MouseState.Normal
+            Invalidate()
+        End If
     End Sub
 
     Public Property Win7AeroOpaque As Boolean = False
+
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -4250,29 +4251,36 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler BlurPowerChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler BlurPowerChanged, AddressOf BlurBack : Catch : End Try
+            Try : AddHandler NoisePowerChanged, AddressOf NoiseBack : Catch : End Try
 
-            Try : AddHandler NoisePowerChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
 
-            Try : AddHandler BackColorChanged, AddressOf Refresh : Catch : End Try
-            Try : AddHandler BackColor2Changed, AddressOf Refresh : Catch : End Try
-            Try : AddHandler Win7ColorBalChanged, AddressOf Refresh : Catch : End Try
-            Try : AddHandler Win7GlowBalChanged, AddressOf Refresh : Catch : End Try
+            'Try : AddHandler BackColorChanged, AddressOf Refresh : Catch : End Try
+            'Try : AddHandler BackColor2Changed, AddressOf Refresh : Catch : End Try
+            'Try : AddHandler Win7ColorBalChanged, AddressOf Refresh : Catch : End Try
+            'Try : AddHandler Win7GlowBalChanged, AddressOf Refresh : Catch : End Try
+            'Try : AddHandler BackColorAlphaChanged, AddressOf ProcessBack : Catch : End Try
 
-            Try : AddHandler BackColorAlphaChanged, AddressOf ProcessBack : Catch : End Try
             ProcessBack()
         End If
     End Sub
 
     Sub ProcessBack()
+        GetBack()
+        BlurBack()
+        'NoiseBack()
+    End Sub
 
+    Sub GetBack()
         Try
             adaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat)
         Catch : End Try
+    End Sub
 
+    Sub BlurBack()
         Try : If Transparency Then
                 If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
                     adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 1)
@@ -4281,7 +4289,9 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 End If
             End If
         Catch : End Try
+    End Sub
 
+    Sub NoiseBack()
         Try
             If Transparency Then
                 If UseItAsTaskbar_Version = TaskbarVersion.Eleven Or UseItAsTaskbar_Version = TaskbarVersion.Ten Then
@@ -4362,8 +4372,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Private _Win7Noise As Single = 1
     Public Event Win7NoiseChanged As PropertyChangedEventHandler
     Private Sub NotifyWin7NoiseChanged(ByVal info As Single)
-        ProcessBack()
         RaiseEvent Win7NoiseChanged(Me, New PropertyChangedEventArgs(info))
+
     End Sub
     Public Property Win7Noise() As Single
         Get
@@ -4373,6 +4383,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Set(ByVal value As Single)
             If Not (value = Win7Noise) Then
                 Me._Win7Noise = value
+
+                If Win7 Then
+                    Try : Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100)) : Catch : End Try
+                End If
+
                 NotifyWin7NoiseChanged(_Win7Noise)
             End If
         End Set
@@ -4400,7 +4415,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property Win7ColorBal As Integer = 100
     Public Property Win7GlowBal As Integer = 100
 
-    Dim AdaptedBack, AdaptedBackBlurred, Noise As Bitmap
+    Dim AdaptedBack, AdaptedBackBlurred As Bitmap
+    Dim Noise As TextureBrush
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -4414,7 +4430,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim IconRect As New Rectangle(4, 4, 15, 15)
         Dim LabelRect As New Rectangle(21, 1, TitlebarRect.Width - 21, TitlebarRect.Height)
         Dim LabelRect8 As New Rectangle(0, 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
-
         Dim XRect As New Rectangle(Rect.Right - 17, 1, 17, TitlebarRect.Height)
 
         Dim RectClip As Rectangle = Bounds
@@ -4501,6 +4516,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 If Not Win7Basic Then
 
                     G.DrawImage(AdaptedBack, Rect7)
+
                     Dim Radius As Integer = 3
 
                     If Not Win7AeroOpaque Then
@@ -4515,13 +4531,13 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         DrawAero(G, Rect7, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius)
 
                     Else
-                        FillRect(G, BlendedTexture(Color.White, Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, 3, True)
+                        FillRect(G, BlendedTexture(Color.White, Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, Radius, True)
                     End If
 
                     G.DrawImage(My.Resources.Win7Sides, RectSide1)
                     G.DrawImage(My.Resources.Win7Sides, RectSide2)
 
-                    FillRect(G, New TextureBrush(Noise), Rect7, 3, True)
+                    FillRect(G, Noise, Rect7, Radius, True)
 
                     Dim closeBtn As Image = If(Active, My.Resources.Win7_Close_Active, My.Resources.Win7_Close_inactive)
                     G.DrawImage(closeBtn, New Rectangle(Width - closeBtn.Width - 5, 0, closeBtn.Width, closeBtn.Height))
@@ -4576,8 +4592,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect8)
                 End If
             End If
-
-
         End If
 
         Dim ForeColorX As Color
@@ -4695,13 +4709,16 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
         End If
+
         ProcessBack()
     End Sub
 
     Sub ProcessBack()
-        Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
-        Try : AdaptedBackBlurred = BlurBitmap(New Bitmap(AdaptedBack), 1) : Catch : End Try
-        Try : Noise = FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100) : Catch : End Try
+        If Win7 Then
+            Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
+            Try : AdaptedBackBlurred = BlurBitmap(New Bitmap(AdaptedBack), 1) : Catch : End Try
+            Try : Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100)) : Catch : End Try
+        End If
     End Sub
 End Class
 

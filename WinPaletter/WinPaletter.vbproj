@@ -283,11 +283,8 @@
     <None Include="Resources\Win7_Close_Active.png" />
     <None Include="Resources\Win7BasicActive.png" />
     <None Include="Resources\Win7BasicInactive.png" />
-    <None Include="Resources\Start7Glass.png" />
     <None Include="Resources\Start7.png" />
     <None Include="Resources\Win7Sides.png" />
-    <None Include="Resources\AeroGlass.png" />
-    <None Include="Resources\AeroGlass.jpg" />
     <None Include="Resources\GaussianBlur.png" />
     <None Include="Resources\GaussianBlurOpaque.png" />
     <None Include="Resources\Taskbar_ActiveApp7.png" />
@@ -298,6 +295,8 @@
     <None Include="Resources\LogonUI8.png" />
     <None Include="Resources\LogonUI7.png" />
     <None Include="Resources\Win7Logo.png" />
+    <None Include="Resources\AeroGlass.png" />
+    <None Include="Resources\Start7Glass.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win7ORB.png" />
