@@ -1,6 +1,19 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
 ![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total)  ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter) [![issues - WinPaletter](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter)](https://github.com/Abdelrhman-AK/WinPaletter/issues)
+
+# Ideas & Plans
+Plan | Status
+-----|------
+Extended Support to Windows 7 and 8.1 | Working on it, Coming Soon
+Right Click menus for colors to increase functionality| Will work on it
+Colorizing Command Prompt/Windows Terminal | ~
+Windows Metrics | ~
+Mini-Store for themes | ~
+
+* ~ symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
+
+
 # WinPaletter: Colorize Windows 10/11 Accents without restrictions.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/First.jpg?raw=true)
