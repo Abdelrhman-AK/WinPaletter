@@ -49,7 +49,7 @@ Public Class MainFrm
             pnl8.Top = pnl7.Bottom + 2
         Else
             XenonWindow1.Active = True
-            XenonWindow2.Active = True
+            XenonWindow2.Active = False
         End If
 
         Select Case PreviewConfig
@@ -535,7 +535,6 @@ Public Class MainFrm
         XenonWindow1.Win8Lite = False
         XenonWindow2.Win8Lite = False
         XenonButton23.Visible = False
-        pnl_preview.Visible = True
 
         Select Case PreviewConfig
             Case WinVer.Eleven

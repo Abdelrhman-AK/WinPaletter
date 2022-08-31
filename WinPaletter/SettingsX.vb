@@ -136,8 +136,6 @@ Public Class SettingsX
             .Save(XeSettings.Mode.Registry)
         End With
 
-        MsgBox(My.Application.LanguageHelper.SettingsSaved, MsgBoxStyle.Information + My.Application.MsgboxRt)
-        Me.Close()
 
         If My.Application._Settings.CustomPreviewConfig_Enabled Then
             MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
@@ -175,6 +173,9 @@ Public Class SettingsX
         MainFrm.Adjust_Preview()
         MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
         ApplyDarkMode()
+
+        MsgBox(My.Application.LanguageHelper.SettingsSaved, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        Me.Close()
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

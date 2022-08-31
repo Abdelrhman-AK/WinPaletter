@@ -295,8 +295,8 @@
     <None Include="Resources\LogonUI8.png" />
     <None Include="Resources\LogonUI7.png" />
     <None Include="Resources\Win7Logo.png" />
-    <None Include="Resources\AeroGlass.png" />
     <None Include="Resources\Start7Glass.png" />
+    <None Include="Resources\AeroGlass.png" />
     <Content Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win8ORB.png" />
     <None Include="Resources\Win7ORB.png" />

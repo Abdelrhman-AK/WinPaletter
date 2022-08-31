@@ -104,16 +104,7 @@ Module XenonModule
             Return False
         End Try
     End Function
-    Public Function BlendedTexture(BaseColor As Color, FrontColor As Color, Optional Fading As Single = 1) As TextureBrush
-        Dim b As New Bitmap(5, 5, Imaging.PixelFormat.Format32bppArgb)
-        Dim g As Graphics = Graphics.FromImage(b)
-        g.FillRectangle(New SolidBrush(BaseColor), New Rectangle(0, 0, b.Width, b.Height))
-        g.FillRectangle(New SolidBrush(FrontColor), New Rectangle(0, 0, b.Width, b.Height))
-        g.Save()
-        Return New TextureBrush(FadeBitmap(b, Fading))
-        g.Dispose()
-        b.Dispose()
-    End Function
+
     Public Function ColorTint(ByVal sourceBitmap As Bitmap, [Color] As Color) As Bitmap
         Dim sourceData As BitmapData = sourceBitmap.LockBits(New Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.[ReadOnly], PixelFormat.Format32bppArgb)
         Dim pixelBuffer As Byte() = New Byte(sourceData.Stride * sourceData.Height - 1) {}
@@ -3978,7 +3969,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         DrawAero(G, RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3)
 
                     Else
-                        FillRect(G, BlendedTexture(Color.White, Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
+                        FillRect(G, New SolidBrush(Color.White), RestRect, 3, True)
+                        FillRect(G, New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
                     End If
 
                     FillRect(G, NoiseStart, New Rectangle(0, 0, Width, Height), 3, True)
@@ -4165,7 +4157,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                             DrawAero(G, Rect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 0)
 
                         Else
-                            G.FillRectangle(BlendedTexture(Color.White, Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), Rect)
+                            G.FillRectangle(New SolidBrush(Color.White), Rect)
+                            G.FillRectangle(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), Rect)
                         End If
 
                         G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
@@ -4278,13 +4271,18 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Try
             adaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat)
         Catch : End Try
+
+        Try : If Transparency Then
+                If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
+                    adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 1)
+                End If
+            End If
+        Catch : End Try
     End Sub
 
     Sub BlurBack()
         Try : If Transparency Then
-                If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 1)
-                ElseIf UseItAsTaskbar_Version <> TaskbarVersion.Seven And UseItAsTaskbar_Version <> TaskbarVersion.Eight Then
+                If UseItAsTaskbar_Version <> TaskbarVersion.Seven And UseItAsTaskbar_Version <> TaskbarVersion.Eight Then
                     adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), BlurPower)
                 End If
             End If
@@ -4398,7 +4396,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     End Sub
 
     Public Property Radius As Integer = 5
-
     Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
     Public Property AccentColor_Inactive As Color = Color.FromArgb(32, 32, 32)
     Public Property AccentColor2_Active As Color = Color.FromArgb(0, 120, 212)
@@ -4461,7 +4458,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         DrawRect(G, New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
                     End If
                 End If
-
 
                 If AccentColor_Enabled Then
                     If Active Then
@@ -4531,7 +4527,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         DrawAero(G, Rect7, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius)
 
                     Else
-                        FillRect(G, BlendedTexture(Color.White, Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, Radius, True)
+                        FillRect(G, New SolidBrush(Color.White), Rect7, Radius, True)
+                        FillRect(G, New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, Radius, True)
                     End If
 
                     G.DrawImage(My.Resources.Win7Sides, RectSide1)
@@ -4714,7 +4711,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     End Sub
 
     Sub ProcessBack()
-        If Win7 Then
+        If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
             Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
             Try : AdaptedBackBlurred = BlurBitmap(New Bitmap(AdaptedBack), 1) : Catch : End Try
             Try : Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100)) : Catch : End Try

@@ -284,23 +284,36 @@ Public Class XenonCore
         att.Dispose()
         g.Dispose()
     End Function
-    Public Shared Function FadeBitmap(ByVal bmp As Bitmap, ByVal opacity As Single) As Bitmap
-        Try
-            Dim bmp2 As New Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb)
-            opacity = Math.Max(0, Math.Min(opacity, 1.0F))
-            Using ia As New ImageAttributes
-                Dim cm As New ColorMatrix With {.Matrix33 = opacity}
-                ia.SetColorMatrix(cm)
-                Dim destpoints() As PointF = {New Point(0, 0), New Point(bmp.Width, 0), New Point(0, bmp.Height)}
-                Using g As Graphics = Graphics.FromImage(bmp2)
-                    g.DrawImage(bmp, destpoints, New RectangleF(Point.Empty, bmp.Size), GraphicsUnit.Pixel, ia)
-                    g.Dispose()
-                End Using
-            End Using
-            Return bmp2
-        Catch
-            Return Nothing
-        End Try
+    Public Shared Function FadeBitmap(ByVal originalImage As Image, ByVal opacity As Double) As Bitmap
+        Const bytesPerPixel As Integer = 4
+
+        If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
+            Return originalImage
+        End If
+
+        Dim bmp As Bitmap = CType(originalImage.Clone(), Bitmap)
+        Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
+        Dim rect As Rectangle = New Rectangle(0, 0, bmp.Width, bmp.Height)
+        Dim bmpData As BitmapData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf)
+        Dim ptr As IntPtr = bmpData.Scan0
+        Dim numBytes As Integer = bmp.Width * bmp.Height * bytesPerPixel
+        Dim argbValues As Byte() = New Byte(numBytes - 1) {}
+        System.Runtime.InteropServices.Marshal.Copy(ptr, argbValues, 0, numBytes)
+        Dim counter As Integer = 0
+
+        While counter < argbValues.Length
+            'If argbValues(counter + bytesPerPixel - 1) <> 0 Then Exit While
+            Dim pos As Integer = 0
+            pos += 1
+            pos += 1
+            pos += 1
+            argbValues(counter + pos) = CByte((argbValues(counter + pos) * opacity))
+            counter += bytesPerPixel
+        End While
+
+        System.Runtime.InteropServices.Marshal.Copy(argbValues, 0, ptr, numBytes)
+        bmp.UnlockBits(bmpData)
+        Return bmp
     End Function
     Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As LogonUI7_NoiseMode, opacity As Single) As Bitmap
         Try
