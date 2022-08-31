@@ -1,6 +1,6 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
-![Downloads](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total)  ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter) [![issues - WinPaletter](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter)](https://github.com/Abdelrhman-AK/WinPaletter/issues)
+![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total)  ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter) [![issues - WinPaletter](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter)](https://github.com/Abdelrhman-AK/WinPaletter/issues)
 # WinPaletter: Colorize Windows 10/11 Accents without restrictions.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/First.jpg?raw=true)
