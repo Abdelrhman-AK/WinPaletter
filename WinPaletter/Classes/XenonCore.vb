@@ -286,6 +286,8 @@ Public Class XenonCore
     End Function
     Public Shared Function FadeBitmap(ByVal originalImage As Image, ByVal opacity As Double) As Bitmap
         Const bytesPerPixel As Integer = 4
+        If opacity > 1 Then opacity = 1
+        If opacity < 0 Then opacity = 0
 
         If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
             Return originalImage

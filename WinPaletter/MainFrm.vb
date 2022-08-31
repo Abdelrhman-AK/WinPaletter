@@ -1225,7 +1225,12 @@ Public Class MainFrm
 
         RefreshRegisrty()
 
-        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer() Else Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
+        If My.Application._Settings.AutoRestartExplorer Then
+            RestartExplorer()
+        Else
+            If Not My.W7 And Not My.W8 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
+        End If
+
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter

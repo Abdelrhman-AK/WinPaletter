@@ -181,13 +181,13 @@ Module XenonModule
         Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
         Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
 
-        Dim bk1 As Bitmap = FadeBitmap(ColorTint(BackgroundBlurred, C1), ColorBalance * (1 - alpha))
-        bk1 = FadeBitmap(bk1, 0.5)
-        FillImg(G, bk1, Rect, Radius, True)
+        'Dim bk1 As Bitmap = FadeBitmap(ColorTint(BackgroundBlurred, C1), ColorBalance * (1 - alpha))
+        'bk1 = FadeBitmap(bk1, 0.5)
+        'FillImg(G, bk1, Rect, Radius, True)
 
-        Dim bk2 As Bitmap = FadeBitmap(Grayscale(BackgroundBlurred), alpha * GlowBalance)
-        bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
-        FillImg(G, bk2, Rect, Radius, True)
+        'Dim bk2 As Bitmap = FadeBitmap(Grayscale(BackgroundBlurred), alpha * GlowBalance)
+        'bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
+        'FillImg(G, bk2, Rect, Radius, True)
 
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), BlendColor(C1, C2, 100))), Rect, Radius, True)
@@ -3505,12 +3505,12 @@ Public Class XenonAlertBox
     End Sub
 
 End Class
-
 Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyPropertyChanged
 
     Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
 
-    Dim NoiseStart As New TextureBrush(FadeBitmap(My.Resources.Start7Glass, 1))
+    Dim Noise7 As Bitmap = My.Resources.AeroGlass
+    Dim Noise7Start As Bitmap = My.Resources.Start7Glass
 
     Dim adaptedBack As Bitmap
     Dim adaptedBackBlurred As Bitmap
@@ -3560,6 +3560,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _NoisePower) Then
                 Me._NoisePower = value
                 NotifyNoisePowerChanged(_NoisePower)
+                If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
+                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
+                End If
             End If
         End Set
     End Property
@@ -3973,7 +3977,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         FillRect(G, New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
                     End If
 
-                    FillRect(G, NoiseStart, New Rectangle(0, 0, Width, Height), 3, True)
+                    FillImg(G, Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
 
                     FillImg(G, My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
 
@@ -4163,7 +4167,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                         G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
-                        G.FillRectangle(Noise, Rect)
+                        FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
                     End If
 
                     If Not Basic Then
@@ -4295,10 +4299,11 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 If UseItAsTaskbar_Version = TaskbarVersion.Eleven Or UseItAsTaskbar_Version = TaskbarVersion.Ten Then
                     Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, NoisePower))
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, NoisePower / 100))
-                    NoiseStart = New TextureBrush(FadeBitmap(My.Resources.Start7Glass, NoisePower / 100))
+                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Eight Then
-                    Noise = New TextureBrush(adaptedBack)
+                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
                 End If
 
             End If
@@ -4383,7 +4388,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Me._Win7Noise = value
 
                 If Win7 Then
-                    Try : Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100)) : Catch : End Try
+                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100) : Catch : End Try
                 End If
 
                 NotifyWin7NoiseChanged(_Win7Noise)
@@ -4413,7 +4418,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property Win7GlowBal As Integer = 100
 
     Dim AdaptedBack, AdaptedBackBlurred As Bitmap
-    Dim Noise As TextureBrush
+
+    Dim Noise7 As Bitmap = My.Resources.AeroGlass
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -4534,7 +4540,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawImage(My.Resources.Win7Sides, RectSide1)
                     G.DrawImage(My.Resources.Win7Sides, RectSide2)
 
-                    FillRect(G, Noise, Rect7, Radius, True)
+                    FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect7, Radius, True)
 
                     Dim closeBtn As Image = If(Active, My.Resources.Win7_Close_Active, My.Resources.Win7_Close_inactive)
                     G.DrawImage(closeBtn, New Rectangle(Width - closeBtn.Width - 5, 0, closeBtn.Width, closeBtn.Height))
@@ -4714,7 +4720,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
             Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
             Try : AdaptedBackBlurred = BlurBitmap(New Bitmap(AdaptedBack), 1) : Catch : End Try
-            Try : Noise = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100)) : Catch : End Try
+            Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100) : Catch : End Try
         End If
     End Sub
 End Class
