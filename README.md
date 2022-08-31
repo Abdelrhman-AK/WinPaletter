@@ -5,11 +5,11 @@
 # Ideas & Plans
 Plan | Status
 -----|------
-Extended Support to Windows 7 and 8.1 | Working on it, Coming Soon
-Right Click menus for colors to increase functionality| Will work on it
-Colorizing Command Prompt/Windows Terminal | ~
-Windows Metrics | ~
-Mini-Store for themes | ~
+Extended Support to Windows 7 and 8.1 | Working on it, Coming Soon |
+Right Click menus for colors to increase functionality| Will work on it |
+Colorizing Command Prompt/Windows Terminal | ~ |
+Windows Metrics | ~ |
+Mini-Store for themes | ~ |
 
 * ~ symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
 
