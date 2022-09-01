@@ -128,12 +128,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
-    </None>
     <None Include="My Project\Settings.settings" />
-    <None Include="Resources\LogonUI7.pdn" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
@@ -239,7 +234,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -280,34 +275,34 @@
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
-    <None Include="Resources\Win8ORB.png" />
-    <None Include="Resources\Start7.pdn" />
-    <None Include="Resources\BasicTaskbar.png" />
-    <None Include="Resources\Start7Basic.png" />
-    <None Include="Resources\AeroPeek.png" />
-    <None Include="Resources\Win7_Close_inactive.png" />
-    <None Include="Resources\Win7_Close_Active.png" />
-    <None Include="Resources\Win7BasicActive.png" />
-    <None Include="Resources\Win7BasicInactive.png" />
-    <None Include="Resources\Start7.png" />
-    <None Include="Resources\Win7Sides.png" />
-    <None Include="Resources\GaussianBlur.png" />
-    <None Include="Resources\GaussianBlurOpaque.png" />
-    <None Include="Resources\Taskbar_ActiveApp7.png" />
-    <None Include="Resources\Taskbar_ActiveApp8.png" />
-    <None Include="Resources\Taskbar_InactiveApp7.png" />
-    <None Include="Resources\Taskbar_InactiveApp8.png" />
-    <None Include="Resources\Win7TaskbarSides.png" />
-    <None Include="Resources\LogonUI8.png" />
-    <None Include="Resources\LogonUI7.png" />
-    <None Include="Resources\Win7Logo.png" />
-    <None Include="Resources\Start7Glass.png" />
-    <None Include="Resources\AeroGlass.png" />
+    <Content Include="My Project\Application.myapp" />
+    <Content Include="Resources\AeroGlass.png" />
+    <Content Include="Resources\AeroPeek.png" />
+    <Content Include="Resources\BasicTaskbar.png" />
+    <Content Include="Resources\CodeStr.txt" />
+    <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
+    <Content Include="Resources\GaussianBlur.png" />
+    <Content Include="Resources\GaussianBlurOpaque.png" />
+    <Content Include="Resources\LogonUI7.png" />
+    <Content Include="Resources\LogonUI8.png" />
+    <None Include="Resources\Native7.png" />
+    <None Include="Resources\Native8.png" />
+    <Content Include="Resources\Start7.png" />
+    <Content Include="Resources\Start7Basic.png" />
+    <Content Include="Resources\Start7Glass.png" />
+    <Content Include="Resources\Taskbar_ActiveApp7.png" />
+    <Content Include="Resources\Taskbar_ActiveApp8.png" />
+    <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <Content Include="Resources\Taskbar_InactiveApp8.png" />
+    <Content Include="Resources\Win7BasicActive.png" />
+    <Content Include="Resources\Win7BasicInactive.png" />
+    <Content Include="Resources\Win7Logo.png" />
+    <Content Include="Resources\Win7ORB.png" />
+    <Content Include="Resources\Win7Sides.png" />
+    <Content Include="Resources\Win7TaskbarSides.png" />
+    <Content Include="Resources\Win7_Close_Active.png" />
+    <Content Include="Resources\Win7_Close_inactive.png" />
     <Content Include="Resources\Win8ORB.png" />
-    <None Include="Resources\Win8ORB.png" />
-    <None Include="Resources\Win7ORB.png" />
-    <None Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
-    <None Include="Resources\CodeStr.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
@@ -318,12 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Changelog1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
@@ -353,10 +345,9 @@
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

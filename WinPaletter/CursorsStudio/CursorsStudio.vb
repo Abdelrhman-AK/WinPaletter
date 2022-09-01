@@ -705,7 +705,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorBack1 = True}
+        Dim _Condition As New Conditions With {.CursorBack1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_PrimaryColor1 = c
@@ -723,7 +723,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorBack2 = True}
+        Dim _Condition As New Conditions With {.CursorBack2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_PrimaryColor2 = c
@@ -740,7 +740,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorLine1 = True}
+        Dim _Condition As New Conditions With {.CursorLine1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_SecondaryColor1 = c
@@ -757,7 +757,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorLine2 = True}
+        Dim _Condition As New Conditions With {.CursorLine2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_SecondaryColor2 = c
@@ -774,7 +774,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorCircle1 = True}
+        Dim _Condition As New Conditions With {.CursorCircle1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleBack1 = c
@@ -894,7 +894,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorCircle2 = True}
+        Dim _Condition As New Conditions With {.CursorCircle2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleBack2 = c
@@ -911,7 +911,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorCircleHot1 = True}
+        Dim _Condition As New Conditions With {.CursorCircleHot1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleHot1 = c
@@ -928,7 +928,7 @@ Public Class CursorsStudio
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
 
-        Dim _Condition As New Conditions With {.CursorCircleHot2 = True}
+        Dim _Condition As New Conditions With {.CursorCircleHot2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleHot2 = c

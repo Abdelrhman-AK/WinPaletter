@@ -1,8 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Runtime.InteropServices
-Imports Microsoft.Win32
-Imports WinPaletter.CP
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.XenonCore
 Public Class ApplyingTheme
 
 #Region "Form Shadow"
@@ -28,13 +24,13 @@ Public Class ApplyingTheme
             Case NativeConstants.WM_NCPAINT
                 Dim val = 2
                 If aeroEnabled Then
-                    NativeMethods.DwmSetWindowAttribute(FindForm.Handle, If(GetRoundedCorners(), 2, 1), val, 4)
+                    NativeMethods.DwmSetWindowAttribute(FindForm.Handle, 2, val, 4)
                     Dim bla As New NativeStructs.MARGINS()
                     With bla
-                        .bottomHeight = 1
-                        .leftWidth = 1
-                        .rightWidth = 1
-                        .topHeight = 1
+                        .bottomHeight = 3
+                        .leftWidth = 3
+                        .rightWidth = 3
+                        .topHeight = 3
                     End With
                     NativeMethods.DwmExtendFrameIntoClientArea(Handle, bla)
                 End If
@@ -84,23 +80,6 @@ Public Class ApplyingTheme
     End Class
 
 #End Region
-
-    <Flags>
-    Enum AnimateWindowFlags
-        AW_HOR_POSITIVE = &H0
-        AW_HOR_NEGATIVE = &H2
-        AW_VER_POSITIVE = &H4
-        AW_VER_NEGATIVE = &H8
-        AW_CENTER = &H10
-        AW_HIDE = &H10000
-        AW_ACTIVATE = &H20000
-        AW_SLIDE = &H40000
-        AW_BLEND = &H80000
-    End Enum
-
-    <DllImport("user32.dll")>
-    Shared Function AnimateWindow(ByVal hWnd As IntPtr, ByVal time As Integer, ByVal flags As AnimateWindowFlags) As Boolean
-    End Function
 
 
     Private Sub ApplyingTheme_Load(sender As Object, e As EventArgs) Handles MyBase.Load

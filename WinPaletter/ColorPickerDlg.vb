@@ -23,7 +23,10 @@ Public Class ColorPickerDlg
 
     Dim ls As New List(Of Control)
 
+    Dim fls As New List(Of Form)
+
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
+        fls.Clear()
 
         ls.Clear()
 
@@ -32,6 +35,14 @@ Public Class ColorPickerDlg
                 ctrl.Visible = False
                 ls.Add(ctrl)
             End If
+        Next
+
+        For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
+            If Application.OpenForms(ix).Visible And Not Application.OpenForms(ix) Is Me Then fls.Add(Application.OpenForms(ix))
+        Next
+
+        For ix = 0 To fls.Count - 1
+            fls(ix).Visible = False
         Next
 
         Me.FormBorderStyle = FormBorderStyle.None
@@ -44,6 +55,11 @@ Public Class ColorPickerDlg
             ctrl.Visible = True
         Next
 
+        For ix = 0 To fls.Count - 1
+            fls(ix).Visible = True
+        Next
+
+        fls.Clear()
         ls.Clear()
         Me.FormBorderStyle = FormBorderStyle.SizableToolWindow
         Me.TransparencyKey = Nothing
@@ -78,8 +94,8 @@ Public Class ColorPickerDlg
         End If
 
         Dim c As Color = Ctrl(0).BackColor
-        ColorEditorManager1.Color = c
-        InitColor = c
+        ColorEditorManager1.Color = Ctrl(0).BackColor
+        InitColor = Ctrl(0).BackColor
 
         CList = Ctrl
 
@@ -534,13 +550,22 @@ Public Class ColorPickerDlg
         End Try
     End Sub
 
-    Private Sub ScreenColorPicker1_ColorChanged(sender As Object, e As EventArgs) Handles ScreenColorPicker1.ColorChanged
-
-    End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.DialogResult = DialogResult.OK
         Me.Close()
+    End Sub
+
+    Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
+            If _Conditions.Win7LivePreview_Colorization Then
+                UpdateWin7Preview(InitColor, MainFrm.CP.Aero_ColorizationAfterglow)
+            End If
+
+            If _Conditions.Win7LivePreview_AfterGlow Then
+                UpdateWin7Preview(MainFrm.CP.Aero_ColorizationColor, InitColor)
+            End If
+        End If
     End Sub
 End Class
 

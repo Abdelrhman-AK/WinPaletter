@@ -17,11 +17,11 @@ Public Class LogonUI7
         If My.W8 Then
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
-            If GetDarkMode() Then PictureBox4.Image = My.Resources.StartBtn_10Dark Else PictureBox4.Image = My.Resources.StartBtn_10Light
+            PictureBox4.Image = My.Resources.Native8
         Else
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
-            PictureBox4.Image = My.Resources.Win7Logo
+            PictureBox4.Image = My.Resources.Native7
         End If
     End Sub
 

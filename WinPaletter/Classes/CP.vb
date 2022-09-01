@@ -85,13 +85,13 @@ Public Class CP
 #End Region
 
 #Region "Metro"
-    Public Property Metro_Start As Integer
-    Public Property Metro_StartColor As Color
-    Public Property Metro_AccentColor As Color
+    Public Property Metro_Start As Integer = 0
+    Public Property Metro_StartColor As Color = Color.FromArgb(30, 0, 84)
+    Public Property Metro_AccentColor As Color = Color.FromArgb(72, 29, 178)
     Public Property Metro_Theme As AeroTheme = AeroTheme.Aero
-    Public Property Metro_LogonUI As Integer
-    Public Property Metro_PersonalColors_Background As Color
-    Public Property Metro_PersonalColors_Accent As Color
+    Public Property Metro_LogonUI As Integer = 0
+    Public Property Metro_PersonalColors_Background As Color = Color.FromArgb(30, 0, 84)
+    Public Property Metro_PersonalColors_Accent As Color = Color.FromArgb(72, 29, 178)
     Public Property Metro_NoLockScreen As Boolean = False
     Public Property Metro_LockScreenType As LogonUI8_Modes = LogonUI8_Modes.System
     Public Property Metro_LockScreenSystemID As Integer = 0
@@ -802,9 +802,9 @@ Public Class CP
 
                         If Classic Then
                             Aero_Theme = AeroTheme.Classic
-                        ElseIf Com Or ComPol = 0 Or ComPol = 2 Then
+                        ElseIf Com Or ComPol = 2 Then
                             If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
-                        ElseIf Not Com Or ComPol = 1 Then
+                        ElseIf Not Com Or ComPol = 1 Or ComPol = 0 Then
                             Aero_Theme = AeroTheme.Basic
                         End If
                     End If
@@ -817,6 +817,7 @@ Public Class CP
 
 #Region "Metro"
                 If My.W8 Then
+
                     Dim stringThemeName As StringBuilder = New StringBuilder(260)
                     GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
 
@@ -826,23 +827,66 @@ Public Class CP
                         Metro_Theme = AeroTheme.Aero
                     End If
 
+                    Registry.CurrentUser.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
+
+                    If isElevated Then
+                        Registry.LocalMachine.CreateSubKey("SOFTWARE\Policies\Microsoft\Windows\Personalization")
+                        Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
+                        ls.Add(vbCrLf)
+
+                        Dim result As String = CStr_FromList(ls)
+
+                            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                            IO.File.WriteAllText(tempreg, result)
+
+                            Dim process As Process = Nothing
+
+                            Dim processStartInfo As New ProcessStartInfo With {
+                               .FileName = "regedit",
+                               .Verb = "runas",
+                               .Arguments = String.Format("/s ""{0}""", tempreg),
+                               .WindowStyle = ProcessWindowStyle.Hidden,
+                               .CreateNoWindow = True,
+                               .UseShellExecute = True
+                            }
+                            process = Process.Start(processStartInfo)
+                            process.WaitForExit()
+                            processStartInfo.FileName = "reg"
+                            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                            process = Process.Start(processStartInfo)
+                            process.WaitForExit()
+                            Kill(tempreg)
+                        End If
+
                     Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
                     Metro_StartColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
                     Metro_AccentColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
 
                     Dim S As String
-                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#000000")
+                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#1e0054")
                     Metro_PersonalColors_Background = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
 
-                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#000000")
+                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#481db2")
                     Metro_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
 
                     Metro_Start = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
 
                     Metro_LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
+
                 End If
 #End Region
 
@@ -2257,7 +2301,7 @@ Public Class CP
                             EnableTheming(1)
                             SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
@@ -2265,7 +2309,7 @@ Public Class CP
                             EnableTheming(1)
                             SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 0)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
 
@@ -2294,7 +2338,9 @@ Public Class CP
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+                    'EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "UseMachineCheck", 0)
+
                 End If
 
 
@@ -4152,4 +4198,103 @@ Public Class CP
 
         Return _Equals
     End Function
+End Class
+
+Public Class CP_Defaults
+
+    Public Default_Windows11 As New CP(CP.Mode.Init) With {
+        .AppVersion = My.Application.Info.Version.ToString,
+        .PaletteName = "Windows 11 (Initial)",
+        .PaletteDescription = "Initial; Like first time after Windows Setup",
+        .PaletteVersion = "1.0.0.0",
+        .Author = "Microsoft",
+        .AuthorSocialMediaLink = "www.microsoft.com",
+        .WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
+        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_DWM_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
+        .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
+        .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
+        .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192),
+        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
+        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
+       }
+
+    Public Default_Windows10 As New CP(CP.Mode.Init) With {
+        .AppVersion = My.Application.Info.Version.ToString,
+        .PaletteName = "Windows 10 (Initial)",
+        .PaletteDescription = "Initial; Like first time after Windows Setup",
+        .PaletteVersion = "1.0.0.0",
+        .Author = "Microsoft",
+        .AuthorSocialMediaLink = "www.microsoft.com",
+        .WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
+        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_DWM_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
+        .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
+        .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
+        .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158),
+        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
+        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
+       }
+
+    Public Default_Windows8 As New CP(CP.Mode.Init) With {
+        .AppVersion = My.Application.Info.Version.ToString,
+        .PaletteName = "Windows 8.1 (Initial)",
+        .PaletteDescription = "Initial; Like first time after Windows Setup",
+        .PaletteVersion = "1.0.0.0",
+        .Author = "Microsoft",
+        .AuthorSocialMediaLink = "www.microsoft.com",
+        .Aero_ColorizationColor = Color.FromArgb(246, 195, 74),
+        .Aero_ColorizationAfterglow = Color.FromArgb(0, 0, 0),
+        .Aero_ColorizationColorBalance = 78,
+        .Aero_ColorizationAfterglowBalance = 31,
+        .Aero_ColorizationBlurBalance = 31,
+        .Aero_ColorizationGlassReflectionIntensity = 0,
+        .Aero_EnableAeroPeek = True,
+        .Aero_AlwaysHibernateThumbnails = False,
+        .Metro_PersonalColors_Background = Color.FromArgb(30, 0, 84),
+        .Metro_PersonalColors_Accent = Color.FromArgb(72, 29, 178),
+        .Metro_StartColor = Color.FromArgb(30, 0, 84),
+        .Metro_AccentColor = Color.FromArgb(72, 29, 178),
+        .Metro_Start = 0,
+        .Metro_Theme = CP.AeroTheme.Aero,
+        .Metro_LogonUI = 0,
+        .Metro_NoLockScreen = False,
+        .Metro_LockScreenType = CP.LogonUI8_Modes.System,
+        .Metro_LockScreenSystemID = 0,
+        .LogonUI7_Enabled = False,
+        .LogonUI7_ImagePath = "",
+        .LogonUI7_Color = Color.FromArgb(0, 0, 0),
+        .LogonUI7_Effect_Blur = False,
+        .LogonUI7_Effect_Blur_Intensity = 0,
+        .LogonUI7_Effect_Grayscale = False,
+        .LogonUI7_Effect_Noise = False,
+        .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
+        .LogonUI7_Effect_Noise_Intensity = 0
+       }
+
+    Public Default_Windows7 As New CP(CP.Mode.Init) With {
+        .AppVersion = My.Application.Info.Version.ToString,
+        .PaletteName = "Windows 7 (Initial)",
+        .PaletteDescription = "Initial; Like first time after Windows Setup",
+        .PaletteVersion = "1.0.0.0",
+        .Author = "Microsoft",
+        .AuthorSocialMediaLink = "www.microsoft.com",
+        .Aero_ColorizationColor = Color.FromArgb(116, 184, 252),
+        .Aero_ColorizationAfterglow = Color.FromArgb(116, 184, 252),
+        .Aero_ColorizationColorBalance = 8,
+        .Aero_ColorizationAfterglowBalance = 43,
+        .Aero_ColorizationBlurBalance = 49,
+        .Aero_ColorizationGlassReflectionIntensity = 0,
+        .Aero_EnableAeroPeek = True,
+        .Aero_AlwaysHibernateThumbnails = False,
+        .Aero_Theme = CP.AeroTheme.Aero,
+        .LogonUI7_Enabled = False,
+        .LogonUI7_Mode = CP.LogonUI7_Modes.Default_,
+        .LogonUI7_ImagePath = "",
+        .LogonUI7_Color = Color.FromArgb(0, 0, 0),
+        .LogonUI7_Effect_Blur = False,
+        .LogonUI7_Effect_Blur_Intensity = 0,
+        .LogonUI7_Effect_Grayscale = False,
+        .LogonUI7_Effect_Noise = False,
+        .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
+        .LogonUI7_Effect_Noise_Intensity = 0
+       }
 End Class

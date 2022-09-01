@@ -7,6 +7,11 @@ Public Class LogonUI
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         Load_FromCP(MainFrm.CP)
+
+        PictureBox23.Image = My.Resources.Native10
+        PictureBox29.Image = My.Resources.Native10
+        PictureBox28.Image = My.Resources.Native10
+
     End Sub
 
     Sub Load_FromCP(ByVal ColorPalette As CP)

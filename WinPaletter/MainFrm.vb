@@ -65,10 +65,6 @@ Public Class MainFrm
 
                 start.Top = taskbar.Top - start.Height - 9
 
-                pic5.Image = My.Resources.Mini_SettingsIcons
-                pic6.Image = My.Resources.Mini_Start11
-                pic7.Image = My.Resources.Mini_StartMenuAccent
-                pic8.Image = My.Resources.Mini_TaskbarActiveIcon
 
                 lbl5.Text = My.Application.LanguageHelper.X7
                 lbl6.Text = My.Application.LanguageHelper.X8
@@ -76,7 +72,7 @@ Public Class MainFrm
                 lbl8.Text = My.Application.LanguageHelper.X10
 
                 pic5.Image = My.Resources.Mini_SettingsIcons
-                pic6.Image = My.Resources.Mini_Start11
+                pic6.Image = My.Resources.Native11
                 pic7.Image = My.Resources.Mini_StartMenuAccent
                 pic8.Image = My.Resources.Mini_Taskbar
 
@@ -192,7 +188,7 @@ Public Class MainFrm
                     pic3.Image = My.Resources.Mini_NotUsed
                     pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                     pic5.Image = My.Resources.Mini_SettingsIcons
-                    pic6.Image = My.Resources.Mini_Start10
+                    pic6.Image = My.Resources.Native10
                     pic7.Image = My.Resources.Mini_NotUsed
                     pic8.Image = My.Resources.Mini_ACHover_Links
 
@@ -222,7 +218,7 @@ Public Class MainFrm
                         pic3.Image = My.Resources.Mini_TaskbarActiveIcon
                         pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         pic5.Image = My.Resources.Mini_SettingsIcons
-                        pic6.Image = My.Resources.Mini_Start10
+                        pic6.Image = My.Resources.Native10
                         pic7.Image = My.Resources.Mini_NotUsed
                         pic8.Image = My.Resources.Mini_StartMenuAccent
 
@@ -251,7 +247,7 @@ Public Class MainFrm
                         pic3.Image = My.Resources.Mini_TaskbarActiveIcon
                         pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         pic5.Image = My.Resources.Mini_SettingsIcons
-                        pic6.Image = My.Resources.Mini_Start10
+                        pic6.Image = My.Resources.Native10
                         pic7.Image = My.Resources.Mini_NotUsed
                         pic8.Image = My.Resources.Mini_NotUsed
 
@@ -329,7 +325,7 @@ Public Class MainFrm
             Case WinVer.Eight
 #Region "Win8.1"
                 If My.W8 And My.Application._Settings.Win7LivePreview Then
-                    UpdateWin8Preview()
+                    RefreshDWM([CP])
                 End If
 
                 ApplyMetroStartToButton([CP])
@@ -362,7 +358,7 @@ Public Class MainFrm
             Case WinVer.Seven
 #Region "Win7"
                 If My.W7 And My.Application._Settings.Win7LivePreview And _Shown Then
-                    UpdateWin7Preview()
+                    RefreshDWM([CP])
                 End If
 
                 Select Case [CP].Aero_Theme
@@ -870,7 +866,17 @@ Public Class MainFrm
         MakeItDoubleBuffered(Me)
         My.Application.AdjustFonts()
 
-        XenonButton20.Image = If(My.W11, My.Resources.Native11, My.Resources.Native10)
+        If My.W11 Then
+            XenonButton20.Image = My.Resources.Native11
+        ElseIf My.W10 Then
+            XenonButton20.Image = My.Resources.Native10
+        ElseIf My.W8 Then
+            XenonButton20.Image = My.Resources.Native8
+        ElseIf My.W7 Then
+            XenonButton20.Image = My.Resources.Native7
+        Else
+            XenonButton20.Image = My.Resources.Native11
+        End If
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -1721,8 +1727,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        'LogonUI.ShowDialog()
-        LogonUI7.ShowDialog()
+        If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
+            LogonUI.ShowDialog()
+        Else
+            LogonUI7.ShowDialog()
+        End If
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
@@ -1886,11 +1895,20 @@ Public Class MainFrm
             End Select
         End If
 
+        Dim Def As New CP_Defaults
 
+        If My.W11 Then
+            CP = Def.Default_Windows11
+        ElseIf My.W10 Then
+            CP = Def.Default_Windows10
+        ElseIf My.W8 Then
+            CP = Def.Default_Windows8
+        ElseIf My.W7 Then
+            CP = Def.Default_Windows7
+        Else
+            CP = Def.Default_Windows11
+        End If
 
-        If My.W11 Then IO.File.WriteAllText("temp.wpth", My.Resources.W11_Init) Else IO.File.WriteAllText("temp.wpth", My.Resources.W10_Init)
-        CP = New CP(CP.Mode.File, "temp.wpth")
-        Kill("temp.wpth")
         CP_Original = CP
         OpenFileDialog1.FileName = Nothing
         SaveFileDialog1.FileName = Nothing
@@ -1916,30 +1934,6 @@ Public Class MainFrm
         Public clrGlassReflectionIntensity As Integer
         Public fOpaque As Boolean
     End Structure
-
-    Public Sub UpdateWin7Preview()
-        Dim temp As New DWM_COLORIZATION_PARAMS
-        temp.clrColor = Aero_ColorizationColor_pick.BackColor.ToArgb
-        temp.clrAfterGlow = Aero_ColorizationAfterglow_pick.BackColor.ToArgb
-        temp.nIntensity = Aero_ColorizationColorBalance_bar.Value
-        temp.clrAfterGlowBalance = Aero_ColorizationAfterglowBalance_bar.Value
-        temp.clrBlurBalance = Aero_ColorizationBlurBalance_bar.Value
-        temp.clrGlassReflectionIntensity = Aero_ColorizationGlassReflectionIntensity_bar.Value
-        temp.fOpaque = If(theme_aeroopaque.Checked, True, False)
-        DwmSetColorizationParameters(temp, False)
-    End Sub
-
-    Public Sub UpdateWin8Preview()
-        Dim temp As New DWM_COLORIZATION_PARAMS
-        temp.clrColor = ColorizationColor8_pick.BackColor.ToArgb
-        temp.clrAfterGlow = Aero_ColorizationAfterglow_pick.BackColor.ToArgb
-        temp.nIntensity = ColorizationBalance8_track.Value
-        temp.clrAfterGlowBalance = 0
-        temp.clrBlurBalance = 0
-        temp.clrGlassReflectionIntensity = 0
-        temp.fOpaque = True
-        DwmSetColorizationParameters(temp, False)
-    End Sub
 #End Region
 
     Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
