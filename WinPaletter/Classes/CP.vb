@@ -2561,10 +2561,6 @@ Public Class CP
                             If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
                         Next
 
-                        For x = 0 To bmpList.Count - 1
-                            bmpList(x) = BitmapFillScaler(bmpList(x), My.Computer.Screen.Bounds.Size)
-                        Next
-
                         If bmpList.Count = 1 Then
                             bmpList(0).Save(Dir & "\backgroundDefault.jpg", ImageFormat.Jpeg)
                         Else
