@@ -435,11 +435,12 @@ Namespace My
 
             Dim processExplorerInfo As New ProcessStartInfo With {
                 .FileName = explorerPath,
-                .Verb = "runas",
                 .Arguments = "",
                 .WindowStyle = ProcessWindowStyle.Normal,
                 .UseShellExecute = True
             }
+
+            If Not My.W8 Then processExplorerInfo.Verb = "runas"
 
             Dim AeroKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\net.exe",

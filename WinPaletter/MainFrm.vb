@@ -1218,12 +1218,17 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
+
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
+        Cursor = Cursors.WaitCursor
+
         CP_Original = CP
 
         CP.Save(CP.SavingMode.Registry)
 
         RefreshRegisrty()
+
+        Cursor = Cursors.Default
 
         If My.Application._Settings.AutoRestartExplorer Then
             RestartExplorer()
@@ -1232,6 +1237,7 @@ Public Class MainFrm
         End If
 
     End Sub
+
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.Application._Settings.AutoRestartExplorer Then
@@ -2174,6 +2180,10 @@ Public Class MainFrm
             pnl_preview.Visible = True
             XenonButton23.Text = "Hide"
         End If
+    End Sub
+
+    Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs)
+        ApplyingTheme.Show()
     End Sub
 
 

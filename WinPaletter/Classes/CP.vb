@@ -5,6 +5,7 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
@@ -106,7 +107,7 @@ Public Class CP
 #End Region
 
 #Region "LogonUI_Win7"
-    Public Property LogonUI7_Enabled As Boolean = True
+    Public Property LogonUI7_Enabled As Boolean = False
     Public Property LogonUI7_Mode As LogonUI7_Modes = LogonUI7_Modes.Default_
     Public Property LogonUI7_ImagePath As String = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
     Public Property LogonUI7_Color As Color = Color.Black
@@ -698,6 +699,14 @@ Public Class CP
 
     End Sub
 #End Region
+
+    Public f As Form
+    Dim th As System.Threading.Thread
+
+    Public Sub Task_A()
+        f = New ApplyingTheme()
+        Application.Run(f)
+    End Sub
 
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "")
         Select Case [Mode]
@@ -1437,15 +1446,51 @@ Public Class CP
                     End If
 #End Region
 
+#Region "Aero"
+                    If lin.StartsWith("*Aero_ColorizationColor= ") Then Aero_ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
+                    If lin.StartsWith("*Aero_ColorizationAfterglow= ") Then Aero_ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
+                    If lin.StartsWith("*Aero_ColorizationColorBalance= ") Then Aero_ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationAfterglowBalance= ") Then Aero_ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationBlurBalance= ") Then Aero_ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ") Then Aero_ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
+                    If lin.StartsWith("*Aero_EnableAeroPeek= ") Then Aero_EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
+                    If lin.StartsWith("*Aero_AlwaysHibernateThumbnails= ") Then Aero_AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
+                    If lin.StartsWith("*Aero_Theme= ") Then Aero_Theme = lin.Remove(0, "*Aero_Theme= ".Count)
+#End Region
+
+#Region "Metro"
+                    If lin.StartsWith("*Metro_PersonalColors_Background= ") Then Metro_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Background= ".Count))
+                    If lin.StartsWith("*Metro_PersonalColors_Accent= ") Then Metro_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Accent= ".Count))
+                    If lin.StartsWith("*Metro_StartColor= ") Then Metro_StartColor = Color.FromArgb(lin.Remove(0, "*Metro_StartColor= ".Count))
+                    If lin.StartsWith("*Metro_AccentColor= ") Then Metro_AccentColor = Color.FromArgb(lin.Remove(0, "*Metro_AccentColor= ".Count))
+                    If lin.StartsWith("*Metro_Start= ") Then Metro_Start = lin.Remove(0, "*Metro_Start= ".Count)
+                    If lin.StartsWith("*Metro_Theme= ") Then Metro_Theme = lin.Remove(0, "*Metro_Theme= ".Count)
+                    If lin.StartsWith("*Metro_LogonUI= ") Then Metro_LogonUI = lin.Remove(0, "*Metro_LogonUI= ".Count)
+                    If lin.StartsWith("*Metro_NoLockScreen= ") Then Metro_NoLockScreen = lin.Remove(0, "*Metro_NoLockScreen= ".Count)
+                    If lin.StartsWith("*Metro_LockScreenType= ") Then Metro_LockScreenType = lin.Remove(0, "*Metro_LockScreenType= ".Count)
+                    If lin.StartsWith("*Metro_LockScreenSystemID= ") Then Metro_LockScreenSystemID = lin.Remove(0, "*Metro_LockScreenSystemID= ".Count)
+#End Region
+
 #Region "LogonUI"
-                    If Not My.W7 And Not My.W8 Then
-                        If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
-                        If lin.StartsWith("*LogonUI_PersonalColors_Background= ") Then LogonUI_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Background= ".Count))
-                        If lin.StartsWith("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
-                        If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
-                        If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
-                        If lin.StartsWith("*LogonUI_NoLockScreen= ") Then LogonUI_NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
-                    End If
+                    If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
+                    If lin.StartsWith("*LogonUI_PersonalColors_Background= ") Then LogonUI_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Background= ".Count))
+                    If lin.StartsWith("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
+                    If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
+                    If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
+                    If lin.StartsWith("*LogonUI_NoLockScreen= ") Then LogonUI_NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
+#End Region
+
+#Region "LogonUI_7_8"
+                    If lin.StartsWith("*LogonUI7_Color= ") Then LogonUI7_Color = Color.FromArgb(lin.Remove(0, "*LogonUI7_Color= ".Count))
+                    If lin.StartsWith("*LogonUI7_Enabled= ") Then LogonUI7_Enabled = lin.Remove(0, "*LogonUI7_Enabled= ".Count)
+                    If lin.StartsWith("*LogonUI7_Mode= ") Then LogonUI7_Mode = lin.Remove(0, "*LogonUI7_Mode= ".Count)
+                    If lin.StartsWith("*LogonUI7_ImagePath= ") Then LogonUI7_ImagePath = lin.Remove(0, "*LogonUI7_ImagePath= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Blur= ") Then LogonUI7_Effect_Blur = lin.Remove(0, "*LogonUI7_Effect_Blur= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Blur_Intensity= ") Then LogonUI7_Effect_Blur_Intensity = lin.Remove(0, "*LogonUI7_Effect_Blur_Intensity= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Grayscale= ") Then LogonUI7_Effect_Grayscale = lin.Remove(0, "*LogonUI7_Effect_Grayscale= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Noise= ") Then LogonUI7_Effect_Noise = lin.Remove(0, "*LogonUI7_Effect_Noise= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Noise_Mode= ") Then LogonUI7_Effect_Noise_Mode = lin.Remove(0, "*LogonUI7_Effect_Noise_Mode= ".Count)
+                    If lin.StartsWith("*LogonUI7_Effect_Noise_Intensity= ") Then LogonUI7_Effect_Noise_Intensity = lin.Remove(0, "*LogonUI7_Effect_Noise_Intensity= ".Count)
 #End Region
 
 #Region "Win32UI"
@@ -1803,6 +1848,31 @@ Public Class CP
                 ApplyAccentonTaskbar = False
 #End Region
 
+#Region "Aero"
+                Aero_ColorizationColor = Color.Black
+                Aero_ColorizationAfterglow = Color.Black
+                Aero_EnableAeroPeek = True
+                Aero_AlwaysHibernateThumbnails = False
+                Aero_ColorizationColorBalance = 8
+                Aero_ColorizationAfterglowBalance = 31
+                Aero_ColorizationBlurBalance = 31
+                Aero_ColorizationGlassReflectionIntensity = 50
+                Aero_Theme = AeroTheme.Aero
+#End Region
+
+#Region "Metro"
+                Metro_Start = 0
+                Metro_StartColor = Color.Black
+                Metro_AccentColor = Color.Black
+                Metro_Theme = AeroTheme.Aero
+                Metro_LogonUI = 0
+                Metro_PersonalColors_Background = Color.Black
+                Metro_PersonalColors_Accent = Color.Black
+                Metro_NoLockScreen = False
+                Metro_LockScreenType = LogonUI8_Modes.System
+                Metro_LockScreenSystemID = 0
+#End Region
+
 #Region "LogonUI"
                 LogonUI_Background = Color.Black
                 LogonUI_PersonalColors_Background = Color.Black
@@ -1810,6 +1880,19 @@ Public Class CP
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
                 LogonUI_NoLockScreen = False
+#End Region
+
+#Region "LogonUI 7"
+                LogonUI7_Enabled = False
+                LogonUI7_Mode = LogonUI7_Modes.Default_
+                LogonUI7_ImagePath = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
+                LogonUI7_Color = Color.Black
+                LogonUI7_Effect_Blur = False
+                LogonUI7_Effect_Blur_Intensity = 0
+                LogonUI7_Effect_Grayscale = False
+                LogonUI7_Effect_Noise = False
+                LogonUI7_Effect_Noise_Mode = LogonUI7_NoiseMode.Acrylic
+                LogonUI7_Effect_Noise_Intensity = 0
 #End Region
 
 #Region "Win32UI"
@@ -2125,10 +2208,16 @@ Public Class CP
 
     End Sub
 
+
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
 #Region "Registry"
+
+                If My.W7 Or My.W8 Then
+                    th = New Thread(AddressOf Task_A)
+                    th.Start()
+                End If
 
 #Region "Modern Windows"
                 If Not My.W7 And Not My.W8 Then
@@ -2159,6 +2248,8 @@ Public Class CP
 
 #Region "Aero"
                 If My.W7 Then
+                    SetCtrlTxt("Applying Theme ...", f)
+
                     Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
 
                     Select Case Aero_Theme
@@ -2191,6 +2282,8 @@ Public Class CP
                             EnableTheming(0)
                     End Select
 
+                    SetCtrlTxt("Applying Colors and Tweaks ...", f)
+
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
@@ -2209,6 +2302,8 @@ Public Class CP
 
 #Region "Metro"
                 If My.W8 Then
+                    SetCtrlTxt("Applying Theme ...", f)
+
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
                     Try
@@ -2222,6 +2317,8 @@ Public Class CP
                         End Select
                     Catch
                     End Try
+
+                    SetCtrlTxt("Applying Colors and Tweaks ...", f)
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
@@ -2339,6 +2436,8 @@ Public Class CP
 
 #Region "LogonUI 7"
                 If My.W7 Then
+                    SetCtrlTxt("Applying Custom LogonUI ...", f)
+
                     If isElevated Then
 
                         My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
@@ -2456,11 +2555,15 @@ Public Class CP
 
 
                         For x = 0 To bmpList.Count - 1
+                            SetCtrlTxt(String.Format("Rendering Custom LogonUI: {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
                             If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
                             If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
                             If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
                         Next
 
+                        For x = 0 To bmpList.Count - 1
+                            bmpList(x) = BitmapFillScaler(bmpList(x), My.Computer.Screen.Bounds.Size)
+                        Next
 
                         If bmpList.Count = 1 Then
                             bmpList(0).Save(Dir & "\backgroundDefault.jpg", ImageFormat.Jpeg)
@@ -2477,6 +2580,8 @@ Public Class CP
 
 #Region "LogonUI 8"
                 If My.W8 Then
+                    SetCtrlTxt("Applying Custom LogonUI ...", f)
+
                     Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
                     If isElevated Then
@@ -2592,6 +2697,7 @@ Public Class CP
                                 bmp = My.Application.GetCurrentWallpaper
                         End Select
 
+                        SetCtrlTxt("Rendering Custom LogonUI ...", f)
 
                         If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
                         If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
@@ -2603,6 +2709,8 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
+                If My.W7 Or My.W8 Then SetCtrlTxt("Applying Win32UI Colors (Classic Windows Elements) ...", f)
+
                 Dim C1 As New List(Of Integer)
                 Dim C2 As New List(Of UInteger)
 
@@ -2748,6 +2856,8 @@ Public Class CP
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
 #Region "Cursors"
+                If My.W7 Or My.W8 Then SetCtrlTxt("Saving Cursors Colors ...", f)
+
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
 
@@ -3041,11 +3151,16 @@ Public Class CP
                 rMain.Close()
 
                 If Cursor_Enabled Then
+                    If My.W7 Or My.W8 Then SetCtrlTxt("Rendering Cursors ...", f)
                     ExportCursors(MainFrm.CP)
-                    If My.Application._Settings.AutoApplyCursors Then ApplyCursorsToReg()
+                    If My.Application._Settings.AutoApplyCursors Then
+                        If My.W7 Or My.W8 Then SetCtrlTxt("Applying Cursors ...", f)
+                        ApplyCursorsToReg()
+                    End If
                 End If
 #End Region
 
+                If My.W7 Or My.W8 Then f.BeginInvoke(New Action(Sub() f.Close()))
 #End Region
 
             Case SavingMode.File

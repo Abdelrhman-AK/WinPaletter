@@ -144,6 +144,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ApplyingTheme.Designer.vb">
+      <DependentUpon>ApplyingTheme.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ApplyingTheme.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Changelog.Designer.vb">
       <DependentUpon>Changelog.vb</DependentUpon>
     </Compile>
@@ -306,6 +312,9 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplyingTheme.resx">
+      <DependentUpon>ApplyingTheme.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>
