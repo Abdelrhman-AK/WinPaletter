@@ -1,11 +1,12 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports System.Drawing.Text
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
 Imports WinPaletter.CP
+Imports WinPaletter.NativeMethods
+Imports WinPaletter.NativeMethods.Dwmapi
 
 Public Class XenonCore
 
@@ -25,7 +26,6 @@ Public Class XenonCore
 #End Region
 
 #Region "Misc"
-
 
     Public Shared Sub RefreshDWM(CP As CP)
 
@@ -54,8 +54,6 @@ Public Class XenonCore
         End Try
     End Sub
 
-
-
     'Public Shared Sub RefreshRegisrty()
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
@@ -74,7 +72,6 @@ Public Class XenonCore
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     'End Sub
-
     Public Shared Function BitmapFillScaler(ByVal Bitmap As Bitmap, Size As Size) As Bitmap
         Try
             Dim sourceWidth As Integer = Bitmap.Width
@@ -136,12 +133,12 @@ Public Class XenonCore
     End Sub
     Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
         Try
-            Dim NM As New NativeMethods.Kernel32
+
             If IO.File.Exists(File) Then
-                Dim hMod As IntPtr = NM.LoadLibraryEx(File, IntPtr.Zero, &H2)
-                Dim hRes As IntPtr = NM.FindResource(hMod, ResourceID, ResourceType)
-                Dim size As UInteger = NM.SizeofResource(hMod, hRes)
-                Dim pt As IntPtr = NM.LoadResource(hMod, hRes)
+                Dim hMod As IntPtr = NativeMethods.Kernel32.LoadLibraryEx(File, IntPtr.Zero, &H2)
+                Dim hRes As IntPtr = NativeMethods.Kernel32.FindResource(hMod, ResourceID, ResourceType)
+                Dim size As UInteger = NativeMethods.Kernel32.SizeofResource(hMod, hRes)
+                Dim pt As IntPtr = NativeMethods.Kernel32.LoadResource(hMod, hRes)
                 Dim bPtr As Byte() = New Byte(size - 1) {}
                 Marshal.Copy(pt, bPtr, 0, CInt(size))
                 Return Image.FromStream(New MemoryStream(bPtr))
@@ -336,7 +333,6 @@ Public Class XenonCore
             Return False
         End If
     End Function
-
 
 #End Region
 
@@ -568,29 +564,39 @@ End Class
 
 Public Class Acrylism
 
-#Region "Fluent"
+    <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure Side
+        Public Left As Integer
+        Public Right As Integer
+        Public Top As Integer
+        Public Buttom As Integer
+    End Structure
+
+    <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarinset As Side) As Integer
+    End Function
+
+    Public Shared Sub EnableBlur(ByVal [Form] As Form, Optional ByVal Border As Boolean = True)
+        If My.W11 Or My.W10 Then
+            Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+            If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
+            Dim accentStructSize = Marshal.SizeOf(accent)
+            Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
+            Marshal.StructureToPtr(accent, accentPtr, False)
+
+            Dim Data = New User32.WindowCompositionAttributeData With {
+                    .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                    .SizeOfData = accentStructSize,
+                    .Data = accentPtr
+                }
+
+            User32.SetWindowCompositionAttribute([Form].Handle, Data)
+            Marshal.FreeHGlobal(accentPtr)
+        Else
+            Dim Com As Boolean
+            NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
+            If Com Then Dim result As Integer = DwmExtendFrameIntoClientArea([Form].Handle, New Side With {.Left = -1, .Right = -1, .Top = -1, .Buttom = -1})
+        End If
 
 
-
-#End Region
-
-    Public Shared Sub EnableBlur(ByVal Handle As IntPtr, Optional ByVal Border As Boolean = True)
-
-        Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
-        If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
-        Dim accentStructSize = Marshal.SizeOf(accent)
-        Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
-        Marshal.StructureToPtr(accent, accentPtr, False)
-
-        Dim Data = New NativeMethods.User32.WindowCompositionAttributeData With {
-                .Attribute = NativeMethods.User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                .SizeOfData = accentStructSize,
-                .Data = accentPtr
-            }
-
-        NativeMethods.User32.SetWindowCompositionAttribute(Handle, Data)
-
-        Marshal.FreeHGlobal(accentPtr)
     End Sub
 End Class
 

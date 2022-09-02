@@ -18,6 +18,17 @@ Namespace NativeMethods
         Public Shared Function DwmIsCompositionEnabled(ByRef enabled As Boolean) As Integer
         End Function
 
+        <DllImport("dwmapi.dll")>
+        Public Shared Function DwmEnableBlurBehindWindow(ByVal hWnd As IntPtr, ByRef pBlurBehind As DwmBlurbehind) As Integer
+        End Function
+
+        Public Structure DwmBlurbehind
+            Public DwFlags As Integer
+            Public FEnable As Boolean
+            Public HRgnBlur As IntPtr
+            Public FTransitionOnMaximized As Boolean
+        End Structure
+
         <Runtime.InteropServices.DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
         End Function
 
@@ -32,7 +43,7 @@ Namespace NativeMethods
             DWM_EC_ENABLECOMPOSITION = 1
         End Enum
 
-        Public Structure MARGINS
+        <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure MARGINS
             Public leftWidth As Integer
             Public rightWidth As Integer
             Public topHeight As Integer
@@ -145,5 +156,10 @@ Namespace NativeMethods
         End Function
     End Class
 
+    Public Class Gdi32
+        <DllImport("gdi32.dll")>
+        Public Shared Function CreateEllipticRgn(ByVal nLeftRect As Integer, ByVal nTopRect As Integer, ByVal nRightRect As Integer, ByVal nBottomRect As Integer) As IntPtr
+        End Function
+    End Class
 
 End Namespace

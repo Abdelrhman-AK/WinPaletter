@@ -14,11 +14,13 @@ Public Class LogonUI7
         LoadFromCP(MainFrm.CP)
         ApplyPreview()
 
-        If My.W8 Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+            Label16.Text = "Lock Screen Enabled?"
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
         Else
+            Label16.Text = "Enabled?"
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
             PictureBox4.Image = My.Resources.Native7
@@ -31,7 +33,7 @@ Public Class LogonUI7
 
     Sub LoadFromCP(CP As CP)
 
-        If My.W8 Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
             XenonToggle1.Checked = Not CP.Metro_NoLockScreen
 
             Select Case CP.Metro_LockScreenType
@@ -89,7 +91,7 @@ Public Class LogonUI7
 
     Sub LoadToCP(CP As CP)
 
-        If My.W8 Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
             CP.Metro_NoLockScreen = Not XenonToggle1.Checked
 
             If XenonRadioButton1.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.System

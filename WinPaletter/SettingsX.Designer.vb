@@ -109,15 +109,17 @@ Partial Class SettingsX
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.XenonSeparator5 = New WinPaletter.XenonSeparator()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator6 = New WinPaletter.XenonSeparator()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
-        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -229,10 +231,11 @@ Partial Class SettingsX
         Me.XenonAlertBox5.Image = Nothing
         Me.XenonAlertBox5.Location = New System.Drawing.Point(88, 116)
         Me.XenonAlertBox5.Name = "XenonAlertBox5"
-        Me.XenonAlertBox5.Size = New System.Drawing.Size(135, 19)
+        Me.XenonAlertBox5.Size = New System.Drawing.Size(482, 38)
         Me.XenonAlertBox5.TabIndex = 14
         Me.XenonAlertBox5.TabStop = False
-        Me.XenonAlertBox5.Text = "Not Recommended"
+        Me.XenonAlertBox5.Text = "Useful only if you create a universal theme for all versions of Windows (7, 8.1, " &
+    "10 & 11), if else, it is not recommended to modify"
         '
         'XenonCheckBox4
         '
@@ -1242,6 +1245,7 @@ Partial Class SettingsX
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.XenonAlertBox6)
         Me.TabPage5.Controls.Add(Me.PictureBox14)
         Me.TabPage5.Controls.Add(Me.XenonCheckBox7)
         Me.TabPage5.Controls.Add(Me.XenonSeparator6)
@@ -1257,10 +1261,29 @@ Partial Class SettingsX
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Theme Applying Behaviour"
         '
+        'XenonAlertBox6
+        '
+        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(134, Byte), Integer))
+        Me.XenonAlertBox6.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox6.CenterText = True
+        Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox6.Image = Nothing
+        Me.XenonAlertBox6.Location = New System.Drawing.Point(90, 115)
+        Me.XenonAlertBox6.Name = "XenonAlertBox6"
+        Me.XenonAlertBox6.Size = New System.Drawing.Size(716, 23)
+        Me.XenonAlertBox6.TabIndex = 22
+        Me.XenonAlertBox6.TabStop = False
+        Me.XenonAlertBox6.Text = "It is used to apply accent colors correctly in Windows 10 and 11, Start Menu for " &
+    "Windows 8.1"
+        '
         'PictureBox14
         '
         Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
-        Me.PictureBox14.Location = New System.Drawing.Point(51, 121)
+        Me.PictureBox14.Location = New System.Drawing.Point(51, 153)
         Me.PictureBox14.Name = "PictureBox14"
         Me.PictureBox14.Size = New System.Drawing.Size(30, 26)
         Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1276,7 +1299,7 @@ Partial Class SettingsX
         Me.XenonCheckBox7.Checked = False
         Me.XenonCheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox7.Location = New System.Drawing.Point(87, 121)
+        Me.XenonCheckBox7.Location = New System.Drawing.Point(87, 153)
         Me.XenonCheckBox7.Name = "XenonCheckBox7"
         Me.XenonCheckBox7.Size = New System.Drawing.Size(719, 26)
         Me.XenonCheckBox7.TabIndex = 21
@@ -1296,6 +1319,7 @@ Partial Class SettingsX
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage6.Controls.Add(Me.PictureBox15)
         Me.TabPage6.Controls.Add(Me.XenonCheckBox9)
         Me.TabPage6.Controls.Add(Me.XenonSeparator7)
@@ -1311,6 +1335,50 @@ Partial Class SettingsX
         Me.TabPage6.Size = New System.Drawing.Size(812, 452)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Miscellaneous"
+        '
+        'XenonAlertBox2
+        '
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox2.CenterText = True
+        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox2.Image = Nothing
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(88, 204)
+        Me.XenonAlertBox2.Name = "XenonAlertBox2"
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(407, 24)
+        Me.XenonAlertBox2.TabIndex = 22
+        Me.XenonAlertBox2.TabStop = False
+        Me.XenonAlertBox2.Text = "Real-time preview might come soon for Windows 10 and 11"
+        '
+        'PictureBox15
+        '
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(51, 172)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox15.TabIndex = 20
+        Me.PictureBox15.TabStop = False
+        '
+        'XenonCheckBox9
+        '
+        Me.XenonCheckBox9.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox9.Checked = False
+        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox9.Location = New System.Drawing.Point(87, 172)
+        Me.XenonCheckBox9.Name = "XenonCheckBox9"
+        Me.XenonCheckBox9.Size = New System.Drawing.Size(684, 26)
+        Me.XenonCheckBox9.TabIndex = 21
+        Me.XenonCheckBox9.Text = "Preview every change I make to colors and values in real-time (Windows 7 and 8.1)" &
+    ""
         '
         'XenonSeparator7
         '
@@ -1337,31 +1405,6 @@ Partial Class SettingsX
         'OpenFileDialog2
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
-        '
-        'PictureBox15
-        '
-        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
-        Me.PictureBox15.Location = New System.Drawing.Point(51, 157)
-        Me.PictureBox15.Name = "PictureBox15"
-        Me.PictureBox15.Size = New System.Drawing.Size(30, 26)
-        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox15.TabIndex = 20
-        Me.PictureBox15.TabStop = False
-        '
-        'XenonCheckBox9
-        '
-        Me.XenonCheckBox9.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox9.Checked = False
-        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox9.Location = New System.Drawing.Point(87, 157)
-        Me.XenonCheckBox9.Name = "XenonCheckBox9"
-        Me.XenonCheckBox9.Size = New System.Drawing.Size(684, 26)
-        Me.XenonCheckBox9.TabIndex = 21
-        Me.XenonCheckBox9.Text = "Preview every change I make to colors and values in real-time (Windows 7)"
         '
         'SettingsX
         '
@@ -1522,4 +1565,6 @@ Partial Class SettingsX
     Friend WithEvents XenonCheckBox7 As XenonCheckBox
     Friend WithEvents PictureBox15 As PictureBox
     Friend WithEvents XenonCheckBox9 As XenonCheckBox
+    Friend WithEvents XenonAlertBox2 As XenonAlertBox
+    Friend WithEvents XenonAlertBox6 As XenonAlertBox
 End Class

@@ -513,6 +513,7 @@ Public Class MainFrm
             End If
         Next
     End Sub
+
     Sub Adjust_Preview()
         If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
         Panel3.Visible = True
