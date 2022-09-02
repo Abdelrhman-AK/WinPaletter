@@ -15,7 +15,7 @@ Public Class dragPreviewer
             CheckAeroEnabled()
             Dim cp As CreateParams = MyBase.CreateParams
             If Not aeroEnabled Then
-                cp.ClassStyle = cp.ClassStyle Or NativeConstants.CS_DROPSHADOW
+                cp.ClassStyle = cp.ClassStyle Or NativeMethods.Dwmapi.CS_DROPSHADOW
                 cp.ExStyle = cp.ExStyle Or 33554432
                 Return cp
             Else
@@ -26,18 +26,18 @@ Public Class dragPreviewer
 
     Protected Overrides Sub WndProc(ByRef m As Message)
         Select Case m.Msg
-            Case NativeConstants.WM_NCPAINT
+            Case NativeMethods.Dwmapi.WM_NCPAINT
                 Dim val = 2
                 If aeroEnabled Then
-                    NativeMethods.DwmSetWindowAttribute(FindForm.Handle, If(GetRoundedCorners(), 2, 1), val, 4)
-                    Dim bla As New NativeStructs.MARGINS()
+                    NativeMethods.Dwmapi.DwmSetWindowAttribute(FindForm.Handle, If(GetRoundedCorners(), 2, 1), val, 4)
+                    Dim bla As New NativeMethods.Dwmapi.MARGINS()
                     With bla
                         .bottomHeight = 1
                         .leftWidth = 1
                         .rightWidth = 1
                         .topHeight = 1
                     End With
-                    NativeMethods.DwmExtendFrameIntoClientArea(Handle, bla)
+                    NativeMethods.Dwmapi.DwmExtendFrameIntoClientArea(Handle, bla)
                 End If
                 Exit Select
         End Select
@@ -48,41 +48,12 @@ Public Class dragPreviewer
     Private Sub CheckAeroEnabled()
         If Environment.OSVersion.Version.Major >= 6 Then
             Dim enabled As Integer = 0
-            Dim response As Integer = NativeMethods.DwmIsCompositionEnabled(enabled)
+            Dim response As Integer = NativeMethods.Dwmapi.DwmIsCompositionEnabled(enabled)
             aeroEnabled = (enabled = 1)
         Else
             aeroEnabled = False
         End If
     End Sub
-
-    Public Class NativeStructs
-
-        Public Structure MARGINS
-            Public leftWidth As Integer
-            Public rightWidth As Integer
-            Public topHeight As Integer
-            Public bottomHeight As Integer
-        End Structure
-
-    End Class
-
-    Public Class NativeMethods
-
-        <Runtime.InteropServices.DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As NativeStructs.MARGINS) As Integer
-        End Function
-
-        <Runtime.InteropServices.DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
-        End Function
-
-        <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmIsCompositionEnabled(ByRef pfEnabled As Integer) As Integer
-        End Function
-
-    End Class
-
-    Public Class NativeConstants
-        Public Const CS_DROPSHADOW As Integer = &H20000
-        Public Const WM_NCPAINT As Integer = &H85
-    End Class
 
 #End Region
 

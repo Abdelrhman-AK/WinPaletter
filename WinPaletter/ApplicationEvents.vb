@@ -394,6 +394,11 @@ Namespace My
             allForms.Add(Win32UI)
             allForms.Add(SettingsX)
             allForms.Add(CursorsStudio)
+            allForms.Add(ApplyingTheme)
+            allForms.Add(LogonUI7)
+            allForms.Add(LogonUI8Colors)
+            allForms.Add(LogonUI8_Pics)
+            allForms.Add(Start8Selector)
 
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
@@ -417,11 +422,11 @@ Namespace My
             DetectOS()
 
             '#If Not DEBUG Then
-            '           If My.W7 Or My.W8 Then
-            '          MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
-            '                    "You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
-            '                   , MsgBoxStyle.Exclamation + MsgboxRt())
-            '       End If
+            'If My.W7 Or My.W8 Then
+            'MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
+            '"You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
+            ', MsgBoxStyle.Exclamation + MsgboxRt())
+            'End If
             '#End If
 
 
@@ -439,29 +444,10 @@ Namespace My
                 .WindowStyle = ProcessWindowStyle.Normal,
                 .UseShellExecute = True
             }
-
             If Not My.W8 Then processExplorerInfo.Verb = "runas"
-
-            Dim AeroKillerInfo As New ProcessStartInfo With {
-                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\net.exe",
-                .Verb = "runas",
-                .Arguments = "stop uxsms",
-                .WindowStyle = ProcessWindowStyle.Hidden,
-                .UseShellExecute = True
-            }
-
-            Dim AeroStarterInfo As New ProcessStartInfo With {
-                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\net.exe",
-                .Verb = "runas",
-                .Arguments = "start uxsms",
-                .WindowStyle = ProcessWindowStyle.Hidden,
-                .UseShellExecute = True
-            }
 
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
-            AeroKiller.StartInfo = AeroKillerInfo
-            AeroStarter.StartInfo = AeroStarterInfo
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try

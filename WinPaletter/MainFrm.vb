@@ -943,8 +943,7 @@ Public Class MainFrm
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         Dim Changed As Boolean = Not CP.Equals(CP_Original)
 
-        If e.CloseReason = CloseReason.UserClosing And Changed Then
-
+        If Changed Then
             Select Case ComplexSave.ShowDialog
                 Case DialogResult.Yes
 
@@ -989,7 +988,7 @@ Public Class MainFrm
                     e.Cancel = True
             End Select
 
-        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
+        Else
             e.Cancel = False
             MyBase.OnFormClosing(e)
         End If
@@ -1227,13 +1226,8 @@ Public Class MainFrm
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
-
         CP_Original = CP
-
         CP.Save(CP.SavingMode.Registry)
-
-        RefreshRegisrty()
-
         Cursor = Cursors.Default
 
         If My.Application._Settings.AutoRestartExplorer Then
@@ -1920,22 +1914,6 @@ Public Class MainFrm
         CursorsStudio.ShowDialog()
     End Sub
 
-#Region "DWM Windows 7 Live Preview"
-    <DllImport("dwmapi.dll", EntryPoint:="#131", PreserveSig:=False)>
-    Private Shared Sub DwmSetColorizationParameters(ByRef parameters As DWM_COLORIZATION_PARAMS, ByVal unknown As Boolean)
-    End Sub
-
-    Private Structure DWM_COLORIZATION_PARAMS
-        Public clrColor As Integer
-        Public clrAfterGlow As Integer
-        Public nIntensity As Integer
-        Public clrAfterGlowBalance As Integer
-        Public clrBlurBalance As Integer
-        Public clrGlassReflectionIntensity As Integer
-        Public fOpaque As Boolean
-    End Structure
-#End Region
-
     Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
         Dim CList As New List(Of Control) From {
             sender,
@@ -2180,6 +2158,9 @@ Public Class MainFrm
         ApplyingTheme.Show()
     End Sub
 
+    Private Sub XenonButton24_Click(sender As Object, e As EventArgs)
+
+    End Sub
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

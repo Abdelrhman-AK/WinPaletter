@@ -786,8 +786,9 @@ Public Class CP
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Nothing)
                         Aero_ColorizationGlassReflectionIntensity = y
 
-                        Dim ComPol As Integer = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        Dim Com As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", True)
+                        Dim Com As Boolean
+                        NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
+
                         Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
                         Dim Classic As Boolean = False
@@ -802,11 +803,12 @@ Public Class CP
 
                         If Classic Then
                             Aero_Theme = AeroTheme.Classic
-                        ElseIf Com Or ComPol = 2 Then
+                        ElseIf Com Then
                             If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
-                        ElseIf Not Com Or ComPol = 1 Or ComPol = 0 Then
+                        Else
                             Aero_Theme = AeroTheme.Basic
                         End If
+
                     End If
 
                     Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", True)
@@ -2324,6 +2326,7 @@ Public Class CP
 
                         Case AeroTheme.Classic
                             EnableTheming(0)
+
                     End Select
 
                     SetCtrlTxt("Applying Colors and Tweaks ...", f)
@@ -2338,9 +2341,7 @@ Public Class CP
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
-                    'EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "UseMachineCheck", 0)
-
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
                 End If
 
 

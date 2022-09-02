@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.dragPreviewer
+Imports WinPaletter.XenonCore
 Public Class ApplyingTheme
 
 #Region "Form Shadow"
@@ -22,17 +23,18 @@ Public Class ApplyingTheme
     Protected Overrides Sub WndProc(ByRef m As Message)
         Select Case m.Msg
             Case NativeConstants.WM_NCPAINT
+
                 Dim val = 2
                 If aeroEnabled Then
-                    NativeMethods.DwmSetWindowAttribute(FindForm.Handle, 2, val, 4)
-                    Dim bla As New NativeStructs.MARGINS()
+                    NativeMethods.Dwmapi.DwmSetWindowAttribute(FindForm.Handle, 2, val, 4)
+                    Dim bla As New NativeMethods.Dwmapi.MARGINS()
                     With bla
                         .bottomHeight = 3
                         .leftWidth = 3
                         .rightWidth = 3
                         .topHeight = 3
                     End With
-                    NativeMethods.DwmExtendFrameIntoClientArea(Handle, bla)
+                    NativeMethods.Dwmapi.DwmExtendFrameIntoClientArea(Handle, bla)
                 End If
                 Exit Select
         End Select
@@ -43,36 +45,13 @@ Public Class ApplyingTheme
     Private Sub CheckAeroEnabled()
         If Environment.OSVersion.Version.Major >= 6 Then
             Dim enabled As Integer = 0
-            Dim response As Integer = NativeMethods.DwmIsCompositionEnabled(enabled)
+            Dim response As Integer = NativeMethods.Dwmapi.DwmIsCompositionEnabled(enabled)
             aeroEnabled = (enabled = 1)
         Else
             aeroEnabled = False
         End If
     End Sub
 
-    Public Class NativeStructs
-
-        Public Structure MARGINS
-            Public leftWidth As Integer
-            Public rightWidth As Integer
-            Public topHeight As Integer
-            Public bottomHeight As Integer
-        End Structure
-
-    End Class
-
-    Public Class NativeMethods
-
-        <Runtime.InteropServices.DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As NativeStructs.MARGINS) As Integer
-        End Function
-
-        <Runtime.InteropServices.DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
-        End Function
-
-        <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmIsCompositionEnabled(ByRef pfEnabled As Integer) As Integer
-        End Function
-
-    End Class
 
     Public Class NativeConstants
         Public Const CS_DROPSHADOW As Integer = &H20000
@@ -84,7 +63,7 @@ Public Class ApplyingTheme
 
     Private Sub ApplyingTheme_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        AnimateWindow(Handle, 250, AnimateWindowFlags.AW_ACTIVATE Or AnimateWindowFlags.AW_BLEND)
+        NativeMethods.User32.AnimateWindow(Handle, 250, NativeMethods.User32.AnimateWindowFlags.AW_ACTIVATE Or NativeMethods.User32.AnimateWindowFlags.AW_BLEND)
         Invalidate()
     End Sub
 
@@ -103,7 +82,7 @@ Public Class ApplyingTheme
         Catch
         End Try
 
-        AnimateWindow(Handle, 250, AnimateWindowFlags.AW_HIDE Or AnimateWindowFlags.AW_BLEND)
+        NativeMethods.User32.AnimateWindow(Handle, 250, NativeMethods.User32.AnimateWindowFlags.AW_HIDE Or NativeMethods.User32.AnimateWindowFlags.AW_BLEND)
 
     End Sub
 

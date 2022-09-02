@@ -381,22 +381,8 @@ Public Class ColorPickerDlg
     End Sub
 
 #Region "DWM Windows 7 Live Preview"
-    <DllImport("dwmapi.dll", EntryPoint:="#131", PreserveSig:=False)>
-    Private Shared Sub DwmSetColorizationParameters(ByRef parameters As DWM_COLORIZATION_PARAMS, ByVal unknown As Boolean)
-    End Sub
-
-    Private Structure DWM_COLORIZATION_PARAMS
-        Public clrColor As Integer
-        Public clrAfterGlow As Integer
-        Public nIntensity As Integer
-        Public clrAfterGlowBalance As Integer
-        Public clrBlurBalance As Integer
-        Public clrGlassReflectionIntensity As Integer
-        Public fOpaque As Boolean
-    End Structure
-
     Public Shared Sub UpdateWin7Preview(Color1 As Color, Color2 As Color)
-        Dim temp As New DWM_COLORIZATION_PARAMS
+        Dim temp As New NativeMethods.Dwmapi.DWM_COLORIZATION_PARAMS
         temp.clrColor = Color1.ToArgb
         temp.clrAfterGlow = Color2.ToArgb
         temp.nIntensity = MainFrm.CP.Aero_ColorizationColorBalance
@@ -404,7 +390,7 @@ Public Class ColorPickerDlg
         temp.clrBlurBalance = MainFrm.CP.Aero_ColorizationBlurBalance
         temp.clrGlassReflectionIntensity = MainFrm.CP.Aero_ColorizationGlassReflectionIntensity
         temp.fOpaque = If(MainFrm.CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
-        DwmSetColorizationParameters(temp, False)
+        NativeMethods.Dwmapi.DwmSetColorizationParameters(temp, False)
     End Sub
 #End Region
 
