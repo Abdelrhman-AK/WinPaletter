@@ -304,7 +304,7 @@ Public Class XenonCore
         Else
             Try
                 If My.Application._Settings.Appearance_Auto Then
-                    i = CLng(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Nothing))
+                    i = CLng(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0))
                     If i = 1 Then
                         Return False
                     Else

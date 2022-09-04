@@ -4211,15 +4211,20 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Dim StartORB As New Bitmap(My.Resources.Win8ORB)
                     Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27)
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
+                    Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
+
                     Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
+                    Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
                     Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
 
 
                     G.DrawImage(StartORB, StartBtnRect)
 
                     If Transparency Then
-                        G.DrawImage(My.Resources.Taskbar_ActiveApp8, AppBtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(100, Color.White)), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(200, CCB(c, -0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(215, Color.White)), AppBtnRectInner)
                     Else
                         G.FillRectangle(New SolidBrush(Color.FromArgb(255, CCB(bc, 0.5))), AppBtnRect)
                         G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), CCB(c, 0.5))), AppBtnRect)
@@ -4230,7 +4235,9 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
 
                     If Transparency Then
-                        G.DrawImage(My.Resources.Taskbar_InactiveApp8, App2BtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, CCB(c, -0.5))), App2BtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, Color.White)), App2BtnRectInner)
                     Else
                         G.FillRectangle(New SolidBrush(Color.FromArgb(255, ControlPaint.Light(bc, 0.1))), App2BtnRect)
                         G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), ControlPaint.Light(c, 0.1))), App2BtnRect)

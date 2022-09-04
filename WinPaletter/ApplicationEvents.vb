@@ -366,7 +366,10 @@ Namespace My
     SettingsX.Label2,
     SettingsX.Label3,
     SettingsX.Label5,
-    SettingsX.Label6
+    SettingsX.Label6,
+    Whatsnew.Label2,
+    Whatsnew.Label3,
+    Whatsnew.Label13
 }
 
             If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then

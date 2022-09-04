@@ -2,6 +2,7 @@
 
 Public Class Whatsnew
     Private Sub Tutorial_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Label2.Text = String.Format("What's New in {0}!", My.Application.Info.Version.ToString)
         ApplyDarkMode(Me)
     End Sub
 

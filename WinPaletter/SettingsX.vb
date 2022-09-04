@@ -118,7 +118,18 @@ Public Class SettingsX
     End Sub
 
     Sub SaveSettings()
+        Cursor = Cursors.WaitCursor
+
+        Dim ch_preview As Boolean = False  'Ch = Change
+        Dim ch_dark As Boolean = False
+
         With My.Application._Settings
+            If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then ch_preview = True
+            If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then ch_preview = True
+
+            If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_dark = True
+            If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_dark = True
+
             .AutoAddExt = XenonCheckBox1.Checked
             .DragAndDropPreview = XenonCheckBox3.Checked
             .OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
@@ -136,43 +147,47 @@ Public Class SettingsX
             .Save(XeSettings.Mode.Registry)
         End With
 
+        If ch_preview Then
+            If My.Application._Settings.CustomPreviewConfig_Enabled Then
+                MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
+            Else
 
-        If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
-        Else
-
-            If My.W11 Then
-                MainFrm.PreviewConfig = MainFrm.WinVer.Eleven
-            ElseIf My.W10 Then
-                MainFrm.PreviewConfig = MainFrm.WinVer.Ten
-            ElseIf My.W8 Then
-                MainFrm.PreviewConfig = MainFrm.WinVer.Eight
-            ElseIf My.W7 Then
-                MainFrm.PreviewConfig = MainFrm.WinVer.Seven
+                If My.W11 Then
+                    MainFrm.PreviewConfig = MainFrm.WinVer.Eleven
+                ElseIf My.W10 Then
+                    MainFrm.PreviewConfig = MainFrm.WinVer.Ten
+                ElseIf My.W8 Then
+                    MainFrm.PreviewConfig = MainFrm.WinVer.Eight
+                ElseIf My.W7 Then
+                    MainFrm.PreviewConfig = MainFrm.WinVer.Seven
+                End If
             End If
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+                MainFrm.PaletteContainer_W1x.Visible = True
+                MainFrm.PaletteContainer_W8.Visible = False
+                MainFrm.PaletteContainer_W7.Visible = False
+            End If
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+                MainFrm.PaletteContainer_W1x.Visible = False
+                MainFrm.PaletteContainer_W8.Visible = False
+                MainFrm.PaletteContainer_W7.Visible = True
+            End If
+
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                MainFrm.PaletteContainer_W1x.Visible = False
+                MainFrm.PaletteContainer_W8.Visible = True
+                MainFrm.PaletteContainer_W7.Visible = False
+            End If
+
+            MainFrm.Adjust_Preview()
+            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
         End If
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
-            MainFrm.PaletteContainer_W1x.Visible = True
-            MainFrm.PaletteContainer_W8.Visible = False
-            MainFrm.PaletteContainer_W7.Visible = False
-        End If
+        If ch_dark Then ApplyDarkMode()
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
-            MainFrm.PaletteContainer_W1x.Visible = False
-            MainFrm.PaletteContainer_W8.Visible = False
-            MainFrm.PaletteContainer_W7.Visible = True
-        End If
-
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-            MainFrm.PaletteContainer_W1x.Visible = False
-            MainFrm.PaletteContainer_W8.Visible = True
-            MainFrm.PaletteContainer_W7.Visible = False
-        End If
-
-        MainFrm.Adjust_Preview()
-        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        ApplyDarkMode()
+        Cursor = Cursors.Default
 
         MsgBox(My.Application.LanguageHelper.SettingsSaved, MsgBoxStyle.Information + My.Application.MsgboxRt)
         Me.Close()
