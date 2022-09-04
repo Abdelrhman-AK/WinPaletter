@@ -163,6 +163,18 @@ Public Class SettingsX
                 End If
             End If
 
+            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+                MainFrm.XenonButton20.Image = My.Resources.Native11
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+                MainFrm.XenonButton20.Image = My.Resources.Native10
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                MainFrm.XenonButton20.Image = My.Resources.Native8
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+                MainFrm.XenonButton20.Image = My.Resources.Native7
+            Else
+                MainFrm.XenonButton20.Image = My.Resources.Native11
+            End If
+
             If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
                 MainFrm.PaletteContainer_W1x.Visible = True
                 MainFrm.PaletteContainer_W8.Visible = False

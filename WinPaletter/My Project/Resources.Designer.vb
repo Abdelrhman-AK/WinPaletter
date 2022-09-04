@@ -284,7 +284,7 @@ Namespace My.Resources
         '''@SaveTag = Save Theme File
         '''@SaveAsTag = Save Theme File as ...
         '''@EditInfoTag = Edit Information of current Theme File
-        '''@NewUpdate = New Update Avaliable
+        '''@NewUpdate = New Update Available
         '''@OpenForActions = Open Updates form for [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property CodeStr() As String

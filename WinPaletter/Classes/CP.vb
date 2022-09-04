@@ -36,11 +36,11 @@ Public Class CP
     ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
 #Region "General Info"
-    Public Property AppVersion As String
-    Public Property PaletteName As String
+    Public Property AppVersion As String = My.Application.Info.Version.ToString
+    Public Property PaletteName As String = "Current Mode"
     Public Property PaletteDescription As String
-    Public Property PaletteVersion As String
-    Public Property Author As String
+    Public Property PaletteVersion As String = "1.0.0.0"
+    Public Property Author As String = Environment.UserName
     Public Property AuthorSocialMediaLink As String
 #End Region
 
@@ -58,9 +58,9 @@ Public Class CP
     Public Property SettingsIconsAndLinks As Color
     Public Property WinMode_Light As Boolean
     Public Property AppMode_Light As Boolean
-    Public Property Transparency As Boolean
-    Public Property ApplyAccentonTitlebars As Boolean
-    Public Property ApplyAccentonTaskbar As Boolean
+    Public Property Transparency As Boolean = True
+    Public Property ApplyAccentonTitlebars As Boolean = False
+    Public Property ApplyAccentonTaskbar As Boolean = False
 #End Region
 
 #Region "Aero"
@@ -433,19 +433,16 @@ Public Class CP
         CustomImage
         SolidColor
     End Enum
-
     Enum LogonUI8_Modes
         System
         Wallpaper
         CustomImage
         SolidColor
     End Enum
-
     Enum LogonUI7_NoiseMode
         Aero
         Acrylic
     End Enum
-
     Enum Mode
         Registry
         Init
@@ -497,11 +494,6 @@ Public Class CP
         s &= int
         Return s
     End Function
-    Function HexStringToBinary(ByVal hexString As String) As String
-        Dim num As Integer = Integer.Parse(hexString, NumberStyles.HexNumber)
-        Return Convert.ToString(num, 2)
-    End Function
-
     Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
         Dim R As RegistryKey = Nothing
 
@@ -538,19 +530,6 @@ Public Class CP
         End Try
 
     End Sub
-
-    Function RGB2HEX(ByVal [Color] As Color) As List(Of String)
-        Dim sb As New List(Of String)
-        sb.Clear()
-
-        sb.Add(String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B))
-        sb.Add(String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))
-
-        Return sb
-    End Function
-
     Function RGB2HEX_oneline(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
         Dim S As String
         If Alpha Then
@@ -561,18 +540,15 @@ Public Class CP
         End If
         Return S
     End Function
-
     Function BizareColorInvertor([Color] As Color) As Color
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
-
     Public Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
         Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
         bArray.CopyTo(newArray, 1)
         newArray(0) = newByte
         Return newArray
     End Function
-
     Private Function StringToBytesArray(ByVal str As String) As Byte()
         Dim bitsToPad = 8 - str.Length Mod 8
 
@@ -590,7 +566,6 @@ Public Class CP
 
         Return arr
     End Function
-
     Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
         If IO.File.Exists(Filename) Then
 
@@ -623,7 +598,6 @@ Public Class CP
             Return Nothing
         End If
     End Function
-
     Public Shared Function GetPaletteFromString([String] As String, ThemeName As String) As List(Of Color)
 
         If String.IsNullOrWhiteSpace([String]) Then
@@ -687,7 +661,6 @@ Public Class CP
 
         Return ls.Distinct.ToList
     End Function
-
     Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
         [ComboBox].Items.Clear()
         Dim ls As New List(Of String)
@@ -711,6 +684,19 @@ Public Class CP
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "")
         Select Case [Mode]
             Case Mode.Registry
+                Dim _Def As CP
+                If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+                    _Def = New CP_Defaults().Default_Windows11
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+                    _Def = New CP_Defaults().Default_Windows10
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                    _Def = New CP_Defaults().Default_Windows8
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+                    _Def = New CP_Defaults().Default_Windows7
+                Else
+                    _Def = New CP_Defaults().Default_Windows11
+                End If
+
 #Region "Registry"
                 Dim Colors As New List(Of Color)
                 Colors.Clear()
@@ -724,7 +710,11 @@ Public Class CP
 
 #Region "Modern Windows"
                 If Not My.W7 And Not My.W8 Then
-                    Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
+
+                    Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
+
+                    Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes))
+
                     Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
                     Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
                     Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
@@ -743,47 +733,68 @@ Public Class CP
                     Taskbar_Background = Colors(6)
 
                     Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.StartMenu_Accent).ToArgb)
                     StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Color.FromArgb(0, 120, 212))
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
                     Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.FromArgb(0, 120, 212))
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
                     Titlebar_DWM_Active = BizareColorInvertor(Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.FromArgb(35, 35, 35))
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Titlebar_Inactive).ToArgb)
                     Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
 
-                    WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", True)
-                    AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", True)
-                    Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
-                    ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", False)
-                    ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", False)
+                    WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.WinMode_Light)
+                    AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.AppMode_Light)
+                    Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Transparency)
+                    ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", Def.ApplyAccentonTaskbar)
+                    ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.ApplyAccentonTitlebars)
+
+                Else
+
+                    ActionCenter_AppsLinks = _Def.ActionCenter_AppsLinks
+                    Taskbar_Icon_Underline = _Def.Taskbar_Icon_Underline
+                    StartButton_Hover = _Def.StartButton_Hover
+                    SettingsIconsAndLinks = _Def.SettingsIconsAndLinks
+                    StartMenuBackground_ActiveTaskbarButton = _Def.StartMenuBackground_ActiveTaskbarButton
+                    StartListFolders_TaskbarFront = _Def.StartListFolders_TaskbarFront
+                    Taskbar_Background = _Def.Taskbar_Background
+                    StartMenu_Accent = _Def.StartMenu_Accent
+                    Titlebar_Active = _Def.Titlebar_Active
+                    Titlebar_DWM_Active = _Def.Titlebar_DWM_Active
+                    Titlebar_Inactive = _Def.Titlebar_Inactive
+                    WinMode_Light = _Def.WinMode_Light
+                    AppMode_Light = _Def.AppMode_Light
+                    Transparency = _Def.Transparency
+                    ApplyAccentonTaskbar = _Def.ApplyAccentonTaskbar
+                    ApplyAccentonTitlebars = _Def.ApplyAccentonTitlebars
                 End If
 
 #End Region
 
 #Region "Aero"
                 If My.W7 Or My.W8 Then
+                    Dim Def As CP = If(My.W7, New CP_Defaults().Default_Windows7, New CP_Defaults().Default_Windows8)
+
                     Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.Aero_ColorizationColor.ToArgb)
                     Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.Aero_ColorizationColorBalance)
                     Aero_ColorizationColorBalance = y
 
                     If Not My.W8 Then
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Nothing)
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.Aero_ColorizationAfterglow.ToArgb)
                         Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Nothing)
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.Aero_ColorizationAfterglowBalance)
                         Aero_ColorizationAfterglowBalance = y
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Nothing)
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.Aero_ColorizationBlurBalance)
                         Aero_ColorizationBlurBalance = y
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Nothing)
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.Aero_ColorizationGlassReflectionIntensity)
                         Aero_ColorizationGlassReflectionIntensity = y
 
                         Dim Com As Boolean
@@ -811,14 +822,26 @@ Public Class CP
 
                     End If
 
-                    Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", True)
-                    Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", False)
+                    Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.Aero_EnableAeroPeek)
+                    Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.Aero_AlwaysHibernateThumbnails)
+
+                Else
+                    Aero_ColorizationColor = _Def.Aero_ColorizationColor
+                    Aero_ColorizationColorBalance = _Def.Aero_ColorizationColorBalance
+                    Aero_ColorizationAfterglow = _Def.Aero_ColorizationAfterglow
+                    Aero_ColorizationAfterglowBalance = _Def.Aero_ColorizationAfterglowBalance
+                    Aero_ColorizationBlurBalance = _Def.Aero_ColorizationBlurBalance
+                    Aero_ColorizationGlassReflectionIntensity = _Def.Aero_ColorizationGlassReflectionIntensity
+                    Aero_Theme = _Def.Aero_Theme
+                    Aero_EnableAeroPeek = _Def.Aero_EnableAeroPeek
+                    Aero_AlwaysHibernateThumbnails = _Def.Aero_AlwaysHibernateThumbnails
                 End If
 
 #End Region
 
 #Region "Metro"
                 If My.W8 Then
+                    Dim Def As CP = New CP_Defaults().Default_Windows8
 
                     Dim stringThemeName As StringBuilder = New StringBuilder(260)
                     GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
@@ -846,15 +869,15 @@ Public Class CP
 
                         Dim result As String = CStr_FromList(ls)
 
-                            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
 
-                            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
 
-                            IO.File.WriteAllText(tempreg, result)
+                        IO.File.WriteAllText(tempreg, result)
 
-                            Dim process As Process = Nothing
+                        Dim process As Process = Nothing
 
-                            Dim processStartInfo As New ProcessStartInfo With {
+                        Dim processStartInfo As New ProcessStartInfo With {
                                .FileName = "regedit",
                                .Verb = "runas",
                                .Arguments = String.Format("/s ""{0}""", tempreg),
@@ -862,14 +885,14 @@ Public Class CP
                                .CreateNoWindow = True,
                                .UseShellExecute = True
                             }
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            processStartInfo.FileName = "reg"
-                            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            Kill(tempreg)
-                        End If
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
 
                     Dim y As Integer
                     y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
@@ -889,34 +912,51 @@ Public Class CP
 
                     Metro_LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
 
+                Else
+                    Metro_Theme = _Def.Metro_Theme
+                    Metro_StartColor = _Def.Metro_StartColor
+                    Metro_AccentColor = _Def.Metro_AccentColor
+                    Metro_PersonalColors_Background = _Def.Metro_PersonalColors_Background
+                    Metro_PersonalColors_Accent = _Def.Metro_PersonalColors_Accent
+                    Metro_Start = _Def.Metro_Start
+                    Metro_LogonUI = _Def.Metro_LogonUI
                 End If
 #End Region
 
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
+                    Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
+
                     Dim y As Integer
 
-                    With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0")
+                    With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", Def.LogonUI_Background.ToArgb)
                         LogonUI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                     End With
 
-                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb)
                     LogonUI_PersonalColors_Background = BizareColorInvertor(Color.FromArgb(y))
 
-                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", Nothing)
+                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb)
                     LogonUI_PersonalColors_Accent = BizareColorInvertor(Color.FromArgb(y))
 
-                    LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", False)
-                    LogonUI_DisableLogonBackgroundImage = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", False)
-                    LogonUI_NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", False)
+                    LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", Def.LogonUI_DisableAcrylicBackgroundOnLogon)
+                    LogonUI_DisableLogonBackgroundImage = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", Def.LogonUI_DisableLogonBackgroundImage)
+                    LogonUI_NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Def.LogonUI_NoLockScreen)
+                Else
+                    LogonUI_Background = _Def.LogonUI_Background
+                    LogonUI_PersonalColors_Background = _Def.LogonUI_PersonalColors_Background
+                    LogonUI_PersonalColors_Accent = _Def.LogonUI_PersonalColors_Accent
+                    LogonUI_DisableAcrylicBackgroundOnLogon = _Def.LogonUI_DisableAcrylicBackgroundOnLogon
+                    LogonUI_DisableLogonBackgroundImage = _Def.LogonUI_DisableLogonBackgroundImage
+                    LogonUI_NoLockScreen = _Def.LogonUI_NoLockScreen
                 End If
 
 #End Region
 
 #Region "LogonUI 7"
                 If My.W7 Then
-                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", True)
-                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", True)
+                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
+                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
                     LogonUI7_Enabled = b1 And b2
 
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
@@ -930,6 +970,18 @@ Public Class CP
                     LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
                     LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
                     rLog.Close()
+
+                Else
+                    LogonUI7_Enabled = _Def.LogonUI7_Enabled
+                    LogonUI7_Mode = _Def.LogonUI7_Mode
+                    LogonUI7_ImagePath = _Def.LogonUI7_ImagePath
+                    LogonUI7_Color = _Def.LogonUI7_Color
+                    LogonUI7_Effect_Blur = _Def.LogonUI7_Effect_Blur
+                    LogonUI7_Effect_Blur_Intensity = _Def.LogonUI7_Effect_Blur_Intensity
+                    LogonUI7_Effect_Grayscale = _Def.LogonUI7_Effect_Grayscale
+                    LogonUI7_Effect_Noise = _Def.LogonUI7_Effect_Noise
+                    LogonUI7_Effect_Noise_Mode = _Def.LogonUI7_Effect_Noise_Mode
+                    LogonUI7_Effect_Noise_Intensity = _Def.LogonUI7_Effect_Noise_Intensity
                 End If
 #End Region
 
@@ -950,6 +1002,18 @@ Public Class CP
                     LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
                     LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
                     rLog.Close()
+                Else
+                    Metro_NoLockScreen = _Def.Metro_NoLockScreen
+                    Metro_LockScreenType = _Def.Metro_LockScreenType
+                    Metro_LockScreenSystemID = _Def.Metro_LockScreenSystemID
+                    LogonUI7_ImagePath = _Def.LogonUI7_ImagePath
+                    LogonUI7_Color = _Def.LogonUI7_Color
+                    LogonUI7_Effect_Blur = _Def.LogonUI7_Effect_Blur
+                    LogonUI7_Effect_Blur_Intensity = _Def.LogonUI7_Effect_Blur_Intensity
+                    LogonUI7_Effect_Grayscale = _Def.LogonUI7_Effect_Grayscale
+                    LogonUI7_Effect_Noise = _Def.LogonUI7_Effect_Noise
+                    LogonUI7_Effect_Noise_Mode = _Def.LogonUI7_Effect_Noise_Mode
+                    LogonUI7_Effect_Noise_Intensity = _Def.LogonUI7_Effect_Noise_Intensity
                 End If
 #End Region
 
@@ -4298,4 +4362,23 @@ Public Class CP_Defaults
         .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
         .LogonUI7_Effect_Noise_Intensity = 0
        }
+
+    Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.ActionCenter_AppsLinks.R, Default_Windows11.ActionCenter_AppsLinks.G, Default_Windows11.ActionCenter_AppsLinks.B, 255,
+                                                    Default_Windows11.Taskbar_Icon_Underline.R, Default_Windows11.Taskbar_Icon_Underline.G, Default_Windows11.Taskbar_Icon_Underline.B, 255,
+                                                    Default_Windows11.StartButton_Hover.R, Default_Windows11.StartButton_Hover.G, Default_Windows11.StartButton_Hover.B, 255,
+                                                    Default_Windows11.SettingsIconsAndLinks.R, Default_Windows11.SettingsIconsAndLinks.G, Default_Windows11.SettingsIconsAndLinks.B, 255,
+                                                    Default_Windows11.StartMenuBackground_ActiveTaskbarButton.R, Default_Windows11.StartMenuBackground_ActiveTaskbarButton.G, Default_Windows11.StartMenuBackground_ActiveTaskbarButton.B, 255,
+                                                    Default_Windows11.StartListFolders_TaskbarFront.R, Default_Windows11.StartListFolders_TaskbarFront.G, Default_Windows11.StartListFolders_TaskbarFront.B, 255,
+                                                    Default_Windows11.Taskbar_Background.R, Default_Windows11.Taskbar_Background.G, Default_Windows11.Taskbar_Background.B, 255,
+                                                    0, 0, 0, 255}
+
+    Public Default_Windows10Accents_Bytes As Byte() = {Default_Windows10.ActionCenter_AppsLinks.R, Default_Windows10.ActionCenter_AppsLinks.G, Default_Windows10.ActionCenter_AppsLinks.B, 255,
+                                                    Default_Windows10.Taskbar_Icon_Underline.R, Default_Windows10.Taskbar_Icon_Underline.G, Default_Windows10.Taskbar_Icon_Underline.B, 255,
+                                                    Default_Windows10.StartButton_Hover.R, Default_Windows10.StartButton_Hover.G, Default_Windows10.StartButton_Hover.B, 255,
+                                                    Default_Windows10.SettingsIconsAndLinks.R, Default_Windows10.SettingsIconsAndLinks.G, Default_Windows10.SettingsIconsAndLinks.B, 255,
+                                                    Default_Windows10.StartMenuBackground_ActiveTaskbarButton.R, Default_Windows10.StartMenuBackground_ActiveTaskbarButton.G, Default_Windows10.StartMenuBackground_ActiveTaskbarButton.B, 255,
+                                                    Default_Windows10.StartListFolders_TaskbarFront.R, Default_Windows10.StartListFolders_TaskbarFront.G, Default_Windows10.StartListFolders_TaskbarFront.B, 255,
+                                                    Default_Windows10.Taskbar_Background.R, Default_Windows10.Taskbar_Background.G, Default_Windows10.Taskbar_Background.B, 255,
+                                                    0, 0, 0, 255}
+
 End Class

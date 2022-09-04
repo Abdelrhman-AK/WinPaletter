@@ -310,7 +310,7 @@ Partial Class Updates
         Me.XenonAlertBox2.Size = New System.Drawing.Size(624, 42)
         Me.XenonAlertBox2.TabIndex = 12
         Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "Update Avaliable"
+        Me.XenonAlertBox2.Text = "Update Available"
         Me.XenonAlertBox2.Visible = False
         '
         'XenonSeparator1

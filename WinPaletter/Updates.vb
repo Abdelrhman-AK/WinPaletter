@@ -26,7 +26,7 @@ Public Class Updates
             StableInt = 0 : BetaInt = 0 : UpdateChannel = 0
 
             Try
-                If IsNetAvaliable() Then
+                If IsNetAvailable() Then
                     Label5.Text = My.Application.LanguageHelper.Label5_Checking
                     Dim ls As New List(Of String)
 
@@ -55,7 +55,7 @@ Public Class Updates
 
                         Dim Customchangelog_str As String = Nothing
 
-                        If IsNetAvaliable() Then
+                        If IsNetAvailable() Then
                             Try
                                 Customchangelog_str = WebCL.DownloadString(New Uri(My.Resources.Link_Changelog))
                             Catch ex As Exception
@@ -83,16 +83,16 @@ Public Class Updates
 
                         Changelog.PhraseInfo(TreeView1, ver, Customchangelog_str)
                         My.Application.AnimatorX.Show(Panel1, True)
-                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_UpdateAvaliable
-                        XenonAlertBox2.Text = String.Format("{0} ({1})", My.Application.LanguageHelper.XenonAlertBox2_UpdateAvaliable, ver)
+                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_UpdateAvailable
+                        XenonAlertBox2.Text = String.Format("{0} ({1})", My.Application.LanguageHelper.XenonAlertBox2_UpdateAvailable, ver)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
                     Else
                         Label5.Text = ""
                         Label7.Text = ""
                         Label9.Text = ""
                         url = Nothing
-                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
-                        XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_NoUpdateAvaliable)
+                        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvailable
+                        XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_NoUpdateAvailable)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Success
                     End If
                 Else
@@ -100,16 +100,16 @@ Public Class Updates
                     Label7.Text = ""
                     Label9.Text = ""
                     url = Nothing
-                    XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+                    XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvailable
                     XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_Error)
                     XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
                 End If
-            Catch
+            Catch ex As Exception
                 Label5.Text = ""
                 Label7.Text = ""
                 Label9.Text = ""
                 url = Nothing
-                XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+                XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvailable
                 XenonAlertBox2.Text = String.Format(My.Application.LanguageHelper.XenonAlertBox2_ServerError)
                 XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
             End Try
@@ -157,7 +157,7 @@ Public Class Updates
         _Shown = False
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
         url = Nothing
-        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvaliable
+        XenonButton1.Text = My.Application.LanguageHelper.XenonButton1_NoUpdateAvailable
         Label2.Text = My.Application.Info.Version.ToString
     End Sub
 

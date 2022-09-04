@@ -300,7 +300,7 @@ Partial Class SettingsX
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(208, 35)
         Me.XenonButton5.TabIndex = 19
-        Me.XenonButton5.Text = "Deassociate Files Extensions"
+        Me.XenonButton5.Text = "De-associate Files Extensions"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonButton4
@@ -438,7 +438,7 @@ Partial Class SettingsX
         Me.XenonCheckBox5.Name = "XenonCheckBox5"
         Me.XenonCheckBox5.Size = New System.Drawing.Size(684, 26)
         Me.XenonCheckBox5.TabIndex = 6
-        Me.XenonCheckBox5.Text = "Automatic check for updates everytime I open the application"
+        Me.XenonCheckBox5.Text = "Automatic check for updates every time I open the application"
         '
         'PictureBox6
         '
@@ -504,7 +504,7 @@ Partial Class SettingsX
         Me.XenonCheckBox2.Name = "XenonCheckBox2"
         Me.XenonCheckBox2.Size = New System.Drawing.Size(719, 26)
         Me.XenonCheckBox2.TabIndex = 8
-        Me.XenonCheckBox2.Text = "Automatic Restart Explorer everytime I apply a theme"
+        Me.XenonCheckBox2.Text = "Automatic Restart Explorer every time I apply a theme"
         '
         'PictureBox7
         '
@@ -535,7 +535,7 @@ Partial Class SettingsX
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(759, 35)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Theme Applying Behaviour"
+        Me.Label2.Text = "Theme Applying Behavior"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonCheckBox3
@@ -626,7 +626,7 @@ Partial Class SettingsX
         Me.XenonCheckBox1.Size = New System.Drawing.Size(623, 26)
         Me.XenonCheckBox1.TabIndex = 6
         Me.XenonCheckBox1.Text = "Automatic Add Extension of theme file and setting file (*.wpth,*.wpsf) to registr" &
-    "y everytime I open the program"
+    "y every time I open the program"
         '
         'PictureBox19
         '
@@ -867,7 +867,7 @@ Partial Class SettingsX
         Me.XenonAlertBox9.Size = New System.Drawing.Size(768, 31)
         Me.XenonAlertBox9.TabIndex = 30
         Me.XenonAlertBox9.TabStop = False
-        Me.XenonAlertBox9.Text = "To return to English, uncheck the checkbox, save settings and restart the applica" &
+        Me.XenonAlertBox9.Text = "To return to English, uncheck the check-box, save settings and restart the applica" &
     "tion"
         '
         'XenonGroupBox1
@@ -1259,7 +1259,7 @@ Partial Class SettingsX
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage5.Size = New System.Drawing.Size(812, 452)
         Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "Theme Applying Behaviour"
+        Me.TabPage5.Text = "Theme Applying Behavior"
         '
         'XenonAlertBox6
         '

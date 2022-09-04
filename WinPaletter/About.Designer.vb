@@ -268,7 +268,7 @@ Partial Class About
         Me.LinkLabel4.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel4.TabIndex = 20
         Me.LinkLabel4.TabStop = True
-        Me.LinkLabel4.Text = "Animaton for Controls by Pavel Torgashov"
+        Me.LinkLabel4.Text = "Animation for Controls by Pavel Torgashov"
         Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5

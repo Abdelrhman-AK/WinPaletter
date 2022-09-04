@@ -462,7 +462,7 @@ Namespace My
 #Region "WhatsNew"
 
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
-                '### Popup WhatsNew
+                '### Pop up WhatsNew
                 Whatsnew.ShowDialog()
 
                 Dim ver As New List(Of String)

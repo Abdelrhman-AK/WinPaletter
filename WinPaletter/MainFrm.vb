@@ -826,7 +826,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        If IsNetAvaliable() Then
+        If IsNetAvailable() Then
             Try
 
                 Dim ls As New List(Of String)
@@ -867,18 +867,6 @@ Public Class MainFrm
         MakeItDoubleBuffered(Me)
         My.Application.AdjustFonts()
 
-        If My.W11 Then
-            XenonButton20.Image = My.Resources.Native11
-        ElseIf My.W10 Then
-            XenonButton20.Image = My.Resources.Native10
-        ElseIf My.W8 Then
-            XenonButton20.Image = My.Resources.Native8
-        ElseIf My.W7 Then
-            XenonButton20.Image = My.Resources.Native7
-        Else
-            XenonButton20.Image = My.Resources.Native11
-        End If
-
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
             AddHandler btn.Enter, AddressOf UpdateHint
@@ -907,6 +895,18 @@ Public Class MainFrm
             If My.W10 Then PreviewConfig = WinVer.Ten
             If My.W8 Then PreviewConfig = WinVer.Eight
             If My.W7 Then PreviewConfig = WinVer.Seven
+        End If
+
+        If PreviewConfig = WinVer.Eleven Then
+            XenonButton20.Image = My.Resources.Native11
+        ElseIf PreviewConfig = WinVer.Ten Then
+            XenonButton20.Image = My.Resources.Native10
+        ElseIf PreviewConfig = WinVer.Eight Then
+            XenonButton20.Image = My.Resources.Native8
+        ElseIf PreviewConfig = WinVer.Seven Then
+            XenonButton20.Image = My.Resources.Native7
+        Else
+            XenonButton20.Image = My.Resources.Native11
         End If
 
         If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
@@ -956,11 +956,11 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     e.Cancel = True
                                 End If
@@ -968,7 +968,7 @@ Public Class MainFrm
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 e.Cancel = True
                             End If
@@ -1227,8 +1227,10 @@ Public Class MainFrm
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
-        CP_Original = CP
+
         CP.Save(CP.SavingMode.Registry)
+        CP_Original = New CP(Mode.Registry)
+
         Cursor = Cursors.Default
 
         If My.Application._Settings.AutoRestartExplorer Then
@@ -1472,11 +1474,11 @@ Public Class MainFrm
                                 Case 0              '' Save
                                     If IO.File.Exists(SaveFileDialog1.FileName) Then
                                         CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                     Else
                                         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                             CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                            CP_Original = CP
+                                            CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                         Else
                                             '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                             Exit Sub
@@ -1485,7 +1487,7 @@ Public Class MainFrm
                                 Case 1              '' Save As
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                         CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                     Else
                                         '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                         Exit Sub
@@ -1542,11 +1544,11 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
@@ -1554,7 +1556,7 @@ Public Class MainFrm
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 Exit Sub
                             End If
@@ -1604,11 +1606,11 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
@@ -1616,7 +1618,7 @@ Public Class MainFrm
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 Exit Sub
                             End If
@@ -1637,7 +1639,7 @@ Public Class MainFrm
         End If
 
         CP = New CP(CP.Mode.Registry)
-        CP_Original = CP
+        CP_Original = New CP(CP.Mode.Registry)
         OpenFileDialog1.FileName = Nothing
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)
@@ -1657,11 +1659,11 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
@@ -1669,7 +1671,7 @@ Public Class MainFrm
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 Exit Sub
                             End If
@@ -1689,7 +1691,7 @@ Public Class MainFrm
         End If
 
         CP = New CP(CP.Mode.Init)
-        CP_Original = CP
+        CP_Original = New CP(CP.Mode.Init)
         OpenFileDialog1.FileName = Nothing
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)
@@ -1763,17 +1765,17 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 End If
                             End If
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
 
                             End If
                     End Select
@@ -1809,17 +1811,17 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 End If
                             End If
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
 
                             End If
                     End Select
@@ -1859,11 +1861,11 @@ Public Class MainFrm
                         Case 0              '' Save
                             If IO.File.Exists(SaveFileDialog1.FileName) Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
@@ -1871,7 +1873,7 @@ Public Class MainFrm
                         Case 1              '' Save As
                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                 CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = CP
+                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                             Else
                                 Exit Sub
                             End If
@@ -1904,7 +1906,6 @@ Public Class MainFrm
             CP = Def.Default_Windows11
         End If
 
-        CP_Original = CP
         OpenFileDialog1.FileName = Nothing
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)

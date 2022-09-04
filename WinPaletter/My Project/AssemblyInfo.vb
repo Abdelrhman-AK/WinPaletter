@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("WinPaletter")>
-<Assembly: AssemblyDescription("Colorize Windows 10/11 Accents without restrictions")>
+<Assembly: AssemblyDescription("Advanced Colorizing Windows Accents")>
 <Assembly: AssemblyCompany("Abdelrhman-AK")>
 <Assembly: AssemblyProduct("WinPaletter")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>

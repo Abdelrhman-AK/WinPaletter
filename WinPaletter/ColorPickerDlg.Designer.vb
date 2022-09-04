@@ -498,7 +498,7 @@ Partial Class ColorPickerDlg
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(459, 516)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Common Controlers"
+        Me.TabPage1.Text = "Common Controllers"
         '
         'XenonButton1
         '

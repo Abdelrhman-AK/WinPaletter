@@ -278,10 +278,15 @@ Public Class XenonCore
     Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As LogonUI7_NoiseMode, opacity As Single) As Bitmap
         Try
             Dim g As Graphics = Graphics.FromImage(bmp)
-            Dim br As TextureBrush
-            If NoiseMode = LogonUI7_NoiseMode.Acrylic Then br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
-            If NoiseMode = LogonUI7_NoiseMode.Aero Then br = New TextureBrush(FadeBitmap(My.Resources.AeroGlass, opacity))
-            g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
+
+            If NoiseMode = LogonUI7_NoiseMode.Acrylic Then
+                Dim br As TextureBrush
+                br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
+                g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
+            ElseIf NoiseMode = LogonUI7_NoiseMode.Aero Then
+                g.DrawImage(FadeBitmap(My.Resources.AeroGlass, opacity), New Rectangle(0, 0, bmp.Width, bmp.Height))
+            End If
+
             g.Save()
             Return bmp
             g.Dispose()
@@ -318,7 +323,7 @@ Public Class XenonCore
             End Try
         End If
     End Function
-    Public Shared Function IsNetAvaliable() As Boolean
+    Public Shared Function IsNetAvailable() As Boolean
         If My.Computer.Network.IsAvailable Then
             Try
                 Using client = New WebClient()

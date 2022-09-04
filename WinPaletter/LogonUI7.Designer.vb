@@ -252,7 +252,7 @@ Partial Class LogonUI7
         Me.XenonCheckBox8.Name = "XenonCheckBox8"
         Me.XenonCheckBox8.Size = New System.Drawing.Size(245, 25)
         Me.XenonCheckBox8.TabIndex = 82
-        Me.XenonCheckBox8.Text = "Grayscale"
+        Me.XenonCheckBox8.Text = "Gray-scale"
         '
         'PictureBox3
         '

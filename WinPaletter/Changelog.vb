@@ -36,7 +36,7 @@ Public Class Changelog
         ProgressBar1.Value = 0
         W = New WebClient
 
-        If IsNetAvaliable() Then
+        If IsNetAvailable() Then
             Try
                 W.DownloadDataAsync(New Uri(My.Resources.Link_Changelog))
             Catch ex As Exception

@@ -185,7 +185,7 @@ Module XenonModule
         'bk1 = FadeBitmap(bk1, 0.5)
         'FillImg(G, bk1, Rect, Radius, True)
 
-        'Dim bk2 As Bitmap = FadeBitmap(Grayscale(BackgroundBlurred), alpha * GlowBalance)
+        'Dim bk2 As Bitmap = FadeBitmap(Gray-scale(BackgroundBlurred), alpha * GlowBalance)
         'bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
         'FillImg(G, bk2, Rect, Radius, True)
 

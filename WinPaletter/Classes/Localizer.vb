@@ -70,10 +70,10 @@ Public Class Localizer
     Property Error_Online As String
     Property NoNetwork As String
     Property CheckConnection As String
-    Property XenonButton1_UpdateAvaliable As String
-    Property XenonAlertBox2_UpdateAvaliable As String
-    Property XenonButton1_NoUpdateAvaliable As String
-    Property XenonAlertBox2_NoUpdateAvaliable As String
+    Property XenonButton1_UpdateAvailable As String
+    Property XenonAlertBox2_UpdateAvailable As String
+    Property XenonButton1_NoUpdateAvailable As String
+    Property XenonAlertBox2_NoUpdateAvailable As String
     Property XenonButton1_Error As String
     Property XenonAlertBox2_Error As String
     Property XenonButton1_ServerError As String
