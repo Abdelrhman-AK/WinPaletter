@@ -440,9 +440,11 @@ Namespace My
                     If arg.ToLower.StartsWith("/apply:") Then
                         Dim File As String = arg.Remove(0, "/apply:".Count)
                         File = File.Replace("""", "")
-                        Dim CPx As New CP(CP.Mode.File, File)
-                        CPx.Save(CP.SavingMode.Registry)
-                        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        If IO.File.Exists(File) Then
+                            Dim CPx As New CP(CP.Mode.File, File)
+                            CPx.Save(CP.SavingMode.Registry)
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End If
                         Process.GetCurrentProcess.Kill()
                     End If
 
@@ -663,13 +665,11 @@ Namespace My
 #Disable Warning BC42105
         End Function
 
-        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-
-#If DEBUG Then
-            MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
-#End If
-
-        End Sub
+        'Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+        '#If DEBUG Then
+        'MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
+        '#End If
+        'End Sub
 
 #Enable Warning BC42105
 
