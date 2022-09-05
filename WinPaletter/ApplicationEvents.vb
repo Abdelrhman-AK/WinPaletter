@@ -409,30 +409,6 @@ Namespace My
                 My.Application.LanguageHelper.LoadInternal()
             End If
 
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
-
-                    If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang("Language.wplng")
-                        Process.GetCurrentProcess.Kill()
-                    End If
-
-                Next
-            Catch
-            End Try
-
-            DetectOS()
-
-            '#If Not DEBUG Then
-            'If My.W7 Or My.W8 Then
-            'MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
-            '"You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
-            ', MsgBoxStyle.Exclamation + MsgboxRt())
-            'End If
-            '#End If
-
-
             Dim ProcessKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
                 .Verb = "runas",
@@ -451,6 +427,39 @@ Namespace My
 
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
+
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+
+                    If arg.ToLower = "/exportlanguage" Then
+                        LanguageHelper.ExportNativeLang("Language.wplng")
+                        Process.GetCurrentProcess.Kill()
+                    End If
+
+                    If arg.ToLower.StartsWith("/apply:") Then
+                        Dim File As String = arg.Remove(0, "/apply:".Count)
+                        File = File.Replace("""", "")
+                        Dim CPx As New CP(CP.Mode.File, File)
+                        CPx.Save(CP.SavingMode.Registry)
+                        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        Process.GetCurrentProcess.Kill()
+                    End If
+
+                Next
+            Catch
+            End Try
+
+            DetectOS()
+
+            '#If Not DEBUG Then
+            'If My.W7 Or My.W8 Then
+            'MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
+            '"You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
+            ', MsgBoxStyle.Exclamation + MsgboxRt())
+            'End If
+            '#End If
+
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try

@@ -1657,7 +1657,6 @@ Public Class CP
                     If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoise= ") Then Cursor_Arrow_SecondaryColorNoise = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoise= ".Count)
                     If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoiseOpacity= ") Then Cursor_Arrow_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoiseOpacity= ".Count)
 
-
 #End Region
 
 #Region "Help"
@@ -3259,7 +3258,7 @@ Public Class CP
 
                 If Cursor_Enabled Then
                     If My.W7 Or My.W8 Then SetCtrlTxt("Rendering Cursors ...", f)
-                    ExportCursors(MainFrm.CP)
+                    ExportCursors(Me)
                     If My.Application._Settings.AutoApplyCursors Then
                         If My.W7 Or My.W8 Then SetCtrlTxt("Applying Cursors ...", f)
                         ApplyCursorsToReg()
@@ -3728,7 +3727,6 @@ Public Class CP
     Sub RenderCursor([Type] As CursorType, [CP] As CP)
 
         Dim CurName As String = ""
-
 
         Select Case [Type]
             Case CursorType.Arrow
