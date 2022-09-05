@@ -120,6 +120,8 @@
   <data name="Label14.Text" xml:space="preserve">
     <value>- Real-Time previewing changes in colors and values in both real Windows Elements and the In-App previewer (Windows 8.1, 7); can be disable in Settings &gt; Miscellaneous
 
+- Fixing a bug in Color Picker: Screen Pixel Picker opens the wrong form after leaving the mouse
+
 - Fixing bugs in the Windows Classic (Win32UI) previewer
 
 - Fixing bugs in Cursor Colorizer (It was broken in 32-bit OS, now fixed)
@@ -143,7 +145,7 @@
   <data name="Panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAzkAAABLCAYAAABTEElOAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAoe9JREFUeF7t3QeUJdld2P9WRBIS0vR0eKl7wu4qSytp807e2TB5ul9OnWZmZ1dZ
+        vAAADrwBlbxySQAAoe9JREFUeF7t3QeUJdld2P9WRBIS0vR0eKl7wu4qSytp807e2TB5ul9OnWZmZ1dZ
         5GSQrCyhHBGIjDFOBGOMwfAHjA0mGRzBgDE5mJxEMDT/7++Gqntv3apXr2dWAk/XOd/z+r2q9zrs7Dn1
         Ob8KM7vLjb4cn3n+8zsz1eq5mf37V2aWl1dnGo3OTH1/f6a2NJipLkujmeq+0Uxt/+hxUn3/mNYer1t/
         Qv3A+hPrBzaeVD+w+WT6tMaBrac0Dl56auPg5U+npzcOXvmMpYMPP3Pppof3LN10de/STY/M08LSTY9W
