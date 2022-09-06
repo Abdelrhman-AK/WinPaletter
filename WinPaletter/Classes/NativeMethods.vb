@@ -154,6 +154,14 @@ Namespace NativeMethods
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function SizeofResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As UInteger
         End Function
+
+        <DllImport("kernel32.dll", SetLastError:=True)>
+        Public Shared Function Wow64DisableWow64FsRedirection(ByRef ptr As IntPtr) As Boolean
+        End Function
+        <DllImport("kernel32.dll", SetLastError:=True)>
+        Public Shared Function Wow64RevertWow64FsRedirection(ByVal ptr As IntPtr) As Boolean
+        End Function
+
     End Class
 
     Public Class Gdi32

@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Security.AccessControl
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
@@ -1739,7 +1740,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        Me.close
+        Me.Close()
     End Sub
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -2160,9 +2161,6 @@ Public Class MainFrm
         ApplyingTheme.Show()
     End Sub
 
-    Private Sub XenonButton24_Click(sender As Object, e As EventArgs)
-
-    End Sub
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

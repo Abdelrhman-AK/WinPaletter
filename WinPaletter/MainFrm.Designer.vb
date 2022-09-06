@@ -1470,7 +1470,7 @@ Partial Class MainFrm
         Me.Label23.AutoEllipsis = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label23.Location = New System.Drawing.Point(324, 112)
+        Me.Label23.Location = New System.Drawing.Point(33, 112)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(90, 22)
         Me.Label23.TabIndex = 39
@@ -1494,7 +1494,7 @@ Partial Class MainFrm
         Me.theme_aero.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_aero.ForeColor = System.Drawing.Color.White
         Me.theme_aero.Image = CType(resources.GetObject("theme_aero.Image"), System.Drawing.Image)
-        Me.theme_aero.Location = New System.Drawing.Point(337, 43)
+        Me.theme_aero.Location = New System.Drawing.Point(46, 43)
         Me.theme_aero.Name = "theme_aero"
         Me.theme_aero.Size = New System.Drawing.Size(64, 64)
         Me.theme_aero.TabIndex = 38
@@ -1517,7 +1517,7 @@ Partial Class MainFrm
         Me.theme_classic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_classic.ForeColor = System.Drawing.Color.White
         Me.theme_classic.Image = CType(resources.GetObject("theme_classic.Image"), System.Drawing.Image)
-        Me.theme_classic.Location = New System.Drawing.Point(49, 43)
+        Me.theme_classic.Location = New System.Drawing.Point(337, 43)
         Me.theme_classic.Name = "theme_classic"
         Me.theme_classic.Size = New System.Drawing.Size(64, 64)
         Me.theme_classic.TabIndex = 32
@@ -1528,7 +1528,7 @@ Partial Class MainFrm
         Me.Label25.AutoEllipsis = True
         Me.Label25.BackColor = System.Drawing.Color.Transparent
         Me.Label25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label25.Location = New System.Drawing.Point(228, 112)
+        Me.Label25.Location = New System.Drawing.Point(129, 112)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(90, 22)
         Me.Label25.TabIndex = 37
@@ -1542,7 +1542,7 @@ Partial Class MainFrm
         Me.theme_basic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_basic.ForeColor = System.Drawing.Color.White
         Me.theme_basic.Image = CType(resources.GetObject("theme_basic.Image"), System.Drawing.Image)
-        Me.theme_basic.Location = New System.Drawing.Point(145, 43)
+        Me.theme_basic.Location = New System.Drawing.Point(241, 43)
         Me.theme_basic.Name = "theme_basic"
         Me.theme_basic.Size = New System.Drawing.Size(64, 64)
         Me.theme_basic.TabIndex = 34
@@ -1553,7 +1553,7 @@ Partial Class MainFrm
         Me.Label14.AutoEllipsis = True
         Me.Label14.BackColor = System.Drawing.Color.Transparent
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label14.Location = New System.Drawing.Point(132, 112)
+        Me.Label14.Location = New System.Drawing.Point(228, 112)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(90, 22)
         Me.Label14.TabIndex = 35
@@ -1567,7 +1567,7 @@ Partial Class MainFrm
         Me.theme_aeroopaque.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.theme_aeroopaque.ForeColor = System.Drawing.Color.White
         Me.theme_aeroopaque.Image = CType(resources.GetObject("theme_aeroopaque.Image"), System.Drawing.Image)
-        Me.theme_aeroopaque.Location = New System.Drawing.Point(241, 43)
+        Me.theme_aeroopaque.Location = New System.Drawing.Point(142, 43)
         Me.theme_aeroopaque.Name = "theme_aeroopaque"
         Me.theme_aeroopaque.Size = New System.Drawing.Size(64, 64)
         Me.theme_aeroopaque.TabIndex = 36
@@ -1578,7 +1578,7 @@ Partial Class MainFrm
         Me.Label6.AutoEllipsis = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label6.Location = New System.Drawing.Point(36, 112)
+        Me.Label6.Location = New System.Drawing.Point(324, 112)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(90, 22)
         Me.Label6.TabIndex = 33
@@ -3393,6 +3393,7 @@ Partial Class MainFrm
         Me.Controls.Add(Me.PaletteContainer_W8)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
