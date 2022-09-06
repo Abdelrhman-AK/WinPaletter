@@ -5,6 +5,16 @@
 #Added= String
 #Removed= String
 
+[1.0.5.0]
+Channel= Stable
+Date= -8585391916854775808
+Added= Windows 8.1 and Windows 7 Extended Support
+Added= Command Line Support (WinPaletter /apply:"FilePath")
+BugFix= Color Picker: Screen Pixel Picker opens the wrong form after leaving the mouse
+BugFix= Win32UI: Fixing bugs in the previewer
+BugFix= Cursors Colorizer: Fixing bugs, specially if you were using a 32-bit OS
+BugFix= Adjusted Settings Saving Speed
+
 [1.0.4.1]
 Channel= Stable
 Date= -8585412652854775808
