@@ -639,7 +639,7 @@ Public Class XenonToggle
 
         BackColor = ColorPalette.Color_Parent
 
-        G.Clear(BackColor)
+        G.Clear(GetParentColor(Me))
 
         '################################################################################# Customizer
         Dim MainRect As New Rectangle(2, 2, Width - 5, Height - 5)

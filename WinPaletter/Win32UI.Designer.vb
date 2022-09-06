@@ -27,8 +27,6 @@ Partial Class Win32UI
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
-        Me.Label16 = New System.Windows.Forms.Label()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonToggle1 = New WinPaletter.XenonToggle()
@@ -218,7 +216,9 @@ Partial Class Win32UI
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -305,6 +305,8 @@ Partial Class Win32UI
         Me.RetroWindow4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
+        Me.XenonGroupBox6.SuspendLayout()
+        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenThemeDialog
@@ -325,28 +327,6 @@ Partial Class Win32UI
         Me.ImageList1.Images.SetKeyName(2, "Selection")
         Me.ImageList1.Images.SetKeyName(3, "Window")
         '
-        'PictureBox16
-        '
-        Me.PictureBox16.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
-        Me.PictureBox16.Location = New System.Drawing.Point(12, 416)
-        Me.PictureBox16.Name = "PictureBox16"
-        Me.PictureBox16.Size = New System.Drawing.Size(30, 30)
-        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox16.TabIndex = 79
-        Me.PictureBox16.TabStop = False
-        '
-        'Label16
-        '
-        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(48, 416)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(140, 30)
-        Me.Label16.TabIndex = 78
-        Me.Label16.Text = "Enable Flat Menus ?"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'SaveFileDialog2
         '
         Me.SaveFileDialog2.DefaultExt = "wpt"
@@ -362,7 +342,7 @@ Partial Class Win32UI
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(488, 502)
+        Me.XenonButton10.Location = New System.Drawing.Point(488, 447)
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 81
@@ -376,7 +356,7 @@ Partial Class Win32UI
         Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonToggle1.Checked = True
         Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(194, 419)
+        Me.XenonToggle1.Location = New System.Drawing.Point(247, 3)
         Me.XenonToggle1.Name = "XenonToggle1"
         Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
         Me.XenonToggle1.TabIndex = 80
@@ -392,7 +372,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 452)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 397)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(816, 31)
         Me.XenonAlertBox1.TabIndex = 71
@@ -410,7 +390,7 @@ Partial Class Win32UI
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(155, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(268, 502)
+        Me.XenonButton8.Location = New System.Drawing.Point(268, 447)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(74, 30)
         Me.XenonButton8.TabIndex = 70
@@ -584,7 +564,7 @@ Partial Class Win32UI
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(101, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(12, 502)
+        Me.XenonButton4.Location = New System.Drawing.Point(12, 447)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(250, 30)
         Me.XenonButton4.TabIndex = 67
@@ -1544,6 +1524,7 @@ Partial Class Win32UI
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.XenonGroupBox6)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox45)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox43)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox35)
@@ -2786,7 +2767,7 @@ Partial Class Win32UI
         Me.RetroWindow2.Location = New System.Drawing.Point(100, 94)
         Me.RetroWindow2.Name = "RetroWindow2"
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
-        Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
+        Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
         Me.RetroWindow2.TabIndex = 1
         Me.RetroWindow2.TitlebarText = "Active Window"
         Me.RetroWindow2.UseItAsMenu = False
@@ -2933,7 +2914,7 @@ Partial Class Win32UI
         Me.RetroTextBox1.Multiline = True
         Me.RetroTextBox1.Name = "RetroTextBox1"
         Me.RetroTextBox1.ReadOnly = True
-        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 63)
+        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 74)
         Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
         Me.RetroTextBox1.Text = "Window Text"
@@ -3169,7 +3150,7 @@ Partial Class Win32UI
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(402, 502)
+        Me.XenonButton2.Location = New System.Drawing.Point(402, 447)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(80, 30)
         Me.XenonButton2.TabIndex = 64
@@ -3186,7 +3167,7 @@ Partial Class Win32UI
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(618, 502)
+        Me.XenonButton1.Location = New System.Drawing.Point(618, 447)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(210, 30)
         Me.XenonButton1.TabIndex = 63
@@ -3197,23 +3178,63 @@ Partial Class Win32UI
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 492)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 437)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(816, 1)
         Me.XenonSeparator1.TabIndex = 62
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
         '
+        'XenonGroupBox6
+        '
+        Me.XenonGroupBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox6.Controls.Add(Me.PictureBox16)
+        Me.XenonGroupBox6.Controls.Add(Me.XenonToggle1)
+        Me.XenonGroupBox6.Controls.Add(Me.Label31)
+        Me.XenonGroupBox6.CustomColor = False
+        Me.XenonGroupBox6.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonGroupBox6.LineSize = 1
+        Me.XenonGroupBox6.Location = New System.Drawing.Point(3, 234)
+        Me.XenonGroupBox6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonGroupBox6.Name = "XenonGroupBox6"
+        Me.XenonGroupBox6.Size = New System.Drawing.Size(301, 30)
+        Me.XenonGroupBox6.TabIndex = 57
+        Me.XenonGroupBox6.Text = "XenonGroupBox25"
+        '
+        'Label31
+        '
+        Me.Label31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label31.BackColor = System.Drawing.Color.Transparent
+        Me.Label31.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label31.Location = New System.Drawing.Point(36, 6)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(206, 16)
+        Me.Label31.TabIndex = 3
+        Me.Label31.Text = "Flat Menus"
+        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox16
+        '
+        Me.PictureBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
+        Me.PictureBox16.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox16.Name = "PictureBox16"
+        Me.PictureBox16.Size = New System.Drawing.Size(30, 24)
+        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox16.TabIndex = 81
+        Me.PictureBox16.TabStop = False
+        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(840, 542)
+        Me.ClientSize = New System.Drawing.Size(840, 487)
         Me.Controls.Add(Me.XenonButton10)
-        Me.Controls.Add(Me.XenonToggle1)
-        Me.Controls.Add(Me.PictureBox16)
-        Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton8)
         Me.Controls.Add(Me.XenonGroupBox2)
@@ -3233,7 +3254,6 @@ Partial Class Win32UI
         Me.Name = "Win32UI"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Win32UI"
-        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3322,6 +3342,8 @@ Partial Class Win32UI
         Me.RetroWindow4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
+        Me.XenonGroupBox6.ResumeLayout(False)
+        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3506,8 +3528,6 @@ Partial Class Win32UI
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents XenonToggle1 As XenonToggle
-    Friend WithEvents PictureBox16 As PictureBox
-    Friend WithEvents Label16 As Label
     Friend WithEvents XenonButton9 As XenonButton
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents PictureBox33 As PictureBox
@@ -3520,4 +3540,7 @@ Partial Class Win32UI
     Friend WithEvents RetroButton12 As RetroButton
     Friend WithEvents RetroButton8 As RetroButton
     Friend WithEvents XenonButton10 As XenonButton
+    Friend WithEvents XenonGroupBox6 As XenonGroupBox
+    Friend WithEvents PictureBox16 As PictureBox
+    Friend WithEvents Label31 As Label
 End Class

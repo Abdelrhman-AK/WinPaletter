@@ -1028,6 +1028,10 @@ Public Class RetroWindow : Inherits Panel
             Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
             If ColorGradient Then
                 G.FillRectangle(gr, TRect)
+
+                Dim TRectFixer As New Rectangle(TRect.X, TRect.Y, 1, TRect.Height)
+                G.FillRectangle(New SolidBrush(If(RTL, Color2, Color1)), TRectFixer)
+
             Else
                 G.FillRectangle(New SolidBrush(Color1), TRect)
             End If

@@ -24,6 +24,15 @@ Partial Class dragPreviewer
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(dragPreviewer))
         Me.pnl_preview = New System.Windows.Forms.Panel()
+        Me.ActionCenter = New WinPaletter.XenonAcrylic()
+        Me.XenonWindow1 = New WinPaletter.XenonWindow()
+        Me.lblx_linkx = New System.Windows.Forms.Label()
+        Me.PanelX3X = New System.Windows.Forms.Panel()
+        Me.lbl_uwp = New System.Windows.Forms.Label()
+        Me.Labelx3x = New System.Windows.Forms.Label()
+        Me.XenonWindow2 = New WinPaletter.XenonWindow()
+        Me.start = New WinPaletter.XenonAcrylic()
+        Me.taskbar = New WinPaletter.XenonAcrylic()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.RetroLabel13 = New WinPaletter.RetroLabel()
@@ -60,16 +69,9 @@ Partial Class dragPreviewer
         Me.RetroButton11 = New WinPaletter.RetroButton()
         Me.RetroButton10 = New WinPaletter.RetroButton()
         Me.RetroButton9 = New WinPaletter.RetroButton()
-        Me.ActionCenter = New WinPaletter.XenonAcrylic()
-        Me.XenonWindow1 = New WinPaletter.XenonWindow()
-        Me.lblx_linkx = New System.Windows.Forms.Label()
-        Me.PanelX3X = New System.Windows.Forms.Panel()
-        Me.lbl_uwp = New System.Windows.Forms.Label()
-        Me.Labelx3x = New System.Windows.Forms.Label()
-        Me.XenonWindow2 = New WinPaletter.XenonWindow()
-        Me.start = New WinPaletter.XenonAcrylic()
-        Me.taskbar = New WinPaletter.XenonAcrylic()
         Me.pnl_preview.SuspendLayout()
+        Me.XenonWindow1.SuspendLayout()
+        Me.PanelX3X.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Menu.SuspendLayout()
@@ -85,8 +87,6 @@ Partial Class dragPreviewer
         Me.RetroWindow4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
-        Me.XenonWindow1.SuspendLayout()
-        Me.PanelX3X.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnl_preview
@@ -105,6 +105,218 @@ Partial Class dragPreviewer
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
         Me.pnl_preview.TabIndex = 3
         Me.pnl_preview.Visible = False
+        '
+        'ActionCenter
+        '
+        Me.ActionCenter.ActionCenterButton_Hover = System.Drawing.Color.Empty
+        Me.ActionCenter.ActionCenterButton_Normal = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.ActionCenter.ActionCenterButton_Pressed = System.Drawing.Color.Empty
+        Me.ActionCenter.AppBackground = System.Drawing.Color.Empty
+        Me.ActionCenter.AppUnderline = System.Drawing.Color.Empty
+        Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.ActionCenter.BackColor2 = System.Drawing.Color.Empty
+        Me.ActionCenter.BackColorAlpha = 50
+        Me.ActionCenter.Basic = False
+        Me.ActionCenter.BlurPower = 8
+        Me.ActionCenter.Borders = True
+        Me.ActionCenter.DarkMode = True
+        Me.ActionCenter.DropShadow = True
+        Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
+        Me.ActionCenter.Location = New System.Drawing.Point(398, 161)
+        Me.ActionCenter.Name = "ActionCenter"
+        Me.ActionCenter.NoisePower = 0.3!
+        Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
+        Me.ActionCenter.Radius = 5
+        Me.ActionCenter.RoundedCorners = True
+        Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
+        Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
+        Me.ActionCenter.StartColor = System.Drawing.Color.Empty
+        Me.ActionCenter.TabIndex = 5
+        Me.ActionCenter.Transparency = True
+        Me.ActionCenter.UseItAsActionCenter = True
+        Me.ActionCenter.UseItAsStartMenu = False
+        Me.ActionCenter.UseItAsTaskbar = False
+        Me.ActionCenter.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
+        Me.ActionCenter.Win7AeroOpaque = False
+        Me.ActionCenter.Win7ColorBal = 0
+        Me.ActionCenter.Win7GlowBal = 0
+        '
+        'XenonWindow1
+        '
+        Me.XenonWindow1.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.XenonWindow1.AccentColor_Enabled = True
+        Me.XenonWindow1.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow1.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow1.Active = True
+        Me.XenonWindow1.Controls.Add(Me.lblx_linkx)
+        Me.XenonWindow1.Controls.Add(Me.PanelX3X)
+        Me.XenonWindow1.DarkMode = True
+        Me.XenonWindow1.DropShadow = True
+        Me.XenonWindow1.Location = New System.Drawing.Point(148, 46)
+        Me.XenonWindow1.Name = "XenonWindow1"
+        Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(2)
+        Me.XenonWindow1.Radius = 5
+        Me.XenonWindow1.RoundedCorners = True
+        Me.XenonWindow1.Size = New System.Drawing.Size(189, 148)
+        Me.XenonWindow1.TabIndex = 2
+        Me.XenonWindow1.Text = "App Preview"
+        Me.XenonWindow1.Win7 = False
+        Me.XenonWindow1.Win7Aero = False
+        Me.XenonWindow1.Win7AeroOpaque = False
+        Me.XenonWindow1.Win7Alpha = 100
+        Me.XenonWindow1.Win7Basic = False
+        Me.XenonWindow1.Win7ColorBal = 100
+        Me.XenonWindow1.Win7GlowBal = 100
+        Me.XenonWindow1.Win7Noise = 1.0!
+        Me.XenonWindow1.Win8 = False
+        Me.XenonWindow1.Win8Lite = False
+        '
+        'lblx_linkx
+        '
+        Me.lblx_linkx.BackColor = System.Drawing.Color.Transparent
+        Me.lblx_linkx.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblx_linkx.ForeColor = System.Drawing.Color.Brown
+        Me.lblx_linkx.Location = New System.Drawing.Point(5, 119)
+        Me.lblx_linkx.Name = "lblx_linkx"
+        Me.lblx_linkx.Size = New System.Drawing.Size(126, 25)
+        Me.lblx_linkx.TabIndex = 16
+        Me.lblx_linkx.Text = "Link Preview"
+        Me.lblx_linkx.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PanelX3X
+        '
+        Me.PanelX3X.BackColor = System.Drawing.Color.Transparent
+        Me.PanelX3X.Controls.Add(Me.lbl_uwp)
+        Me.PanelX3X.Controls.Add(Me.Labelx3x)
+        Me.PanelX3X.Location = New System.Drawing.Point(5, 27)
+        Me.PanelX3X.Name = "PanelX3X"
+        Me.PanelX3X.Padding = New System.Windows.Forms.Padding(1)
+        Me.PanelX3X.Size = New System.Drawing.Size(179, 39)
+        Me.PanelX3X.TabIndex = 0
+        '
+        'lbl_uwp
+        '
+        Me.lbl_uwp.BackColor = System.Drawing.Color.Transparent
+        Me.lbl_uwp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbl_uwp.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_uwp.Location = New System.Drawing.Point(59, 1)
+        Me.lbl_uwp.Name = "lbl_uwp"
+        Me.lbl_uwp.Size = New System.Drawing.Size(119, 37)
+        Me.lbl_uwp.TabIndex = 15
+        Me.lbl_uwp.Text = "This is a setting icon"
+        Me.lbl_uwp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Labelx3x
+        '
+        Me.Labelx3x.BackColor = System.Drawing.Color.Transparent
+        Me.Labelx3x.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Labelx3x.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Labelx3x.Location = New System.Drawing.Point(1, 1)
+        Me.Labelx3x.Name = "Labelx3x"
+        Me.Labelx3x.Size = New System.Drawing.Size(58, 37)
+        Me.Labelx3x.TabIndex = 14
+        Me.Labelx3x.Text = ""
+        Me.Labelx3x.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'XenonWindow2
+        '
+        Me.XenonWindow2.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.XenonWindow2.AccentColor_Enabled = True
+        Me.XenonWindow2.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow2.Active = False
+        Me.XenonWindow2.DarkMode = True
+        Me.XenonWindow2.DropShadow = True
+        Me.XenonWindow2.Location = New System.Drawing.Point(148, 200)
+        Me.XenonWindow2.Name = "XenonWindow2"
+        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
+        Me.XenonWindow2.Radius = 5
+        Me.XenonWindow2.RoundedCorners = True
+        Me.XenonWindow2.Size = New System.Drawing.Size(189, 46)
+        Me.XenonWindow2.TabIndex = 3
+        Me.XenonWindow2.Text = "Inactive app"
+        Me.XenonWindow2.Win7 = False
+        Me.XenonWindow2.Win7Aero = False
+        Me.XenonWindow2.Win7AeroOpaque = False
+        Me.XenonWindow2.Win7Alpha = 100
+        Me.XenonWindow2.Win7Basic = False
+        Me.XenonWindow2.Win7ColorBal = 100
+        Me.XenonWindow2.Win7GlowBal = 100
+        Me.XenonWindow2.Win7Noise = 1.0!
+        Me.XenonWindow2.Win8 = False
+        Me.XenonWindow2.Win8Lite = False
+        '
+        'start
+        '
+        Me.start.ActionCenterButton_Hover = System.Drawing.Color.Empty
+        Me.start.ActionCenterButton_Normal = System.Drawing.Color.Empty
+        Me.start.ActionCenterButton_Pressed = System.Drawing.Color.Empty
+        Me.start.AppBackground = System.Drawing.Color.Empty
+        Me.start.AppUnderline = System.Drawing.Color.Empty
+        Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.start.BackColor2 = System.Drawing.Color.Empty
+        Me.start.BackColorAlpha = 150
+        Me.start.Basic = False
+        Me.start.BlurPower = 6
+        Me.start.Borders = True
+        Me.start.DarkMode = True
+        Me.start.DropShadow = True
+        Me.start.LinkColor = System.Drawing.Color.Empty
+        Me.start.Location = New System.Drawing.Point(7, 46)
+        Me.start.Name = "start"
+        Me.start.NoisePower = 0.3!
+        Me.start.Padding = New System.Windows.Forms.Padding(2)
+        Me.start.Radius = 5
+        Me.start.RoundedCorners = True
+        Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.start.Size = New System.Drawing.Size(135, 200)
+        Me.start.StartColor = System.Drawing.Color.Empty
+        Me.start.TabIndex = 1
+        Me.start.Transparency = True
+        Me.start.UseItAsActionCenter = False
+        Me.start.UseItAsStartMenu = True
+        Me.start.UseItAsTaskbar = False
+        Me.start.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
+        Me.start.Win7AeroOpaque = False
+        Me.start.Win7ColorBal = 0
+        Me.start.Win7GlowBal = 0
+        '
+        'taskbar
+        '
+        Me.taskbar.ActionCenterButton_Hover = System.Drawing.Color.Empty
+        Me.taskbar.ActionCenterButton_Normal = System.Drawing.Color.Empty
+        Me.taskbar.ActionCenterButton_Pressed = System.Drawing.Color.Empty
+        Me.taskbar.AppBackground = System.Drawing.Color.Empty
+        Me.taskbar.AppUnderline = System.Drawing.Color.Empty
+        Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
+        Me.taskbar.BackColor2 = System.Drawing.Color.Empty
+        Me.taskbar.BackColorAlpha = 130
+        Me.taskbar.Basic = False
+        Me.taskbar.BlurPower = 15
+        Me.taskbar.Borders = False
+        Me.taskbar.DarkMode = True
+        Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.taskbar.DropShadow = True
+        Me.taskbar.LinkColor = System.Drawing.Color.Empty
+        Me.taskbar.Location = New System.Drawing.Point(0, 253)
+        Me.taskbar.Name = "taskbar"
+        Me.taskbar.NoisePower = 0.15!
+        Me.taskbar.Radius = 5
+        Me.taskbar.RoundedCorners = False
+        Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
+        Me.taskbar.Size = New System.Drawing.Size(526, 42)
+        Me.taskbar.StartColor = System.Drawing.Color.Empty
+        Me.taskbar.TabIndex = 0
+        Me.taskbar.Transparency = True
+        Me.taskbar.UseItAsActionCenter = False
+        Me.taskbar.UseItAsStartMenu = False
+        Me.taskbar.UseItAsTaskbar = True
+        Me.taskbar.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
+        Me.taskbar.Win7AeroOpaque = False
+        Me.taskbar.Win7ColorBal = 0
+        Me.taskbar.Win7GlowBal = 0
         '
         'PictureBox1
         '
@@ -360,7 +572,7 @@ Partial Class dragPreviewer
         Me.RetroWindow2.Location = New System.Drawing.Point(50, 67)
         Me.RetroWindow2.Name = "RetroWindow2"
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
-        Me.RetroWindow2.Size = New System.Drawing.Size(196, 109)
+        Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
         Me.RetroWindow2.TabIndex = 7
         Me.RetroWindow2.TitlebarText = "Active Window"
         Me.RetroWindow2.UseItAsMenu = False
@@ -507,7 +719,7 @@ Partial Class dragPreviewer
         Me.RetroTextBox1.Multiline = True
         Me.RetroTextBox1.Name = "RetroTextBox1"
         Me.RetroTextBox1.ReadOnly = True
-        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 63)
+        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 74)
         Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
         Me.RetroTextBox1.Text = "Window Text"
@@ -734,218 +946,6 @@ Partial Class dragPreviewer
         Me.RetroButton9.UseVisualStyleBackColor = False
         Me.RetroButton9.WindowFrame = System.Drawing.Color.Black
         '
-        'ActionCenter
-        '
-        Me.ActionCenter.ActionCenterButton_Hover = System.Drawing.Color.Empty
-        Me.ActionCenter.ActionCenterButton_Normal = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.ActionCenter.ActionCenterButton_Pressed = System.Drawing.Color.Empty
-        Me.ActionCenter.AppBackground = System.Drawing.Color.Empty
-        Me.ActionCenter.AppUnderline = System.Drawing.Color.Empty
-        Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ActionCenter.BackColor2 = System.Drawing.Color.Empty
-        Me.ActionCenter.BackColorAlpha = 50
-        Me.ActionCenter.Basic = False
-        Me.ActionCenter.BlurPower = 8
-        Me.ActionCenter.Borders = True
-        Me.ActionCenter.DarkMode = True
-        Me.ActionCenter.DropShadow = True
-        Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
-        Me.ActionCenter.Location = New System.Drawing.Point(398, 161)
-        Me.ActionCenter.Name = "ActionCenter"
-        Me.ActionCenter.NoisePower = 0.3!
-        Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
-        Me.ActionCenter.Radius = 5
-        Me.ActionCenter.RoundedCorners = True
-        Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
-        Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
-        Me.ActionCenter.StartColor = System.Drawing.Color.Empty
-        Me.ActionCenter.TabIndex = 5
-        Me.ActionCenter.Transparency = True
-        Me.ActionCenter.UseItAsActionCenter = True
-        Me.ActionCenter.UseItAsStartMenu = False
-        Me.ActionCenter.UseItAsTaskbar = False
-        Me.ActionCenter.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.ActionCenter.Win7AeroOpaque = False
-        Me.ActionCenter.Win7ColorBal = 0
-        Me.ActionCenter.Win7GlowBal = 0
-        '
-        'XenonWindow1
-        '
-        Me.XenonWindow1.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.XenonWindow1.AccentColor_Enabled = True
-        Me.XenonWindow1.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow1.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow1.Active = True
-        Me.XenonWindow1.Controls.Add(Me.lblx_linkx)
-        Me.XenonWindow1.Controls.Add(Me.PanelX3X)
-        Me.XenonWindow1.DarkMode = True
-        Me.XenonWindow1.DropShadow = True
-        Me.XenonWindow1.Location = New System.Drawing.Point(148, 46)
-        Me.XenonWindow1.Name = "XenonWindow1"
-        Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(2)
-        Me.XenonWindow1.Radius = 5
-        Me.XenonWindow1.RoundedCorners = True
-        Me.XenonWindow1.Size = New System.Drawing.Size(189, 148)
-        Me.XenonWindow1.TabIndex = 2
-        Me.XenonWindow1.Text = "App Preview"
-        Me.XenonWindow1.Win7 = False
-        Me.XenonWindow1.Win7Aero = False
-        Me.XenonWindow1.Win7AeroOpaque = False
-        Me.XenonWindow1.Win7Alpha = 100
-        Me.XenonWindow1.Win7Basic = False
-        Me.XenonWindow1.Win7ColorBal = 100
-        Me.XenonWindow1.Win7GlowBal = 100
-        Me.XenonWindow1.Win7Noise = 1.0!
-        Me.XenonWindow1.Win8 = False
-        Me.XenonWindow1.Win8Lite = False
-        '
-        'lblx_linkx
-        '
-        Me.lblx_linkx.BackColor = System.Drawing.Color.Transparent
-        Me.lblx_linkx.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblx_linkx.ForeColor = System.Drawing.Color.Brown
-        Me.lblx_linkx.Location = New System.Drawing.Point(5, 119)
-        Me.lblx_linkx.Name = "lblx_linkx"
-        Me.lblx_linkx.Size = New System.Drawing.Size(126, 25)
-        Me.lblx_linkx.TabIndex = 16
-        Me.lblx_linkx.Text = "Link Preview"
-        Me.lblx_linkx.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PanelX3X
-        '
-        Me.PanelX3X.BackColor = System.Drawing.Color.Transparent
-        Me.PanelX3X.Controls.Add(Me.lbl_uwp)
-        Me.PanelX3X.Controls.Add(Me.Labelx3x)
-        Me.PanelX3X.Location = New System.Drawing.Point(5, 27)
-        Me.PanelX3X.Name = "PanelX3X"
-        Me.PanelX3X.Padding = New System.Windows.Forms.Padding(1)
-        Me.PanelX3X.Size = New System.Drawing.Size(179, 39)
-        Me.PanelX3X.TabIndex = 0
-        '
-        'lbl_uwp
-        '
-        Me.lbl_uwp.BackColor = System.Drawing.Color.Transparent
-        Me.lbl_uwp.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lbl_uwp.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_uwp.Location = New System.Drawing.Point(59, 1)
-        Me.lbl_uwp.Name = "lbl_uwp"
-        Me.lbl_uwp.Size = New System.Drawing.Size(119, 37)
-        Me.lbl_uwp.TabIndex = 15
-        Me.lbl_uwp.Text = "This is a setting icon"
-        Me.lbl_uwp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Labelx3x
-        '
-        Me.Labelx3x.BackColor = System.Drawing.Color.Transparent
-        Me.Labelx3x.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Labelx3x.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Labelx3x.Location = New System.Drawing.Point(1, 1)
-        Me.Labelx3x.Name = "Labelx3x"
-        Me.Labelx3x.Size = New System.Drawing.Size(58, 37)
-        Me.Labelx3x.TabIndex = 14
-        Me.Labelx3x.Text = ""
-        Me.Labelx3x.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'XenonWindow2
-        '
-        Me.XenonWindow2.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(100, Byte), Integer))
-        Me.XenonWindow2.AccentColor_Enabled = True
-        Me.XenonWindow2.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow2.Active = False
-        Me.XenonWindow2.DarkMode = True
-        Me.XenonWindow2.DropShadow = True
-        Me.XenonWindow2.Location = New System.Drawing.Point(148, 200)
-        Me.XenonWindow2.Name = "XenonWindow2"
-        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
-        Me.XenonWindow2.Radius = 5
-        Me.XenonWindow2.RoundedCorners = True
-        Me.XenonWindow2.Size = New System.Drawing.Size(189, 46)
-        Me.XenonWindow2.TabIndex = 3
-        Me.XenonWindow2.Text = "Inactive app"
-        Me.XenonWindow2.Win7 = False
-        Me.XenonWindow2.Win7Aero = False
-        Me.XenonWindow2.Win7AeroOpaque = False
-        Me.XenonWindow2.Win7Alpha = 100
-        Me.XenonWindow2.Win7Basic = False
-        Me.XenonWindow2.Win7ColorBal = 100
-        Me.XenonWindow2.Win7GlowBal = 100
-        Me.XenonWindow2.Win7Noise = 1.0!
-        Me.XenonWindow2.Win8 = False
-        Me.XenonWindow2.Win8Lite = False
-        '
-        'start
-        '
-        Me.start.ActionCenterButton_Hover = System.Drawing.Color.Empty
-        Me.start.ActionCenterButton_Normal = System.Drawing.Color.Empty
-        Me.start.ActionCenterButton_Pressed = System.Drawing.Color.Empty
-        Me.start.AppBackground = System.Drawing.Color.Empty
-        Me.start.AppUnderline = System.Drawing.Color.Empty
-        Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.start.BackColor2 = System.Drawing.Color.Empty
-        Me.start.BackColorAlpha = 150
-        Me.start.Basic = False
-        Me.start.BlurPower = 6
-        Me.start.Borders = True
-        Me.start.DarkMode = True
-        Me.start.DropShadow = True
-        Me.start.LinkColor = System.Drawing.Color.Empty
-        Me.start.Location = New System.Drawing.Point(7, 46)
-        Me.start.Name = "start"
-        Me.start.NoisePower = 0.3!
-        Me.start.Padding = New System.Windows.Forms.Padding(2)
-        Me.start.Radius = 5
-        Me.start.RoundedCorners = True
-        Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.start.Size = New System.Drawing.Size(135, 200)
-        Me.start.StartColor = System.Drawing.Color.Empty
-        Me.start.TabIndex = 1
-        Me.start.Transparency = True
-        Me.start.UseItAsActionCenter = False
-        Me.start.UseItAsStartMenu = True
-        Me.start.UseItAsTaskbar = False
-        Me.start.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.start.Win7AeroOpaque = False
-        Me.start.Win7ColorBal = 0
-        Me.start.Win7GlowBal = 0
-        '
-        'taskbar
-        '
-        Me.taskbar.ActionCenterButton_Hover = System.Drawing.Color.Empty
-        Me.taskbar.ActionCenterButton_Normal = System.Drawing.Color.Empty
-        Me.taskbar.ActionCenterButton_Pressed = System.Drawing.Color.Empty
-        Me.taskbar.AppBackground = System.Drawing.Color.Empty
-        Me.taskbar.AppUnderline = System.Drawing.Color.Empty
-        Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.taskbar.BackColor2 = System.Drawing.Color.Empty
-        Me.taskbar.BackColorAlpha = 130
-        Me.taskbar.Basic = False
-        Me.taskbar.BlurPower = 15
-        Me.taskbar.Borders = False
-        Me.taskbar.DarkMode = True
-        Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.taskbar.DropShadow = True
-        Me.taskbar.LinkColor = System.Drawing.Color.Empty
-        Me.taskbar.Location = New System.Drawing.Point(0, 253)
-        Me.taskbar.Name = "taskbar"
-        Me.taskbar.NoisePower = 0.15!
-        Me.taskbar.Radius = 5
-        Me.taskbar.RoundedCorners = False
-        Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
-        Me.taskbar.Size = New System.Drawing.Size(526, 42)
-        Me.taskbar.StartColor = System.Drawing.Color.Empty
-        Me.taskbar.TabIndex = 0
-        Me.taskbar.Transparency = True
-        Me.taskbar.UseItAsActionCenter = False
-        Me.taskbar.UseItAsStartMenu = False
-        Me.taskbar.UseItAsTaskbar = True
-        Me.taskbar.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.taskbar.Win7AeroOpaque = False
-        Me.taskbar.Win7ColorBal = 0
-        Me.taskbar.Win7GlowBal = 0
-        '
         'dragPreviewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -969,6 +969,8 @@ Partial Class dragPreviewer
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Preview"
         Me.pnl_preview.ResumeLayout(False)
+        Me.XenonWindow1.ResumeLayout(False)
+        Me.PanelX3X.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -986,8 +988,6 @@ Partial Class dragPreviewer
         Me.RetroWindow4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
-        Me.XenonWindow1.ResumeLayout(False)
-        Me.PanelX3X.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
