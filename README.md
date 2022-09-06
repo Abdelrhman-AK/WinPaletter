@@ -18,7 +18,7 @@ Mini-Store for themes | :yellow_square: |
 
 - **Windows 10 and Windows 11** | .Net Framework 4.8 is already preinstalled, so no extra step is required.
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Colorize Windows 10/11 Accents without restrictions.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Colorizing Windows Accents.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/First.png?raw=true)
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Second.png?raw=true)
