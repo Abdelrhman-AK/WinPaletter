@@ -14,9 +14,9 @@ Mini-Store for themes | :yellow_square: |
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
-- **Windows 7 and Windows 8.1** | Use WinPaletter version starting from **1.0.5.0** and higher, and you should install at least .NET Framework 4.7, or better 4.8, then reboot your Windows (Necessary) [Download it from here, choose "Runtime"](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+- **Windows 7 and Windows 8.1:** Use WinPaletter version starting from **1.0.5.0** and higher, and you should install at least .NET Framework 4.7, or better 4.8, then reboot your Windows (Necessary) [Download it from here, choose "Runtime"](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 
-- **Windows 10 and Windows 11** | .Net Framework 4.8 is already preinstalled, so no extra step is required.
+- **Windows 10 and Windows 11:** .Net Framework 4.8 is already preinstalled, so no extra step is required.
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Colorizing Windows Accents.
 
