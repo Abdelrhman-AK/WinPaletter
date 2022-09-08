@@ -507,7 +507,7 @@ Public Class ColorPickerDlg
 
             Try
                 For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True, .ForceNoNerd = True}
+                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
@@ -527,7 +527,7 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True, .ForceNoNerd = True}
+                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click

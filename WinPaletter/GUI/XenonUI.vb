@@ -1119,7 +1119,6 @@ Public Class XenonRadioImage
         AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
-
     End Sub
 
 #Region "Properties"
@@ -1672,6 +1671,8 @@ Public Class XenonGroupBox
     Public Property ForceNoNerd As Boolean = False
 #End Region
 
+    Private _Shown As Boolean = False
+
 #Region "Events"
 
     Enum MouseState
@@ -1685,31 +1686,104 @@ Public Class XenonGroupBox
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         If Not CustomColor Then Exit Sub
         State = MouseState.Down
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
         Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         If Not CustomColor Then Exit Sub
         State = MouseState.Over
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
         Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         If Not CustomColor Then Exit Sub
         State = MouseState.Over
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
         Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         If Not CustomColor Then Exit Sub
         State = MouseState.None
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
         Invalidate()
     End Sub
 
-    Public Sub RefreshColorPalette()
+    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+            End If
+        Catch
+        End Try
+
+        Try
+            alpha = 0
+        Catch
+        End Try
+    End Sub
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
         Invalidate()
     End Sub
 
+#End Region
+
+#Region "Animator"
+    Dim alpha As Integer
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        If Not DesignMode Then
+
+            If State = MouseState.Over Then
+                If alpha + Factor <= 255 Then
+                    alpha += Factor
+                ElseIf alpha + Factor > 255 Then
+                    alpha = 255
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+
+            If Not State = MouseState.Over Then
+                If alpha - Factor >= 0 Then
+                    alpha -= Factor
+                ElseIf alpha - Factor < 0 Then
+                    alpha = 0
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                If _Shown Then
+                    Threading.Thread.Sleep(1)
+                    Invalidate()
+                End If
+            End If
+        End If
+    End Sub
 #End Region
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
@@ -1717,12 +1791,14 @@ Public Class XenonGroupBox
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         G.Clear(GetParentColor(Me))
 
         If Not CustomColor Then
             BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.05))
             LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.03, -0.06))
+
             FillRect(G, New SolidBrush(BackColor), Rect)
             DrawRect(G, New Pen(LineColor), Rect)
         Else
@@ -1739,13 +1815,22 @@ Public Class XenonGroupBox
 
             LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
 
-            FillRect(G, New SolidBrush(BackColor), Rect)
-            DrawRect_LikeW11(G, LineColor, Rect)
+            FillRect(G, New SolidBrush(BackColor), RectInner)
+            DrawRect_LikeW11(G, LineColor, RectInner)
+
+            FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+            DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect)
 
             If Not DesignMode Then
                 If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
                     G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-                    Dim FC As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.DarkDark(LineColor))
+
+                    Dim FC0 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
+                    Dim FC1 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
+
+                    FC0 = Color.FromArgb(100, FC0)
+                    FC1 = Color.FromArgb(alpha, FC1)
+
                     Dim RectX As Rectangle = Rect
                     RectX.Y += 1
 
@@ -1769,7 +1854,9 @@ Public Class XenonGroupBox
 
                     End Select
 
-                    G.DrawString(S, New Font("Lucida Console", 8), New SolidBrush(FC), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
+
                 End If
             End If
         End If

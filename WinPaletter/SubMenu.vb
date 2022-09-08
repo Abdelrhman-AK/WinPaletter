@@ -1,11 +1,15 @@
 ﻿Imports AnimatorNS
 Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods
+Imports System.Reflection
+
 Public Class SubMenu
 
     Private _shown As Boolean
     Private _overrideColor As Color
     Private _eventDone As Boolean
+    Private _Speed As Integer = 35
+    Private _dark As Single = 0.9
 
 #Region "Form Shadow"
 
@@ -63,9 +67,13 @@ Public Class SubMenu
     End Sub
 #End Region
 
-    Public Function ShowMenu(ColorHandle As XenonGroupBox, _DefaultColor As Color) As Color
+    Public Function ShowMenu(ColorHandle As XenonGroupBox) As Color
         MainColor.BackColor = ColorHandle.BackColor
-        DefaultColor.BackColor = _DefaultColor
+        DefaultColor.BackColor = ColorHandle.DefaultColor
+        DefaultLightestColor.BackColor = ControlPaint.LightLight(ColorHandle.DefaultColor)
+        DefaultLightColor.BackColor = ControlPaint.Light(ColorHandle.DefaultColor)
+        DefaultDarkColor.BackColor = ControlPaint.Dark(ColorHandle.DefaultColor)
+        DefaultDarkestColor.BackColor = ControlPaint.Dark(ColorHandle.DefaultColor, _dark)
 
         If ShowDialog() = DialogResult.OK Then
             Select Case My.Application.ColorEvent
@@ -98,10 +106,15 @@ Public Class SubMenu
 
     Private Sub SubMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _shown = True
+
+
+
+        PaletteContainer.Visible = False
+
     End Sub
 
     Private Sub SubMenu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        User32.AnimateWindow(Handle, 50, User32.AnimateWindowFlags.AW_HIDE Or User32.AnimateWindowFlags.AW_BLEND)
+        User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_HIDE Or User32.AnimateWindowFlags.AW_BLEND)
     End Sub
 
     Sub HandleDeactivate()
@@ -112,47 +125,93 @@ Public Class SubMenu
         End If
     End Sub
 
-    Private LateralMargin As Integer
-    Private MedialMargin As Integer
+    Sub Collapse_Expand()
+
+        XenonButton4.Visible = False
+
+        Select Case PaletteContainer.Visible
+            Case False
+                XenonButton4.Text = "<"
+
+                For i = PaletteContainer.Left + 3 To PaletteContainer.Right + 8 Step 2
+                    Width = i
+                Next
+
+                Width = PaletteContainer.Right + 8
+
+                PaletteContainer.Visible = True
+                XenonComboBox1.Visible = True
+
+            Case True
+                XenonButton4.Text = ">"
+
+                PaletteContainer.Visible = False
+                XenonComboBox1.Visible = False
+
+                For i = PaletteContainer.Right + 8 To PaletteContainer.Left + 3 Step -2
+                    Width = i
+                Next
+
+                Width = PaletteContainer.Left + 3
+
+        End Select
+
+        XenonButton4.Visible = True
+    End Sub
 
     Private Sub SubMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _shown = False
         Location = MousePosition
 
-        ApplyDarkMode(Me)
+        Width = PaletteContainer.Left + 3
 
-        LateralMargin = Width - PaletteContainer.Right
-        MedialMargin = PaletteContainer.Left + 3
-
-        Width = MedialMargin
         PaletteContainer.Visible = False
+        XenonComboBox1.Visible = False
+        XenonButton4.Text = ">"
+
+        ApplyDarkMode(Me)
 
         Update_Variants()
 
-        For Factor As Single = 1 To -1 Step -0.01
-            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True, .ForceNoNerd = True}
-            pnl.BackColor = CCB(MainColor.BackColor, Factor)
-            PaletteContainer.Controls.Add(pnl)
-            AddHandler pnl.Click, AddressOf Pnl_Click
-        Next
+        XenonComboBox1.SelectedIndex = 0
+
+        GetColorsFromPalette(MainFrm.CP)
 
         XenonButton3.Enabled = (My.Application.CopiedColor <> Nothing)
 
-        BackColor = If(GetDarkMode(), ControlPaint.DarkDark(MainColor.BackColor), ControlPaint.LightLight(MainColor.BackColor))
+        BackColor = If(GetDarkMode(), ControlPaint.Dark(MainColor.BackColor, _dark), ControlPaint.LightLight(MainColor.BackColor))
 
-        User32.AnimateWindow(Handle, 50, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
+        User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 
         Invalidate()
     End Sub
 
     Sub Pnl_Click(sender As Object, e As EventArgs)
         MainColor.BackColor = sender.BackColor
+        'BackColor = If(GetDarkMode(), ControlPaint.Dark(MainColor.BackColor, _dark), ControlPaint.LightLight(MainColor.BackColor))
+
         Update_Variants()
         Collapse_Expand()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Collapse_Expand()
+    Sub GetColorsFromPalette(CP As CP)
+        PaletteContainer.SuspendLayout()
+
+        For Each c As XenonGroupBox In PaletteContainer.Controls.OfType(Of XenonGroupBox)
+            c.Dispose()
+            PaletteContainer.Controls.Remove(c)
+        Next
+
+        PaletteContainer.Controls.Clear()
+
+        For Each c As Color In CP.ListColors
+            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20), .CustomColor = True}
+            pnl.BackColor = c
+            PaletteContainer.Controls.Add(pnl)
+            AddHandler pnl.Click, AddressOf Pnl_Click
+        Next
+
+        PaletteContainer.ResumeLayout()
     End Sub
 
     Sub Update_Variants()
@@ -160,40 +219,15 @@ Public Class SubMenu
         LightestColor.BackColor = ControlPaint.LightLight(MainColor.BackColor)
 
         DarkerColor.BackColor = ControlPaint.Dark(MainColor.BackColor)
-        DarkestColor.BackColor = ControlPaint.DarkDark(MainColor.BackColor)
+        DarkestColor.BackColor = ControlPaint.Dark(MainColor.BackColor, _dark)
 
         InvertedColor.BackColor = InvertColor(MainColor.BackColor)
-    End Sub
 
-    Sub Collapse_Expand()
-        My.Application.AnimatorX.HideSync(XenonButton4)
+        ILighterColor.BackColor = ControlPaint.Light(InvertedColor.BackColor)
+        ILightestColor.BackColor = ControlPaint.LightLight(InvertedColor.BackColor)
 
-        Select Case PaletteContainer.Visible
-            Case False
-                XenonButton4.Text = "<"
-
-                My.Application.AnimatorX.Show(PaletteContainer)
-
-                For i = Width To PaletteContainer.Right + LateralMargin Step 2
-                    Width = i
-                Next
-
-                Width = PaletteContainer.Right + LateralMargin
-
-            Case True
-                XenonButton4.Text = ">"
-
-                My.Application.AnimatorX.Hide(PaletteContainer)
-
-                For i = Width To MedialMargin Step -2
-                    Width = i
-                Next
-
-                Width = MedialMargin
-
-        End Select
-
-        My.Application.AnimatorX.ShowSync(XenonButton4)
+        IDarkerColor.BackColor = ControlPaint.Dark(InvertedColor.BackColor)
+        IDarkestColor.BackColor = ControlPaint.Dark(InvertedColor.BackColor, _dark)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -217,14 +251,42 @@ Public Class SubMenu
         Close()
     End Sub
 
-    Private Sub MainColor_Click(sender As Object, e As EventArgs) Handles MainColor.Click, DefaultColor.Click, WhiteColor.Click, BlackColor.Click, LighterColor.Click, LightestColor.Click,
-             DarkerColor.Click, DarkestColor.Click, InvertedColor.Click
+    Private Sub MainColor_Click(sender As Object, e As EventArgs) Handles MainColor.Click, LighterColor.Click, LightestColor.Click,
+             DarkerColor.Click, DarkestColor.Click, InvertedColor.Click, ILighterColor.Click, ILightestColor.Click, IDarkerColor.Click, IDarkestColor.Click,
+             DefaultColor.Click, DefaultLightColor.Click, DefaultLightestColor.Click, DefaultDarkColor.Click, DefaultDarkestColor.Click
 
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Override
         _overrideColor = sender.BackColor
         DialogResult = DialogResult.OK
         Close()
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Collapse_Expand()
+    End Sub
+
+    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+        If _shown Then
+            Select Case XenonComboBox1.SelectedIndex
+                Case 0
+                    GetColorsFromPalette(MainFrm.CP)
+                Case 1
+                    GetColorsFromPalette(MainFrm.CP_Original)
+                Case 2
+                    GetColorsFromPalette(MainFrm.CP_FirstTime)
+                Case 3
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows11)
+                Case 4
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows10)
+                Case 5
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows8)
+                Case 6
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows7)
+                Case Else
+                    GetColorsFromPalette(MainFrm.CP)
+            End Select
+        End If
     End Sub
 
 End Class

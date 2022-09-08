@@ -672,6 +672,23 @@ Public Class CP
         Next
 
     End Sub
+
+
+    Public Function ListColors() As List(Of Color)
+        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+        Dim CL As New List(Of Color)
+        CL.Clear()
+
+        For Each [property] As PropertyInfo In properties1
+            If [property].PropertyType.Name.ToLower = "color" Then
+                CL.Add([property].GetValue(Me, Nothing))
+            End If
+        Next
+
+        CL = CL.Distinct.ToList
+
+        Return CL
+    End Function
 #End Region
 
     Public f As Form

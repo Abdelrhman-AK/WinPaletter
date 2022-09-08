@@ -160,6 +160,8 @@ Public Class MainFrm
                         Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                         Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
                 End Select
+
+                ReValidateLivePreview(pnl_preview)
 #End Region
             Case WinVer.Ten
 #Region "Win10"
@@ -997,6 +999,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Titlebar_Active = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)

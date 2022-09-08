@@ -114,6 +114,7 @@ Partial Class SettingsX
         Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator6 = New WinPaletter.XenonSeparator()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
         Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
         Me.PictureBox27 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
@@ -123,7 +124,6 @@ Partial Class SettingsX
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -899,6 +899,8 @@ Partial Class SettingsX
         Me.XenonGroupBox1.Controls.Add(Me.Label10)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox21)
         Me.XenonGroupBox1.CustomColor = False
+        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
+        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(90, 145)
@@ -1345,6 +1347,21 @@ Partial Class SettingsX
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Miscellaneous"
         '
+        'XenonCheckBox11
+        '
+        Me.XenonCheckBox11.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox11.Checked = False
+        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox11.Location = New System.Drawing.Point(88, 315)
+        Me.XenonCheckBox11.Name = "XenonCheckBox11"
+        Me.XenonCheckBox11.Size = New System.Drawing.Size(684, 26)
+        Me.XenonCheckBox11.TabIndex = 26
+        Me.XenonCheckBox11.Text = "Show Hex Hash (#)"
+        '
         'XenonComboBox3
         '
         Me.XenonComboBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1456,21 +1473,6 @@ Partial Class SettingsX
         'OpenFileDialog2
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
-        '
-        'XenonCheckBox11
-        '
-        Me.XenonCheckBox11.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox11.Checked = False
-        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox11.Location = New System.Drawing.Point(88, 315)
-        Me.XenonCheckBox11.Name = "XenonCheckBox11"
-        Me.XenonCheckBox11.Size = New System.Drawing.Size(684, 26)
-        Me.XenonCheckBox11.TabIndex = 26
-        Me.XenonCheckBox11.Text = "Show Hex Hash (#)"
         '
         'SettingsX
         '

@@ -6,7 +6,6 @@ Imports System.Net
 Imports System.Runtime.InteropServices
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
-Imports WinPaletter.NativeMethods.Dwmapi
 
 Public Class XenonCore
 
