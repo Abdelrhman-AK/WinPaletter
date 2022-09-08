@@ -531,7 +531,7 @@ Public Class CP
         End Try
 
     End Sub
-    Function RGB2HEX_oneline(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
+    Public Function RGB2HEX_oneline(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
         Dim S As String
         If Alpha Then
             S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
@@ -847,7 +847,7 @@ Public Class CP
                     Dim stringThemeName As StringBuilder = New StringBuilder(260)
                     GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
 
-                    If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Then
+                    If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Or String.IsNullOrWhiteSpace(stringThemeName.ToString) Then
                         Metro_Theme = AeroTheme.AeroLite
                     Else
                         Metro_Theme = AeroTheme.Aero
@@ -4127,126 +4127,75 @@ Public Class CP
 
         Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
         rMain.SetValue("AppStarting", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
         x = String.Format("{0}\{1}", Path, "Arrow.cur")
         rMain.SetValue("Arrow", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NORMAL)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
         x = String.Format("{0}\{1}", Path, "Cross.cur")
         rMain.SetValue("Crosshair", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_CROSS)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
         x = String.Format("{0}\{1}", Path, "Link.cur")
         rMain.SetValue("Hand", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HAND)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
         x = String.Format("{0}\{1}", Path, "Help.cur")
         rMain.SetValue("Help", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_HELP)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
         x = String.Format("{0}\{1}", Path, "IBeam.cur")
         rMain.SetValue("IBeam", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_IBEAM)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
         x = String.Format("{0}\{1}", Path, "None.cur")
         rMain.SetValue("No", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_NO)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
         x = String.Format("{0}\{1}", Path, "Pen.cur")
         rMain.SetValue("NWPen", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_)
 
         x = String.Format("{0}\{1}", Path, "Person.cur")
         rMain.SetValue("Person", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
         x = String.Format("{0}\{1}", Path, "Pin.cur")
         rMain.SetValue("Pin", x)
-        'SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
         x = String.Format("{0}\{1}", Path, "Move.cur")
         rMain.SetValue("SizeAll", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
         x = String.Format("{0}\{1}", Path, "NESW.cur")
         rMain.SetValue("SizeNESW", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
         x = String.Format("{0}\{1}", Path, "NS.cur")
         rMain.SetValue("SizeNS", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENS)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
         x = String.Format("{0}\{1}", Path, "NWSE.cur")
         rMain.SetValue("SizeNWSE", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
         x = String.Format("{0}\{1}", Path, "EW.cur")
         rMain.SetValue("SizeWE", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
         x = String.Format("{0}\{1}", Path, "Up.cur")
         rMain.SetValue("UpArrow", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_UP)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
         x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
         rMain.SetValue("Wait", x)
-        SetSystemCursor(LoadCursorFromFile(x), OCR_SYSTEM_CURSORS.OCR_WAIT)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
         rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
         rMain.Close()
     End Sub
-
-    <DllImport("user32.dll")>
-    Private Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As Integer) As Boolean
-    End Function
-
-    Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
-
-    Enum OCR_SYSTEM_CURSORS As Integer
-
-        ' Standard arrow And small hourglass
-        OCR_APPSTARTING = 32650
-
-        'Standard arrow
-        OCR_NORMAL = 32512
-
-        'Crosshair
-        OCR_CROSS = 32515
-
-        'Windows 2000/XP: Hand
-        OCR_HAND = 32649
-
-        'Arrow And question mark
-        OCR_HELP = 32651
-
-        'I-beam
-        OCR_IBEAM = 32513
-
-        'Slashed circle
-        OCR_NO = 32648
-
-        'Four-pointed arrow pointing north south east And west
-        OCR_SIZEALL = 32646
-
-        'Double-pointed arrow pointing northeast And southwest
-        OCR_SIZENESW = 32643
-
-        'Double-pointed arrow pointing north And south
-        OCR_SIZENS = 32645
-
-        'Double-pointed arrow pointing northwest And southeast
-        OCR_SIZENWSE = 32642
-
-        'Double-pointed arrow pointing west And east
-        OCR_SIZEWE = 32644
-
-        'Vertical arrow
-        OCR_UP = 32516
-
-        'Hourglass
-        OCR_WAIT = 32514
-    End Enum
 #End Region
 
     Public Overrides Function Equals(obj As Object) As Boolean

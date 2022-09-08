@@ -142,10 +142,37 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="ApplyingTheme.Designer.vb">
+    <Compile Include="ColorPickerDlg.Designer.vb">
+      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorPickerDlg.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComplexSave.Designer.vb">
+      <DependentUpon>ComplexSave.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ComplexSave.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb" />
+    <Compile Include="My Project\Resources1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb" />
+    <Compile Include="SubMenu.Designer.vb">
+      <DependentUpon>SubMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win7_8\ApplyingTheme.Designer.vb">
       <DependentUpon>ApplyingTheme.vb</DependentUpon>
     </Compile>
-    <Compile Include="ApplyingTheme.vb">
+    <Compile Include="Win7_8\ApplyingTheme.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Changelog.Designer.vb">
@@ -160,18 +187,6 @@
     <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />
     <Compile Include="Classes\XeSettings.vb" />
-    <Compile Include="ColorPickerDlg.Designer.vb">
-      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ColorPickerDlg.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ComplexSave.Designer.vb">
-      <DependentUpon>ComplexSave.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ComplexSave.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
       <DependentUpon>CursorsCustomizer.vb</DependentUpon>
     </Compile>
@@ -212,22 +227,22 @@
     <Compile Include="LogonUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI7.Designer.vb">
+    <Compile Include="Win7_8\LogonUI7.Designer.vb">
       <DependentUpon>LogonUI7.vb</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI7.vb">
+    <Compile Include="Win7_8\LogonUI7.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI8Colors.Designer.vb">
+    <Compile Include="Win7_8\LogonUI8Colors.Designer.vb">
       <DependentUpon>LogonUI8Colors.vb</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI8Colors.vb">
+    <Compile Include="Win7_8\LogonUI8Colors.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonUI8_Pics.Designer.vb">
+    <Compile Include="Win7_8\LogonUI8_Pics.Designer.vb">
       <DependentUpon>LogonUI8_Pics.vb</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI8_Pics.vb">
+    <Compile Include="Win7_8\LogonUI8_Pics.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainFrm.Designer.vb">
@@ -236,20 +251,16 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application.Designer.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb" />
-    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
     <Compile Include="SettingsX.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Start8Selector.Designer.vb">
+    <Compile Include="Win7_8\Start8Selector.Designer.vb">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </Compile>
-    <Compile Include="Start8Selector.vb">
+    <Compile Include="Win7_8\Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Updates.Designer.vb">
@@ -275,17 +286,24 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ApplyingTheme.resx">
-      <DependentUpon>ApplyingTheme.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Changelog.resx">
-      <DependentUpon>Changelog.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubMenu.resx">
+      <DependentUpon>SubMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win7_8\ApplyingTheme.resx">
+      <DependentUpon>ApplyingTheme.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Changelog.resx">
+      <DependentUpon>Changelog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
@@ -299,23 +317,22 @@
     <EmbeddedResource Include="LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI7.resx">
+    <EmbeddedResource Include="Win7_8\LogonUI7.resx">
       <DependentUpon>LogonUI7.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI8Colors.resx">
+    <EmbeddedResource Include="Win7_8\LogonUI8Colors.resx">
       <DependentUpon>LogonUI8Colors.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonUI8_Pics.resx">
+    <EmbeddedResource Include="Win7_8\LogonUI8_Pics.resx">
       <DependentUpon>LogonUI8_Pics.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Start8Selector.resx">
+    <EmbeddedResource Include="Win7_8\Start8Selector.resx">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates.resx">
@@ -331,16 +348,10 @@
   <ItemGroup>
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
-    </None>
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />

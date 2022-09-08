@@ -96,7 +96,7 @@ Partial Class LogonUI
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 12)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
-        Me.XenonGroupBox3.Size = New System.Drawing.Size(245, 228)
+        Me.XenonGroupBox3.Size = New System.Drawing.Size(303, 228)
         Me.XenonGroupBox3.TabIndex = 15
         Me.XenonGroupBox3.Text = "XenonGroupBox3"
         '
@@ -114,7 +114,7 @@ Partial Class LogonUI
         Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 196)
         Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
-        Me.XenonGroupBox21.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox21.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox21.TabIndex = 12
         Me.XenonGroupBox21.Text = "XenonGroupBox21"
         '
@@ -122,10 +122,10 @@ Partial Class LogonUI
         '
         Me.LogonUI_Lockscreen_Toggle.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.LogonUI_Lockscreen_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LogonUI_Lockscreen_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.LogonUI_Lockscreen_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.LogonUI_Lockscreen_Toggle.Checked = False
         Me.LogonUI_Lockscreen_Toggle.DarkLight_Toggler = False
-        Me.LogonUI_Lockscreen_Toggle.Location = New System.Drawing.Point(188, 3)
+        Me.LogonUI_Lockscreen_Toggle.Location = New System.Drawing.Point(246, 3)
         Me.LogonUI_Lockscreen_Toggle.Name = "LogonUI_Lockscreen_Toggle"
         Me.LogonUI_Lockscreen_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.LogonUI_Lockscreen_Toggle.TabIndex = 16
@@ -150,7 +150,7 @@ Partial Class LogonUI
         Me.Label20.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label20.Location = New System.Drawing.Point(36, 2)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(146, 24)
+        Me.Label20.Size = New System.Drawing.Size(204, 24)
         Me.Label20.TabIndex = 13
         Me.Label20.Text = "Lockscreen"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -169,7 +169,7 @@ Partial Class LogonUI
         Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 165)
         Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
-        Me.XenonGroupBox19.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox19.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox19.TabIndex = 11
         Me.XenonGroupBox19.Text = "XenonGroupBox19"
         '
@@ -177,10 +177,10 @@ Partial Class LogonUI
         '
         Me.LogonUI_Background_Toggle.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.LogonUI_Background_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LogonUI_Background_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.LogonUI_Background_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.LogonUI_Background_Toggle.Checked = False
         Me.LogonUI_Background_Toggle.DarkLight_Toggler = False
-        Me.LogonUI_Background_Toggle.Location = New System.Drawing.Point(188, 3)
+        Me.LogonUI_Background_Toggle.Location = New System.Drawing.Point(246, 3)
         Me.LogonUI_Background_Toggle.Name = "LogonUI_Background_Toggle"
         Me.LogonUI_Background_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.LogonUI_Background_Toggle.TabIndex = 16
@@ -205,7 +205,7 @@ Partial Class LogonUI
         Me.Label18.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(36, 2)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(146, 24)
+        Me.Label18.Size = New System.Drawing.Size(204, 24)
         Me.Label18.TabIndex = 13
         Me.Label18.Text = "LogonUI Background"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -224,7 +224,7 @@ Partial Class LogonUI
         Me.XenonGroupBox17.Location = New System.Drawing.Point(3, 134)
         Me.XenonGroupBox17.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox17.Name = "XenonGroupBox17"
-        Me.XenonGroupBox17.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox17.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox17.TabIndex = 10
         Me.XenonGroupBox17.Text = "XenonGroupBox17"
         '
@@ -232,10 +232,10 @@ Partial Class LogonUI
         '
         Me.LogonUI_Acrylic_Toggle.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.LogonUI_Acrylic_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LogonUI_Acrylic_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.LogonUI_Acrylic_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.LogonUI_Acrylic_Toggle.Checked = False
         Me.LogonUI_Acrylic_Toggle.DarkLight_Toggler = False
-        Me.LogonUI_Acrylic_Toggle.Location = New System.Drawing.Point(188, 3)
+        Me.LogonUI_Acrylic_Toggle.Location = New System.Drawing.Point(246, 3)
         Me.LogonUI_Acrylic_Toggle.Name = "LogonUI_Acrylic_Toggle"
         Me.LogonUI_Acrylic_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.LogonUI_Acrylic_Toggle.TabIndex = 16
@@ -260,7 +260,7 @@ Partial Class LogonUI
         Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(36, 2)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(146, 24)
+        Me.Label16.Size = New System.Drawing.Size(204, 24)
         Me.Label16.TabIndex = 13
         Me.Label16.Text = "Acrylic"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -280,7 +280,7 @@ Partial Class LogonUI
         Me.XenonGroupBox15.Location = New System.Drawing.Point(3, 103)
         Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
-        Me.XenonGroupBox15.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox15.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox15.TabIndex = 7
         Me.XenonGroupBox15.Text = "XenonGroupBox15"
         '
@@ -288,7 +288,7 @@ Partial Class LogonUI
         '
         Me.PictureBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox28.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox28.Location = New System.Drawing.Point(184, 6)
         Me.PictureBox28.Name = "PictureBox28"
         Me.PictureBox28.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -329,10 +329,10 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsAccent_Picker.CustomColor = True
         Me.LogonUI_PersonalColorsAccent_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_PersonalColorsAccent_Picker.LineSize = 1
-        Me.LogonUI_PersonalColorsAccent_Picker.Location = New System.Drawing.Point(185, 4)
+        Me.LogonUI_PersonalColorsAccent_Picker.Location = New System.Drawing.Point(204, 4)
         Me.LogonUI_PersonalColorsAccent_Picker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LogonUI_PersonalColorsAccent_Picker.Name = "LogonUI_PersonalColorsAccent_Picker"
-        Me.LogonUI_PersonalColorsAccent_Picker.Size = New System.Drawing.Size(50, 21)
+        Me.LogonUI_PersonalColorsAccent_Picker.Size = New System.Drawing.Size(89, 21)
         Me.LogonUI_PersonalColorsAccent_Picker.TabIndex = 2
         Me.LogonUI_PersonalColorsAccent_Picker.Text = "XenonGroupBox21"
         '
@@ -351,7 +351,7 @@ Partial Class LogonUI
         Me.XenonGroupBox10.Location = New System.Drawing.Point(3, 72)
         Me.XenonGroupBox10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
-        Me.XenonGroupBox10.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox10.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox10.TabIndex = 6
         Me.XenonGroupBox10.Text = "XenonGroupBox10"
         '
@@ -359,7 +359,7 @@ Partial Class LogonUI
         '
         Me.PictureBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox29.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox29.Location = New System.Drawing.Point(184, 6)
         Me.PictureBox29.Name = "PictureBox29"
         Me.PictureBox29.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -400,10 +400,10 @@ Partial Class LogonUI
         Me.LogonUI_PersonalColorsBackground_Picker.CustomColor = True
         Me.LogonUI_PersonalColorsBackground_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_PersonalColorsBackground_Picker.LineSize = 1
-        Me.LogonUI_PersonalColorsBackground_Picker.Location = New System.Drawing.Point(185, 4)
+        Me.LogonUI_PersonalColorsBackground_Picker.Location = New System.Drawing.Point(204, 4)
         Me.LogonUI_PersonalColorsBackground_Picker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LogonUI_PersonalColorsBackground_Picker.Name = "LogonUI_PersonalColorsBackground_Picker"
-        Me.LogonUI_PersonalColorsBackground_Picker.Size = New System.Drawing.Size(50, 21)
+        Me.LogonUI_PersonalColorsBackground_Picker.Size = New System.Drawing.Size(89, 21)
         Me.LogonUI_PersonalColorsBackground_Picker.TabIndex = 2
         Me.LogonUI_PersonalColorsBackground_Picker.Text = "XenonGroupBox21"
         '
@@ -442,7 +442,7 @@ Partial Class LogonUI
         Me.XenonGroupBox12.Location = New System.Drawing.Point(3, 41)
         Me.XenonGroupBox12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
-        Me.XenonGroupBox12.Size = New System.Drawing.Size(239, 29)
+        Me.XenonGroupBox12.Size = New System.Drawing.Size(297, 29)
         Me.XenonGroupBox12.TabIndex = 5
         Me.XenonGroupBox12.Text = "XenonGroupBox12"
         '
@@ -450,7 +450,7 @@ Partial Class LogonUI
         '
         Me.PictureBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox23.Location = New System.Drawing.Point(165, 6)
+        Me.PictureBox23.Location = New System.Drawing.Point(184, 6)
         Me.PictureBox23.Name = "PictureBox23"
         Me.PictureBox23.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -491,10 +491,10 @@ Partial Class LogonUI
         Me.LogonUI_Background_Picker.CustomColor = True
         Me.LogonUI_Background_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.LogonUI_Background_Picker.LineSize = 1
-        Me.LogonUI_Background_Picker.Location = New System.Drawing.Point(185, 4)
+        Me.LogonUI_Background_Picker.Location = New System.Drawing.Point(204, 4)
         Me.LogonUI_Background_Picker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LogonUI_Background_Picker.Name = "LogonUI_Background_Picker"
-        Me.LogonUI_Background_Picker.Size = New System.Drawing.Size(50, 21)
+        Me.LogonUI_Background_Picker.Size = New System.Drawing.Size(89, 21)
         Me.LogonUI_Background_Picker.TabIndex = 2
         Me.LogonUI_Background_Picker.Text = "XenonGroupBox10"
         '
@@ -507,7 +507,7 @@ Partial Class LogonUI
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(137, 362)
+        Me.XenonButton1.Location = New System.Drawing.Point(195, 362)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(116, 30)
         Me.XenonButton1.TabIndex = 16
@@ -523,7 +523,7 @@ Partial Class LogonUI
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(15, 362)
+        Me.XenonButton2.Location = New System.Drawing.Point(73, 362)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(116, 30)
         Me.XenonButton2.TabIndex = 17
@@ -536,7 +536,7 @@ Partial Class LogonUI
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(16, 350)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(237, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(295, 1)
         Me.XenonSeparator1.TabIndex = 18
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -553,7 +553,7 @@ Partial Class LogonUI
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(266, 404)
+        Me.ClientSize = New System.Drawing.Size(324, 404)
         Me.Controls.Add(Me.XenonSeparator1)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)

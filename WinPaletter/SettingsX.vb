@@ -39,6 +39,9 @@ Public Class SettingsX
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
             If .Language <> XenonCheckBox8.Checked Then Changed = True
             If .Language_File <> OpenFileDialog2.FileName Then Changed = True
+            If .Nerd_Stats <> XenonCheckBox10.Checked Then Changed = True
+            If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then Changed = True
+            If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -102,6 +105,17 @@ Public Class SettingsX
 
             XenonCheckBox8.Checked = .Language
             OpenFileDialog2.FileName = .Language_File
+
+            XenonCheckBox10.Checked = .Nerd_Stats
+            XenonCheckBox11.Checked = .Nerd_Stats_HexHash
+
+            Select Case .Nerd_Stats_Kind
+                Case XeSettings.Nerd_Stats_Type.HEX
+                    XenonComboBox3.SelectedIndex = 0
+                Case XeSettings.Nerd_Stats_Type.RGB
+                    XenonComboBox3.SelectedIndex = 1
+            End Select
+
         End With
 
         With My.Application.LanguageHelper
@@ -144,6 +158,9 @@ Public Class SettingsX
             .Appearance_Auto = XenonCheckBox6.Checked
             .Language = XenonCheckBox8.Checked
             .Language_File = OpenFileDialog2.FileName
+            .Nerd_Stats = XenonCheckBox10.Checked
+            .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
+            .Nerd_Stats_HexHash = XenonCheckBox11.Checked
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -229,6 +246,9 @@ Public Class SettingsX
                 .Appearance_Auto = XenonCheckBox6.Checked
                 .Language = XenonCheckBox8.Checked
                 .Language_File = OpenFileDialog2.FileName
+                .Nerd_Stats = XenonCheckBox10.Checked
+                .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
+                .Nerd_Stats_HexHash = XenonCheckBox11.Checked
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -266,6 +286,15 @@ Public Class SettingsX
                 End Select
 
                 XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+
+                XenonCheckBox10.Checked = .Nerd_Stats
+                XenonCheckBox11.Checked = .Nerd_Stats_HexHash
+                Select Case .Nerd_Stats_Kind
+                    Case XeSettings.Nerd_Stats_Type.HEX
+                        XenonComboBox3.SelectedIndex = 0
+                    Case XeSettings.Nerd_Stats_Type.RGB
+                        XenonComboBox3.SelectedIndex = 1
+                End Select
 
                 XenonRadioButton3.Checked = .Appearance_Dark
                 XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -317,6 +346,15 @@ Public Class SettingsX
             End Select
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+
+            XenonCheckBox10.Checked = .Nerd_Stats
+            XenonCheckBox11.Checked = .Nerd_Stats_HexHash
+            Select Case .Nerd_Stats_Kind
+                Case XeSettings.Nerd_Stats_Type.HEX
+                    XenonComboBox3.SelectedIndex = 0
+                Case XeSettings.Nerd_Stats_Type.RGB
+                    XenonComboBox3.SelectedIndex = 1
+            End Select
 
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -374,5 +412,4 @@ Public Class SettingsX
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
     End Sub
-
 End Class

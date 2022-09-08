@@ -150,7 +150,7 @@ Public Class ColorPickerDlg
 
     Dim CList As New List(Of Control)
 
-    Sub CHANGECOLORPREVIEW()
+    Public Sub CHANGECOLORPREVIEW()
         Dim steps As Integer = 30
         Dim delay As Integer = 1
 
@@ -452,7 +452,7 @@ Public Class ColorPickerDlg
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
-            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
+            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
             pnl.BackColor = Color.FromArgb(255, C)
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
@@ -507,7 +507,7 @@ Public Class ColorPickerDlg
 
             Try
                 For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
+                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True, .ForceNoNerd = True}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
@@ -525,12 +525,14 @@ Public Class ColorPickerDlg
         ThemePaletteContainer.Controls.Clear()
 
         Try
-            For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(30, 25), .CustomColor = True}
-                pnl.BackColor = Color.FromArgb(255, C)
-                ThemePaletteContainer.Controls.Add(pnl)
-                AddHandler pnl.Click, AddressOf Pnl_click
-            Next
+            If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
+                For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True, .ForceNoNerd = True}
+                    pnl.BackColor = Color.FromArgb(255, C)
+                    ThemePaletteContainer.Controls.Add(pnl)
+                    AddHandler pnl.Click, AddressOf Pnl_click
+                Next
+            End If
         Catch
 
         End Try

@@ -19,6 +19,9 @@ Public Class XeSettings
     Public Property WhatsNewRecord As String() = {""}
     Public Property Language As Boolean = False
     Public Property Language_File As String = Nothing
+    Public Property Nerd_Stats As Boolean = True
+    Public Property Nerd_Stats_Kind As Nerd_Stats_Type = Nerd_Stats_Type.HEX
+    Public Property Nerd_Stats_HexHash As Boolean = True
 
 #End Region
 
@@ -27,6 +30,11 @@ Public Class XeSettings
         Ten
         Eight
         Seven
+    End Enum
+
+    Public Enum Nerd_Stats_Type
+        HEX
+        RGB
     End Enum
 
     Public Enum UpdateChannels
@@ -72,6 +80,15 @@ Public Class XeSettings
         If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
         If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", Language, RegistryValueKind.DWord)
         If Key.GetValue("Language_File", Nothing) Is Nothing Then Key.SetValue("Language_File", "", RegistryValueKind.String)
+        If Key.GetValue("Nerd_Stats", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats", Nerd_Stats, RegistryValueKind.DWord)
+        If Key.GetValue("Nerd_Stats_HexHash", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_HexHash", Nerd_Stats_HexHash, RegistryValueKind.DWord)
+
+        Select Case Nerd_Stats_Kind
+            Case Nerd_Stats_Type.HEX
+                If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 0)
+            Case Nerd_Stats_Type.RGB
+                If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 1)
+        End Select
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -108,6 +125,16 @@ Public Class XeSettings
                 Language = Key.GetValue("Language", False)
                 Language_File = Key.GetValue("Language_File", Nothing)
 
+                Nerd_Stats = Key.GetValue("Nerd_Stats", True)
+                Nerd_Stats_HexHash = Key.GetValue("Nerd_Stats_HexHash", True)
+
+                Select Case Key.GetValue("Nerd_Stats_Kind", 0)
+                    Case 0
+                        Nerd_Stats_Kind = Nerd_Stats_Type.HEX
+                    Case 1
+                        Nerd_Stats_Kind = Nerd_Stats_Type.RGB
+                End Select
+
             Case Mode.File
                 Dim l As New List(Of String)
                 CList_FromStr(l, IO.File.ReadAllText(File))
@@ -126,7 +153,9 @@ Public Class XeSettings
                     If x.StartsWith("Appearance_Auto= ") Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
                     If x.StartsWith("Language= ") Then Language = x.Remove(0, "Language= ".Count)
                     If x.StartsWith("Language_File= ") Then Language_File = x.Remove(0, "Language_File= ".Count)
-
+                    If x.StartsWith("Nerd_Stats= ") Then Nerd_Stats = x.Remove(0, "Nerd_Stats= ".Count)
+                    If x.StartsWith("Nerd_Stats_HexHash= ") Then Nerd_Stats_HexHash = x.Remove(0, "Nerd_Stats_HexHash= ".Count)
+                    If x.StartsWith("Nerd_Stats_Kind= ") Then Nerd_Stats_Kind = x.Remove(0, "Nerd_Stats_Kind= ".Count)
                 Next
         End Select
     End Sub
@@ -163,6 +192,15 @@ Public Class XeSettings
                 Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
                 Key.SetValue("Language", Language, RegistryValueKind.DWord)
                 Key.SetValue("Language_File", Language_File, RegistryValueKind.String)
+                Key.SetValue("Nerd_Stats", Nerd_Stats, RegistryValueKind.DWord)
+                Key.SetValue("Nerd_Stats_HexHash", Nerd_Stats_HexHash, RegistryValueKind.DWord)
+
+                Select Case Nerd_Stats_Kind
+                    Case Nerd_Stats_Type.HEX
+                        Key.SetValue("Nerd_Stats_Kind", 0)
+                    Case Nerd_Stats_Type.RGB
+                        Key.SetValue("Nerd_Stats_Kind", 1)
+                End Select
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -195,6 +233,17 @@ Public Class XeSettings
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
                 l.Add(String.Format("Language= {0}", Language))
                 l.Add(String.Format("Language_File= {0}", Language_File))
+                l.Add(String.Format("Nerd_Stats= {0}", Nerd_Stats))
+                l.Add(String.Format("Nerd_Stats_HexHash= {0}", Nerd_Stats_HexHash))
+
+
+                Select Case Nerd_Stats_Kind
+                    Case Nerd_Stats_Type.HEX
+                        l.Add(String.Format("Nerd_Stats_Kind= {0}", 0))
+                    Case Nerd_Stats_Type.HEX
+                        l.Add(String.Format("Nerd_Stats_Kind= {0}", 1))
+                End Select
+
 
                 IO.File.WriteAllText(File, CStr_FromList(l))
         End Select

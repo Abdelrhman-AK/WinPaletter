@@ -37,7 +37,6 @@ Namespace NativeMethods
 
         Public Const CS_DROPSHADOW As Integer = &H20000
         Public Const WM_NCPAINT As Integer = &H85
-
         Public Enum CompositionAction As Integer
             DWM_EC_DISABLECOMPOSITION = 0
             DWM_EC_ENABLECOMPOSITION = 1
@@ -75,7 +74,58 @@ Namespace NativeMethods
 
         Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
 
-        Private Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+        Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+
+        <DllImport("user32.dll")>
+        Public Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As Integer) As Boolean
+        End Function
+
+        Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
+
+        Enum OCR_SYSTEM_CURSORS As Integer
+
+            ' Standard arrow And small hourglass
+            OCR_APPSTARTING = 32650
+
+            'Standard arrow
+            OCR_NORMAL = 32512
+
+            'Crosshair
+            OCR_CROSS = 32515
+
+            'Windows 2000/XP: Hand
+            OCR_HAND = 32649
+
+            'Arrow And question mark
+            OCR_HELP = 32651
+
+            'I-beam
+            OCR_IBEAM = 32513
+
+            'Slashed circle
+            OCR_NO = 32648
+
+            'Four-pointed arrow pointing north south east And west
+            OCR_SIZEALL = 32646
+
+            'Double-pointed arrow pointing northeast And southwest
+            OCR_SIZENESW = 32643
+
+            'Double-pointed arrow pointing north And south
+            OCR_SIZENS = 32645
+
+            'Double-pointed arrow pointing northwest And southeast
+            OCR_SIZENWSE = 32642
+
+            'Double-pointed arrow pointing west And east
+            OCR_SIZEWE = 32644
+
+            'Vertical arrow
+            OCR_UP = 32516
+
+            'Hourglass
+            OCR_WAIT = 32514
+        End Enum
 
         <StructLayout(LayoutKind.Sequential)>
         Friend Structure AccentPolicy

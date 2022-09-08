@@ -349,6 +349,7 @@ Partial Class MainFrm
         Me.XenonGroupBox13.Controls.Add(Me.pnl2)
         Me.XenonGroupBox13.Controls.Add(Me.pnl5)
         Me.XenonGroupBox13.CustomColor = False
+        Me.XenonGroupBox13.ForceNoNerd = False
         Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox13.LineSize = 1
         Me.XenonGroupBox13.Location = New System.Drawing.Point(0, 220)
@@ -367,6 +368,7 @@ Partial Class MainFrm
         Me.pnl8.Controls.Add(Me.lbl8)
         Me.pnl8.Controls.Add(Me.TaskbarBackground_Picker)
         Me.pnl8.CustomColor = False
+        Me.pnl8.ForceNoNerd = False
         Me.pnl8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl8.LineSize = 1
         Me.pnl8.Location = New System.Drawing.Point(3, 258)
@@ -409,6 +411,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TaskbarBackground_Picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.TaskbarBackground_Picker.CustomColor = True
+        Me.TaskbarBackground_Picker.ForceNoNerd = False
         Me.TaskbarBackground_Picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.TaskbarBackground_Picker.LineSize = 1
         Me.TaskbarBackground_Picker.Location = New System.Drawing.Point(388, 4)
@@ -427,6 +430,7 @@ Partial Class MainFrm
         Me.pnl7.Controls.Add(Me.lbl7)
         Me.pnl7.Controls.Add(Me.StartAccent_picker)
         Me.pnl7.CustomColor = False
+        Me.pnl7.ForceNoNerd = False
         Me.pnl7.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl7.LineSize = 1
         Me.pnl7.Location = New System.Drawing.Point(3, 227)
@@ -469,6 +473,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StartAccent_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.StartAccent_picker.CustomColor = True
+        Me.StartAccent_picker.ForceNoNerd = False
         Me.StartAccent_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.StartAccent_picker.LineSize = 1
         Me.StartAccent_picker.Location = New System.Drawing.Point(388, 4)
@@ -487,6 +492,7 @@ Partial Class MainFrm
         Me.pnl4.Controls.Add(Me.lbl4)
         Me.pnl4.Controls.Add(Me.StartBackgroundAndTaskbarButton_picker)
         Me.pnl4.CustomColor = False
+        Me.pnl4.ForceNoNerd = False
         Me.pnl4.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl4.LineSize = 1
         Me.pnl4.Location = New System.Drawing.Point(3, 134)
@@ -529,6 +535,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StartBackgroundAndTaskbarButton_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.StartBackgroundAndTaskbarButton_picker.CustomColor = True
+        Me.StartBackgroundAndTaskbarButton_picker.ForceNoNerd = False
         Me.StartBackgroundAndTaskbarButton_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.StartBackgroundAndTaskbarButton_picker.LineSize = 1
         Me.StartBackgroundAndTaskbarButton_picker.Location = New System.Drawing.Point(388, 4)
@@ -557,6 +564,7 @@ Partial Class MainFrm
         Me.pnl6.Controls.Add(Me.lbl6)
         Me.pnl6.Controls.Add(Me.StartButtonHover_picker)
         Me.pnl6.CustomColor = False
+        Me.pnl6.ForceNoNerd = False
         Me.pnl6.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl6.LineSize = 1
         Me.pnl6.Location = New System.Drawing.Point(3, 196)
@@ -599,6 +607,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StartButtonHover_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.StartButtonHover_picker.CustomColor = True
+        Me.StartButtonHover_picker.ForceNoNerd = False
         Me.StartButtonHover_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.StartButtonHover_picker.LineSize = 1
         Me.StartButtonHover_picker.Location = New System.Drawing.Point(388, 4)
@@ -617,6 +626,7 @@ Partial Class MainFrm
         Me.pnl1.Controls.Add(Me.TaskbarFrontAndFoldersOnStart_picker)
         Me.pnl1.Controls.Add(Me.lbl1)
         Me.pnl1.CustomColor = False
+        Me.pnl1.ForceNoNerd = False
         Me.pnl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl1.LineSize = 1
         Me.pnl1.Location = New System.Drawing.Point(3, 41)
@@ -644,6 +654,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TaskbarFrontAndFoldersOnStart_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.TaskbarFrontAndFoldersOnStart_picker.CustomColor = True
+        Me.TaskbarFrontAndFoldersOnStart_picker.ForceNoNerd = False
         Me.TaskbarFrontAndFoldersOnStart_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.TaskbarFrontAndFoldersOnStart_picker.LineSize = 1
         Me.TaskbarFrontAndFoldersOnStart_picker.Location = New System.Drawing.Point(388, 4)
@@ -677,6 +688,7 @@ Partial Class MainFrm
         Me.pnl3.Controls.Add(Me.TaskbarIconUnderline_picker)
         Me.pnl3.Controls.Add(Me.lbl3)
         Me.pnl3.CustomColor = False
+        Me.pnl3.ForceNoNerd = False
         Me.pnl3.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl3.LineSize = 1
         Me.pnl3.Location = New System.Drawing.Point(3, 103)
@@ -704,6 +716,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TaskbarIconUnderline_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.TaskbarIconUnderline_picker.CustomColor = True
+        Me.TaskbarIconUnderline_picker.ForceNoNerd = False
         Me.TaskbarIconUnderline_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.TaskbarIconUnderline_picker.LineSize = 1
         Me.TaskbarIconUnderline_picker.Location = New System.Drawing.Point(388, 4)
@@ -747,6 +760,7 @@ Partial Class MainFrm
         Me.pnl2.Controls.Add(Me.pic2)
         Me.pnl2.Controls.Add(Me.lbl2)
         Me.pnl2.CustomColor = False
+        Me.pnl2.ForceNoNerd = False
         Me.pnl2.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl2.LineSize = 1
         Me.pnl2.Location = New System.Drawing.Point(3, 72)
@@ -762,6 +776,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ActionCenter_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.ActionCenter_picker.CustomColor = True
+        Me.ActionCenter_picker.ForceNoNerd = False
         Me.ActionCenter_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.ActionCenter_picker.LineSize = 1
         Me.ActionCenter_picker.Location = New System.Drawing.Point(388, 4)
@@ -807,6 +822,7 @@ Partial Class MainFrm
         Me.pnl5.Controls.Add(Me.lbl5)
         Me.pnl5.Controls.Add(Me.SettingsIconsAndLinks_picker)
         Me.pnl5.CustomColor = False
+        Me.pnl5.ForceNoNerd = False
         Me.pnl5.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl5.LineSize = 1
         Me.pnl5.Location = New System.Drawing.Point(3, 165)
@@ -849,6 +865,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.SettingsIconsAndLinks_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.SettingsIconsAndLinks_picker.CustomColor = True
+        Me.SettingsIconsAndLinks_picker.ForceNoNerd = False
         Me.SettingsIconsAndLinks_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.SettingsIconsAndLinks_picker.LineSize = 1
         Me.SettingsIconsAndLinks_picker.Location = New System.Drawing.Point(388, 4)
@@ -870,6 +887,7 @@ Partial Class MainFrm
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox17)
         Me.XenonGroupBox5.Controls.Add(Me.Label17)
         Me.XenonGroupBox5.CustomColor = False
+        Me.XenonGroupBox5.ForceNoNerd = False
         Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox5.LineSize = 1
         Me.XenonGroupBox5.Location = New System.Drawing.Point(0, 0)
@@ -888,6 +906,7 @@ Partial Class MainFrm
         Me.XenonGroupBox6.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox6.Controls.Add(Me.Label19)
         Me.XenonGroupBox6.CustomColor = False
+        Me.XenonGroupBox6.ForceNoNerd = False
         Me.XenonGroupBox6.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox6.LineSize = 1
         Me.XenonGroupBox6.Location = New System.Drawing.Point(3, 103)
@@ -943,6 +962,7 @@ Partial Class MainFrm
         Me.XenonGroupBox4.Controls.Add(Me.Label2)
         Me.XenonGroupBox4.Controls.Add(Me.WinMode_Toggle)
         Me.XenonGroupBox4.CustomColor = False
+        Me.XenonGroupBox4.ForceNoNerd = False
         Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox4.LineSize = 1
         Me.XenonGroupBox4.Location = New System.Drawing.Point(3, 41)
@@ -1000,6 +1020,7 @@ Partial Class MainFrm
         Me.XenonGroupBox18.Controls.Add(Me.PictureBox18)
         Me.XenonGroupBox18.Controls.Add(Me.Label9)
         Me.XenonGroupBox18.CustomColor = False
+        Me.XenonGroupBox18.ForceNoNerd = False
         Me.XenonGroupBox18.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox18.LineSize = 1
         Me.XenonGroupBox18.Location = New System.Drawing.Point(3, 72)
@@ -1056,6 +1077,7 @@ Partial Class MainFrm
         Me.XenonGroupBox24.Controls.Add(Me.AppMode_Toggle)
         Me.XenonGroupBox24.Controls.Add(Me.Label7)
         Me.XenonGroupBox24.CustomColor = False
+        Me.XenonGroupBox24.ForceNoNerd = False
         Me.XenonGroupBox24.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox24.LineSize = 1
         Me.XenonGroupBox24.Location = New System.Drawing.Point(225, 41)
@@ -1134,6 +1156,7 @@ Partial Class MainFrm
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.XenonGroupBox9)
         Me.XenonGroupBox1.CustomColor = False
+        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(0, 141)
@@ -1164,6 +1187,7 @@ Partial Class MainFrm
         Me.XenonGroupBox20.Controls.Add(Me.Label11)
         Me.XenonGroupBox20.Controls.Add(Me.InactiveTitlebar_picker)
         Me.XenonGroupBox20.CustomColor = False
+        Me.XenonGroupBox20.ForceNoNerd = False
         Me.XenonGroupBox20.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox20.LineSize = 1
         Me.XenonGroupBox20.Location = New System.Drawing.Point(225, 41)
@@ -1205,6 +1229,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InactiveTitlebar_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InactiveTitlebar_picker.CustomColor = True
+        Me.InactiveTitlebar_picker.ForceNoNerd = False
         Me.InactiveTitlebar_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.InactiveTitlebar_picker.LineSize = 1
         Me.InactiveTitlebar_picker.Location = New System.Drawing.Point(166, 4)
@@ -1242,6 +1267,7 @@ Partial Class MainFrm
         Me.XenonGroupBox9.Controls.Add(Me.Label5)
         Me.XenonGroupBox9.Controls.Add(Me.ActiveTitlebar_picker)
         Me.XenonGroupBox9.CustomColor = False
+        Me.XenonGroupBox9.ForceNoNerd = False
         Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox9.LineSize = 1
         Me.XenonGroupBox9.Location = New System.Drawing.Point(3, 41)
@@ -1299,6 +1325,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ActiveTitlebar_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.ActiveTitlebar_picker.CustomColor = True
+        Me.ActiveTitlebar_picker.ForceNoNerd = False
         Me.ActiveTitlebar_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.ActiveTitlebar_picker.LineSize = 1
         Me.ActiveTitlebar_picker.Location = New System.Drawing.Point(166, 4)
@@ -1393,6 +1420,7 @@ Partial Class MainFrm
         Me.XenonGroupBox11.Controls.Add(Me.theme_aeroopaque)
         Me.XenonGroupBox11.Controls.Add(Me.Label6)
         Me.XenonGroupBox11.CustomColor = False
+        Me.XenonGroupBox11.ForceNoNerd = False
         Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox11.LineSize = 1
         Me.XenonGroupBox11.Location = New System.Drawing.Point(3, 107)
@@ -1412,6 +1440,7 @@ Partial Class MainFrm
         Me.XenonGroupBox14.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox14.Controls.Add(Me.Label18)
         Me.XenonGroupBox14.CustomColor = False
+        Me.XenonGroupBox14.ForceNoNerd = False
         Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox14.LineSize = 1
         Me.XenonGroupBox14.Location = New System.Drawing.Point(5, 424)
@@ -1598,6 +1627,7 @@ Partial Class MainFrm
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox10)
         Me.XenonGroupBox22.Controls.Add(Me.XenonGroupBox7)
         Me.XenonGroupBox22.CustomColor = False
+        Me.XenonGroupBox22.ForceNoNerd = False
         Me.XenonGroupBox22.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox22.LineSize = 1
         Me.XenonGroupBox22.Location = New System.Drawing.Point(3, 250)
@@ -1617,6 +1647,7 @@ Partial Class MainFrm
         Me.XenonGroupBox25.Controls.Add(Me.PictureBox16)
         Me.XenonGroupBox25.Controls.Add(Me.Label4)
         Me.XenonGroupBox25.CustomColor = False
+        Me.XenonGroupBox25.ForceNoNerd = False
         Me.XenonGroupBox25.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox25.LineSize = 1
         Me.XenonGroupBox25.Location = New System.Drawing.Point(5, 424)
@@ -1679,6 +1710,7 @@ Partial Class MainFrm
         Me.XenonGroupBox19.Controls.Add(Me.PictureBox24)
         Me.XenonGroupBox19.Controls.Add(Me.Label26)
         Me.XenonGroupBox19.CustomColor = False
+        Me.XenonGroupBox19.ForceNoNerd = False
         Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox19.LineSize = 1
         Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 75)
@@ -1749,6 +1781,7 @@ Partial Class MainFrm
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox12.Controls.Add(Me.Label15)
         Me.XenonGroupBox12.CustomColor = False
+        Me.XenonGroupBox12.ForceNoNerd = False
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox12.LineSize = 1
         Me.XenonGroupBox12.Location = New System.Drawing.Point(3, 44)
@@ -1819,6 +1852,7 @@ Partial Class MainFrm
         Me.XenonGroupBox10.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox10.Controls.Add(Me.Aero_EnableAeroPeek_lbl)
         Me.XenonGroupBox10.CustomColor = False
+        Me.XenonGroupBox10.ForceNoNerd = False
         Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox10.LineSize = 1
         Me.XenonGroupBox10.Location = New System.Drawing.Point(3, 106)
@@ -1875,6 +1909,7 @@ Partial Class MainFrm
         Me.XenonGroupBox7.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox7.Controls.Add(Me.Aero_AlwaysHibernateThumbnails_lbl)
         Me.XenonGroupBox7.CustomColor = False
+        Me.XenonGroupBox7.ForceNoNerd = False
         Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox7.LineSize = 1
         Me.XenonGroupBox7.Location = New System.Drawing.Point(222, 106)
@@ -1933,6 +1968,7 @@ Partial Class MainFrm
         Me.XenonGroupBox30.Controls.Add(Me.PictureBox25)
         Me.XenonGroupBox30.Controls.Add(Me.Label27)
         Me.XenonGroupBox30.CustomColor = False
+        Me.XenonGroupBox30.ForceNoNerd = False
         Me.XenonGroupBox30.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox30.LineSize = 1
         Me.XenonGroupBox30.Location = New System.Drawing.Point(0, 0)
@@ -1952,6 +1988,7 @@ Partial Class MainFrm
         Me.XenonGroupBox21.Controls.Add(Me.Aero_ColorizationColor_pick)
         Me.XenonGroupBox21.Controls.Add(Me.Label16)
         Me.XenonGroupBox21.CustomColor = False
+        Me.XenonGroupBox21.ForceNoNerd = False
         Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox21.LineSize = 1
         Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 44)
@@ -1991,6 +2028,7 @@ Partial Class MainFrm
         Me.Aero_ColorizationColor_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Aero_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Aero_ColorizationColor_pick.CustomColor = True
+        Me.Aero_ColorizationColor_pick.ForceNoNerd = False
         Me.Aero_ColorizationColor_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.Aero_ColorizationColor_pick.LineSize = 1
         Me.Aero_ColorizationColor_pick.Location = New System.Drawing.Point(166, 4)
@@ -2024,6 +2062,7 @@ Partial Class MainFrm
         Me.XenonGroupBox26.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox26.Controls.Add(Me.Label21)
         Me.XenonGroupBox26.CustomColor = False
+        Me.XenonGroupBox26.ForceNoNerd = False
         Me.XenonGroupBox26.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox26.LineSize = 1
         Me.XenonGroupBox26.Location = New System.Drawing.Point(226, 44)
@@ -2053,6 +2092,7 @@ Partial Class MainFrm
         Me.Aero_ColorizationAfterglow_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Aero_ColorizationAfterglow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Aero_ColorizationAfterglow_pick.CustomColor = True
+        Me.Aero_ColorizationAfterglow_pick.ForceNoNerd = False
         Me.Aero_ColorizationAfterglow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.Aero_ColorizationAfterglow_pick.LineSize = 1
         Me.Aero_ColorizationAfterglow_pick.Location = New System.Drawing.Point(166, 4)
@@ -2130,6 +2170,7 @@ Partial Class MainFrm
         Me.XenonGroupBox23.Controls.Add(Me.XenonGroupBox15)
         Me.XenonGroupBox23.Controls.Add(Me.XenonGroupBox29)
         Me.XenonGroupBox23.CustomColor = False
+        Me.XenonGroupBox23.ForceNoNerd = False
         Me.XenonGroupBox23.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox23.LineSize = 1
         Me.XenonGroupBox23.Location = New System.Drawing.Point(0, 317)
@@ -2168,6 +2209,7 @@ Partial Class MainFrm
         Me.XenonGroupBox15.Controls.Add(Me.start8_pick)
         Me.XenonGroupBox15.Controls.Add(Me.Label20)
         Me.XenonGroupBox15.CustomColor = False
+        Me.XenonGroupBox15.ForceNoNerd = False
         Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox15.LineSize = 1
         Me.XenonGroupBox15.Location = New System.Drawing.Point(3, 41)
@@ -2192,6 +2234,7 @@ Partial Class MainFrm
         Me.start8_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.start8_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.start8_pick.CustomColor = True
+        Me.start8_pick.ForceNoNerd = False
         Me.start8_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.start8_pick.LineSize = 1
         Me.start8_pick.Location = New System.Drawing.Point(391, 4)
@@ -2224,6 +2267,7 @@ Partial Class MainFrm
         Me.XenonGroupBox29.Controls.Add(Me.accent8_pick)
         Me.XenonGroupBox29.Controls.Add(Me.Label29)
         Me.XenonGroupBox29.CustomColor = False
+        Me.XenonGroupBox29.ForceNoNerd = False
         Me.XenonGroupBox29.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox29.LineSize = 1
         Me.XenonGroupBox29.Location = New System.Drawing.Point(3, 72)
@@ -2248,6 +2292,7 @@ Partial Class MainFrm
         Me.accent8_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.accent8_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.accent8_pick.CustomColor = True
+        Me.accent8_pick.ForceNoNerd = False
         Me.accent8_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.accent8_pick.LineSize = 1
         Me.accent8_pick.Location = New System.Drawing.Point(390, 4)
@@ -2288,6 +2333,7 @@ Partial Class MainFrm
         Me.XenonGroupBox17.Controls.Add(Me.XenonRadioImage1)
         Me.XenonGroupBox17.Controls.Add(Me.XenonButton22)
         Me.XenonGroupBox17.CustomColor = False
+        Me.XenonGroupBox17.ForceNoNerd = False
         Me.XenonGroupBox17.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox17.LineSize = 1
         Me.XenonGroupBox17.Location = New System.Drawing.Point(0, 172)
@@ -2439,6 +2485,7 @@ Partial Class MainFrm
         Me.XenonGroupBox32.Controls.Add(Me.PictureBox32)
         Me.XenonGroupBox32.Controls.Add(Me.Label41)
         Me.XenonGroupBox32.CustomColor = False
+        Me.XenonGroupBox32.ForceNoNerd = False
         Me.XenonGroupBox32.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox32.LineSize = 1
         Me.XenonGroupBox32.Location = New System.Drawing.Point(0, 0)
@@ -2457,6 +2504,7 @@ Partial Class MainFrm
         Me.XenonGroupBox39.Controls.Add(Me.personalcolor8accent_pick)
         Me.XenonGroupBox39.Controls.Add(Me.Foregrounds)
         Me.XenonGroupBox39.CustomColor = False
+        Me.XenonGroupBox39.ForceNoNerd = False
         Me.XenonGroupBox39.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox39.LineSize = 1
         Me.XenonGroupBox39.Location = New System.Drawing.Point(3, 134)
@@ -2481,6 +2529,7 @@ Partial Class MainFrm
         Me.personalcolor8accent_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.personalcolor8accent_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.personalcolor8accent_pick.CustomColor = True
+        Me.personalcolor8accent_pick.ForceNoNerd = False
         Me.personalcolor8accent_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.personalcolor8accent_pick.LineSize = 1
         Me.personalcolor8accent_pick.Location = New System.Drawing.Point(389, 4)
@@ -2513,6 +2562,7 @@ Partial Class MainFrm
         Me.XenonGroupBox41.Controls.Add(Me.personalcls8_background_pick)
         Me.XenonGroupBox41.Controls.Add(Me.Label33)
         Me.XenonGroupBox41.CustomColor = False
+        Me.XenonGroupBox41.ForceNoNerd = False
         Me.XenonGroupBox41.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox41.LineSize = 1
         Me.XenonGroupBox41.Location = New System.Drawing.Point(3, 103)
@@ -2537,6 +2587,7 @@ Partial Class MainFrm
         Me.personalcls8_background_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.personalcls8_background_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.personalcls8_background_pick.CustomColor = True
+        Me.personalcls8_background_pick.ForceNoNerd = False
         Me.personalcls8_background_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.personalcls8_background_pick.LineSize = 1
         Me.personalcls8_background_pick.Location = New System.Drawing.Point(389, 4)
@@ -2570,6 +2621,7 @@ Partial Class MainFrm
         Me.XenonGroupBox33.Controls.Add(Me.ColorizationColor8_pick)
         Me.XenonGroupBox33.Controls.Add(Me.Label39)
         Me.XenonGroupBox33.CustomColor = False
+        Me.XenonGroupBox33.ForceNoNerd = False
         Me.XenonGroupBox33.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox33.LineSize = 1
         Me.XenonGroupBox33.Location = New System.Drawing.Point(3, 44)
@@ -2609,6 +2661,7 @@ Partial Class MainFrm
         Me.ColorizationColor8_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ColorizationColor8_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.ColorizationColor8_pick.CustomColor = True
+        Me.ColorizationColor8_pick.ForceNoNerd = False
         Me.ColorizationColor8_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
         Me.ColorizationColor8_pick.LineSize = 1
         Me.ColorizationColor8_pick.Location = New System.Drawing.Point(389, 4)
@@ -2663,6 +2716,7 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Controls.Add(Me.Label13)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
         Me.XenonGroupBox3.CustomColor = False
+        Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 593)
@@ -2807,6 +2861,7 @@ Partial Class MainFrm
         Me.XenonGroupBox8.Controls.Add(Me.themename_lbl)
         Me.XenonGroupBox8.Controls.Add(Me.author_lbl)
         Me.XenonGroupBox8.CustomColor = False
+        Me.XenonGroupBox8.ForceNoNerd = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox8.LineSize = 1
         Me.XenonGroupBox8.Location = New System.Drawing.Point(470, 77)
@@ -3150,6 +3205,7 @@ Partial Class MainFrm
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton2)
         Me.XenonGroupBox2.CustomColor = False
+        Me.XenonGroupBox2.ForceNoNerd = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 11)
@@ -3388,9 +3444,9 @@ Partial Class MainFrm
         Me.Controls.Add(Me.NotificationsPanel)
         Me.Controls.Add(Me.XenonGroupBox8)
         Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Controls.Add(Me.PaletteContainer_W7)
         Me.Controls.Add(Me.PaletteContainer_W1x)
         Me.Controls.Add(Me.PaletteContainer_W8)
+        Me.Controls.Add(Me.PaletteContainer_W7)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle

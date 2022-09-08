@@ -114,12 +114,16 @@ Partial Class SettingsX
         Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator6 = New WinPaletter.XenonSeparator()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
+        Me.PictureBox27 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,6 +157,7 @@ Partial Class SettingsX
         Me.TabPage5.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -867,8 +872,8 @@ Partial Class SettingsX
         Me.XenonAlertBox9.Size = New System.Drawing.Size(768, 31)
         Me.XenonAlertBox9.TabIndex = 30
         Me.XenonAlertBox9.TabStop = False
-        Me.XenonAlertBox9.Text = "To return to English, uncheck the check-box, save settings and restart the applica" &
-    "tion"
+        Me.XenonAlertBox9.Text = "To return to English, uncheck the check-box, save settings and restart the applic" &
+    "ation"
         '
         'XenonGroupBox1
         '
@@ -1319,6 +1324,10 @@ Partial Class SettingsX
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox11)
+        Me.TabPage6.Controls.Add(Me.XenonComboBox3)
+        Me.TabPage6.Controls.Add(Me.PictureBox27)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox10)
         Me.TabPage6.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage6.Controls.Add(Me.PictureBox15)
         Me.TabPage6.Controls.Add(Me.XenonCheckBox9)
@@ -1335,6 +1344,48 @@ Partial Class SettingsX
         Me.TabPage6.Size = New System.Drawing.Size(812, 452)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Miscellaneous"
+        '
+        'XenonComboBox3
+        '
+        Me.XenonComboBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.XenonComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox3.FormattingEnabled = True
+        Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB"})
+        Me.XenonComboBox3.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonComboBox3.Location = New System.Drawing.Point(87, 285)
+        Me.XenonComboBox3.Name = "XenonComboBox3"
+        Me.XenonComboBox3.Size = New System.Drawing.Size(282, 24)
+        Me.XenonComboBox3.TabIndex = 25
+        '
+        'PictureBox27
+        '
+        Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
+        Me.PictureBox27.Location = New System.Drawing.Point(51, 253)
+        Me.PictureBox27.Name = "PictureBox27"
+        Me.PictureBox27.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox27.TabIndex = 23
+        Me.PictureBox27.TabStop = False
+        '
+        'XenonCheckBox10
+        '
+        Me.XenonCheckBox10.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox10.Checked = False
+        Me.XenonCheckBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox10.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox10.Location = New System.Drawing.Point(87, 253)
+        Me.XenonCheckBox10.Name = "XenonCheckBox10"
+        Me.XenonCheckBox10.Size = New System.Drawing.Size(684, 26)
+        Me.XenonCheckBox10.TabIndex = 24
+        Me.XenonCheckBox10.Text = "Nerd color info on color palette item"
         '
         'XenonAlertBox2
         '
@@ -1406,6 +1457,21 @@ Partial Class SettingsX
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
         '
+        'XenonCheckBox11
+        '
+        Me.XenonCheckBox11.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox11.Checked = False
+        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox11.Location = New System.Drawing.Point(88, 315)
+        Me.XenonCheckBox11.Name = "XenonCheckBox11"
+        Me.XenonCheckBox11.Size = New System.Drawing.Size(684, 26)
+        Me.XenonCheckBox11.TabIndex = 26
+        Me.XenonCheckBox11.Text = "Show Hex Hash (#)"
+        '
         'SettingsX
         '
         Me.AllowDrop = True
@@ -1467,6 +1533,7 @@ Partial Class SettingsX
         Me.TabPage5.ResumeLayout(False)
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -1567,4 +1634,8 @@ Partial Class SettingsX
     Friend WithEvents XenonCheckBox9 As XenonCheckBox
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents XenonAlertBox6 As XenonAlertBox
+    Friend WithEvents PictureBox27 As PictureBox
+    Friend WithEvents XenonCheckBox10 As XenonCheckBox
+    Friend WithEvents XenonComboBox3 As XenonComboBox
+    Friend WithEvents XenonCheckBox11 As XenonCheckBox
 End Class

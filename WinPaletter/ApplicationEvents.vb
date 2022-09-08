@@ -36,6 +36,17 @@ Namespace My
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
         Public WinRes As WinResources
+
+        Public CopiedColor As Color = Nothing
+        Public ColorEvent As MenuEvent = MenuEvent.None
+
+        Enum MenuEvent
+            None
+            Copy
+            Cut
+            Paste
+            Override
+        End Enum
 #End Region
 
 #Region "File Association"

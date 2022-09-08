@@ -1,4 +1,5 @@
 ﻿Imports WinPaletter.dragPreviewer
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 Public Class ApplyingTheme
 
@@ -44,9 +45,9 @@ Public Class ApplyingTheme
 
     Private Sub CheckAeroEnabled()
         If Environment.OSVersion.Version.Major >= 6 Then
-            Dim enabled As Integer = 0
-            Dim response As Integer = NativeMethods.Dwmapi.DwmIsCompositionEnabled(enabled)
-            aeroEnabled = (enabled = 1)
+            Dim Com As Boolean
+            Dwmapi.DwmIsCompositionEnabled(Com)
+            aeroEnabled = Com
         Else
             aeroEnabled = False
         End If

@@ -1667,8 +1667,9 @@ Public Class XenonGroupBox
 #Region "Properties"
     Public Property LineSize As Integer = 1
     Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
+    Public Property DefaultColor As Color = Color.Black
     Public Property CustomColor As Boolean = False
-
+    Public Property ForceNoNerd As Boolean = False
 #End Region
 
 #Region "Events"
@@ -1740,10 +1741,52 @@ Public Class XenonGroupBox
 
             FillRect(G, New SolidBrush(BackColor), Rect)
             DrawRect_LikeW11(G, LineColor, Rect)
+
+            If Not DesignMode Then
+                If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
+                    G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                    Dim FC As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.DarkDark(LineColor))
+                    Dim RectX As Rectangle = Rect
+                    RectX.Y += 1
+
+                    Dim S As String
+                    Select Case My.Application._Settings.Nerd_Stats_Kind
+                        Case XeSettings.Nerd_Stats_Type.HEX
+
+                            If BackColor.A = 255 Then
+                                S = If(My.Application._Settings.Nerd_Stats_HexHash, "#", "") & RGB2HEX(BackColor, False)
+                            Else
+                                S = If(My.Application._Settings.Nerd_Stats_HexHash, "#", "") & RGB2HEX(BackColor, True)
+                            End If
+
+                        Case XeSettings.Nerd_Stats_Type.RGB
+
+                            If BackColor.A = 255 Then
+                                S = String.Format("{0},{1},{2}", BackColor.R, BackColor.G, BackColor.B)
+                            Else
+                                S = String.Format("{0},{1},{2},{3}", BackColor.A, BackColor.R, BackColor.G, BackColor.B)
+                            End If
+
+                    End Select
+
+                    G.DrawString(S, New Font("Lucida Console", 8), New SolidBrush(FC), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                End If
+            End If
         End If
 
-
     End Sub
+
+    Function RGB2HEX(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
+        Dim S As String
+        If Alpha Then
+            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
+            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
+        Else
+            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
+        End If
+        Return S
+    End Function
+
 End Class
 Public Class XenonButton : Inherits Button
     Sub New()
