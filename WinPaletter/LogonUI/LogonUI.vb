@@ -26,6 +26,11 @@ Public Class LogonUI
     Private Sub LogonUI_Background_Picker_Click(sender As Object, e As EventArgs) Handles LogonUI_Background_Picker.Click, LogonUI_PersonalColorsBackground_Picker.Click,
         LogonUI_PersonalColorsAccent_Picker.Click
 
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)

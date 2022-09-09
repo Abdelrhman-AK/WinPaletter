@@ -700,6 +700,14 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_PrimaryColor1 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
 
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
@@ -719,6 +727,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles XenonGroupBox3.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_PrimaryColor2 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -736,6 +753,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles XenonGroupBox5.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_SecondaryColor1 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -753,6 +779,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles XenonGroupBox4.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_SecondaryColor2 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -770,6 +805,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles XenonGroupBox10.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -890,6 +934,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles XenonGroupBox9.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -907,6 +960,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles XenonGroupBox8.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_LoadingCircleHot1 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)
@@ -924,6 +986,15 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles XenonGroupBox7.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                _SelectedControl.Prop_LoadingCircleHot2 = sender.BackColor
+                _SelectedControl.Invalidate()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         CList.Add(DirectCast(sender, XenonGroupBox))
         CList.Add(_SelectedControl)

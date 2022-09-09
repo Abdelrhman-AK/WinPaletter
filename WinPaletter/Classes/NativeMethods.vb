@@ -1,8 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
-Imports WinPaletter.XenonCore
 
 Namespace NativeMethods
-
     Public Class Dwmapi
 
         <DllImport("dwmapi.dll", EntryPoint:="#131", PreserveSig:=False)>
@@ -219,5 +217,4 @@ Namespace NativeMethods
         Public Shared Function CreateEllipticRgn(ByVal nLeftRect As Integer, ByVal nTopRect As Integer, ByVal nRightRect As Integer, ByVal nBottomRect As Integer) As IntPtr
         End Function
     End Class
-
 End Namespace

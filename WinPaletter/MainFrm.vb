@@ -724,6 +724,40 @@ Public Class MainFrm
         ApplyBackLogonUI(ColorPalette)
     End Sub
 
+    Sub ApplyDefaultCPValues()
+        Dim DefCP As CP
+
+        If My.W11 Then
+            DefCP = New CP_Defaults().Default_Windows11
+        ElseIf My.W10 Then
+            DefCP = New CP_Defaults().Default_Windows10
+        ElseIf My.W8 Then
+            DefCP = New CP_Defaults().Default_Windows8
+        ElseIf My.W7 Then
+            DefCP = New CP_Defaults().Default_Windows7
+        Else
+            DefCP = New CP_Defaults().Default_Windows11
+        End If
+
+        ActiveTitlebar_picker.DefaultColor = DefCP.Titlebar_Active
+        InactiveTitlebar_picker.DefaultColor = DefCP.Titlebar_Inactive
+        StartAccent_picker.DefaultColor = DefCP.StartMenu_Accent
+        StartButtonHover_picker.DefaultColor = DefCP.StartButton_Hover
+        TaskbarBackground_Picker.DefaultColor = DefCP.Taskbar_Background
+        TaskbarIconUnderline_picker.DefaultColor = DefCP.Taskbar_Icon_Underline
+        StartBackgroundAndTaskbarButton_picker.DefaultColor = DefCP.StartMenuBackground_ActiveTaskbarButton
+        TaskbarFrontAndFoldersOnStart_picker.DefaultColor = DefCP.StartListFolders_TaskbarFront
+        ActionCenter_picker.DefaultColor = DefCP.ActionCenter_AppsLinks
+        SettingsIconsAndLinks_picker.DefaultColor = DefCP.SettingsIconsAndLinks
+        Aero_ColorizationColor_pick.DefaultColor = DefCP.Aero_ColorizationColor
+        Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Aero_ColorizationAfterglow
+        ColorizationColor8_pick.DefaultColor = DefCP.Aero_ColorizationColor
+        start8_pick.DefaultColor = DefCP.Metro_StartColor
+        accent8_pick.DefaultColor = DefCP.Metro_AccentColor
+        personalcls8_background_pick.DefaultColor = DefCP.Metro_PersonalColors_Background
+        personalcolor8accent_pick.DefaultColor = DefCP.Metro_PersonalColors_Accent
+    End Sub
+
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Metro_Start
             Case 1
@@ -935,6 +969,7 @@ Public Class MainFrm
 
         Adjust_Preview()
         ApplyCPValues(CP)
+        ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
     End Sub
 
@@ -1025,6 +1060,14 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonGroupBox21_Click(sender As Object, e As EventArgs) Handles InactiveTitlebar_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Titlebar_Inactive = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
 
         Dim CList As New List(Of Control) From {sender, XenonWindow2}
 
@@ -1070,6 +1113,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub TaskbarIconUnderline_picker_Click(sender As Object, e As EventArgs) Handles TaskbarIconUnderline_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Taskbar_Icon_Underline = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         Dim C As Color
         CList.Add(sender)
@@ -1123,6 +1175,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.StartListFolders_TaskbarFront = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         If PreviewConfig = WinVer.Eleven Then
@@ -1165,6 +1226,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub ActionCenter_picker_Click(sender As Object, e As EventArgs) Handles ActionCenter_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.ActionCenter_AppsLinks = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         Dim C As Color
 
@@ -1207,6 +1277,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub SettingsIconsAndLinks_picker_Click(sender As Object, e As EventArgs) Handles SettingsIconsAndLinks_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.SettingsIconsAndLinks = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         Dim C As Color
 
@@ -1269,6 +1348,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonGroupBox12_Click(sender As Object, e As EventArgs) Handles TaskbarBackground_Picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Taskbar_Background = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control)
         Dim C As Color
 
@@ -1318,6 +1406,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub StartAccent_picker_Click(sender As Object, e As EventArgs) Handles StartAccent_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.StartMenu_Accent = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
 
         Dim CList As New List(Of Control) From {sender}
 
@@ -1339,6 +1436,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub StartButtonHover_picker_Click(sender As Object, e As EventArgs) Handles StartButtonHover_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.StartButton_Hover = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
 
         Dim CList As New List(Of Control) From {sender}
 
@@ -1354,6 +1460,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub StartBackgroundAndTaskbarButton_picker_Click(sender As Object, e As EventArgs) Handles StartBackgroundAndTaskbarButton_picker.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.StartMenuBackground_ActiveTaskbarButton = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
 
         Dim CList As New List(Of Control) From {sender}
 
@@ -1929,6 +2044,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Aero_ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {
             sender,
             start,
@@ -1952,6 +2076,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub Aero_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglow_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Aero_ColorizationAfterglow = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {
             sender,
             start,
@@ -2041,6 +2174,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub ColorizationColor8_pick_Click(sender As Object, e As EventArgs) Handles ColorizationColor8_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Aero_ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {
            sender,
            start,
@@ -2071,6 +2213,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub start8_pick_Click(sender As Object, e As EventArgs) Handles start8_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Metro_StartColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
@@ -2086,6 +2237,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub accent8_pick_Click(sender As Object, e As EventArgs) Handles accent8_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Metro_AccentColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
@@ -2101,6 +2261,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub personalcls8_background_pick_Click(sender As Object, e As EventArgs) Handles personalcls8_background_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Metro_PersonalColors_Background = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
@@ -2116,6 +2285,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub personalcolor8accent_pick_Click(sender As Object, e As EventArgs) Handles personalcolor8accent_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Metro_PersonalColors_Accent = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
@@ -2170,6 +2348,10 @@ Public Class MainFrm
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs)
         ApplyingTheme.Show()
+    End Sub
+
+    Private Sub PaletteContainer_W8_Paint(sender As Object, e As PaintEventArgs) Handles PaletteContainer_W8.Paint
+
     End Sub
 
 

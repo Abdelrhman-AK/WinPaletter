@@ -61,7 +61,7 @@ Partial Class SubMenu
         'PictureBox3
         '
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(14, 236)
+        Me.PictureBox3.Location = New System.Drawing.Point(14, 197)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox3.TabIndex = 9
@@ -69,7 +69,7 @@ Partial Class SubMenu
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(44, 236)
+        Me.Label3.Location = New System.Drawing.Point(44, 197)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(53, 24)
         Me.Label3.TabIndex = 10
@@ -78,7 +78,7 @@ Partial Class SubMenu
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(44, 146)
+        Me.Label5.Location = New System.Drawing.Point(44, 128)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(61, 24)
         Me.Label5.TabIndex = 14
@@ -88,7 +88,7 @@ Partial Class SubMenu
         'PictureBox5
         '
         Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
-        Me.PictureBox5.Location = New System.Drawing.Point(14, 146)
+        Me.PictureBox5.Location = New System.Drawing.Point(14, 128)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox5.TabIndex = 13
@@ -99,16 +99,16 @@ Partial Class SubMenu
         Me.PaletteContainer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PaletteContainer.AutoScroll = True
-        Me.PaletteContainer.Location = New System.Drawing.Point(235, 46)
+        Me.PaletteContainer.Location = New System.Drawing.Point(215, 43)
         Me.PaletteContainer.Name = "PaletteContainer"
-        Me.PaletteContainer.Size = New System.Drawing.Size(185, 266)
+        Me.PaletteContainer.Size = New System.Drawing.Size(183, 207)
         Me.PaletteContainer.TabIndex = 46
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(44, 57)
+        Me.Label1.Location = New System.Drawing.Point(44, 60)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(61, 24)
+        Me.Label1.Size = New System.Drawing.Size(53, 24)
         Me.Label1.TabIndex = 54
         Me.Label1.Text = "Current"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -116,7 +116,7 @@ Partial Class SubMenu
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(14, 57)
+        Me.PictureBox1.Location = New System.Drawing.Point(14, 60)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox1.TabIndex = 53
@@ -127,13 +127,13 @@ Partial Class SubMenu
         Me.DefaultDarkestColor.BackColor = System.Drawing.Color.Crimson
         Me.DefaultDarkestColor.CustomColor = True
         Me.DefaultDarkestColor.DefaultColor = System.Drawing.Color.Black
-        Me.DefaultDarkestColor.ForceNoNerd = False
+        Me.DefaultDarkestColor.ForceNoNerd = True
         Me.DefaultDarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DefaultDarkestColor.LineSize = 1
-        Me.DefaultDarkestColor.Location = New System.Drawing.Point(112, 200)
+        Me.DefaultDarkestColor.Location = New System.Drawing.Point(149, 158)
         Me.DefaultDarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultDarkestColor.Name = "DefaultDarkestColor"
-        Me.DefaultDarkestColor.Size = New System.Drawing.Size(96, 20)
+        Me.DefaultDarkestColor.Size = New System.Drawing.Size(40, 20)
         Me.DefaultDarkestColor.TabIndex = 52
         Me.DefaultDarkestColor.Text = "XenonGroupBox15"
         '
@@ -142,13 +142,13 @@ Partial Class SubMenu
         Me.DefaultDarkColor.BackColor = System.Drawing.Color.Crimson
         Me.DefaultDarkColor.CustomColor = True
         Me.DefaultDarkColor.DefaultColor = System.Drawing.Color.Black
-        Me.DefaultDarkColor.ForceNoNerd = False
+        Me.DefaultDarkColor.ForceNoNerd = True
         Me.DefaultDarkColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DefaultDarkColor.LineSize = 1
-        Me.DefaultDarkColor.Location = New System.Drawing.Point(13, 200)
+        Me.DefaultDarkColor.Location = New System.Drawing.Point(104, 158)
         Me.DefaultDarkColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultDarkColor.Name = "DefaultDarkColor"
-        Me.DefaultDarkColor.Size = New System.Drawing.Size(96, 20)
+        Me.DefaultDarkColor.Size = New System.Drawing.Size(40, 20)
         Me.DefaultDarkColor.TabIndex = 51
         Me.DefaultDarkColor.Text = "XenonGroupBox15"
         '
@@ -157,13 +157,13 @@ Partial Class SubMenu
         Me.DefaultLightestColor.BackColor = System.Drawing.Color.Crimson
         Me.DefaultLightestColor.CustomColor = True
         Me.DefaultLightestColor.DefaultColor = System.Drawing.Color.Black
-        Me.DefaultLightestColor.ForceNoNerd = False
+        Me.DefaultLightestColor.ForceNoNerd = True
         Me.DefaultLightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DefaultLightestColor.LineSize = 1
-        Me.DefaultLightestColor.Location = New System.Drawing.Point(13, 176)
+        Me.DefaultLightestColor.Location = New System.Drawing.Point(13, 158)
         Me.DefaultLightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultLightestColor.Name = "DefaultLightestColor"
-        Me.DefaultLightestColor.Size = New System.Drawing.Size(96, 20)
+        Me.DefaultLightestColor.Size = New System.Drawing.Size(40, 20)
         Me.DefaultLightestColor.TabIndex = 50
         Me.DefaultLightestColor.Text = "XenonGroupBox15"
         '
@@ -172,21 +172,21 @@ Partial Class SubMenu
         Me.DefaultLightColor.BackColor = System.Drawing.Color.Crimson
         Me.DefaultLightColor.CustomColor = True
         Me.DefaultLightColor.DefaultColor = System.Drawing.Color.Black
-        Me.DefaultLightColor.ForceNoNerd = False
+        Me.DefaultLightColor.ForceNoNerd = True
         Me.DefaultLightColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DefaultLightColor.LineSize = 1
-        Me.DefaultLightColor.Location = New System.Drawing.Point(112, 176)
+        Me.DefaultLightColor.Location = New System.Drawing.Point(59, 158)
         Me.DefaultLightColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultLightColor.Name = "DefaultLightColor"
-        Me.DefaultLightColor.Size = New System.Drawing.Size(96, 20)
+        Me.DefaultLightColor.Size = New System.Drawing.Size(40, 20)
         Me.DefaultLightColor.TabIndex = 49
         Me.DefaultLightColor.Text = "XenonGroupBox15"
         '
         'XenonSeparator2
         '
-        Me.XenonSeparator2.Location = New System.Drawing.Point(14, 229)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(13, 190)
         Me.XenonSeparator2.Name = "XenonSeparator2"
-        Me.XenonSeparator2.Size = New System.Drawing.Size(195, 1)
+        Me.XenonSeparator2.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator2.TabIndex = 48
         Me.XenonSeparator2.TabStop = False
         Me.XenonSeparator2.Text = "XenonSeparator2"
@@ -199,11 +199,11 @@ Partial Class SubMenu
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
-        Me.XenonComboBox1.Items.AddRange(New Object() {"Main Color Palette", "Previous Color Palette", "First Color Palette", "Windows 11 Default", "Windows 10 Default", "Windows 8.1 Default", "Windows 7 Default"})
+        Me.XenonComboBox1.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
         Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonComboBox1.Location = New System.Drawing.Point(235, 16)
+        Me.XenonComboBox1.Location = New System.Drawing.Point(215, 13)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(185, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(183, 24)
         Me.XenonComboBox1.TabIndex = 47
         '
         'XenonButton4
@@ -216,18 +216,18 @@ Partial Class SubMenu
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(216, 18)
+        Me.XenonButton4.Location = New System.Drawing.Point(196, 12)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(13, 294)
+        Me.XenonButton4.Size = New System.Drawing.Size(13, 237)
         Me.XenonButton4.TabIndex = 45
         Me.XenonButton4.Text = ">"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'XenonSeparator3
         '
-        Me.XenonSeparator3.Location = New System.Drawing.Point(15, 139)
+        Me.XenonSeparator3.Location = New System.Drawing.Point(13, 121)
         Me.XenonSeparator3.Name = "XenonSeparator3"
-        Me.XenonSeparator3.Size = New System.Drawing.Size(195, 1)
+        Me.XenonSeparator3.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator3.TabIndex = 44
         Me.XenonSeparator3.TabStop = False
         Me.XenonSeparator3.Text = "XenonSeparator3"
@@ -237,13 +237,13 @@ Partial Class SubMenu
         Me.IDarkestColor.BackColor = System.Drawing.Color.Crimson
         Me.IDarkestColor.CustomColor = True
         Me.IDarkestColor.DefaultColor = System.Drawing.Color.Black
-        Me.IDarkestColor.ForceNoNerd = False
+        Me.IDarkestColor.ForceNoNerd = True
         Me.IDarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.IDarkestColor.LineSize = 1
-        Me.IDarkestColor.Location = New System.Drawing.Point(112, 290)
+        Me.IDarkestColor.Location = New System.Drawing.Point(149, 227)
         Me.IDarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.IDarkestColor.Name = "IDarkestColor"
-        Me.IDarkestColor.Size = New System.Drawing.Size(96, 20)
+        Me.IDarkestColor.Size = New System.Drawing.Size(40, 20)
         Me.IDarkestColor.TabIndex = 43
         Me.IDarkestColor.Text = "XenonGroupBox15"
         '
@@ -252,13 +252,13 @@ Partial Class SubMenu
         Me.IDarkerColor.BackColor = System.Drawing.Color.Crimson
         Me.IDarkerColor.CustomColor = True
         Me.IDarkerColor.DefaultColor = System.Drawing.Color.Black
-        Me.IDarkerColor.ForceNoNerd = False
+        Me.IDarkerColor.ForceNoNerd = True
         Me.IDarkerColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.IDarkerColor.LineSize = 1
-        Me.IDarkerColor.Location = New System.Drawing.Point(13, 290)
+        Me.IDarkerColor.Location = New System.Drawing.Point(104, 227)
         Me.IDarkerColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.IDarkerColor.Name = "IDarkerColor"
-        Me.IDarkerColor.Size = New System.Drawing.Size(96, 20)
+        Me.IDarkerColor.Size = New System.Drawing.Size(40, 20)
         Me.IDarkerColor.TabIndex = 40
         Me.IDarkerColor.Text = "XenonGroupBox15"
         '
@@ -267,13 +267,13 @@ Partial Class SubMenu
         Me.ILightestColor.BackColor = System.Drawing.Color.Crimson
         Me.ILightestColor.CustomColor = True
         Me.ILightestColor.DefaultColor = System.Drawing.Color.Black
-        Me.ILightestColor.ForceNoNerd = False
+        Me.ILightestColor.ForceNoNerd = True
         Me.ILightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.ILightestColor.LineSize = 1
-        Me.ILightestColor.Location = New System.Drawing.Point(13, 266)
+        Me.ILightestColor.Location = New System.Drawing.Point(13, 227)
         Me.ILightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ILightestColor.Name = "ILightestColor"
-        Me.ILightestColor.Size = New System.Drawing.Size(96, 20)
+        Me.ILightestColor.Size = New System.Drawing.Size(40, 20)
         Me.ILightestColor.TabIndex = 37
         Me.ILightestColor.Text = "XenonGroupBox15"
         '
@@ -282,13 +282,13 @@ Partial Class SubMenu
         Me.ILighterColor.BackColor = System.Drawing.Color.Crimson
         Me.ILighterColor.CustomColor = True
         Me.ILighterColor.DefaultColor = System.Drawing.Color.Black
-        Me.ILighterColor.ForceNoNerd = False
+        Me.ILighterColor.ForceNoNerd = True
         Me.ILighterColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.ILighterColor.LineSize = 1
-        Me.ILighterColor.Location = New System.Drawing.Point(112, 266)
+        Me.ILighterColor.Location = New System.Drawing.Point(59, 227)
         Me.ILighterColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ILighterColor.Name = "ILighterColor"
-        Me.ILighterColor.Size = New System.Drawing.Size(96, 20)
+        Me.ILighterColor.Size = New System.Drawing.Size(40, 20)
         Me.ILighterColor.TabIndex = 34
         Me.ILighterColor.Text = "XenonGroupBox15"
         '
@@ -297,13 +297,13 @@ Partial Class SubMenu
         Me.DarkestColor.BackColor = System.Drawing.Color.Crimson
         Me.DarkestColor.CustomColor = True
         Me.DarkestColor.DefaultColor = System.Drawing.Color.Black
-        Me.DarkestColor.ForceNoNerd = False
+        Me.DarkestColor.ForceNoNerd = True
         Me.DarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DarkestColor.LineSize = 1
-        Me.DarkestColor.Location = New System.Drawing.Point(112, 111)
+        Me.DarkestColor.Location = New System.Drawing.Point(149, 90)
         Me.DarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DarkestColor.Name = "DarkestColor"
-        Me.DarkestColor.Size = New System.Drawing.Size(96, 20)
+        Me.DarkestColor.Size = New System.Drawing.Size(40, 20)
         Me.DarkestColor.TabIndex = 31
         Me.DarkestColor.Text = "XenonGroupBox15"
         '
@@ -312,13 +312,13 @@ Partial Class SubMenu
         Me.LightestColor.BackColor = System.Drawing.Color.Crimson
         Me.LightestColor.CustomColor = True
         Me.LightestColor.DefaultColor = System.Drawing.Color.Black
-        Me.LightestColor.ForceNoNerd = False
+        Me.LightestColor.ForceNoNerd = True
         Me.LightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.LightestColor.LineSize = 1
-        Me.LightestColor.Location = New System.Drawing.Point(13, 87)
+        Me.LightestColor.Location = New System.Drawing.Point(14, 90)
         Me.LightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LightestColor.Name = "LightestColor"
-        Me.LightestColor.Size = New System.Drawing.Size(96, 20)
+        Me.LightestColor.Size = New System.Drawing.Size(40, 20)
         Me.LightestColor.TabIndex = 28
         Me.LightestColor.Text = "XenonGroupBox15"
         '
@@ -330,10 +330,10 @@ Partial Class SubMenu
         Me.InvertedColor.ForceNoNerd = False
         Me.InvertedColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.InvertedColor.LineSize = 1
-        Me.InvertedColor.Location = New System.Drawing.Point(112, 239)
+        Me.InvertedColor.Location = New System.Drawing.Point(104, 200)
         Me.InvertedColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InvertedColor.Name = "InvertedColor"
-        Me.InvertedColor.Size = New System.Drawing.Size(96, 20)
+        Me.InvertedColor.Size = New System.Drawing.Size(85, 20)
         Me.InvertedColor.TabIndex = 25
         Me.InvertedColor.Text = "XenonGroupBox15"
         '
@@ -342,13 +342,13 @@ Partial Class SubMenu
         Me.DarkerColor.BackColor = System.Drawing.Color.Crimson
         Me.DarkerColor.CustomColor = True
         Me.DarkerColor.DefaultColor = System.Drawing.Color.Black
-        Me.DarkerColor.ForceNoNerd = False
+        Me.DarkerColor.ForceNoNerd = True
         Me.DarkerColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DarkerColor.LineSize = 1
-        Me.DarkerColor.Location = New System.Drawing.Point(13, 111)
+        Me.DarkerColor.Location = New System.Drawing.Point(104, 90)
         Me.DarkerColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DarkerColor.Name = "DarkerColor"
-        Me.DarkerColor.Size = New System.Drawing.Size(96, 20)
+        Me.DarkerColor.Size = New System.Drawing.Size(40, 20)
         Me.DarkerColor.TabIndex = 24
         Me.DarkerColor.Text = "XenonGroupBox15"
         '
@@ -357,13 +357,13 @@ Partial Class SubMenu
         Me.LighterColor.BackColor = System.Drawing.Color.Crimson
         Me.LighterColor.CustomColor = True
         Me.LighterColor.DefaultColor = System.Drawing.Color.Black
-        Me.LighterColor.ForceNoNerd = False
+        Me.LighterColor.ForceNoNerd = True
         Me.LighterColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.LighterColor.LineSize = 1
-        Me.LighterColor.Location = New System.Drawing.Point(112, 87)
+        Me.LighterColor.Location = New System.Drawing.Point(59, 90)
         Me.LighterColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LighterColor.Name = "LighterColor"
-        Me.LighterColor.Size = New System.Drawing.Size(96, 20)
+        Me.LighterColor.Size = New System.Drawing.Size(40, 20)
         Me.LighterColor.TabIndex = 23
         Me.LighterColor.Text = "XenonGroupBox15"
         '
@@ -375,10 +375,10 @@ Partial Class SubMenu
         Me.DefaultColor.ForceNoNerd = False
         Me.DefaultColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.DefaultColor.LineSize = 1
-        Me.DefaultColor.Location = New System.Drawing.Point(112, 149)
+        Me.DefaultColor.Location = New System.Drawing.Point(104, 131)
         Me.DefaultColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultColor.Name = "DefaultColor"
-        Me.DefaultColor.Size = New System.Drawing.Size(96, 20)
+        Me.DefaultColor.Size = New System.Drawing.Size(85, 20)
         Me.DefaultColor.TabIndex = 19
         Me.DefaultColor.Text = "XenonGroupBox15"
         '
@@ -390,18 +390,18 @@ Partial Class SubMenu
         Me.MainColor.ForceNoNerd = False
         Me.MainColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
         Me.MainColor.LineSize = 1
-        Me.MainColor.Location = New System.Drawing.Point(113, 59)
+        Me.MainColor.Location = New System.Drawing.Point(104, 62)
         Me.MainColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MainColor.Name = "MainColor"
-        Me.MainColor.Size = New System.Drawing.Size(96, 20)
+        Me.MainColor.Size = New System.Drawing.Size(85, 20)
         Me.MainColor.TabIndex = 4
         Me.MainColor.Text = "XenonGroupBox15"
         '
         'XenonSeparator1
         '
-        Me.XenonSeparator1.Location = New System.Drawing.Point(13, 50)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(13, 51)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(196, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator1.TabIndex = 3
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -454,7 +454,7 @@ Partial Class SubMenu
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(430, 324)
+        Me.ClientSize = New System.Drawing.Size(408, 261)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.DefaultDarkestColor)
@@ -488,6 +488,7 @@ Partial Class SubMenu
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -495,7 +496,7 @@ Partial Class SubMenu
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "SubMenu"
+        Me.Text = "Sub Menu"
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

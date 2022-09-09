@@ -297,7 +297,6 @@ Public Class XenonCore
     Public Shared Function InvertColor(ByVal [Color] As Color) As Color
         Return Color.FromArgb([Color].A, 255 - [Color].R, 255 - [Color].G, 255 - [Color].B)
     End Function
-
     Public Shared Function IsColorDark(ByVal [Color] As Color) As Boolean
         Return Not ([Color].R * 0.2126 + [Color].G * 0.7152 + [Color].B * 0.0722 > 255 / 2)
     End Function
@@ -371,7 +370,6 @@ Public Class XenonCore
 #Region "Dark\Light Mode"
     Public Shared Sub ApplyDarkMode(Optional ByVal [Form] As Form = Nothing)
         Dim DarkMode As Boolean = GetDarkMode()
-
 
         If Form Is Nothing Then
             '####################### For Form1

@@ -8,7 +8,7 @@ Public Class SubMenu
     Private _shown As Boolean
     Private _overrideColor As Color
     Private _eventDone As Boolean
-    Private _Speed As Integer = 35
+    Private _Speed As Integer = 25
     Private _dark As Single = 0.9
 
 #Region "Form Shadow"
@@ -161,7 +161,27 @@ Public Class SubMenu
 
     Private Sub SubMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _shown = False
-        Location = MousePosition
+
+        Dim p As Point = MousePosition
+
+        If p.Y + Height > My.Computer.Screen.WorkingArea.Bottom Then
+            p.Y = My.Computer.Screen.WorkingArea.Bottom - Height - 5
+        End If
+
+        If p.Y < My.Computer.Screen.WorkingArea.Top Then
+            p.Y = 0
+        End If
+
+        If p.X + Width > My.Computer.Screen.WorkingArea.Right Then
+            p.X = My.Computer.Screen.WorkingArea.Right - Width - 5
+        End If
+
+        If p.X < My.Computer.Screen.WorkingArea.Left Then
+            p.X = 0
+        End If
+
+
+        Location = p
 
         Width = PaletteContainer.Left + 3
 
@@ -177,7 +197,40 @@ Public Class SubMenu
 
         GetColorsFromPalette(MainFrm.CP)
 
-        XenonButton3.Enabled = (My.Application.CopiedColor <> Nothing)
+        If My.Application.CopiedColor = Nothing Then
+
+            XenonButton3.Enabled = False
+
+            Try
+                Dim s As String = Clipboard.GetData("Text").ToString.ToLower
+
+                If s.StartsWith("color ") Then
+                    Dim C As Color = Color.FromArgb(255, 0, 0, 0)
+                    s = s.Remove(0, "color ".Count)
+                    s = s.Replace("[", "")
+                    s = s.Replace("]", "")
+                    s = s.Replace(" ", "")
+
+                    For Each x As String In s.Split(",")
+                        Dim i As Byte = Val(x.Remove(0, 2))
+                        If x.StartsWith("a=") Then C = Color.FromArgb(i, C)
+                        If x.StartsWith("r=") Then C = Color.FromArgb(C.A, i, C.G, C.B)
+                        If x.StartsWith("g=") Then C = Color.FromArgb(C.A, C.R, i, C.B)
+                        If x.StartsWith("b=") Then C = Color.FromArgb(C.A, C.R, C.G, i)
+                    Next
+
+                    My.Application.CopiedColor = C
+                    XenonButton3.Enabled = True
+                End If
+
+            Catch
+                XenonButton3.Enabled = False
+            End Try
+
+        Else
+            XenonButton3.Enabled = True
+        End If
+
 
         BackColor = If(GetDarkMode(), ControlPaint.Dark(MainColor.BackColor, _dark), ControlPaint.LightLight(MainColor.BackColor))
 
@@ -231,6 +284,7 @@ Public Class SubMenu
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Clipboard.SetData("Text", MainColor.BackColor)
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Copy
         DialogResult = DialogResult.OK
@@ -272,16 +326,12 @@ Public Class SubMenu
                 Case 0
                     GetColorsFromPalette(MainFrm.CP)
                 Case 1
-                    GetColorsFromPalette(MainFrm.CP_Original)
-                Case 2
-                    GetColorsFromPalette(MainFrm.CP_FirstTime)
-                Case 3
                     GetColorsFromPalette(New CP_Defaults().Default_Windows11)
-                Case 4
+                Case 2
                     GetColorsFromPalette(New CP_Defaults().Default_Windows10)
-                Case 5
+                Case 3
                     GetColorsFromPalette(New CP_Defaults().Default_Windows8)
-                Case 6
+                Case 4
                     GetColorsFromPalette(New CP_Defaults().Default_Windows7)
                 Case Else
                     GetColorsFromPalette(MainFrm.CP)

@@ -239,6 +239,14 @@ Public Class LogonUI7
     End Sub
 
     Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                pnl_preview.BackgroundImage = ReturnBK()
+            End If
+            Exit Sub
+        End If
+
         Dim CList As New List(Of Control) From {
           sender, pnl_preview
       }

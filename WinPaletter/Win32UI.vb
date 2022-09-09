@@ -13,7 +13,8 @@ Public Class Win32UI
 
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
-        loadCP(MainFrm.CP)
+        ApplyDefaultCPValues()
+        LoadCP(MainFrm.CP)
     End Sub
 
 
@@ -57,6 +58,55 @@ Public Class Win32UI
         hilight_pick.BackColor = [CP].Win32UI_Hilight
         menuhilight_pick.BackColor = [CP].Win32UI_MenuHilight
         desktop_pick.BackColor = [CP].Win32UI_Desktop
+    End Sub
+
+    Sub ApplyDefaultCPValues()
+        Dim DefCP As CP
+
+        If My.W11 Then
+            DefCP = New CP_Defaults().Default_Windows11
+        ElseIf My.W10 Then
+            DefCP = New CP_Defaults().Default_Windows10
+        ElseIf My.W8 Then
+            DefCP = New CP_Defaults().Default_Windows8
+        ElseIf My.W7 Then
+            DefCP = New CP_Defaults().Default_Windows7
+        Else
+            DefCP = New CP_Defaults().Default_Windows11
+        End If
+
+        ActiveBorder_pick.DefaultColor = DefCP.Win32UI_ActiveBorder
+        activetitle_pick.DefaultColor = DefCP.Win32UI_ActiveTitle
+        AppWorkspace_pick.DefaultColor = DefCP.Win32UI_AppWorkspace
+        background_pick.DefaultColor = DefCP.Win32UI_Background
+        btnaltface_pick.DefaultColor = DefCP.Win32UI_ButtonAlternateFace
+        btndkshadow_pick.DefaultColor = DefCP.Win32UI_ButtonDkShadow
+        btnface_pick.DefaultColor = DefCP.Win32UI_ButtonFace
+        btnhilight_pick.DefaultColor = DefCP.Win32UI_ButtonHilight
+        btnlight_pick.DefaultColor = DefCP.Win32UI_ButtonLight
+        btnshadow_pick.DefaultColor = DefCP.Win32UI_ButtonShadow
+        btntext_pick.DefaultColor = DefCP.Win32UI_ButtonText
+        GActivetitle_pick.DefaultColor = DefCP.Win32UI_GradientActiveTitle
+        GInactivetitle_pick.DefaultColor = DefCP.Win32UI_GradientInactiveTitle
+        GrayText_pick.DefaultColor = DefCP.Win32UI_GrayText
+        hilighttext_pick.DefaultColor = DefCP.Win32UI_HilightText
+        hottracking_pick.DefaultColor = DefCP.Win32UI_HotTrackingColor
+        InactiveBorder_pick.DefaultColor = DefCP.Win32UI_InactiveBorder
+        InactiveTitle_pick.DefaultColor = DefCP.Win32UI_InactiveTitle
+        InactivetitleText_pick.DefaultColor = DefCP.Win32UI_InactiveTitleText
+        InfoText_pick.DefaultColor = DefCP.Win32UI_InfoText
+        InfoWindow_pick.DefaultColor = DefCP.Win32UI_InfoWindow
+        menu_pick.DefaultColor = DefCP.Win32UI_Menu
+        menubar_pick.DefaultColor = DefCP.Win32UI_MenuBar
+        menutext_pick.DefaultColor = DefCP.Win32UI_MenuText
+        Scrollbar_pick.DefaultColor = DefCP.Win32UI_Scrollbar
+        TitleText_pick.DefaultColor = DefCP.Win32UI_TitleText
+        Window_pick.DefaultColor = DefCP.Win32UI_Window
+        Frame_pick.DefaultColor = DefCP.Win32UI_WindowFrame
+        WindowText_pick.DefaultColor = DefCP.Win32UI_WindowText
+        hilight_pick.DefaultColor = DefCP.Win32UI_Hilight
+        menuhilight_pick.DefaultColor = DefCP.Win32UI_MenuHilight
+        desktop_pick.DefaultColor = DefCP.Win32UI_Desktop
     End Sub
 
     Sub ApplyToCP(ByVal [CP] As CP)
@@ -106,6 +156,14 @@ Public Class Win32UI
             GInactivetitle_pick.Click, GrayText_pick.Click, hilighttext_pick.Click, hottracking_pick.Click, InactiveBorder_pick.Click, InactiveTitle_pick.Click, InactivetitleText_pick.Click,
             InfoText_pick.Click, InfoWindow_pick.Click, menu_pick.Click, menubar_pick.Click, menutext_pick.Click, Scrollbar_pick.Click, TitleText_pick.Click, Window_pick.Click, Frame_pick.Click,
             WindowText_pick.Click, hilight_pick.Click, menuhilight_pick.Click, desktop_pick.Click
+
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                ApplyRetroPreview()
+            End If
+            Exit Sub
+        End If
 
         Dim CList As New List(Of Control) From {sender}
 
