@@ -7,10 +7,10 @@ Public Class Win32UI
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-
         CP.PopulateThemeToListbox(XenonComboBox1)
         RevalidateEverything(pnl_preview)
-
+        XenonComboBox1.SelectedIndex = 0
+        XenonComboBox2.SelectedIndex = 0
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
@@ -1060,11 +1060,80 @@ Public Class Win32UI
             s.Add(String.Format("; Palette Name: {0}", MainFrm.CP.PaletteName))
             s.Add(String.Format("; Palette Version: {0}", MainFrm.CP.PaletteVersion))
             s.Add("")
+
             s.Add(String.Format("[Control Panel\Colors]"))
 
+            With activetitle_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ActiveTitle", .R, .G, .B)) : End With
+            With background_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Background", .R, .G, .B)) : End With
+            With hilight_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Hilight", .R, .G, .B)) : End With
+            With hilighttext_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "HilightText", .R, .G, .B)) : End With
+            With TitleText_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "TitleText", .R, .G, .B)) : End With
+            With Window_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Window", .R, .G, .B)) : End With
+            With WindowText_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "WindowText", .R, .G, .B)) : End With
+            With Scrollbar_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Scrollbar", .R, .G, .B)) : End With
+            With InactiveTitle_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "InactiveTitle", .R, .G, .B)) : End With
+            With menu_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Menu", .R, .G, .B)) : End With
+            With Frame_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "WindowFrame", .R, .G, .B)) : End With
+            With menutext_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "MenuText", .R, .G, .B)) : End With
+            With ActiveBorder_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ActiveBorder", .R, .G, .B)) : End With
+            With InactiveBorder_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "InactiveBorder", .R, .G, .B)) : End With
+            With AppWorkspace_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "AppWorkspace", .R, .G, .B)) : End With
+            With btnface_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonFace", .R, .G, .B)) : End With
+            With btnshadow_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonShadow", .R, .G, .B)) : End With
+            With GrayText_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "GrayText", .R, .G, .B)) : End With
+            With btntext_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonText", .R, .G, .B)) : End With
+            With InactivetitleText_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "InactiveTitleText", .R, .G, .B)) : End With
+            With btnhilight_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonHilight", .R, .G, .B)) : End With
+            With btndkshadow_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonDkShadow", .R, .G, .B)) : End With
+            With btnlight_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonLight", .R, .G, .B)) : End With
+            With InfoText_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "InfoText", .R, .G, .B)) : End With
+            With InfoWindow_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "InfoWindow", .R, .G, .B)) : End With
+            With GActivetitle_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "GradientActiveTitle", .R, .G, .B)) : End With
+            With GInactivetitle_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "GradientInactiveTitle", .R, .G, .B)) : End With
+            With btnaltface_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "ButtonAlternateFace", .R, .G, .B)) : End With
+            With hottracking_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "HotTrackingColor", .R, .G, .B)) : End With
+            With menuhilight_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "MenuHilight", .R, .G, .B)) : End With
+            With menubar_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "MenuBar", .R, .G, .B)) : End With
+            With desktop_pick.BackColor : s.Add(String.Format("{0}={1} {2} {3}", "Desktop", .R, .G, .B)) : End With
             s.Add("")
+
             s.Add(String.Format("[MasterThemeSelector]"))
             s.Add(String.Format("MTSM=DABJDKT"))
+
+            If XenonComboBox2.SelectedIndex = 1 Then
+                s.Add("")
+                s.Add("[CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\DefaultIcon]")
+                s.Add("full=C:\WINDOWS\System32\shell32.dll,32")
+                s.Add("empty=C:\WINDOWS\System32\shell32.dll,31")
+                s.Add("")
+
+                s.Add("[Metrics]")
+                s.Add("IconMetrics=76 0 0 0 75 0 0 0 75 0 0 0 1 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0  ")
+                s.Add("NonclientMetrics=84 1 0 0 1 0 0 0 13 0 0 0 13 0 0 0 18 0 0 0 18 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 15 0 0 0 15 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 18 0 0 0 18 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0  ")
+                s.Add("")
+
+            ElseIf XenonComboBox2.SelectedIndex = 2 Then
+                s.Add("")
+                s.Add("[Control Panel\Desktop]")
+                s.Add("Wallpaper=")
+                s.Add("TileWallpaper=0")
+                s.Add("WallpaperStyle=10")
+                s.Add("Pattern=")
+                s.Add("")
+
+                s.Add("[VisualStyles]")
+                s.Add("Path=")
+                s.Add("ColorStyle=@themeui.dll,-854")
+                s.Add("Size=@themeui.dll,-2019")
+                s.Add("Transparency=0")
+                s.Add("")
+            End If
+
+            Try
+                IO.File.WriteAllText(SaveFileDialog2.FileName, CStr_FromList(s))
+            Catch ex As Exception
+                MsgBox("Error saving file: " & SaveFileDialog2.FileName & "(" & ex.Message & ")" & vbCrLf & vbCrLf & ex.StackTrace)
+            End Try
 
         End If
     End Sub
