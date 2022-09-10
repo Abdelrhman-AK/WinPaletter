@@ -35,6 +35,8 @@ Public Class XeSettings
     Public Enum Nerd_Stats_Type
         HEX
         RGB
+        HSL
+        Dec
     End Enum
 
     Public Enum UpdateChannels
@@ -88,6 +90,10 @@ Public Class XeSettings
                 If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 0)
             Case Nerd_Stats_Type.RGB
                 If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 1)
+            Case Nerd_Stats_Type.HSL
+                If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 2)
+            Case Nerd_Stats_Type.Dec
+                If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 3)
         End Select
     End Sub
 
@@ -133,6 +139,10 @@ Public Class XeSettings
                         Nerd_Stats_Kind = Nerd_Stats_Type.HEX
                     Case 1
                         Nerd_Stats_Kind = Nerd_Stats_Type.RGB
+                    Case 2
+                        Nerd_Stats_Kind = Nerd_Stats_Type.HSL
+                    Case 3
+                        Nerd_Stats_Kind = Nerd_Stats_Type.Dec
                 End Select
 
             Case Mode.File
@@ -200,6 +210,10 @@ Public Class XeSettings
                         Key.SetValue("Nerd_Stats_Kind", 0)
                     Case Nerd_Stats_Type.RGB
                         Key.SetValue("Nerd_Stats_Kind", 1)
+                    Case Nerd_Stats_Type.HSL
+                        Key.SetValue("Nerd_Stats_Kind", 2)
+                    Case Nerd_Stats_Type.Dec
+                        Key.SetValue("Nerd_Stats_Kind", 3)
                 End Select
 
             Case Mode.File
@@ -242,6 +256,10 @@ Public Class XeSettings
                         l.Add(String.Format("Nerd_Stats_Kind= {0}", 0))
                     Case Nerd_Stats_Type.HEX
                         l.Add(String.Format("Nerd_Stats_Kind= {0}", 1))
+                    Case Nerd_Stats_Type.HSL
+                        l.Add(String.Format("Nerd_Stats_Kind= {0}", 2))
+                    Case Nerd_Stats_Type.Dec
+                        l.Add(String.Format("Nerd_Stats_Kind= {0}", 3))
                 End Select
 
 

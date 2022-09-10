@@ -619,7 +619,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Windows Classic (3.1)|Background=192 192 192|AppWorkspace=255 255 255|Window=255 255 255|WindowText=0 0 0|MenuBar=255 255 255|Menu=255 255 255|MenuText=0 0 0|ActiveTitle=0 0 128|InactiveTitle=255 255 255|TitleText=255 255 255|ActiveBorder=192 192 192|InactiveBorder=192 192 192|WindowFrame=0 0 0|Scrollbar=192 192 192|ButtonFace=192 192 192|ButtonShadow=128 128 128|ButtonText=0 0 0|GrayText=192 192 192|Hilight=0 0 128|HotTrackingColor=0 0 128|MenuHilight=0 0 128|HilightText=255 255 255|InactiveTitleText=0 0 0 [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to Aero Fallback (Default Windows)|ActiveBorder=180 180 180|ActiveTitle=153 180 209|AppWorkspace=171 171 171|Background=0 0 0|ButtonAlternateFace=0 0 0|ButtonDkShadow=105 105 105|ButtonFace=240 240 240|ButtonHilight=255 255 255|ButtonLight=227 227 227|ButtonShadow=160 160 160|ButtonText=0 0 0|GradientActiveTitle=185 209 234|GradientInactiveTitle=215 228 242|GrayText=109 109 109|HilightText=255 255 255|HotTrackingColor=0 102 204|InactiveBorder=244 247 252|InactiveTitle=191 205 219|InactiveTitleText=0 0 0|InfoTe [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property RetroThemesDB() As String
             Get

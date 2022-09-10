@@ -1372,7 +1372,7 @@ Partial Class SettingsX
         Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox3.FormattingEnabled = True
-        Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB"})
+        Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB", "HSL", "Decimal"})
         Me.XenonComboBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox3.Location = New System.Drawing.Point(87, 285)
         Me.XenonComboBox3.Name = "XenonComboBox3"

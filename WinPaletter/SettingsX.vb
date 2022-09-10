@@ -114,6 +114,10 @@ Public Class SettingsX
                     XenonComboBox3.SelectedIndex = 0
                 Case XeSettings.Nerd_Stats_Type.RGB
                     XenonComboBox3.SelectedIndex = 1
+                Case XeSettings.Nerd_Stats_Type.HSL
+                    XenonComboBox3.SelectedIndex = 2
+                Case XeSettings.Nerd_Stats_Type.Dec
+                    XenonComboBox3.SelectedIndex = 3
             End Select
 
         End With
@@ -136,6 +140,7 @@ Public Class SettingsX
 
         Dim ch_preview As Boolean = False  'Ch = Change
         Dim ch_dark As Boolean = False
+        Dim ch_nerd As Boolean = False
 
         With My.Application._Settings
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then ch_preview = True
@@ -143,6 +148,10 @@ Public Class SettingsX
 
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_dark = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_dark = True
+
+            If .Nerd_Stats <> XenonCheckBox10.Checked Then ch_nerd = True
+            If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then ch_nerd = True
+            If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then ch_nerd = True
 
             .AutoAddExt = XenonCheckBox1.Checked
             .DragAndDropPreview = XenonCheckBox3.Checked
@@ -215,6 +224,12 @@ Public Class SettingsX
         End If
 
         If ch_dark Then ApplyDarkMode()
+
+        If ch_nerd Then
+            For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
+                Application.OpenForms(ix).Refresh()
+            Next
+        End If
 
         Cursor = Cursors.Default
 
@@ -294,6 +309,10 @@ Public Class SettingsX
                         XenonComboBox3.SelectedIndex = 0
                     Case XeSettings.Nerd_Stats_Type.RGB
                         XenonComboBox3.SelectedIndex = 1
+                    Case XeSettings.Nerd_Stats_Type.HSL
+                        XenonComboBox3.SelectedIndex = 2
+                    Case XeSettings.Nerd_Stats_Type.Dec
+                        XenonComboBox3.SelectedIndex = 3
                 End Select
 
                 XenonRadioButton3.Checked = .Appearance_Dark
@@ -354,6 +373,10 @@ Public Class SettingsX
                     XenonComboBox3.SelectedIndex = 0
                 Case XeSettings.Nerd_Stats_Type.RGB
                     XenonComboBox3.SelectedIndex = 1
+                Case XeSettings.Nerd_Stats_Type.HSL
+                    XenonComboBox3.SelectedIndex = 2
+                Case XeSettings.Nerd_Stats_Type.Dec
+                    XenonComboBox3.SelectedIndex = 3
             End Select
 
             XenonRadioButton3.Checked = .Appearance_Dark

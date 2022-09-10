@@ -131,6 +131,7 @@
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="Resources\RetroThemesDB.wpdb" />
+    <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.Designer.vb">
@@ -283,6 +284,8 @@
   <ItemGroup>
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AeroGlass.png" />

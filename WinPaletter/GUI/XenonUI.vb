@@ -1671,8 +1671,6 @@ Public Class XenonGroupBox
     Public Property ForceNoNerd As Boolean = False
 #End Region
 
-    Private _Shown As Boolean = False
-
 #Region "Events"
 
     Enum MouseState
@@ -1684,63 +1682,43 @@ Public Class XenonGroupBox
     Public State As MouseState = MouseState.None
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-        If Not CustomColor Then Exit Sub
         State = MouseState.Down
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-        Invalidate()
+        If CustomColor Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-        If Not CustomColor Then Exit Sub
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-        Invalidate()
+        If CustomColor Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-        If Not CustomColor Then Exit Sub
         State = MouseState.Over
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-        Invalidate()
+        If CustomColor Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-        If Not CustomColor Then Exit Sub
         State = MouseState.None
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-        Invalidate()
+        If CustomColor Then
+            Tmr.Enabled = True
+            Tmr.Start()
+            Invalidate()
+        End If
     End Sub
 
     Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-        Try
-            If Not DesignMode Then
-                AddHandler FindForm.Load, AddressOf Loaded
-                AddHandler FindForm.Shown, AddressOf Showed
-            End If
-        Catch
-        End Try
-
-        Try
-            alpha = 0
-        Catch
-        End Try
-    End Sub
-
-    Sub Loaded()
-        _Shown = False
-    End Sub
-
-    Sub Showed()
-        _Shown = True
-        Invalidate()
+        alpha = 0
     End Sub
 
 #End Region
@@ -1751,7 +1729,7 @@ Public Class XenonGroupBox
     Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
-        If Not DesignMode Then
+        If Not DesignMode And CustomColor Then
 
             If State = MouseState.Over Then
                 If alpha + Factor <= 255 Then
@@ -1762,10 +1740,8 @@ Public Class XenonGroupBox
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not State = MouseState.Over Then
@@ -1777,10 +1753,8 @@ Public Class XenonGroupBox
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
         End If
     End Sub
@@ -1834,25 +1808,13 @@ Public Class XenonGroupBox
                     Dim RectX As Rectangle = Rect
                     RectX.Y += 1
 
-                    Dim S As String
-                    Select Case My.Application._Settings.Nerd_Stats_Kind
-                        Case XeSettings.Nerd_Stats_Type.HEX
+                    Dim CF As ColorFormat = ColorFormat.HEX
+                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
+                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
+                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
+                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
 
-                            If BackColor.A = 255 Then
-                                S = If(My.Application._Settings.Nerd_Stats_HexHash, "#", "") & RGB2HEX(BackColor, False)
-                            Else
-                                S = If(My.Application._Settings.Nerd_Stats_HexHash, "#", "") & RGB2HEX(BackColor, True)
-                            End If
-
-                        Case XeSettings.Nerd_Stats_Type.RGB
-
-                            If BackColor.A = 255 Then
-                                S = String.Format("{0},{1},{2}", BackColor.R, BackColor.G, BackColor.B)
-                            Else
-                                S = String.Format("{0},{1},{2},{3}", BackColor.A, BackColor.R, BackColor.G, BackColor.B)
-                            End If
-
-                    End Select
+                    Dim S As String = ReturnColorFormat(BackColor, CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
 
                     G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
                     G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
@@ -1863,16 +1825,7 @@ Public Class XenonGroupBox
 
     End Sub
 
-    Function RGB2HEX(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
-        Dim S As String
-        If Alpha Then
-            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
-            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
-        Else
-            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
-        End If
-        Return S
-    End Function
+
 
 End Class
 Public Class XenonButton : Inherits Button

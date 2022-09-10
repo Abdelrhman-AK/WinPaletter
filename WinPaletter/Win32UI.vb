@@ -1,4 +1,4 @@
-﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.XenonCore
 
 Public Class Win32UI
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
@@ -649,6 +649,11 @@ Public Class Win32UI
                 If x.ToLower.StartsWith("infotext=".ToLower) Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 If x.ToLower.StartsWith("infowindow=".ToLower) Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
                 If x.ToLower.StartsWith("hottrackingcolor=".ToLower) Then hottracking_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+
+                If x.ToLower.StartsWith("buttonalternateface=".ToLower) Then btnaltface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("menubar=".ToLower) Then menubar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("menuhilight=".ToLower) Then menuhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+                If x.ToLower.StartsWith("desktop=".ToLower) Then desktop_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
             Next
         End If
 
@@ -743,6 +748,11 @@ Public Class Win32UI
             If x.ToLower.StartsWith("infotext=".ToLower) Then InfoText_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
             If x.ToLower.StartsWith("infowindow=".ToLower) Then InfoWindow_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
             If x.ToLower.StartsWith("hottrackingcolor=".ToLower) Then hottracking_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+
+            If x.ToLower.StartsWith("buttonalternateface=".ToLower) Then btnaltface_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menubar=".ToLower) Then menubar_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("menuhilight=".ToLower) Then menuhilight_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
+            If x.ToLower.StartsWith("desktop=".ToLower) Then desktop_pick.BackColor = Color.FromArgb(x.Split("=")(1).Split(" ")(0), x.Split("=")(1).Split(" ")(1), x.Split("=")(1).Split(" ")(2))
         Next
 
         ApplyRetroPreview()
@@ -1000,16 +1010,14 @@ Public Class Win32UI
         LoadCP(New CP(CP.Mode.Registry))
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        LoadCP(New CP(CP.Mode.Init))
-    End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Process.Start("https://www.neowin.net/forum/topic/624901-windows-colors-explained/")
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        XenonToggle1.Checked = False
+        If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
+        XenonToggle1.Checked = (XenonComboBox1.SelectedIndex = 0)
         LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
     End Sub
 
@@ -1025,18 +1033,6 @@ Public Class Win32UI
         RetroWindow4.Invalidate()
     End Sub
 
-    Private Sub RetroButton10_Click(sender As Object, e As EventArgs) Handles RetroButton10.Click
-        'If RetroButton10.Bottom < RetroButton12.Top Then RetroButton12.Top -= 5
-    End Sub
-
-    Private Sub RetroButton11_Click(sender As Object, e As EventArgs) Handles RetroButton11.Click
-        'If RetroButton12.Bottom < RetroButton11.Top Then RetroButton12.Top += 5
-    End Sub
-
-    'Private Sub XenonToggle3_CheckedChanged(sender As Object, e As EventArgs)
-    'If XenonToggle3.Checked Then My.Application.TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit Else My.Application.TextRenderingHint = Drawing.Text.TextRenderingHint.SystemDefault
-    'RevalidateEverything(pnl_preview)
-    'End Sub
 
     Sub RevalidateEverything([Control] As Control)
         For Each c As Control In Control.Controls
@@ -1051,5 +1047,25 @@ Public Class Win32UI
         ApplyToCP(CPx)
         ApplyToCP(MainFrm.CP)
         CPx.Save(CP.SavingMode.Registry)
+    End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            Dim s As New List(Of String)
+            s.Clear()
+            s.Add(String.Format("; Copyright © Microsoft Corp. 1995-{0}", Now.Year))
+            s.Add(String.Format("; This theme was designed by WinPaletter, programmed by Abdelrhman-AK"))
+            s.Add(String.Format("; Created from application version {0}", MainFrm.CP.AppVersion))
+            s.Add(String.Format("; Created by {0}", MainFrm.CP.Author))
+            s.Add(String.Format("; Palette Name: {0}", MainFrm.CP.PaletteName))
+            s.Add(String.Format("; Palette Version: {0}", MainFrm.CP.PaletteVersion))
+            s.Add("")
+            s.Add(String.Format("[Control Panel\Colors]"))
+
+            s.Add("")
+            s.Add(String.Format("[MasterThemeSelector]"))
+            s.Add(String.Format("MTSM=DABJDKT"))
+
+        End If
     End Sub
 End Class

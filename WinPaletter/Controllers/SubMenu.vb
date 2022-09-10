@@ -8,7 +8,7 @@ Public Class SubMenu
     Private _shown As Boolean
     Private _overrideColor As Color
     Private _eventDone As Boolean
-    Private _Speed As Integer = 25
+    Private _Speed As Integer = 20
     Private _dark As Single = 0.9
 
 #Region "Form Shadow"
@@ -202,25 +202,27 @@ Public Class SubMenu
             XenonButton3.Enabled = False
 
             Try
-                Dim s As String = Clipboard.GetData("Text").ToString.ToLower
+                If Clipboard.GetData("Text") IsNot Nothing Then
+                    Dim s As String = Clipboard.GetData("Text").ToString.ToLower
 
-                If s.StartsWith("color ") Then
-                    Dim C As Color = Color.FromArgb(255, 0, 0, 0)
-                    s = s.Remove(0, "color ".Count)
-                    s = s.Replace("[", "")
-                    s = s.Replace("]", "")
-                    s = s.Replace(" ", "")
+                    If s.StartsWith("color ") Then
+                        Dim C As Color = Color.FromArgb(255, 0, 0, 0)
+                        s = s.Remove(0, "color ".Count)
+                        s = s.Replace("[", "")
+                        s = s.Replace("]", "")
+                        s = s.Replace(" ", "")
 
-                    For Each x As String In s.Split(",")
-                        Dim i As Byte = Val(x.Remove(0, 2))
-                        If x.StartsWith("a=") Then C = Color.FromArgb(i, C)
-                        If x.StartsWith("r=") Then C = Color.FromArgb(C.A, i, C.G, C.B)
-                        If x.StartsWith("g=") Then C = Color.FromArgb(C.A, C.R, i, C.B)
-                        If x.StartsWith("b=") Then C = Color.FromArgb(C.A, C.R, C.G, i)
-                    Next
+                        For Each x As String In s.Split(",")
+                            Dim i As Integer = Val(x.Remove(0, 2))
+                            If x.StartsWith("a=") Then C = Color.FromArgb(i, C)
+                            If x.StartsWith("r=") Then C = Color.FromArgb(C.A, i, C.G, C.B)
+                            If x.StartsWith("g=") Then C = Color.FromArgb(C.A, C.R, i, C.B)
+                            If x.StartsWith("b=") Then C = Color.FromArgb(C.A, C.R, C.G, i)
+                        Next
 
-                    My.Application.CopiedColor = C
-                    XenonButton3.Enabled = True
+                        My.Application.CopiedColor = C
+                        XenonButton3.Enabled = True
+                    End If
                 End If
 
             Catch

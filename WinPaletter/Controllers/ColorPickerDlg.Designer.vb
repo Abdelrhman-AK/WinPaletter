@@ -76,6 +76,11 @@ Partial Class ColorPickerDlg
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ThemePaletteContainer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.XenonComboBox2 = New WinPaletter.XenonComboBox()
+        Me.PaletteContainer = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
@@ -94,6 +99,8 @@ Partial Class ColorPickerDlg
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ColorEditorManager1
@@ -473,10 +480,11 @@ Partial Class ColorPickerDlg
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
         Me.XenonTabControl1.Controls.Add(Me.TabPage3)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage4)
         Me.XenonTabControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(140, 30)
+        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(110, 30)
         Me.XenonTabControl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonTabControl1.Location = New System.Drawing.Point(0, 0)
         Me.XenonTabControl1.Multiline = True
@@ -498,7 +506,7 @@ Partial Class ColorPickerDlg
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(459, 516)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Common Controllers"
+        Me.TabPage1.Text = "Common"
         '
         'XenonButton1
         '
@@ -553,7 +561,7 @@ Partial Class ColorPickerDlg
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(459, 516)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Image to palette"
+        Me.TabPage2.Text = "From Image"
         '
         'XenonSeparator2
         '
@@ -585,7 +593,7 @@ Partial Class ColorPickerDlg
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(459, 516)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Classic Theme to palette"
+        Me.TabPage3.Text = "From Theme"
         '
         'PictureBox10
         '
@@ -744,6 +752,65 @@ Partial Class ColorPickerDlg
         Me.ThemePaletteContainer.Size = New System.Drawing.Size(449, 395)
         Me.ThemePaletteContainer.TabIndex = 31
         '
+        'TabPage4
+        '
+        Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage4.Controls.Add(Me.XenonComboBox2)
+        Me.TabPage4.Controls.Add(Me.PaletteContainer)
+        Me.TabPage4.Controls.Add(Me.Label9)
+        Me.TabPage4.Controls.Add(Me.PictureBox11)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 34)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(459, 516)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "All used colors"
+        '
+        'XenonComboBox2
+        '
+        Me.XenonComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox2.FormattingEnabled = True
+        Me.XenonComboBox2.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
+        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonComboBox2.Location = New System.Drawing.Point(8, 47)
+        Me.XenonComboBox2.Name = "XenonComboBox2"
+        Me.XenonComboBox2.Size = New System.Drawing.Size(442, 24)
+        Me.XenonComboBox2.TabIndex = 49
+        '
+        'PaletteContainer
+        '
+        Me.PaletteContainer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PaletteContainer.AutoScroll = True
+        Me.PaletteContainer.Location = New System.Drawing.Point(8, 77)
+        Me.PaletteContainer.Name = "PaletteContainer"
+        Me.PaletteContainer.Size = New System.Drawing.Size(442, 430)
+        Me.PaletteContainer.TabIndex = 48
+        '
+        'Label9
+        '
+        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(47, 6)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(406, 35)
+        Me.Label9.TabIndex = 34
+        Me.Label9.Text = "These are all colors used in palette"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox11
+        '
+        Me.PictureBox11.Image = CType(resources.GetObject("PictureBox11.Image"), System.Drawing.Image)
+        Me.PictureBox11.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox11.Name = "PictureBox11"
+        Me.PictureBox11.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox11.TabIndex = 35
+        Me.PictureBox11.TabStop = False
+        '
         'OpenFileDialog2
         '
         Me.OpenFileDialog2.Filter = resources.GetString("OpenFileDialog2.Filter")
@@ -791,6 +858,8 @@ Partial Class ColorPickerDlg
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage4.ResumeLayout(False)
+        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -851,4 +920,9 @@ Partial Class ColorPickerDlg
     Friend WithEvents PictureBox33 As PictureBox
     Friend WithEvents Label29 As Label
     Friend WithEvents PictureBox10 As PictureBox
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents XenonComboBox2 As XenonComboBox
+    Friend WithEvents PaletteContainer As FlowLayoutPanel
+    Friend WithEvents Label9 As Label
+    Friend WithEvents PictureBox11 As PictureBox
 End Class

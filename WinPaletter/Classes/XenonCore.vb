@@ -338,6 +338,88 @@ Public Class XenonCore
         End If
     End Function
 
+    Public Shared Function ReturnColorFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
+        Dim s As String
+
+        Select Case Format
+            Case ColorFormat.HEX
+                s = If(HexHash, "#", "") & RGB2HEX(Color, Alpha)
+
+            Case ColorFormat.RGB
+                If Not Alpha Then
+                    s = String.Format("{0} {1} {2}", Color.R, Color.G, Color.B)
+                Else
+                    s = String.Format("{0} {1} {2} {3}", Color.A, Color.R, Color.G, Color.B)
+                End If
+
+            Case ColorFormat.HSL
+                s = String.Format("{0} {1}% {2}%", RGBToHSL(Color).H, Math.Round(RGBToHSL(Color).S * 100), Math.Round(RGBToHSL(Color).L * 100))
+
+            Case ColorFormat.Dec
+                s = Color.ToArgb
+
+        End Select
+
+        Return s
+    End Function
+
+    Shared Function RGB2HEX(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
+        Dim S As String
+        If Alpha Then
+            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
+            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
+        Else
+            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
+        End If
+        Return S
+    End Function
+    Public Shared Function RGBToHSL(rgb As Color) As HSL
+        Dim hsl As New HSL()
+
+        Dim r As Single = (rgb.R / 255.0F)
+        Dim g As Single = (rgb.G / 255.0F)
+        Dim b As Single = (rgb.B / 255.0F)
+
+        Dim min As Single = Math.Min(Math.Min(r, g), b)
+        Dim max As Single = Math.Max(Math.Max(r, g), b)
+        Dim delta As Single = max - min
+
+        hsl.L = (max + min) / 2
+
+        If delta = 0 Then
+            hsl.H = 0
+            hsl.S = 0.0F
+        Else
+            hsl.S = If((hsl.L <= 0.5), (delta / (max + min)), (delta / (2 - max - min)))
+
+            Dim hue As Single
+
+            If r = max Then
+                hue = ((g - b) / 6) / delta
+            ElseIf g = max Then
+                hue = (1.0F / 3) + ((b - r) / 6) / delta
+            Else
+                hue = (2.0F / 3) + ((r - g) / 6) / delta
+            End If
+
+            If hue < 0 Then
+                hue += 1
+            End If
+            If hue > 1 Then
+                hue -= 1
+            End If
+
+            hsl.H = CInt(Math.Truncate(hue * 360))
+        End If
+
+        Return hsl
+    End Function
+    Enum ColorFormat
+        HEX
+        RGB
+        HSL
+        Dec
+    End Enum
 #End Region
 
 #Region " ResizeImage "
@@ -563,7 +645,52 @@ Public Class XenonCore
     End Function
 #End Region
 
+
 End Class
+
+Public Structure HSL
+    Private _h As Integer
+    Private _s As Single
+    Private _l As Single
+
+    Public Sub New(h As Integer, s As Single, l As Single)
+        Me._h = h
+        Me._s = s
+        Me._l = l
+    End Sub
+
+    Public Property H() As Integer
+        Get
+            Return Me._h
+        End Get
+        Set(value As Integer)
+            Me._h = value
+        End Set
+    End Property
+
+    Public Property S() As Single
+        Get
+            Return Me._s
+        End Get
+        Set(value As Single)
+            Me._s = value
+        End Set
+    End Property
+
+    Public Property L() As Single
+        Get
+            Return Me._l
+        End Get
+        Set(value As Single)
+            Me._l = value
+        End Set
+    End Property
+
+    Public Overloads Function Equals(hsl As HSL) As Boolean
+        Return (Me.H = hsl.H) AndAlso (Me.S = hsl.S) AndAlso (Me.L = hsl.L)
+    End Function
+End Structure
+
 
 Public Class Acrylism
 

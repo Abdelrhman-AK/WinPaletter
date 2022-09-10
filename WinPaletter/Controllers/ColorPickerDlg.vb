@@ -6,15 +6,38 @@ Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
+    Private _shown As Boolean = False
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        _shown = False
         CP.PopulateThemeToListbox(XenonComboBox1)
         Me.Left = fr.Right - 14
         Me.Top = fr.Top
         Me.Height = fr.Height
+        XenonComboBox2.SelectedIndex = 0
+        GetColorsFromPalette(MainFrm.CP)
     End Sub
 
+    Sub GetColorsFromPalette(CP As CP)
+        PaletteContainer.SuspendLayout()
+
+        For Each c As XenonGroupBox In PaletteContainer.Controls.OfType(Of XenonGroupBox)
+            c.Dispose()
+            PaletteContainer.Controls.Remove(c)
+        Next
+
+        PaletteContainer.Controls.Clear()
+
+        For Each c As Color In CP.ListColors
+            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20), .CustomColor = True}
+            pnl.BackColor = c
+            PaletteContainer.Controls.Add(pnl)
+            AddHandler pnl.Click, AddressOf Pnl_click
+        Next
+
+        PaletteContainer.ResumeLayout()
+    End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs)
         ColorWheel1.Visible = False
@@ -544,6 +567,25 @@ Public Class ColorPickerDlg
         Me.Close()
     End Sub
 
+    Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
+        If _shown Then
+            Select Case XenonComboBox2.SelectedIndex
+                Case 0
+                    GetColorsFromPalette(MainFrm.CP)
+                Case 1
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows11)
+                Case 2
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows10)
+                Case 3
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows8)
+                Case 4
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows7)
+                Case Else
+                    GetColorsFromPalette(MainFrm.CP)
+            End Select
+        End If
+    End Sub
+
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
@@ -554,6 +596,10 @@ Public Class ColorPickerDlg
                 UpdateWin7Preview(MainFrm.CP.Aero_ColorizationColor, InitColor)
             End If
         End If
+    End Sub
+
+    Private Sub ColorPickerDlg_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        _shown = True
     End Sub
 End Class
 

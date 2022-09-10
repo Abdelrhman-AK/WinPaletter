@@ -64,6 +64,7 @@ Partial Class SubMenu
         Me.PictureBox3.Location = New System.Drawing.Point(14, 197)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox3.TabIndex = 9
         Me.PictureBox3.TabStop = False
         '
@@ -91,6 +92,7 @@ Partial Class SubMenu
         Me.PictureBox5.Location = New System.Drawing.Point(14, 128)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox5.TabIndex = 13
         Me.PictureBox5.TabStop = False
         '
@@ -119,6 +121,7 @@ Partial Class SubMenu
         Me.PictureBox1.Location = New System.Drawing.Point(14, 60)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox1.TabIndex = 53
         Me.PictureBox1.TabStop = False
         '
@@ -413,7 +416,7 @@ Partial Class SubMenu
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(153, Byte), Integer))
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(145, Byte), Integer), CType(CType(139, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(85, 13)
         Me.XenonButton3.Name = "XenonButton3"
@@ -441,7 +444,7 @@ Partial Class SubMenu
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(142, Byte), Integer))
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer))
         Me.XenonButton1.LineSize = 1
         Me.XenonButton1.Location = New System.Drawing.Point(13, 13)
         Me.XenonButton1.Name = "XenonButton1"
