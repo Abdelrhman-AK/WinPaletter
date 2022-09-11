@@ -374,6 +374,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property JetBrainsMono_Regular() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("JetBrainsMono_Regular", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property lightmode_dark() As System.Drawing.Bitmap

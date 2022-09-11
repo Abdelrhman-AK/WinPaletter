@@ -672,8 +672,6 @@ Public Class CP
         Next
 
     End Sub
-
-
     Public Function ListColors() As List(Of Color)
         Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
         Dim CL As New List(Of Color)
@@ -728,46 +726,109 @@ Public Class CP
 
 #Region "Modern Windows"
                 If Not My.W7 And Not My.W8 Then
-
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
 
-                    Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes))
+                    Dim x As Byte()
+                    Dim y As Object
 
-                    Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
-                    Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
-                    Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
-                    Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
-                    Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
-                    Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
-                    Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
-                    Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+                    Try
+                        x = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes))
+                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
+                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
+                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
+                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
+                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
+                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
+                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
+                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                    ActionCenter_AppsLinks = Colors(0)
-                    Taskbar_Icon_Underline = Colors(1)
-                    StartButton_Hover = Colors(2)
-                    SettingsIconsAndLinks = Colors(3)
-                    StartMenuBackground_ActiveTaskbarButton = Colors(4)
-                    StartListFolders_TaskbarFront = Colors(5)
-                    Taskbar_Background = Colors(6)
+                        ActionCenter_AppsLinks = Colors(0)
+                        Taskbar_Icon_Underline = Colors(1)
+                        StartButton_Hover = Colors(2)
+                        SettingsIconsAndLinks = Colors(3)
+                        StartMenuBackground_ActiveTaskbarButton = Colors(4)
+                        StartListFolders_TaskbarFront = Colors(5)
+                        Taskbar_Background = Colors(6)
 
-                    Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.StartMenu_Accent).ToArgb)
-                    StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        x = If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes)
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
-                    Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
+                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
+                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
+                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
+                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
+                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
+                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
+                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
-                    Titlebar_DWM_Active = BizareColorInvertor(Color.FromArgb(y))
+                        ActionCenter_AppsLinks = Colors(0)
+                        Taskbar_Icon_Underline = Colors(1)
+                        StartButton_Hover = Colors(2)
+                        SettingsIconsAndLinks = Colors(3)
+                        StartMenuBackground_ActiveTaskbarButton = Colors(4)
+                        StartListFolders_TaskbarFront = Colors(5)
+                        Taskbar_Background = Colors(6)
+                    End Try
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Titlebar_Inactive).ToArgb)
-                    Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.StartMenu_Accent).ToArgb)
+                        StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        StartMenu_Accent = Def.StartMenu_Accent
+                    End Try
 
-                    WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.WinMode_Light)
-                    AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.AppMode_Light)
-                    Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Transparency)
-                    ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", Def.ApplyAccentonTaskbar)
-                    ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.ApplyAccentonTitlebars)
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
+                        Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Titlebar_Active = Def.Titlebar_Active
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
+                        Titlebar_DWM_Active = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Titlebar_DWM_Active = Def.Titlebar_Active
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Titlebar_Inactive).ToArgb)
+                        Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Titlebar_Inactive = Def.Titlebar_Inactive
+                    End Try
+
+                    Try
+                        WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.WinMode_Light)
+                    Catch
+                        WinMode_Light = Def.WinMode_Light
+                    End Try
+
+                    Try
+                        AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.AppMode_Light)
+                    Catch
+                        AppMode_Light = Def.AppMode_Light
+                    End Try
+
+                    Try
+                        Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Transparency)
+                    Catch
+                        Transparency = Def.Transparency
+                    End Try
+
+                    Try
+                        ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", Def.ApplyAccentonTaskbar)
+                    Catch
+                        ApplyAccentonTaskbar = Def.ApplyAccentonTaskbar
+                    End Try
+
+                    Try
+                        ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.ApplyAccentonTitlebars)
+                    Catch
+                        ApplyAccentonTitlebars = Def.ApplyAccentonTitlebars
+                    End Try
+
 
                 Else
 
@@ -794,31 +855,59 @@ Public Class CP
 #Region "Aero"
                 If My.W7 Or My.W8 Then
                     Dim Def As CP = If(My.W7, New CP_Defaults().Default_Windows7, New CP_Defaults().Default_Windows8)
+                    Dim y As Object
 
-                    Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.Aero_ColorizationColor.ToArgb)
-                    Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.Aero_ColorizationColor.ToArgb)
+                        Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
+                    Catch
+                        Aero_ColorizationColor = Def.Aero_ColorizationColor
+                    End Try
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.Aero_ColorizationColorBalance)
-                    Aero_ColorizationColorBalance = y
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.Aero_ColorizationColorBalance)
+                        Aero_ColorizationColorBalance = y
+                    Catch
+                        Aero_ColorizationColorBalance = Def.Aero_ColorizationColorBalance
+                    End Try
 
                     If Not My.W8 Then
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.Aero_ColorizationAfterglow.ToArgb)
-                        Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
+                        Try
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.Aero_ColorizationAfterglow.ToArgb)
+                            Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
+                        Catch
+                            Aero_ColorizationAfterglow = Def.Aero_ColorizationAfterglow
+                        End Try
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.Aero_ColorizationAfterglowBalance)
-                        Aero_ColorizationAfterglowBalance = y
+                        Try
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.Aero_ColorizationAfterglowBalance)
+                            Aero_ColorizationAfterglowBalance = y
+                        Catch
+                            Aero_ColorizationAfterglowBalance = Def.Aero_ColorizationAfterglowBalance
+                        End Try
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.Aero_ColorizationBlurBalance)
-                        Aero_ColorizationBlurBalance = y
+                        Try
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.Aero_ColorizationBlurBalance)
+                            Aero_ColorizationBlurBalance = y
+                        Catch
+                            Aero_ColorizationBlurBalance = Def.Aero_ColorizationBlurBalance
+                        End Try
 
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.Aero_ColorizationGlassReflectionIntensity)
-                        Aero_ColorizationGlassReflectionIntensity = y
+                        Try
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.Aero_ColorizationGlassReflectionIntensity)
+                            Aero_ColorizationGlassReflectionIntensity = y
+                        Catch
+                            Aero_ColorizationGlassReflectionIntensity = Def.Aero_ColorizationGlassReflectionIntensity
+                        End Try
 
-                        Dim Com As Boolean
+                        Dim Com, Opaque As Boolean
                         NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
 
-                        Dim Opaque As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
+                        Try
+                            Opaque = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
+                        Catch
+                            Opaque = False
+                        End Try
 
                         Dim Classic As Boolean = False
 
@@ -840,8 +929,17 @@ Public Class CP
 
                     End If
 
-                    Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.Aero_EnableAeroPeek)
-                    Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.Aero_AlwaysHibernateThumbnails)
+                    Try
+                        Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.Aero_EnableAeroPeek)
+                    Catch
+                        Aero_EnableAeroPeek = Def.Aero_EnableAeroPeek
+                    End Try
+
+                    Try
+                        Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.Aero_AlwaysHibernateThumbnails)
+                    Catch
+                        Aero_AlwaysHibernateThumbnails = Def.Aero_AlwaysHibernateThumbnails
+                    End Try
 
                 Else
                     Aero_ColorizationColor = _Def.Aero_ColorizationColor
@@ -912,24 +1010,49 @@ Public Class CP
                         Kill(tempreg)
                     End If
 
-                    Dim y As Integer
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
-                    Metro_StartColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                    Dim y As Object
 
-                    y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
-                    Metro_AccentColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
+                        Metro_StartColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                    Catch
+                        Metro_StartColor = Color.FromArgb(84, 0, 30)
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
+                        Metro_AccentColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                    Catch
+                        Metro_AccentColor = Color.FromArgb(178, 29, 72)
+                    End Try
 
                     Dim S As String
-                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#1e0054")
-                    Metro_PersonalColors_Background = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
 
-                    S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#481db2")
-                    Metro_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+                    Try
+                        S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#1e0054")
+                        Metro_PersonalColors_Background = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+                    Catch
+                        Metro_PersonalColors_Background = Def.Metro_PersonalColors_Background
+                    End Try
 
-                    Metro_Start = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
+                    Try
+                        S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#481db2")
+                        Metro_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+                    Catch
+                        Metro_PersonalColors_Accent = Def.Metro_PersonalColors_Accent
+                    End Try
 
-                    Metro_LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
+                    Try
+                        Metro_Start = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
+                    Catch
+                        Metro_Start = 0
+                    End Try
 
+                    Try
+                        Metro_LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
+                    Catch
+                        Metro_LogonUI = 0
+                    End Try
                 Else
                     Metro_Theme = _Def.Metro_Theme
                     Metro_StartColor = _Def.Metro_StartColor
@@ -944,22 +1067,55 @@ Public Class CP
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
+                    Dim y As Object
 
-                    Dim y As Integer
+                    Try
+                        With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", Def.LogonUI_Background.R & " " & Def.LogonUI_Background.G & " " & Def.LogonUI_Background.B)
+                            If .ToString.Split(" ").Count = 3 Then
+                                LogonUI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                            Else
+                                LogonUI_Background = Color.FromArgb(255, Def.LogonUI_Background)
+                            End If
+                        End With
+                    Catch
+                        LogonUI_Background = Color.FromArgb(255, Def.LogonUI_Background)
+                    End Try
 
-                    With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", Def.LogonUI_Background.ToArgb)
-                        LogonUI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
-                    End With
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb)
+                        If y Is Nothing Then y = BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb
+                        If y.ToString.Contains("#") Or Not IsNumeric(y) Then y = Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)).ToArgb
+                        LogonUI_PersonalColors_Background = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        LogonUI_PersonalColors_Background = Def.LogonUI_PersonalColors_Background
+                    End Try
 
-                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb)
-                    LogonUI_PersonalColors_Background = BizareColorInvertor(Color.FromArgb(y))
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb)
+                        If y Is Nothing Then y = BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb
+                        If y.ToString.Contains("#") Or Not IsNumeric(y) Then y = Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)).ToArgb
+                        LogonUI_PersonalColors_Accent = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        LogonUI_PersonalColors_Accent = Def.LogonUI_PersonalColors_Accent
+                    End Try
 
-                    y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb)
-                    LogonUI_PersonalColors_Accent = BizareColorInvertor(Color.FromArgb(y))
+                    Try
+                        LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", Def.LogonUI_DisableAcrylicBackgroundOnLogon)
+                    Catch
+                        LogonUI_DisableAcrylicBackgroundOnLogon = Def.LogonUI_DisableAcrylicBackgroundOnLogon
+                    End Try
 
-                    LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", Def.LogonUI_DisableAcrylicBackgroundOnLogon)
-                    LogonUI_DisableLogonBackgroundImage = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", Def.LogonUI_DisableLogonBackgroundImage)
-                    LogonUI_NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Def.LogonUI_NoLockScreen)
+                    Try
+                        LogonUI_DisableLogonBackgroundImage = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", Def.LogonUI_DisableLogonBackgroundImage)
+                    Catch
+                        LogonUI_DisableLogonBackgroundImage = Def.LogonUI_DisableLogonBackgroundImage
+                    End Try
+
+                    Try
+                        LogonUI_NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Def.LogonUI_NoLockScreen)
+                    Catch
+                        LogonUI_NoLockScreen = Def.LogonUI_NoLockScreen
+                    End Try
                 Else
                     LogonUI_Background = _Def.LogonUI_Background
                     LogonUI_PersonalColors_Background = _Def.LogonUI_PersonalColors_Background
@@ -978,15 +1134,61 @@ Public Class CP
                     LogonUI7_Enabled = b1 And b2
 
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-                    LogonUI7_Mode = rLog.GetValue("Mode", LogonUI7_Modes.Default_)
-                    LogonUI7_ImagePath = rLog.GetValue("ImagePath", "")
-                    LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
-                    LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
-                    LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
-                    LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
-                    LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
-                    LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
-                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+
+                    Try
+                        LogonUI7_Mode = rLog.GetValue("Mode", LogonUI7_Modes.Default_)
+                    Catch
+                        LogonUI7_Mode = LogonUI7_Modes.Default_
+                    End Try
+
+                    Try
+                        LogonUI7_ImagePath = rLog.GetValue("ImagePath", "")
+                    Catch
+                        LogonUI7_ImagePath = ""
+                    End Try
+
+                    Try
+                        LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
+                    Catch
+                        LogonUI7_Color = Color.Black
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
+                    Catch
+                        LogonUI7_Effect_Blur = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
+                    Catch
+                        LogonUI7_Effect_Blur_Intensity = 0
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
+                    Catch
+                        LogonUI7_Effect_Grayscale = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
+                    Catch
+                        LogonUI7_Effect_Noise = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
+                    Catch
+                        LogonUI7_Effect_Noise_Mode = LogonUI7_NoiseMode.Acrylic
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+                    Catch
+                        LogonUI7_Effect_Noise_Intensity = 0
+                    End Try
+
                     rLog.Close()
                 Else
                     LogonUI7_Enabled = _Def.LogonUI7_Enabled
@@ -1005,19 +1207,69 @@ Public Class CP
 #Region "LogonUI 8"
                 If My.W8 Then
                     Metro_NoLockScreen = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", False)
+
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
-                    Metro_LockScreenType = rLog.GetValue("Mode", LogonUI8_Modes.System)
-                    Metro_LockScreenSystemID = rLog.GetValue("Metro_LockScreenSystemID", 0)
+                    Try
+                        Metro_LockScreenType = rLog.GetValue("Mode", LogonUI8_Modes.System)
+                    Catch
+                        Metro_LockScreenType = LogonUI8_Modes.System
+                    End Try
 
-                    LogonUI7_ImagePath = rLog.GetValue("ImagePath", "")
-                    LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
-                    LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
-                    LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
-                    LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
-                    LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
-                    LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
-                    LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+                    Try
+                        Metro_LockScreenSystemID = rLog.GetValue("Metro_LockScreenSystemID", 0)
+                    Catch
+                        Metro_LockScreenSystemID = 0
+                    End Try
+
+                    Try
+                        LogonUI7_ImagePath = rLog.GetValue("ImagePath", "")
+                    Catch
+                        LogonUI7_ImagePath = ""
+                    End Try
+
+                    Try
+                        LogonUI7_Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
+                    Catch
+                        LogonUI7_Color = Color.Black
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Blur = rLog.GetValue("Effect_Blur", False)
+                    Catch
+                        LogonUI7_Effect_Blur = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Blur_Intensity = rLog.GetValue("Effect_Blur_Intensity", 0)
+                    Catch
+                        LogonUI7_Effect_Blur_Intensity = 0
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Grayscale = rLog.GetValue("Effect_Grayscale", False)
+                    Catch
+                        LogonUI7_Effect_Grayscale = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise = rLog.GetValue("Effect_Noise", False)
+                    Catch
+                        LogonUI7_Effect_Noise = False
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise_Mode = rLog.GetValue("Noise_Mode", LogonUI7_NoiseMode.Acrylic)
+                    Catch
+                        LogonUI7_Effect_Noise_Mode = LogonUI7_NoiseMode.Acrylic
+                    End Try
+
+                    Try
+                        LogonUI7_Effect_Noise_Intensity = rLog.GetValue("Effect_Noise_Intensity", 0)
+                    Catch
+                        LogonUI7_Effect_Noise_Intensity = 0
+                    End Try
+
                     rLog.Close()
 
                 ElseIf Not My.W7 Then
@@ -1037,135 +1289,144 @@ Public Class CP
 
 #Region "Win32UI"
 
-                Win32UI_EnableTheming = GetUserPreferencesMask(17)
-                Win32UI_EnableGradient = GetUserPreferencesMask(4)
+                Try
+                    Win32UI_EnableTheming = GetUserPreferencesMask(17)
+                Catch
+                    Win32UI_EnableTheming = True
+                End Try
+
+                Try
+                    Win32UI_EnableGradient = GetUserPreferencesMask(4)
+                Catch
+                    Win32UI_EnableGradient = True
+                End Try
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
-                    Win32UI_ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171")
-                    Win32UI_AppWorkspace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_AppWorkspace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
-                    Win32UI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0")
-                    Win32UI_ButtonAlternateFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonAlternateFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105")
-                    Win32UI_ButtonDkShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonDkShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240")
-                    Win32UI_ButtonFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255")
-                    Win32UI_ButtonHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227")
-                    Win32UI_ButtonLight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonLight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160")
-                    Win32UI_ButtonShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0")
-                    Win32UI_ButtonText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ButtonText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234")
-                    Win32UI_GradientActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_GradientActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242")
-                    Win32UI_GradientInactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_GradientInactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109")
-                    Win32UI_GrayText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_GrayText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255")
-                    Win32UI_HilightText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_HilightText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204")
-                    Win32UI_HotTrackingColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_HotTrackingColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252")
-                    Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252")
-                    Win32UI_InactiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_InactiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219")
-                    Win32UI_InactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_InactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0")
-                    Win32UI_InactiveTitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_InactiveTitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0")
-                    Win32UI_InfoText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_InfoText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225")
-                    Win32UI_InfoWindow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_InfoWindow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240")
-                    Win32UI_Menu = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Menu = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240")
-                    Win32UI_MenuBar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_MenuBar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0")
-                    Win32UI_MenuText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_MenuText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200")
-                    Win32UI_Scrollbar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Scrollbar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0")
-                    Win32UI_TitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_TitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255")
-                    Win32UI_Window = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Window = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100")
-                    Win32UI_WindowFrame = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_WindowFrame = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0")
-                    Win32UI_WindowText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_WindowText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215")
-                    Win32UI_Hilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Hilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215")
-                    Win32UI_MenuHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_MenuHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
-                    Win32UI_Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                    If .ToString.Split(" ").Count = 3 Then Win32UI_Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
 #End Region
 

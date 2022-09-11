@@ -1798,11 +1798,11 @@ Public Class XenonGroupBox
             If Not DesignMode Then
                 If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
                     G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-
+                    Dim IsDefault As Boolean = (BackColor = DefaultColor)
                     Dim FC0 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
                     Dim FC1 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
 
-                    FC0 = Color.FromArgb(100, FC0)
+                    FC0 = Color.FromArgb(If(Not IsDefault, 100, 200), FC0)
                     FC1 = Color.FromArgb(alpha, FC1)
 
                     Dim RectX As Rectangle = Rect
@@ -1814,10 +1814,18 @@ Public Class XenonGroupBox
                     If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
                     If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
 
-                    Dim S As String = ReturnColorFormat(BackColor, CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
 
-                    G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
-                    G.DrawString(S, New Font("Lucida Console", 7.5), New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                    Dim S As String = If(IsDefault, "D ", "") & ReturnColorFormat(BackColor, CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
+                    Dim F As Font
+
+                    If IsDefault Then
+                        F = My.Application.ConsoleFontDef
+                    Else
+                        F = My.Application.ConsoleFont
+                    End If
+
+                    G.DrawString(S, F, New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawString(S, F, New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
 
                 End If
             End If

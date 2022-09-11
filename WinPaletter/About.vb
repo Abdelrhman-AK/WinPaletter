@@ -46,4 +46,8 @@ Public Class About
     Private Sub LinkLabel6_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel6.LinkClicked
         Process.Start("https://www.microsoft.com")
     End Sub
+
+    Private Sub LinkLabel8_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel8.LinkClicked
+        Process.Start("https://github.com/JetBrains/JetBrainsMono")
+    End Sub
 End Class

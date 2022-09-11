@@ -124,6 +124,7 @@ Partial Class SettingsX
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1326,6 +1327,7 @@ Partial Class SettingsX
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.XenonAlertBox7)
         Me.TabPage6.Controls.Add(Me.XenonCheckBox11)
         Me.TabPage6.Controls.Add(Me.XenonComboBox3)
         Me.TabPage6.Controls.Add(Me.PictureBox27)
@@ -1473,6 +1475,25 @@ Partial Class SettingsX
         'OpenFileDialog2
         '
         Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
+        '
+        'XenonAlertBox7
+        '
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox7.CenterText = True
+        Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox7.Image = Nothing
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(88, 347)
+        Me.XenonAlertBox7.Name = "XenonAlertBox7"
+        Me.XenonAlertBox7.Size = New System.Drawing.Size(407, 42)
+        Me.XenonAlertBox7.TabIndex = 27
+        Me.XenonAlertBox7.TabStop = False
+        Me.XenonAlertBox7.Text = "Know that if the color info starts with ""D"" and font is underlined, the color is " &
+    "the same as the default one"
         '
         'SettingsX
         '
@@ -1640,4 +1661,5 @@ Partial Class SettingsX
     Friend WithEvents XenonCheckBox10 As XenonCheckBox
     Friend WithEvents XenonComboBox3 As XenonComboBox
     Friend WithEvents XenonCheckBox11 As XenonCheckBox
+    Friend WithEvents XenonAlertBox7 As XenonAlertBox
 End Class
