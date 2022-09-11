@@ -5,15 +5,24 @@
 #Added= String
 #Removed= String
 
+[1.0.5.1]
+Channel= Stable
+Date= -8585387596854775808
+NewFeature= Right Click Menus for Colors
+NewFeature= Nerd Info on Color palette
+BugFix= Fixing multiple issues in Color Palette loading for users used WinPaletter 1.0.5.0 for the first time
+BugFix= Win32UI: Fixing bugs
+Added= Win32UI: Save theme file as classic theme *.theme to reuse in Windows 95 and up!
+
 [1.0.5.0]
 Channel= Stable
 Date= -8585391916854775808
-Added= Windows 8.1 and Windows 7 Extended Support
-Added= Command Line Support (WinPaletter /apply:"FilePath")
+NewFeature= Windows 8.1 and Windows 7 Extended Support
+NewFeature= Command Line Support (WinPaletter /apply:"FilePath")
 BugFix= Color Picker: Screen Pixel Picker opens the wrong form after leaving the mouse
 BugFix= Win32UI: Fixing bugs in the previewer
 BugFix= Cursors Colorizer: Fixing bugs, specially if you were using a 32-bit OS
-BugFix= Adjusted Settings Saving Speed
+Added= Adjusted Settings Saving Speed
 
 [1.0.4.1]
 Channel= Stable
