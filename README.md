@@ -6,7 +6,7 @@
 Plan | Status
 -----|------
 Extended Support to Windows 7 and 8.1 | :white_check_mark: Done (Version 1.0.5.0) |
-Right Click menus for colors to increase functionality| :large_blue_circle:	Working on it |
+Right Click menus for colors to increase functionality| :white_check_mark: Done (Version 1.0.5.1) |
 Colorizing Command Prompt/Windows Terminal | :yellow_square: |
 Windows Metrics | :yellow_square:	|
 Mini-Store for themes | :yellow_square: |
