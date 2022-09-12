@@ -47,7 +47,6 @@ Public Class CP
 
 #Region "ModernWindows"
     Public Property Titlebar_Active As Color
-    Public Property Titlebar_DWM_Active As Color
     Public Property Titlebar_Inactive As Color
     Public Property StartMenu_Accent As Color
     Public Property StartButton_Hover As Color
@@ -99,9 +98,8 @@ Public Class CP
 #End Region
 
 #Region "LogonUI_Win10"
-    Public Property LogonUI_Background As Color
-    Public Property LogonUI_PersonalColors_Background As Color
-    Public Property LogonUI_PersonalColors_Accent As Color
+    Public Property LogonUI_Background As Color = Color.FromArgb(0, 90, 158)
+    Public Property LogonUI_PersonalColors_Accent As Color = Color.FromArgb(0, 118, 215)
     Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
     Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
     Public Property LogonUI_NoLockScreen As Boolean = False
@@ -787,9 +785,9 @@ Public Class CP
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
-                        Titlebar_DWM_Active = BizareColorInvertor(Color.FromArgb(y))
+                        Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Titlebar_DWM_Active = Def.Titlebar_Active
+                        Titlebar_Active = Def.Titlebar_Active
                     End Try
 
                     Try
@@ -841,7 +839,6 @@ Public Class CP
                     Taskbar_Background = _Def.Taskbar_Background
                     StartMenu_Accent = _Def.StartMenu_Accent
                     Titlebar_Active = _Def.Titlebar_Active
-                    Titlebar_DWM_Active = _Def.Titlebar_DWM_Active
                     Titlebar_Inactive = _Def.Titlebar_Inactive
                     WinMode_Light = _Def.WinMode_Light
                     AppMode_Light = _Def.AppMode_Light
@@ -1081,20 +1078,10 @@ Public Class CP
                         LogonUI_Background = Color.FromArgb(255, Def.LogonUI_Background)
                     End Try
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb)
-                        If y Is Nothing Then y = BizareColorInvertor(Def.LogonUI_PersonalColors_Background).ToArgb
-                        If y.ToString.Contains("#") Or Not IsNumeric(y) Then y = Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)).ToArgb
-                        LogonUI_PersonalColors_Background = BizareColorInvertor(Color.FromArgb(y))
-                    Catch
-                        LogonUI_PersonalColors_Background = Def.LogonUI_PersonalColors_Background
-                    End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb)
-                        If y Is Nothing Then y = BizareColorInvertor(Def.LogonUI_PersonalColors_Accent).ToArgb
-                        If y.ToString.Contains("#") Or Not IsNumeric(y) Then y = Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)).ToArgb
-                        LogonUI_PersonalColors_Accent = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(Def.LogonUI_PersonalColors_Accent, False))
+                        LogonUI_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)))
                     Catch
                         LogonUI_PersonalColors_Accent = Def.LogonUI_PersonalColors_Accent
                     End Try
@@ -1118,7 +1105,6 @@ Public Class CP
                     End Try
                 Else
                     LogonUI_Background = _Def.LogonUI_Background
-                    LogonUI_PersonalColors_Background = _Def.LogonUI_PersonalColors_Background
                     LogonUI_PersonalColors_Accent = _Def.LogonUI_PersonalColors_Accent
                     LogonUI_DisableAcrylicBackgroundOnLogon = _Def.LogonUI_DisableAcrylicBackgroundOnLogon
                     LogonUI_DisableLogonBackgroundImage = _Def.LogonUI_DisableLogonBackgroundImage
@@ -1819,10 +1805,7 @@ Public Class CP
                         If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
                         If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                         If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then ApplyAccentonTaskbar = lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
-                        If lin.StartsWith("*Titlebar_Active= ") Then
-                            Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
-                            Titlebar_DWM_Active = Titlebar_Active
-                        End If
+                        If lin.StartsWith("*Titlebar_Active= ") Then Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
                         If lin.StartsWith("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
                         If lin.StartsWith("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
                         If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
@@ -1862,7 +1845,6 @@ Public Class CP
 
 #Region "LogonUI"
                     If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
-                    If lin.StartsWith("*LogonUI_PersonalColors_Background= ") Then LogonUI_PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Background= ".Count))
                     If lin.StartsWith("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
                     If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
                     If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
@@ -2263,7 +2245,6 @@ Public Class CP
 
 #Region "LogonUI"
                 LogonUI_Background = Color.Black
-                LogonUI_PersonalColors_Background = Color.Black
                 LogonUI_PersonalColors_Accent = Color.Black
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
@@ -2623,7 +2604,7 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_DWM_Active).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
 
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
@@ -2729,8 +2710,8 @@ Public Class CP
                         ls.Add("Windows Registry Editor Version 5.00")
                         ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""PersonalColors_Background""=#{0}", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False)))
-                        ls.Add(String.Format("""PersonalColors_Accent""=#{0}", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False)))
+                        ls.Add(String.Format("""PersonalColors_Background""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False)))
+                        ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False)))
                         ls.Add(String.Format("""ForceStartBackground""=dword:{0}", ReturnEightDigitsFromInt(Metro_Start)))
                         ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
@@ -2769,8 +2750,7 @@ Public Class CP
                 If Not My.W7 And Not My.W8 Then
                     If isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", BizareColorInvertor(LogonUI_PersonalColors_Background).ToArgb)
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", BizareColorInvertor(LogonUI_PersonalColors_Accent).ToArgb)
+                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(LogonUI_PersonalColors_Accent, False), False, True)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
@@ -2784,8 +2764,7 @@ Public Class CP
                         ls.Add(String.Format("""Background""=""{0} {1} {2}""", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B))
                         ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""PersonalColors_Background""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Background))))
-                        ls.Add(String.Format("""PersonalColors_Accent""=dword:{0}", RGB2HEX_oneline(BizareColorInvertor(LogonUI_PersonalColors_Accent))))
+                        ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", RGB2HEX_oneline(LogonUI_PersonalColors_Accent, False)))
                         ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
                         ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
@@ -2810,6 +2789,7 @@ Public Class CP
                            .CreateNoWindow = True,
                            .UseShellExecute = True
                         }
+
                         process = Process.Start(processStartInfo)
                         process.WaitForExit()
                         processStartInfo.FileName = "reg"
@@ -3624,7 +3604,6 @@ Public Class CP
 #Region "LogonUI"
                 tx.Add("<LogonUI_10_11>")
                 tx.Add("*LogonUI_Background= " & LogonUI_Background.ToArgb)
-                tx.Add("*LogonUI_PersonalColors_Background= " & LogonUI_PersonalColors_Background.ToArgb)
                 tx.Add("*LogonUI_PersonalColors_Accent= " & LogonUI_PersonalColors_Accent.ToArgb)
                 tx.Add("*LogonUI_DisableAcrylicBackgroundOnLogon= " & LogonUI_DisableAcrylicBackgroundOnLogon)
                 tx.Add("*LogonUI_DisableLogonBackgroundImage= " & LogonUI_DisableLogonBackgroundImage)
@@ -4503,11 +4482,11 @@ Public Class CP_Defaults
         .Author = "Microsoft",
         .AuthorSocialMediaLink = "www.microsoft.com",
         .WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
-        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_DWM_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
+        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
         .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192),
-        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
+        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
        }
 
@@ -4519,11 +4498,11 @@ Public Class CP_Defaults
         .Author = "Microsoft",
         .AuthorSocialMediaLink = "www.microsoft.com",
         .WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
-        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_DWM_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
+        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
         .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158),
-        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
+        .LogonUI_Background = Color.FromArgb(0, 90, 158), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 118, 215),
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
        }
 

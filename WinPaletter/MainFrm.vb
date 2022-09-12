@@ -66,7 +66,6 @@ Public Class MainFrm
 
                 start.Top = taskbar.Top - start.Height - 9
 
-
                 lbl5.Text = My.Application.LanguageHelper.X7
                 lbl6.Text = My.Application.LanguageHelper.X8
                 lbl7.Text = My.Application.LanguageHelper.X9

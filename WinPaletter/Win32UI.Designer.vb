@@ -1622,7 +1622,7 @@ Partial Class Win32UI
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(200, 16)
         Me.Label22.TabIndex = 3
-        Me.Label22.Text = "Menu Bar"
+        Me.Label22.Text = "Menu Bar (If you enable Flat Menus)"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menubar_pick
