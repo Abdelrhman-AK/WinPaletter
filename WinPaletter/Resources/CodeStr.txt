@@ -11,7 +11,7 @@
 @SaveTag = Save Theme File
 @SaveAsTag = Save Theme File as ...
 @EditInfoTag = Edit Information of current Theme File
-@NewUpdate = New Update Avaliable
+@NewUpdate = New Update Available
 @OpenForActions = Open Updates form for actions.
 @By = By
 @X1 = Start Menu, Taskbar and Action Center
@@ -53,7 +53,7 @@
 @Extracting = Extracting palette from image depends on your device's performance, maximum palette colors number, image quality and its resolution ...
 @Sorting = Sorting Colors in Palette ...
 @Error_Online = Error reading changelog online
-@NoNetwork = No Network is avaliable
+@NoNetwork = No Network is Available
 @CheckConnection = Check your connection and try again
 @ErrorPhrasingChangelog = Error phrasing changelog
 @VersionNotReleased = is not released yet, deleted or written in a wrong format.
@@ -61,12 +61,12 @@
 @Version = Version
 @Label5_Checking = Checking ...
 @Error_Online = Error reading changelog online
-@NoNetwork = No Network is avaliable
+@NoNetwork = No Network is Available
 @CheckConnection = Check your connection and try again
-@XenonButton1_UpdateAvaliable = Do Action
-@XenonAlertBox2_UpdateAvaliable = Update Avaliable
-@XenonButton1_NoUpdateAvaliable = Check for updates
-@XenonAlertBox2_NoUpdateAvaliable = No Avaliable Updates
+@XenonButton1_UpdateAvailable = Do Action
+@XenonAlertBox2_UpdateAvailable = Update Available
+@XenonButton1_NoUpdateAvailable = Check for updates
+@XenonAlertBox2_NoUpdateAvailable = No Available Updates
 @XenonButton1_Error = Check for updates
 @XenonAlertBox2_Error = Network Error
 @XenonButton1_ServerError = Check for updates
