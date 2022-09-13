@@ -5,14 +5,6 @@
 #Added= String
 #Removed= String
 
-[1.0.5.2]
-Channel= Stable
-Date= -8585385868854775808
-Added= Same changelog of Version 1.0.5.1
-Removed= Windows 10\11 LogonUI Colors removed due to critical bugs on system
-BugFix= Minor UI fixes and Improvements
-BugFix= Win32UI: Fixing bugs
-
 [1.0.5.1]
 Channel= Stable
 Date= -8585387596854775808
