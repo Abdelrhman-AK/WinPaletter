@@ -1802,7 +1802,7 @@ Public Class XenonGroupBox
                     Dim FC0 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
                     Dim FC1 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
 
-                    FC0 = Color.FromArgb(If(Not IsDefault, 100, 200), FC0)
+                    FC0 = Color.FromArgb(If(Not IsDefault, 150, 200), FC0)
                     FC1 = Color.FromArgb(alpha, FC1)
 
                     Dim RectX As Rectangle = Rect

@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Reflection
+Imports System.Runtime.InteropServices
+Imports Microsoft.Win32
 
 Namespace NativeMethods
     Public Class Dwmapi
@@ -217,4 +219,5 @@ Namespace NativeMethods
         Public Shared Function CreateEllipticRgn(ByVal nLeftRect As Integer, ByVal nTopRect As Integer, ByVal nRightRect As Integer, ByVal nBottomRect As Integer) As IntPtr
         End Function
     End Class
+
 End Namespace

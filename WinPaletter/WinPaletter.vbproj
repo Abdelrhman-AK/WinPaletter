@@ -129,9 +129,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
-    <None Include="Resources\RetroThemesDB.wpdb" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
@@ -234,11 +234,6 @@
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -286,14 +281,13 @@
   <ItemGroup>
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
-    <Content Include="Resources\CodeStr.txt" />
+    <None Include="Resources\CodeStr.txt" />
+    <None Include="Resources\CodeStr.txt" />
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
@@ -354,11 +348,7 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>

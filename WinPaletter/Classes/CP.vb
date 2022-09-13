@@ -8,6 +8,7 @@ Imports System.Security.Principal
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.Win32
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class CP
@@ -98,8 +99,6 @@ Public Class CP
 #End Region
 
 #Region "LogonUI_Win10"
-    Public Property LogonUI_Background As Color = Color.FromArgb(0, 90, 158)
-    Public Property LogonUI_PersonalColors_Accent As Color = Color.FromArgb(0, 118, 215)
     Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
     Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
     Public Property LogonUI_NoLockScreen As Boolean = False
@@ -500,7 +499,7 @@ Public Class CP
             R = Registry.CurrentUser
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
         ElseIf KeyName.Contains("HKEY_LOCAL_MACHINE") Then
-            R = Registry.LocalMachine
+            R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
         End If
 
@@ -514,7 +513,7 @@ Public Class CP
             End If
         Catch 'ex As Exception
             'MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
-            'MainFrm.status_lbl.Text = "Error in applying values of LogonUI. Restart the application as an Administrator and try again."
+
         Finally
             If R IsNot Nothing Then
                 R.Flush()
@@ -1067,26 +1066,6 @@ Public Class CP
                     Dim y As Object
 
                     Try
-                        With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", Def.LogonUI_Background.R & " " & Def.LogonUI_Background.G & " " & Def.LogonUI_Background.B)
-                            If .ToString.Split(" ").Count = 3 Then
-                                LogonUI_Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
-                            Else
-                                LogonUI_Background = Color.FromArgb(255, Def.LogonUI_Background)
-                            End If
-                        End With
-                    Catch
-                        LogonUI_Background = Color.FromArgb(255, Def.LogonUI_Background)
-                    End Try
-
-
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(Def.LogonUI_PersonalColors_Accent, False))
-                        LogonUI_PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y.Replace("#", ""), 16)))
-                    Catch
-                        LogonUI_PersonalColors_Accent = Def.LogonUI_PersonalColors_Accent
-                    End Try
-
-                    Try
                         LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", Def.LogonUI_DisableAcrylicBackgroundOnLogon)
                     Catch
                         LogonUI_DisableAcrylicBackgroundOnLogon = Def.LogonUI_DisableAcrylicBackgroundOnLogon
@@ -1104,8 +1083,6 @@ Public Class CP
                         LogonUI_NoLockScreen = Def.LogonUI_NoLockScreen
                     End Try
                 Else
-                    LogonUI_Background = _Def.LogonUI_Background
-                    LogonUI_PersonalColors_Accent = _Def.LogonUI_PersonalColors_Accent
                     LogonUI_DisableAcrylicBackgroundOnLogon = _Def.LogonUI_DisableAcrylicBackgroundOnLogon
                     LogonUI_DisableLogonBackgroundImage = _Def.LogonUI_DisableLogonBackgroundImage
                     LogonUI_NoLockScreen = _Def.LogonUI_NoLockScreen
@@ -1844,8 +1821,6 @@ Public Class CP
 #End Region
 
 #Region "LogonUI"
-                    If lin.StartsWith("*LogonUI_Background= ") Then LogonUI_Background = Color.FromArgb(lin.Remove(0, "*LogonUI_Background= ".Count))
-                    If lin.StartsWith("*LogonUI_PersonalColors_Accent= ") Then LogonUI_PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*LogonUI_PersonalColors_Accent= ".Count))
                     If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI_DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
                     If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI_DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
                     If lin.StartsWith("*LogonUI_NoLockScreen= ") Then LogonUI_NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
@@ -2244,8 +2219,6 @@ Public Class CP
 #End Region
 
 #Region "LogonUI"
-                LogonUI_Background = Color.Black
-                LogonUI_PersonalColors_Accent = Color.Black
                 LogonUI_DisableAcrylicBackgroundOnLogon = False
                 LogonUI_DisableLogonBackgroundImage = False
                 LogonUI_NoLockScreen = False
@@ -2581,6 +2554,7 @@ Public Class CP
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
             Case SavingMode.Registry
+
 #Region "Registry"
 
                 If My.W7 Or My.W8 Then
@@ -2604,6 +2578,7 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
+
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
 
@@ -2749,22 +2724,15 @@ Public Class CP
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
                     If isElevated Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", String.Format("{0} {1} {2}", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B), False, True)
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(LogonUI_PersonalColors_Accent, False), False, True)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
-
                     Else
                         Dim ls As New List(Of String)
                         ls.Clear()
                         ls.Add("Windows Registry Editor Version 5.00")
                         ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]")
-                        ls.Add(String.Format("""Background""=""{0} {1} {2}""", LogonUI_Background.R, LogonUI_Background.G, LogonUI_Background.B))
-                        ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", RGB2HEX_oneline(LogonUI_PersonalColors_Accent, False)))
                         ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
                         ls.Add(vbCrLf)
                         ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
@@ -3603,8 +3571,6 @@ Public Class CP
 
 #Region "LogonUI"
                 tx.Add("<LogonUI_10_11>")
-                tx.Add("*LogonUI_Background= " & LogonUI_Background.ToArgb)
-                tx.Add("*LogonUI_PersonalColors_Accent= " & LogonUI_PersonalColors_Accent.ToArgb)
                 tx.Add("*LogonUI_DisableAcrylicBackgroundOnLogon= " & LogonUI_DisableAcrylicBackgroundOnLogon)
                 tx.Add("*LogonUI_DisableLogonBackgroundImage= " & LogonUI_DisableLogonBackgroundImage)
                 tx.Add("*LogonUI_NoLockScreen= " & LogonUI_NoLockScreen)
@@ -4486,7 +4452,6 @@ Public Class CP_Defaults
         .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
         .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192),
-        .LogonUI_Background = Color.FromArgb(0, 0, 0), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 0, 0),
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
        }
 
@@ -4502,7 +4467,6 @@ Public Class CP_Defaults
         .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
         .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158),
-        .LogonUI_Background = Color.FromArgb(0, 90, 158), .LogonUI_PersonalColors_Accent = Color.FromArgb(0, 118, 215),
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
        }
 

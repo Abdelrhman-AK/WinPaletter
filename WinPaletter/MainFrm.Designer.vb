@@ -362,8 +362,6 @@ Partial Class MainFrm
         '
         'pnl8
         '
-        Me.pnl8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl8.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl8.Controls.Add(Me.pic8)
         Me.pnl8.Controls.Add(Me.lbl8)
@@ -426,8 +424,6 @@ Partial Class MainFrm
         '
         'pnl7
         '
-        Me.pnl7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl7.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl7.Controls.Add(Me.pic7)
         Me.pnl7.Controls.Add(Me.lbl7)
@@ -490,8 +486,6 @@ Partial Class MainFrm
         '
         'pnl4
         '
-        Me.pnl4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl4.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl4.Controls.Add(Me.pic4)
         Me.pnl4.Controls.Add(Me.lbl4)
@@ -564,8 +558,6 @@ Partial Class MainFrm
         '
         'pnl6
         '
-        Me.pnl6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl6.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl6.Controls.Add(Me.pic6)
         Me.pnl6.Controls.Add(Me.lbl6)
@@ -628,8 +620,6 @@ Partial Class MainFrm
         '
         'pnl1
         '
-        Me.pnl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl1.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl1.Controls.Add(Me.pic1)
         Me.pnl1.Controls.Add(Me.TaskbarFrontAndFoldersOnStart_picker)
@@ -692,8 +682,6 @@ Partial Class MainFrm
         '
         'pnl3
         '
-        Me.pnl3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl3.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl3.Controls.Add(Me.pic3)
         Me.pnl3.Controls.Add(Me.TaskbarIconUnderline_picker)
@@ -768,8 +756,6 @@ Partial Class MainFrm
         '
         'pnl2
         '
-        Me.pnl2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl2.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl2.Controls.Add(Me.ActionCenter_picker)
         Me.pnl2.Controls.Add(Me.pic2)
@@ -832,8 +818,6 @@ Partial Class MainFrm
         '
         'pnl5
         '
-        Me.pnl5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl5.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
         Me.pnl5.Controls.Add(Me.pic5)
         Me.pnl5.Controls.Add(Me.lbl5)
@@ -3518,9 +3502,9 @@ Partial Class MainFrm
         Me.Controls.Add(Me.NotificationsPanel)
         Me.Controls.Add(Me.XenonGroupBox8)
         Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Controls.Add(Me.PaletteContainer_W7)
         Me.Controls.Add(Me.PaletteContainer_W1x)
         Me.Controls.Add(Me.PaletteContainer_W8)
+        Me.Controls.Add(Me.PaletteContainer_W7)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle

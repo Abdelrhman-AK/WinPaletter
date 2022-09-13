@@ -40,32 +40,7 @@ Public Class MainFrm
 
             Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
-            pnl1.Top = Label10.Bottom + 3
-            pnl2.Top = pnl1.Bottom + 2
-            pnl3.Top = pnl2.Bottom + 2
-            pnl4.Top = pnl3.Bottom + 2
-            pnl5.Top = pnl4.Bottom + 2
-            pnl6.Top = pnl5.Bottom + 2
-            pnl7.Top = pnl6.Bottom + 2
-            pnl8.Top = pnl7.Bottom + 2
-        Else
-            XenonWindow1.Active = True
-            XenonWindow2.Active = False
-        End If
-
-        Select Case PreviewConfig
-            Case WinVer.Eleven
-#Region "Win11"
-                start.DarkMode = Not [CP].WinMode_Light
-                taskbar.DarkMode = Not [CP].WinMode_Light
-                ActionCenter.DarkMode = Not [CP].WinMode_Light
-
-                taskbar.Transparency = [CP].Transparency
-                start.Transparency = [CP].Transparency
-                ActionCenter.Transparency = [CP].Transparency
-
-                start.Top = taskbar.Top - start.Height - 9
-
+            If PreviewConfig = WinVer.Eleven Then
                 lbl5.Text = My.Application.LanguageHelper.X7
                 lbl6.Text = My.Application.LanguageHelper.X8
                 lbl7.Text = My.Application.LanguageHelper.X9
@@ -95,29 +70,6 @@ Public Class MainFrm
                             pnl4.Top = pnl3.Bottom + 2
                         End If
 
-                        taskbar.BackColorAlpha = 130
-                        start.BackColorAlpha = 130
-                        ActionCenter.BackColorAlpha = 130
-
-                        If [CP].ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                        Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
-                        End If
-
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-
-                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-
                     Case False   ''''''''''Light
                         lbl1.Text = My.Application.LanguageHelper.X2
                         lbl2.Text = My.Application.LanguageHelper.X5
@@ -135,47 +87,8 @@ Public Class MainFrm
                             pnl4.Top = pnl1.Bottom + 2
                             pnl3.Top = pnl4.Bottom + 2
                         End If
-
-                        taskbar.BackColorAlpha = 180
-                        start.BackColorAlpha = 180
-                        ActionCenter.BackColorAlpha = 180
-
-                        If [CP].ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
-                        Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                        End If
-
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-
-                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
                 End Select
-
-                ReValidateLivePreview(pnl_preview)
-#End Region
-            Case WinVer.Ten
-#Region "Win10"
-                start.DarkMode = Not [CP].WinMode_Light
-                taskbar.DarkMode = Not [CP].WinMode_Light
-                ActionCenter.DarkMode = Not [CP].WinMode_Light
-
-                taskbar.Transparency = [CP].Transparency
-                start.Transparency = [CP].Transparency
-                ActionCenter.Transparency = [CP].Transparency
-
-                start.Top = taskbar.Top - start.Height
-
-                lbl6.Text = My.Application.LanguageHelper.X11
-
+            Else
                 If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
                     lbl1.Text = My.Application.LanguageHelper.X16
                     lbl2.Text = My.Application.LanguageHelper.X16
@@ -265,6 +178,92 @@ Public Class MainFrm
                         End If
                     End If
                 End If
+            End If
+
+
+        Else
+            XenonWindow1.Active = True
+            XenonWindow2.Active = False
+        End If
+
+        Select Case PreviewConfig
+            Case WinVer.Eleven
+#Region "Win11"
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
+
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
+
+                start.Top = taskbar.Top - start.Height - 9
+
+                Select Case Not [CP].WinMode_Light
+                    Case True   ''''''''''Dark
+                        taskbar.BackColorAlpha = 130
+                        start.BackColorAlpha = 130
+                        ActionCenter.BackColorAlpha = 130
+
+                        If [CP].ApplyAccentonTaskbar Then
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                        Else
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+                        End If
+
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+
+                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+
+                    Case False   ''''''''''Light
+                        taskbar.BackColorAlpha = 180
+                        start.BackColorAlpha = 180
+                        ActionCenter.BackColorAlpha = 180
+
+                        If [CP].ApplyAccentonTaskbar Then
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+                        Else
+                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                        End If
+
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+
+                        Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                End Select
+
+                ReValidateLivePreview(pnl_preview)
+#End Region
+            Case WinVer.Ten
+#Region "Win10"
+                start.DarkMode = Not [CP].WinMode_Light
+                taskbar.DarkMode = Not [CP].WinMode_Light
+                ActionCenter.DarkMode = Not [CP].WinMode_Light
+
+                taskbar.Transparency = [CP].Transparency
+                start.Transparency = [CP].Transparency
+                ActionCenter.Transparency = [CP].Transparency
+
+                start.Top = taskbar.Top - start.Height
+
+                lbl6.Text = My.Application.LanguageHelper.X11
 
                 taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, [CP].Taskbar_Icon_Underline))
 
@@ -2347,10 +2346,6 @@ Public Class MainFrm
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs)
         ApplyingTheme.Show()
-    End Sub
-
-    Private Sub PaletteContainer_W8_Paint(sender As Object, e As PaintEventArgs) Handles PaletteContainer_W8.Paint
-
     End Sub
 
 

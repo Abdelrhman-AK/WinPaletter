@@ -101,7 +101,6 @@ Public Class SubMenu
             My.Application.ColorEvent = My.MyApplication.MenuEvent.None
             Return Nothing
         End If
-
     End Function
 
     Private Sub SubMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
