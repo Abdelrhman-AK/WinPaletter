@@ -120,11 +120,7 @@
   <data name="Label14.Text" xml:space="preserve">
     <value>- Windows 10,11 LogonUI colors (PersonalColors_Background, PersonalColors_Accent and Background) are removed from the program, as when they are applied correctly to registry, several bugs occurs to Windows (These Colors are Specific for Windows 8.1)
 
-- New: You can save classic theme of Win32UI in *.theme format to used it in any OS (Starting by Windows 95), Open Win32UI Form for more info
-
-- Fixing multiple issues in Color Palette loading for users used WinPaletter 1.0.5.0 for the first time (not for old users)
-
-- Aero Lite Theme in Windows 8.1 can't be remembered if applied or not, now Fixed
+- Minor UI fixes and improvements
 
 - Fixing bugs in the Windows Classic (Win32UI) previewer</value>
   </data>
@@ -139,7 +135,7 @@
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAZYAAAEFCAIAAABPaFYsAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAQQNJREFUeF7tnQmcFdWV/8moJA5LI1uzBCSQMShEXAIGiCCiTELAQQVjUBRcISRR
+        vgAADr4B6kKxwAAAQQNJREFUeF7tnQmcFdWV/8moJA5LI1uzBCSQMShEXAIGiCCiTELAQQVjUBRcISRR
         0SgYjAtiEFzbLY7aGjeSTBJFB2iFREAS3ElEVGy2VpM4MTEqxsjMf4b/797frVP33bdQr/vx+r3X536+
         n+LWuefeqnr96uupokNaDTj4y4qiKGWKUdin9m6rKIpSdqjCFEUpY1RhiqKUMaowRVHKGFWYoihljCpM
         UZQyRhWmKEoZowpTFKWMUYUpilLGqMIURSljVGGKopQxqjBFUcqYPBT2T/u02+czHfZq3R7bvT9dRbCL
