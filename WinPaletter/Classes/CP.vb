@@ -154,6 +154,28 @@ Public Class CP
     Public Property Win32UI_Desktop As Color = Color.FromArgb(0, 0, 0)
 #End Region
 
+#Region "CMD"
+    Public Property CMD_ColorTable00 As Color
+    Public Property CMD_ColorTable01 As Color
+    Public Property CMD_ColorTable02 As Color
+    Public Property CMD_ColorTable03 As Color
+    Public Property CMD_ColorTable04 As Color
+    Public Property CMD_ColorTable05 As Color
+    Public Property CMD_ColorTable06 As Color
+    Public Property CMD_ColorTable07 As Color
+    Public Property CMD_ColorTable08 As Color
+    Public Property CMD_ColorTable09 As Color
+    Public Property CMD_ColorTable10 As Color
+    Public Property CMD_ColorTable11 As Color
+    Public Property CMD_ColorTable12 As Color
+    Public Property CMD_ColorTable13 As Color
+    Public Property CMD_ColorTable14 As Color
+    Public Property CMD_ColorTable15 As Color
+    Public Property CMD_PopupForeground As Integer = 15
+    Public Property CMD_PopupBackground As Integer = 5
+    Public Property CMD_ScreenColors As Integer = 7
+#End Region
+
 #Region "Cursors"
     Public Property Cursor_Enabled As Boolean = False
 
@@ -1391,6 +1413,143 @@ Public Class CP
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
                     If .ToString.Split(" ").Count = 3 Then Win32UI_Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
+#End Region
+
+#Region "CMD"
+                'Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
+                Dim y_cmd As Object
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable00", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable00 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable01", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable01 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable02", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable02 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable03", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable03 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable04", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable04 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable05", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable05 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable06", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable06 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable07", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable07 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable08", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable08 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable09", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable09 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable10", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable10 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable11", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable11 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable12", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable12 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable13", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable13 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable14", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable14 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable15", BizareColorInvertor(Color.Black).ToArgb)
+                    CMD_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                Catch
+                    CMD_ColorTable15 = Color.Black
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "PopupColors", 245)
+
+                    With CInt(y_cmd).ToString("X")
+                        CMD_PopupBackground = Convert.ToInt32(.Chars(0), 16)
+                        CMD_PopupForeground = Convert.ToInt32(.Chars(1), 16)
+                    End With
+                Catch
+                    CMD_PopupBackground = 15
+                    CMD_PopupForeground = 5
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ScreenColors", 7)
+                    CMD_ScreenColors = y_cmd
+                Catch
+                    CMD_ScreenColors = 7
+                End Try
+
 #End Region
 
 #Region "Cursors"
@@ -3189,6 +3348,28 @@ Public Class CP
 #End Region
 
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
+
+#Region "CMD"
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", CMD_ScreenColors)
+
+#End Region
 
 #Region "Cursors"
                 If My.W7 Or My.W8 Then SetCtrlTxt("Saving Cursors Colors ...", f)

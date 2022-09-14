@@ -2348,6 +2348,10 @@ Public Class MainFrm
         ApplyingTheme.Show()
     End Sub
 
+    Private Sub XenonButton24_Click(sender As Object, e As EventArgs) Handles XenonButton24.Click
+        cmd.ShowDialog()
+    End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
