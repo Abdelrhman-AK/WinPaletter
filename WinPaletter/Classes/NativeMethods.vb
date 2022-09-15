@@ -214,10 +214,4 @@ Namespace NativeMethods
 
     End Class
 
-    Public Class Gdi32
-        <DllImport("gdi32.dll")>
-        Public Shared Function CreateEllipticRgn(ByVal nLeftRect As Integer, ByVal nTopRect As Integer, ByVal nRightRect As Integer, ByVal nBottomRect As Integer) As IntPtr
-        End Function
-    End Class
-
 End Namespace

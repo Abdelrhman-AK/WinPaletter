@@ -194,6 +194,7 @@ Partial Class MainFrm
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton24 = New WinPaletter.XenonButton()
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
@@ -234,7 +235,6 @@ Partial Class MainFrm
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton24 = New WinPaletter.XenonButton()
         Me.PaletteContainer_W1x.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -2784,6 +2784,23 @@ Partial Class MainFrm
         Me.XenonGroupBox3.TabIndex = 28
         Me.XenonGroupBox3.Text = "XenonGroupBox3"
         '
+        'XenonButton24
+        '
+        Me.XenonButton24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton24.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton24.ForeColor = System.Drawing.Color.White
+        Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
+        Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
+        Me.XenonButton24.LineSize = 1
+        Me.XenonButton24.Location = New System.Drawing.Point(208, 3)
+        Me.XenonButton24.Name = "XenonButton24"
+        Me.XenonButton24.Size = New System.Drawing.Size(69, 59)
+        Me.XenonButton24.TabIndex = 28
+        Me.XenonButton24.Text = "Terminals"
+        Me.XenonButton24.UseVisualStyleBackColor = False
+        '
         'XenonButton21
         '
         Me.XenonButton21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -3489,23 +3506,6 @@ Partial Class MainFrm
         Me.XenonButton2.TabIndex = 2
         Me.XenonButton2.Tag = "Open a Theme File"
         Me.XenonButton2.UseVisualStyleBackColor = False
-        '
-        'XenonButton24
-        '
-        Me.XenonButton24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton24.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton24.ForeColor = System.Drawing.Color.White
-        Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
-        Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
-        Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(208, 3)
-        Me.XenonButton24.Name = "XenonButton24"
-        Me.XenonButton24.Size = New System.Drawing.Size(69, 59)
-        Me.XenonButton24.TabIndex = 28
-        Me.XenonButton24.Text = "CMD"
-        Me.XenonButton24.UseVisualStyleBackColor = False
         '
         'MainFrm
         '

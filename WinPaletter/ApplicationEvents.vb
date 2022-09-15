@@ -1,4 +1,6 @@
-﻿Imports System.Management
+﻿Imports System.Drawing.Text
+Imports System.IO
+Imports System.Management
 Imports System.Reflection
 Imports System.Security.Principal
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -42,6 +44,7 @@ Namespace My
 
         Public ConsoleFont As New Font("Lucida Console", 7.5)
         Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
+        Public TerminalFont As New Font("Lucida Console", 7.5)
 
         Enum MenuEvent
             None
@@ -396,13 +399,15 @@ Namespace My
             End If
         End Sub
 
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
-
+                MemoryFonts.AddMemoryFont(My.Resources.TerminalFont)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
+
+                TerminalFont = MemoryFonts.GetFont(1)
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)

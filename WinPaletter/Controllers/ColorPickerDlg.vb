@@ -351,6 +351,75 @@ Public Class ColorPickerDlg
                     ctrl.Invalidate()
                 End With
 
+            ElseIf TypeOf ctrl Is XenonCMD Then
+                With TryCast(ctrl, XenonCMD)
+                    If _Conditions.CMD_ColorTable00 Then
+                        .CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.CMD_ColorTable01 Then
+                        .CMD_ColorTable01 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.CMD_ColorTable02 Then
+                        .CMD_ColorTable02 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable03 Then
+                        .CMD_ColorTable03 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable04 Then
+                        .CMD_ColorTable04 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable05 Then
+                        .CMD_ColorTable05 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable06 Then
+                        .CMD_ColorTable06 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable07 Then
+                        .CMD_ColorTable07 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable08 Then
+                        .CMD_ColorTable08 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable09 Then
+                        .CMD_ColorTable09 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable10 Then
+                        .CMD_ColorTable10 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable11 Then
+                        .CMD_ColorTable11 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable12 Then
+                        .CMD_ColorTable12 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable13 Then
+                        .CMD_ColorTable13 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable14 Then
+                        .CMD_ColorTable14 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+
+                    ElseIf _Conditions.CMD_ColorTable15 Then
+                        .CMD_ColorTable15 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    Else
+                        .CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    End If
+
+                    .Refresh()
+                End With
+
             ElseIf TypeOf ctrl Is CursorControl Then
 
                 With DirectCast(ctrl, CursorControl)
@@ -608,6 +677,22 @@ Public Class Conditions
     Public Sub New()
 
     End Sub
+    Public Property CMD_ColorTable00 As Boolean = False
+    Public Property CMD_ColorTable01 As Boolean = False
+    Public Property CMD_ColorTable02 As Boolean = False
+    Public Property CMD_ColorTable03 As Boolean = False
+    Public Property CMD_ColorTable04 As Boolean = False
+    Public Property CMD_ColorTable05 As Boolean = False
+    Public Property CMD_ColorTable06 As Boolean = False
+    Public Property CMD_ColorTable07 As Boolean = False
+    Public Property CMD_ColorTable08 As Boolean = False
+    Public Property CMD_ColorTable09 As Boolean = False
+    Public Property CMD_ColorTable10 As Boolean = False
+    Public Property CMD_ColorTable11 As Boolean = False
+    Public Property CMD_ColorTable12 As Boolean = False
+    Public Property CMD_ColorTable13 As Boolean = False
+    Public Property CMD_ColorTable14 As Boolean = False
+    Public Property CMD_ColorTable15 As Boolean = False
 
     Public Property Win7LivePreview_Colorization As Boolean = False
     Public Property Win7LivePreview_AfterGlow As Boolean = False

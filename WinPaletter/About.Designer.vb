@@ -50,6 +50,8 @@ Partial Class About
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel8 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel9 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -59,6 +61,7 @@ Partial Class About
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox1
@@ -191,7 +194,7 @@ Partial Class About
         '
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 446)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 476)
         Me.XenonSeparator2.Name = "XenonSeparator2"
         Me.XenonSeparator2.Size = New System.Drawing.Size(501, 1)
         Me.XenonSeparator2.TabIndex = 14
@@ -204,7 +207,7 @@ Partial Class About
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Gray
-        Me.Label3.Location = New System.Drawing.Point(18, 471)
+        Me.Label3.Location = New System.Drawing.Point(18, 498)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(229, 15)
         Me.Label3.TabIndex = 15
@@ -252,7 +255,7 @@ Partial Class About
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(420, 462)
+        Me.XenonButton3.Location = New System.Drawing.Point(420, 489)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(93, 33)
         Me.XenonButton3.TabIndex = 18
@@ -327,7 +330,7 @@ Partial Class About
         Me.LinkLabel6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel6.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel6.LinkColor = System.Drawing.Color.White
-        Me.LinkLabel6.Location = New System.Drawing.Point(42, 408)
+        Me.LinkLabel6.Location = New System.Drawing.Point(42, 438)
         Me.LinkLabel6.Name = "LinkLabel6"
         Me.LinkLabel6.Size = New System.Drawing.Size(471, 35)
         Me.LinkLabel6.TabIndex = 25
@@ -338,7 +341,7 @@ Partial Class About
         'PictureBox7
         '
         Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
-        Me.PictureBox7.Location = New System.Drawing.Point(12, 406)
+        Me.PictureBox7.Location = New System.Drawing.Point(12, 436)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox7.TabIndex = 24
@@ -392,12 +395,38 @@ Partial Class About
         Me.PictureBox9.TabIndex = 28
         Me.PictureBox9.TabStop = False
         '
+        'LinkLabel9
+        '
+        Me.LinkLabel9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel9.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel9.LinkColor = System.Drawing.Color.White
+        Me.LinkLabel9.Location = New System.Drawing.Point(42, 406)
+        Me.LinkLabel9.Name = "LinkLabel9"
+        Me.LinkLabel9.Size = New System.Drawing.Size(471, 24)
+        Me.LinkLabel9.TabIndex = 31
+        Me.LinkLabel9.TabStop = True
+        Me.LinkLabel9.Text = "Terminal Font Vectorized and combined by George Yohng"
+        Me.LinkLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox10
+        '
+        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
+        Me.PictureBox10.Location = New System.Drawing.Point(12, 406)
+        Me.PictureBox10.Name = "PictureBox10"
+        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox10.TabIndex = 30
+        Me.PictureBox10.TabStop = False
+        '
         'About
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(525, 507)
+        Me.ClientSize = New System.Drawing.Size(525, 534)
+        Me.Controls.Add(Me.LinkLabel9)
+        Me.Controls.Add(Me.PictureBox10)
         Me.Controls.Add(Me.LinkLabel8)
         Me.Controls.Add(Me.PictureBox9)
         Me.Controls.Add(Me.LinkLabel7)
@@ -445,6 +474,7 @@ Partial Class About
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -477,4 +507,6 @@ Partial Class About
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents LinkLabel8 As LinkLabel
     Friend WithEvents PictureBox9 As PictureBox
+    Friend WithEvents LinkLabel9 As LinkLabel
+    Friend WithEvents PictureBox10 As PictureBox
 End Class

@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonCore
 
@@ -835,11 +836,9 @@ Public Class XenonRadioButton
 
                 RaiseEvent CheckedChanged(Me)
 
-                If _Shown Then
-                    Tmr2.Enabled = True
-                    Tmr2.Start()
+                Tmr2.Enabled = True
+                Tmr2.Start()
                     Invalidate()
-                End If
 
             Catch
             End Try
@@ -847,7 +846,6 @@ Public Class XenonRadioButton
     End Property
 
     Private _Checked As Boolean
-    Private _Shown As Boolean = False
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -883,7 +881,6 @@ Public Class XenonRadioButton
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = True
         State = MouseState.Down
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -892,7 +889,6 @@ Public Class XenonRadioButton
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -900,7 +896,6 @@ Public Class XenonRadioButton
 
     Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -908,7 +903,6 @@ Public Class XenonRadioButton
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -918,7 +912,6 @@ Public Class XenonRadioButton
 
         Try
             If Not DesignMode Then
-                AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
@@ -937,21 +930,15 @@ Public Class XenonRadioButton
         End Try
     End Sub
 
-    Sub Loaded()
-        _Shown = False
-    End Sub
 
     Sub Showed()
-        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
-            Invalidate()
-        End If
+        ColorPalette = New XenonColorPalette(Me)
+        Invalidate()
     End Sub
 #End Region
 
@@ -972,10 +959,8 @@ Public Class XenonRadioButton
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not State = MouseState.Over Then
@@ -987,10 +972,8 @@ Public Class XenonRadioButton
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
         End If
     End Sub
@@ -1007,10 +990,8 @@ Public Class XenonRadioButton
                     Tmr2.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not Checked Then
@@ -1022,10 +1003,8 @@ Public Class XenonRadioButton
                     Tmr2.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
         End If
     End Sub
@@ -1146,9 +1125,7 @@ Public Class XenonRadioImage
 
                 RaiseEvent CheckedChanged(Me)
 
-                If _Shown Then
-                    Invalidate()
-                End If
+                Invalidate()
 
             Catch
             End Try
@@ -1157,7 +1134,6 @@ Public Class XenonRadioImage
 
     Public Property Image As Image
     Private _Checked As Boolean
-    Private _Shown As Boolean = False
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -1193,7 +1169,6 @@ Public Class XenonRadioImage
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = True
         State = MouseState.Down
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -1202,7 +1177,6 @@ Public Class XenonRadioImage
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -1210,7 +1184,6 @@ Public Class XenonRadioImage
 
     Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -1218,7 +1191,6 @@ Public Class XenonRadioImage
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
-        _Shown = True
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
@@ -1228,7 +1200,6 @@ Public Class XenonRadioImage
 
         Try
             If Not DesignMode Then
-                AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
@@ -1246,21 +1217,14 @@ Public Class XenonRadioImage
         End Try
     End Sub
 
-    Sub Loaded()
-        _Shown = False
-    End Sub
-
     Sub Showed()
-        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
-            Invalidate()
-        End If
+        ColorPalette = New XenonColorPalette(Me)
+        Invalidate()
     End Sub
 #End Region
 
@@ -1281,10 +1245,8 @@ Public Class XenonRadioImage
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not State = MouseState.Over Then
@@ -1296,10 +1258,8 @@ Public Class XenonRadioImage
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
         End If
     End Sub
@@ -1456,7 +1416,6 @@ Public Class XenonCheckBox
             ColorPalette = New XenonColorPalette(Me)
             If Not DesignMode Then
                 Try
-                    AddHandler FindForm.Load, AddressOf Loaded
                     AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                     AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
@@ -1470,21 +1429,15 @@ Public Class XenonCheckBox
         End Try
     End Sub
 
-    Sub Loaded()
-        _Shown = False
-    End Sub
 
     Sub Showed()
-        _Shown = True
         ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
-            Invalidate()
-        End If
+        ColorPalette = New XenonColorPalette(Me)
+        Invalidate()
     End Sub
 #End Region
 
@@ -1492,7 +1445,6 @@ Public Class XenonCheckBox
     Dim alpha, alpha2 As Integer
     ReadOnly Factor As Integer = 25
     Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
-    Private _Shown As Boolean = False
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
@@ -1536,10 +1488,8 @@ Public Class XenonCheckBox
                     Tmr2.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not Checked Then
@@ -1551,10 +1501,8 @@ Public Class XenonCheckBox
                     Tmr2.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
 
             End If
         End If
@@ -4930,7 +4878,6 @@ Class XenonTrackbar
     Private ThumbDown As Boolean
     Private Circle As Rectangle
     Dim Colors As XenonColorPalette
-    Private _Shown As Boolean = False
 
     Enum MouseState
         None
@@ -4955,10 +4902,8 @@ Class XenonTrackbar
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
 
             If Not State = MouseState.Over Or State = MouseState.Down Then
@@ -4970,10 +4915,8 @@ Class XenonTrackbar
                     Tmr.Stop()
                 End If
 
-                If _Shown Then
-                    Threading.Thread.Sleep(1)
-                    Invalidate()
-                End If
+                Threading.Thread.Sleep(1)
+                Invalidate()
             End If
         End If
     End Sub
@@ -5131,7 +5074,6 @@ Class XenonTrackbar
 
         Try
             If Not DesignMode Then
-                AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
@@ -5149,21 +5091,237 @@ Class XenonTrackbar
         End Try
     End Sub
 
-    Sub Loaded()
-        _Shown = False
-    End Sub
 
     Sub Showed()
-        _Shown = True
         Colors = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        If _Shown Then
-            Colors = New XenonColorPalette(Me)
-            Invalidate()
-        End If
+        Colors = New XenonColorPalette(Me)
+        Invalidate()
     End Sub
 End Class
+
+<DefaultEvent("Click")>
+Public Class XenonCMD
+    Inherits ContainerControl
+    Public Property CMD_ColorTable00 As Color
+    Public Property CMD_ColorTable01 As Color
+    Public Property CMD_ColorTable02 As Color
+    Public Property CMD_ColorTable03 As Color
+    Public Property CMD_ColorTable04 As Color
+    Public Property CMD_ColorTable05 As Color
+    Public Property CMD_ColorTable06 As Color
+    Public Property CMD_ColorTable07 As Color
+    Public Property CMD_ColorTable08 As Color
+    Public Property CMD_ColorTable09 As Color
+    Public Property CMD_ColorTable10 As Color
+    Public Property CMD_ColorTable11 As Color
+    Public Property CMD_ColorTable12 As Color
+    Public Property CMD_ColorTable13 As Color
+    Public Property CMD_ColorTable14 As Color
+    Public Property CMD_ColorTable15 As Color
+    Public Property CMD_ScreenColorsForeground As Integer = 7
+    Public Property CMD_ScreenColorsBackground As Integer = 0
+    Public Property CMD_PopupForeground As Integer = 15
+    Public Property CMD_PopupBackground As Integer = 5
+    Public Property PowerShell As Boolean = False
+    Public Property Raster As Boolean = True
+
+    Dim S1 As String = "(c) Microsoft Corporation. All rights reserved."
+    Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
+    Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        DoubleBuffered = True
+
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim RectCMD As New Rectangle(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10)
+        Dim RectMiddle As New Rectangle(Rect.X + (Rect.Width - 200) / 2, Rect.Y + (Rect.Height - 50) / 2, 200, 50)
+        Dim RectMiddleBorder As New Rectangle(RectMiddle.X + 3, RectMiddle.Y + 9, RectMiddle.Width - 6, RectMiddle.Height - 18)
+
+        Dim FC, BK, PCF, PCB As Color
+        Dim S As String
+
+        Dim F As Font
+
+        If Raster Then
+            G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+            F = New Font(My.Application.TerminalFont.FontFamily, CSng(Font.Size * 0.8), Font.Style)
+        Else
+            G.TextRenderingHint = TextRenderingHint.SystemDefault
+            F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+        End If
+
+        Select Case CMD_ScreenColorsForeground
+            Case 0
+                If CMD_ScreenColorsForeground = 0 And CMD_ScreenColorsBackground = 0 Then
+                    FC = CMD_ColorTable07
+                Else
+                    FC = CMD_ColorTable00
+                End If
+            Case 1
+                FC = CMD_ColorTable01
+            Case 2
+                FC = CMD_ColorTable02
+            Case 3
+                FC = CMD_ColorTable03
+            Case 4
+                FC = CMD_ColorTable04
+            Case 5
+                FC = CMD_ColorTable05
+            Case 6
+                FC = CMD_ColorTable06
+            Case 7
+                FC = CMD_ColorTable07
+            Case 8
+                FC = CMD_ColorTable08
+            Case 9
+                FC = CMD_ColorTable09
+            Case 10
+                FC = CMD_ColorTable10
+            Case 11
+                FC = CMD_ColorTable11
+            Case 12
+                FC = CMD_ColorTable12
+            Case 13
+                FC = CMD_ColorTable13
+            Case 14
+                FC = CMD_ColorTable14
+            Case 15
+                FC = CMD_ColorTable15
+        End Select
+
+        Select Case CMD_ScreenColorsBackground
+            Case 0
+                BK = CMD_ColorTable00
+            Case 1
+                BK = CMD_ColorTable01
+            Case 2
+                BK = CMD_ColorTable02
+            Case 3
+                BK = CMD_ColorTable03
+            Case 4
+                BK = CMD_ColorTable04
+            Case 5
+                BK = CMD_ColorTable05
+            Case 6
+                BK = CMD_ColorTable06
+            Case 7
+                BK = CMD_ColorTable07
+            Case 8
+                BK = CMD_ColorTable08
+            Case 9
+                BK = CMD_ColorTable09
+            Case 10
+                BK = CMD_ColorTable10
+            Case 11
+                BK = CMD_ColorTable11
+            Case 12
+                BK = CMD_ColorTable12
+            Case 13
+                BK = CMD_ColorTable13
+            Case 14
+                BK = CMD_ColorTable14
+            Case 15
+                BK = CMD_ColorTable15
+        End Select
+
+        Select Case CMD_PopupForeground
+            Case 0
+                PCF = CMD_ColorTable00
+            Case 1
+                PCF = CMD_ColorTable01
+            Case 2
+                PCF = CMD_ColorTable02
+            Case 3
+                PCF = CMD_ColorTable03
+            Case 4
+                PCF = CMD_ColorTable04
+            Case 5
+                PCF = CMD_ColorTable05
+            Case 6
+                PCF = CMD_ColorTable06
+            Case 7
+                PCF = CMD_ColorTable07
+            Case 8
+                PCF = CMD_ColorTable08
+            Case 9
+                PCF = CMD_ColorTable09
+            Case 10
+                PCF = CMD_ColorTable10
+            Case 11
+                PCF = CMD_ColorTable11
+            Case 12
+                PCF = CMD_ColorTable12
+            Case 13
+                PCF = CMD_ColorTable13
+            Case 14
+                PCF = CMD_ColorTable14
+            Case 15
+                PCF = CMD_ColorTable15
+        End Select
+
+        Select Case CMD_PopupBackground
+            Case 0
+                PCB = CMD_ColorTable00
+            Case 1
+                PCB = CMD_ColorTable01
+            Case 2
+                PCB = CMD_ColorTable02
+            Case 3
+                PCB = CMD_ColorTable03
+            Case 4
+                PCB = CMD_ColorTable04
+            Case 5
+                PCB = CMD_ColorTable05
+            Case 6
+                PCB = CMD_ColorTable06
+            Case 7
+                PCB = CMD_ColorTable07
+            Case 8
+                PCB = CMD_ColorTable08
+            Case 9
+                PCB = CMD_ColorTable09
+            Case 10
+                PCB = CMD_ColorTable10
+            Case 11
+                PCB = CMD_ColorTable11
+            Case 12
+                PCB = CMD_ColorTable12
+            Case 13
+                PCB = CMD_ColorTable13
+            Case 14
+                PCB = CMD_ColorTable14
+            Case 15
+                PCB = CMD_ColorTable15
+        End Select
+
+        BackColor = BK
+        G.Clear(BK)
+
+        If Not PowerShell Then
+            S = String.Format("Microsoft Windows [Version {0}]", String.Format("{0}.{1}", Microsoft.Win32.Registry.GetValue(CV, "CurrentBuildNumber", 0),
+                Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))) & vbCrLf & S1 & vbCrLf & vbCrLf & S2
+        Else
+            S = "Windows PowerShell" & vbCrLf & S1 & vbCrLf & vbCrLf & "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" & vbCrLf & vbCrLf & "PS " & S2
+        End If
+
+        If Raster Then
+            S &= vbCrLf & vbCrLf & "*Note: Raster Font will look different from the preview."
+        End If
+
+        G.DrawString(S, F, New SolidBrush(FC), RectCMD)
+
+        G.FillRectangle(New SolidBrush(PCB), RectMiddle)
+        G.FillRectangle(New SolidBrush(PCB), RectMiddle)
+        G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
+        G.DrawString("This is a pop-up", F, New SolidBrush(PCF), RectMiddleBorder, StringAligner(ContentAlignment.MiddleCenter))
+    End Sub
+
+End Class
+
 #End Region
