@@ -46,6 +46,9 @@ Namespace My
         Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
         Public TerminalFont As New Font("Lucida Console", 7.5)
 
+        Public FontsList As New List(Of String)
+        Public FontsFixedList As New List(Of String)
+
         Enum MenuEvent
             None
             Copy
@@ -413,6 +416,23 @@ Namespace My
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
             End Try
 
+            FontsList.Clear()
+            FontsFixedList.Clear()
+
+            For Each [font] As FontFamily In FontFamily.Families
+                FontsList.Add([font].Name)
+            Next
+
+            Dim B As New Bitmap(100, 100)
+            Dim G As Graphics = Graphics.FromImage(B)
+
+            For Each [font] As FontFamily In NativeMethods.GDI32.GetFixedWidthFonts(G)
+                FontsFixedList.Add([font].Name)
+            Next
+
+            B.Dispose()
+            G.Dispose()
+
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
             allForms = New List(Of Form)
@@ -434,6 +454,7 @@ Namespace My
             allForms.Add(LogonUI8Colors)
             allForms.Add(LogonUI8_Pics)
             allForms.Add(Start8Selector)
+            allForms.Add(cmd)
 
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)

@@ -3079,6 +3079,7 @@ Public Class XenonComboBox : Inherits ComboBox
     Public ColorPalette As New XenonColorPalette()
 
 #Region "Properties"
+    Public Property CustomFont As Boolean = False
 
 #Region "Line Color Property"
     Private LineColorValue As Color = Color.DodgerBlue
@@ -3126,7 +3127,18 @@ Public Class XenonComboBox : Inherits ComboBox
                 e.Graphics.FillRectangle(New SolidBrush(ColorPalette.Color_Border_Checked_Hover), e.Bounds)
             End If
 
-            e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
+            Dim f As Font
+            If Not CustomFont Then
+                f = e.Font
+            Else
+                Try
+                    f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
+                Catch
+                    f = e.Font
+                End Try
+            End If
+
+            e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
         Catch
         End Try
     End Sub
@@ -3364,7 +3376,18 @@ Public Class XenonComboBox : Inherits ComboBox
             G.DrawLine(New Pen(FadeInColor), New Point(Width - 14, 15), New Point(Width - 14, 14))
         End If
 
-        G.DrawString(Text, Font, New SolidBrush(ForeColor), TextRect, New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near})
+        Dim f As Font
+        If Not CustomFont Then
+            f = Font
+        Else
+            Try
+                f = New Font(Text, Font.Size, Font.Style)
+            Catch
+                f = Font
+            End Try
+        End If
+
+        G.DrawString(Text, f, New SolidBrush(ForeColor), TextRect, New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near})
     End Sub
 End Class
 Public Class XenonAlertBox
@@ -4774,7 +4797,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 End Class
 
 <DefaultEvent("Scroll")>
-Class XenonTrackbar
+Public Class XenonTrackbar
     Inherits Control
 
     Event Scroll(ByVal sender As Object)
@@ -5128,10 +5151,25 @@ Public Class XenonCMD
     Public Property CMD_PopupBackground As Integer = 5
     Public Property PowerShell As Boolean = False
     Public Property Raster As Boolean = True
+    Public Property CustomTerminal As Boolean = False
 
     Dim S1 As String = "(c) Microsoft Corporation. All rights reserved."
     Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
     Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+
+    Function FixValue(i As Integer) As Integer
+        Dim v As Integer
+        v = i
+        If v < 12 Then v = 12
+        If v > 12 And v < 18 Then v = 12
+        If v > 18 And v < 24 Then v = 18
+        If v > 24 And v < 30 Then v = 24
+        If v > 30 And v < 36 Then v = 30
+        If v > 36 And v < 42 Then v = 36
+        If v > 42 And v < 48 Then v = 42
+        If v > 48 Then v = 48
+        Return v
+    End Function
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -5149,10 +5187,8 @@ Public Class XenonCMD
         Dim F As Font
 
         If Raster Then
-            G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
-            F = New Font(My.Application.TerminalFont.FontFamily, CSng(Font.Size * 0.8), Font.Style)
+            F = New Font(My.Application.TerminalFont.FontFamily, CSng(FixValue(Font.Size) * 0.9), Font.Style)
         Else
-            G.TextRenderingHint = TextRenderingHint.SystemDefault
             F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
         End If
 
@@ -5303,12 +5339,17 @@ Public Class XenonCMD
         BackColor = BK
         G.Clear(BK)
 
-        If Not PowerShell Then
-            S = String.Format("Microsoft Windows [Version {0}]", String.Format("{0}.{1}", Microsoft.Win32.Registry.GetValue(CV, "CurrentBuildNumber", 0),
-                Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))) & vbCrLf & S1 & vbCrLf & vbCrLf & S2
+        If Not CustomTerminal Then
+            If Not PowerShell Then
+                S = String.Format("Microsoft Windows [Version {0}]", String.Format("{0}.{1}", Microsoft.Win32.Registry.GetValue(CV, "CurrentBuildNumber", 0),
+                    Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))) & vbCrLf & S1 & vbCrLf & vbCrLf & S2
+            Else
+                S = "Windows PowerShell" & vbCrLf & S1 & vbCrLf & vbCrLf & "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" & vbCrLf & vbCrLf & "PS " & S2
+            End If
         Else
-            S = "Windows PowerShell" & vbCrLf & S1 & vbCrLf & vbCrLf & "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" & vbCrLf & vbCrLf & "PS " & S2
+            S = "This is just an preview to your custom terminal." & vbCrLf & vbCrLf & S2
         End If
+
 
         If Raster Then
             S &= vbCrLf & vbCrLf & "*Note: Raster Font will look different from the preview."

@@ -183,6 +183,16 @@ Public Class CP
     Public Property CMD_FontWeight As Integer = 400
 #End Region
 
+
+#Region "Terminal: 1909"
+    Public Property CMD_1909_CursorType As Integer = 1
+    Public Property CMD_1909_CursorColor As Color = Color.White
+    Public Property CMD_1909_ForceV2 As Boolean = True
+    Public Property CMD_1909_LineSelection As Boolean = False
+    Public Property CMD_1909_TerminalScrolling As Boolean = False
+    Public Property CMD_1909_WindowAlpha As Integer = 100
+#End Region
+
 #Region "PowerShell 32-bit"
     Public Property PS_32_ColorTable00 As Color
     Public Property PS_32_ColorTable01 As Color
@@ -568,7 +578,7 @@ Public Class CP
         s &= int
         Return s
     End Function
-    Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
+    Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
         Dim R As RegistryKey = Nothing
 
         If KeyName.Contains("HKEY_CURRENT_USER") Then
@@ -1611,15 +1621,21 @@ Public Class CP
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorSize", 19)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorSize", 25)
                     CMD_CursorSize = y_cmd
                 Catch
-                    CMD_CursorSize = 19
+                    CMD_CursorSize = 25
                 End Try
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FaceName", "Cascadia Mono")
-                    CMD_FaceName = y_cmd
+
+                    If IsFontInstalled(y_cmd) Then
+                        CMD_FaceName = y_cmd
+                    Else
+                        CMD_FaceName = "Cascadia Mono"
+                    End If
+
                 Catch
                     CMD_FaceName = "Cascadia Mono"
                 End Try
@@ -1644,6 +1660,54 @@ Public Class CP
                 Catch
                     CMD_FontWeight = 400
                 End Try
+#End Region
+
+#Region "Terminal: 1909"
+                If Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909 Then
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
+                        CMD_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                    Catch
+                        CMD_1909_CursorColor = Color.White
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorType", 0)
+                        CMD_1909_CursorType = y_cmd
+                    Catch
+                        CMD_1909_CursorType = 1
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ForceV2", True)
+                        CMD_1909_ForceV2 = y_cmd
+                    Catch
+                        CMD_1909_ForceV2 = True
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "LineSelection", False)
+                        CMD_1909_LineSelection = y_cmd
+                    Catch
+                        CMD_1909_LineSelection = False
+                    End Try
+
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "TerminalScrolling", False)
+                        CMD_1909_TerminalScrolling = y_cmd
+                    Catch
+                        CMD_1909_TerminalScrolling = False
+                    End Try
+
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "WindowAlpha", 100)
+                        CMD_1909_WindowAlpha = y_cmd
+                    Catch
+                        CMD_1909_WindowAlpha = 100
+                    End Try
+                End If
 #End Region
 
 #Region "PowerShell 32-bit"
@@ -3312,34 +3376,34 @@ Public Class CP
 
                     If isElevated Then
 
-                            My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
-                            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
+                        My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
 
-                            My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
-                            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7_Enabled, 1, 0))
+                        My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
+                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7_Enabled, 1, 0))
 
-                        Else
-                            Dim ls As New List(Of String)
-                            ls.Clear()
-                            ls.Add("Windows Registry Editor Version 5.00")
-                            ls.Add(vbCrLf)
-                            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
-                            ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
-                            ls.Add(vbCrLf)
-                            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
-                            ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
+                        ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
+                        ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
 
-                            Dim result As String = CStr_FromList(ls)
+                        Dim result As String = CStr_FromList(ls)
 
-                            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
 
-                            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
 
-                            IO.File.WriteAllText(tempreg, result)
+                        IO.File.WriteAllText(tempreg, result)
 
-                            Dim process As Process = Nothing
+                        Dim process As Process = Nothing
 
-                            Dim processStartInfo As New ProcessStartInfo With {
+                        Dim processStartInfo As New ProcessStartInfo With {
                        .FileName = "regedit",
                        .Verb = "runas",
                        .Arguments = String.Format("/s ""{0}""", tempreg),
@@ -3347,104 +3411,104 @@ Public Class CP
                        .CreateNoWindow = True,
                        .UseShellExecute = True
                     }
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            processStartInfo.FileName = "reg"
-                            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            Kill(tempreg)
-                        End If
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
 
-                        Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
+                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
+
+                    Select Case LogonUI7_Mode
+                        Case LogonUI7_Modes.Default_
+                            rLog.SetValue("Mode", 0)
+
+                        Case LogonUI7_Modes.Wallpaper
+                            rLog.SetValue("Mode", 1)
+
+                        Case LogonUI7_Modes.CustomImage
+                            rLog.SetValue("Mode", 2)
+
+                        Case LogonUI7_Modes.SolidColor
+                            rLog.SetValue("Mode", 3)
+                    End Select
+
+                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
+                    rLog.SetValue("Color", LogonUI7_Color.ToArgb)
+                    rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
+                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
+                    rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
+                    rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
+
+                    Select Case LogonUI7_Effect_Noise_Mode
+                        Case LogonUI7_NoiseMode.Aero
+                            rLog.SetValue("Noise_Mode", 0)
+
+                        Case LogonUI7_NoiseMode.Acrylic
+                            rLog.SetValue("Noise_Mode", 1)
+                    End Select
+
+                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
+                    rLog.Flush()
+                    rLog.Close()
+
+                    If LogonUI7_Enabled Then
+                        NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+
+                        Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
+                        Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+
+                        Directory.CreateDirectory(DirX)
+
+                        For Each fileX As String In My.Computer.FileSystem.GetFiles(DirX)
+                            Try : Kill(fileX) : Catch : End Try
+                        Next
+
+                        Dim bmpList As New List(Of Bitmap)
+                        bmpList.Clear()
 
                         Select Case LogonUI7_Mode
                             Case LogonUI7_Modes.Default_
-                                rLog.SetValue("Mode", 0)
 
-                            Case LogonUI7_Modes.Wallpaper
-                                rLog.SetValue("Mode", 1)
+                                For i As Integer = 5031 To 5043 Step +1
+                                    bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
+                                Next
 
                             Case LogonUI7_Modes.CustomImage
-                                rLog.SetValue("Mode", 2)
+
+                                If IO.File.Exists(LogonUI7_ImagePath) Then
+                                    bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+                                Else
+                                    bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
+                                End If
 
                             Case LogonUI7_Modes.SolidColor
-                                rLog.SetValue("Mode", 3)
+                                bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
+
+                            Case LogonUI7_Modes.Wallpaper
+                                bmpList.Add(My.Application.GetCurrentWallpaper)
                         End Select
 
-                        rLog.SetValue("ImagePath", LogonUI7_ImagePath)
-                        rLog.SetValue("Color", LogonUI7_Color.ToArgb)
-                        rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
-                        rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
-                        rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
-                        rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
 
-                        Select Case LogonUI7_Effect_Noise_Mode
-                            Case LogonUI7_NoiseMode.Aero
-                                rLog.SetValue("Noise_Mode", 0)
+                        For x = 0 To bmpList.Count - 1
+                            SetCtrlTxt(String.Format("Rendering Custom LogonUI: {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
+                            If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
+                            If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
+                            If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
+                        Next
 
-                            Case LogonUI7_NoiseMode.Acrylic
-                                rLog.SetValue("Noise_Mode", 1)
-                        End Select
-
-                        rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
-                        rLog.Flush()
-                        rLog.Close()
-
-                        If LogonUI7_Enabled Then
-                            NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
-
-                            Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
-                            Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
-
-                            Directory.CreateDirectory(DirX)
-
-                            For Each fileX As String In My.Computer.FileSystem.GetFiles(DirX)
-                                Try : Kill(fileX) : Catch : End Try
-                            Next
-
-                            Dim bmpList As New List(Of Bitmap)
-                            bmpList.Clear()
-
-                            Select Case LogonUI7_Mode
-                                Case LogonUI7_Modes.Default_
-
-                                    For i As Integer = 5031 To 5043 Step +1
-                                        bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
-                                    Next
-
-                                Case LogonUI7_Modes.CustomImage
-
-                                    If IO.File.Exists(LogonUI7_ImagePath) Then
-                                        bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
-                                    Else
-                                        bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
-                                    End If
-
-                                Case LogonUI7_Modes.SolidColor
-                                    bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
-
-                                Case LogonUI7_Modes.Wallpaper
-                                    bmpList.Add(My.Application.GetCurrentWallpaper)
-                            End Select
-
-
+                        If bmpList.Count = 1 Then
+                            bmpList(0).Save(DirX & "\backgroundDefault.jpg", ImageFormat.Jpeg)
+                        Else
                             For x = 0 To bmpList.Count - 1
-                                SetCtrlTxt(String.Format("Rendering Custom LogonUI: {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
-                                If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
-                                If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
-                                If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
+                                bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), ImageFormat.Jpeg)
                             Next
-
-                            If bmpList.Count = 1 Then
-                                bmpList(0).Save(DirX & "\backgroundDefault.jpg", ImageFormat.Jpeg)
-                            Else
-                                For x = 0 To bmpList.Count - 1
-                                    bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), ImageFormat.Jpeg)
-                                Next
-                            End If
-                            NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
                         End If
+                        NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+                    End If
                 End If
 #End Region
 
@@ -3746,10 +3810,59 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
                 EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
                 EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
+
+                If Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909 Then
+                    EditReg("HKEY_CURRENT_USER\Console", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Console", "CursorType", CMD_1909_CursorType)
+                    EditReg("HKEY_CURRENT_USER\Console", "WindowAlpha", CMD_1909_WindowAlpha)
+                    EditReg("HKEY_CURRENT_USER\Console", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
+                End If
+
                 EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
+                If isElevated Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
+                Else
+                    Dim ls As New List(Of String)
+                    ls.Clear()
+                    ls.Add("Windows Registry Editor Version 5.00")
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
+                    ls.Add(String.Format("""000""=""{0}""", CMD_FaceName))
+
+                    Dim result As String = CStr_FromList(ls)
+
+                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                    IO.File.WriteAllText(tempreg, result)
+
+                    Dim process As Process = Nothing
+
+                    Dim processStartInfo As New ProcessStartInfo With {
+                       .FileName = "regedit",
+                       .Verb = "runas",
+                       .Arguments = String.Format("/s ""{0}""", tempreg),
+                       .WindowStyle = ProcessWindowStyle.Hidden,
+                       .CreateNoWindow = True,
+                       .UseShellExecute = True
+                    }
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    processStartInfo.FileName = "reg"
+                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    Kill(tempreg)
+                End If
+
                 EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 0, 54))
                 EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
                 EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
+
+
 
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable00)).ToArgb)
@@ -4533,6 +4646,36 @@ Public Class CP
 
     End Sub
 
+
+    Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
+        Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
+
+        If Not installed Then
+            installed = IsFontInstalled(fontName, FontStyle.Bold)
+        End If
+
+        If Not installed Then
+            installed = IsFontInstalled(fontName, FontStyle.Italic)
+        End If
+
+        Return installed
+    End Function
+
+    Public Shared Function IsFontInstalled(ByVal fontName As String, ByVal style As FontStyle) As Boolean
+        Dim installed As Boolean = False
+        Const emSize As Single = 8.0F
+
+        Try
+
+            Using testFont = New Font(fontName, emSize, style)
+                installed = (0 = String.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase))
+            End Using
+
+        Catch
+        End Try
+
+        Return installed
+    End Function
 
 #Region "Cursors Render"
     Sub ExportCursors([CP] As CP)
