@@ -5189,7 +5189,11 @@ Public Class XenonCMD
         If Raster Then
             F = New Font(My.Application.TerminalFont.FontFamily, CSng(FixValue(Font.Size) * 0.9), Font.Style)
         Else
-            F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+            If Not PowerShell Then
+                F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+            Else
+                F = New Font(Font.Name, If(Font.Size * 0.7 <= 0, 1, CSng(Font.Size * 0.7)), Font.Style)
+            End If
         End If
 
         Select Case CMD_ScreenColorsForeground

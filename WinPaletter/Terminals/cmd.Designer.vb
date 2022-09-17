@@ -118,6 +118,41 @@ Partial Class cmd
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.XenonTabControl3 = New WinPaletter.XenonTabControl()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.PS_32_ColorTable00 = New WinPaletter.XenonGroupBox()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable01 = New WinPaletter.XenonGroupBox()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable02 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable03 = New WinPaletter.XenonGroupBox()
+        Me.Label47 = New System.Windows.Forms.Label()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.Label51 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable04 = New WinPaletter.XenonGroupBox()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.Label53 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable05 = New WinPaletter.XenonGroupBox()
+        Me.Label54 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable06 = New WinPaletter.XenonGroupBox()
+        Me.Label55 = New System.Windows.Forms.Label()
+        Me.Label56 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable15 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable07 = New WinPaletter.XenonGroupBox()
+        Me.Label62 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable08 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable14 = New WinPaletter.XenonGroupBox()
+        Me.Label63 = New System.Windows.Forms.Label()
+        Me.Label64 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable09 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable13 = New WinPaletter.XenonGroupBox()
+        Me.Label65 = New System.Windows.Forms.Label()
+        Me.PS_32_ColorTable12 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable10 = New WinPaletter.XenonGroupBox()
+        Me.PS_32_ColorTable11 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.PS_32_AccentBackgroundLbl = New System.Windows.Forms.Label()
@@ -168,41 +203,6 @@ Partial Class cmd
         Me.Label38 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.Label40 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
-        Me.Label42 = New System.Windows.Forms.Label()
-        Me.Label43 = New System.Windows.Forms.Label()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
-        Me.Label44 = New System.Windows.Forms.Label()
-        Me.Label45 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox11 = New WinPaletter.XenonGroupBox()
-        Me.Label46 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
-        Me.Label47 = New System.Windows.Forms.Label()
-        Me.Label48 = New System.Windows.Forms.Label()
-        Me.Label51 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
-        Me.Label52 = New System.Windows.Forms.Label()
-        Me.Label53 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox16 = New WinPaletter.XenonGroupBox()
-        Me.Label54 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox17 = New WinPaletter.XenonGroupBox()
-        Me.Label55 = New System.Windows.Forms.Label()
-        Me.Label56 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox18 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox19 = New WinPaletter.XenonGroupBox()
-        Me.Label62 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox20 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox21 = New WinPaletter.XenonGroupBox()
-        Me.Label63 = New System.Windows.Forms.Label()
-        Me.Label64 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox22 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox23 = New WinPaletter.XenonGroupBox()
-        Me.Label65 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox24 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox25 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox26 = New WinPaletter.XenonGroupBox()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox27 = New WinPaletter.XenonGroupBox()
         Me.XenonButton3 = New WinPaletter.XenonButton()
@@ -210,6 +210,41 @@ Partial Class cmd
         Me.XenonCMD2 = New WinPaletter.XenonCMD()
         Me.Label66 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
+        Me.Label83 = New System.Windows.Forms.Label()
+        Me.Label84 = New System.Windows.Forms.Label()
+        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.PS_64_ColorTable00 = New WinPaletter.XenonGroupBox()
+        Me.Label85 = New System.Windows.Forms.Label()
+        Me.Label86 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable01 = New WinPaletter.XenonGroupBox()
+        Me.Label87 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable02 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable03 = New WinPaletter.XenonGroupBox()
+        Me.Label88 = New System.Windows.Forms.Label()
+        Me.Label89 = New System.Windows.Forms.Label()
+        Me.Label90 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable04 = New WinPaletter.XenonGroupBox()
+        Me.Label92 = New System.Windows.Forms.Label()
+        Me.Label93 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable05 = New WinPaletter.XenonGroupBox()
+        Me.Label94 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable06 = New WinPaletter.XenonGroupBox()
+        Me.Label95 = New System.Windows.Forms.Label()
+        Me.Label96 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable15 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable07 = New WinPaletter.XenonGroupBox()
+        Me.Label97 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable08 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable14 = New WinPaletter.XenonGroupBox()
+        Me.Label98 = New System.Windows.Forms.Label()
+        Me.Label99 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable09 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable13 = New WinPaletter.XenonGroupBox()
+        Me.Label100 = New System.Windows.Forms.Label()
+        Me.PS_64_ColorTable12 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable10 = New WinPaletter.XenonGroupBox()
+        Me.PS_64_ColorTable11 = New WinPaletter.XenonGroupBox()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox28 = New WinPaletter.XenonGroupBox()
         Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
@@ -261,41 +296,6 @@ Partial Class cmd
         Me.Label80 = New System.Windows.Forms.Label()
         Me.Label81 = New System.Windows.Forms.Label()
         Me.Label82 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox32 = New WinPaletter.XenonGroupBox()
-        Me.Label83 = New System.Windows.Forms.Label()
-        Me.Label84 = New System.Windows.Forms.Label()
-        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox33 = New WinPaletter.XenonGroupBox()
-        Me.Label85 = New System.Windows.Forms.Label()
-        Me.Label86 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox35 = New WinPaletter.XenonGroupBox()
-        Me.Label87 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox36 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox37 = New WinPaletter.XenonGroupBox()
-        Me.Label88 = New System.Windows.Forms.Label()
-        Me.Label89 = New System.Windows.Forms.Label()
-        Me.Label90 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox38 = New WinPaletter.XenonGroupBox()
-        Me.Label92 = New System.Windows.Forms.Label()
-        Me.Label93 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox39 = New WinPaletter.XenonGroupBox()
-        Me.Label94 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox40 = New WinPaletter.XenonGroupBox()
-        Me.Label95 = New System.Windows.Forms.Label()
-        Me.Label96 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox41 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox42 = New WinPaletter.XenonGroupBox()
-        Me.Label97 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox43 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox44 = New WinPaletter.XenonGroupBox()
-        Me.Label98 = New System.Windows.Forms.Label()
-        Me.Label99 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox45 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox46 = New WinPaletter.XenonGroupBox()
-        Me.Label100 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox47 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox48 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox49 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox50 = New WinPaletter.XenonGroupBox()
         Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
@@ -426,6 +426,8 @@ Partial Class cmd
         Me.TabPage3.SuspendLayout()
         Me.XenonTabControl3.SuspendLayout()
         Me.TabPage8.SuspendLayout()
+        Me.XenonGroupBox9.SuspendLayout()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox5.SuspendLayout()
@@ -436,11 +438,11 @@ Partial Class cmd
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox7.SuspendLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox9.SuspendLayout()
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox27.SuspendLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
+        Me.XenonGroupBox10.SuspendLayout()
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox28.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox29.SuspendLayout()
@@ -451,8 +453,6 @@ Partial Class cmd
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox31.SuspendLayout()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox32.SuspendLayout()
-        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox50.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
@@ -803,9 +803,9 @@ Partial Class cmd
         Me.CMD_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_OpacityLbl.BackColor = System.Drawing.Color.Transparent
         Me.CMD_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_OpacityLbl.Location = New System.Drawing.Point(118, 161)
+        Me.CMD_OpacityLbl.Location = New System.Drawing.Point(136, 162)
         Me.CMD_OpacityLbl.Name = "CMD_OpacityLbl"
-        Me.CMD_OpacityLbl.Size = New System.Drawing.Size(44, 22)
+        Me.CMD_OpacityLbl.Size = New System.Drawing.Size(26, 22)
         Me.CMD_OpacityLbl.TabIndex = 121
         Me.CMD_OpacityLbl.Text = "100"
         Me.CMD_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -877,7 +877,7 @@ Partial Class cmd
         Me.CMD_OpacityBar.Maximum = 255
         Me.CMD_OpacityBar.Minimum = 0
         Me.CMD_OpacityBar.Name = "CMD_OpacityBar"
-        Me.CMD_OpacityBar.Size = New System.Drawing.Size(104, 19)
+        Me.CMD_OpacityBar.Size = New System.Drawing.Size(119, 19)
         Me.CMD_OpacityBar.SmallChange = 1
         Me.CMD_OpacityBar.TabIndex = 120
         Me.CMD_OpacityBar.Text = "XenonTrackbar1"
@@ -963,7 +963,7 @@ Partial Class cmd
         '
         Me.CMD_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
         Me.CMD_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_PreviewCUR_LBL.Location = New System.Drawing.Point(186, 97)
+        Me.CMD_PreviewCUR_LBL.Location = New System.Drawing.Point(190, 97)
         Me.CMD_PreviewCUR_LBL.Name = "CMD_PreviewCUR_LBL"
         Me.CMD_PreviewCUR_LBL.Size = New System.Drawing.Size(31, 22)
         Me.CMD_PreviewCUR_LBL.TabIndex = 104
@@ -1007,7 +1007,7 @@ Partial Class cmd
         Me.CMD_CursorSizeBar.Maximum = 100
         Me.CMD_CursorSizeBar.Minimum = 20
         Me.CMD_CursorSizeBar.Name = "CMD_CursorSizeBar"
-        Me.CMD_CursorSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.CMD_CursorSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.CMD_CursorSizeBar.SmallChange = 1
         Me.CMD_CursorSizeBar.TabIndex = 102
         Me.CMD_CursorSizeBar.Value = 20
@@ -1073,7 +1073,7 @@ Partial Class cmd
         '
         Me.CMD_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
         Me.CMD_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_FontSizeLbl.Location = New System.Drawing.Point(186, 73)
+        Me.CMD_FontSizeLbl.Location = New System.Drawing.Point(190, 73)
         Me.CMD_FontSizeLbl.Name = "CMD_FontSizeLbl"
         Me.CMD_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
         Me.CMD_FontSizeLbl.TabIndex = 102
@@ -1087,7 +1087,7 @@ Partial Class cmd
         Me.CMD_FontSizeBar.Maximum = 48
         Me.CMD_FontSizeBar.Minimum = 5
         Me.CMD_FontSizeBar.Name = "CMD_FontSizeBar"
-        Me.CMD_FontSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.CMD_FontSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.CMD_FontSizeBar.SmallChange = 1
         Me.CMD_FontSizeBar.TabIndex = 101
         Me.CMD_FontSizeBar.Text = "XenonTrackbar16"
@@ -1117,7 +1117,7 @@ Partial Class cmd
         Me.CMD_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.CMD_FontWeightBox.FormattingEnabled = True
-        Me.CMD_FontWeightBox.Items.AddRange(New Object() {"Don't Care (0)", "Thin (100)", "Extra Light (200)", "Light (300)", "Normal (400)", "Medium (500)", "Semibold (600)", "Bold (700)", "Extra Bold(800)", "Heavy (900)"})
+        Me.CMD_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
         Me.CMD_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
         Me.CMD_FontWeightBox.Location = New System.Drawing.Point(93, 42)
         Me.CMD_FontWeightBox.Name = "CMD_FontWeightBox"
@@ -1141,7 +1141,7 @@ Partial Class cmd
         Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_RasterToggle.Checked = False
         Me.CMD_RasterToggle.DarkLight_Toggler = False
-        Me.CMD_RasterToggle.Location = New System.Drawing.Point(162, 99)
+        Me.CMD_RasterToggle.Location = New System.Drawing.Point(172, 99)
         Me.CMD_RasterToggle.Name = "CMD_RasterToggle"
         Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.CMD_RasterToggle.TabIndex = 95
@@ -1272,11 +1272,11 @@ Partial Class cmd
         '
         'ColorTable00
         '
-        Me.ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable00.CustomColor = True
-        Me.ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable00.ForceNoNerd = False
-        Me.ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.ColorTable00.LineSize = 1
         Me.ColorTable00.Location = New System.Drawing.Point(28, 44)
         Me.ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1309,11 +1309,11 @@ Partial Class cmd
         '
         'ColorTable01
         '
-        Me.ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
+        Me.ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ColorTable01.CustomColor = True
-        Me.ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
+        Me.ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ColorTable01.ForceNoNerd = False
-        Me.ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
         Me.ColorTable01.LineSize = 1
         Me.ColorTable01.Location = New System.Drawing.Point(28, 75)
         Me.ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1335,11 +1335,11 @@ Partial Class cmd
         '
         'ColorTable02
         '
-        Me.ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ColorTable02.CustomColor = True
-        Me.ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ColorTable02.ForceNoNerd = False
-        Me.ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
         Me.ColorTable02.LineSize = 1
         Me.ColorTable02.Location = New System.Drawing.Point(28, 106)
         Me.ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1350,11 +1350,11 @@ Partial Class cmd
         '
         'ColorTable03
         '
-        Me.ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
+        Me.ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ColorTable03.CustomColor = True
-        Me.ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
+        Me.ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ColorTable03.ForceNoNerd = False
-        Me.ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(198, Byte), Integer))
+        Me.ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
         Me.ColorTable03.LineSize = 1
         Me.ColorTable03.Location = New System.Drawing.Point(28, 137)
         Me.ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1398,11 +1398,11 @@ Partial Class cmd
         '
         'ColorTable04
         '
-        Me.ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ColorTable04.CustomColor = True
-        Me.ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ColorTable04.ForceNoNerd = False
-        Me.ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(202, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
         Me.ColorTable04.LineSize = 1
         Me.ColorTable04.Location = New System.Drawing.Point(28, 168)
         Me.ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1435,11 +1435,11 @@ Partial Class cmd
         '
         'ColorTable05
         '
-        Me.ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(29, Byte), Integer), CType(CType(151, Byte), Integer))
+        Me.ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ColorTable05.CustomColor = True
-        Me.ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(29, Byte), Integer), CType(CType(151, Byte), Integer))
+        Me.ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ColorTable05.ForceNoNerd = False
-        Me.ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(147, Byte), Integer), CType(CType(52, Byte), Integer), CType(CType(161, Byte), Integer))
+        Me.ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
         Me.ColorTable05.LineSize = 1
         Me.ColorTable05.Location = New System.Drawing.Point(28, 199)
         Me.ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1461,11 +1461,11 @@ Partial Class cmd
         '
         'ColorTable06
         '
-        Me.ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorTable06.CustomColor = True
-        Me.ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorTable06.ForceNoNerd = False
-        Me.ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(173, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorTable06.LineSize = 1
         Me.ColorTable06.Location = New System.Drawing.Point(28, 230)
         Me.ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1513,11 +1513,11 @@ Partial Class cmd
         '
         'ColorTable07
         '
-        Me.ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
+        Me.ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ColorTable07.CustomColor = True
-        Me.ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
+        Me.ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ColorTable07.ForceNoNerd = False
-        Me.ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer))
+        Me.ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.ColorTable07.LineSize = 1
         Me.ColorTable07.Location = New System.Drawing.Point(28, 261)
         Me.ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1539,11 +1539,11 @@ Partial Class cmd
         '
         'ColorTable08
         '
-        Me.ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ColorTable08.CustomColor = True
-        Me.ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ColorTable08.ForceNoNerd = False
-        Me.ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer))
+        Me.ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
         Me.ColorTable08.LineSize = 1
         Me.ColorTable08.Location = New System.Drawing.Point(165, 44)
         Me.ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1554,11 +1554,11 @@ Partial Class cmd
         '
         'ColorTable14
         '
-        Me.ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ColorTable14.CustomColor = True
-        Me.ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ColorTable14.ForceNoNerd = False
-        Me.ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(147, Byte), Integer))
+        Me.ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
         Me.ColorTable14.LineSize = 1
         Me.ColorTable14.Location = New System.Drawing.Point(165, 230)
         Me.ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1591,11 +1591,11 @@ Partial Class cmd
         '
         'ColorTable09
         '
-        Me.ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ColorTable09.CustomColor = True
-        Me.ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ColorTable09.ForceNoNerd = False
-        Me.ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ColorTable09.LineSize = 1
         Me.ColorTable09.Location = New System.Drawing.Point(165, 75)
         Me.ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1606,11 +1606,11 @@ Partial Class cmd
         '
         'ColorTable13
         '
-        Me.ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
+        Me.ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ColorTable13.CustomColor = True
-        Me.ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
+        Me.ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ColorTable13.ForceNoNerd = False
-        Me.ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(167, Byte), Integer))
+        Me.ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
         Me.ColorTable13.LineSize = 1
         Me.ColorTable13.Location = New System.Drawing.Point(165, 199)
         Me.ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1632,11 +1632,11 @@ Partial Class cmd
         '
         'ColorTable12
         '
-        Me.ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
+        Me.ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ColorTable12.CustomColor = True
-        Me.ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
+        Me.ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ColorTable12.ForceNoNerd = False
-        Me.ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
         Me.ColorTable12.LineSize = 1
         Me.ColorTable12.Location = New System.Drawing.Point(165, 168)
         Me.ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1647,11 +1647,11 @@ Partial Class cmd
         '
         'ColorTable10
         '
-        Me.ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable10.CustomColor = True
-        Me.ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable10.ForceNoNerd = False
-        Me.ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(18, Byte), Integer))
+        Me.ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
         Me.ColorTable10.LineSize = 1
         Me.ColorTable10.Location = New System.Drawing.Point(165, 106)
         Me.ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1662,11 +1662,11 @@ Partial Class cmd
         '
         'ColorTable11
         '
-        Me.ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ColorTable11.CustomColor = True
-        Me.ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ColorTable11.ForceNoNerd = False
-        Me.ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
         Me.ColorTable11.LineSize = 1
         Me.ColorTable11.Location = New System.Drawing.Point(165, 137)
         Me.ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1784,11 +1784,11 @@ Partial Class cmd
         'TabPage8
         '
         Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage8.Controls.Add(Me.XenonGroupBox9)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox3)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox5)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox6)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox7)
-        Me.TabPage8.Controls.Add(Me.XenonGroupBox9)
         Me.TabPage8.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox27)
         Me.TabPage8.Location = New System.Drawing.Point(4, 4)
@@ -1796,6 +1796,492 @@ Partial Class cmd
         Me.TabPage8.Size = New System.Drawing.Size(673, 615)
         Me.TabPage8.TabIndex = 0
         Me.TabPage8.Text = "32-bit"
+        '
+        'XenonGroupBox9
+        '
+        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox9.Controls.Add(Me.Label42)
+        Me.XenonGroupBox9.Controls.Add(Me.Label43)
+        Me.XenonGroupBox9.Controls.Add(Me.PictureBox7)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable00)
+        Me.XenonGroupBox9.Controls.Add(Me.Label44)
+        Me.XenonGroupBox9.Controls.Add(Me.Label45)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable01)
+        Me.XenonGroupBox9.Controls.Add(Me.Label46)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable02)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable03)
+        Me.XenonGroupBox9.Controls.Add(Me.Label47)
+        Me.XenonGroupBox9.Controls.Add(Me.Label48)
+        Me.XenonGroupBox9.Controls.Add(Me.Label51)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable04)
+        Me.XenonGroupBox9.Controls.Add(Me.Label52)
+        Me.XenonGroupBox9.Controls.Add(Me.Label53)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable05)
+        Me.XenonGroupBox9.Controls.Add(Me.Label54)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable06)
+        Me.XenonGroupBox9.Controls.Add(Me.Label55)
+        Me.XenonGroupBox9.Controls.Add(Me.Label56)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable15)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable07)
+        Me.XenonGroupBox9.Controls.Add(Me.Label62)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable08)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable14)
+        Me.XenonGroupBox9.Controls.Add(Me.Label63)
+        Me.XenonGroupBox9.Controls.Add(Me.Label64)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable09)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable13)
+        Me.XenonGroupBox9.Controls.Add(Me.Label65)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable12)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable10)
+        Me.XenonGroupBox9.Controls.Add(Me.PS_32_ColorTable11)
+        Me.XenonGroupBox9.CustomColor = False
+        Me.XenonGroupBox9.DefaultColor = System.Drawing.Color.Black
+        Me.XenonGroupBox9.ForceNoNerd = False
+        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonGroupBox9.LineSize = 1
+        Me.XenonGroupBox9.Location = New System.Drawing.Point(2, 2)
+        Me.XenonGroupBox9.Name = "XenonGroupBox9"
+        Me.XenonGroupBox9.Size = New System.Drawing.Size(259, 293)
+        Me.XenonGroupBox9.TabIndex = 115
+        '
+        'Label42
+        '
+        Me.Label42.BackColor = System.Drawing.Color.Transparent
+        Me.Label42.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label42.Location = New System.Drawing.Point(120, 261)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(38, 25)
+        Me.Label42.TabIndex = 99
+        Me.Label42.Text = "15 (F)"
+        Me.Label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label43
+        '
+        Me.Label43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label43.BackColor = System.Drawing.Color.Transparent
+        Me.Label43.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.Location = New System.Drawing.Point(47, 8)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(198, 31)
+        Me.Label43.TabIndex = 84
+        Me.Label43.Text = "Color Tables:"
+        Me.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
+        Me.PictureBox7.Location = New System.Drawing.Point(6, 8)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(35, 31)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox7.TabIndex = 83
+        Me.PictureBox7.TabStop = False
+        '
+        'PS_32_ColorTable00
+        '
+        Me.PS_32_ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_32_ColorTable00.CustomColor = True
+        Me.PS_32_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_32_ColorTable00.ForceNoNerd = False
+        Me.PS_32_ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.PS_32_ColorTable00.LineSize = 1
+        Me.PS_32_ColorTable00.Location = New System.Drawing.Point(28, 44)
+        Me.PS_32_ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable00.Name = "PS_32_ColorTable00"
+        Me.PS_32_ColorTable00.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable00.TabIndex = 3
+        Me.PS_32_ColorTable00.Text = "XenonGroupBox31"
+        '
+        'Label44
+        '
+        Me.Label44.BackColor = System.Drawing.Color.Transparent
+        Me.Label44.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.Location = New System.Drawing.Point(7, 44)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(14, 25)
+        Me.Label44.TabIndex = 4
+        Me.Label44.Text = "0"
+        Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label45
+        '
+        Me.Label45.BackColor = System.Drawing.Color.Transparent
+        Me.Label45.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label45.Location = New System.Drawing.Point(120, 230)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(38, 25)
+        Me.Label45.TabIndex = 98
+        Me.Label45.Text = "14 (E)"
+        Me.Label45.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable01
+        '
+        Me.PS_32_ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_32_ColorTable01.CustomColor = True
+        Me.PS_32_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_32_ColorTable01.ForceNoNerd = False
+        Me.PS_32_ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
+        Me.PS_32_ColorTable01.LineSize = 1
+        Me.PS_32_ColorTable01.Location = New System.Drawing.Point(28, 75)
+        Me.PS_32_ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable01.Name = "PS_32_ColorTable01"
+        Me.PS_32_ColorTable01.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable01.TabIndex = 5
+        Me.PS_32_ColorTable01.Text = "XenonGroupBox31"
+        '
+        'Label46
+        '
+        Me.Label46.BackColor = System.Drawing.Color.Transparent
+        Me.Label46.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label46.Location = New System.Drawing.Point(7, 75)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(14, 25)
+        Me.Label46.TabIndex = 85
+        Me.Label46.Text = "1"
+        Me.Label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable02
+        '
+        Me.PS_32_ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.PS_32_ColorTable02.CustomColor = True
+        Me.PS_32_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.PS_32_ColorTable02.ForceNoNerd = False
+        Me.PS_32_ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
+        Me.PS_32_ColorTable02.LineSize = 1
+        Me.PS_32_ColorTable02.Location = New System.Drawing.Point(28, 106)
+        Me.PS_32_ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable02.Name = "PS_32_ColorTable02"
+        Me.PS_32_ColorTable02.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable02.TabIndex = 7
+        Me.PS_32_ColorTable02.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable03
+        '
+        Me.PS_32_ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.PS_32_ColorTable03.CustomColor = True
+        Me.PS_32_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.PS_32_ColorTable03.ForceNoNerd = False
+        Me.PS_32_ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
+        Me.PS_32_ColorTable03.LineSize = 1
+        Me.PS_32_ColorTable03.Location = New System.Drawing.Point(28, 137)
+        Me.PS_32_ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable03.Name = "PS_32_ColorTable03"
+        Me.PS_32_ColorTable03.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable03.TabIndex = 9
+        Me.PS_32_ColorTable03.Text = "XenonGroupBox31"
+        '
+        'Label47
+        '
+        Me.Label47.BackColor = System.Drawing.Color.Transparent
+        Me.Label47.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label47.Location = New System.Drawing.Point(120, 200)
+        Me.Label47.Name = "Label47"
+        Me.Label47.Size = New System.Drawing.Size(38, 25)
+        Me.Label47.TabIndex = 97
+        Me.Label47.Text = "13 (D)"
+        Me.Label47.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label48
+        '
+        Me.Label48.BackColor = System.Drawing.Color.Transparent
+        Me.Label48.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label48.Location = New System.Drawing.Point(7, 106)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(14, 25)
+        Me.Label48.TabIndex = 86
+        Me.Label48.Text = "2"
+        Me.Label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label51
+        '
+        Me.Label51.BackColor = System.Drawing.Color.Transparent
+        Me.Label51.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label51.Location = New System.Drawing.Point(7, 137)
+        Me.Label51.Name = "Label51"
+        Me.Label51.Size = New System.Drawing.Size(14, 25)
+        Me.Label51.TabIndex = 87
+        Me.Label51.Text = "3"
+        Me.Label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable04
+        '
+        Me.PS_32_ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
+        Me.PS_32_ColorTable04.CustomColor = True
+        Me.PS_32_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
+        Me.PS_32_ColorTable04.ForceNoNerd = False
+        Me.PS_32_ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
+        Me.PS_32_ColorTable04.LineSize = 1
+        Me.PS_32_ColorTable04.Location = New System.Drawing.Point(28, 168)
+        Me.PS_32_ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable04.Name = "PS_32_ColorTable04"
+        Me.PS_32_ColorTable04.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable04.TabIndex = 11
+        Me.PS_32_ColorTable04.Text = "XenonGroupBox31"
+        '
+        'Label52
+        '
+        Me.Label52.BackColor = System.Drawing.Color.Transparent
+        Me.Label52.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label52.Location = New System.Drawing.Point(7, 168)
+        Me.Label52.Name = "Label52"
+        Me.Label52.Size = New System.Drawing.Size(14, 25)
+        Me.Label52.TabIndex = 88
+        Me.Label52.Text = "4"
+        Me.Label52.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label53
+        '
+        Me.Label53.BackColor = System.Drawing.Color.Transparent
+        Me.Label53.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label53.Location = New System.Drawing.Point(120, 168)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(38, 25)
+        Me.Label53.TabIndex = 96
+        Me.Label53.Text = "12 (C)"
+        Me.Label53.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable05
+        '
+        Me.PS_32_ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_32_ColorTable05.CustomColor = True
+        Me.PS_32_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_32_ColorTable05.ForceNoNerd = False
+        Me.PS_32_ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(103, Byte), Integer))
+        Me.PS_32_ColorTable05.LineSize = 1
+        Me.PS_32_ColorTable05.Location = New System.Drawing.Point(28, 199)
+        Me.PS_32_ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable05.Name = "PS_32_ColorTable05"
+        Me.PS_32_ColorTable05.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable05.TabIndex = 13
+        Me.PS_32_ColorTable05.Text = "XenonGroupBox31"
+        '
+        'Label54
+        '
+        Me.Label54.BackColor = System.Drawing.Color.Transparent
+        Me.Label54.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label54.Location = New System.Drawing.Point(7, 200)
+        Me.Label54.Name = "Label54"
+        Me.Label54.Size = New System.Drawing.Size(14, 25)
+        Me.Label54.TabIndex = 89
+        Me.Label54.Text = "5"
+        Me.Label54.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable06
+        '
+        Me.PS_32_ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.PS_32_ColorTable06.CustomColor = True
+        Me.PS_32_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.PS_32_ColorTable06.ForceNoNerd = False
+        Me.PS_32_ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(216, Byte), Integer))
+        Me.PS_32_ColorTable06.LineSize = 1
+        Me.PS_32_ColorTable06.Location = New System.Drawing.Point(28, 230)
+        Me.PS_32_ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable06.Name = "PS_32_ColorTable06"
+        Me.PS_32_ColorTable06.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable06.TabIndex = 15
+        Me.PS_32_ColorTable06.Text = "XenonGroupBox31"
+        '
+        'Label55
+        '
+        Me.Label55.BackColor = System.Drawing.Color.Transparent
+        Me.Label55.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label55.Location = New System.Drawing.Point(7, 230)
+        Me.Label55.Name = "Label55"
+        Me.Label55.Size = New System.Drawing.Size(14, 25)
+        Me.Label55.TabIndex = 90
+        Me.Label55.Text = "6"
+        Me.Label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label56
+        '
+        Me.Label56.BackColor = System.Drawing.Color.Transparent
+        Me.Label56.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label56.Location = New System.Drawing.Point(120, 137)
+        Me.Label56.Name = "Label56"
+        Me.Label56.Size = New System.Drawing.Size(38, 25)
+        Me.Label56.TabIndex = 95
+        Me.Label56.Text = "11 (B)"
+        Me.Label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable15
+        '
+        Me.PS_32_ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
+        Me.PS_32_ColorTable15.CustomColor = True
+        Me.PS_32_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
+        Me.PS_32_ColorTable15.ForceNoNerd = False
+        Me.PS_32_ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_32_ColorTable15.LineSize = 1
+        Me.PS_32_ColorTable15.Location = New System.Drawing.Point(165, 261)
+        Me.PS_32_ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable15.Name = "PS_32_ColorTable15"
+        Me.PS_32_ColorTable15.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable15.TabIndex = 33
+        Me.PS_32_ColorTable15.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable07
+        '
+        Me.PS_32_ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.PS_32_ColorTable07.CustomColor = True
+        Me.PS_32_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.PS_32_ColorTable07.ForceNoNerd = False
+        Me.PS_32_ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.PS_32_ColorTable07.LineSize = 1
+        Me.PS_32_ColorTable07.Location = New System.Drawing.Point(28, 261)
+        Me.PS_32_ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable07.Name = "PS_32_ColorTable07"
+        Me.PS_32_ColorTable07.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable07.TabIndex = 17
+        Me.PS_32_ColorTable07.Text = "XenonGroupBox31"
+        '
+        'Label62
+        '
+        Me.Label62.BackColor = System.Drawing.Color.Transparent
+        Me.Label62.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label62.Location = New System.Drawing.Point(7, 261)
+        Me.Label62.Name = "Label62"
+        Me.Label62.Size = New System.Drawing.Size(14, 25)
+        Me.Label62.TabIndex = 91
+        Me.Label62.Text = "7"
+        Me.Label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable08
+        '
+        Me.PS_32_ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
+        Me.PS_32_ColorTable08.CustomColor = True
+        Me.PS_32_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
+        Me.PS_32_ColorTable08.ForceNoNerd = False
+        Me.PS_32_ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
+        Me.PS_32_ColorTable08.LineSize = 1
+        Me.PS_32_ColorTable08.Location = New System.Drawing.Point(165, 44)
+        Me.PS_32_ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable08.Name = "PS_32_ColorTable08"
+        Me.PS_32_ColorTable08.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable08.TabIndex = 19
+        Me.PS_32_ColorTable08.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable14
+        '
+        Me.PS_32_ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
+        Me.PS_32_ColorTable14.CustomColor = True
+        Me.PS_32_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
+        Me.PS_32_ColorTable14.ForceNoNerd = False
+        Me.PS_32_ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.PS_32_ColorTable14.LineSize = 1
+        Me.PS_32_ColorTable14.Location = New System.Drawing.Point(165, 230)
+        Me.PS_32_ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable14.Name = "PS_32_ColorTable14"
+        Me.PS_32_ColorTable14.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable14.TabIndex = 31
+        Me.PS_32_ColorTable14.Text = "XenonGroupBox31"
+        '
+        'Label63
+        '
+        Me.Label63.BackColor = System.Drawing.Color.Transparent
+        Me.Label63.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label63.Location = New System.Drawing.Point(120, 106)
+        Me.Label63.Name = "Label63"
+        Me.Label63.Size = New System.Drawing.Size(38, 25)
+        Me.Label63.TabIndex = 94
+        Me.Label63.Text = "10 (A)"
+        Me.Label63.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label64
+        '
+        Me.Label64.BackColor = System.Drawing.Color.Transparent
+        Me.Label64.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label64.Location = New System.Drawing.Point(120, 44)
+        Me.Label64.Name = "Label64"
+        Me.Label64.Size = New System.Drawing.Size(38, 25)
+        Me.Label64.TabIndex = 92
+        Me.Label64.Text = "8"
+        Me.Label64.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable09
+        '
+        Me.PS_32_ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_32_ColorTable09.CustomColor = True
+        Me.PS_32_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_32_ColorTable09.ForceNoNerd = False
+        Me.PS_32_ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_32_ColorTable09.LineSize = 1
+        Me.PS_32_ColorTable09.Location = New System.Drawing.Point(165, 75)
+        Me.PS_32_ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable09.Name = "PS_32_ColorTable09"
+        Me.PS_32_ColorTable09.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable09.TabIndex = 21
+        Me.PS_32_ColorTable09.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable13
+        '
+        Me.PS_32_ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
+        Me.PS_32_ColorTable13.CustomColor = True
+        Me.PS_32_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
+        Me.PS_32_ColorTable13.ForceNoNerd = False
+        Me.PS_32_ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
+        Me.PS_32_ColorTable13.LineSize = 1
+        Me.PS_32_ColorTable13.Location = New System.Drawing.Point(165, 199)
+        Me.PS_32_ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable13.Name = "PS_32_ColorTable13"
+        Me.PS_32_ColorTable13.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable13.TabIndex = 29
+        Me.PS_32_ColorTable13.Text = "XenonGroupBox31"
+        '
+        'Label65
+        '
+        Me.Label65.BackColor = System.Drawing.Color.Transparent
+        Me.Label65.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label65.Location = New System.Drawing.Point(120, 75)
+        Me.Label65.Name = "Label65"
+        Me.Label65.Size = New System.Drawing.Size(38, 25)
+        Me.Label65.TabIndex = 93
+        Me.Label65.Text = "9"
+        Me.Label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_32_ColorTable12
+        '
+        Me.PS_32_ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_32_ColorTable12.CustomColor = True
+        Me.PS_32_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_32_ColorTable12.ForceNoNerd = False
+        Me.PS_32_ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
+        Me.PS_32_ColorTable12.LineSize = 1
+        Me.PS_32_ColorTable12.Location = New System.Drawing.Point(165, 168)
+        Me.PS_32_ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable12.Name = "PS_32_ColorTable12"
+        Me.PS_32_ColorTable12.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable12.TabIndex = 27
+        Me.PS_32_ColorTable12.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable10
+        '
+        Me.PS_32_ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_32_ColorTable10.CustomColor = True
+        Me.PS_32_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_32_ColorTable10.ForceNoNerd = False
+        Me.PS_32_ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
+        Me.PS_32_ColorTable10.LineSize = 1
+        Me.PS_32_ColorTable10.Location = New System.Drawing.Point(165, 106)
+        Me.PS_32_ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable10.Name = "PS_32_ColorTable10"
+        Me.PS_32_ColorTable10.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable10.TabIndex = 23
+        Me.PS_32_ColorTable10.Text = "XenonGroupBox31"
+        '
+        'PS_32_ColorTable11
+        '
+        Me.PS_32_ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
+        Me.PS_32_ColorTable11.CustomColor = True
+        Me.PS_32_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
+        Me.PS_32_ColorTable11.ForceNoNerd = False
+        Me.PS_32_ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
+        Me.PS_32_ColorTable11.LineSize = 1
+        Me.PS_32_ColorTable11.Location = New System.Drawing.Point(165, 137)
+        Me.PS_32_ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_32_ColorTable11.Name = "PS_32_ColorTable11"
+        Me.PS_32_ColorTable11.Size = New System.Drawing.Size(85, 25)
+        Me.PS_32_ColorTable11.TabIndex = 25
+        Me.PS_32_ColorTable11.Text = "XenonGroupBox31"
         '
         'XenonGroupBox3
         '
@@ -2073,9 +2559,9 @@ Partial Class cmd
         Me.PS_32_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PS_32_OpacityLbl.BackColor = System.Drawing.Color.Transparent
         Me.PS_32_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_32_OpacityLbl.Location = New System.Drawing.Point(118, 161)
+        Me.PS_32_OpacityLbl.Location = New System.Drawing.Point(136, 162)
         Me.PS_32_OpacityLbl.Name = "PS_32_OpacityLbl"
-        Me.PS_32_OpacityLbl.Size = New System.Drawing.Size(44, 22)
+        Me.PS_32_OpacityLbl.Size = New System.Drawing.Size(26, 22)
         Me.PS_32_OpacityLbl.TabIndex = 121
         Me.PS_32_OpacityLbl.Text = "100"
         Me.PS_32_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2147,7 +2633,7 @@ Partial Class cmd
         Me.PS_32_OpacityBar.Maximum = 255
         Me.PS_32_OpacityBar.Minimum = 0
         Me.PS_32_OpacityBar.Name = "PS_32_OpacityBar"
-        Me.PS_32_OpacityBar.Size = New System.Drawing.Size(104, 19)
+        Me.PS_32_OpacityBar.Size = New System.Drawing.Size(119, 19)
         Me.PS_32_OpacityBar.SmallChange = 1
         Me.PS_32_OpacityBar.TabIndex = 120
         Me.PS_32_OpacityBar.Text = "XenonTrackbar1"
@@ -2233,7 +2719,7 @@ Partial Class cmd
         '
         Me.PS_32_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
         Me.PS_32_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_32_PreviewCUR_LBL.Location = New System.Drawing.Point(186, 97)
+        Me.PS_32_PreviewCUR_LBL.Location = New System.Drawing.Point(190, 97)
         Me.PS_32_PreviewCUR_LBL.Name = "PS_32_PreviewCUR_LBL"
         Me.PS_32_PreviewCUR_LBL.Size = New System.Drawing.Size(31, 22)
         Me.PS_32_PreviewCUR_LBL.TabIndex = 104
@@ -2277,7 +2763,7 @@ Partial Class cmd
         Me.PS_32_CursorSizeBar.Maximum = 100
         Me.PS_32_CursorSizeBar.Minimum = 20
         Me.PS_32_CursorSizeBar.Name = "PS_32_CursorSizeBar"
-        Me.PS_32_CursorSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.PS_32_CursorSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.PS_32_CursorSizeBar.SmallChange = 1
         Me.PS_32_CursorSizeBar.TabIndex = 102
         Me.PS_32_CursorSizeBar.Value = 20
@@ -2343,7 +2829,7 @@ Partial Class cmd
         '
         Me.PS_32_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
         Me.PS_32_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_32_FontSizeLbl.Location = New System.Drawing.Point(186, 73)
+        Me.PS_32_FontSizeLbl.Location = New System.Drawing.Point(190, 73)
         Me.PS_32_FontSizeLbl.Name = "PS_32_FontSizeLbl"
         Me.PS_32_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
         Me.PS_32_FontSizeLbl.TabIndex = 102
@@ -2357,7 +2843,7 @@ Partial Class cmd
         Me.PS_32_FontSizeBar.Maximum = 48
         Me.PS_32_FontSizeBar.Minimum = 5
         Me.PS_32_FontSizeBar.Name = "PS_32_FontSizeBar"
-        Me.PS_32_FontSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.PS_32_FontSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.PS_32_FontSizeBar.SmallChange = 1
         Me.PS_32_FontSizeBar.TabIndex = 101
         Me.PS_32_FontSizeBar.Text = "XenonTrackbar16"
@@ -2387,7 +2873,7 @@ Partial Class cmd
         Me.PS_32_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.PS_32_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.PS_32_FontWeightBox.FormattingEnabled = True
-        Me.PS_32_FontWeightBox.Items.AddRange(New Object() {"Don't Care (0)", "Thin (100)", "Extra Light (200)", "Light (300)", "Normal (400)", "Medium (500)", "Semibold (600)", "Bold (700)", "Extra Bold(800)", "Heavy (900)"})
+        Me.PS_32_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
         Me.PS_32_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
         Me.PS_32_FontWeightBox.Location = New System.Drawing.Point(93, 42)
         Me.PS_32_FontWeightBox.Name = "PS_32_FontWeightBox"
@@ -2411,7 +2897,7 @@ Partial Class cmd
         Me.PS_32_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.PS_32_RasterToggle.Checked = False
         Me.PS_32_RasterToggle.DarkLight_Toggler = False
-        Me.PS_32_RasterToggle.Location = New System.Drawing.Point(162, 99)
+        Me.PS_32_RasterToggle.Location = New System.Drawing.Point(172, 99)
         Me.PS_32_RasterToggle.Name = "PS_32_RasterToggle"
         Me.PS_32_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.PS_32_RasterToggle.TabIndex = 95
@@ -2458,492 +2944,6 @@ Partial Class cmd
         Me.Label40.TabIndex = 103
         Me.Label40.Text = "Size:"
         Me.Label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox9
-        '
-        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox9.Controls.Add(Me.Label42)
-        Me.XenonGroupBox9.Controls.Add(Me.Label43)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox7)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox10)
-        Me.XenonGroupBox9.Controls.Add(Me.Label44)
-        Me.XenonGroupBox9.Controls.Add(Me.Label45)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox11)
-        Me.XenonGroupBox9.Controls.Add(Me.Label46)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox13)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox14)
-        Me.XenonGroupBox9.Controls.Add(Me.Label47)
-        Me.XenonGroupBox9.Controls.Add(Me.Label48)
-        Me.XenonGroupBox9.Controls.Add(Me.Label51)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox15)
-        Me.XenonGroupBox9.Controls.Add(Me.Label52)
-        Me.XenonGroupBox9.Controls.Add(Me.Label53)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox16)
-        Me.XenonGroupBox9.Controls.Add(Me.Label54)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox17)
-        Me.XenonGroupBox9.Controls.Add(Me.Label55)
-        Me.XenonGroupBox9.Controls.Add(Me.Label56)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox18)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox19)
-        Me.XenonGroupBox9.Controls.Add(Me.Label62)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox20)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox21)
-        Me.XenonGroupBox9.Controls.Add(Me.Label63)
-        Me.XenonGroupBox9.Controls.Add(Me.Label64)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox22)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox23)
-        Me.XenonGroupBox9.Controls.Add(Me.Label65)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox24)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox25)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonGroupBox26)
-        Me.XenonGroupBox9.CustomColor = False
-        Me.XenonGroupBox9.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox9.ForceNoNerd = False
-        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox9.LineSize = 1
-        Me.XenonGroupBox9.Location = New System.Drawing.Point(2, 2)
-        Me.XenonGroupBox9.Name = "XenonGroupBox9"
-        Me.XenonGroupBox9.Size = New System.Drawing.Size(259, 293)
-        Me.XenonGroupBox9.TabIndex = 109
-        '
-        'Label42
-        '
-        Me.Label42.BackColor = System.Drawing.Color.Transparent
-        Me.Label42.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label42.Location = New System.Drawing.Point(120, 261)
-        Me.Label42.Name = "Label42"
-        Me.Label42.Size = New System.Drawing.Size(38, 25)
-        Me.Label42.TabIndex = 99
-        Me.Label42.Text = "15 (F)"
-        Me.Label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label43
-        '
-        Me.Label43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label43.BackColor = System.Drawing.Color.Transparent
-        Me.Label43.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label43.Location = New System.Drawing.Point(47, 8)
-        Me.Label43.Name = "Label43"
-        Me.Label43.Size = New System.Drawing.Size(198, 31)
-        Me.Label43.TabIndex = 84
-        Me.Label43.Text = "Color Tables:"
-        Me.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox7
-        '
-        Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
-        Me.PictureBox7.Location = New System.Drawing.Point(6, 8)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox7.TabIndex = 83
-        Me.PictureBox7.TabStop = False
-        '
-        'XenonGroupBox10
-        '
-        Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox10.CustomColor = True
-        Me.XenonGroupBox10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox10.ForceNoNerd = False
-        Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox10.LineSize = 1
-        Me.XenonGroupBox10.Location = New System.Drawing.Point(28, 44)
-        Me.XenonGroupBox10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox10.Name = "XenonGroupBox10"
-        Me.XenonGroupBox10.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox10.TabIndex = 3
-        Me.XenonGroupBox10.Text = "XenonGroupBox31"
-        '
-        'Label44
-        '
-        Me.Label44.BackColor = System.Drawing.Color.Transparent
-        Me.Label44.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label44.Location = New System.Drawing.Point(7, 44)
-        Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(14, 25)
-        Me.Label44.TabIndex = 4
-        Me.Label44.Text = "0"
-        Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label45
-        '
-        Me.Label45.BackColor = System.Drawing.Color.Transparent
-        Me.Label45.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label45.Location = New System.Drawing.Point(120, 230)
-        Me.Label45.Name = "Label45"
-        Me.Label45.Size = New System.Drawing.Size(38, 25)
-        Me.Label45.TabIndex = 98
-        Me.Label45.Text = "14 (E)"
-        Me.Label45.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox11
-        '
-        Me.XenonGroupBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
-        Me.XenonGroupBox11.CustomColor = True
-        Me.XenonGroupBox11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
-        Me.XenonGroupBox11.ForceNoNerd = False
-        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.XenonGroupBox11.LineSize = 1
-        Me.XenonGroupBox11.Location = New System.Drawing.Point(28, 75)
-        Me.XenonGroupBox11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox11.Name = "XenonGroupBox11"
-        Me.XenonGroupBox11.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox11.TabIndex = 5
-        Me.XenonGroupBox11.Text = "XenonGroupBox31"
-        '
-        'Label46
-        '
-        Me.Label46.BackColor = System.Drawing.Color.Transparent
-        Me.Label46.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label46.Location = New System.Drawing.Point(7, 75)
-        Me.Label46.Name = "Label46"
-        Me.Label46.Size = New System.Drawing.Size(14, 25)
-        Me.Label46.TabIndex = 85
-        Me.Label46.Text = "1"
-        Me.Label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox13
-        '
-        Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonGroupBox13.CustomColor = True
-        Me.XenonGroupBox13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonGroupBox13.ForceNoNerd = False
-        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.XenonGroupBox13.LineSize = 1
-        Me.XenonGroupBox13.Location = New System.Drawing.Point(28, 106)
-        Me.XenonGroupBox13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox13.Name = "XenonGroupBox13"
-        Me.XenonGroupBox13.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox13.TabIndex = 7
-        Me.XenonGroupBox13.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox14
-        '
-        Me.XenonGroupBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
-        Me.XenonGroupBox14.CustomColor = True
-        Me.XenonGroupBox14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
-        Me.XenonGroupBox14.ForceNoNerd = False
-        Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(198, Byte), Integer))
-        Me.XenonGroupBox14.LineSize = 1
-        Me.XenonGroupBox14.Location = New System.Drawing.Point(28, 137)
-        Me.XenonGroupBox14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox14.Name = "XenonGroupBox14"
-        Me.XenonGroupBox14.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox14.TabIndex = 9
-        Me.XenonGroupBox14.Text = "XenonGroupBox31"
-        '
-        'Label47
-        '
-        Me.Label47.BackColor = System.Drawing.Color.Transparent
-        Me.Label47.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label47.Location = New System.Drawing.Point(120, 200)
-        Me.Label47.Name = "Label47"
-        Me.Label47.Size = New System.Drawing.Size(38, 25)
-        Me.Label47.TabIndex = 97
-        Me.Label47.Text = "13 (D)"
-        Me.Label47.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label48
-        '
-        Me.Label48.BackColor = System.Drawing.Color.Transparent
-        Me.Label48.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label48.Location = New System.Drawing.Point(7, 106)
-        Me.Label48.Name = "Label48"
-        Me.Label48.Size = New System.Drawing.Size(14, 25)
-        Me.Label48.TabIndex = 86
-        Me.Label48.Text = "2"
-        Me.Label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label51
-        '
-        Me.Label51.BackColor = System.Drawing.Color.Transparent
-        Me.Label51.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label51.Location = New System.Drawing.Point(7, 137)
-        Me.Label51.Name = "Label51"
-        Me.Label51.Size = New System.Drawing.Size(14, 25)
-        Me.Label51.TabIndex = 87
-        Me.Label51.Text = "3"
-        Me.Label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox15
-        '
-        Me.XenonGroupBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.XenonGroupBox15.CustomColor = True
-        Me.XenonGroupBox15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.XenonGroupBox15.ForceNoNerd = False
-        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(202, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.XenonGroupBox15.LineSize = 1
-        Me.XenonGroupBox15.Location = New System.Drawing.Point(28, 168)
-        Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox15.Name = "XenonGroupBox15"
-        Me.XenonGroupBox15.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox15.TabIndex = 11
-        Me.XenonGroupBox15.Text = "XenonGroupBox31"
-        '
-        'Label52
-        '
-        Me.Label52.BackColor = System.Drawing.Color.Transparent
-        Me.Label52.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label52.Location = New System.Drawing.Point(7, 168)
-        Me.Label52.Name = "Label52"
-        Me.Label52.Size = New System.Drawing.Size(14, 25)
-        Me.Label52.TabIndex = 88
-        Me.Label52.Text = "4"
-        Me.Label52.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label53
-        '
-        Me.Label53.BackColor = System.Drawing.Color.Transparent
-        Me.Label53.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label53.Location = New System.Drawing.Point(120, 168)
-        Me.Label53.Name = "Label53"
-        Me.Label53.Size = New System.Drawing.Size(38, 25)
-        Me.Label53.TabIndex = 96
-        Me.Label53.Text = "12 (C)"
-        Me.Label53.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox16
-        '
-        Me.XenonGroupBox16.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox16.CustomColor = True
-        Me.XenonGroupBox16.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox16.ForceNoNerd = False
-        Me.XenonGroupBox16.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(62, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.XenonGroupBox16.LineSize = 1
-        Me.XenonGroupBox16.Location = New System.Drawing.Point(28, 199)
-        Me.XenonGroupBox16.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox16.Name = "XenonGroupBox16"
-        Me.XenonGroupBox16.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox16.TabIndex = 13
-        Me.XenonGroupBox16.Text = "XenonGroupBox31"
-        '
-        'Label54
-        '
-        Me.Label54.BackColor = System.Drawing.Color.Transparent
-        Me.Label54.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label54.Location = New System.Drawing.Point(7, 200)
-        Me.Label54.Name = "Label54"
-        Me.Label54.Size = New System.Drawing.Size(14, 25)
-        Me.Label54.TabIndex = 89
-        Me.Label54.Text = "5"
-        Me.Label54.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox17
-        '
-        Me.XenonGroupBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.XenonGroupBox17.CustomColor = True
-        Me.XenonGroupBox17.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.XenonGroupBox17.ForceNoNerd = False
-        Me.XenonGroupBox17.LineColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(212, Byte), Integer), CType(CType(215, Byte), Integer))
-        Me.XenonGroupBox17.LineSize = 1
-        Me.XenonGroupBox17.Location = New System.Drawing.Point(28, 230)
-        Me.XenonGroupBox17.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox17.Name = "XenonGroupBox17"
-        Me.XenonGroupBox17.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox17.TabIndex = 15
-        Me.XenonGroupBox17.Text = "XenonGroupBox31"
-        '
-        'Label55
-        '
-        Me.Label55.BackColor = System.Drawing.Color.Transparent
-        Me.Label55.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label55.Location = New System.Drawing.Point(7, 230)
-        Me.Label55.Name = "Label55"
-        Me.Label55.Size = New System.Drawing.Size(14, 25)
-        Me.Label55.TabIndex = 90
-        Me.Label55.Text = "6"
-        Me.Label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label56
-        '
-        Me.Label56.BackColor = System.Drawing.Color.Transparent
-        Me.Label56.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label56.Location = New System.Drawing.Point(120, 137)
-        Me.Label56.Name = "Label56"
-        Me.Label56.Size = New System.Drawing.Size(38, 25)
-        Me.Label56.TabIndex = 95
-        Me.Label56.Text = "11 (B)"
-        Me.Label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox18
-        '
-        Me.XenonGroupBox18.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.XenonGroupBox18.CustomColor = True
-        Me.XenonGroupBox18.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.XenonGroupBox18.ForceNoNerd = False
-        Me.XenonGroupBox18.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.XenonGroupBox18.LineSize = 1
-        Me.XenonGroupBox18.Location = New System.Drawing.Point(165, 261)
-        Me.XenonGroupBox18.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox18.Name = "XenonGroupBox18"
-        Me.XenonGroupBox18.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox18.TabIndex = 33
-        Me.XenonGroupBox18.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox19
-        '
-        Me.XenonGroupBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
-        Me.XenonGroupBox19.CustomColor = True
-        Me.XenonGroupBox19.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
-        Me.XenonGroupBox19.ForceNoNerd = False
-        Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer))
-        Me.XenonGroupBox19.LineSize = 1
-        Me.XenonGroupBox19.Location = New System.Drawing.Point(28, 261)
-        Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox19.Name = "XenonGroupBox19"
-        Me.XenonGroupBox19.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox19.TabIndex = 17
-        Me.XenonGroupBox19.Text = "XenonGroupBox31"
-        '
-        'Label62
-        '
-        Me.Label62.BackColor = System.Drawing.Color.Transparent
-        Me.Label62.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label62.Location = New System.Drawing.Point(7, 261)
-        Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(14, 25)
-        Me.Label62.TabIndex = 91
-        Me.Label62.Text = "7"
-        Me.Label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox20
-        '
-        Me.XenonGroupBox20.BackColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonGroupBox20.CustomColor = True
-        Me.XenonGroupBox20.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonGroupBox20.ForceNoNerd = False
-        Me.XenonGroupBox20.LineColor = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.XenonGroupBox20.LineSize = 1
-        Me.XenonGroupBox20.Location = New System.Drawing.Point(165, 44)
-        Me.XenonGroupBox20.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox20.Name = "XenonGroupBox20"
-        Me.XenonGroupBox20.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox20.TabIndex = 19
-        Me.XenonGroupBox20.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox21
-        '
-        Me.XenonGroupBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.XenonGroupBox21.CustomColor = True
-        Me.XenonGroupBox21.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.XenonGroupBox21.ForceNoNerd = False
-        Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(147, Byte), Integer))
-        Me.XenonGroupBox21.LineSize = 1
-        Me.XenonGroupBox21.Location = New System.Drawing.Point(165, 230)
-        Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox21.Name = "XenonGroupBox21"
-        Me.XenonGroupBox21.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox21.TabIndex = 31
-        Me.XenonGroupBox21.Text = "XenonGroupBox31"
-        '
-        'Label63
-        '
-        Me.Label63.BackColor = System.Drawing.Color.Transparent
-        Me.Label63.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label63.Location = New System.Drawing.Point(120, 106)
-        Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(38, 25)
-        Me.Label63.TabIndex = 94
-        Me.Label63.Text = "10 (A)"
-        Me.Label63.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label64
-        '
-        Me.Label64.BackColor = System.Drawing.Color.Transparent
-        Me.Label64.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label64.Location = New System.Drawing.Point(120, 44)
-        Me.Label64.Name = "Label64"
-        Me.Label64.Size = New System.Drawing.Size(38, 25)
-        Me.Label64.TabIndex = 92
-        Me.Label64.Text = "8"
-        Me.Label64.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox22
-        '
-        Me.XenonGroupBox22.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox22.CustomColor = True
-        Me.XenonGroupBox22.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox22.ForceNoNerd = False
-        Me.XenonGroupBox22.LineColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox22.LineSize = 1
-        Me.XenonGroupBox22.Location = New System.Drawing.Point(165, 75)
-        Me.XenonGroupBox22.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox22.Name = "XenonGroupBox22"
-        Me.XenonGroupBox22.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox22.TabIndex = 21
-        Me.XenonGroupBox22.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox23
-        '
-        Me.XenonGroupBox23.BackColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
-        Me.XenonGroupBox23.CustomColor = True
-        Me.XenonGroupBox23.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
-        Me.XenonGroupBox23.ForceNoNerd = False
-        Me.XenonGroupBox23.LineColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(167, Byte), Integer))
-        Me.XenonGroupBox23.LineSize = 1
-        Me.XenonGroupBox23.Location = New System.Drawing.Point(165, 199)
-        Me.XenonGroupBox23.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox23.Name = "XenonGroupBox23"
-        Me.XenonGroupBox23.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox23.TabIndex = 29
-        Me.XenonGroupBox23.Text = "XenonGroupBox31"
-        '
-        'Label65
-        '
-        Me.Label65.BackColor = System.Drawing.Color.Transparent
-        Me.Label65.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label65.Location = New System.Drawing.Point(120, 75)
-        Me.Label65.Name = "Label65"
-        Me.Label65.Size = New System.Drawing.Size(38, 25)
-        Me.Label65.TabIndex = 93
-        Me.Label65.Text = "9"
-        Me.Label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox24
-        '
-        Me.XenonGroupBox24.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox24.CustomColor = True
-        Me.XenonGroupBox24.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox24.ForceNoNerd = False
-        Me.XenonGroupBox24.LineColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.XenonGroupBox24.LineSize = 1
-        Me.XenonGroupBox24.Location = New System.Drawing.Point(165, 168)
-        Me.XenonGroupBox24.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox24.Name = "XenonGroupBox24"
-        Me.XenonGroupBox24.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox24.TabIndex = 27
-        Me.XenonGroupBox24.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox25
-        '
-        Me.XenonGroupBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox25.CustomColor = True
-        Me.XenonGroupBox25.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox25.ForceNoNerd = False
-        Me.XenonGroupBox25.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(18, Byte), Integer))
-        Me.XenonGroupBox25.LineSize = 1
-        Me.XenonGroupBox25.Location = New System.Drawing.Point(165, 106)
-        Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox25.Name = "XenonGroupBox25"
-        Me.XenonGroupBox25.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox25.TabIndex = 23
-        Me.XenonGroupBox25.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox26
-        '
-        Me.XenonGroupBox26.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.XenonGroupBox26.CustomColor = True
-        Me.XenonGroupBox26.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.XenonGroupBox26.ForceNoNerd = False
-        Me.XenonGroupBox26.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.XenonGroupBox26.LineSize = 1
-        Me.XenonGroupBox26.Location = New System.Drawing.Point(165, 137)
-        Me.XenonGroupBox26.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox26.Name = "XenonGroupBox26"
-        Me.XenonGroupBox26.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox26.TabIndex = 25
-        Me.XenonGroupBox26.Text = "XenonGroupBox31"
         '
         'XenonAlertBox2
         '
@@ -3060,18 +3060,504 @@ Partial Class cmd
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.XenonGroupBox10)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox1)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox28)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox29)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox30)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox31)
-        Me.TabPage9.Controls.Add(Me.XenonGroupBox32)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox50)
         Me.TabPage9.Location = New System.Drawing.Point(4, 4)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Size = New System.Drawing.Size(673, 615)
         Me.TabPage9.TabIndex = 1
         Me.TabPage9.Text = "64-bit"
+        '
+        'XenonGroupBox10
+        '
+        Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox10.Controls.Add(Me.Label83)
+        Me.XenonGroupBox10.Controls.Add(Me.Label84)
+        Me.XenonGroupBox10.Controls.Add(Me.PictureBox14)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable00)
+        Me.XenonGroupBox10.Controls.Add(Me.Label85)
+        Me.XenonGroupBox10.Controls.Add(Me.Label86)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable01)
+        Me.XenonGroupBox10.Controls.Add(Me.Label87)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable02)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable03)
+        Me.XenonGroupBox10.Controls.Add(Me.Label88)
+        Me.XenonGroupBox10.Controls.Add(Me.Label89)
+        Me.XenonGroupBox10.Controls.Add(Me.Label90)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable04)
+        Me.XenonGroupBox10.Controls.Add(Me.Label92)
+        Me.XenonGroupBox10.Controls.Add(Me.Label93)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable05)
+        Me.XenonGroupBox10.Controls.Add(Me.Label94)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable06)
+        Me.XenonGroupBox10.Controls.Add(Me.Label95)
+        Me.XenonGroupBox10.Controls.Add(Me.Label96)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable15)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable07)
+        Me.XenonGroupBox10.Controls.Add(Me.Label97)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable08)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable14)
+        Me.XenonGroupBox10.Controls.Add(Me.Label98)
+        Me.XenonGroupBox10.Controls.Add(Me.Label99)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable09)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable13)
+        Me.XenonGroupBox10.Controls.Add(Me.Label100)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable12)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable10)
+        Me.XenonGroupBox10.Controls.Add(Me.PS_64_ColorTable11)
+        Me.XenonGroupBox10.CustomColor = False
+        Me.XenonGroupBox10.DefaultColor = System.Drawing.Color.Black
+        Me.XenonGroupBox10.ForceNoNerd = False
+        Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonGroupBox10.LineSize = 1
+        Me.XenonGroupBox10.Location = New System.Drawing.Point(2, 2)
+        Me.XenonGroupBox10.Name = "XenonGroupBox10"
+        Me.XenonGroupBox10.Size = New System.Drawing.Size(259, 293)
+        Me.XenonGroupBox10.TabIndex = 127
+        '
+        'Label83
+        '
+        Me.Label83.BackColor = System.Drawing.Color.Transparent
+        Me.Label83.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label83.Location = New System.Drawing.Point(120, 261)
+        Me.Label83.Name = "Label83"
+        Me.Label83.Size = New System.Drawing.Size(38, 25)
+        Me.Label83.TabIndex = 99
+        Me.Label83.Text = "15 (F)"
+        Me.Label83.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label84
+        '
+        Me.Label84.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label84.BackColor = System.Drawing.Color.Transparent
+        Me.Label84.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label84.Location = New System.Drawing.Point(47, 8)
+        Me.Label84.Name = "Label84"
+        Me.Label84.Size = New System.Drawing.Size(198, 31)
+        Me.Label84.TabIndex = 84
+        Me.Label84.Text = "Color Tables:"
+        Me.Label84.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox14
+        '
+        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
+        Me.PictureBox14.Location = New System.Drawing.Point(6, 8)
+        Me.PictureBox14.Name = "PictureBox14"
+        Me.PictureBox14.Size = New System.Drawing.Size(35, 31)
+        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox14.TabIndex = 83
+        Me.PictureBox14.TabStop = False
+        '
+        'PS_64_ColorTable00
+        '
+        Me.PS_64_ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_64_ColorTable00.CustomColor = True
+        Me.PS_64_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_64_ColorTable00.ForceNoNerd = False
+        Me.PS_64_ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.PS_64_ColorTable00.LineSize = 1
+        Me.PS_64_ColorTable00.Location = New System.Drawing.Point(28, 44)
+        Me.PS_64_ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable00.Name = "PS_64_ColorTable00"
+        Me.PS_64_ColorTable00.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable00.TabIndex = 3
+        Me.PS_64_ColorTable00.Text = "XenonGroupBox31"
+        '
+        'Label85
+        '
+        Me.Label85.BackColor = System.Drawing.Color.Transparent
+        Me.Label85.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label85.Location = New System.Drawing.Point(7, 44)
+        Me.Label85.Name = "Label85"
+        Me.Label85.Size = New System.Drawing.Size(14, 25)
+        Me.Label85.TabIndex = 4
+        Me.Label85.Text = "0"
+        Me.Label85.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label86
+        '
+        Me.Label86.BackColor = System.Drawing.Color.Transparent
+        Me.Label86.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label86.Location = New System.Drawing.Point(120, 230)
+        Me.Label86.Name = "Label86"
+        Me.Label86.Size = New System.Drawing.Size(38, 25)
+        Me.Label86.TabIndex = 98
+        Me.Label86.Text = "14 (E)"
+        Me.Label86.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable01
+        '
+        Me.PS_64_ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_64_ColorTable01.CustomColor = True
+        Me.PS_64_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_64_ColorTable01.ForceNoNerd = False
+        Me.PS_64_ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
+        Me.PS_64_ColorTable01.LineSize = 1
+        Me.PS_64_ColorTable01.Location = New System.Drawing.Point(28, 75)
+        Me.PS_64_ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable01.Name = "PS_64_ColorTable01"
+        Me.PS_64_ColorTable01.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable01.TabIndex = 5
+        Me.PS_64_ColorTable01.Text = "XenonGroupBox31"
+        '
+        'Label87
+        '
+        Me.Label87.BackColor = System.Drawing.Color.Transparent
+        Me.Label87.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label87.Location = New System.Drawing.Point(7, 75)
+        Me.Label87.Name = "Label87"
+        Me.Label87.Size = New System.Drawing.Size(14, 25)
+        Me.Label87.TabIndex = 85
+        Me.Label87.Text = "1"
+        Me.Label87.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable02
+        '
+        Me.PS_64_ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.PS_64_ColorTable02.CustomColor = True
+        Me.PS_64_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
+        Me.PS_64_ColorTable02.ForceNoNerd = False
+        Me.PS_64_ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
+        Me.PS_64_ColorTable02.LineSize = 1
+        Me.PS_64_ColorTable02.Location = New System.Drawing.Point(28, 106)
+        Me.PS_64_ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable02.Name = "PS_64_ColorTable02"
+        Me.PS_64_ColorTable02.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable02.TabIndex = 7
+        Me.PS_64_ColorTable02.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable03
+        '
+        Me.PS_64_ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.PS_64_ColorTable03.CustomColor = True
+        Me.PS_64_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.PS_64_ColorTable03.ForceNoNerd = False
+        Me.PS_64_ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
+        Me.PS_64_ColorTable03.LineSize = 1
+        Me.PS_64_ColorTable03.Location = New System.Drawing.Point(28, 137)
+        Me.PS_64_ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable03.Name = "PS_64_ColorTable03"
+        Me.PS_64_ColorTable03.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable03.TabIndex = 9
+        Me.PS_64_ColorTable03.Text = "XenonGroupBox31"
+        '
+        'Label88
+        '
+        Me.Label88.BackColor = System.Drawing.Color.Transparent
+        Me.Label88.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label88.Location = New System.Drawing.Point(120, 200)
+        Me.Label88.Name = "Label88"
+        Me.Label88.Size = New System.Drawing.Size(38, 25)
+        Me.Label88.TabIndex = 97
+        Me.Label88.Text = "13 (D)"
+        Me.Label88.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label89
+        '
+        Me.Label89.BackColor = System.Drawing.Color.Transparent
+        Me.Label89.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label89.Location = New System.Drawing.Point(7, 106)
+        Me.Label89.Name = "Label89"
+        Me.Label89.Size = New System.Drawing.Size(14, 25)
+        Me.Label89.TabIndex = 86
+        Me.Label89.Text = "2"
+        Me.Label89.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label90
+        '
+        Me.Label90.BackColor = System.Drawing.Color.Transparent
+        Me.Label90.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label90.Location = New System.Drawing.Point(7, 137)
+        Me.Label90.Name = "Label90"
+        Me.Label90.Size = New System.Drawing.Size(14, 25)
+        Me.Label90.TabIndex = 87
+        Me.Label90.Text = "3"
+        Me.Label90.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable04
+        '
+        Me.PS_64_ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
+        Me.PS_64_ColorTable04.CustomColor = True
+        Me.PS_64_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
+        Me.PS_64_ColorTable04.ForceNoNerd = False
+        Me.PS_64_ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
+        Me.PS_64_ColorTable04.LineSize = 1
+        Me.PS_64_ColorTable04.Location = New System.Drawing.Point(28, 168)
+        Me.PS_64_ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable04.Name = "PS_64_ColorTable04"
+        Me.PS_64_ColorTable04.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable04.TabIndex = 11
+        Me.PS_64_ColorTable04.Text = "XenonGroupBox31"
+        '
+        'Label92
+        '
+        Me.Label92.BackColor = System.Drawing.Color.Transparent
+        Me.Label92.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label92.Location = New System.Drawing.Point(7, 168)
+        Me.Label92.Name = "Label92"
+        Me.Label92.Size = New System.Drawing.Size(14, 25)
+        Me.Label92.TabIndex = 88
+        Me.Label92.Text = "4"
+        Me.Label92.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label93
+        '
+        Me.Label93.BackColor = System.Drawing.Color.Transparent
+        Me.Label93.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label93.Location = New System.Drawing.Point(120, 168)
+        Me.Label93.Name = "Label93"
+        Me.Label93.Size = New System.Drawing.Size(38, 25)
+        Me.Label93.TabIndex = 96
+        Me.Label93.Text = "12 (C)"
+        Me.Label93.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable05
+        '
+        Me.PS_64_ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_64_ColorTable05.CustomColor = True
+        Me.PS_64_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_64_ColorTable05.ForceNoNerd = False
+        Me.PS_64_ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(103, Byte), Integer))
+        Me.PS_64_ColorTable05.LineSize = 1
+        Me.PS_64_ColorTable05.Location = New System.Drawing.Point(28, 199)
+        Me.PS_64_ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable05.Name = "PS_64_ColorTable05"
+        Me.PS_64_ColorTable05.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable05.TabIndex = 13
+        Me.PS_64_ColorTable05.Text = "XenonGroupBox31"
+        '
+        'Label94
+        '
+        Me.Label94.BackColor = System.Drawing.Color.Transparent
+        Me.Label94.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label94.Location = New System.Drawing.Point(7, 200)
+        Me.Label94.Name = "Label94"
+        Me.Label94.Size = New System.Drawing.Size(14, 25)
+        Me.Label94.TabIndex = 89
+        Me.Label94.Text = "5"
+        Me.Label94.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable06
+        '
+        Me.PS_64_ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.PS_64_ColorTable06.CustomColor = True
+        Me.PS_64_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.PS_64_ColorTable06.ForceNoNerd = False
+        Me.PS_64_ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(214, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(216, Byte), Integer))
+        Me.PS_64_ColorTable06.LineSize = 1
+        Me.PS_64_ColorTable06.Location = New System.Drawing.Point(28, 230)
+        Me.PS_64_ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable06.Name = "PS_64_ColorTable06"
+        Me.PS_64_ColorTable06.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable06.TabIndex = 15
+        Me.PS_64_ColorTable06.Text = "XenonGroupBox31"
+        '
+        'Label95
+        '
+        Me.Label95.BackColor = System.Drawing.Color.Transparent
+        Me.Label95.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label95.Location = New System.Drawing.Point(7, 230)
+        Me.Label95.Name = "Label95"
+        Me.Label95.Size = New System.Drawing.Size(14, 25)
+        Me.Label95.TabIndex = 90
+        Me.Label95.Text = "6"
+        Me.Label95.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label96
+        '
+        Me.Label96.BackColor = System.Drawing.Color.Transparent
+        Me.Label96.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label96.Location = New System.Drawing.Point(120, 137)
+        Me.Label96.Name = "Label96"
+        Me.Label96.Size = New System.Drawing.Size(38, 25)
+        Me.Label96.TabIndex = 95
+        Me.Label96.Text = "11 (B)"
+        Me.Label96.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable15
+        '
+        Me.PS_64_ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
+        Me.PS_64_ColorTable15.CustomColor = True
+        Me.PS_64_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
+        Me.PS_64_ColorTable15.ForceNoNerd = False
+        Me.PS_64_ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
+        Me.PS_64_ColorTable15.LineSize = 1
+        Me.PS_64_ColorTable15.Location = New System.Drawing.Point(165, 261)
+        Me.PS_64_ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable15.Name = "PS_64_ColorTable15"
+        Me.PS_64_ColorTable15.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable15.TabIndex = 33
+        Me.PS_64_ColorTable15.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable07
+        '
+        Me.PS_64_ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.PS_64_ColorTable07.CustomColor = True
+        Me.PS_64_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
+        Me.PS_64_ColorTable07.ForceNoNerd = False
+        Me.PS_64_ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
+        Me.PS_64_ColorTable07.LineSize = 1
+        Me.PS_64_ColorTable07.Location = New System.Drawing.Point(28, 261)
+        Me.PS_64_ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable07.Name = "PS_64_ColorTable07"
+        Me.PS_64_ColorTable07.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable07.TabIndex = 17
+        Me.PS_64_ColorTable07.Text = "XenonGroupBox31"
+        '
+        'Label97
+        '
+        Me.Label97.BackColor = System.Drawing.Color.Transparent
+        Me.Label97.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label97.Location = New System.Drawing.Point(7, 261)
+        Me.Label97.Name = "Label97"
+        Me.Label97.Size = New System.Drawing.Size(14, 25)
+        Me.Label97.TabIndex = 91
+        Me.Label97.Text = "7"
+        Me.Label97.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable08
+        '
+        Me.PS_64_ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
+        Me.PS_64_ColorTable08.CustomColor = True
+        Me.PS_64_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
+        Me.PS_64_ColorTable08.ForceNoNerd = False
+        Me.PS_64_ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
+        Me.PS_64_ColorTable08.LineSize = 1
+        Me.PS_64_ColorTable08.Location = New System.Drawing.Point(165, 44)
+        Me.PS_64_ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable08.Name = "PS_64_ColorTable08"
+        Me.PS_64_ColorTable08.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable08.TabIndex = 19
+        Me.PS_64_ColorTable08.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable14
+        '
+        Me.PS_64_ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
+        Me.PS_64_ColorTable14.CustomColor = True
+        Me.PS_64_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
+        Me.PS_64_ColorTable14.ForceNoNerd = False
+        Me.PS_64_ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
+        Me.PS_64_ColorTable14.LineSize = 1
+        Me.PS_64_ColorTable14.Location = New System.Drawing.Point(165, 230)
+        Me.PS_64_ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable14.Name = "PS_64_ColorTable14"
+        Me.PS_64_ColorTable14.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable14.TabIndex = 31
+        Me.PS_64_ColorTable14.Text = "XenonGroupBox31"
+        '
+        'Label98
+        '
+        Me.Label98.BackColor = System.Drawing.Color.Transparent
+        Me.Label98.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label98.Location = New System.Drawing.Point(120, 106)
+        Me.Label98.Name = "Label98"
+        Me.Label98.Size = New System.Drawing.Size(38, 25)
+        Me.Label98.TabIndex = 94
+        Me.Label98.Text = "10 (A)"
+        Me.Label98.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label99
+        '
+        Me.Label99.BackColor = System.Drawing.Color.Transparent
+        Me.Label99.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label99.Location = New System.Drawing.Point(120, 44)
+        Me.Label99.Name = "Label99"
+        Me.Label99.Size = New System.Drawing.Size(38, 25)
+        Me.Label99.TabIndex = 92
+        Me.Label99.Text = "8"
+        Me.Label99.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable09
+        '
+        Me.PS_64_ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_64_ColorTable09.CustomColor = True
+        Me.PS_64_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_64_ColorTable09.ForceNoNerd = False
+        Me.PS_64_ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.PS_64_ColorTable09.LineSize = 1
+        Me.PS_64_ColorTable09.Location = New System.Drawing.Point(165, 75)
+        Me.PS_64_ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable09.Name = "PS_64_ColorTable09"
+        Me.PS_64_ColorTable09.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable09.TabIndex = 21
+        Me.PS_64_ColorTable09.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable13
+        '
+        Me.PS_64_ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
+        Me.PS_64_ColorTable13.CustomColor = True
+        Me.PS_64_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
+        Me.PS_64_ColorTable13.ForceNoNerd = False
+        Me.PS_64_ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
+        Me.PS_64_ColorTable13.LineSize = 1
+        Me.PS_64_ColorTable13.Location = New System.Drawing.Point(165, 199)
+        Me.PS_64_ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable13.Name = "PS_64_ColorTable13"
+        Me.PS_64_ColorTable13.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable13.TabIndex = 29
+        Me.PS_64_ColorTable13.Text = "XenonGroupBox31"
+        '
+        'Label100
+        '
+        Me.Label100.BackColor = System.Drawing.Color.Transparent
+        Me.Label100.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label100.Location = New System.Drawing.Point(120, 75)
+        Me.Label100.Name = "Label100"
+        Me.Label100.Size = New System.Drawing.Size(38, 25)
+        Me.Label100.TabIndex = 93
+        Me.Label100.Text = "9"
+        Me.Label100.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'PS_64_ColorTable12
+        '
+        Me.PS_64_ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_64_ColorTable12.CustomColor = True
+        Me.PS_64_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.PS_64_ColorTable12.ForceNoNerd = False
+        Me.PS_64_ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
+        Me.PS_64_ColorTable12.LineSize = 1
+        Me.PS_64_ColorTable12.Location = New System.Drawing.Point(165, 168)
+        Me.PS_64_ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable12.Name = "PS_64_ColorTable12"
+        Me.PS_64_ColorTable12.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable12.TabIndex = 27
+        Me.PS_64_ColorTable12.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable10
+        '
+        Me.PS_64_ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_64_ColorTable10.CustomColor = True
+        Me.PS_64_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.PS_64_ColorTable10.ForceNoNerd = False
+        Me.PS_64_ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
+        Me.PS_64_ColorTable10.LineSize = 1
+        Me.PS_64_ColorTable10.Location = New System.Drawing.Point(165, 106)
+        Me.PS_64_ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable10.Name = "PS_64_ColorTable10"
+        Me.PS_64_ColorTable10.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable10.TabIndex = 23
+        Me.PS_64_ColorTable10.Text = "XenonGroupBox31"
+        '
+        'PS_64_ColorTable11
+        '
+        Me.PS_64_ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
+        Me.PS_64_ColorTable11.CustomColor = True
+        Me.PS_64_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
+        Me.PS_64_ColorTable11.ForceNoNerd = False
+        Me.PS_64_ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
+        Me.PS_64_ColorTable11.LineSize = 1
+        Me.PS_64_ColorTable11.Location = New System.Drawing.Point(165, 137)
+        Me.PS_64_ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.PS_64_ColorTable11.Name = "PS_64_ColorTable11"
+        Me.PS_64_ColorTable11.Size = New System.Drawing.Size(85, 25)
+        Me.PS_64_ColorTable11.TabIndex = 25
+        Me.PS_64_ColorTable11.Text = "XenonGroupBox31"
         '
         'XenonAlertBox1
         '
@@ -3367,9 +3853,9 @@ Partial Class cmd
         Me.PS_64_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PS_64_OpacityLbl.BackColor = System.Drawing.Color.Transparent
         Me.PS_64_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_64_OpacityLbl.Location = New System.Drawing.Point(118, 161)
+        Me.PS_64_OpacityLbl.Location = New System.Drawing.Point(136, 162)
         Me.PS_64_OpacityLbl.Name = "PS_64_OpacityLbl"
-        Me.PS_64_OpacityLbl.Size = New System.Drawing.Size(44, 22)
+        Me.PS_64_OpacityLbl.Size = New System.Drawing.Size(26, 22)
         Me.PS_64_OpacityLbl.TabIndex = 121
         Me.PS_64_OpacityLbl.Text = "100"
         Me.PS_64_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3441,7 +3927,7 @@ Partial Class cmd
         Me.PS_64_OpacityBar.Maximum = 255
         Me.PS_64_OpacityBar.Minimum = 0
         Me.PS_64_OpacityBar.Name = "PS_64_OpacityBar"
-        Me.PS_64_OpacityBar.Size = New System.Drawing.Size(104, 19)
+        Me.PS_64_OpacityBar.Size = New System.Drawing.Size(119, 19)
         Me.PS_64_OpacityBar.SmallChange = 1
         Me.PS_64_OpacityBar.TabIndex = 120
         Me.PS_64_OpacityBar.Text = "XenonTrackbar1"
@@ -3527,7 +4013,7 @@ Partial Class cmd
         '
         Me.PS_64_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
         Me.PS_64_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_64_PreviewCUR_LBL.Location = New System.Drawing.Point(186, 97)
+        Me.PS_64_PreviewCUR_LBL.Location = New System.Drawing.Point(190, 97)
         Me.PS_64_PreviewCUR_LBL.Name = "PS_64_PreviewCUR_LBL"
         Me.PS_64_PreviewCUR_LBL.Size = New System.Drawing.Size(31, 22)
         Me.PS_64_PreviewCUR_LBL.TabIndex = 104
@@ -3571,7 +4057,7 @@ Partial Class cmd
         Me.PS_64_CursorSizeBar.Maximum = 100
         Me.PS_64_CursorSizeBar.Minimum = 20
         Me.PS_64_CursorSizeBar.Name = "PS_64_CursorSizeBar"
-        Me.PS_64_CursorSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.PS_64_CursorSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.PS_64_CursorSizeBar.SmallChange = 1
         Me.PS_64_CursorSizeBar.TabIndex = 102
         Me.PS_64_CursorSizeBar.Value = 20
@@ -3637,7 +4123,7 @@ Partial Class cmd
         '
         Me.PS_64_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
         Me.PS_64_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PS_64_FontSizeLbl.Location = New System.Drawing.Point(186, 73)
+        Me.PS_64_FontSizeLbl.Location = New System.Drawing.Point(190, 73)
         Me.PS_64_FontSizeLbl.Name = "PS_64_FontSizeLbl"
         Me.PS_64_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
         Me.PS_64_FontSizeLbl.TabIndex = 102
@@ -3651,7 +4137,7 @@ Partial Class cmd
         Me.PS_64_FontSizeBar.Maximum = 48
         Me.PS_64_FontSizeBar.Minimum = 5
         Me.PS_64_FontSizeBar.Name = "PS_64_FontSizeBar"
-        Me.PS_64_FontSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.PS_64_FontSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.PS_64_FontSizeBar.SmallChange = 1
         Me.PS_64_FontSizeBar.TabIndex = 101
         Me.PS_64_FontSizeBar.Text = "XenonTrackbar16"
@@ -3681,7 +4167,7 @@ Partial Class cmd
         Me.PS_64_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.PS_64_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.PS_64_FontWeightBox.FormattingEnabled = True
-        Me.PS_64_FontWeightBox.Items.AddRange(New Object() {"Don't Care (0)", "Thin (100)", "Extra Light (200)", "Light (300)", "Normal (400)", "Medium (500)", "Semibold (600)", "Bold (700)", "Extra Bold(800)", "Heavy (900)"})
+        Me.PS_64_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
         Me.PS_64_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
         Me.PS_64_FontWeightBox.Location = New System.Drawing.Point(93, 42)
         Me.PS_64_FontWeightBox.Name = "PS_64_FontWeightBox"
@@ -3705,7 +4191,7 @@ Partial Class cmd
         Me.PS_64_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.PS_64_RasterToggle.Checked = False
         Me.PS_64_RasterToggle.DarkLight_Toggler = False
-        Me.PS_64_RasterToggle.Location = New System.Drawing.Point(162, 99)
+        Me.PS_64_RasterToggle.Location = New System.Drawing.Point(172, 99)
         Me.PS_64_RasterToggle.Name = "PS_64_RasterToggle"
         Me.PS_64_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.PS_64_RasterToggle.TabIndex = 95
@@ -3752,492 +4238,6 @@ Partial Class cmd
         Me.Label82.TabIndex = 103
         Me.Label82.Text = "Size:"
         Me.Label82.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox32
-        '
-        Me.XenonGroupBox32.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox32.Controls.Add(Me.Label83)
-        Me.XenonGroupBox32.Controls.Add(Me.Label84)
-        Me.XenonGroupBox32.Controls.Add(Me.PictureBox14)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox33)
-        Me.XenonGroupBox32.Controls.Add(Me.Label85)
-        Me.XenonGroupBox32.Controls.Add(Me.Label86)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox35)
-        Me.XenonGroupBox32.Controls.Add(Me.Label87)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox36)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox37)
-        Me.XenonGroupBox32.Controls.Add(Me.Label88)
-        Me.XenonGroupBox32.Controls.Add(Me.Label89)
-        Me.XenonGroupBox32.Controls.Add(Me.Label90)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox38)
-        Me.XenonGroupBox32.Controls.Add(Me.Label92)
-        Me.XenonGroupBox32.Controls.Add(Me.Label93)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox39)
-        Me.XenonGroupBox32.Controls.Add(Me.Label94)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox40)
-        Me.XenonGroupBox32.Controls.Add(Me.Label95)
-        Me.XenonGroupBox32.Controls.Add(Me.Label96)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox41)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox42)
-        Me.XenonGroupBox32.Controls.Add(Me.Label97)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox43)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox44)
-        Me.XenonGroupBox32.Controls.Add(Me.Label98)
-        Me.XenonGroupBox32.Controls.Add(Me.Label99)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox45)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox46)
-        Me.XenonGroupBox32.Controls.Add(Me.Label100)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox47)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox48)
-        Me.XenonGroupBox32.Controls.Add(Me.XenonGroupBox49)
-        Me.XenonGroupBox32.CustomColor = False
-        Me.XenonGroupBox32.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox32.ForceNoNerd = False
-        Me.XenonGroupBox32.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox32.LineSize = 1
-        Me.XenonGroupBox32.Location = New System.Drawing.Point(2, 2)
-        Me.XenonGroupBox32.Name = "XenonGroupBox32"
-        Me.XenonGroupBox32.Size = New System.Drawing.Size(259, 293)
-        Me.XenonGroupBox32.TabIndex = 121
-        '
-        'Label83
-        '
-        Me.Label83.BackColor = System.Drawing.Color.Transparent
-        Me.Label83.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label83.Location = New System.Drawing.Point(120, 261)
-        Me.Label83.Name = "Label83"
-        Me.Label83.Size = New System.Drawing.Size(38, 25)
-        Me.Label83.TabIndex = 99
-        Me.Label83.Text = "15 (F)"
-        Me.Label83.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label84
-        '
-        Me.Label84.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label84.BackColor = System.Drawing.Color.Transparent
-        Me.Label84.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label84.Location = New System.Drawing.Point(47, 8)
-        Me.Label84.Name = "Label84"
-        Me.Label84.Size = New System.Drawing.Size(198, 31)
-        Me.Label84.TabIndex = 84
-        Me.Label84.Text = "Color Tables:"
-        Me.Label84.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox14
-        '
-        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
-        Me.PictureBox14.Location = New System.Drawing.Point(6, 8)
-        Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox14.TabIndex = 83
-        Me.PictureBox14.TabStop = False
-        '
-        'XenonGroupBox33
-        '
-        Me.XenonGroupBox33.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox33.CustomColor = True
-        Me.XenonGroupBox33.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox33.ForceNoNerd = False
-        Me.XenonGroupBox33.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonGroupBox33.LineSize = 1
-        Me.XenonGroupBox33.Location = New System.Drawing.Point(28, 44)
-        Me.XenonGroupBox33.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox33.Name = "XenonGroupBox33"
-        Me.XenonGroupBox33.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox33.TabIndex = 3
-        Me.XenonGroupBox33.Text = "XenonGroupBox31"
-        '
-        'Label85
-        '
-        Me.Label85.BackColor = System.Drawing.Color.Transparent
-        Me.Label85.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label85.Location = New System.Drawing.Point(7, 44)
-        Me.Label85.Name = "Label85"
-        Me.Label85.Size = New System.Drawing.Size(14, 25)
-        Me.Label85.TabIndex = 4
-        Me.Label85.Text = "0"
-        Me.Label85.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label86
-        '
-        Me.Label86.BackColor = System.Drawing.Color.Transparent
-        Me.Label86.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label86.Location = New System.Drawing.Point(120, 230)
-        Me.Label86.Name = "Label86"
-        Me.Label86.Size = New System.Drawing.Size(38, 25)
-        Me.Label86.TabIndex = 98
-        Me.Label86.Text = "14 (E)"
-        Me.Label86.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox35
-        '
-        Me.XenonGroupBox35.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
-        Me.XenonGroupBox35.CustomColor = True
-        Me.XenonGroupBox35.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
-        Me.XenonGroupBox35.ForceNoNerd = False
-        Me.XenonGroupBox35.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.XenonGroupBox35.LineSize = 1
-        Me.XenonGroupBox35.Location = New System.Drawing.Point(28, 75)
-        Me.XenonGroupBox35.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox35.Name = "XenonGroupBox35"
-        Me.XenonGroupBox35.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox35.TabIndex = 5
-        Me.XenonGroupBox35.Text = "XenonGroupBox31"
-        '
-        'Label87
-        '
-        Me.Label87.BackColor = System.Drawing.Color.Transparent
-        Me.Label87.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label87.Location = New System.Drawing.Point(7, 75)
-        Me.Label87.Name = "Label87"
-        Me.Label87.Size = New System.Drawing.Size(14, 25)
-        Me.Label87.TabIndex = 85
-        Me.Label87.Text = "1"
-        Me.Label87.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox36
-        '
-        Me.XenonGroupBox36.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonGroupBox36.CustomColor = True
-        Me.XenonGroupBox36.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonGroupBox36.ForceNoNerd = False
-        Me.XenonGroupBox36.LineColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.XenonGroupBox36.LineSize = 1
-        Me.XenonGroupBox36.Location = New System.Drawing.Point(28, 106)
-        Me.XenonGroupBox36.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox36.Name = "XenonGroupBox36"
-        Me.XenonGroupBox36.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox36.TabIndex = 7
-        Me.XenonGroupBox36.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox37
-        '
-        Me.XenonGroupBox37.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
-        Me.XenonGroupBox37.CustomColor = True
-        Me.XenonGroupBox37.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
-        Me.XenonGroupBox37.ForceNoNerd = False
-        Me.XenonGroupBox37.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(198, Byte), Integer))
-        Me.XenonGroupBox37.LineSize = 1
-        Me.XenonGroupBox37.Location = New System.Drawing.Point(28, 137)
-        Me.XenonGroupBox37.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox37.Name = "XenonGroupBox37"
-        Me.XenonGroupBox37.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox37.TabIndex = 9
-        Me.XenonGroupBox37.Text = "XenonGroupBox31"
-        '
-        'Label88
-        '
-        Me.Label88.BackColor = System.Drawing.Color.Transparent
-        Me.Label88.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label88.Location = New System.Drawing.Point(120, 200)
-        Me.Label88.Name = "Label88"
-        Me.Label88.Size = New System.Drawing.Size(38, 25)
-        Me.Label88.TabIndex = 97
-        Me.Label88.Text = "13 (D)"
-        Me.Label88.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label89
-        '
-        Me.Label89.BackColor = System.Drawing.Color.Transparent
-        Me.Label89.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label89.Location = New System.Drawing.Point(7, 106)
-        Me.Label89.Name = "Label89"
-        Me.Label89.Size = New System.Drawing.Size(14, 25)
-        Me.Label89.TabIndex = 86
-        Me.Label89.Text = "2"
-        Me.Label89.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label90
-        '
-        Me.Label90.BackColor = System.Drawing.Color.Transparent
-        Me.Label90.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label90.Location = New System.Drawing.Point(7, 137)
-        Me.Label90.Name = "Label90"
-        Me.Label90.Size = New System.Drawing.Size(14, 25)
-        Me.Label90.TabIndex = 87
-        Me.Label90.Text = "3"
-        Me.Label90.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox38
-        '
-        Me.XenonGroupBox38.BackColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.XenonGroupBox38.CustomColor = True
-        Me.XenonGroupBox38.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.XenonGroupBox38.ForceNoNerd = False
-        Me.XenonGroupBox38.LineColor = System.Drawing.Color.FromArgb(CType(CType(202, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.XenonGroupBox38.LineSize = 1
-        Me.XenonGroupBox38.Location = New System.Drawing.Point(28, 168)
-        Me.XenonGroupBox38.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox38.Name = "XenonGroupBox38"
-        Me.XenonGroupBox38.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox38.TabIndex = 11
-        Me.XenonGroupBox38.Text = "XenonGroupBox31"
-        '
-        'Label92
-        '
-        Me.Label92.BackColor = System.Drawing.Color.Transparent
-        Me.Label92.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label92.Location = New System.Drawing.Point(7, 168)
-        Me.Label92.Name = "Label92"
-        Me.Label92.Size = New System.Drawing.Size(14, 25)
-        Me.Label92.TabIndex = 88
-        Me.Label92.Text = "4"
-        Me.Label92.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label93
-        '
-        Me.Label93.BackColor = System.Drawing.Color.Transparent
-        Me.Label93.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label93.Location = New System.Drawing.Point(120, 168)
-        Me.Label93.Name = "Label93"
-        Me.Label93.Size = New System.Drawing.Size(38, 25)
-        Me.Label93.TabIndex = 96
-        Me.Label93.Text = "12 (C)"
-        Me.Label93.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox39
-        '
-        Me.XenonGroupBox39.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox39.CustomColor = True
-        Me.XenonGroupBox39.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox39.ForceNoNerd = False
-        Me.XenonGroupBox39.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(62, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.XenonGroupBox39.LineSize = 1
-        Me.XenonGroupBox39.Location = New System.Drawing.Point(28, 199)
-        Me.XenonGroupBox39.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox39.Name = "XenonGroupBox39"
-        Me.XenonGroupBox39.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox39.TabIndex = 13
-        Me.XenonGroupBox39.Text = "XenonGroupBox31"
-        '
-        'Label94
-        '
-        Me.Label94.BackColor = System.Drawing.Color.Transparent
-        Me.Label94.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label94.Location = New System.Drawing.Point(7, 200)
-        Me.Label94.Name = "Label94"
-        Me.Label94.Size = New System.Drawing.Size(14, 25)
-        Me.Label94.TabIndex = 89
-        Me.Label94.Text = "5"
-        Me.Label94.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox40
-        '
-        Me.XenonGroupBox40.BackColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.XenonGroupBox40.CustomColor = True
-        Me.XenonGroupBox40.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.XenonGroupBox40.ForceNoNerd = False
-        Me.XenonGroupBox40.LineColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(212, Byte), Integer), CType(CType(215, Byte), Integer))
-        Me.XenonGroupBox40.LineSize = 1
-        Me.XenonGroupBox40.Location = New System.Drawing.Point(28, 230)
-        Me.XenonGroupBox40.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox40.Name = "XenonGroupBox40"
-        Me.XenonGroupBox40.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox40.TabIndex = 15
-        Me.XenonGroupBox40.Text = "XenonGroupBox31"
-        '
-        'Label95
-        '
-        Me.Label95.BackColor = System.Drawing.Color.Transparent
-        Me.Label95.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label95.Location = New System.Drawing.Point(7, 230)
-        Me.Label95.Name = "Label95"
-        Me.Label95.Size = New System.Drawing.Size(14, 25)
-        Me.Label95.TabIndex = 90
-        Me.Label95.Text = "6"
-        Me.Label95.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label96
-        '
-        Me.Label96.BackColor = System.Drawing.Color.Transparent
-        Me.Label96.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label96.Location = New System.Drawing.Point(120, 137)
-        Me.Label96.Name = "Label96"
-        Me.Label96.Size = New System.Drawing.Size(38, 25)
-        Me.Label96.TabIndex = 95
-        Me.Label96.Text = "11 (B)"
-        Me.Label96.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox41
-        '
-        Me.XenonGroupBox41.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.XenonGroupBox41.CustomColor = True
-        Me.XenonGroupBox41.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.XenonGroupBox41.ForceNoNerd = False
-        Me.XenonGroupBox41.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.XenonGroupBox41.LineSize = 1
-        Me.XenonGroupBox41.Location = New System.Drawing.Point(165, 261)
-        Me.XenonGroupBox41.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox41.Name = "XenonGroupBox41"
-        Me.XenonGroupBox41.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox41.TabIndex = 33
-        Me.XenonGroupBox41.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox42
-        '
-        Me.XenonGroupBox42.BackColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
-        Me.XenonGroupBox42.CustomColor = True
-        Me.XenonGroupBox42.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
-        Me.XenonGroupBox42.ForceNoNerd = False
-        Me.XenonGroupBox42.LineColor = System.Drawing.Color.FromArgb(CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer), CType(CType(183, Byte), Integer))
-        Me.XenonGroupBox42.LineSize = 1
-        Me.XenonGroupBox42.Location = New System.Drawing.Point(28, 261)
-        Me.XenonGroupBox42.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox42.Name = "XenonGroupBox42"
-        Me.XenonGroupBox42.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox42.TabIndex = 17
-        Me.XenonGroupBox42.Text = "XenonGroupBox31"
-        '
-        'Label97
-        '
-        Me.Label97.BackColor = System.Drawing.Color.Transparent
-        Me.Label97.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label97.Location = New System.Drawing.Point(7, 261)
-        Me.Label97.Name = "Label97"
-        Me.Label97.Size = New System.Drawing.Size(14, 25)
-        Me.Label97.TabIndex = 91
-        Me.Label97.Text = "7"
-        Me.Label97.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox43
-        '
-        Me.XenonGroupBox43.BackColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonGroupBox43.CustomColor = True
-        Me.XenonGroupBox43.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonGroupBox43.ForceNoNerd = False
-        Me.XenonGroupBox43.LineColor = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.XenonGroupBox43.LineSize = 1
-        Me.XenonGroupBox43.Location = New System.Drawing.Point(165, 44)
-        Me.XenonGroupBox43.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox43.Name = "XenonGroupBox43"
-        Me.XenonGroupBox43.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox43.TabIndex = 19
-        Me.XenonGroupBox43.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox44
-        '
-        Me.XenonGroupBox44.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.XenonGroupBox44.CustomColor = True
-        Me.XenonGroupBox44.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
-        Me.XenonGroupBox44.ForceNoNerd = False
-        Me.XenonGroupBox44.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(147, Byte), Integer))
-        Me.XenonGroupBox44.LineSize = 1
-        Me.XenonGroupBox44.Location = New System.Drawing.Point(165, 230)
-        Me.XenonGroupBox44.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox44.Name = "XenonGroupBox44"
-        Me.XenonGroupBox44.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox44.TabIndex = 31
-        Me.XenonGroupBox44.Text = "XenonGroupBox31"
-        '
-        'Label98
-        '
-        Me.Label98.BackColor = System.Drawing.Color.Transparent
-        Me.Label98.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label98.Location = New System.Drawing.Point(120, 106)
-        Me.Label98.Name = "Label98"
-        Me.Label98.Size = New System.Drawing.Size(38, 25)
-        Me.Label98.TabIndex = 94
-        Me.Label98.Text = "10 (A)"
-        Me.Label98.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label99
-        '
-        Me.Label99.BackColor = System.Drawing.Color.Transparent
-        Me.Label99.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label99.Location = New System.Drawing.Point(120, 44)
-        Me.Label99.Name = "Label99"
-        Me.Label99.Size = New System.Drawing.Size(38, 25)
-        Me.Label99.TabIndex = 92
-        Me.Label99.Text = "8"
-        Me.Label99.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox45
-        '
-        Me.XenonGroupBox45.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox45.CustomColor = True
-        Me.XenonGroupBox45.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox45.ForceNoNerd = False
-        Me.XenonGroupBox45.LineColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.XenonGroupBox45.LineSize = 1
-        Me.XenonGroupBox45.Location = New System.Drawing.Point(165, 75)
-        Me.XenonGroupBox45.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox45.Name = "XenonGroupBox45"
-        Me.XenonGroupBox45.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox45.TabIndex = 21
-        Me.XenonGroupBox45.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox46
-        '
-        Me.XenonGroupBox46.BackColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
-        Me.XenonGroupBox46.CustomColor = True
-        Me.XenonGroupBox46.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
-        Me.XenonGroupBox46.ForceNoNerd = False
-        Me.XenonGroupBox46.LineColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(167, Byte), Integer))
-        Me.XenonGroupBox46.LineSize = 1
-        Me.XenonGroupBox46.Location = New System.Drawing.Point(165, 199)
-        Me.XenonGroupBox46.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox46.Name = "XenonGroupBox46"
-        Me.XenonGroupBox46.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox46.TabIndex = 29
-        Me.XenonGroupBox46.Text = "XenonGroupBox31"
-        '
-        'Label100
-        '
-        Me.Label100.BackColor = System.Drawing.Color.Transparent
-        Me.Label100.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label100.Location = New System.Drawing.Point(120, 75)
-        Me.Label100.Name = "Label100"
-        Me.Label100.Size = New System.Drawing.Size(38, 25)
-        Me.Label100.TabIndex = 93
-        Me.Label100.Text = "9"
-        Me.Label100.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'XenonGroupBox47
-        '
-        Me.XenonGroupBox47.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox47.CustomColor = True
-        Me.XenonGroupBox47.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
-        Me.XenonGroupBox47.ForceNoNerd = False
-        Me.XenonGroupBox47.LineColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.XenonGroupBox47.LineSize = 1
-        Me.XenonGroupBox47.Location = New System.Drawing.Point(165, 168)
-        Me.XenonGroupBox47.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox47.Name = "XenonGroupBox47"
-        Me.XenonGroupBox47.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox47.TabIndex = 27
-        Me.XenonGroupBox47.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox48
-        '
-        Me.XenonGroupBox48.BackColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox48.CustomColor = True
-        Me.XenonGroupBox48.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.XenonGroupBox48.ForceNoNerd = False
-        Me.XenonGroupBox48.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(18, Byte), Integer))
-        Me.XenonGroupBox48.LineSize = 1
-        Me.XenonGroupBox48.Location = New System.Drawing.Point(165, 106)
-        Me.XenonGroupBox48.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox48.Name = "XenonGroupBox48"
-        Me.XenonGroupBox48.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox48.TabIndex = 23
-        Me.XenonGroupBox48.Text = "XenonGroupBox31"
-        '
-        'XenonGroupBox49
-        '
-        Me.XenonGroupBox49.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.XenonGroupBox49.CustomColor = True
-        Me.XenonGroupBox49.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.XenonGroupBox49.ForceNoNerd = False
-        Me.XenonGroupBox49.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.XenonGroupBox49.LineSize = 1
-        Me.XenonGroupBox49.Location = New System.Drawing.Point(165, 137)
-        Me.XenonGroupBox49.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox49.Name = "XenonGroupBox49"
-        Me.XenonGroupBox49.Size = New System.Drawing.Size(85, 25)
-        Me.XenonGroupBox49.TabIndex = 25
-        Me.XenonGroupBox49.Text = "XenonGroupBox31"
         '
         'XenonGroupBox50
         '
@@ -4696,7 +4696,7 @@ Partial Class cmd
         '
         Me.ExtTerminal_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
         Me.ExtTerminal_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_PreviewCUR_LBL.Location = New System.Drawing.Point(186, 97)
+        Me.ExtTerminal_PreviewCUR_LBL.Location = New System.Drawing.Point(190, 97)
         Me.ExtTerminal_PreviewCUR_LBL.Name = "ExtTerminal_PreviewCUR_LBL"
         Me.ExtTerminal_PreviewCUR_LBL.Size = New System.Drawing.Size(31, 22)
         Me.ExtTerminal_PreviewCUR_LBL.TabIndex = 104
@@ -4740,7 +4740,7 @@ Partial Class cmd
         Me.ExtTerminal_CursorSizeBar.Maximum = 100
         Me.ExtTerminal_CursorSizeBar.Minimum = 20
         Me.ExtTerminal_CursorSizeBar.Name = "ExtTerminal_CursorSizeBar"
-        Me.ExtTerminal_CursorSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.ExtTerminal_CursorSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.ExtTerminal_CursorSizeBar.SmallChange = 1
         Me.ExtTerminal_CursorSizeBar.TabIndex = 102
         Me.ExtTerminal_CursorSizeBar.Value = 20
@@ -4806,7 +4806,7 @@ Partial Class cmd
         '
         Me.ExtTerminal_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
         Me.ExtTerminal_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_FontSizeLbl.Location = New System.Drawing.Point(186, 73)
+        Me.ExtTerminal_FontSizeLbl.Location = New System.Drawing.Point(190, 73)
         Me.ExtTerminal_FontSizeLbl.Name = "ExtTerminal_FontSizeLbl"
         Me.ExtTerminal_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
         Me.ExtTerminal_FontSizeLbl.TabIndex = 102
@@ -4820,7 +4820,7 @@ Partial Class cmd
         Me.ExtTerminal_FontSizeBar.Maximum = 48
         Me.ExtTerminal_FontSizeBar.Minimum = 5
         Me.ExtTerminal_FontSizeBar.Name = "ExtTerminal_FontSizeBar"
-        Me.ExtTerminal_FontSizeBar.Size = New System.Drawing.Size(90, 19)
+        Me.ExtTerminal_FontSizeBar.Size = New System.Drawing.Size(91, 19)
         Me.ExtTerminal_FontSizeBar.SmallChange = 1
         Me.ExtTerminal_FontSizeBar.TabIndex = 101
         Me.ExtTerminal_FontSizeBar.Text = "XenonTrackbar16"
@@ -4850,7 +4850,7 @@ Partial Class cmd
         Me.ExtTerminal_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_FontWeightBox.FormattingEnabled = True
-        Me.ExtTerminal_FontWeightBox.Items.AddRange(New Object() {"Don't Care (0)", "Thin (100)", "Extra Light (200)", "Light (300)", "Normal (400)", "Medium (500)", "Semibold (600)", "Bold (700)", "Extra Bold(800)", "Heavy (900)"})
+        Me.ExtTerminal_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
         Me.ExtTerminal_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
         Me.ExtTerminal_FontWeightBox.Location = New System.Drawing.Point(93, 42)
         Me.ExtTerminal_FontWeightBox.Name = "ExtTerminal_FontWeightBox"
@@ -4874,7 +4874,7 @@ Partial Class cmd
         Me.ExtTerminal_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.ExtTerminal_RasterToggle.Checked = False
         Me.ExtTerminal_RasterToggle.DarkLight_Toggler = False
-        Me.ExtTerminal_RasterToggle.Location = New System.Drawing.Point(162, 99)
+        Me.ExtTerminal_RasterToggle.Location = New System.Drawing.Point(172, 99)
         Me.ExtTerminal_RasterToggle.Name = "ExtTerminal_RasterToggle"
         Me.ExtTerminal_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.ExtTerminal_RasterToggle.TabIndex = 95
@@ -5005,11 +5005,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable00
         '
-        Me.ExtTerminal_ColorTable00.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable00.CustomColor = True
-        Me.ExtTerminal_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ExtTerminal_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable00.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.ExtTerminal_ColorTable00.LineSize = 1
         Me.ExtTerminal_ColorTable00.Location = New System.Drawing.Point(28, 44)
         Me.ExtTerminal_ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5042,11 +5042,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable01
         '
-        Me.ExtTerminal_ColorTable01.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ExtTerminal_ColorTable01.CustomColor = True
-        Me.ExtTerminal_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(217, Byte), Integer))
+        Me.ExtTerminal_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ExtTerminal_ColorTable01.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
         Me.ExtTerminal_ColorTable01.LineSize = 1
         Me.ExtTerminal_ColorTable01.Location = New System.Drawing.Point(28, 75)
         Me.ExtTerminal_ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5068,11 +5068,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable02
         '
-        Me.ExtTerminal_ColorTable02.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ExtTerminal_ColorTable02.CustomColor = True
-        Me.ExtTerminal_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.ExtTerminal_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ExtTerminal_ColorTable02.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
         Me.ExtTerminal_ColorTable02.LineSize = 1
         Me.ExtTerminal_ColorTable02.Location = New System.Drawing.Point(28, 106)
         Me.ExtTerminal_ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5083,11 +5083,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable03
         '
-        Me.ExtTerminal_ColorTable03.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ExtTerminal_ColorTable03.CustomColor = True
-        Me.ExtTerminal_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(149, Byte), Integer), CType(CType(220, Byte), Integer))
+        Me.ExtTerminal_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ExtTerminal_ColorTable03.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
         Me.ExtTerminal_ColorTable03.LineSize = 1
         Me.ExtTerminal_ColorTable03.Location = New System.Drawing.Point(28, 137)
         Me.ExtTerminal_ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5131,11 +5131,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable04
         '
-        Me.ExtTerminal_ColorTable04.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ExtTerminal_ColorTable04.CustomColor = True
-        Me.ExtTerminal_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(22, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.ExtTerminal_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ExtTerminal_ColorTable04.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
         Me.ExtTerminal_ColorTable04.LineSize = 1
         Me.ExtTerminal_ColorTable04.Location = New System.Drawing.Point(28, 168)
         Me.ExtTerminal_ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5168,11 +5168,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable05
         '
-        Me.ExtTerminal_ColorTable05.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ExtTerminal_ColorTable05.CustomColor = True
-        Me.ExtTerminal_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(29, Byte), Integer), CType(CType(151, Byte), Integer))
+        Me.ExtTerminal_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ExtTerminal_ColorTable05.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
         Me.ExtTerminal_ColorTable05.LineSize = 1
         Me.ExtTerminal_ColorTable05.Location = New System.Drawing.Point(28, 199)
         Me.ExtTerminal_ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5194,11 +5194,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable06
         '
-        Me.ExtTerminal_ColorTable06.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ExtTerminal_ColorTable06.CustomColor = True
-        Me.ExtTerminal_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ExtTerminal_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ExtTerminal_ColorTable06.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ExtTerminal_ColorTable06.LineSize = 1
         Me.ExtTerminal_ColorTable06.Location = New System.Drawing.Point(28, 230)
         Me.ExtTerminal_ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5231,11 +5231,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable15
         '
-        Me.ExtTerminal_ColorTable15.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ExtTerminal_ColorTable15.CustomColor = True
         Me.ExtTerminal_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ExtTerminal_ColorTable15.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ExtTerminal_ColorTable15.LineSize = 1
         Me.ExtTerminal_ColorTable15.Location = New System.Drawing.Point(165, 261)
         Me.ExtTerminal_ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5246,11 +5246,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable07
         '
-        Me.ExtTerminal_ColorTable07.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ExtTerminal_ColorTable07.CustomColor = True
-        Me.ExtTerminal_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer), CType(CType(203, Byte), Integer))
+        Me.ExtTerminal_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ExtTerminal_ColorTable07.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.ExtTerminal_ColorTable07.LineSize = 1
         Me.ExtTerminal_ColorTable07.Location = New System.Drawing.Point(28, 261)
         Me.ExtTerminal_ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5272,11 +5272,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable08
         '
-        Me.ExtTerminal_ColorTable08.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ExtTerminal_ColorTable08.CustomColor = True
-        Me.ExtTerminal_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.ExtTerminal_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ExtTerminal_ColorTable08.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
         Me.ExtTerminal_ColorTable08.LineSize = 1
         Me.ExtTerminal_ColorTable08.Location = New System.Drawing.Point(165, 44)
         Me.ExtTerminal_ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5287,11 +5287,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable14
         '
-        Me.ExtTerminal_ColorTable14.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ExtTerminal_ColorTable14.CustomColor = True
-        Me.ExtTerminal_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(163, Byte), Integer))
+        Me.ExtTerminal_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ExtTerminal_ColorTable14.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
         Me.ExtTerminal_ColorTable14.LineSize = 1
         Me.ExtTerminal_ColorTable14.Location = New System.Drawing.Point(165, 230)
         Me.ExtTerminal_ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5324,11 +5324,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable09
         '
-        Me.ExtTerminal_ColorTable09.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ExtTerminal_ColorTable09.CustomColor = True
-        Me.ExtTerminal_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(119, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.ExtTerminal_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ExtTerminal_ColorTable09.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ExtTerminal_ColorTable09.LineSize = 1
         Me.ExtTerminal_ColorTable09.Location = New System.Drawing.Point(165, 75)
         Me.ExtTerminal_ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5339,11 +5339,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable13
         '
-        Me.ExtTerminal_ColorTable13.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ExtTerminal_ColorTable13.CustomColor = True
-        Me.ExtTerminal_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(178, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(157, Byte), Integer))
+        Me.ExtTerminal_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ExtTerminal_ColorTable13.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
         Me.ExtTerminal_ColorTable13.LineSize = 1
         Me.ExtTerminal_ColorTable13.Location = New System.Drawing.Point(165, 199)
         Me.ExtTerminal_ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5365,11 +5365,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable12
         '
-        Me.ExtTerminal_ColorTable12.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ExtTerminal_ColorTable12.CustomColor = True
-        Me.ExtTerminal_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(87, Byte), Integer))
+        Me.ExtTerminal_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ExtTerminal_ColorTable12.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
         Me.ExtTerminal_ColorTable12.LineSize = 1
         Me.ExtTerminal_ColorTable12.Location = New System.Drawing.Point(165, 168)
         Me.ExtTerminal_ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5380,11 +5380,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable10
         '
-        Me.ExtTerminal_ColorTable10.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable10.CustomColor = True
-        Me.ExtTerminal_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.ExtTerminal_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable10.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
         Me.ExtTerminal_ColorTable10.LineSize = 1
         Me.ExtTerminal_ColorTable10.Location = New System.Drawing.Point(165, 106)
         Me.ExtTerminal_ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5395,11 +5395,11 @@ Partial Class cmd
         '
         'ExtTerminal_ColorTable11
         '
-        Me.ExtTerminal_ColorTable11.BackColor = System.Drawing.Color.Black
+        Me.ExtTerminal_ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ExtTerminal_ColorTable11.CustomColor = True
-        Me.ExtTerminal_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ExtTerminal_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ExtTerminal_ColorTable11.ForceNoNerd = False
-        Me.ExtTerminal_ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer))
+        Me.ExtTerminal_ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
         Me.ExtTerminal_ColorTable11.LineSize = 1
         Me.ExtTerminal_ColorTable11.Location = New System.Drawing.Point(165, 137)
         Me.ExtTerminal_ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -5667,9 +5667,9 @@ Partial Class cmd
         Me.ExtTerminal_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_OpacityLbl.BackColor = System.Drawing.Color.Transparent
         Me.ExtTerminal_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_OpacityLbl.Location = New System.Drawing.Point(118, 161)
+        Me.ExtTerminal_OpacityLbl.Location = New System.Drawing.Point(134, 162)
         Me.ExtTerminal_OpacityLbl.Name = "ExtTerminal_OpacityLbl"
-        Me.ExtTerminal_OpacityLbl.Size = New System.Drawing.Size(44, 22)
+        Me.ExtTerminal_OpacityLbl.Size = New System.Drawing.Size(26, 22)
         Me.ExtTerminal_OpacityLbl.TabIndex = 121
         Me.ExtTerminal_OpacityLbl.Text = "100"
         Me.ExtTerminal_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -5741,7 +5741,7 @@ Partial Class cmd
         Me.ExtTerminal_OpacityBar.Maximum = 255
         Me.ExtTerminal_OpacityBar.Minimum = 0
         Me.ExtTerminal_OpacityBar.Name = "ExtTerminal_OpacityBar"
-        Me.ExtTerminal_OpacityBar.Size = New System.Drawing.Size(104, 19)
+        Me.ExtTerminal_OpacityBar.Size = New System.Drawing.Size(117, 19)
         Me.ExtTerminal_OpacityBar.SmallChange = 1
         Me.ExtTerminal_OpacityBar.TabIndex = 120
         Me.ExtTerminal_OpacityBar.Text = "XenonTrackbar1"
@@ -5852,6 +5852,8 @@ Partial Class cmd
         Me.TabPage3.ResumeLayout(False)
         Me.XenonTabControl3.ResumeLayout(False)
         Me.TabPage8.ResumeLayout(False)
+        Me.XenonGroupBox9.ResumeLayout(False)
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox5.ResumeLayout(False)
@@ -5862,11 +5864,11 @@ Partial Class cmd
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox7.ResumeLayout(False)
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox9.ResumeLayout(False)
-        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox27.ResumeLayout(False)
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
+        Me.XenonGroupBox10.ResumeLayout(False)
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox28.ResumeLayout(False)
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox29.ResumeLayout(False)
@@ -5877,8 +5879,6 @@ Partial Class cmd
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox31.ResumeLayout(False)
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox32.ResumeLayout(False)
-        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox50.ResumeLayout(False)
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
@@ -6061,41 +6061,6 @@ Partial Class cmd
     Friend WithEvents Label38 As Label
     Friend WithEvents Label39 As Label
     Friend WithEvents Label40 As Label
-    Friend WithEvents XenonGroupBox9 As XenonGroupBox
-    Friend WithEvents Label42 As Label
-    Friend WithEvents Label43 As Label
-    Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents XenonGroupBox10 As XenonGroupBox
-    Friend WithEvents Label44 As Label
-    Friend WithEvents Label45 As Label
-    Friend WithEvents XenonGroupBox11 As XenonGroupBox
-    Friend WithEvents Label46 As Label
-    Friend WithEvents XenonGroupBox13 As XenonGroupBox
-    Friend WithEvents XenonGroupBox14 As XenonGroupBox
-    Friend WithEvents Label47 As Label
-    Friend WithEvents Label48 As Label
-    Friend WithEvents Label51 As Label
-    Friend WithEvents XenonGroupBox15 As XenonGroupBox
-    Friend WithEvents Label52 As Label
-    Friend WithEvents Label53 As Label
-    Friend WithEvents XenonGroupBox16 As XenonGroupBox
-    Friend WithEvents Label54 As Label
-    Friend WithEvents XenonGroupBox17 As XenonGroupBox
-    Friend WithEvents Label55 As Label
-    Friend WithEvents Label56 As Label
-    Friend WithEvents XenonGroupBox18 As XenonGroupBox
-    Friend WithEvents XenonGroupBox19 As XenonGroupBox
-    Friend WithEvents Label62 As Label
-    Friend WithEvents XenonGroupBox20 As XenonGroupBox
-    Friend WithEvents XenonGroupBox21 As XenonGroupBox
-    Friend WithEvents Label63 As Label
-    Friend WithEvents Label64 As Label
-    Friend WithEvents XenonGroupBox22 As XenonGroupBox
-    Friend WithEvents XenonGroupBox23 As XenonGroupBox
-    Friend WithEvents Label65 As Label
-    Friend WithEvents XenonGroupBox24 As XenonGroupBox
-    Friend WithEvents XenonGroupBox25 As XenonGroupBox
-    Friend WithEvents XenonGroupBox26 As XenonGroupBox
     Friend WithEvents XenonGroupBox27 As XenonGroupBox
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents PictureBox8 As PictureBox
@@ -6151,41 +6116,6 @@ Partial Class cmd
     Friend WithEvents Label80 As Label
     Friend WithEvents Label81 As Label
     Friend WithEvents Label82 As Label
-    Friend WithEvents XenonGroupBox32 As XenonGroupBox
-    Friend WithEvents Label83 As Label
-    Friend WithEvents Label84 As Label
-    Friend WithEvents PictureBox14 As PictureBox
-    Friend WithEvents XenonGroupBox33 As XenonGroupBox
-    Friend WithEvents Label85 As Label
-    Friend WithEvents Label86 As Label
-    Friend WithEvents XenonGroupBox35 As XenonGroupBox
-    Friend WithEvents Label87 As Label
-    Friend WithEvents XenonGroupBox36 As XenonGroupBox
-    Friend WithEvents XenonGroupBox37 As XenonGroupBox
-    Friend WithEvents Label88 As Label
-    Friend WithEvents Label89 As Label
-    Friend WithEvents Label90 As Label
-    Friend WithEvents XenonGroupBox38 As XenonGroupBox
-    Friend WithEvents Label92 As Label
-    Friend WithEvents Label93 As Label
-    Friend WithEvents XenonGroupBox39 As XenonGroupBox
-    Friend WithEvents Label94 As Label
-    Friend WithEvents XenonGroupBox40 As XenonGroupBox
-    Friend WithEvents Label95 As Label
-    Friend WithEvents Label96 As Label
-    Friend WithEvents XenonGroupBox41 As XenonGroupBox
-    Friend WithEvents XenonGroupBox42 As XenonGroupBox
-    Friend WithEvents Label97 As Label
-    Friend WithEvents XenonGroupBox43 As XenonGroupBox
-    Friend WithEvents XenonGroupBox44 As XenonGroupBox
-    Friend WithEvents Label98 As Label
-    Friend WithEvents Label99 As Label
-    Friend WithEvents XenonGroupBox45 As XenonGroupBox
-    Friend WithEvents XenonGroupBox46 As XenonGroupBox
-    Friend WithEvents Label100 As Label
-    Friend WithEvents XenonGroupBox47 As XenonGroupBox
-    Friend WithEvents XenonGroupBox48 As XenonGroupBox
-    Friend WithEvents XenonGroupBox49 As XenonGroupBox
     Friend WithEvents XenonGroupBox50 As XenonGroupBox
     Friend WithEvents XenonButton5 As XenonButton
     Friend WithEvents PictureBox15 As PictureBox
@@ -6288,4 +6218,74 @@ Partial Class cmd
     Friend WithEvents PictureBox19 As PictureBox
     Friend WithEvents Label110 As Label
     Friend WithEvents ExtTerminal_OpacityBar As XenonTrackbar
+    Friend WithEvents XenonGroupBox9 As XenonGroupBox
+    Friend WithEvents Label42 As Label
+    Friend WithEvents Label43 As Label
+    Friend WithEvents PictureBox7 As PictureBox
+    Friend WithEvents PS_32_ColorTable00 As XenonGroupBox
+    Friend WithEvents Label44 As Label
+    Friend WithEvents Label45 As Label
+    Friend WithEvents PS_32_ColorTable01 As XenonGroupBox
+    Friend WithEvents Label46 As Label
+    Friend WithEvents PS_32_ColorTable02 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable03 As XenonGroupBox
+    Friend WithEvents Label47 As Label
+    Friend WithEvents Label48 As Label
+    Friend WithEvents Label51 As Label
+    Friend WithEvents PS_32_ColorTable04 As XenonGroupBox
+    Friend WithEvents Label52 As Label
+    Friend WithEvents Label53 As Label
+    Friend WithEvents PS_32_ColorTable05 As XenonGroupBox
+    Friend WithEvents Label54 As Label
+    Friend WithEvents PS_32_ColorTable06 As XenonGroupBox
+    Friend WithEvents Label55 As Label
+    Friend WithEvents Label56 As Label
+    Friend WithEvents PS_32_ColorTable15 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable07 As XenonGroupBox
+    Friend WithEvents Label62 As Label
+    Friend WithEvents PS_32_ColorTable08 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable14 As XenonGroupBox
+    Friend WithEvents Label63 As Label
+    Friend WithEvents Label64 As Label
+    Friend WithEvents PS_32_ColorTable09 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable13 As XenonGroupBox
+    Friend WithEvents Label65 As Label
+    Friend WithEvents PS_32_ColorTable12 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable10 As XenonGroupBox
+    Friend WithEvents PS_32_ColorTable11 As XenonGroupBox
+    Friend WithEvents XenonGroupBox10 As XenonGroupBox
+    Friend WithEvents Label83 As Label
+    Friend WithEvents Label84 As Label
+    Friend WithEvents PictureBox14 As PictureBox
+    Friend WithEvents PS_64_ColorTable00 As XenonGroupBox
+    Friend WithEvents Label85 As Label
+    Friend WithEvents Label86 As Label
+    Friend WithEvents PS_64_ColorTable01 As XenonGroupBox
+    Friend WithEvents Label87 As Label
+    Friend WithEvents PS_64_ColorTable02 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable03 As XenonGroupBox
+    Friend WithEvents Label88 As Label
+    Friend WithEvents Label89 As Label
+    Friend WithEvents Label90 As Label
+    Friend WithEvents PS_64_ColorTable04 As XenonGroupBox
+    Friend WithEvents Label92 As Label
+    Friend WithEvents Label93 As Label
+    Friend WithEvents PS_64_ColorTable05 As XenonGroupBox
+    Friend WithEvents Label94 As Label
+    Friend WithEvents PS_64_ColorTable06 As XenonGroupBox
+    Friend WithEvents Label95 As Label
+    Friend WithEvents Label96 As Label
+    Friend WithEvents PS_64_ColorTable15 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable07 As XenonGroupBox
+    Friend WithEvents Label97 As Label
+    Friend WithEvents PS_64_ColorTable08 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable14 As XenonGroupBox
+    Friend WithEvents Label98 As Label
+    Friend WithEvents Label99 As Label
+    Friend WithEvents PS_64_ColorTable09 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable13 As XenonGroupBox
+    Friend WithEvents Label100 As Label
+    Friend WithEvents PS_64_ColorTable12 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable10 As XenonGroupBox
+    Friend WithEvents PS_64_ColorTable11 As XenonGroupBox
 End Class

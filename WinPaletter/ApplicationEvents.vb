@@ -13,6 +13,7 @@ Namespace My
         Public W10 As Boolean
         Public W8 As Boolean
         Public W7 As Boolean
+        Public W10_1909 As Boolean
     End Module
     Partial Friend Class MyApplication
 
@@ -324,6 +325,7 @@ Namespace My
             W10 = My.Computer.Info.OSFullName.Contains("10")
             W8 = My.Computer.Info.OSFullName.Contains("8")
             W7 = My.Computer.Info.OSFullName.Contains("7")
+            W10_1909 = W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909)
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown

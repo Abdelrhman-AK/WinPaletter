@@ -177,14 +177,10 @@ Public Class CP
     Public Property CMD_ScreenColorsForeground As Integer = 7
     Public Property CMD_ScreenColorsBackground As Integer = 0
     Public Property CMD_CursorSize As Integer = 19
-    Public Property CMD_FaceName As String = "Cascadia Mono"
+    Public Property CMD_FaceName As String = "Consolas"
     Public Property CMD_FontRaster As Boolean = False
     Public Property CMD_FontSize As Integer
     Public Property CMD_FontWeight As Integer = 400
-#End Region
-
-
-#Region "Terminal: 1909"
     Public Property CMD_1909_CursorType As Integer = 1
     Public Property CMD_1909_CursorColor As Color = Color.White
     Public Property CMD_1909_ForceV2 As Boolean = True
@@ -214,6 +210,17 @@ Public Class CP
     Public Property PS_32_PopupBackground As Integer = 3
     Public Property PS_32_ScreenColorsForeground As Integer = 6
     Public Property PS_32_ScreenColorsBackground As Integer = 8
+    Public Property PS_32_CursorSize As Integer = 19
+    Public Property PS_32_FaceName As String = "Consolas"
+    Public Property PS_32_FontRaster As Boolean = False
+    Public Property PS_32_FontSize As Integer
+    Public Property PS_32_FontWeight As Integer = 400
+    Public Property PS_32_1909_CursorType As Integer = 1
+    Public Property PS_32_1909_CursorColor As Color = Color.White
+    Public Property PS_32_1909_ForceV2 As Boolean = True
+    Public Property PS_32_1909_LineSelection As Boolean = False
+    Public Property PS_32_1909_TerminalScrolling As Boolean = False
+    Public Property PS_32_1909_WindowAlpha As Integer = 100
 #End Region
 
 #Region "PowerShell 64-bit"
@@ -237,6 +244,17 @@ Public Class CP
     Public Property PS_64_PopupBackground As Integer = 3
     Public Property PS_64_ScreenColorsForeground As Integer = 6
     Public Property PS_64_ScreenColorsBackground As Integer = 8
+    Public Property PS_64_CursorSize As Integer = 19
+    Public Property PS_64_FaceName As String = "Consolas"
+    Public Property PS_64_FontRaster As Boolean = False
+    Public Property PS_64_FontSize As Integer
+    Public Property PS_64_FontWeight As Integer = 400
+    Public Property PS_64_1909_CursorType As Integer = 1
+    Public Property PS_64_1909_CursorColor As Color = Color.White
+    Public Property PS_64_1909_ForceV2 As Boolean = True
+    Public Property PS_64_1909_LineSelection As Boolean = False
+    Public Property PS_64_1909_TerminalScrolling As Boolean = False
+    Public Property PS_64_1909_WindowAlpha As Integer = 100
 #End Region
 #End Region
 
@@ -1480,144 +1498,144 @@ Public Class CP
 #End Region
 
 #Region "Terminals"
-                'Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
                 Dim y_cmd As Object
 
 #Region "Command Prompt"
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable00", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable00", BizareColorInvertor(_Def.CMD_ColorTable00).ToArgb)
                     CMD_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable00 = Color.Black
+                    CMD_ColorTable00 = _Def.CMD_ColorTable01
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable01", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable01", BizareColorInvertor(_Def.CMD_ColorTable01).ToArgb)
                     CMD_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable01 = Color.Black
+                    CMD_ColorTable01 = _Def.CMD_ColorTable02
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable02", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable02", BizareColorInvertor(_Def.CMD_ColorTable02).ToArgb)
                     CMD_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable02 = Color.Black
+                    CMD_ColorTable02 = _Def.CMD_ColorTable03
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable03", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable03", BizareColorInvertor(_Def.CMD_ColorTable03).ToArgb)
                     CMD_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable03 = Color.Black
+                    CMD_ColorTable03 = _Def.CMD_ColorTable04
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable04", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable04", BizareColorInvertor(_Def.CMD_ColorTable04).ToArgb)
                     CMD_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable04 = Color.Black
+                    CMD_ColorTable04 = _Def.CMD_ColorTable05
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable05", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable05", BizareColorInvertor(_Def.CMD_ColorTable05).ToArgb)
                     CMD_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable05 = Color.Black
+                    CMD_ColorTable05 = _Def.CMD_ColorTable06
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable06", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable06", BizareColorInvertor(_Def.CMD_ColorTable06).ToArgb)
                     CMD_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable06 = Color.Black
+                    CMD_ColorTable06 = _Def.CMD_ColorTable07
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable07", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable07", BizareColorInvertor(_Def.CMD_ColorTable07).ToArgb)
                     CMD_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable07 = Color.Black
+                    CMD_ColorTable07 = _Def.CMD_ColorTable08
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable08", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable08", BizareColorInvertor(_Def.CMD_ColorTable08).ToArgb)
                     CMD_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable08 = Color.Black
+                    CMD_ColorTable08 = _Def.CMD_ColorTable09
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable09", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable09", BizareColorInvertor(_Def.CMD_ColorTable09).ToArgb)
                     CMD_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable09 = Color.Black
+                    CMD_ColorTable09 = _Def.CMD_ColorTable10
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable10", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable10", BizareColorInvertor(_Def.CMD_ColorTable10).ToArgb)
                     CMD_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable10 = Color.Black
+                    CMD_ColorTable10 = _Def.CMD_ColorTable00
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable11", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable11", BizareColorInvertor(_Def.CMD_ColorTable11).ToArgb)
                     CMD_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable11 = Color.Black
+                    CMD_ColorTable11 = _Def.CMD_ColorTable11
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable12", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable12", BizareColorInvertor(_Def.CMD_ColorTable12).ToArgb)
                     CMD_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable12 = Color.Black
+                    CMD_ColorTable12 = _Def.CMD_ColorTable12
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable13", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable13", BizareColorInvertor(_Def.CMD_ColorTable13).ToArgb)
                     CMD_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable13 = Color.Black
+                    CMD_ColorTable13 = _Def.CMD_ColorTable13
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable14", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable14", BizareColorInvertor(_Def.CMD_ColorTable14).ToArgb)
                     CMD_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable14 = Color.Black
+                    CMD_ColorTable14 = _Def.CMD_ColorTable14
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable15", BizareColorInvertor(Color.Black).ToArgb)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable15", BizareColorInvertor(_Def.CMD_ColorTable15).ToArgb)
                     CMD_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                 Catch
-                    CMD_ColorTable15 = Color.Black
+                    CMD_ColorTable15 = _Def.CMD_ColorTable15
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "PopupColors", 245)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(_Def.CMD_PopupBackground.ToString("X") & _Def.CMD_PopupForeground.ToString("X"), 16))
 
                     With CInt(y_cmd).ToString("X")
                         CMD_PopupBackground = Convert.ToInt32(.Chars(0), 16)
                         CMD_PopupForeground = Convert.ToInt32(.Chars(1), 16)
                     End With
+
                 Catch
-                    CMD_PopupBackground = 15
-                    CMD_PopupForeground = 5
+                    CMD_PopupBackground = _Def.CMD_PopupBackground
+                    CMD_PopupForeground = _Def.CMD_PopupForeground
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ScreenColors", 7)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(_Def.CMD_ScreenColorsBackground.ToString("X") & _Def.CMD_ScreenColorsForeground.ToString("X"), 16))
 
                     With CInt(y_cmd).ToString("X")
                         CMD_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
                         CMD_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
                     End With
                 Catch
-                    CMD_ScreenColorsBackground = 0
-                    CMD_ScreenColorsForeground = 7
+                    CMD_ScreenColorsBackground = _Def.CMD_ScreenColorsBackground
+                    CMD_ScreenColorsForeground = _Def.CMD_ScreenColorsForeground
                 End Try
 
                 Try
@@ -1628,30 +1646,30 @@ Public Class CP
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FaceName", "Cascadia Mono")
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FaceName", _Def.CMD_FaceName)
 
                     If IsFontInstalled(y_cmd) Then
                         CMD_FaceName = y_cmd
                     Else
-                        CMD_FaceName = "Cascadia Mono"
+                        CMD_FaceName = _Def.CMD_FaceName
                     End If
 
                 Catch
-                    CMD_FaceName = "Cascadia Mono"
+                    CMD_FaceName = _Def.CMD_FaceName
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontFamily", 54)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontFamily", If(Not _Def.CMD_FontRaster, 54, 0))
                     CMD_FontRaster = If(y_cmd = 0, True, False)
                 Catch
-                    CMD_FontRaster = False
+                    CMD_FontRaster = _Def.CMD_FontRaster
                 End Try
 
                 Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontSize", 0)
+                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontSize", _Def.CMD_FontSize)
                     CMD_FontSize = y_cmd
                 Catch
-                    CMD_FontSize = 0
+                    CMD_FontSize = _Def.CMD_FontSize
                 End Try
 
                 Try
@@ -1660,10 +1678,8 @@ Public Class CP
                 Catch
                     CMD_FontWeight = 400
                 End Try
-#End Region
 
-#Region "Terminal: 1909"
-                If Microsoft.Win32.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909 Then
+                If My.W10_1909 Then
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
                         CMD_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
@@ -1748,17 +1764,17 @@ Public Class CP
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(CMD_ColorTable05).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(_Def.PS_32_ColorTable05).ToArgb)
                         PS_32_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
-                        PS_32_ColorTable05 = CMD_ColorTable05
+                        PS_32_ColorTable05 = _Def.PS_32_ColorTable05
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(CMD_ColorTable06).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(_Def.PS_32_ColorTable06).ToArgb)
                         PS_32_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
-                        PS_32_ColorTable06 = CMD_ColorTable06
+                        PS_32_ColorTable06 = _Def.PS_32_ColorTable06
                     End Try
 
                     Try
@@ -1825,168 +1841,340 @@ Public Class CP
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", 243)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_32_PopupBackground.ToString("X") & _Def.PS_32_PopupForeground.ToString("X"), 16))
 
                         With CInt(y_cmd).ToString("X")
                             PS_32_PopupBackground = Convert.ToInt32(.Chars(0), 16)
                             PS_32_PopupForeground = Convert.ToInt32(.Chars(1), 16)
                         End With
                     Catch
-                        PS_32_PopupBackground = 15
-                        PS_32_PopupForeground = 3
+                        PS_32_PopupBackground = _Def.PS_32_PopupBackground
+                        PS_32_PopupForeground = _Def.PS_32_PopupForeground
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", 86)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_32_ScreenColorsBackground.ToString("X") & _Def.PS_32_ScreenColorsForeground.ToString("X"), 16))
 
                         With CInt(y_cmd).ToString("X")
                             PS_32_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
                             PS_32_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
                         End With
                     Catch
-                        PS_32_ScreenColorsBackground = 8
-                        PS_32_ScreenColorsForeground = 6
+                        PS_32_ScreenColorsBackground = _Def.PS_32_ScreenColorsBackground
+                        PS_32_ScreenColorsForeground = _Def.PS_32_ScreenColorsForeground
                     End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", 25)
+                        PS_32_CursorSize = y_cmd
+                    Catch
+                        PS_32_CursorSize = 25
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", _Def.PS_32_FaceName)
+                        If IsFontInstalled(y_cmd) Then
+                            PS_32_FaceName = y_cmd
+                        Else
+                            PS_32_FaceName = _Def.PS_32_FaceName
+                        End If
+                    Catch
+                        PS_32_FaceName = _Def.PS_32_FaceName
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_32_FontRaster, 54, 0))
+                        PS_32_FontRaster = If(y_cmd = 0, True, False)
+                    Catch
+                        PS_32_FontRaster = _Def.PS_32_FontRaster
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", _Def.PS_32_FontSize)
+                        PS_32_FontSize = y_cmd
+                    Catch
+                        PS_32_FontSize = _Def.PS_32_FontSize
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", 400)
+                        PS_32_FontWeight = y_cmd
+                    Catch
+                        PS_32_FontWeight = 400
+                    End Try
+
+                    If My.W10_1909 Then
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
+                            PS_32_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                        Catch
+                            PS_32_1909_CursorColor = Color.White
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", 0)
+                            PS_32_1909_CursorType = y_cmd
+                        Catch
+                            PS_32_1909_CursorType = 1
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", True)
+                            PS_32_1909_ForceV2 = y_cmd
+                        Catch
+                            PS_32_1909_ForceV2 = True
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", False)
+                            PS_32_1909_LineSelection = y_cmd
+                        Catch
+                            PS_32_1909_LineSelection = False
+                        End Try
+
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", False)
+                            PS_32_1909_TerminalScrolling = y_cmd
+                        Catch
+                            PS_32_1909_TerminalScrolling = False
+                        End Try
+
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 100)
+                            PS_32_1909_WindowAlpha = y_cmd
+                        Catch
+                            PS_32_1909_WindowAlpha = 100
+                        End Try
+                    End If
                 End If
 #End Region
 
 #Region "PowerShell 64-bit"
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
                         PS_64_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable00 = CMD_ColorTable00
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", BizareColorInvertor(CMD_ColorTable01).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", BizareColorInvertor(CMD_ColorTable01).ToArgb)
                         PS_64_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable01 = CMD_ColorTable01
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", BizareColorInvertor(CMD_ColorTable02).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", BizareColorInvertor(CMD_ColorTable02).ToArgb)
                         PS_64_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable02 = CMD_ColorTable02
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", BizareColorInvertor(CMD_ColorTable03).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", BizareColorInvertor(CMD_ColorTable03).ToArgb)
                         PS_64_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable03 = CMD_ColorTable03
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", BizareColorInvertor(CMD_ColorTable04).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", BizareColorInvertor(CMD_ColorTable04).ToArgb)
                         PS_64_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable04 = CMD_ColorTable04
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(CMD_ColorTable05).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(_Def.PS_64_ColorTable05).ToArgb)
                         PS_64_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
-                        PS_64_ColorTable05 = CMD_ColorTable05
+                        PS_64_ColorTable05 = _Def.PS_64_ColorTable05
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(CMD_ColorTable06).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(_Def.PS_64_ColorTable06).ToArgb)
                         PS_64_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
-                        PS_64_ColorTable06 = CMD_ColorTable06
+                        PS_64_ColorTable06 = _Def.PS_64_ColorTable06
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", BizareColorInvertor(CMD_ColorTable07).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", BizareColorInvertor(CMD_ColorTable07).ToArgb)
                         PS_64_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable07 = CMD_ColorTable07
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", BizareColorInvertor(CMD_ColorTable08).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", BizareColorInvertor(CMD_ColorTable08).ToArgb)
                         PS_64_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable08 = CMD_ColorTable08
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", BizareColorInvertor(CMD_ColorTable09).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", BizareColorInvertor(CMD_ColorTable09).ToArgb)
                         PS_64_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable09 = CMD_ColorTable09
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", BizareColorInvertor(CMD_ColorTable10).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", BizareColorInvertor(CMD_ColorTable10).ToArgb)
                         PS_64_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable10 = CMD_ColorTable10
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", BizareColorInvertor(CMD_ColorTable11).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", BizareColorInvertor(CMD_ColorTable11).ToArgb)
                         PS_64_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable11 = CMD_ColorTable11
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", BizareColorInvertor(CMD_ColorTable12).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", BizareColorInvertor(CMD_ColorTable12).ToArgb)
                         PS_64_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable12 = CMD_ColorTable12
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", BizareColorInvertor(CMD_ColorTable13).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", BizareColorInvertor(CMD_ColorTable13).ToArgb)
                         PS_64_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable13 = CMD_ColorTable13
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", BizareColorInvertor(CMD_ColorTable14).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", BizareColorInvertor(CMD_ColorTable14).ToArgb)
                         PS_64_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable14 = CMD_ColorTable14
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", BizareColorInvertor(CMD_ColorTable15).ToArgb)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", BizareColorInvertor(CMD_ColorTable15).ToArgb)
                         PS_64_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
                     Catch
                         PS_64_ColorTable15 = CMD_ColorTable15
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", 243)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_64_PopupBackground.ToString("X") & _Def.PS_64_PopupForeground.ToString("X"), 16))
 
                         With CInt(y_cmd).ToString("X")
                             PS_64_PopupBackground = Convert.ToInt32(.Chars(0), 16)
                             PS_64_PopupForeground = Convert.ToInt32(.Chars(1), 16)
                         End With
                     Catch
-                        PS_64_PopupBackground = 15
-                        PS_64_PopupForeground = 3
+                        PS_64_PopupBackground = _Def.PS_64_PopupBackground
+                        PS_64_PopupForeground = _Def.PS_64_PopupForeground
                     End Try
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", 86)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_64_ScreenColorsBackground.ToString("X") & _Def.PS_64_ScreenColorsForeground.ToString("X"), 16))
 
                         With CInt(y_cmd).ToString("X")
                             PS_64_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
                             PS_64_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
                         End With
                     Catch
-                        PS_64_ScreenColorsBackground = 8
-                        PS_64_ScreenColorsForeground = 6
+                        PS_64_ScreenColorsBackground = _Def.PS_64_ScreenColorsBackground
+                        PS_64_ScreenColorsForeground = _Def.PS_64_ScreenColorsForeground
                     End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", 25)
+                        PS_64_CursorSize = y_cmd
+                    Catch
+                        PS_64_CursorSize = 25
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", _Def.PS_64_FaceName)
+
+                        If IsFontInstalled(y_cmd) Then
+                            PS_64_FaceName = y_cmd
+                        Else
+                            PS_64_FaceName = _Def.PS_64_FaceName
+                        End If
+
+                    Catch
+                        PS_64_FaceName = _Def.PS_64_FaceName
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_64_FontRaster, 54, 0))
+                        PS_64_FontRaster = If(y_cmd = 0, True, False)
+                    Catch
+                        PS_64_FontRaster = _Def.PS_64_FontRaster
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", CMD_FontSize)
+                        PS_64_FontSize = y_cmd
+                    Catch
+                        PS_64_FontSize = CMD_FontSize
+                    End Try
+
+                    Try
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", 400)
+                        PS_64_FontWeight = y_cmd
+                    Catch
+                        PS_64_FontWeight = 400
+                    End Try
+
+                    If My.W10_1909 Then
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
+                            PS_64_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
+                        Catch
+                            PS_64_1909_CursorColor = Color.White
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", 0)
+                            PS_64_1909_CursorType = y_cmd
+                        Catch
+                            PS_64_1909_CursorType = 1
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", True)
+                            PS_64_1909_ForceV2 = y_cmd
+                        Catch
+                            PS_64_1909_ForceV2 = True
+                        End Try
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", False)
+                            PS_64_1909_LineSelection = y_cmd
+                        Catch
+                            PS_64_1909_LineSelection = False
+                        End Try
+
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", False)
+                            PS_64_1909_TerminalScrolling = y_cmd
+                        Catch
+                            PS_64_1909_TerminalScrolling = False
+                        End Try
+
+
+                        Try
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 100)
+                            PS_64_1909_WindowAlpha = y_cmd
+                        Catch
+                            PS_64_1909_WindowAlpha = 100
+                        End Try
+                    End If
                 End If
 #End Region
 
@@ -4646,7 +4834,6 @@ Public Class CP
 
     End Sub
 
-
     Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
         Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
 
@@ -5200,7 +5387,31 @@ Public Class CP_Defaults
         .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
         .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192),
-        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
+        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
+        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
+        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
+        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
+        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
+        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 17 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 17 * 65536
        }
 
     Public Default_Windows10 As New CP(CP.Mode.Init) With {
@@ -5215,7 +5426,31 @@ Public Class CP_Defaults
         .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
         .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158),
-        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False
+        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
+        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
+        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
+        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
+        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
+        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows8 As New CP(CP.Mode.Init) With {
@@ -5251,7 +5486,31 @@ Public Class CP_Defaults
         .LogonUI7_Effect_Grayscale = False,
         .LogonUI7_Effect_Noise = False,
         .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
-        .LogonUI7_Effect_Noise_Intensity = 0
+        .LogonUI7_Effect_Noise_Intensity = 0,
+        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
+        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
+        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
+        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows7 As New CP(CP.Mode.Init) With {
@@ -5279,7 +5538,31 @@ Public Class CP_Defaults
         .LogonUI7_Effect_Grayscale = False,
         .LogonUI7_Effect_Noise = False,
         .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
-        .LogonUI7_Effect_Noise_Intensity = 0
+        .LogonUI7_Effect_Noise_Intensity = 0,
+        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
+        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
+        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
+        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.ActionCenter_AppsLinks.R, Default_Windows11.ActionCenter_AppsLinks.G, Default_Windows11.ActionCenter_AppsLinks.B, 255,
