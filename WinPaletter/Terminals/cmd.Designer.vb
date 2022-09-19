@@ -22,6 +22,7 @@ Partial Class cmd
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(cmd))
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
@@ -407,6 +408,7 @@ Partial Class cmd
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.XenonGroupBox2.SuspendLayout()
@@ -501,7 +503,8 @@ Partial Class cmd
         Me.XenonTabControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(135, 32)
+        Me.XenonTabControl1.ImageList = Me.ImageList1
+        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(170, 32)
         Me.XenonTabControl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonTabControl1.Location = New System.Drawing.Point(0, 0)
         Me.XenonTabControl1.Name = "XenonTabControl1"
@@ -1765,7 +1768,6 @@ Partial Class cmd
         '
         'XenonTabControl3
         '
-        Me.XenonTabControl3.Alignment = System.Windows.Forms.TabAlignment.Bottom
         Me.XenonTabControl3.Controls.Add(Me.TabPage8)
         Me.XenonTabControl3.Controls.Add(Me.TabPage9)
         Me.XenonTabControl3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1791,11 +1793,11 @@ Partial Class cmd
         Me.TabPage8.Controls.Add(Me.XenonGroupBox7)
         Me.TabPage8.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage8.Controls.Add(Me.XenonGroupBox27)
-        Me.TabPage8.Location = New System.Drawing.Point(4, 4)
+        Me.TabPage8.Location = New System.Drawing.Point(4, 34)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Size = New System.Drawing.Size(673, 615)
         Me.TabPage8.TabIndex = 0
-        Me.TabPage8.Text = "32-bit"
+        Me.TabPage8.Text = "x86"
         '
         'XenonGroupBox9
         '
@@ -2961,7 +2963,7 @@ Partial Class cmd
         Me.XenonAlertBox2.Size = New System.Drawing.Size(656, 30)
         Me.XenonAlertBox2.TabIndex = 99
         Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "PowerShell 32-bit is not installed, so ignore this page"
+        Me.XenonAlertBox2.Text = "PowerShell x86 is not installed, so ignore this page"
         '
         'XenonGroupBox27
         '
@@ -3067,11 +3069,11 @@ Partial Class cmd
         Me.TabPage9.Controls.Add(Me.XenonGroupBox30)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox31)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox50)
-        Me.TabPage9.Location = New System.Drawing.Point(4, 4)
+        Me.TabPage9.Location = New System.Drawing.Point(4, 34)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Size = New System.Drawing.Size(673, 615)
         Me.TabPage9.TabIndex = 1
-        Me.TabPage9.Text = "64-bit"
+        Me.TabPage9.Text = "x64"
         '
         'XenonGroupBox10
         '
@@ -3575,7 +3577,7 @@ Partial Class cmd
         Me.XenonAlertBox1.Size = New System.Drawing.Size(656, 30)
         Me.XenonAlertBox1.TabIndex = 97
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "PowerShell 64-bit is not installed, so ignore this page"
+        Me.XenonAlertBox1.Text = "PowerShell x64 is not installed, so ignore this page"
         '
         'XenonGroupBox28
         '
@@ -4345,7 +4347,6 @@ Partial Class cmd
         '
         'XenonTabControl2
         '
-        Me.XenonTabControl2.Alignment = System.Windows.Forms.TabAlignment.Bottom
         Me.XenonTabControl2.Controls.Add(Me.TabPage2)
         Me.XenonTabControl2.Controls.Add(Me.TabPage6)
         Me.XenonTabControl2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -4364,7 +4365,7 @@ Partial Class cmd
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage2.Location = New System.Drawing.Point(4, 4)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 34)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Size = New System.Drawing.Size(673, 615)
         Me.TabPage2.TabIndex = 0
@@ -4373,7 +4374,7 @@ Partial Class cmd
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage6.Location = New System.Drawing.Point(4, 4)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 34)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Size = New System.Drawing.Size(673, 615)
         Me.TabPage6.TabIndex = 1
@@ -5812,6 +5813,15 @@ Partial Class cmd
         Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (May cause wrong renderering in Enhanced terminal, won'" &
     "t be used in legacy terminal)"
         '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "0.png")
+        Me.ImageList1.Images.SetKeyName(1, "1.png")
+        Me.ImageList1.Images.SetKeyName(2, "2.png")
+        Me.ImageList1.Images.SetKeyName(3, "3.png")
+        '
         'cmd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -6288,4 +6298,5 @@ Partial Class cmd
     Friend WithEvents PS_64_ColorTable12 As XenonGroupBox
     Friend WithEvents PS_64_ColorTable10 As XenonGroupBox
     Friend WithEvents PS_64_ColorTable11 As XenonGroupBox
+    Friend WithEvents ImageList1 As ImageList
 End Class

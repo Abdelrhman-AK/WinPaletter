@@ -522,8 +522,12 @@ Namespace My
             Catch : End Try
 
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+
             Monitor()
             ApplyDarkMode()
+
+
+
 
 #Region "WhatsNew"
 

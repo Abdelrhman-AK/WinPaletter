@@ -255,6 +255,10 @@ Public Class CP
     Public Property PS_64_1909_TerminalScrolling As Boolean = False
     Public Property PS_64_1909_WindowAlpha As Integer = 100
 #End Region
+
+    Public Property Terminal As WinTerminal
+    Public Property TerminalPreview As WinTerminal
+
 #End Region
 
 #Region "Cursors"
@@ -1725,7 +1729,7 @@ Public Class CP
                 End If
 #End Region
 
-#Region "PowerShell 32-bit"
+#Region "PowerShell x86"
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
@@ -1950,7 +1954,7 @@ Public Class CP
                 End If
 #End Region
 
-#Region "PowerShell 64-bit"
+#Region "PowerShell x64"
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
@@ -2177,6 +2181,18 @@ Public Class CP
                 End If
 #End Region
 
+#Region "Windows Terminal"
+                If My.W10 Or My.W11 Then
+                    Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+
+                    If IO.File.Exists(TerDir) Then Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile) Else Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                    If IO.File.Exists(TerPreDir) Then TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, True) Else TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, True)
+                Else
+                    Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                    TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, True)
+                End If
+#End Region
 #End Region
 
 #Region "Cursors"
@@ -3333,9 +3349,7 @@ Public Class CP
 #End Region
 
         End Select
-
     End Sub
-
 
     Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
         Select Case [SaveTo]
@@ -3976,7 +3990,9 @@ Public Class CP
 
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
-#Region "CMD"
+#Region "Terminals"
+
+#Region "Command Prompt"
                 EditReg("HKEY_CURRENT_USER\Console", "EnableColorSelection", 1)
                 EditReg("HKEY_CURRENT_USER\Console", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
                 EditReg("HKEY_CURRENT_USER\Console", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
@@ -3998,7 +4014,7 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
                 EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
 
-                If Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909 Then
+                If My.W10_1909 Then
                     EditReg("HKEY_CURRENT_USER\Console", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console", "CursorType", CMD_1909_CursorType)
                     EditReg("HKEY_CURRENT_USER\Console", "WindowAlpha", CMD_1909_WindowAlpha)
@@ -4006,7 +4022,6 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\Console", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
                     EditReg("HKEY_CURRENT_USER\Console", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
                 End If
-
                 EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
                 If isElevated Then
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
@@ -4044,14 +4059,14 @@ Public Class CP
                     process.WaitForExit()
                     Kill(tempreg)
                 End If
-
                 EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 0, 54))
                 EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
                 EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
+#End Region
 
-
-
+#Region "PowerShell x86"
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable00)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable01)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable02)).ToArgb)
@@ -4070,9 +4085,62 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable15)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_32_PopupBackground.ToString("X") & PS_32_PopupForeground.ToString("X"), 16))
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_32_ScreenColorsBackground.ToString("X") & PS_32_ScreenColorsForeground.ToString("X"), 16))
-                End If
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_32_CursorSize)
 
+                    If My.W10_1909 Then
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_32_1909_CursorColor)).ToArgb)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_32_1909_CursorType)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_32_1909_WindowAlpha)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_32_1909_ForceV2, 1, 0))
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_32_1909_LineSelection, 1, 0))
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_32_1909_TerminalScrolling, 1, 0))
+                    End If
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
+                    If isElevated Then
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_32_FaceName, False, True)
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
+                        ls.Add(String.Format("""000""=""{0}""", PS_32_FaceName))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 0, 54))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_32_FontSize)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_32_FontWeight)
+                End If
+#End Region
+
+#Region "PowerShell x64"
                 If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable00)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable01)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable02)).ToArgb)
@@ -4091,7 +4159,68 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable15)).ToArgb)
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_64_PopupBackground.ToString("X") & PS_64_PopupForeground.ToString("X"), 16))
                     EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_64_ScreenColorsBackground.ToString("X") & PS_64_ScreenColorsForeground.ToString("X"), 16))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_64_CursorSize)
+
+                    If My.W10_1909 Then
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_64_1909_CursorColor)).ToArgb)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_64_1909_CursorType)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_64_1909_WindowAlpha)
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_64_1909_ForceV2, 1, 0))
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_64_1909_LineSelection, 1, 0))
+                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_64_1909_TerminalScrolling, 1, 0))
+                    End If
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
+                    If isElevated Then
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_64_FaceName, False, True)
+                    Else
+                        Dim ls As New List(Of String)
+                        ls.Clear()
+                        ls.Add("Windows Registry Editor Version 5.00")
+                        ls.Add(vbCrLf)
+                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
+                        ls.Add(String.Format("""000""=""{0}""", PS_64_FaceName))
+
+                        Dim result As String = CStr_FromList(ls)
+
+                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                        IO.File.WriteAllText(tempreg, result)
+
+                        Dim process As Process = Nothing
+
+                        Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        processStartInfo.FileName = "reg"
+                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                        process = Process.Start(processStartInfo)
+                        process.WaitForExit()
+                        Kill(tempreg)
+                    End If
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 0, 54))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_64_FontSize)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_64_FontWeight)
                 End If
+#End Region
+
+#Region "Windows Terminals"
+                If My.W10 Or My.W11 Then
+                    Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+
+                    If IO.File.Exists(TerDir) Then Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                    If IO.File.Exists(TerPreDir) Then TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, True)
+                End If
+#End Region
 
 #End Region
 
@@ -4833,6 +4962,16 @@ Public Class CP
 
     End Sub
 
+    Sub CopyCat(CP As CP)
+
+        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
+        For Each [property] As PropertyInfo In properties1
+            [property].SetValue(CP, [property].GetValue(Me))
+        Next
+
+    End Sub
+
     Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
         Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
 
@@ -5362,9 +5501,12 @@ Public Class CP
         Dim type2 As Type = obj.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
 
         For Each [property] As PropertyInfo In properties1
-            If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
-                _Equals = False
-                Exit For
+
+            If [property].PropertyType.Name.ToLower <> "winterminal" Then
+                If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
+                    _Equals = False
+                    Exit For
+                End If
             End If
         Next
 
@@ -5585,7 +5727,6 @@ Public Class CP_Defaults
 End Class
 
 
-
 Public Class WinTerminal
     Public Property Colors As List(Of TColor)
     Public Property Profiles As List(Of ProfilesList)
@@ -5601,10 +5742,10 @@ Public Class WinTerminal
         Select Case Mode
             Case Mode.JSONFile
                 If IO.File.Exists(File) Then
-
                     Dim St As New StreamReader(File)
                     Dim JSON_String As String = St.ReadToEnd
                     Dim JSonFile As JObject = JObject.Parse(JSON_String)
+
 
                     Try : alwaysShowNotificationIcon = JSonFile("alwaysShowNotificationIcon") : Catch : End Try
                     Try : defaultProfile = JSonFile("defaultProfile") : Catch : End Try
@@ -5669,65 +5810,43 @@ Public Class WinTerminal
                     Try : DefaultProf.Font.Size = JSonFile("profiles")("defaults")("font")("size") : Catch : End Try
 #End Region
 
+
+
 #Region "Getting Profiles"
                     Profiles = New List(Of ProfilesList)
                     Profiles.Clear()
 
                     For Each item In JSonFile("profiles")("list")
                         Dim P As New ProfilesList
+                        If item("name") IsNot Nothing Then P.Name = item("name")
+                        If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
+                        If item("backgroundImageAlignment") IsNot Nothing Then P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
+                        If item("backgroundImageStretchMode") IsNot Nothing Then P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
+                        If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
+                        If item("scrollbarState") IsNot Nothing Then P.ScrollbarState = ScrollbarState_GetFromString(item("scrollbarState"))
 
-                        Try : P.Name = item("name") : Catch : End Try
-                        Try : P.BackgroundImage = item("backgroundImage") : Catch : End Try
+                        If item("font") IsNot Nothing Then
+                            If item("font")("weight") IsNot Nothing Then P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
+                            If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
+                            If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
+                        End If
 
-                        Try
-                            P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
-                        Catch
-                            P.BackgroundImageAlignment = BackgroundImageAlignment_Enum.center
-                        End Try
-
-                        Try
-                            P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
-                        Catch
-                            P.BackgroundImageStretchMode = BackgroundImageStretchMode_Enum.fill
-                        End Try
-
-                        Try
-                            P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
-                        Catch
-                            P.CursorShape = CursorShape_Enum.bar
-                        End Try
-
-                        Try
-                            P.ScrollbarState = ScrollbarState_GetFromString(item("scrollbarState"))
-                        Catch
-                            P.ScrollbarState = ScrollbarState_Enum.visible
-                        End Try
-
-                        Try
-                            P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
-                        Catch
-                            P.Font.Weight = FontWeight_Enum.normal
-                        End Try
-
-
-                        Try : P.ColorScheme = item("colorScheme") : Catch : End Try
-                        Try : P.TabTitle = item("tabTitle") : Catch : End Try
-                        Try : P.Icon = item("icon") : Catch : End Try
-                        Try : P.Background = HEX2RGB(item("background")) : Catch : End Try
-                        Try : P.CursorColor = HEX2RGB(item("cursorColor")) : Catch : End Try
-                        Try : P.Foreground = HEX2RGB(item("foreground")) : Catch : End Try
-                        Try : P.SelectionBackground = HEX2RGB(item("selectionBackground")) : Catch : End Try
-                        Try : P.TabColor = HEX2RGB(item("tabColor")) : Catch : End Try
-                        Try : P.adjustIndistinguishableColors = item("adjustIndistinguishableColors") : Catch : End Try
-                        Try : P.SnapOnInput = item("snapOnInput") : Catch : End Try
-                        Try : P.Hidden = item("hidden") : Catch : End Try
-                        Try : P.UseAcrylic = item("useAcrylic") : Catch : End Try
-                        Try : P.CursorHeight = item("cursorHeight") : Catch : End Try
-                        Try : P.Opacity = item("opacity") : Catch : End Try
-                        Try : P.BackgroundImageOpacity = item("backgroundImageOpacity") : Catch : End Try
-                        Try : P.Padding = New Padding(item("padding").ToString.Split(",")(0).Trim, item("padding").ToString.Split(",")(1).Trim, item("padding").ToString.Split(",")(2).Trim, item("padding").ToString.Split(",")(3).Trim) : Catch : End Try
-                        Try : P.Font.Face = item("font")("face") : Catch : End Try
-                        Try : P.Font.Size = item("font")("size") : Catch : End Try
+                        If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme")
+                        If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
+                        If item("icon") IsNot Nothing Then P.Icon = item("icon")
+                        If item("background") IsNot Nothing Then P.Background = HEX2RGB(item("background"))
+                        If item("cursorColor") IsNot Nothing Then P.CursorColor = HEX2RGB(item("cursorColor"))
+                        If item("foreground") IsNot Nothing Then P.Foreground = HEX2RGB(item("foreground"))
+                        If item("selectionBackground") IsNot Nothing Then P.SelectionBackground = HEX2RGB(item("selectionBackground"))
+                        If item("tabColor") IsNot Nothing Then P.TabColor = HEX2RGB(item("tabColor"))
+                        If item("adjustIndistinguishableColors") IsNot Nothing Then P.adjustIndistinguishableColors = item("adjustIndistinguishableColors")
+                        If item("snapOnInput") IsNot Nothing Then P.SnapOnInput = item("snapOnInput")
+                        If item("hidden") IsNot Nothing Then P.Hidden = item("hidden")
+                        If item("useAcrylic") IsNot Nothing Then P.UseAcrylic = item("useAcrylic")
+                        If item("cursorHeight") IsNot Nothing Then P.CursorHeight = item("cursorHeight")
+                        If item("opacity") IsNot Nothing Then P.Opacity = item("opacity")
+                        If item("backgroundImageOpacity") IsNot Nothing Then P.BackgroundImageOpacity = item("backgroundImageOpacity")
+                        If item("padding") IsNot Nothing Then P.Padding = New Padding(item("padding").ToString.Split(",")(0).Trim, item("padding").ToString.Split(",")(1).Trim, item("padding").ToString.Split(",")(2).Trim, item("padding").ToString.Split(",")(3).Trim)
 
                         Profiles.Add(P)
                     Next
@@ -5767,6 +5886,7 @@ Public Class WinTerminal
 #End Region
 
                     St.Close()
+
                 Else
                     MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
                 End If
@@ -5782,8 +5902,6 @@ Public Class WinTerminal
                         If lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") Then Collected.Add(lin.Remove(0, "terminal.".Count))
                     End If
                 Next
-
-
 
 
                 Dim Defs As New List(Of String)
@@ -6072,9 +6190,10 @@ Public Class WinTerminal
     Enum Mode As Integer
         JSONFile
         WinPaletterFile
+        Empty
     End Enum
 
-    Public Sub Save(File As String, Mode As Mode, Optional Preview_Version As Boolean = False)
+    Public Function Save(File As String, Mode As Mode, Optional Preview_Version As Boolean = False) As String
         Select Case Mode
             Case Mode.JSONFile
                 Dim SettingsFile As String
@@ -6273,6 +6392,8 @@ Public Class WinTerminal
 
                 St.Close()
 
+                Return JSonFile.ToString
+
             Case Mode.WinPaletterFile
 
                 Dim First As String = If(Preview_Version, "TerminalPreview.", "Terminal.")
@@ -6317,10 +6438,13 @@ Public Class WinTerminal
 
                 Next
 
-                IO.File.WriteAllText(File, String.Join(vbCrLf, S.ToArray))
+                Return String.Join(vbCrLf, S.ToArray)
+
+            Case Else
+                Return "NonValid"
 
         End Select
-    End Sub
+    End Function
 
     Public Function ReturnPerfectValue(ByVal Type As Type, Value As Object) As String
         Select Case Type.Name.ToLower
@@ -6343,7 +6467,7 @@ Public Class WinTerminal
         End Select
     End Function
 
-    Public Function HEX2RGB([String] As String) As Color
+    Public Shared Function HEX2RGB([String] As String) As Color
         Try
             Return Color.FromArgb(Convert.ToInt32([String].Replace("#", ""), 16))
         Catch
@@ -6354,9 +6478,7 @@ Public Class WinTerminal
     Public Function RGB2HEX([Color] As Color) As String
         Return String.Format("#{0:X2}{1:X2}{2:X2}", [Color].R, [Color].G, [Color].B)
     End Function
-
 End Class
-
 
 Public Class TColor
     Public Property Name As String
