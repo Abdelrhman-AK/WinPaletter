@@ -89,6 +89,10 @@
       <HintPath>..\References\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -132,6 +136,7 @@
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
+    <None Include="packages.config" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\RetroThemesDB.wpdb" />
     <None Include="Resources\TerminalFont.ttf" />
@@ -307,6 +312,7 @@
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
+    <None Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />

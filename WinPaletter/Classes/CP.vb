@@ -1,15 +1,14 @@
 ﻿Imports System.Drawing.Imaging
-Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
-Imports System.Security.AccessControl
 Imports System.Security.Principal
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.Win32
-Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
+Imports Newtonsoft.Json.Linq
+Imports WinPaletter.ProfilesList
 
 Public Class CP
 
@@ -5584,3 +5583,1165 @@ Public Class CP_Defaults
                                                     0, 0, 0, 255}
 
 End Class
+
+
+
+Public Class WinTerminal
+    Public Property Colors As List(Of TColor)
+    Public Property Profiles As List(Of ProfilesList)
+    Public Property DefaultProf As ProfilesList
+    Public Property tabWidthMode As String
+    Public Property theme As String
+    Public Property useAcrylicInTabRow As Boolean = False
+    Public Property alwaysShowNotificationIcon As Boolean = False
+    Public Property defaultProfile As String '= "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"
+    Public Property focusFollowMouse As Boolean = False
+
+    Public Sub New(File As String, Mode As Mode, Optional Preview_Version As Boolean = False)
+        Select Case Mode
+            Case Mode.JSONFile
+                If IO.File.Exists(File) Then
+
+                    Dim St As New StreamReader(File)
+                    Dim JSON_String As String = St.ReadToEnd
+                    Dim JSonFile As JObject = JObject.Parse(JSON_String)
+
+                    Try : alwaysShowNotificationIcon = JSonFile("alwaysShowNotificationIcon") : Catch : End Try
+                    Try : defaultProfile = JSonFile("defaultProfile") : Catch : End Try
+                    Try : focusFollowMouse = JSonFile("focusFollowMouse") : Catch : End Try
+                    Try : useAcrylicInTabRow = JSonFile("useAcrylicInTabRow") : Catch : End Try
+                    Try : theme = JSonFile("theme") : Catch : End Try
+                    Try : tabWidthMode = JSonFile("tabWidthMode") : Catch : End Try
+
+
+#Region "Getting Default Profile"
+                    DefaultProf = New ProfilesList
+                    Try : DefaultProf.Name = JSonFile("profiles")("defaults")("name") : Catch : End Try
+                    Try : DefaultProf.BackgroundImage = JSonFile("profiles")("defaults")("backgroundImage") : Catch : End Try
+                    Try : DefaultProf.ColorScheme = JSonFile("profiles")("defaults")("colorScheme") : Catch : End Try
+                    Try : DefaultProf.TabTitle = JSonFile("profiles")("defaults")("tabTitle") : Catch : End Try
+                    Try : DefaultProf.Icon = JSonFile("profiles")("defaults")("icon") : Catch : End Try
+
+                    Try
+                        DefaultProf.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(JSonFile("profiles")("defaults")("backgroundImageAlignment"))
+                    Catch
+                        DefaultProf.BackgroundImageAlignment = BackgroundImageAlignment_Enum.center
+                    End Try
+
+                    Try
+                        DefaultProf.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(JSonFile("profiles")("defaults")("backgroundImageStretchMode"))
+                    Catch
+                        DefaultProf.BackgroundImageStretchMode = BackgroundImageStretchMode_Enum.fill
+                    End Try
+
+                    Try
+                        DefaultProf.CursorShape = CursorShape_GetFromString(JSonFile("profiles")("defaults")("cursorShape"))
+                    Catch
+                        DefaultProf.CursorShape = CursorShape_Enum.bar
+                    End Try
+
+                    Try
+                        DefaultProf.ScrollbarState = ScrollbarState_GetFromString(JSonFile("profiles")("defaults")("scrollbarState"))
+                    Catch
+                        DefaultProf.ScrollbarState = ScrollbarState_Enum.visible
+                    End Try
+
+                    Try
+                        DefaultProf.Font.Weight = FontWeight_GetFromString(JSonFile("profiles")("defaults")("font")("weight"))
+                    Catch
+                        DefaultProf.Font.Weight = FontWeight_Enum.medium
+                    End Try
+
+                    Try : DefaultProf.Background = HEX2RGB(JSonFile("profiles")("defaults")("background")) : Catch : End Try
+                    Try : DefaultProf.CursorColor = HEX2RGB(JSonFile("profiles")("defaults")("cursorColor")) : Catch : End Try
+                    Try : DefaultProf.Foreground = HEX2RGB(JSonFile("profiles")("defaults")("foreground")) : Catch : End Try
+                    Try : DefaultProf.SelectionBackground = HEX2RGB(JSonFile("profiles")("defaults")("selectionBackground")) : Catch : End Try
+                    Try : DefaultProf.TabColor = HEX2RGB(JSonFile("profiles")("defaults")("tabColor")) : Catch : End Try
+                    Try : DefaultProf.adjustIndistinguishableColors = JSonFile("profiles")("defaults")("adjustIndistinguishableColors") : Catch : End Try
+                    Try : DefaultProf.SnapOnInput = JSonFile("profiles")("defaults")("snapOnInput") : Catch : End Try
+                    Try : DefaultProf.Hidden = JSonFile("profiles")("defaults")("hidden") : Catch : End Try
+                    Try : DefaultProf.UseAcrylic = JSonFile("profiles")("defaults")("useAcrylic") : Catch : End Try
+                    Try : DefaultProf.CursorHeight = JSonFile("profiles")("defaults")("cursorHeight") : Catch : End Try
+                    Try : DefaultProf.Opacity = JSonFile("profiles")("defaults")("opacity") : Catch : End Try
+                    Try : DefaultProf.BackgroundImageOpacity = JSonFile("profiles")("defaults")("backgroundImageOpacity") : Catch : End Try
+                    Try : DefaultProf.Padding = New Padding(JSonFile("profiles")("defaults")("padding").ToString.Split(",")(0).Trim, JSonFile("profiles")("defaults")("padding").ToString.Split(",")(1).Trim, JSonFile("profiles")("defaults")("padding").ToString.Split(",")(2).Trim, JSonFile("profiles")("defaults")("padding").ToString.Split(",")(3).Trim) : Catch : End Try
+                    Try : DefaultProf.Font.Face = JSonFile("profiles")("defaults")("font")("face") : Catch : End Try
+                    Try : DefaultProf.Font.Size = JSonFile("profiles")("defaults")("font")("size") : Catch : End Try
+#End Region
+
+#Region "Getting Profiles"
+                    Profiles = New List(Of ProfilesList)
+                    Profiles.Clear()
+
+                    For Each item In JSonFile("profiles")("list")
+                        Dim P As New ProfilesList
+
+                        Try : P.Name = item("name") : Catch : End Try
+                        Try : P.BackgroundImage = item("backgroundImage") : Catch : End Try
+
+                        Try
+                            P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
+                        Catch
+                            P.BackgroundImageAlignment = BackgroundImageAlignment_Enum.center
+                        End Try
+
+                        Try
+                            P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
+                        Catch
+                            P.BackgroundImageStretchMode = BackgroundImageStretchMode_Enum.fill
+                        End Try
+
+                        Try
+                            P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
+                        Catch
+                            P.CursorShape = CursorShape_Enum.bar
+                        End Try
+
+                        Try
+                            P.ScrollbarState = ScrollbarState_GetFromString(item("scrollbarState"))
+                        Catch
+                            P.ScrollbarState = ScrollbarState_Enum.visible
+                        End Try
+
+                        Try
+                            P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
+                        Catch
+                            P.Font.Weight = FontWeight_Enum.normal
+                        End Try
+
+
+                        Try : P.ColorScheme = item("colorScheme") : Catch : End Try
+                        Try : P.TabTitle = item("tabTitle") : Catch : End Try
+                        Try : P.Icon = item("icon") : Catch : End Try
+                        Try : P.Background = HEX2RGB(item("background")) : Catch : End Try
+                        Try : P.CursorColor = HEX2RGB(item("cursorColor")) : Catch : End Try
+                        Try : P.Foreground = HEX2RGB(item("foreground")) : Catch : End Try
+                        Try : P.SelectionBackground = HEX2RGB(item("selectionBackground")) : Catch : End Try
+                        Try : P.TabColor = HEX2RGB(item("tabColor")) : Catch : End Try
+                        Try : P.adjustIndistinguishableColors = item("adjustIndistinguishableColors") : Catch : End Try
+                        Try : P.SnapOnInput = item("snapOnInput") : Catch : End Try
+                        Try : P.Hidden = item("hidden") : Catch : End Try
+                        Try : P.UseAcrylic = item("useAcrylic") : Catch : End Try
+                        Try : P.CursorHeight = item("cursorHeight") : Catch : End Try
+                        Try : P.Opacity = item("opacity") : Catch : End Try
+                        Try : P.BackgroundImageOpacity = item("backgroundImageOpacity") : Catch : End Try
+                        Try : P.Padding = New Padding(item("padding").ToString.Split(",")(0).Trim, item("padding").ToString.Split(",")(1).Trim, item("padding").ToString.Split(",")(2).Trim, item("padding").ToString.Split(",")(3).Trim) : Catch : End Try
+                        Try : P.Font.Face = item("font")("face") : Catch : End Try
+                        Try : P.Font.Size = item("font")("size") : Catch : End Try
+
+                        Profiles.Add(P)
+                    Next
+#End Region
+
+#Region "Getting All Colors Schemes"
+                    Colors = New List(Of TColor)
+                    Colors.Clear()
+
+                    For Each item In JSonFile("schemes")
+                        Dim TC As New TColor
+
+                        TC.Background = HEX2RGB(item("background"))
+                        TC.Black = HEX2RGB(item("black"))
+                        TC.Blue = HEX2RGB(item("blue"))
+                        TC.BrightBlack = HEX2RGB(item("brightBlack"))
+                        TC.BrightBlue = HEX2RGB(item("brightBlue"))
+                        TC.BrightCyan = HEX2RGB(item("brightCyan"))
+                        TC.BrightGreen = HEX2RGB(item("brightGreen"))
+                        TC.BrightPurple = HEX2RGB(item("brightPurple"))
+                        TC.BrightRed = HEX2RGB(item("brightRed"))
+                        TC.BrightWhite = HEX2RGB(item("brightWhite"))
+                        TC.BrightYellow = HEX2RGB(item("brightYellow"))
+                        TC.CursorColor = HEX2RGB(item("cursorColor"))
+                        TC.Cyan = HEX2RGB(item("cyan"))
+                        TC.Foreground = HEX2RGB(item("foreground"))
+                        TC.Green = HEX2RGB(item("green"))
+                        TC.Name = item("name")
+                        TC.Purple = HEX2RGB(item("purple"))
+                        TC.Red = HEX2RGB(item("red"))
+                        TC.SelectionBackground = HEX2RGB(item("selectionBackground"))
+                        TC.White = HEX2RGB(item("white"))
+                        TC.Yellow = HEX2RGB(item("yellow"))
+
+                        Colors.Add(TC)
+                    Next
+#End Region
+
+                    St.Close()
+                Else
+                    MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
+                End If
+
+            Case Mode.WinPaletterFile
+                Dim Collected As New List(Of String)
+                Dim Preview As Boolean = False
+
+                For Each lin As String In IO.File.ReadAllLines(File)
+                    If Preview_Version Then
+                        If lin.ToLower.StartsWith("terminalpreview.") Then Collected.Add(lin.Remove(0, "terminalpreview.".Count))
+                    Else
+                        If lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") Then Collected.Add(lin.Remove(0, "terminal.".Count))
+                    End If
+                Next
+
+
+
+
+                Dim Defs As New List(Of String)
+                Dim CollectedColors, EnumColors As New List(Of String)
+                Dim CollectedProfiles, EnumProfiles As New List(Of String)
+                Defs.Clear()
+
+                CollectedColors.Clear()
+                CollectedProfiles.Clear()
+                EnumColors.Clear()
+                EnumProfiles.Clear()
+                DefaultProf = New ProfilesList
+                Colors = New List(Of TColor)
+                Profiles = New List(Of ProfilesList)
+
+                For Each lin As String In Collected
+                    If lin.ToLower.StartsWith("tabwidthmode= ".ToLower) Then tabWidthMode = lin.Remove(0, "tabWidthMode= ".Count)
+                    If lin.ToLower.StartsWith("theme= ".ToLower) Then theme = lin.Remove(0, "theme= ".Count)
+                    If lin.ToLower.StartsWith("useacrylicintabrow= ".ToLower) Then useAcrylicInTabRow = lin.Remove(0, "useAcrylicInTabRow= ".Count)
+                    If lin.ToLower.StartsWith("alwaysshownotificationicon= ".ToLower) Then alwaysShowNotificationIcon = lin.Remove(0, "alwaysShowNotificationIcon= ".Count)
+                    If lin.ToLower.StartsWith("defaultprofile= ".ToLower) Then defaultProfile = lin.Remove(0, "defaultProfile= ".Count)
+                    If lin.ToLower.StartsWith("focusfollowMouse= ".ToLower) Then focusFollowMouse = lin.Remove(0, "focusFollowMouse= ".Count)
+
+                    If lin.ToLower.StartsWith("default.".ToLower) Then Defs.Add(lin.Remove(0, "default.".Count))
+                    If lin.ToLower.StartsWith("schemes.".ToLower) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
+                    If lin.ToLower.StartsWith("profiles.".ToLower) Then CollectedProfiles.Add(lin.Remove(0, "profiles.".Count))
+                Next
+
+                For Each lin As String In Defs
+                    Dim prop As String = lin.Split("=")(0).Trim
+                    Dim value As String = lin.Split("=")(1).Trim
+
+                    Select Case prop.ToLower
+                        Case "name".ToLower
+                            DefaultProf.Name = value
+
+                        Case "BackgroundImage".ToLower
+                            DefaultProf.BackgroundImage = value
+
+                        Case "ColorScheme".ToLower
+                            DefaultProf.ColorScheme = value
+
+                        Case "TabTitle".ToLower
+                            DefaultProf.TabTitle = value
+
+                        Case "Icon".ToLower
+                            DefaultProf.Icon = value
+
+                        Case "BackgroundImageAlignment".ToLower
+                            DefaultProf.BackgroundImageAlignment = value
+
+                        Case "BackgroundImageStretchMode".ToLower
+                            DefaultProf.BackgroundImageStretchMode = value
+
+                        Case "CursorShape".ToLower
+                            DefaultProf.CursorShape = value
+
+                        Case "Font".ToLower
+                            DefaultProf.Font.Face = value.Split(",")(0)
+                            DefaultProf.Font.Size = value.Split(",")(1)
+                            DefaultProf.Font.Weight = FontWeight_GetFromString(value.Split(",")(2))
+
+                        Case "Background".ToLower
+                            DefaultProf.Background = Color.FromArgb(value)
+
+                        Case "CursorColor".ToLower
+                            DefaultProf.CursorColor = Color.FromArgb(value)
+
+                        Case "Foreground".ToLower
+                            DefaultProf.Foreground = Color.FromArgb(value)
+
+                        Case "SelectionBackground".ToLower
+                            DefaultProf.SelectionBackground = Color.FromArgb(value)
+
+                        Case "TabColor".ToLower
+                            DefaultProf.TabColor = Color.FromArgb(value)
+
+                        Case "adjustIndistinguishableColors".ToLower
+                            DefaultProf.adjustIndistinguishableColors = value
+
+                        Case "SnapOnInput".ToLower
+                            DefaultProf.SnapOnInput = value
+
+                        Case "Hidden".ToLower
+                            DefaultProf.Hidden = value
+
+                        Case "UseAcrylic".ToLower
+                            DefaultProf.UseAcrylic = value
+
+                        Case "CursorHeight".ToLower
+                            DefaultProf.CursorHeight = value
+
+                        Case "Opacity".ToLower
+                            DefaultProf.Opacity = value
+
+                        Case "BackgroundImageOpacity".ToLower
+                            DefaultProf.BackgroundImageOpacity = value
+
+                        Case "Padding".ToLower
+                            DefaultProf.Padding = New Padding(value.Split(",")(0), value.Split(",")(1), value.Split(",")(2), value.Split(",")(3))
+                    End Select
+                Next
+
+                For Each x As String In CollectedProfiles
+                    EnumProfiles.Add(x.Split(".")(0))
+                Next
+                EnumProfiles = EnumProfiles.Distinct.ToList
+                For Each x As String In EnumProfiles
+                    Dim P As New ProfilesList
+                    For Each lin As String In CollectedProfiles
+                        If lin.Split("=")(0).Split(".")(0).Trim.ToLower = x.ToLower Then
+
+                            Dim prop As String = lin.Split("=")(0).Split(".")(1).Trim
+                            Dim value As String = lin.Split("=")(1).Trim
+
+                            Select Case prop.ToLower
+                                Case "Name".ToLower
+                                    P.Name = value
+
+                                Case "TabTitle".ToLower
+                                    P.TabTitle = value
+
+                                Case "Icon".ToLower
+                                    P.Icon = value
+
+                                Case "Source".ToLower
+                                    P.Source = value
+
+                                Case "Background".ToLower
+                                    P.Background = Color.FromArgb(value)
+
+                                Case "Foreground".ToLower
+                                    P.Foreground = Color.FromArgb(value)
+
+                                Case "SelectionBackground".ToLower
+                                    P.SelectionBackground = Color.FromArgb(value)
+
+                                Case "TabColor".ToLower
+                                    P.TabColor = Color.FromArgb(value)
+
+                                Case "adjustIndistinguishableColors".ToLower
+                                    P.adjustIndistinguishableColors = value
+
+                                Case "UseAcrylic".ToLower
+                                    P.UseAcrylic = value
+
+                                Case "Opacity".ToLower
+                                    P.Opacity = value
+
+                                Case "Font".ToLower
+                                    P.Font.Face = value.Split(",")(0)
+                                    P.Font.Size = value.Split(",")(1)
+                                    P.Font.Weight = FontWeight_GetFromString(value.Split(",")(2))
+
+                                Case "BackgroundImage".ToLower
+                                    P.BackgroundImage = value
+
+                                Case "BackgroundImageAlignment".ToLower
+                                    P.BackgroundImageAlignment = value
+
+                                Case "BackgroundImageStretchMode".ToLower
+                                    P.BackgroundImageStretchMode = value
+
+                                Case "BackgroundImageOpacity".ToLower
+                                    P.BackgroundImageOpacity = value
+
+                                Case "CursorColor".ToLower
+                                    P.CursorColor = Color.FromArgb(value)
+
+                                Case "ColorScheme".ToLower
+                                    P.ColorScheme = value
+
+                                Case "CursorShape".ToLower
+                                    P.CursorShape = value
+
+                                Case "CursorHeight".ToLower
+                                    P.CursorHeight = value
+
+                                Case "ScrollbarState".ToLower
+                                    P.ScrollbarState = value
+
+                                Case "SnapOnInput".ToLower
+                                    P.SnapOnInput = value
+
+                                Case "Hidden".ToLower
+                                    P.Hidden = value
+
+                                Case "Padding".ToLower
+                                    P.Padding = New Padding(value.Split(",")(0), value.Split(",")(1), value.Split(",")(2), value.Split(",")(3))
+
+                            End Select
+
+                        End If
+                    Next
+
+                    Profiles.Add(P)
+                Next
+
+                For Each x As String In CollectedColors
+                    EnumColors.Add(x.Split(".")(0))
+                Next
+                EnumColors = EnumColors.Distinct.ToList
+                For Each x As String In EnumColors
+                    Dim TC As New TColor
+
+                    For Each lin As String In CollectedColors
+                        If lin.Split("=")(0).Split(".")(0).Trim.ToLower = x.ToLower Then
+                            Dim prop As String = lin.Split("=")(0).Split(".")(1).Trim
+                            Dim value As String = lin.Split("=")(1).Trim
+
+                            Select Case prop.ToLower
+                                Case "Name".ToLower
+                                    TC.Name = value
+
+                                Case "Background".ToLower
+                                    TC.Background = Color.FromArgb(value)
+
+                                Case "Foreground".ToLower
+                                    TC.Foreground = Color.FromArgb(value)
+
+                                Case "SelectionBackground".ToLower
+                                    TC.SelectionBackground = Color.FromArgb(value)
+
+                                Case "Black".ToLower
+                                    TC.Black = Color.FromArgb(value)
+
+                                Case "Blue".ToLower
+                                    TC.Blue = Color.FromArgb(value)
+
+                                Case "BrightBlack".ToLower
+                                    TC.BrightBlack = Color.FromArgb(value)
+
+                                Case "BrightBlue".ToLower
+                                    TC.BrightBlue = Color.FromArgb(value)
+
+                                Case "BrightCyan".ToLower
+                                    TC.BrightCyan = Color.FromArgb(value)
+
+                                Case "BrightGreen".ToLower
+                                    TC.BrightGreen = Color.FromArgb(value)
+
+                                Case "BrightPurple".ToLower
+                                    TC.BrightPurple = Color.FromArgb(value)
+
+                                Case "BrightRed".ToLower
+                                    TC.BrightRed = Color.FromArgb(value)
+
+                                Case "BrightWhite".ToLower
+                                    TC.BrightWhite = Color.FromArgb(value)
+
+                                Case "BrightYellow".ToLower
+                                    TC.BrightYellow = Color.FromArgb(value)
+
+                                Case "CursorColor".ToLower
+                                    TC.CursorColor = Color.FromArgb(value)
+
+                                Case "Cyan".ToLower
+                                    TC.Cyan = Color.FromArgb(value)
+
+                                Case "Green".ToLower
+                                    TC.Green = Color.FromArgb(value)
+
+                                Case "Purple".ToLower
+                                    TC.Purple = Color.FromArgb(value)
+
+                                Case "Red".ToLower
+                                    TC.Red = Color.FromArgb(value)
+
+                                Case "White".ToLower
+                                    TC.White = Color.FromArgb(value)
+
+                                Case "Yellow".ToLower
+                                    TC.Yellow = Color.FromArgb(value)
+
+                            End Select
+
+                        End If
+                    Next
+
+                    Colors.Add(TC)
+                Next
+
+        End Select
+    End Sub
+
+    Enum Mode As Integer
+        JSONFile
+        WinPaletterFile
+    End Enum
+
+    Public Sub Save(File As String, Mode As Mode, Optional Preview_Version As Boolean = False)
+        Select Case Mode
+            Case Mode.JSONFile
+                Dim SettingsFile As String
+
+                If Preview_Version Then
+                    SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Else
+                    SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                End If
+
+                Dim St As New StreamReader(SettingsFile)
+                Dim JSON_String As String = St.ReadToEnd
+                Dim JSonFile As JObject = JObject.Parse(JSON_String)
+                Dim JSonFileUntouched As JObject = JObject.Parse(JSON_String)
+
+#Region "Global Settings"
+                JSonFile("alwaysShowNotificationIcon") = alwaysShowNotificationIcon
+                JSonFile("defaultProfile") = defaultProfile
+                JSonFile("focusFollowMouse") = focusFollowMouse
+                JSonFile("useAcrylicInTabRow") = useAcrylicInTabRow
+                JSonFile("theme") = theme
+                JSonFile("tabWidthMode") = tabWidthMode
+#End Region
+
+#Region "Schemes"
+                CType(JSonFile("schemes"), JArray).Clear()
+                For x = 0 To Colors.Count - 1
+                    Dim JS As New JObject
+                    JS("background") = RGB2HEX(Colors(x).Background)
+                    JS("black") = RGB2HEX(Colors(x).Black)
+                    JS("blue") = RGB2HEX(Colors(x).Blue)
+                    JS("brightBlack") = RGB2HEX(Colors(x).BrightBlack)
+                    JS("brightBlue") = RGB2HEX(Colors(x).BrightBlue)
+                    JS("brightCyan") = RGB2HEX(Colors(x).BrightCyan)
+                    JS("brightGreen") = RGB2HEX(Colors(x).BrightGreen)
+                    JS("brightPurple") = RGB2HEX(Colors(x).BrightPurple)
+                    JS("brightRed") = RGB2HEX(Colors(x).BrightRed)
+                    JS("brightWhite") = RGB2HEX(Colors(x).BrightWhite)
+                    JS("brightYellow") = RGB2HEX(Colors(x).BrightYellow)
+                    JS("cursorColor") = RGB2HEX(Colors(x).CursorColor)
+                    JS("cyan") = RGB2HEX(Colors(x).Cyan)
+                    JS("green") = RGB2HEX(Colors(x).Green)
+                    JS("name") = Colors(x).Name
+                    JS("purple") = RGB2HEX(Colors(x).Purple)
+                    JS("red") = RGB2HEX(Colors(x).Red)
+                    JS("selectionBackground") = RGB2HEX(Colors(x).SelectionBackground)
+                    JS("white") = RGB2HEX(Colors(x).White)
+                    JS("yellow") = RGB2HEX(Colors(x).Yellow)
+                    JS("foreground") = RGB2HEX(Colors(x).Foreground)
+
+                    '# Check for properties reminants from the old JSON to be added to the new one
+                    For Each item In JSonFileUntouched("schemes")
+                        If item("name").ToString.ToLower = JS("name").ToString.ToLower Then
+                            For Each itemX In item
+                                Dim Contains As Boolean = JS.ContainsKey(itemX.ToString.Split(":")(0).Trim.Replace("""", ""))
+                                If Not Contains Then JS.Add(itemX)
+                            Next
+                            Exit For
+                        End If
+                    Next
+
+                    CType(JSonFile("schemes"), JArray).Add(JS)
+                Next
+
+                '# Check for reminants from the old JSON to be added to the new one
+                For Each x In CType(JSonFileUntouched("schemes"), JArray)
+                    Dim name1 As String = x("name")
+                    Dim Found As Boolean = False
+
+                    For Each y In CType(JSonFile("schemes"), JArray)
+                        Dim name2 As String = y("name")
+
+                        If name1 = name2 Then
+                            Found = True
+                            Exit For
+                        End If
+
+                    Next
+
+                    If Not Found Then
+                        CType(JSonFile("schemes"), JArray).Add(x)
+                    End If
+
+                    Found = False
+                Next
+#End Region
+
+#Region "Defaults"
+                JSonFile("profiles")("defaults")("source") = DefaultProf.Source
+
+                If Not String.IsNullOrEmpty(DefaultProf.BackgroundImage) Then JSonFile("profiles")("defaults")("backgroundImage") = DefaultProf.BackgroundImage
+                If Not String.IsNullOrEmpty(DefaultProf.ColorScheme) Then JSonFile("profiles")("defaults")("colorScheme") = DefaultProf.ColorScheme
+                If Not String.IsNullOrEmpty(DefaultProf.TabTitle) Then JSonFile("profiles")("defaults")("tabTitle") = DefaultProf.TabTitle
+                If Not String.IsNullOrEmpty(DefaultProf.CursorShape) Then JSonFile("profiles")("defaults")("cursorShape") = CursorShape_ReturnToString(DefaultProf.CursorShape)
+                If Not String.IsNullOrEmpty(DefaultProf.Icon) Then JSonFile("profiles")("defaults")("icon") = DefaultProf.Icon
+                If Not DefaultProf.CursorHeight = 0 Then JSonFile("profiles")("defaults")("cursorHeight") = DefaultProf.CursorHeight
+                If Not DefaultProf.Opacity = 0 Then JSonFile("profiles")("defaults")("opacity") = DefaultProf.Opacity
+
+                JSonFile("profiles")("defaults")("backgroundImageAlignment") = BackgroundImageAlignment_ReturnToString(DefaultProf.BackgroundImageAlignment)
+                JSonFile("profiles")("defaults")("backgroundImageStretchMode") = BackgroundImageStretchMode_ReturnToString(DefaultProf.BackgroundImageStretchMode)
+                JSonFile("profiles")("defaults")("scrollbarState") = ScrollbarState_ReturnToString(DefaultProf.ScrollbarState)
+
+                If DefaultProf.Background <> Nothing Then JSonFile("profiles")("defaults")("background") = RGB2HEX(DefaultProf.Background)
+                If DefaultProf.CursorColor <> Nothing Then JSonFile("profiles")("defaults")("cursorColor") = RGB2HEX(DefaultProf.CursorColor)
+                If DefaultProf.Foreground <> Nothing Then JSonFile("profiles")("defaults")("foreground") = RGB2HEX(DefaultProf.Foreground)
+                If DefaultProf.SelectionBackground <> Nothing Then JSonFile("profiles")("defaults")("selectionBackground") = RGB2HEX(DefaultProf.SelectionBackground)
+                If DefaultProf.TabColor <> Nothing Then JSonFile("profiles")("defaults")("tabColor") = RGB2HEX(DefaultProf.TabColor)
+
+                JSonFile("profiles")("defaults")("adjustIndistinguishableColors") = DefaultProf.adjustIndistinguishableColors
+                JSonFile("profiles")("defaults")("snapOnInput") = DefaultProf.SnapOnInput
+                JSonFile("profiles")("defaults")("hidden") = DefaultProf.Hidden
+                JSonFile("profiles")("defaults")("useAcrylic") = DefaultProf.UseAcrylic
+                JSonFile("profiles")("defaults")("backgroundImageOpacity") = DefaultProf.BackgroundImageOpacity
+                JSonFile("profiles")("defaults")("padding") = DefaultProf.Padding.Left & ", " & DefaultProf.Padding.Top & ", " & DefaultProf.Padding.Right & ", " & DefaultProf.Padding.Bottom
+
+                JSonFile("profiles")("defaults")("font")("weight") = FontWeight_ReturnToString(DefaultProf.Font.Weight)
+                If Not String.IsNullOrEmpty(DefaultProf.Font.Face) Then JSonFile("profiles")("defaults")("font")("face") = DefaultProf.Font.Face
+                If Not DefaultProf.Font.Size = 0 Then JSonFile("profiles")("defaults")("font")("size") = DefaultProf.Font.Size
+#End Region
+
+#Region "Profiles"
+                CType(JSonFile("profiles")("list"), JArray).Clear()
+                For x = 0 To Profiles.Count - 1
+                    Dim JS As New JObject
+                    JS("name") = Profiles(x).Name
+                    JS("source") = Profiles(x).Source
+
+                    If Not String.IsNullOrEmpty(Profiles(x).BackgroundImage) Then JS("backgroundImage") = Profiles(x).BackgroundImage
+                    JS("backgroundImageAlignment") = BackgroundImageAlignment_ReturnToString(Profiles(x).BackgroundImageAlignment)
+                    JS("backgroundImageStretchMode") = BackgroundImageStretchMode_ReturnToString(Profiles(x).BackgroundImageStretchMode)
+                    JS("cursorShape") = CursorShape_ReturnToString(Profiles(x).CursorShape)
+                    JS("scrollbarState") = ScrollbarState_ReturnToString(Profiles(x).ScrollbarState)
+                    If Not String.IsNullOrEmpty(Profiles(x).ColorScheme) Then JS("colorScheme") = Profiles(x).ColorScheme
+                    If Not String.IsNullOrEmpty(Profiles(x).TabTitle) Then JS("tabTitle") = Profiles(x).TabTitle
+                    If Not String.IsNullOrEmpty(Profiles(x).Icon) Then JS("icon") = Profiles(x).Icon
+                    If Not Profiles(x).CursorHeight = 0 Then JS("cursorHeight") = Profiles(x).CursorHeight
+                    If Not Profiles(x).Opacity = 0 Then JS("opacity") = Profiles(x).Opacity
+                    If Not Profiles(x).BackgroundImageOpacity = 0 Then JS("backgroundImageOpacity") = Profiles(x).BackgroundImageOpacity
+
+                    If Profiles(x).Background <> Nothing Then JS("background") = RGB2HEX(Profiles(x).Background)
+                    If Profiles(x).CursorColor <> Nothing Then JS("cursorColor") = RGB2HEX(Profiles(x).CursorColor)
+                    If Profiles(x).Foreground <> Nothing Then JS("foreground") = RGB2HEX(Profiles(x).Foreground)
+                    If Profiles(x).SelectionBackground <> Nothing Then JS("selectionBackground") = RGB2HEX(Profiles(x).SelectionBackground)
+                    If Profiles(x).TabColor <> Nothing Then JS("tabColor") = RGB2HEX(Profiles(x).TabColor)
+
+                    JS("adjustIndistinguishableColors") = Profiles(x).adjustIndistinguishableColors
+                    JS("snapOnInput") = Profiles(x).SnapOnInput
+                    JS("hidden") = Profiles(x).Hidden
+                    JS("useAcrylic") = Profiles(x).UseAcrylic
+                    JS("padding") = Profiles(x).Padding.Left & ", " & Profiles(x).Padding.Top & ", " & Profiles(x).Padding.Right & ", " & Profiles(x).Padding.Bottom
+
+                    Dim JS_Font As New JObject
+                    If Profiles(x).Font.Weight <> Nothing Then JS_Font("weight") = FontWeight_ReturnToString(Profiles(x).Font.Weight)
+                    If Profiles(x).Font.Face IsNot Nothing Then JS_Font("face") = Profiles(x).Font.Face
+                    If Profiles(x).Font.Size <> 0 Then JS_Font("Size") = Profiles(x).Font.Size
+                    JS("font") = JS_Font
+
+                    '# Check for properties reminants from the old JSON to be added to the new one
+                    For Each item In JSonFileUntouched("profiles")("list")
+                        If item("name").ToString.ToLower = JS("name").ToString.ToLower Then
+                            For Each itemX In item
+                                Dim Contains As Boolean = JS.ContainsKey(itemX.ToString.Split(":")(0).Trim.Replace("""", ""))
+                                If Not Contains Then JS.Add(itemX)
+                            Next
+                            Exit For
+                        End If
+                    Next
+
+                    CType(JSonFile("profiles")("list"), JArray).Add(JS)
+                Next
+
+                '# Check for reminants from the old JSON to be added to the new one
+                For Each x In CType(JSonFileUntouched("profiles")("list"), JArray)
+                    Dim name1 As String = x("name")
+                    Dim Found As Boolean = False
+
+                    For Each y In CType(JSonFile("profiles")("list"), JArray)
+                        Dim name2 As String = y("name")
+
+                        If name1 = name2 Then
+                            Found = True
+                            Exit For
+                        End If
+
+                    Next
+
+                    If Not Found Then
+                        CType(JSonFile("profiles")("list"), JArray).Add(x)
+                    End If
+
+                    Found = False
+                Next
+#End Region
+
+                IO.File.WriteAllText(File, JSonFile.ToString)
+
+                St.Close()
+
+            Case Mode.WinPaletterFile
+
+                Dim First As String = If(Preview_Version, "TerminalPreview.", "Terminal.")
+                Dim S As New List(Of String)
+                S.Clear()
+
+                S.Add(String.Format("{0}{1}= {2}", First, "tabWidthMode", tabWidthMode))
+                S.Add(String.Format("{0}{1}= {2}", First, "theme", theme))
+                S.Add(String.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", useAcrylicInTabRow))
+                S.Add(String.Format("{0}{1}= {2}", First, "alwaysShowNotificationIcon", alwaysShowNotificationIcon))
+                S.Add(String.Format("{0}{1}= {2}", First, "defaultProfile", defaultProfile))
+                S.Add(String.Format("{0}{1}= {2}", First, "focusFollowMouse", focusFollowMouse))
+
+
+                Dim type1 As Type = DefaultProf.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
+                For Each [property] As PropertyInfo In properties1
+                    If [property].GetValue(Me.DefaultProf) IsNot Nothing Then
+                        S.Add(String.Format("{0}{1}.{2}= {3}", First, "Default", [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(Me.DefaultProf))))
+                    End If
+                Next
+
+                For Each c As TColor In Colors
+                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+
+                    For Each [property] As PropertyInfo In properties2
+                        If [property].GetValue(c) IsNot Nothing Then
+                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                        End If
+                    Next
+
+                Next
+
+                For Each c As ProfilesList In Profiles
+                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+
+                    For Each [property] As PropertyInfo In properties2
+                        If [property].GetValue(c) IsNot Nothing Then
+                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                        End If
+                    Next
+
+                Next
+
+                IO.File.WriteAllText(File, String.Join(vbCrLf, S.ToArray))
+
+        End Select
+    End Sub
+
+    Public Function ReturnPerfectValue(ByVal Type As Type, Value As Object) As String
+        Select Case Type.Name.ToLower
+            Case "color"
+                Return DirectCast(Value, Color).ToArgb
+
+            Case "padding"
+                With DirectCast(Value, Padding)
+                    Return .Left & "," & .Top & "," & .Right & "," & .Bottom
+                End With
+
+            Case "fontsbase"
+                With DirectCast(Value, FontsBase)
+                    Return .Face & "," & .Size & "," & FontWeight_ReturnToString(.Weight)
+                End With
+
+            Case Else
+                Return Value
+
+        End Select
+    End Function
+
+    Public Function HEX2RGB([String] As String) As Color
+        Try
+            Return Color.FromArgb(Convert.ToInt32([String].Replace("#", ""), 16))
+        Catch
+            Return Nothing 'Color.FromArgb(Convert.ToInt32("FFFFFF", 16))
+        End Try
+    End Function
+
+    Public Function RGB2HEX([Color] As Color) As String
+        Return String.Format("#{0:X2}{1:X2}{2:X2}", [Color].R, [Color].G, [Color].B)
+    End Function
+
+End Class
+
+
+Public Class TColor
+    Public Property Name As String
+    Public Property Background As Color
+    Public Property Foreground As Color
+    Public Property SelectionBackground As Color
+    Public Property Black As Color
+    Public Property Blue As Color
+    Public Property BrightBlack As Color
+    Public Property BrightBlue As Color
+    Public Property BrightCyan As Color
+    Public Property BrightGreen As Color
+    Public Property BrightPurple As Color
+    Public Property BrightRed As Color
+    Public Property BrightWhite As Color
+    Public Property BrightYellow As Color
+    Public Property CursorColor As Color
+    Public Property Cyan As Color
+    Public Property Green As Color
+    Public Property Purple As Color
+    Public Property Red As Color
+    Public Property White As Color
+    Public Property Yellow As Color
+End Class
+
+Public Class FontsBase
+    Public Property Face As String = "Cascadia Mono"
+    Public Property Weight As FontWeight_Enum
+    Public Property Size As Integer = 12
+End Class
+
+Public Class ProfilesList
+    Public Property Name As String
+    Public Property TabTitle As String
+    Public Property Icon As String
+    Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
+
+    Public Property Background As Color = Nothing
+    Public Property Foreground As Color = Nothing
+    Public Property SelectionBackground As Color = Nothing
+    Public Property TabColor As Color = Nothing
+    Public Property adjustIndistinguishableColors As Boolean = False
+    Public Property UseAcrylic As Boolean = False
+    Public Property Opacity As Integer = 100
+
+    Public Property Font As New FontsBase
+    Public Property BackgroundImage As String
+    Public Property BackgroundImageAlignment As BackgroundImageAlignment_Enum
+    Public Property BackgroundImageStretchMode As BackgroundImageStretchMode_Enum
+    Public Property BackgroundImageOpacity As Single = 0
+
+    Public Property CursorColor As Color = Nothing
+    Public Property ColorScheme As String = "Default"
+    Public Property CursorShape As CursorShape_Enum
+    Public Property CursorHeight As Integer
+
+    Public Property ScrollbarState As ScrollbarState_Enum
+
+    Public Property SnapOnInput As Boolean = True
+    Public Property Hidden As Boolean = False
+    Public Property Padding As Padding = New Padding(8, 8, 8, 8)
+
+
+#Region "Helpers"
+
+    Enum BackgroundImageAlignment_Enum
+        bottom
+        bottomLeft
+        bottomRight
+        center
+        left
+        right
+        top
+        topLeft
+        topRight
+    End Enum
+
+    Public Shared Function BackgroundImageAlignment_ReturnToString(int As BackgroundImageAlignment_Enum) As String
+        Select Case int
+            Case BackgroundImageAlignment_Enum.bottom
+                Return "bottom"
+
+            Case BackgroundImageAlignment_Enum.bottomLeft
+                Return "bottomLeft"
+
+            Case BackgroundImageAlignment_Enum.bottomRight
+                Return "bottomRight"
+
+            Case BackgroundImageAlignment_Enum.center
+                Return "center"
+
+            Case BackgroundImageAlignment_Enum.left
+                Return "left"
+
+            Case BackgroundImageAlignment_Enum.right
+                Return "right"
+
+            Case BackgroundImageAlignment_Enum.top
+                Return "top"
+
+            Case BackgroundImageAlignment_Enum.topLeft
+                Return "topLeft"
+
+            Case BackgroundImageAlignment_Enum.topRight
+                Return "topRight"
+
+            Case Else
+                Return "center"
+        End Select
+    End Function
+
+    Public Shared Function BackgroundImageAlignment_GetFromString(str As String) As BackgroundImageAlignment_Enum
+        Select Case str.ToLower
+            Case "bottom".ToLower
+                Return BackgroundImageAlignment_Enum.bottom
+
+            Case "bottomleft".ToLower
+                Return BackgroundImageAlignment_Enum.bottomLeft
+
+            Case "bottomright".ToLower
+                Return BackgroundImageAlignment_Enum.bottomRight
+
+            Case "center".ToLower
+                Return BackgroundImageAlignment_Enum.center
+
+            Case "left".ToLower
+                Return BackgroundImageAlignment_Enum.left
+
+            Case "right".ToLower
+                Return BackgroundImageAlignment_Enum.right
+
+            Case "top".ToLower
+                Return BackgroundImageAlignment_Enum.top
+
+            Case "topleft".ToLower
+                Return BackgroundImageAlignment_Enum.topLeft
+
+            Case "topright".ToLower
+                Return BackgroundImageAlignment_Enum.topRight
+
+            Case Else
+                Return BackgroundImageAlignment_Enum.center
+        End Select
+    End Function
+
+
+
+    Enum BackgroundImageStretchMode_Enum
+        fill
+        none
+        uniform
+        uniformToFill
+    End Enum
+
+    Public Shared Function BackgroundImageStretchMode_ReturnToString(int As BackgroundImageStretchMode_Enum) As String
+        Select Case int
+            Case BackgroundImageStretchMode_Enum.fill
+                Return "fill"
+
+            Case BackgroundImageStretchMode_Enum.none
+                Return "none"
+
+            Case BackgroundImageStretchMode_Enum.uniform
+                Return "uniform"
+
+            Case BackgroundImageStretchMode_Enum.uniformToFill
+                Return "uniformToFill"
+
+            Case Else
+                Return "fill"
+
+        End Select
+    End Function
+
+    Public Shared Function BackgroundImageStretchMode_GetFromString(str As String) As BackgroundImageStretchMode_Enum
+        Select Case str.ToLower
+            Case "fill".ToLower
+                Return BackgroundImageStretchMode_Enum.fill
+
+            Case "none".ToLower
+                Return BackgroundImageStretchMode_Enum.none
+
+            Case "uniform".ToLower
+                Return BackgroundImageStretchMode_Enum.uniform
+
+            Case "uniformtofill".ToLower
+                Return BackgroundImageStretchMode_Enum.uniformToFill
+
+            Case Else
+                Return BackgroundImageStretchMode_Enum.fill
+        End Select
+    End Function
+
+
+
+    Enum CursorShape_Enum
+        bar
+        doubleUnderscore
+        emptyBox
+        filledBox
+        underscore
+        vintage
+    End Enum
+
+    Public Shared Function CursorShape_ReturnToString(int As CursorShape_Enum) As String
+        Select Case int
+            Case CursorShape_Enum.bar
+                Return "bar"
+
+            Case CursorShape_Enum.doubleUnderscore
+                Return "doubleUnderscore"
+
+            Case CursorShape_Enum.emptyBox
+                Return "emptyBox"
+
+            Case CursorShape_Enum.filledBox
+                Return "filledBox"
+
+            Case CursorShape_Enum.underscore
+                Return "underscore"
+
+            Case CursorShape_Enum.vintage
+                Return "vintage"
+
+            Case Else
+                Return "bar"
+
+        End Select
+    End Function
+
+    Public Shared Function CursorShape_GetFromString(str As String) As CursorShape_Enum
+        Select Case str.ToLower
+            Case "bar".ToLower
+                Return CursorShape_Enum.bar
+
+            Case "doubleunderscore".ToLower
+                Return CursorShape_Enum.doubleUnderscore
+
+            Case "emptybox".ToLower
+                Return CursorShape_Enum.emptyBox
+
+            Case "filledbox".ToLower
+                Return CursorShape_Enum.filledBox
+
+            Case "underscore".ToLower
+                Return CursorShape_Enum.underscore
+
+            Case "vintage".ToLower
+                Return CursorShape_Enum.vintage
+
+            Case Else
+                Return CursorShape_Enum.bar
+
+        End Select
+    End Function
+
+
+
+    Enum FontWeight_Enum   'replace _ by -
+        thin
+        extra_light
+        light
+        semi_light
+        normal
+        medium
+        semi_bold
+        bold
+        extra_bold
+        black
+        extra_black
+    End Enum
+    Public Shared Function FontWeight_ReturnToString(int As FontWeight_Enum) As String
+        Select Case int
+            Case FontWeight_Enum.black
+                Return "black"
+
+            Case FontWeight_Enum.bold
+                Return "bold"
+
+            Case FontWeight_Enum.extra_black
+                Return "extra-black"
+
+            Case FontWeight_Enum.extra_bold
+                Return "extra-bold"
+
+            Case FontWeight_Enum.extra_light
+                Return "extra-light"
+
+            Case FontWeight_Enum.light
+                Return "light"
+
+            Case FontWeight_Enum.medium
+                Return "medium"
+
+            Case FontWeight_Enum.normal
+                Return "normal"
+
+            Case FontWeight_Enum.semi_bold
+                Return "semi-bold"
+
+            Case FontWeight_Enum.semi_light
+                Return "semi-light"
+
+            Case FontWeight_Enum.thin
+                Return "thin"
+
+            Case Else
+                Return "normal"
+
+        End Select
+    End Function
+
+    Public Shared Function FontWeight_GetFromString(str As String) As FontWeight_Enum
+        Select Case str.ToLower
+            Case "thin".ToLower
+                Return FontWeight_Enum.thin
+
+            Case "extra-light".ToLower
+                Return FontWeight_Enum.extra_light
+
+            Case "light".ToLower
+                Return FontWeight_Enum.light
+
+            Case "semi-light".ToLower
+                Return FontWeight_Enum.semi_light
+
+            Case "medium".ToLower
+                Return FontWeight_Enum.medium
+
+            Case "semi-bold".ToLower
+                Return FontWeight_Enum.semi_bold
+
+            Case "bold".ToLower
+                Return FontWeight_Enum.bold
+
+            Case "extra-bold".ToLower
+                Return FontWeight_Enum.extra_bold
+
+            Case "black".ToLower
+                Return FontWeight_Enum.black
+
+            Case "extra-black".ToLower
+                Return FontWeight_Enum.extra_black
+
+            Case Else
+                Return FontWeight_Enum.medium
+
+        End Select
+    End Function
+
+
+
+    Enum ScrollbarState_Enum
+        visible
+        hidden
+    End Enum
+
+    Public Shared Function ScrollbarState_ReturnToString(int As ScrollbarState_Enum) As String
+        Select Case int
+            Case ScrollbarState_Enum.hidden
+                Return "hidden"
+
+            Case ScrollbarState_Enum.visible
+                Return "visible"
+
+            Case Else
+                Return "hidden"
+
+        End Select
+    End Function
+
+    Public Shared Function ScrollbarState_GetFromString(str As String) As ScrollbarState_Enum
+        Select Case str.ToLower
+            Case "visible".ToLower
+                Return ScrollbarState_Enum.visible
+
+            Case "hidden".ToLower
+                Return ScrollbarState_Enum.hidden
+
+            Case Else
+                Return ScrollbarState_Enum.visible
+
+        End Select
+    End Function
+
+#End Region
+End Class
+
