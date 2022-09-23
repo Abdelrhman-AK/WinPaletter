@@ -351,6 +351,37 @@ Public Class ColorPickerDlg
                     ctrl.Invalidate()
                 End With
 
+            ElseIf TypeOf ctrl Is XenonTerminal Then
+                With TryCast(ctrl, XenonTerminal)
+
+                    If _Conditions.Terminal_Back Then
+                        .Color_Background = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_Fore Then
+                        .Color_Foreground = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_Selection Then
+                        .Color_Selection = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_Cursor Then
+                        .Color_Cursor = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_TabActive Then
+                        .Color_TabFocused = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_TabInactive Then
+                        .Color_TabUnFocused = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_TitlebarActive Then
+                        .Color_Titlebar = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_TitlebarInactive Then
+                        .Color_Titlebar_Unfocused = Color.FromArgb(255, ColorEditorManager1.Color)
+                    End If
+
+                    .Invalidate()
+                End With
+
             ElseIf TypeOf ctrl Is XenonCMD Then
                 With TryCast(ctrl, XenonCMD)
                     If _Conditions.CMD_ColorTable00 Then
@@ -677,6 +708,15 @@ Public Class Conditions
     Public Sub New()
 
     End Sub
+
+    Public Property Terminal_Back As Boolean = False
+    Public Property Terminal_Fore As Boolean = False
+    Public Property Terminal_Selection As Boolean = False
+    Public Property Terminal_Cursor As Boolean = False
+    Public Property Terminal_TabActive As Boolean = False
+    Public Property Terminal_TabInactive As Boolean = False
+    Public Property Terminal_TitlebarActive As Boolean = False
+    Public Property Terminal_TitlebarInactive As Boolean = False
     Public Property CMD_ColorTable00 As Boolean = False
     Public Property CMD_ColorTable01 As Boolean = False
     Public Property CMD_ColorTable02 As Boolean = False

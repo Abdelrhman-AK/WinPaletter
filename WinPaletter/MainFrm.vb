@@ -2352,6 +2352,10 @@ Public Class MainFrm
         cmd.ShowDialog()
     End Sub
 
+    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        WindowsTerminal.ShowDialog()
+    End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

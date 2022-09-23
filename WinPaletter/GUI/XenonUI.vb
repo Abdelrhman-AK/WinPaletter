@@ -4,6 +4,7 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
+Imports WinPaletter.XenonAcrylic
 Imports WinPaletter.XenonCore
 
 #Region "Helpers"
@@ -5365,6 +5366,296 @@ Public Class XenonCMD
         G.FillRectangle(New SolidBrush(PCB), RectMiddle)
         G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
         G.DrawString("This is a pop-up", F, New SolidBrush(PCF), RectMiddleBorder, StringAligner(ContentAlignment.MiddleCenter))
+    End Sub
+
+End Class
+
+<DefaultEvent("Click")>
+Public Class XenonTerminal
+    Inherits ContainerControl
+
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
+    Dim adaptedBack As Bitmap
+    Dim adaptedBackBlurred As Bitmap
+
+    Private _Opacity As Single = 1
+    Public Event OpacityChanged As PropertyChangedEventHandler
+    Private Sub NotifyOpacityChanged(ByVal info As Single)
+        Invalidate()
+        RaiseEvent OpacityChanged(Me, New PropertyChangedEventArgs(info))
+    End Sub
+    Public Property Opacity() As Single
+        Get
+            Return _Opacity
+        End Get
+
+        Set(ByVal value As Single)
+            If Not (value = _Opacity) Then
+                Me._Opacity = value
+                NotifyOpacityChanged(_Opacity)
+            End If
+        End Set
+    End Property
+
+    Public Property Color_Titlebar As Color
+    Public Property Color_Titlebar_Unfocused As Color
+    Public Property Color_TabFocused As Color
+    Public Property Color_TabUnFocused As Color
+    Public Property Color_Background As Color = Color.Black
+    Public Property Color_Foreground As Color = Color.White
+    Public Property Color_Selection As Color = Color.Gray
+    Public Property Color_Cursor As Color = Color.White
+    Public Property CursorType As CursorShape_Enum = CursorShape_Enum.bar
+    Public Property CursorHeight As Integer = 25
+    Public Property Light As Boolean = False
+    Public Property UseAcrylicOnTitlebar As Boolean = False
+    Public Property UseAcrylic As Boolean = False
+    Public Property IsFocused As Boolean = True
+
+    Enum CursorShape_Enum
+        bar
+        doubleUnderscore
+        emptyBox
+        filledBox
+        underscore
+        vintage
+    End Enum
+
+    Public Function RR(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+        Try
+            Dim path As New GraphicsPath()
+            Dim d As Integer = radius * 2
+            Dim f0 As Single = 0.5
+            Dim f1 As Single = 2 - f0
+
+            Dim R1 As New Rectangle(r.X + f0 * d, r.Y, d, d)
+            Dim R2 As New Rectangle(r.X + r.Width - f1 * d, r.Y, d, d)
+            Dim R3 As New Rectangle(r.X - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d)
+            Dim R4 As New Rectangle(r.X + r.Width - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d)
+
+            path.AddArc(R4, 90, 90)
+            path.AddLine(New Point(R4.X, R4.Y), New Point(R2.Right, R2.Bottom))
+            path.AddArc(R2, 0, -90)
+            path.AddArc(R1, -90, -90)
+            path.AddArc(R3, 0, 90)
+            path.AddLine(New Point(R3.X + R3.Width, R3.Y + R3.Height), New Point(R4.X, R4.Y + R4.Height))
+
+            path.CloseFigure()
+
+            Return path
+        Catch
+            Return Nothing
+        End Try
+    End Function
+    Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
+        Try
+            If [Radius] = -1 Then [Radius] = 6
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+
+            Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
+                Graphics.FillPath(Brush, path)
+            End Using
+
+        Catch
+        End Try
+    End Sub
+
+    Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+        Try
+            Dim path As New GraphicsPath()
+            Dim d As Integer = radius * 2
+
+            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90)
+
+            path.AddLine(r.Right, r.Top, r.Right, r.Bottom)
+
+            path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom)
+
+            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d)
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180, 90)
+
+            path.CloseFigure()
+            Return path
+        Catch
+            Return Nothing
+        End Try
+    End Function
+    Public Sub FillSemiImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius] = -1 Then [Radius] = 6
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
+                    Dim reg As New Region(path)
+                    [Graphics].Clip = reg
+                    [Graphics].SmoothingMode = SmoothingMode.AntiAlias
+                    [Graphics].DrawImage([Image], [Rectangle])
+                    [Graphics].ResetClip()
+                End Using
+            Else
+                Graphics.DrawImage([Image], [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+
+    Dim WithEvents tm As New Timer With {.Enabled = False, .Interval = 500}
+
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.HighSpeed
+        DoubleBuffered = True
+
+        If Not Light Then
+            If Color_Titlebar = Nothing Then Color_Titlebar = Color.FromArgb(46, 46, 46)
+            If Color_TabFocused = Nothing Then Color_TabFocused = Color_Background
+            If Color_TabUnFocused = Nothing Then Color_TabUnFocused = Color_Titlebar
+            If Color_Titlebar_Unfocused = Nothing Then Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46)
+        Else
+            If Color_Titlebar = Nothing Then Color_Titlebar = Color.FromArgb(232, 232, 232)
+            If Color_TabFocused = Nothing Then Color_TabFocused = Color_Background
+            If Color_TabUnFocused = Nothing Then Color_TabUnFocused = Color_Titlebar
+            If Color_Titlebar_Unfocused = Nothing Then Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255)
+        End If
+
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim Rect_Titlebar As New Rectangle(0, 0, Width - 1, 32)
+        Dim Rect_Console As New Rectangle(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height)
+
+        Dim s1 As String = "Console Sample"
+        Dim s1X As SizeF = MeasureString(s1, Font) + New SizeF(5, 0)
+
+        Dim s2 As String = "This is a selection"
+        Dim s2X As SizeF = MeasureString(s2, Font) + New SizeF(2, 0)
+
+        Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
+        Dim s3X As SizeF = MeasureString(s3, Font) + New SizeF(2, 0)
+
+        Dim Rect_ConsoleText0 As New Rectangle(8, Rect_Titlebar.Bottom + 8, s1X.Width, s1X.Height)
+        Dim Rect_ConsoleText1 As New Rectangle(8, Rect_ConsoleText0.Bottom + 3, s2X.Width, s2X.Height)
+        Dim Rect_ConsoleText2 As New Rectangle(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, s3X.Width, s3X.Height)
+
+        Dim Rect_ConsoleCursor As New Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height)
+
+        If UseAcrylic Then
+            FillImg(G, adaptedBackBlurred, Rect)
+            FillRect(G, Noise, Rect)
+            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 200, 35, 35, 35)), Rect)
+        Else
+            FillImg(G, adaptedBack, Rect)
+            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
+        End If
+
+        If UseAcrylicOnTitlebar And Not DesignMode Then
+            FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar)
+            FillSemiRect(G, Noise, Rect_Titlebar)
+            FillSemiRect(G, New SolidBrush(Color.FromArgb(100, 35, 35, 35)), Rect_Titlebar)
+        End If
+
+        If Not UseAcrylicOnTitlebar Then
+            FillSemiRect(G, New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
+        End If
+
+        If IsFocused Then
+            Dim Radius As Integer = 5
+            Dim TabHeight As Integer = 21
+            Dim Rect_Tab0 As New Rectangle(10, Rect_Titlebar.Bottom - TabHeight, 100, TabHeight)
+            Dim Rect_Tab1 As Rectangle = Rect_Tab0
+            Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius
+            G.FillPath(New SolidBrush(Color_TabFocused), RR(Rect_Tab0, Radius))
+            G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
+        End If
+
+        G.DrawString(s1, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText0, StringAligner(ContentAlignment.TopLeft))
+
+        G.FillRectangle(New SolidBrush(Color_Selection), Rect_ConsoleText1)
+
+        G.DrawString(s2, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText1, StringAligner(ContentAlignment.TopLeft))
+
+        G.DrawString(s3, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText2, StringAligner(ContentAlignment.TopLeft))
+
+
+        If tk And IsFocused Then
+            G.SmoothingMode = SmoothingMode.HighSpeed
+
+            Select Case CursorType
+                Case CursorShape_Enum.bar
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height))
+
+                Case CursorShape_Enum.doubleUnderscore
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom, Rect_ConsoleCursor.Height * 0.5, 1))
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 3, Rect_ConsoleCursor.Height * 0.5, 1))
+
+                Case CursorShape_Enum.emptyBox
+                    G.DrawRectangle(New Pen(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5, Rect_ConsoleCursor.Height))
+
+                Case CursorShape_Enum.filledBox
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5, Rect_ConsoleCursor.Height))
+
+                Case CursorShape_Enum.underscore
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 1, Rect_ConsoleCursor.Height * 0.5, 1))
+
+                Case CursorShape_Enum.vintage
+                    G.FillRectangle(New SolidBrush(Color_Cursor), New Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - (CursorHeight / 100) * (Rect_ConsoleCursor.Height), Rect_ConsoleCursor.Height * 0.5, (CursorHeight / 100) * (Rect_ConsoleCursor.Height)))
+
+
+            End Select
+
+            G.SmoothingMode = SmoothingMode.AntiAlias
+        End If
+
+
+        DrawRect(G, New Pen(Color.FromArgb(100, 150, 150, 150)), Rect)
+    End Sub
+
+    Dim tk As Boolean = False
+
+    Private Sub tm_Tick(sender As Object, e As EventArgs) Handles tm.Tick
+        If IsFocused Then
+            If tk Then
+                tk = False
+            Else
+                tk = True
+            End If
+
+            Refresh()
+        End If
+    End Sub
+
+    Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        If Not DesignMode Then
+            tm.Enabled = True
+            tm.Start()
+
+            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+
+
+            ProcessBack()
+        Else
+            tm.Enabled = False
+            tm.Stop()
+        End If
+    End Sub
+
+    Sub ProcessBack()
+        GetBack()
+        NoiseBack()
+    End Sub
+
+    Sub GetBack()
+        adaptedBack = My.Application.GetCurrentWallpaper.Clone(RectangleToScreen(Bounds), My.Application.Wallpaper.PixelFormat)
+        adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 5)
+    End Sub
+
+    Sub NoiseBack()
+        Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.5))
     End Sub
 
 End Class

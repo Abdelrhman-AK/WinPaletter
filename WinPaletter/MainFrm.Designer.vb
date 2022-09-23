@@ -235,6 +235,7 @@ Partial Class MainFrm
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.PaletteContainer_W1x.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.pnl8.SuspendLayout()
@@ -2766,6 +2767,7 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton24)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton21)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton16)
@@ -2852,9 +2854,9 @@ Partial Class MainFrm
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label13.Location = New System.Drawing.Point(44, 3)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(84, 61)
+        Me.Label13.Size = New System.Drawing.Size(47, 61)
         Me.Label13.TabIndex = 0
-        Me.Label13.Text = "See Also"
+        Me.Label13.Text = "Misc"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton4
@@ -3507,6 +3509,23 @@ Partial Class MainFrm
         Me.XenonButton2.Tag = "Open a Theme File"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
+        'XenonButton25
+        '
+        Me.XenonButton25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton25.ForeColor = System.Drawing.Color.White
+        Me.XenonButton25.Image = CType(resources.GetObject("XenonButton25.Image"), System.Drawing.Image)
+        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
+        Me.XenonButton25.LineSize = 1
+        Me.XenonButton25.Location = New System.Drawing.Point(97, 3)
+        Me.XenonButton25.Name = "XenonButton25"
+        Me.XenonButton25.Size = New System.Drawing.Size(110, 59)
+        Me.XenonButton25.TabIndex = 29
+        Me.XenonButton25.Text = "Windows Terminal"
+        Me.XenonButton25.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -3830,4 +3849,5 @@ Partial Class MainFrm
     Friend WithEvents XenonSeparatorVertical2 As XenonSeparatorVertical
     Friend WithEvents XenonButton23 As XenonButton
     Friend WithEvents XenonButton24 As XenonButton
+    Friend WithEvents XenonButton25 As XenonButton
 End Class

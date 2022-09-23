@@ -178,9 +178,9 @@ Public Class CP
     Public Property CMD_CursorSize As Integer = 19
     Public Property CMD_FaceName As String = "Consolas"
     Public Property CMD_FontRaster As Boolean = False
-    Public Property CMD_FontSize As Integer
+    Public Property CMD_FontSize As Integer = 12 * 65536
     Public Property CMD_FontWeight As Integer = 400
-    Public Property CMD_1909_CursorType As Integer = 1
+    Public Property CMD_1909_CursorType As Integer = 0
     Public Property CMD_1909_CursorColor As Color = Color.White
     Public Property CMD_1909_ForceV2 As Boolean = True
     Public Property CMD_1909_LineSelection As Boolean = False
@@ -212,9 +212,9 @@ Public Class CP
     Public Property PS_32_CursorSize As Integer = 19
     Public Property PS_32_FaceName As String = "Consolas"
     Public Property PS_32_FontRaster As Boolean = False
-    Public Property PS_32_FontSize As Integer
+    Public Property PS_32_FontSize As Integer = 12 * 65536
     Public Property PS_32_FontWeight As Integer = 400
-    Public Property PS_32_1909_CursorType As Integer = 1
+    Public Property PS_32_1909_CursorType As Integer = 0
     Public Property PS_32_1909_CursorColor As Color = Color.White
     Public Property PS_32_1909_ForceV2 As Boolean = True
     Public Property PS_32_1909_LineSelection As Boolean = False
@@ -246,9 +246,9 @@ Public Class CP
     Public Property PS_64_CursorSize As Integer = 19
     Public Property PS_64_FaceName As String = "Consolas"
     Public Property PS_64_FontRaster As Boolean = False
-    Public Property PS_64_FontSize As Integer
+    Public Property PS_64_FontSize As Integer = 12 * 65536
     Public Property PS_64_FontWeight As Integer = 400
-    Public Property PS_64_1909_CursorType As Integer = 1
+    Public Property PS_64_1909_CursorType As Integer = 0
     Public Property PS_64_1909_CursorColor As Color = Color.White
     Public Property PS_64_1909_ForceV2 As Boolean = True
     Public Property PS_64_1909_LineSelection As Boolean = False
@@ -5731,6 +5731,7 @@ Public Class WinTerminal
     Public Property Colors As List(Of TColor)
     Public Property Profiles As List(Of ProfilesList)
     Public Property DefaultProf As ProfilesList
+    Public Property Themes As List(Of ThemesList)
     Public Property tabWidthMode As String
     Public Property theme As String
     Public Property useAcrylicInTabRow As Boolean = False
@@ -5771,10 +5772,6 @@ Public Class WinTerminal
                     If JSonFile("profiles")("defaults")("colorScheme") IsNot Nothing Then DefaultProf.ColorScheme = JSonFile("profiles")("defaults")("colorScheme")
                     If JSonFile("profiles")("defaults")("tabTitle") IsNot Nothing Then DefaultProf.TabTitle = JSonFile("profiles")("defaults")("tabTitle")
                     If JSonFile("profiles")("defaults")("icon") IsNot Nothing Then DefaultProf.Icon = JSonFile("profiles")("defaults")("icon")
-                    If JSonFile("profiles")("defaults")("background") IsNot Nothing Then DefaultProf.Background = HEX2RGB(JSonFile("profiles")("defaults")("background"))
-                    If JSonFile("profiles")("defaults")("cursorColor") IsNot Nothing Then DefaultProf.CursorColor = HEX2RGB(JSonFile("profiles")("defaults")("cursorColor"))
-                    If JSonFile("profiles")("defaults")("foreground") IsNot Nothing Then DefaultProf.Foreground = HEX2RGB(JSonFile("profiles")("defaults")("foreground"))
-                    If JSonFile("profiles")("defaults")("selectionBackground") IsNot Nothing Then DefaultProf.SelectionBackground = HEX2RGB(JSonFile("profiles")("defaults")("selectionBackground"))
                     If JSonFile("profiles")("defaults")("tabColor") IsNot Nothing Then DefaultProf.TabColor = HEX2RGB(JSonFile("profiles")("defaults")("tabColor"))
                     If JSonFile("profiles")("defaults")("adjustIndistinguishableColors") IsNot Nothing Then DefaultProf.adjustIndistinguishableColors = JSonFile("profiles")("defaults")("adjustIndistinguishableColors")
                     If JSonFile("profiles")("defaults")("hidden") IsNot Nothing Then DefaultProf.Hidden = JSonFile("profiles")("defaults")("hidden")
@@ -5784,81 +5781,100 @@ Public Class WinTerminal
                     If JSonFile("profiles")("defaults")("backgroundImageOpacity") IsNot Nothing Then DefaultProf.BackgroundImageOpacity = JSonFile("profiles")("defaults")("backgroundImageOpacity")
 #End Region
 
-
 #Region "Getting Profiles"
                     Profiles = New List(Of ProfilesList)
                     Profiles.Clear()
 
-                    For Each item In JSonFile("profiles")("list")
-                        Dim P As New ProfilesList
-                        If item("name") IsNot Nothing Then P.Name = item("name")
-                        If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
-                        If item("backgroundImageAlignment") IsNot Nothing Then P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
-                        If item("backgroundImageStretchMode") IsNot Nothing Then P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
-                        If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
+                    If JSonFile("profiles")("list") IsNot Nothing Then
+                        For Each item In JSonFile("profiles")("list")
+                            Dim P As New ProfilesList
+                            If item("name") IsNot Nothing Then P.Name = item("name")
+                            If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
+                            If item("backgroundImageAlignment") IsNot Nothing Then P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
+                            If item("backgroundImageStretchMode") IsNot Nothing Then P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
+                            If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
 
-                        If item("font") IsNot Nothing Then
-                            If item("font")("weight") IsNot Nothing Then P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
-                            If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
-                            If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
-                        End If
+                            If item("font") IsNot Nothing Then
+                                If item("font")("weight") IsNot Nothing Then P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
+                                If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
+                                If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
+                            End If
 
-                        If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme")
-                        If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
-                        If item("icon") IsNot Nothing Then P.Icon = item("icon")
-                        If item("background") IsNot Nothing Then P.Background = HEX2RGB(item("background"))
-                        If item("cursorColor") IsNot Nothing Then P.CursorColor = HEX2RGB(item("cursorColor"))
-                        If item("foreground") IsNot Nothing Then P.Foreground = HEX2RGB(item("foreground"))
-                        If item("selectionBackground") IsNot Nothing Then P.SelectionBackground = HEX2RGB(item("selectionBackground"))
-                        If item("tabColor") IsNot Nothing Then P.TabColor = HEX2RGB(item("tabColor"))
-                        If item("adjustIndistinguishableColors") IsNot Nothing Then P.adjustIndistinguishableColors = item("adjustIndistinguishableColors")
-                        If item("hidden") IsNot Nothing Then P.Hidden = item("hidden")
-                        If item("useAcrylic") IsNot Nothing Then P.UseAcrylic = item("useAcrylic")
-                        If item("cursorHeight") IsNot Nothing Then P.CursorHeight = item("cursorHeight")
-                        If item("opacity") IsNot Nothing Then P.Opacity = item("opacity")
-                        If item("backgroundImageOpacity") IsNot Nothing Then P.BackgroundImageOpacity = item("backgroundImageOpacity")
+                            If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme") Else P.ColorScheme = DefaultProf.ColorScheme
+                            If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
+                            If item("icon") IsNot Nothing Then P.Icon = item("icon")
+                            If item("tabColor") IsNot Nothing Then P.TabColor = HEX2RGB(item("tabColor"))
+                            If item("adjustIndistinguishableColors") IsNot Nothing Then P.adjustIndistinguishableColors = item("adjustIndistinguishableColors")
+                            If item("hidden") IsNot Nothing Then P.Hidden = item("hidden")
+                            If item("useAcrylic") IsNot Nothing Then P.UseAcrylic = item("useAcrylic")
+                            If item("cursorHeight") IsNot Nothing Then P.CursorHeight = item("cursorHeight")
+                            If item("opacity") IsNot Nothing Then P.Opacity = item("opacity")
+                            If item("backgroundImageOpacity") IsNot Nothing Then P.BackgroundImageOpacity = item("backgroundImageOpacity")
 
-                        Profiles.Add(P)
-                    Next
+                            Profiles.Add(P)
+                        Next
+                    End If
+
 #End Region
 
 #Region "Getting All Colors Schemes"
                     Colors = New List(Of TColor)
-                    Colors.Clear()
+                        Colors.Clear()
 
-                    For Each item In JSonFile("schemes")
-                        Dim TC As New TColor
+                    If JSonFile("schemes") IsNot Nothing Then
+                        For Each item In JSonFile("schemes")
+                            Dim TC As New TColor
 
-                        TC.Background = HEX2RGB(item("background"))
-                        TC.Black = HEX2RGB(item("black"))
-                        TC.Blue = HEX2RGB(item("blue"))
-                        TC.BrightBlack = HEX2RGB(item("brightBlack"))
-                        TC.BrightBlue = HEX2RGB(item("brightBlue"))
-                        TC.BrightCyan = HEX2RGB(item("brightCyan"))
-                        TC.BrightGreen = HEX2RGB(item("brightGreen"))
-                        TC.BrightPurple = HEX2RGB(item("brightPurple"))
-                        TC.BrightRed = HEX2RGB(item("brightRed"))
-                        TC.BrightWhite = HEX2RGB(item("brightWhite"))
-                        TC.BrightYellow = HEX2RGB(item("brightYellow"))
-                        TC.CursorColor = HEX2RGB(item("cursorColor"))
-                        TC.Cyan = HEX2RGB(item("cyan"))
-                        TC.Foreground = HEX2RGB(item("foreground"))
-                        TC.Green = HEX2RGB(item("green"))
-                        TC.Name = item("name")
-                        TC.Purple = HEX2RGB(item("purple"))
-                        TC.Red = HEX2RGB(item("red"))
-                        TC.SelectionBackground = HEX2RGB(item("selectionBackground"))
-                        TC.White = HEX2RGB(item("white"))
-                        TC.Yellow = HEX2RGB(item("yellow"))
+                            If item("background") IsNot Nothing Then TC.Background = HEX2RGB(item("background"))
+                            If item("black") IsNot Nothing Then TC.Black = HEX2RGB(item("black"))
+                            If item("blue") IsNot Nothing Then TC.Blue = HEX2RGB(item("blue"))
+                            If item("brightBlack") IsNot Nothing Then TC.BrightBlack = HEX2RGB(item("brightBlack"))
+                            If item("brightBlue") IsNot Nothing Then TC.BrightBlue = HEX2RGB(item("brightBlue"))
+                            If item("brightCyan") IsNot Nothing Then TC.BrightCyan = HEX2RGB(item("brightCyan"))
+                            If item("brightGreen") IsNot Nothing Then TC.BrightGreen = HEX2RGB(item("brightGreen"))
+                            If item("brightPurple") IsNot Nothing Then TC.BrightPurple = HEX2RGB(item("brightPurple"))
+                            If item("brightRed") IsNot Nothing Then TC.BrightRed = HEX2RGB(item("brightRed"))
+                            If item("brightWhite") IsNot Nothing Then TC.BrightWhite = HEX2RGB(item("brightWhite"))
+                            If item("brightYellow") IsNot Nothing Then TC.BrightYellow = HEX2RGB(item("brightYellow"))
+                            If item("cursorColor") IsNot Nothing Then TC.CursorColor = HEX2RGB(item("cursorColor"))
+                            If item("cyan") IsNot Nothing Then TC.Cyan = HEX2RGB(item("cyan"))
+                            If item("foreground") IsNot Nothing Then TC.Foreground = HEX2RGB(item("foreground"))
+                            If item("green") IsNot Nothing Then TC.Green = HEX2RGB(item("green"))
+                            If item("name") IsNot Nothing Then TC.Name = item("name")
+                            If item("purple") IsNot Nothing Then TC.Purple = HEX2RGB(item("purple"))
+                            If item("red") IsNot Nothing Then TC.Red = HEX2RGB(item("red"))
+                            If item("selectionBackground") IsNot Nothing Then TC.SelectionBackground = HEX2RGB(item("selectionBackground"))
+                            If item("white") IsNot Nothing Then TC.White = HEX2RGB(item("white"))
+                            If item("yellow") IsNot Nothing Then TC.Yellow = HEX2RGB(item("yellow"))
 
-                        Colors.Add(TC)
-                    Next
+                            Colors.Add(TC)
+                        Next
+                    End If
+
 #End Region
 
+#Region "Getting All Themes"
+                    Themes = New List(Of ThemesList)
+                    Themes.Clear()
+
+                    If JSonFile("themes") IsNot Nothing Then
+                        For Each item In JSonFile("themes")
+                            Dim Th As New ThemesList
+                            If item("name") IsNot Nothing Then Th.Name = item("name")
+                            If item("tabRow")("background") IsNot Nothing Then Th.Titlebar_Active = HEX2RGB(item("tabRow")("background"))
+                            If item("tabRow")("unfocusedBackground") IsNot Nothing Then Th.Titlebar_Inactive = HEX2RGB(item("tabRow")("unfocusedBackground"))
+                            If item("tab")("background") IsNot Nothing Then Th.Tab_Active = HEX2RGB(item("tab")("background"))
+                            If item("tab")("unfocusedBackground") IsNot Nothing Then Th.Tab_Inactive = HEX2RGB(item("tab")("unfocusedBackground"))
+                            If item("window")("applicationTheme") IsNot Nothing Then Th.applicationTheme_light = item("window")("applicationTheme")
+                            Themes.Add(Th)
+                        Next
+                    End If
+
+#End Region
                     St.Close()
 
-                Else
-                    MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
+                    Else
+                        MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
                 End If
 
             Case Mode.WinPaletterFile
@@ -5877,15 +5893,22 @@ Public Class WinTerminal
                 Dim Defs As New List(Of String)
                 Dim CollectedColors, EnumColors As New List(Of String)
                 Dim CollectedProfiles, EnumProfiles As New List(Of String)
+                Dim CollectedThemes, EnumThemes As New List(Of String)
+
                 Defs.Clear()
 
                 CollectedColors.Clear()
                 CollectedProfiles.Clear()
+                CollectedThemes.Clear()
+
                 EnumColors.Clear()
                 EnumProfiles.Clear()
+                EnumThemes.Clear()
+
                 DefaultProf = New ProfilesList
                 Colors = New List(Of TColor)
                 Profiles = New List(Of ProfilesList)
+                Themes = New List(Of ThemesList)
 
                 For Each lin As String In Collected
                     If lin.ToLower.StartsWith("tabwidthmode= ".ToLower) Then tabWidthMode = lin.Remove(0, "tabWidthMode= ".Count)
@@ -5897,6 +5920,7 @@ Public Class WinTerminal
                     If lin.ToLower.StartsWith("default.".ToLower) Then Defs.Add(lin.Remove(0, "default.".Count))
                     If lin.ToLower.StartsWith("schemes.".ToLower) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
                     If lin.ToLower.StartsWith("profiles.".ToLower) Then CollectedProfiles.Add(lin.Remove(0, "profiles.".Count))
+                    If lin.ToLower.StartsWith("themes.".ToLower) Then CollectedThemes.Add(lin.Remove(0, "themes.".Count))
                 Next
 
                 For Each lin As String In Defs
@@ -5932,18 +5956,6 @@ Public Class WinTerminal
                             DefaultProf.Font.Face = value.Split(",")(0)
                             DefaultProf.Font.Size = value.Split(",")(1)
                             DefaultProf.Font.Weight = FontWeight_GetFromString(value.Split(",")(2))
-
-                        Case "Background".ToLower
-                            DefaultProf.Background = Color.FromArgb(value)
-
-                        Case "CursorColor".ToLower
-                            DefaultProf.CursorColor = Color.FromArgb(value)
-
-                        Case "Foreground".ToLower
-                            DefaultProf.Foreground = Color.FromArgb(value)
-
-                        Case "SelectionBackground".ToLower
-                            DefaultProf.SelectionBackground = Color.FromArgb(value)
 
                         Case "TabColor".ToLower
                             DefaultProf.TabColor = Color.FromArgb(value)
@@ -5993,15 +6005,6 @@ Public Class WinTerminal
                                 Case "Source".ToLower
                                     P.Source = value
 
-                                Case "Background".ToLower
-                                    P.Background = Color.FromArgb(value)
-
-                                Case "Foreground".ToLower
-                                    P.Foreground = Color.FromArgb(value)
-
-                                Case "SelectionBackground".ToLower
-                                    P.SelectionBackground = Color.FromArgb(value)
-
                                 Case "TabColor".ToLower
                                     P.TabColor = Color.FromArgb(value)
 
@@ -6030,9 +6033,6 @@ Public Class WinTerminal
 
                                 Case "BackgroundImageOpacity".ToLower
                                     P.BackgroundImageOpacity = value
-
-                                Case "CursorColor".ToLower
-                                    P.CursorColor = Color.FromArgb(value)
 
                                 Case "ColorScheme".ToLower
                                     P.ColorScheme = value
@@ -6136,6 +6136,45 @@ Public Class WinTerminal
                     Next
 
                     Colors.Add(TC)
+                Next
+
+                For Each x As String In CollectedThemes
+                    EnumThemes.Add(x.Split(".")(0))
+                Next
+                EnumThemes = EnumThemes.Distinct.ToList
+                For Each x As String In EnumThemes
+                    Dim Th As New ThemesList
+
+                    For Each lin As String In CollectedThemes
+                        If lin.Split("=")(0).Split(".")(0).Trim.ToLower = x.ToLower Then
+                            Dim prop As String = lin.Split("=")(0).Split(".")(1).Trim
+                            Dim value As String = lin.Split("=")(1).Trim
+
+                            Select Case prop.ToLower
+                                Case "Name".ToLower
+                                    Th.Name = value
+
+                                Case "Titlebar_Active".ToLower
+                                    Th.Titlebar_Active = Color.FromArgb(value)
+
+                                Case "Titlebar_Inactive".ToLower
+                                    Th.Titlebar_Inactive = Color.FromArgb(value)
+
+                                Case "Tab_Active".ToLower
+                                    Th.Tab_Active = Color.FromArgb(value)
+
+                                Case "Tab_Inactive".ToLower
+                                    Th.Tab_Inactive = Color.FromArgb(value)
+
+                                Case "applicationTheme_light".ToLower
+                                    Th.applicationTheme_light = value
+
+                            End Select
+
+                        End If
+                    Next
+
+                    Themes.Add(Th)
                 Next
 
         End Select
@@ -6248,10 +6287,6 @@ Public Class WinTerminal
                 JSonFile("profiles")("defaults")("backgroundImageAlignment") = BackgroundImageAlignment_ReturnToString(DefaultProf.BackgroundImageAlignment)
                 JSonFile("profiles")("defaults")("backgroundImageStretchMode") = BackgroundImageStretchMode_ReturnToString(DefaultProf.BackgroundImageStretchMode)
 
-                If DefaultProf.Background <> Nothing Then JSonFile("profiles")("defaults")("background") = RGB2HEX(DefaultProf.Background)
-                If DefaultProf.CursorColor <> Nothing Then JSonFile("profiles")("defaults")("cursorColor") = RGB2HEX(DefaultProf.CursorColor)
-                If DefaultProf.Foreground <> Nothing Then JSonFile("profiles")("defaults")("foreground") = RGB2HEX(DefaultProf.Foreground)
-                If DefaultProf.SelectionBackground <> Nothing Then JSonFile("profiles")("defaults")("selectionBackground") = RGB2HEX(DefaultProf.SelectionBackground)
                 If DefaultProf.TabColor <> Nothing Then JSonFile("profiles")("defaults")("tabColor") = RGB2HEX(DefaultProf.TabColor)
 
                 JSonFile("profiles")("defaults")("adjustIndistinguishableColors") = DefaultProf.adjustIndistinguishableColors
@@ -6282,10 +6317,6 @@ Public Class WinTerminal
                     If Not Profiles(x).Opacity = 0 Then JS("opacity") = Profiles(x).Opacity
                     If Not Profiles(x).BackgroundImageOpacity = 0 Then JS("backgroundImageOpacity") = Profiles(x).BackgroundImageOpacity
 
-                    If Profiles(x).Background <> Nothing Then JS("background") = RGB2HEX(Profiles(x).Background)
-                    If Profiles(x).CursorColor <> Nothing Then JS("cursorColor") = RGB2HEX(Profiles(x).CursorColor)
-                    If Profiles(x).Foreground <> Nothing Then JS("foreground") = RGB2HEX(Profiles(x).Foreground)
-                    If Profiles(x).SelectionBackground <> Nothing Then JS("selectionBackground") = RGB2HEX(Profiles(x).SelectionBackground)
                     If Profiles(x).TabColor <> Nothing Then JS("tabColor") = RGB2HEX(Profiles(x).TabColor)
 
                     JS("adjustIndistinguishableColors") = Profiles(x).adjustIndistinguishableColors
@@ -6333,6 +6364,58 @@ Public Class WinTerminal
 
                     Found = False
                 Next
+#End Region
+
+#Region "Themes"
+
+                If Themes.Count <> 0 Then
+                    CType(JSonFile("themes"), JArray).Clear()
+
+                    For x = 0 To Themes.Count - 1
+                        Dim JS As New JObject
+                        JS("name") = Themes(x).Name
+                        JS("tab")("background") = RGB2HEX(Themes(x).Tab_Active)
+                        JS("tab")("unfocusedBackground") = RGB2HEX(Themes(x).Tab_Inactive)
+                        JS("tabRow")("background") = RGB2HEX(Themes(x).Titlebar_Active)
+                        JS("tabRow")("unfocusedBackground") = RGB2HEX(Themes(x).Titlebar_Inactive)
+                        JS("window")("applicationTheme") = Themes(x).applicationTheme_light
+
+                        '# Check for properties reminants from the old JSON to be added to the new one
+                        For Each item In JSonFileUntouched("themes")
+                            If item("name").ToString.ToLower = JS("name").ToString.ToLower Then
+                                For Each itemX In item
+                                    Dim Contains As Boolean = JS.ContainsKey(itemX.ToString.Split(":")(0).Trim.Replace("""", ""))
+                                    If Not Contains Then JS.Add(itemX)
+                                Next
+                                Exit For
+                            End If
+                        Next
+
+                        CType(JSonFile("themes"), JArray).Add(JS)
+                    Next
+
+                    '# Check for reminants from the old JSON to be added to the new one
+                    For Each x In CType(JSonFileUntouched("themes"), JArray)
+                        Dim name1 As String = x("name")
+                        Dim Found As Boolean = False
+
+                        For Each y In CType(JSonFile("themes"), JArray)
+                            Dim name2 As String = y("name")
+
+                            If name1 = name2 Then
+                                Found = True
+                                Exit For
+                            End If
+
+                        Next
+
+                        If Not Found Then
+                            CType(JSonFile("themes"), JArray).Add(x)
+                        End If
+
+                        Found = False
+                    Next
+                End If
 #End Region
 
                 IO.File.WriteAllText(File, JSonFile.ToString)
@@ -6384,6 +6467,17 @@ Public Class WinTerminal
 
                 Next
 
+                For Each c As ThemesList In Themes
+                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+
+                    For Each [property] As PropertyInfo In properties2
+                        If [property].GetValue(c) IsNot Nothing Then
+                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                        End If
+                    Next
+
+                Next
+
                 Return String.Join(vbCrLf, S.ToArray)
 
             Case Else
@@ -6415,7 +6509,11 @@ Public Class WinTerminal
 
     Public Shared Function HEX2RGB([String] As String) As Color
         Try
-            Return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32([String].Replace("#", ""), 16)))
+            If [String].Replace("#", "").Count / 2 = 3 Then
+                Return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32([String].Replace("#", ""), 16)))
+            Else
+                Return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32([String].Remove([String].Count - 2, 2).Replace("#", ""), 16)))
+            End If
         Catch
             Return Nothing 'Color.FromArgb(Convert.ToInt32("FFFFFF", 16))
         End Try
@@ -6450,6 +6548,14 @@ Public Class TColor
     Public Property Yellow As Color
 End Class
 
+Public Class ThemesList
+    Public Property Name As String
+    Public Property Titlebar_Active As Color
+    Public Property Titlebar_Inactive As Color
+    Public Property Tab_Active As Color
+    Public Property Tab_Inactive As Color
+    Public Property applicationTheme_light As String = "dark"
+End Class
 Public Class FontsBase
     Public Property Face As String = "Cascadia Mono"
     Public Property Weight As FontWeight_Enum
@@ -6462,9 +6568,6 @@ Public Class ProfilesList
     Public Property Icon As String
     Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
 
-    Public Property Background As Color = Nothing
-    Public Property Foreground As Color = Nothing
-    Public Property SelectionBackground As Color = Nothing
     Public Property TabColor As Color = Nothing
     Public Property adjustIndistinguishableColors As Boolean = False
     Public Property UseAcrylic As Boolean = False
@@ -6476,8 +6579,7 @@ Public Class ProfilesList
     Public Property BackgroundImageStretchMode As BackgroundImageStretchMode_Enum
     Public Property BackgroundImageOpacity As Single = 0
 
-    Public Property CursorColor As Color = Nothing
-    Public Property ColorScheme As String = "Default"
+    Public Property ColorScheme As String = "Campbell"
     Public Property CursorShape As CursorShape_Enum
     Public Property CursorHeight As Integer
 
@@ -6669,7 +6771,6 @@ Public Class ProfilesList
 
         End Select
     End Function
-
 
 
     Enum FontWeight_Enum   'replace _ by -

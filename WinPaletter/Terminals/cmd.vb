@@ -12,13 +12,16 @@ Public Class cmd
 
     Private _Shown As Boolean = False
 
+
 #Region "   Subs not related to colors and shapes"
     Private Sub cmd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
+
         FillFonts(CMD_FontsBox, True)
         FillFonts(PS_32_FontsBox, True)
         FillFonts(PS_64_FontsBox, True)
         FillFonts(ExtTerminal_FontsBox, True)
+
         FillTerminals(XenonComboBox1)
 
         ApplyDarkMode(Me)
@@ -40,6 +43,9 @@ Public Class cmd
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
             FillFonts(CMD_FontsBox, Not XenonCheckBox1.Checked)
+            FillFonts(PS_32_FontsBox, Not XenonCheckBox1.Checked)
+            FillFonts(PS_64_FontsBox, Not XenonCheckBox1.Checked)
+            FillFonts(ExtTerminal_FontsBox, Not XenonCheckBox1.Checked)
         End If
     End Sub
     Sub FillTerminals([ListBox] As ComboBox)
@@ -1769,46 +1775,6 @@ Public Class cmd
         UpdateCurPreview(3)
 #End Region
 
-#Region "Terminals"
-        'TerminalSchemes
-
-        If My.W10 Or My.W11 Then
-            Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-            Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-
-            If IO.File.Exists(TerDir) Then
-                'FillTerminalSchemes(CP.Terminal, TerPrevSchemes)
-
-            End If
-
-            If IO.File.Exists(TerPreDir) Then
-                FillTerminalSchemes(CP.TerminalPreview, TerPrevSchemes)
-                FillTerminalProfiles(CP.TerminalPreview, TerPrevProfiles)
-            End If
-
-        Else
-
-        End If
-
-#End Region
-    End Sub
-
-    Sub FillTerminalSchemes(Terminal As WinTerminal, Combobox As ComboBox)
-        Combobox.Items.Clear()
-
-        For x = 0 To Terminal.Colors.Count - 1
-            Combobox.Items.Add(Terminal.Colors(x).Name)
-        Next
-
-    End Sub
-
-    Sub FillTerminalProfiles(Terminal As WinTerminal, Combobox As ComboBox)
-        Combobox.Items.Clear()
-
-        For x = 0 To Terminal.Profiles.Count - 1
-            Combobox.Items.Add(Terminal.Profiles(x).Name)
-        Next
-
     End Sub
 
     Sub ApplyToCP([CP] As CP)
@@ -2567,30 +2533,4 @@ Public Class cmd
         CList.Clear()
     End Sub
 
-    Private Sub TerPrevSchemes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerPrevSchemes.SelectedIndexChanged
-        With MainFrm.CP.TerminalPreview.Colors(TerPrevSchemes.SelectedIndex)
-            TerPrevBackground.BackColor = .Background
-            TerPrevForeground.BackColor = .Foreground
-            TerPrevSelection.BackColor = .SelectionBackground
-            TerPrevCursor.BackColor = .CursorColor
-
-            TerPrevBlack.BackColor = .Black
-            TerPrevBlue.BackColor = .Blue
-            TerPrevGreen.BackColor = .Green
-            TerPrevCyan.BackColor = .Cyan
-            TerPrevRed.BackColor = .Red
-            TerPrevPurple.BackColor = .Purple
-            TerPrevYellow.BackColor = .Yellow
-            TerPrevWhite.BackColor = .White
-
-            TerPrevBlackB.BackColor = .BrightBlack
-            TerPrevBlueB.BackColor = .BrightBlue
-            TerPrevGreenB.BackColor = .BrightGreen
-            TerPrevCyanB.BackColor = .BrightCyan
-            TerPrevRedB.BackColor = .BrightRed
-            TerPrevPurpleB.BackColor = .BrightPurple
-            TerPrevYellowB.BackColor = .BrightYellow
-            TerPrevWhiteB.BackColor = .BrightWhite
-        End With
-    End Sub
 End Class

@@ -724,11 +724,11 @@ Namespace My
 #Disable Warning BC42105
         End Function
 
-        'Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-        '#If DEBUG Then
-        'MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
-        '#End If
-        'End Sub
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+#If DEBUG Then
+            MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
+#End If
+        End Sub
 
 #Enable Warning BC42105
 
