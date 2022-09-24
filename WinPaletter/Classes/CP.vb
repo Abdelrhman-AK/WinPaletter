@@ -5759,8 +5759,6 @@ Public Class WinTerminal
 
                     If JSonFile("profiles")("defaults")("name") IsNot Nothing Then DefaultProf.Name = JSonFile("profiles")("defaults")("name")
                     If JSonFile("profiles")("defaults")("backgroundImage") IsNot Nothing Then DefaultProf.BackgroundImage = JSonFile("profiles")("defaults")("backgroundImage")
-                    If JSonFile("profiles")("defaults")("backgroundImageAlignment") IsNot Nothing Then DefaultProf.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(JSonFile("profiles")("defaults")("backgroundImageAlignment"))
-                    If JSonFile("profiles")("defaults")("backgroundImageStretchMode") IsNot Nothing Then DefaultProf.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(JSonFile("profiles")("defaults")("backgroundImageStretchMode"))
                     If JSonFile("profiles")("defaults")("cursorShape") IsNot Nothing Then DefaultProf.CursorShape = CursorShape_GetFromString(JSonFile("profiles")("defaults")("cursorShape"))
 
                     If JSonFile("profiles")("defaults")("font") IsNot Nothing Then
@@ -5790,8 +5788,6 @@ Public Class WinTerminal
                             Dim P As New ProfilesList
                             If item("name") IsNot Nothing Then P.Name = item("name")
                             If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
-                            If item("backgroundImageAlignment") IsNot Nothing Then P.BackgroundImageAlignment = BackgroundImageAlignment_GetFromString(item("backgroundImageAlignment"))
-                            If item("backgroundImageStretchMode") IsNot Nothing Then P.BackgroundImageStretchMode = BackgroundImageStretchMode_GetFromString(item("backgroundImageStretchMode"))
                             If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
 
                             If item("font") IsNot Nothing Then
@@ -5943,12 +5939,6 @@ Public Class WinTerminal
                         Case "Icon".ToLower
                             DefaultProf.Icon = value
 
-                        Case "BackgroundImageAlignment".ToLower
-                            DefaultProf.BackgroundImageAlignment = value
-
-                        Case "BackgroundImageStretchMode".ToLower
-                            DefaultProf.BackgroundImageStretchMode = value
-
                         Case "CursorShape".ToLower
                             DefaultProf.CursorShape = value
 
@@ -6024,12 +6014,6 @@ Public Class WinTerminal
 
                                 Case "BackgroundImage".ToLower
                                     P.BackgroundImage = value
-
-                                Case "BackgroundImageAlignment".ToLower
-                                    P.BackgroundImageAlignment = value
-
-                                Case "BackgroundImageStretchMode".ToLower
-                                    P.BackgroundImageStretchMode = value
 
                                 Case "BackgroundImageOpacity".ToLower
                                     P.BackgroundImageOpacity = value
@@ -6284,9 +6268,6 @@ Public Class WinTerminal
                 If Not DefaultProf.CursorHeight = 0 Then JSonFile("profiles")("defaults")("cursorHeight") = DefaultProf.CursorHeight
                 If Not DefaultProf.Opacity = 0 Then JSonFile("profiles")("defaults")("opacity") = DefaultProf.Opacity
 
-                JSonFile("profiles")("defaults")("backgroundImageAlignment") = BackgroundImageAlignment_ReturnToString(DefaultProf.BackgroundImageAlignment)
-                JSonFile("profiles")("defaults")("backgroundImageStretchMode") = BackgroundImageStretchMode_ReturnToString(DefaultProf.BackgroundImageStretchMode)
-
                 If DefaultProf.TabColor <> Nothing Then JSonFile("profiles")("defaults")("tabColor") = RGB2HEX(DefaultProf.TabColor)
 
                 JSonFile("profiles")("defaults")("adjustIndistinguishableColors") = DefaultProf.adjustIndistinguishableColors
@@ -6307,8 +6288,6 @@ Public Class WinTerminal
                     JS("source") = Profiles(x).Source
 
                     If Not String.IsNullOrEmpty(Profiles(x).BackgroundImage) Then JS("backgroundImage") = Profiles(x).BackgroundImage
-                    JS("backgroundImageAlignment") = BackgroundImageAlignment_ReturnToString(Profiles(x).BackgroundImageAlignment)
-                    JS("backgroundImageStretchMode") = BackgroundImageStretchMode_ReturnToString(Profiles(x).BackgroundImageStretchMode)
                     JS("cursorShape") = CursorShape_ReturnToString(Profiles(x).CursorShape)
                     If Not String.IsNullOrEmpty(Profiles(x).ColorScheme) Then JS("colorScheme") = Profiles(x).ColorScheme
                     If Not String.IsNullOrEmpty(Profiles(x).TabTitle) Then JS("tabTitle") = Profiles(x).TabTitle
@@ -6558,8 +6537,8 @@ Public Class ThemesList
 End Class
 Public Class FontsBase
     Public Property Face As String = "Cascadia Mono"
-    Public Property Weight As FontWeight_Enum
-    Public Property Size As Integer = 12
+    Public Property Weight As FontWeight_Enum = FontWeight_Enum.normal
+    Public Property Size As Integer = 10
 End Class
 
 Public Class ProfilesList
@@ -6575,13 +6554,11 @@ Public Class ProfilesList
 
     Public Property Font As New FontsBase
     Public Property BackgroundImage As String
-    Public Property BackgroundImageAlignment As BackgroundImageAlignment_Enum
-    Public Property BackgroundImageStretchMode As BackgroundImageStretchMode_Enum
-    Public Property BackgroundImageOpacity As Single = 0
+    Public Property BackgroundImageOpacity As Single = 1
 
     Public Property ColorScheme As String = "Campbell"
     Public Property CursorShape As CursorShape_Enum
-    Public Property CursorHeight As Integer
+    Public Property CursorHeight As Integer = 25
 
     Public Property Hidden As Boolean = False
 
@@ -6598,116 +6575,6 @@ Public Class ProfilesList
         topLeft
         topRight
     End Enum
-    Public Shared Function BackgroundImageAlignment_ReturnToString(int As BackgroundImageAlignment_Enum) As String
-        Select Case int
-            Case BackgroundImageAlignment_Enum.bottom
-                Return "bottom"
-
-            Case BackgroundImageAlignment_Enum.bottomLeft
-                Return "bottomLeft"
-
-            Case BackgroundImageAlignment_Enum.bottomRight
-                Return "bottomRight"
-
-            Case BackgroundImageAlignment_Enum.center
-                Return "center"
-
-            Case BackgroundImageAlignment_Enum.left
-                Return "left"
-
-            Case BackgroundImageAlignment_Enum.right
-                Return "right"
-
-            Case BackgroundImageAlignment_Enum.top
-                Return "top"
-
-            Case BackgroundImageAlignment_Enum.topLeft
-                Return "topLeft"
-
-            Case BackgroundImageAlignment_Enum.topRight
-                Return "topRight"
-
-            Case Else
-                Return "center"
-        End Select
-    End Function
-
-    Public Shared Function BackgroundImageAlignment_GetFromString(str As String) As BackgroundImageAlignment_Enum
-        Select Case str.ToLower
-            Case "bottom".ToLower
-                Return BackgroundImageAlignment_Enum.bottom
-
-            Case "bottomleft".ToLower
-                Return BackgroundImageAlignment_Enum.bottomLeft
-
-            Case "bottomright".ToLower
-                Return BackgroundImageAlignment_Enum.bottomRight
-
-            Case "center".ToLower
-                Return BackgroundImageAlignment_Enum.center
-
-            Case "left".ToLower
-                Return BackgroundImageAlignment_Enum.left
-
-            Case "right".ToLower
-                Return BackgroundImageAlignment_Enum.right
-
-            Case "top".ToLower
-                Return BackgroundImageAlignment_Enum.top
-
-            Case "topleft".ToLower
-                Return BackgroundImageAlignment_Enum.topLeft
-
-            Case "topright".ToLower
-                Return BackgroundImageAlignment_Enum.topRight
-
-            Case Else
-                Return BackgroundImageAlignment_Enum.center
-        End Select
-    End Function
-    Enum BackgroundImageStretchMode_Enum
-        fill
-        none
-        uniform
-        uniformToFill
-    End Enum
-    Public Shared Function BackgroundImageStretchMode_ReturnToString(int As BackgroundImageStretchMode_Enum) As String
-        Select Case int
-            Case BackgroundImageStretchMode_Enum.fill
-                Return "fill"
-
-            Case BackgroundImageStretchMode_Enum.none
-                Return "none"
-
-            Case BackgroundImageStretchMode_Enum.uniform
-                Return "uniform"
-
-            Case BackgroundImageStretchMode_Enum.uniformToFill
-                Return "uniformToFill"
-
-            Case Else
-                Return "fill"
-
-        End Select
-    End Function
-    Public Shared Function BackgroundImageStretchMode_GetFromString(str As String) As BackgroundImageStretchMode_Enum
-        Select Case str.ToLower
-            Case "fill".ToLower
-                Return BackgroundImageStretchMode_Enum.fill
-
-            Case "none".ToLower
-                Return BackgroundImageStretchMode_Enum.none
-
-            Case "uniform".ToLower
-                Return BackgroundImageStretchMode_Enum.uniform
-
-            Case "uniformtofill".ToLower
-                Return BackgroundImageStretchMode_Enum.uniformToFill
-
-            Case Else
-                Return BackgroundImageStretchMode_Enum.fill
-        End Select
-    End Function
 
 
 

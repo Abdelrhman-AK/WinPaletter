@@ -39,9 +39,10 @@ Partial Class TerminalInfo
         Me.PictureBox39 = New System.Windows.Forms.PictureBox()
         Me.TerPrevAdjustColors = New WinPaletter.XenonCheckBox()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.TerPrevOpacityLbl = New System.Windows.Forms.Label()
         Me.TerPrevAcrylic = New WinPaletter.XenonCheckBox()
-        Me.TerPrevOpacity = New WinPaletter.XenonTrackbar()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,6 +53,8 @@ Partial Class TerminalInfo
         '
         'TerPrevTabTitle
         '
+        Me.TerPrevTabTitle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerPrevTabTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerPrevTabTitle.ForeColor = System.Drawing.Color.White
         Me.TerPrevTabTitle.Hint = Nothing
@@ -61,7 +64,7 @@ Partial Class TerminalInfo
         Me.TerPrevTabTitle.Multiline = False
         Me.TerPrevTabTitle.Name = "TerPrevTabTitle"
         Me.TerPrevTabTitle.ReadOnly = False
-        Me.TerPrevTabTitle.Size = New System.Drawing.Size(330, 24)
+        Me.TerPrevTabTitle.Size = New System.Drawing.Size(376, 24)
         Me.TerPrevTabTitle.TabIndex = 195
         Me.TerPrevTabTitle.Text = "XenonTextBox4"
         Me.TerPrevTabTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -90,6 +93,8 @@ Partial Class TerminalInfo
         '
         'TerPrevName
         '
+        Me.TerPrevName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerPrevName.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerPrevName.ForeColor = System.Drawing.Color.White
         Me.TerPrevName.Hint = Nothing
@@ -99,7 +104,7 @@ Partial Class TerminalInfo
         Me.TerPrevName.Multiline = False
         Me.TerPrevName.Name = "TerPrevName"
         Me.TerPrevName.ReadOnly = False
-        Me.TerPrevName.Size = New System.Drawing.Size(330, 24)
+        Me.TerPrevName.Size = New System.Drawing.Size(376, 24)
         Me.TerPrevName.TabIndex = 192
         Me.TerPrevName.Text = "XenonTextBox1"
         Me.TerPrevName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -121,9 +126,9 @@ Partial Class TerminalInfo
         Me.Label164.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label164.Location = New System.Drawing.Point(42, 12)
         Me.Label164.Name = "Label164"
-        Me.Label164.Size = New System.Drawing.Size(31, 24)
+        Me.Label164.Size = New System.Drawing.Size(72, 24)
         Me.Label164.TabIndex = 190
-        Me.Label164.Text = "Text:"
+        Me.Label164.Text = "Name:"
         Me.Label164.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox28
@@ -149,20 +154,23 @@ Partial Class TerminalInfo
         '
         'XenonButton11
         '
+        Me.XenonButton11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton11.ForeColor = System.Drawing.Color.White
         Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
-        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(426, 72)
+        Me.XenonButton11.Location = New System.Drawing.Point(464, 72)
         Me.XenonButton11.Name = "XenonButton11"
-        Me.XenonButton11.Size = New System.Drawing.Size(24, 24)
+        Me.XenonButton11.Size = New System.Drawing.Size(32, 24)
         Me.XenonButton11.TabIndex = 189
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'TerPrevTabIcon
         '
+        Me.TerPrevTabIcon.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerPrevTabIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerPrevTabIcon.ForeColor = System.Drawing.Color.White
         Me.TerPrevTabIcon.Hint = Nothing
@@ -172,7 +180,7 @@ Partial Class TerminalInfo
         Me.TerPrevTabIcon.Multiline = False
         Me.TerPrevTabIcon.Name = "TerPrevTabIcon"
         Me.TerPrevTabIcon.ReadOnly = False
-        Me.TerPrevTabIcon.Size = New System.Drawing.Size(300, 24)
+        Me.TerPrevTabIcon.Size = New System.Drawing.Size(338, 24)
         Me.TerPrevTabIcon.TabIndex = 188
         Me.TerPrevTabIcon.Text = "XenonTextBox3"
         Me.TerPrevTabIcon.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -233,7 +241,7 @@ Partial Class TerminalInfo
         Me.TerPrevAdjustColors.ForeColor = System.Drawing.Color.White
         Me.TerPrevAdjustColors.Location = New System.Drawing.Point(45, 162)
         Me.TerPrevAdjustColors.Name = "TerPrevAdjustColors"
-        Me.TerPrevAdjustColors.Size = New System.Drawing.Size(167, 24)
+        Me.TerPrevAdjustColors.Size = New System.Drawing.Size(174, 24)
         Me.TerPrevAdjustColors.TabIndex = 200
         Me.TerPrevAdjustColors.Text = "Adjust Colors Accessibility"
         '
@@ -247,17 +255,6 @@ Partial Class TerminalInfo
         Me.PictureBox40.TabIndex = 201
         Me.PictureBox40.TabStop = False
         '
-        'TerPrevOpacityLbl
-        '
-        Me.TerPrevOpacityLbl.BackColor = System.Drawing.Color.Transparent
-        Me.TerPrevOpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TerPrevOpacityLbl.Location = New System.Drawing.Point(210, 133)
-        Me.TerPrevOpacityLbl.Name = "TerPrevOpacityLbl"
-        Me.TerPrevOpacityLbl.Size = New System.Drawing.Size(25, 24)
-        Me.TerPrevOpacityLbl.TabIndex = 204
-        Me.TerPrevOpacityLbl.Text = "100"
-        Me.TerPrevOpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'TerPrevAcrylic
         '
         Me.TerPrevAcrylic.AccentColor = System.Drawing.Color.DodgerBlue
@@ -267,35 +264,67 @@ Partial Class TerminalInfo
         Me.TerPrevAcrylic.ForeColor = System.Drawing.Color.White
         Me.TerPrevAcrylic.Location = New System.Drawing.Point(45, 131)
         Me.TerPrevAcrylic.Name = "TerPrevAcrylic"
-        Me.TerPrevAcrylic.Size = New System.Drawing.Size(60, 24)
+        Me.TerPrevAcrylic.Size = New System.Drawing.Size(184, 24)
         Me.TerPrevAcrylic.TabIndex = 202
-        Me.TerPrevAcrylic.Text = "Acrylic"
+        Me.TerPrevAcrylic.Text = "Acrylic Titlebar (All Profiles)"
         '
-        'TerPrevOpacity
+        'XenonButton2
         '
-        Me.TerPrevOpacity.LargeChange = 10
-        Me.TerPrevOpacity.Location = New System.Drawing.Point(114, 135)
-        Me.TerPrevOpacity.Maximum = 100
-        Me.TerPrevOpacity.Minimum = 0
-        Me.TerPrevOpacity.Name = "TerPrevOpacity"
-        Me.TerPrevOpacity.Size = New System.Drawing.Size(88, 19)
-        Me.TerPrevOpacity.SmallChange = 1
-        Me.TerPrevOpacity.TabIndex = 203
-        Me.TerPrevOpacity.Text = "XenonTrackbar16"
-        Me.TerPrevOpacity.Value = 100
+        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonButton2.Image = Nothing
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton2.LineSize = 1
+        Me.XenonButton2.Location = New System.Drawing.Point(332, 234)
+        Me.XenonButton2.Name = "XenonButton2"
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton2.TabIndex = 206
+        Me.XenonButton2.Text = "Cancel"
+        Me.XenonButton2.UseVisualStyleBackColor = False
+        '
+        'XenonButton1
+        '
+        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton1.ForeColor = System.Drawing.Color.White
+        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
+        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.XenonButton1.LineSize = 1
+        Me.XenonButton1.Location = New System.Drawing.Point(418, 234)
+        Me.XenonButton1.Name = "XenonButton1"
+        Me.XenonButton1.Size = New System.Drawing.Size(79, 30)
+        Me.XenonButton1.TabIndex = 205
+        Me.XenonButton1.Text = "Load"
+        Me.XenonButton1.UseVisualStyleBackColor = False
+        '
+        'XenonSeparator1
+        '
+        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 195)
+        Me.XenonSeparator1.Name = "XenonSeparator1"
+        Me.XenonSeparator1.Size = New System.Drawing.Size(484, 1)
+        Me.XenonSeparator1.TabIndex = 207
+        Me.XenonSeparator1.TabStop = False
+        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'TerminalInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(481, 419)
+        Me.ClientSize = New System.Drawing.Size(509, 276)
+        Me.Controls.Add(Me.XenonSeparator1)
+        Me.Controls.Add(Me.XenonButton2)
+        Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.PictureBox39)
         Me.Controls.Add(Me.TerPrevAdjustColors)
         Me.Controls.Add(Me.PictureBox40)
-        Me.Controls.Add(Me.TerPrevOpacityLbl)
         Me.Controls.Add(Me.TerPrevAcrylic)
-        Me.Controls.Add(Me.TerPrevOpacity)
         Me.Controls.Add(Me.Label166)
         Me.Controls.Add(Me.PictureBox36)
         Me.Controls.Add(Me.TerPrevTabColor)
@@ -312,6 +341,7 @@ Partial Class TerminalInfo
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -345,7 +375,8 @@ Partial Class TerminalInfo
     Friend WithEvents PictureBox39 As PictureBox
     Friend WithEvents TerPrevAdjustColors As XenonCheckBox
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents TerPrevOpacityLbl As Label
     Friend WithEvents TerPrevAcrylic As XenonCheckBox
-    Friend WithEvents TerPrevOpacity As XenonTrackbar
+    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonSeparator1 As XenonSeparator
 End Class

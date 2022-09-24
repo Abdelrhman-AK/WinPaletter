@@ -2353,6 +2353,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        WindowsTerminal._Mode = WindowsTerminal.Mode.Preview
+        WindowsTerminal._Terminal = CP.TerminalPreview
         WindowsTerminal.ShowDialog()
     End Sub
 

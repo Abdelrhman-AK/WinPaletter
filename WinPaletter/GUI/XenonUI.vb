@@ -5397,6 +5397,45 @@ Public Class XenonTerminal
         End Set
     End Property
 
+    Private _OpacityBackImage As Single = 100
+    Public Event OpacityBackImageChanged As PropertyChangedEventHandler
+    Private Sub NotifyOpacityBackImageChanged(ByVal info As Single)
+        Invalidate()
+        RaiseEvent OpacityBackImageChanged(Me, New PropertyChangedEventArgs(info))
+    End Sub
+    Public Property OpacityBackImage() As Single
+        Get
+            Return _OpacityBackImage
+        End Get
+
+        Set(ByVal value As Single)
+            If Not (value = _OpacityBackImage) Then
+                Me._OpacityBackImage = value
+                NotifyOpacityBackImageChanged(_OpacityBackImage)
+            End If
+        End Set
+    End Property
+
+    Private _BackImage As Image
+    Public Event BackImageChanged As PropertyChangedEventHandler
+    Private Sub NotifyBackImageChanged(ByVal info As Object)
+        Invalidate()
+        UpdateOpacityBackImageChanged()
+        RaiseEvent BackImageChanged(Me, New PropertyChangedEventArgs(info))
+    End Sub
+    Public Property BackImage() As Image
+        Get
+            Return _BackImage
+        End Get
+
+        Set(ByVal value As Image)
+            If Not (value Is _BackImage) Then
+                Me._BackImage = value
+                NotifyBackImageChanged(_BackImage)
+            End If
+        End Set
+    End Property
+
     Public Property Color_Titlebar As Color
     Public Property Color_Titlebar_Unfocused As Color
     Public Property Color_TabFocused As Color
@@ -5411,7 +5450,6 @@ Public Class XenonTerminal
     Public Property UseAcrylicOnTitlebar As Boolean = False
     Public Property UseAcrylic As Boolean = False
     Public Property IsFocused As Boolean = True
-
     Enum CursorShape_Enum
         bar
         doubleUnderscore
@@ -5507,7 +5545,7 @@ Public Class XenonTerminal
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
+        G.SmoothingMode = SmoothingMode.HighQuality
         DoubleBuffered = True
 
         If Not Light Then
@@ -5527,27 +5565,27 @@ Public Class XenonTerminal
         Dim Rect_Console As New Rectangle(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height)
 
         Dim s1 As String = "Console Sample"
-        Dim s1X As SizeF = MeasureString(s1, Font) + New SizeF(5, 0)
-
         Dim s2 As String = "This is a selection"
-        Dim s2X As SizeF = MeasureString(s2, Font) + New SizeF(2, 0)
-
         Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
-        Dim s3X As SizeF = MeasureString(s3, Font) + New SizeF(2, 0)
 
+        Dim s1X As SizeF = MeasureString(s1, Font) + New SizeF(5, 0)
+        Dim s2X As SizeF = MeasureString(s2, Font) + New SizeF(2, 0)
+        Dim s3X As SizeF = MeasureString(s3, Font) + New SizeF(2, 0)
         Dim Rect_ConsoleText0 As New Rectangle(8, Rect_Titlebar.Bottom + 8, s1X.Width, s1X.Height)
         Dim Rect_ConsoleText1 As New Rectangle(8, Rect_ConsoleText0.Bottom + 3, s2X.Width, s2X.Height)
         Dim Rect_ConsoleText2 As New Rectangle(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, s3X.Width, s3X.Height)
 
-        Dim Rect_ConsoleCursor As New Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height)
+        Dim Rect_ConsoleCursor As New Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1)
 
         If UseAcrylic Then
             FillImg(G, adaptedBackBlurred, Rect)
             FillRect(G, Noise, Rect)
             FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 200, 35, 35, 35)), Rect)
+            If BackImage IsNot Nothing Then FillImg(G, img, Rect_Console)
         Else
             FillImg(G, adaptedBack, Rect)
             FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
+            If BackImage IsNot Nothing Then FillImg(G, img, Rect_Console)
         End If
 
         If UseAcrylicOnTitlebar And Not DesignMode Then
@@ -5631,16 +5669,23 @@ Public Class XenonTerminal
             tm.Enabled = True
             tm.Start()
 
-            Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
-
+            Try : AddHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try
 
             ProcessBack()
+            UpdateOpacityBackImageChanged()
         Else
             tm.Enabled = False
             tm.Stop()
+        End If
+    End Sub
+
+    Dim img As Image
+
+    Sub UpdateOpacityBackImageChanged()
+        If BackImage IsNot Nothing Then
+            img = FadeBitmap(BackImage, OpacityBackImage / 100)
+            Refresh()
         End If
     End Sub
 
