@@ -337,7 +337,6 @@ Public Class XenonCore
             Return False
         End If
     End Function
-
     Public Shared Function ReturnColorFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
         Dim s As String
 

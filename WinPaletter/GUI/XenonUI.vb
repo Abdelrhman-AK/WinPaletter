@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Management
 Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonAcrylic
@@ -839,7 +840,7 @@ Public Class XenonRadioButton
 
                 Tmr2.Enabled = True
                 Tmr2.Start()
-                    Invalidate()
+                Invalidate()
 
             Catch
             End Try
@@ -5449,6 +5450,10 @@ Public Class XenonTerminal
     Public Property Light As Boolean = False
     Public Property UseAcrylicOnTitlebar As Boolean = False
     Public Property UseAcrylic As Boolean = False
+    Public Property TabTitle As String = ""
+    Public Property TabIcon As Image
+    Public Property TabIconButItIsString As String = ""
+
     Public Property IsFocused As Boolean = True
     Enum CursorShape_Enum
         bar
@@ -5591,22 +5596,61 @@ Public Class XenonTerminal
         If UseAcrylicOnTitlebar And Not DesignMode Then
             FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar)
             FillSemiRect(G, Noise, Rect_Titlebar)
-            FillSemiRect(G, New SolidBrush(Color.FromArgb(100, 35, 35, 35)), Rect_Titlebar)
+
+            If Not Light Then
+                FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 100, 255), 35, 35, 35)), Rect_Titlebar)
+            Else
+                FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 180, 255), 232, 232, 232)), Rect_Titlebar)
+            End If
+
         End If
 
         If Not UseAcrylicOnTitlebar Then
             FillSemiRect(G, New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
         End If
 
+        Dim Radius As Integer = 5
+        Dim TabHeight As Integer = 22
+        Dim Rect_Tab0 As New Rectangle(10, Rect_Titlebar.Bottom - TabHeight, 150, TabHeight)
+        Dim Rect_Tab1 As Rectangle = Rect_Tab0
+        Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius
+
+        Dim IconRect0 As New Rectangle(Rect_Tab0.X + 10, Rect_Tab0.Y + 3, 16, 16)
+        Dim FC0 As Color = If(IsColorDark(Color_TabFocused), Color.White, Color.Black)
+        Dim RectText_Tab0 As New Rectangle(IconRect0.Right + 1, IconRect0.Y + 1, Rect_Tab0.Width - 35 - IconRect0.Width, IconRect0.Height)
+        Dim RectClose_Tab0 As New Rectangle(RectText_Tab0.Right + 2, RectText_Tab0.Y - 1, 15, RectText_Tab0.Height)
+
+        Dim IconRect1 As New Rectangle(Rect_Tab1.X + 10, Rect_Tab1.Y + 3, 16, 16)
+        Dim FC1 As Color = If(IsColorDark(Color_TabUnFocused), Color.White, Color.Black)
+        Dim RectText_Tab1 As New Rectangle(IconRect1.Right + 1, IconRect1.Y + 1, Rect_Tab1.Width - 35 - IconRect1.Width, IconRect1.Height)
+        Dim RectClose_Tab1 As New Rectangle(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height)
+
         If IsFocused Then
-            Dim Radius As Integer = 5
-            Dim TabHeight As Integer = 21
-            Dim Rect_Tab0 As New Rectangle(10, Rect_Titlebar.Bottom - TabHeight, 100, TabHeight)
-            Dim Rect_Tab1 As Rectangle = Rect_Tab0
-            Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius
             G.FillPath(New SolidBrush(Color_TabFocused), RR(Rect_Tab0, Radius))
-            G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
+            If Not UseAcrylicOnTitlebar Then
+                G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
+            Else
+                If Color_TabUnFocused <> Color_Titlebar Then
+                    G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
+                End If
+            End If
         End If
+
+        If TabIcon IsNot Nothing Then
+            G.DrawImage(TabIcon, IconRect0)
+        Else
+            G.DrawString(TabIconButItIsString, New Font("Segoe Fluent Icons", 12), New SolidBrush(FC0), IconRect0, StringAligner(ContentAlignment.TopCenter))
+        End If
+
+        G.DrawString(TabIconButItIsString, New Font("Segoe Fluent Icons", 12), New SolidBrush(FC1), IconRect1, StringAligner(ContentAlignment.TopCenter))
+
+        TextRenderer.DrawText(G, TabTitle, New Font("Segoe UI", 8, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis)
+        TextRenderer.DrawText(G, "Other Terminal", New Font("Segoe UI", 8, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis)
+
+
+        G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), New SolidBrush(FC0), RectClose_Tab0, StringAligner(ContentAlignment.MiddleCenter))
+        G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), New SolidBrush(FC1), RectClose_Tab1, StringAligner(ContentAlignment.MiddleCenter))
+
 
         G.DrawString(s1, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText0, StringAligner(ContentAlignment.TopLeft))
 
@@ -5615,7 +5659,6 @@ Public Class XenonTerminal
         G.DrawString(s2, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText1, StringAligner(ContentAlignment.TopLeft))
 
         G.DrawString(s3, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText2, StringAligner(ContentAlignment.TopLeft))
-
 
         If tk And IsFocused Then
             G.SmoothingMode = SmoothingMode.HighSpeed
@@ -5645,7 +5688,6 @@ Public Class XenonTerminal
 
             G.SmoothingMode = SmoothingMode.AntiAlias
         End If
-
 
         DrawRect(G, New Pen(Color.FromArgb(100, 150, 150, 150)), Rect)
     End Sub

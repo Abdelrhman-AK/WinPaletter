@@ -230,8 +230,37 @@ Public Class WindowsTerminal
             XenonTerminal1.OpacityBackImage = .BackgroundImageOpacity * 100
             XenonTerminal2.OpacityBackImage = .BackgroundImageOpacity * 100
 
+            If Not String.IsNullOrEmpty(.TabTitle) Then
+                XenonTerminal1.TabTitle = .TabTitle
+            Else
+                If Not String.IsNullOrEmpty(.Name) Then
+                    XenonTerminal1.TabTitle = .Name
+                ElseIf TerProfiles.SelectedIndex = 0 Then
+                    XenonTerminal1.TabTitle = "Default"
+                Else
+                    XenonTerminal1.TabTitle = "Untitled"
+                End If
+            End If
+
+            If File.Exists(.Icon) Then
+                XenonTerminal1.TabIcon = Image.FromStream(New FileStream(.Icon, FileMode.Open, FileAccess.Read))
+
+            Else
+                NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+                Dim path As String
+                If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+                NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+
+                If File.Exists(path) Then
+                    XenonTerminal1.TabIcon = NativeMethods.User32.ExtractSmallIcon(path).ToBitmap
+                Else
+                    XenonTerminal1.TabIcon = Nothing
+                    XenonTerminal1.TabIconButItIsString = ""
+                End If
+
+            End If
             XenonTerminal1.Refresh()
-            XenonTerminal2.Refresh()
+
         End With
 
     End Sub

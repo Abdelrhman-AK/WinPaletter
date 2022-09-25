@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Microsoft.Win32
 
@@ -82,6 +83,44 @@ Namespace NativeMethods
 
         Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
 
+        <DllImport("Shell32.dll", EntryPoint:="SHDefExtractIconW")>
+        Public Shared Function SHDefExtractIconW(<MarshalAs(UnmanagedType.LPTStr)> ByVal pszIconFile As String, ByVal iIndex As Integer, ByVal uFlags As UInteger, ByRef phiconLarge As IntPtr, ByRef phiconSmall As IntPtr, ByVal nIconSize As UInteger) As Integer
+        End Function
+
+        <DllImport("user32.dll", EntryPoint:="DestroyIcon")>
+        Public Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        End Function
+
+        Public Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
+            Return (high << 16) Or (low And &HFFFF)
+        End Function
+
+        Public Shared Function ExtractSmallIcon(Path As String, Optional IconIndex As Integer = 0)
+            Dim ico As Icon
+            'Make the nIconSize value (See the Msdn documents). The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
+            'The largest size for an icon is 256.
+            Dim LargeAndSmallSize As UInteger = CUInt(MAKEICONSIZE(256, 16))
+
+            Dim hLrgIcon As IntPtr = IntPtr.Zero
+            Dim hSmlIcon As IntPtr = IntPtr.Zero
+
+            Dim result As Integer = SHDefExtractIconW(Path, IconIndex, 0, hLrgIcon, hSmlIcon, LargeAndSmallSize)
+
+            If result = 0 Then
+                If ico IsNot Nothing Then ico.Dispose()
+
+                'if the large and/or small icons where created in the unmanaged memory successfuly then create
+                'a clone of them in the managed icons and delete the icons in the unmanaged memory.
+
+                If hSmlIcon <> IntPtr.Zero Then
+                    ico = CType(Icon.FromHandle(hSmlIcon).Clone, Icon)
+                    DestroyIcon(hSmlIcon)
+                End If
+
+            End If
+
+            Return ico
+        End Function
         Enum OCR_SYSTEM_CURSORS As Integer
 
             ' Standard arrow And small hourglass
@@ -286,4 +325,5 @@ Namespace NativeMethods
             dc.ReleaseHdc()
         End Function
     End Class
+
 End Namespace

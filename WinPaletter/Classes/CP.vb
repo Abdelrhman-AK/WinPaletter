@@ -5732,11 +5732,8 @@ Public Class WinTerminal
     Public Property Profiles As List(Of ProfilesList)
     Public Property DefaultProf As ProfilesList
     Public Property Themes As List(Of ThemesList)
-    Public Property tabWidthMode As String
     Public Property theme As String
     Public Property useAcrylicInTabRow As Boolean = False
-    Public Property alwaysShowNotificationIcon As Boolean = False
-    Public Property defaultProfile As String '= "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"
 
     Public Sub New(File As String, Mode As Mode, Optional Preview_Version As Boolean = False)
         Select Case Mode
@@ -5746,12 +5743,8 @@ Public Class WinTerminal
                     Dim JSON_String As String = St.ReadToEnd
                     Dim JSonFile As JObject = JObject.Parse(JSON_String)
 
-
-                    If JSonFile("alwaysShowNotificationIcon") IsNot Nothing Then alwaysShowNotificationIcon = JSonFile("alwaysShowNotificationIcon")
-                    If JSonFile("defaultProfile") IsNot Nothing Then defaultProfile = JSonFile("defaultProfile")
                     If JSonFile("useAcrylicInTabRow") IsNot Nothing Then useAcrylicInTabRow = JSonFile("useAcrylicInTabRow")
                     If JSonFile("theme") IsNot Nothing Then theme = JSonFile("theme")
-                    If JSonFile("tabWidthMode") IsNot Nothing Then tabWidthMode = JSonFile("tabWidthMode")
 
 
 #Region "Getting Default Profile"
@@ -5795,7 +5788,8 @@ Public Class WinTerminal
                                 If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
                                 If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
                             End If
-
+                            '
+                            If item("commandline") IsNot Nothing Then P.commandline = item("commandline")
                             If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme") Else P.ColorScheme = DefaultProf.ColorScheme
                             If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
                             If item("icon") IsNot Nothing Then P.Icon = item("icon")
@@ -5907,11 +5901,8 @@ Public Class WinTerminal
                 Themes = New List(Of ThemesList)
 
                 For Each lin As String In Collected
-                    If lin.ToLower.StartsWith("tabwidthmode= ".ToLower) Then tabWidthMode = lin.Remove(0, "tabWidthMode= ".Count)
                     If lin.ToLower.StartsWith("theme= ".ToLower) Then theme = lin.Remove(0, "theme= ".Count)
                     If lin.ToLower.StartsWith("useacrylicintabrow= ".ToLower) Then useAcrylicInTabRow = lin.Remove(0, "useAcrylicInTabRow= ".Count)
-                    If lin.ToLower.StartsWith("alwaysshownotificationicon= ".ToLower) Then alwaysShowNotificationIcon = lin.Remove(0, "alwaysShowNotificationIcon= ".Count)
-                    If lin.ToLower.StartsWith("defaultprofile= ".ToLower) Then defaultProfile = lin.Remove(0, "defaultProfile= ".Count)
 
                     If lin.ToLower.StartsWith("default.".ToLower) Then Defs.Add(lin.Remove(0, "default.".Count))
                     If lin.ToLower.StartsWith("schemes.".ToLower) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
@@ -6187,11 +6178,8 @@ Public Class WinTerminal
                 Dim JSonFileUntouched As JObject = JObject.Parse(JSON_String)
 
 #Region "Global Settings"
-                JSonFile("alwaysShowNotificationIcon") = alwaysShowNotificationIcon
-                JSonFile("defaultProfile") = defaultProfile
                 JSonFile("useAcrylicInTabRow") = useAcrylicInTabRow
                 JSonFile("theme") = theme
-                JSonFile("tabWidthMode") = tabWidthMode
 #End Region
 
 #Region "Schemes"
@@ -6409,12 +6397,8 @@ Public Class WinTerminal
                 Dim S As New List(Of String)
                 S.Clear()
 
-                S.Add(String.Format("{0}{1}= {2}", First, "tabWidthMode", tabWidthMode))
                 S.Add(String.Format("{0}{1}= {2}", First, "theme", theme))
                 S.Add(String.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", useAcrylicInTabRow))
-                S.Add(String.Format("{0}{1}= {2}", First, "alwaysShowNotificationIcon", alwaysShowNotificationIcon))
-                S.Add(String.Format("{0}{1}= {2}", First, "defaultProfile", defaultProfile))
-
 
                 Dim type1 As Type = DefaultProf.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
@@ -6439,7 +6423,7 @@ Public Class WinTerminal
                     Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
 
                     For Each [property] As PropertyInfo In properties2
-                        If [property].GetValue(c) IsNot Nothing Then
+                        If [property].GetValue(c) IsNot Nothing And [property].Name <> "commandline" Then
                             S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
                         End If
                     Next
@@ -6546,6 +6530,7 @@ Public Class ProfilesList
     Public Property TabTitle As String
     Public Property Icon As String
     Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
+    Public Property commandline As String
 
     Public Property TabColor As Color = Nothing
     Public Property adjustIndistinguishableColors As Boolean = False
