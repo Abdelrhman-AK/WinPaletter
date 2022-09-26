@@ -1514,6 +1514,7 @@ Public Class CP
 #Region "Terminals"
                 Dim y_cmd As Object
 
+#Region "Locking"
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
 
                 Try
@@ -1551,6 +1552,7 @@ Public Class CP
                 Catch
                     Terminal_Developer_Enabled = False
                 End Try
+#End Region
 
 #Region "Command Prompt"
                 Try
@@ -2232,14 +2234,32 @@ Public Class CP
 
 #Region "Windows Terminal"
                 If My.W10 Or My.W11 Then
-                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
-                    If IO.File.Exists(TerDir) Then Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile) Else Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                    If IO.File.Exists(TerPreDir) Then TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, True) Else TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, True)
+                    If File.Exists(TerDir) Then
+                        Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
+                    Else
+                        Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                    End If
+
+                    If File.Exists(TerPreDir) Then
+                        TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                    Else
+                        TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                    End If
+
+                    If File.Exists(TerDevDir) Then
+                        TerminalDeveloper = New WinTerminal(TerDevDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Developer)
+                    Else
+                        TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
+                    End If
+
                 Else
                     Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                    TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, True)
+                    TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                    TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
                 End If
 #End Region
 #End Region
@@ -4042,12 +4062,12 @@ Public Class CP
 #Region "Terminals"
 
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-                rLogX.SetValue("Terminal_CMD_Enabled", Terminal_CMD_Enabled)
-                rLogX.SetValue("Terminal_PS_32_Enabled", Terminal_PS_32_Enabled)
-                rLogX.SetValue("Terminal_PS_64_Enabled", Terminal_PS_64_Enabled)
-                rLogX.SetValue("Terminal_Stable_Enabled", Terminal_Stable_Enabled)
-                rLogX.SetValue("Terminal_Preview_Enabled", Terminal_Preview_Enabled)
-                rLogX.SetValue("Terminal_Developer_Enabled", Terminal_Developer_Enabled)
+                rLogX.SetValue("Terminal_CMD_Enabled", If(Terminal_CMD_Enabled, 1, 0))
+                rLogX.SetValue("Terminal_PS_32_Enabled", If(Terminal_PS_32_Enabled, 1, 0))
+                rLogX.SetValue("Terminal_PS_64_Enabled", If(Terminal_PS_64_Enabled, 1, 0))
+                rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal_Stable_Enabled, 1, 0))
+                rLogX.SetValue("Terminal_Preview_Enabled", If(Terminal_Preview_Enabled, 1, 0))
+                rLogX.SetValue("Terminal_Developer_Enabled", If(Terminal_Developer_Enabled, 1, 0))
 
 #Region "Command Prompt"
                 If Terminal_CMD_Enabled Then
@@ -4289,13 +4309,13 @@ Public Class CP
 
                     If Terminal_Preview_Enabled Then
                         If IO.File.Exists(TerPreDir) Then
-                            TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, True)
+                            TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
                         End If
                     End If
 
                     If Terminal_Developer_Enabled Then
                         If IO.File.Exists(TerDevDir) Then
-                            TerminalDeveloper.Save(TerDevDir, WinTerminal.Mode.JSONFile, True)
+                            TerminalDeveloper.Save(TerDevDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Developer)
                         End If
                     End If
 
@@ -5625,10 +5645,39 @@ Public Class CP_Defaults
         .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
         .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
         .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
         .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
         .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
         .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
@@ -5664,10 +5713,39 @@ Public Class CP_Defaults
         .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
         .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
         .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
         .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
         .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
         .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
@@ -5724,10 +5802,39 @@ Public Class CP_Defaults
         .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
         .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
         .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
         .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
         .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
         .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
@@ -5776,10 +5883,39 @@ Public Class CP_Defaults
         .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
         .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
         .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
         .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
+        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
+        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
+        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
+        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
         .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240), .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
+        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
+        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
+        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
+        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
+        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
+        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
+        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
+        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
+        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
+         .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
         .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
         .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
@@ -5812,10 +5948,10 @@ Public Class WinTerminal
     Public Property Profiles As List(Of ProfilesList)
     Public Property DefaultProf As ProfilesList
     Public Property Themes As List(Of ThemesList)
-    Public Property theme As String
+    Public Property theme As String = "system"
     Public Property useAcrylicInTabRow As Boolean = False
 
-    Public Sub New(File As String, Mode As Mode, Optional Preview_Version As Boolean = False)
+    Public Sub New(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable)
         Select Case Mode
             Case Mode.JSONFile
                 If IO.File.Exists(File) Then
@@ -5889,7 +6025,7 @@ Public Class WinTerminal
 
 #Region "Getting All Colors Schemes"
                     Colors = New List(Of TColor)
-                        Colors.Clear()
+                    Colors.Clear()
 
                     If JSonFile("schemes") IsNot Nothing Then
                         For Each item In JSonFile("schemes")
@@ -5943,8 +6079,8 @@ Public Class WinTerminal
 #End Region
                     St.Close()
 
-                    Else
-                        MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
+                Else
+                    MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
                 End If
 
             Case Mode.WinPaletterFile
@@ -5952,11 +6088,26 @@ Public Class WinTerminal
                 Dim Preview As Boolean = False
 
                 For Each lin As String In IO.File.ReadAllLines(File)
-                    If Preview_Version Then
-                        If lin.ToLower.StartsWith("terminalpreview.") Then Collected.Add(lin.Remove(0, "terminalpreview.".Count))
-                    Else
-                        If lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") Then Collected.Add(lin.Remove(0, "terminal.".Count))
-                    End If
+
+                    Select Case [Version]
+                        Case Version.Stable
+                            If lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") And Not lin.ToLower.StartsWith("terminaldeveloper.") Then
+                                Collected.Add(lin.Remove(0, "terminal.".Count))
+                            End If
+
+                        Case Version.Preview
+                            If lin.ToLower.StartsWith("terminalpreview.") And Not lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminaldeveloper.") Then
+                                Collected.Add(lin.Remove(0, "terminalpreview.".Count))
+                            End If
+
+                        Case Version.Developer
+                            If lin.ToLower.StartsWith("terminaldeveloper.") And Not lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") Then
+                                Collected.Add(lin.Remove(0, "terminaldeveloper.".Count))
+                            End If
+
+                    End Select
+
+
                 Next
 
 
@@ -6229,16 +6380,28 @@ Public Class WinTerminal
         Empty
     End Enum
 
-    Public Function Save(File As String, Mode As Mode, Optional Preview_Version As Boolean = False) As String
+    Enum Version As Integer
+        Stable
+        Preview
+        Developer
+    End Enum
+
+    Public Function Save(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable) As String
         Select Case Mode
             Case Mode.JSONFile
                 Dim SettingsFile As String
 
-                If Preview_Version Then
-                    SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                Else
-                    SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                End If
+                Select Case [Version]
+                    Case Version.Stable
+                        SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    Case Version.Preview
+                        SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+
+                    Case Version.Developer
+                        SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+                End Select
+
 
                 Dim St As New StreamReader(SettingsFile)
                 Dim JSON_String As String = St.ReadToEnd
@@ -6452,7 +6615,21 @@ Public Class WinTerminal
 
             Case Mode.WinPaletterFile
 
-                Dim First As String = If(Preview_Version, "TerminalPreview.", "Terminal.")
+                Dim First As String
+
+                Select Case [Version]
+                    Case Version.Stable
+                        First = "Terminal."
+
+                    Case Version.Preview
+                        First = "TerminalPreview."
+
+                    Case Version.Developer
+                        First = "TerminalDeveloper."
+
+                End Select
+
+
                 Dim S As New List(Of String)
                 S.Clear()
 
@@ -6567,26 +6744,26 @@ End Class
 
 Public Class TColor
     Public Property Name As String
-    Public Property Background As Color
-    Public Property Foreground As Color
-    Public Property SelectionBackground As Color
-    Public Property Black As Color
-    Public Property Blue As Color
-    Public Property BrightBlack As Color
-    Public Property BrightBlue As Color
-    Public Property BrightCyan As Color
-    Public Property BrightGreen As Color
-    Public Property BrightPurple As Color
-    Public Property BrightRed As Color
-    Public Property BrightWhite As Color
-    Public Property BrightYellow As Color
-    Public Property CursorColor As Color
-    Public Property Cyan As Color
-    Public Property Green As Color
-    Public Property Purple As Color
-    Public Property Red As Color
-    Public Property White As Color
-    Public Property Yellow As Color
+    Public Property Background As Color = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+    Public Property Foreground As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+    Public Property SelectionBackground As Color = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+    Public Property Black As Color = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+    Public Property Blue As Color = Color.FromArgb(Convert.ToInt32("FF0037DA", 16))
+    Public Property BrightBlack As Color = Color.FromArgb(Convert.ToInt32("FF767676", 16))
+    Public Property BrightBlue As Color = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16))
+    Public Property BrightCyan As Color = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16))
+    Public Property BrightGreen As Color = Color.FromArgb(Convert.ToInt32("FF16C60C", 16))
+    Public Property BrightPurple As Color = Color.FromArgb(Convert.ToInt32("FFB4009E", 16))
+    Public Property BrightRed As Color = Color.FromArgb(Convert.ToInt32("FFE74856", 16))
+    Public Property BrightWhite As Color = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16))
+    Public Property BrightYellow As Color = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16))
+    Public Property CursorColor As Color= Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+    Public Property Cyan As Color = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16))
+    Public Property Green As Color = Color.FromArgb(Convert.ToInt32("FF13A10E", 16))
+    Public Property Purple As Color = Color.FromArgb(Convert.ToInt32("FF881798", 16))
+    Public Property Red As Color = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
+    Public Property White As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+    Public Property Yellow As Color = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
 End Class
 
 Public Class ThemesList
@@ -6605,8 +6782,8 @@ End Class
 
 Public Class ProfilesList
     Public Property Name As String
-    Public Property TabTitle As String
-    Public Property Icon As String
+    Public Property TabTitle As String = ""
+    Public Property Icon As String = ""
     Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
     Public Property commandline As String
 
@@ -6615,11 +6792,11 @@ Public Class ProfilesList
     Public Property Opacity As Integer = 100
 
     Public Property Font As New FontsBase
-    Public Property BackgroundImage As String
+    Public Property BackgroundImage As String = ""
     Public Property BackgroundImageOpacity As Single = 1
 
     Public Property ColorScheme As String = "Campbell"
-    Public Property CursorShape As CursorShape_Enum
+    Public Property CursorShape As CursorShape_Enum = CursorShape_Enum.bar
     Public Property CursorHeight As Integer = 25
 
 #Region "Helpers"

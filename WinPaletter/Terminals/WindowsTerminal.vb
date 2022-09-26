@@ -2,62 +2,56 @@
 Imports WinPaletter.XenonCore
 Public Class WindowsTerminal
     Private _Shown As Boolean = False
-
-    Public _Mode As Mode = Mode.Stable
-
+    Public _Mode As WinTerminal.Version
     Public _Terminal As WinTerminal
 
-    Public Enum Mode
-        Stable
-        Preview
-        Developer
-    End Enum
-
     Private Sub WindowsTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MainFrm.Visible = False
+        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+
         ApplyDarkMode(Me)
         _Shown = False
 
         Select Case _Mode
-            Case Mode.Stable
+            Case WinTerminal.Version.Stable
                 _Terminal = MainFrm.CP.Terminal
                 Text = "(BETA) Windows Terminal - Stable Version"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Stable_Enabled
 
-            Case Mode.Preview
+            Case WinTerminal.Version.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
                 Text = "(BETA) Windows Terminal - Preview Version"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
 
-            Case Mode.Developer
+            Case WinTerminal.Version.Developer
                 _Terminal = MainFrm.CP.TerminalDeveloper
                 Text = "(BETA) Windows Terminal - Developer Version"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Developer_Enabled
 
         End Select
 
-
-
         FillFonts(TerFonts, True)
 
         If My.W10 Or My.W11 Then
-            Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
             Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
-            If IO.File.Exists(TerDir) And _Mode = Mode.Stable Then
-                'FillTerminalSchemes(CP.Terminal, TerSchemes)
-
+            If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                Load_FromTerminal()
             End If
 
-            If IO.File.Exists(TerPreDir) And _Mode = Mode.Preview Then
+            If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
                 Load_FromTerminal()
+            End If
 
+            If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                Load_FromTerminal()
             End If
 
         Else
 
         End If
-
-
     End Sub
 
     Sub Load_FromTerminal()
@@ -107,8 +101,6 @@ Public Class WindowsTerminal
             End With
 
         End If
-
-
 
         ApplyPreview(_Terminal)
     End Sub
@@ -171,6 +163,8 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerSchemes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerSchemes.SelectedIndexChanged
+        SetDefaultsToScheme(TerSchemes.SelectedItem.ToString)
+
         Try
             With _Terminal.Colors(TerSchemes.SelectedIndex)
                 TerBackground.BackColor = .Background
@@ -206,6 +200,232 @@ Public Class WindowsTerminal
         Catch ex As Exception
             MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
         End Try
+    End Sub
+
+    Sub SetDefaultsToScheme(Scheme As String)
+        Select Case Scheme.ToLower
+
+            Case "Campbell".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0037DA", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF767676", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF16C60C", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFB4009E", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE74856", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF13A10E", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF881798", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+
+            Case "Campbell Powershell".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF012456", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0037DA", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF767676", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF16C60C", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFB4009E", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE74856", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF13A10E", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF881798", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+
+            Case "One Half Dark".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF282C34", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF282C34", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61AFEF", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF5A6374", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61AFEF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF56B6C2", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF98C379", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC678DD", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE06C75", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDCDFE4", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE5C07B", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF56B6C2", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDCDFE4", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF98C379", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC678DD", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE06C75", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDCDFE4", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE5C07B", 16))
+
+            Case "One Half Light".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFAFAFA", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF383A42", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0184BC", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF4F525D", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61AFEF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF56B5C1", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF98C379", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC577DD", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDF6C75", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE4C07A", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FF4F525D", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0997B3", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF383A42", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF50A14F", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FFA626A4", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE45649", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFAFAFA", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC18301", 16))
+
+            Case "Solarized Dark".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF002B36", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF002B36", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF268BD2", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF073642", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF839496", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF93A1A1", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF586E75", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF6C71C4", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCB4B16", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFDF6E3", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF657B83", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF2AA198", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF839496", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF859900", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FFD33682", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDC322F", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEEE8D5", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFB58900", 16))
+
+            Case "Solarized Light".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFDF6E3", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF002B36", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF268BD2", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF073642", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF839496", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF93A1A1", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF586E75", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF6C71C4", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCB4B16", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFDF6E3", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF657B83", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FF002B36", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF2AA198", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF657B83", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF859900", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FFD33682", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFDC322F", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEEE8D5", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFB58900", 16))
+
+            Case "Tango Dark".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3465A4", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF555753", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF729FCF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF34E2E2", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF8AE234", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFAD7FA8", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEF2929", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEEEEEC", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFCE94F", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF06989A", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFD3D7CF", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF4E9A06", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF75507B", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCC0000", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFD3D7CF", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC4A000", 16))
+
+            Case "Tango Light".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3465A4", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF555753", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF729FCF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF34E2E2", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF8AE234", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFAD7FA8", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEF2929", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFEEEEEC", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFCE94F", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF06989A", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF555753", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF4E9A06", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF75507B", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCC0000", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFD3D7CF", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC4A000", 16))
+
+            Case "Vintage".ToLower
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000000", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF000080", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF808080", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0000FF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF00FFFF", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF00FF00", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFF00FF", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFF0000", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFF00", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF008080", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC0C0C0", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF008000", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF800080", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FF800000", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC0C0C0", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FF808000", 16))
+
+            Case Else
+                TerBackground.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+                TerBlack.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
+                TerBlue.DefaultColor = Color.FromArgb(Convert.ToInt32("FF0037DA", 16))
+                TerBlackB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF767676", 16))
+                TerBlueB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16))
+                TerCyanB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16))
+                TerGreenB.DefaultColor = Color.FromArgb(Convert.ToInt32("FF16C60C", 16))
+                TerPurpleB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFB4009E", 16))
+                TerRedB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFE74856", 16))
+                TerWhiteB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16))
+                TerYellowB.DefaultColor = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16))
+                TerCursor.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerCyan.DefaultColor = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16))
+                TerForeground.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerGreen.DefaultColor = Color.FromArgb(Convert.ToInt32("FF13A10E", 16))
+                TerPurple.DefaultColor = Color.FromArgb(Convert.ToInt32("FF881798", 16))
+                TerRed.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
+                TerSelection.DefaultColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
+                TerWhite.DefaultColor = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
+                TerYellow.DefaultColor = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+
+        End Select
     End Sub
 
     Private Sub TerProfiles_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerProfiles.SelectedIndexChanged
@@ -323,7 +543,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
-        _Terminal.Colors.Add(New TColor With {.Name = "New Color #" & TerSchemes.Items.Count})
+        _Terminal.Colors.Add(New TColor With {.Name = "New Scheme #" & TerSchemes.Items.Count})
         FillTerminalSchemes(_Terminal, TerSchemes)
         TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1
     End Sub
@@ -374,39 +594,41 @@ Public Class WindowsTerminal
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             Dim cx As Color = SubMenu.ShowMenu(sender)
 
-            If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).Background = cx
-            End If
+            If My.Application.ColorEvent <> My.MyApplication.MenuEvent.None Then
+                If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
+                    _Terminal.Colors(TerSchemes.SelectedIndex).Background = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerForeground.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerForeground.Name.ToLower) Then
+                    _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerSelection.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerSelection.Name.ToLower) Then
+                    _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerCursor.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerCursor.Name.ToLower) Then
+                    _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerTabActive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerTabActive.Name.ToLower) Then
+                    _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerTabInactive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerTabInactive.Name.ToLower) Then
+                    _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerTitlebarActive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerTitlebarActive.Name.ToLower) Then
+                    _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = cx
+                End If
 
-            If sender.Name.ToString.ToLower.Contains(TerTitlebarInactive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = cx
-            End If
+                If sender.Name.ToString.ToLower.Contains(TerTitlebarInactive.Name.ToLower) Then
+                    _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = cx
+                End If
 
-            ApplyPreview(_Terminal)
+                ApplyPreview(_Terminal)
+            End If
 
             Exit Sub
         End If
@@ -709,15 +931,17 @@ Public Class WindowsTerminal
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
         Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe"
         Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe"
+        Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe"
 
         Select Case _Mode
-            Case Mode.Stable
+            Case WinTerminal.Version.Stable
                 If IO.Directory.Exists(TerDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App")
 
-            Case Mode.Preview
+            Case WinTerminal.Version.Preview
                 If IO.Directory.Exists(TerPreDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App")
 
-            Case Mode.Developer
+            Case WinTerminal.Version.Developer
+                If IO.Directory.Exists(TerDevDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe!App")
 
         End Select
     End Sub
@@ -751,8 +975,8 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            TerBackImage.Text = OpenFileDialog1.FileName
+        If ImgDlg.ShowDialog = DialogResult.OK Then
+            TerBackImage.Text = ImgDlg.FileName
         End If
     End Sub
 
@@ -766,13 +990,13 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         Select Case _Mode
-            Case Mode.Stable
+            Case WinTerminal.Version.Stable
                 MainFrm.CP.Terminal_Stable_Enabled = TerEnabled.Checked
 
-            Case Mode.Preview
+            Case WinTerminal.Version.Preview
                 MainFrm.CP.Terminal_Preview_Enabled = TerEnabled.Checked
 
-            Case Mode.Developer
+            Case WinTerminal.Version.Developer
                 MainFrm.CP.Terminal_Developer_Enabled = TerEnabled.Checked
         End Select
 
@@ -801,22 +1025,186 @@ Public Class WindowsTerminal
                 Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
 
-                If IO.File.Exists(TerDir) And _Mode = Mode.Stable Then
+                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
                     _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
                 End If
 
-                If IO.File.Exists(TerPreDir) And _Mode = Mode.Preview Then
-                    _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, True)
+                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                    _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
                 End If
 
-                If IO.File.Exists(TerDevDir) And _Mode = Mode.Developer Then
-                    _Terminal.Save(TerDevDir, WinTerminal.Mode.JSONFile, True)
+                If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                    _Terminal.Save(TerDevDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Developer)
                 End If
             End If
 
         Else
             MsgBox("You should enable terminal editing from the toggle above.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End If
+
+    End Sub
+
+    Private Sub WindowsTerminal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If My.W10 Or My.W11 Then
+            Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+
+            If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                Process.Start(TerDir)
+            End If
+
+            If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                Process.Start(TerPreDir)
+            End If
+
+            If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                Process.Start(TerDevDir)
+            End If
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        If SaveJSONDlg.ShowDialog = DialogResult.OK Then
+            If My.W10 Or My.W11 Then
+                Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                    IO.File.Copy(TerDir, SaveJSONDlg.FileName)
+                End If
+
+                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                    IO.File.Copy(TerPreDir, SaveJSONDlg.FileName)
+                End If
+
+                If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                    IO.File.Copy(TerDevDir, SaveJSONDlg.FileName)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
+
+            If My.W10 Or My.W11 Then
+                Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile)
+                    Load_FromTerminal()
+                End If
+
+                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+                    Load_FromTerminal()
+                End If
+
+                If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Developer)
+                    Load_FromTerminal()
+                End If
+            End If
+
+        End If
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenJSONDlg.ShowDialog = DialogResult.OK Then
+
+            Try
+                If My.W10 Or My.W11 Then
+                    Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+                    If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                        _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile)
+                        Load_FromTerminal()
+                    End If
+
+                    If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                        _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                        Load_FromTerminal()
+                    End If
+
+                    If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                        _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Stable)
+                        Load_FromTerminal()
+                    End If
+                End If
+            Catch ex As Exception
+                MsgBox("Error occurred while reading settings file: " & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            End Try
+
+        End If
+    End Sub
+
+
+
+    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+
+        Dim TC As New TColor With {
+        .Name = TerSchemes.SelectedItem.ToString & " Clone #" & TerSchemes.Items.Count,
+        .Background = _Terminal.Colors(TerSchemes.SelectedIndex).Background,
+        .Black = _Terminal.Colors(TerSchemes.SelectedIndex).Black,
+        .Blue = _Terminal.Colors(TerSchemes.SelectedIndex).Blue,
+        .BrightBlack = _Terminal.Colors(TerSchemes.SelectedIndex).BrightBlack,
+        .BrightBlue = _Terminal.Colors(TerSchemes.SelectedIndex).BrightBlue,
+        .BrightCyan = _Terminal.Colors(TerSchemes.SelectedIndex).BrightCyan,
+        .BrightGreen = _Terminal.Colors(TerSchemes.SelectedIndex).BrightGreen,
+        .BrightPurple = _Terminal.Colors(TerSchemes.SelectedIndex).BrightPurple,
+        .BrightRed = _Terminal.Colors(TerSchemes.SelectedIndex).BrightRed,
+        .BrightWhite = _Terminal.Colors(TerSchemes.SelectedIndex).BrightWhite,
+        .BrightYellow = _Terminal.Colors(TerSchemes.SelectedIndex).BrightYellow,
+        .CursorColor = _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor,
+        .Cyan = _Terminal.Colors(TerSchemes.SelectedIndex).Cyan,
+        .Foreground = _Terminal.Colors(TerSchemes.SelectedIndex).Foreground,
+        .Green = _Terminal.Colors(TerSchemes.SelectedIndex).Green,
+        .Purple = _Terminal.Colors(TerSchemes.SelectedIndex).Purple,
+        .Red = _Terminal.Colors(TerSchemes.SelectedIndex).Red,
+        .SelectionBackground = _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground,
+        .White = _Terminal.Colors(TerSchemes.SelectedIndex).White,
+        .Yellow = _Terminal.Colors(TerSchemes.SelectedIndex).Yellow}
+
+        _Terminal.Colors.Add(TC)
+        FillTerminalSchemes(_Terminal, TerSchemes)
+        TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1
+    End Sub
+
+    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+
+        With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
+            Dim P As New ProfilesList With {
+            .Name = .Name & " Clone #" & TerProfiles.Items.Count,
+            .BackgroundImage = .BackgroundImage,
+            .BackgroundImageOpacity = .BackgroundImageOpacity,
+            .ColorScheme = .ColorScheme,
+            .commandline = .commandline,
+            .CursorHeight = .CursorHeight,
+            .CursorShape = .CursorShape,
+            .Font = .Font,
+            .Icon = .Icon,
+            .Opacity = .Opacity,
+            .Source = .Source,
+            .TabColor = .TabColor,
+            .TabTitle = .TabTitle,
+            .UseAcrylic = .UseAcrylic}
+
+            _Terminal.Profiles.Add(P)
+            FillTerminalProfiles(_Terminal, TerProfiles)
+            TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1
+        End With
+
 
     End Sub
 End Class

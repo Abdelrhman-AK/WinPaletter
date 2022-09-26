@@ -98,7 +98,7 @@ Public Class SubMenu
                     Return ColorHandle.BackColor
 
                 Case My.MyApplication.MenuEvent.None
-                    Return Nothing
+                    Return ColorHandle.BackColor
 
             End Select
         Else

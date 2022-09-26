@@ -79,4 +79,5 @@ Public Class TerminalInfo
         CList.Clear()
     End Sub
 
+
 End Class
