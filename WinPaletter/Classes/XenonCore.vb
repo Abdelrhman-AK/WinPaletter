@@ -338,26 +338,30 @@ Public Class XenonCore
         End If
     End Function
     Public Shared Function ReturnColorFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
-        Dim s As String
+        Dim s As String = "Empty"
 
-        Select Case Format
-            Case ColorFormat.HEX
-                s = If(HexHash, "#", "") & RGB2HEX(Color, Alpha)
+        If Color <> Color.FromArgb(0, 0, 0, 0) Then
+            Select Case Format
+                Case ColorFormat.HEX
+                    s = If(HexHash, "#", "") & RGB2HEX(Color, Alpha)
 
-            Case ColorFormat.RGB
-                If Not Alpha Then
-                    s = String.Format("{0} {1} {2}", Color.R, Color.G, Color.B)
-                Else
-                    s = String.Format("{0} {1} {2} {3}", Color.A, Color.R, Color.G, Color.B)
-                End If
+                Case ColorFormat.RGB
+                    If Not Alpha Then
+                        s = String.Format("{0} {1} {2}", Color.R, Color.G, Color.B)
+                    Else
+                        s = String.Format("{0} {1} {2} {3}", Color.A, Color.R, Color.G, Color.B)
+                    End If
 
-            Case ColorFormat.HSL
-                s = String.Format("{0} {1}% {2}%", RGBToHSL(Color).H, Math.Round(RGBToHSL(Color).S * 100), Math.Round(RGBToHSL(Color).L * 100))
+                Case ColorFormat.HSL
+                    s = String.Format("{0} {1}% {2}%", RGBToHSL(Color).H, Math.Round(RGBToHSL(Color).S * 100), Math.Round(RGBToHSL(Color).L * 100))
 
-            Case ColorFormat.Dec
-                s = Color.ToArgb
+                Case ColorFormat.Dec
+                    s = Color.ToArgb
 
-        End Select
+            End Select
+        Else
+            s = "Empty"
+        End If
 
         Return s
     End Function

@@ -20,15 +20,18 @@ Public Class WindowsTerminal
         Select Case _Mode
             Case Mode.Stable
                 _Terminal = MainFrm.CP.Terminal
-                Text = "Windows Terminal - Stable Version"
+                Text = "(BETA) Windows Terminal - Stable Version"
+                TerEnabled.Checked = MainFrm.CP.Terminal_Stable_Enabled
 
             Case Mode.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
-                Text = "Windows Terminal - Preview Version"
+                Text = "(BETA) Windows Terminal - Preview Version"
+                TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
 
             Case Mode.Developer
-                '_Terminal = MainFrm.CP.Terminal
-                Text = "Windows Terminal - Developer Version"
+                _Terminal = MainFrm.CP.TerminalDeveloper
+                Text = "(BETA) Windows Terminal - Developer Version"
+                TerEnabled.Checked = MainFrm.CP.Terminal_Developer_Enabled
 
         End Select
 
@@ -58,6 +61,7 @@ Public Class WindowsTerminal
     End Sub
 
     Sub Load_FromTerminal()
+
         FillTerminalSchemes(_Terminal, TerSchemes)
         FillTerminalThemes(_Terminal, TerThemes)
         FillTerminalProfiles(_Terminal, TerProfiles)
@@ -259,9 +263,10 @@ Public Class WindowsTerminal
                 End If
 
             End If
-            XenonTerminal1.Refresh()
 
         End With
+
+        ApplyPreview(_Terminal)
 
     End Sub
 
@@ -273,7 +278,7 @@ Public Class WindowsTerminal
         XenonTerminal1.Font = New Font(XenonTerminal1.Font.Name, TerFontSizeBar.Value, XenonTerminal1.Font.Style)
 
         With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
-            .Font.Size = sender.Value
+            .Font.Size = TerFontSizeBar.Value
         End With
 
     End Sub
@@ -365,8 +370,44 @@ Public Class WindowsTerminal
 
     Private Sub ColorMainsClick(sender As Object, e As EventArgs) Handles TerBackground.Click, TerForeground.Click, TerSelection.Click, TerCursor.Click,
                                                                           TerTabActive.Click, TerTabInactive.Click, TerTitlebarActive.Click, TerTitlebarInactive.Click
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
+            Dim cx As Color = SubMenu.ShowMenu(sender)
+
+            If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).Background = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerForeground.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerSelection.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerCursor.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTabActive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTabInactive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTitlebarActive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = cx
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTitlebarInactive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = cx
+            End If
+
+            ApplyPreview(_Terminal)
+
             Exit Sub
         End If
 
@@ -428,7 +469,14 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerFonts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerFonts.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
         XenonTerminal1.Font = New Font(TerFonts.SelectedItem.ToString, XenonTerminal1.Font.Size, XenonTerminal1.Font.Style)
+
+        With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
+            .Font.Face = TerFonts.SelectedItem.ToString
+        End With
+
     End Sub
 
     Sub ApplyPreview([Terminal] As WinTerminal)
@@ -436,65 +484,64 @@ Public Class WindowsTerminal
             XenonTerminal1.UseAcrylicOnTitlebar = [Terminal].useAcrylicInTabRow
             XenonTerminal2.UseAcrylicOnTitlebar = [Terminal].useAcrylicInTabRow
 
+            If TerProfiles.SelectedIndex = 0 Then
+                XenonTerminal1.TabColor = [Terminal].DefaultProf.TabColor
+            Else
+                If [Terminal].Profiles(TerProfiles.SelectedIndex - 1).TabColor = Color.FromArgb(0, 0, 0, 0) Then
+                    XenonTerminal1.TabColor = [Terminal].DefaultProf.TabColor
+                Else
+                    XenonTerminal1.TabColor = [Terminal].Profiles(TerProfiles.SelectedIndex - 1).TabColor
+                End If
+            End If
+
             XenonTerminal1.Color_Background = [Terminal].Colors(TerSchemes.SelectedIndex).Background
             XenonTerminal1.Color_Foreground = [Terminal].Colors(TerSchemes.SelectedIndex).Foreground
             XenonTerminal1.Color_Selection = [Terminal].Colors(TerSchemes.SelectedIndex).SelectionBackground
             XenonTerminal1.Color_Cursor = [Terminal].Colors(TerSchemes.SelectedIndex).CursorColor
 
             If TerThemesContainer.Enabled Then
-                If [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Active = Nothing Then
-                    XenonTerminal1.Color_TabFocused = Nothing
-                Else
-                    XenonTerminal1.Color_TabFocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Active
-                End If
-
-                If [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = Nothing Then
-                    XenonTerminal1.Color_Titlebar = Nothing
-                Else
-                    XenonTerminal1.Color_Titlebar = [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Active
-                End If
-
-                If [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = Nothing Then
-                    XenonTerminal1.Color_TabUnFocused = Nothing
-                Else
-                    XenonTerminal1.Color_TabUnFocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Inactive
-                End If
-
-                If [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = Nothing Then
-                    XenonTerminal2.Color_Titlebar_Unfocused = Nothing
-                Else
-                    XenonTerminal2.Color_Titlebar_Unfocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive
-                End If
+                XenonTerminal1.Color_TabFocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Active
+                XenonTerminal1.Color_Titlebar = [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Active
+                XenonTerminal1.Color_TabUnFocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Tab_Inactive
+                XenonTerminal2.Color_Titlebar_Unfocused = [Terminal].Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive
             Else
-                XenonTerminal1.Color_TabFocused = Nothing
-                XenonTerminal1.Color_Titlebar = Nothing
-                XenonTerminal1.Color_Titlebar_Unfocused = Nothing
-                XenonTerminal1.Color_TabUnFocused = Nothing
-                XenonTerminal2.Color_Titlebar_Unfocused = Nothing
-
-                If TerThemes.SelectedItem IsNot Nothing Then
-                    If TerThemes.SelectedItem.ToString.ToLower = "dark" Then
-                        XenonTerminal1.Light = False
-                        XenonTerminal2.Light = False
-
-                    ElseIf TerThemes.SelectedItem.ToString.ToLower = "light" Then
-                        XenonTerminal1.Light = True
-                        XenonTerminal2.Light = True
-                    Else
-                        XenonTerminal1.Light = MainFrm.CP.AppMode_Light
-                        XenonTerminal2.Light = MainFrm.CP.AppMode_Light
-                    End If
-                End If
-
+                XenonTerminal1.Color_TabFocused = Color.FromArgb(0, 0, 0, 0)
+                XenonTerminal1.Color_Titlebar = Color.FromArgb(0, 0, 0, 0)
+                XenonTerminal1.Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0)
+                XenonTerminal1.Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0)
+                XenonTerminal2.Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0)
             End If
 
-            Dim fx As New LOGFONT
-            Dim f_cmd As New Font([Terminal].Profiles(TerProfiles.SelectedIndex).Font.Face, [Terminal].Profiles(TerProfiles.SelectedIndex).Font.Size)
-            f_cmd.ToLogFont(fx)
-            fx.lfWeight = [Terminal].Profiles(TerProfiles.SelectedIndex).Font.Weight * 100
-            With Font.FromLogFont(fx) : f_cmd = New Font(f_cmd.Name, f_cmd.Size, .Style) : End With
-            XenonTerminal1.Font = f_cmd
-            XenonTerminal2.Font = f_cmd
+            If TerThemes.SelectedItem IsNot Nothing Then
+                If TerThemes.SelectedItem.ToString.ToLower = "dark" Then
+                    XenonTerminal1.Light = False
+                    XenonTerminal2.Light = False
+
+                ElseIf TerThemes.SelectedItem.ToString.ToLower = "light" Then
+                    XenonTerminal1.Light = True
+                    XenonTerminal2.Light = True
+
+                ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
+                    XenonTerminal1.Light = MainFrm.CP.AppMode_Light
+                    XenonTerminal2.Light = MainFrm.CP.AppMode_Light
+
+                Else
+                    XenonTerminal1.Light = Not TerMode.Checked
+                    XenonTerminal2.Light = Not TerMode.Checked
+                End If
+            End If
+
+            With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
+                Dim fx As New LOGFONT
+                Dim f_cmd As New Font(.Font.Face, .Font.Size)
+                f_cmd.ToLogFont(fx)
+                fx.lfWeight = .Font.Weight * 100
+                With Font.FromLogFont(fx) : f_cmd = New Font(f_cmd.Name, f_cmd.Size, .Style) : End With
+                XenonTerminal1.Font = f_cmd
+                XenonTerminal2.Font = f_cmd
+            End With
+
+
 
             XenonTerminal1.Refresh()
             XenonTerminal2.Refresh()
@@ -530,51 +577,46 @@ Public Class WindowsTerminal
     Private Sub TerThemes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerThemes.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        Try
+        If TerThemes.SelectedIndex > 2 Then
+            TerThemesContainer.Enabled = True
 
-            If TerThemes.SelectedIndex > 2 Then
-                TerThemesContainer.Enabled = True
+            With _Terminal.Themes(TerThemes.SelectedIndex - 3)
+                TerTitlebarActive.BackColor = .Titlebar_Active
+                TerTitlebarInactive.BackColor = .Titlebar_Inactive
+                TerTabActive.BackColor = .Tab_Active
+                TerTabInactive.BackColor = .Tab_Inactive
+                TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
+            End With
 
-                With _Terminal.Themes(TerThemes.SelectedIndex - 3)
-                    TerTitlebarActive.BackColor = .Titlebar_Active
-                    TerTitlebarInactive.BackColor = .Titlebar_Inactive
-                    TerTabActive.BackColor = .Tab_Active
-                    TerTabInactive.BackColor = .Tab_Inactive
-                    TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
-                End With
+        Else
+            TerThemesContainer.Enabled = False
 
-                ApplyPreview(_Terminal)
-            Else
-                TerThemesContainer.Enabled = False
+            TerTitlebarActive.BackColor = Color.FromArgb(0, 0, 0, 0)
+            TerTitlebarInactive.BackColor = Color.FromArgb(0, 0, 0, 0)
+            TerTabActive.BackColor = Color.FromArgb(0, 0, 0, 0)
+            TerTabInactive.BackColor = Color.FromArgb(0, 0, 0, 0)
 
-                TerTitlebarActive.BackColor = Nothing
-                TerTitlebarInactive.BackColor = Nothing
-                TerTabActive.BackColor = Nothing
-                TerTabInactive.BackColor = Nothing
+            If TerThemes.SelectedIndex = 0 Then TerMode.Checked = True
+            If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
+            If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.AppMode_Light
 
-                If TerThemes.SelectedIndex = 0 Then TerMode.Checked = True
-                If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
-                If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.AppMode_Light
+        End If
 
-            End If
+        If TerThemes.SelectedItem.ToString.ToLower = "dark" Then
+            _Terminal.theme = "dark"
 
-            If TerThemes.SelectedItem.ToString.ToLower = "dark" Then
-                _Terminal.theme = "dark"
+        ElseIf TerThemes.SelectedItem.ToString.ToLower = "light" Then
+            _Terminal.theme = "light"
 
-            ElseIf TerThemes.SelectedItem.ToString.ToLower = "light" Then
-                _Terminal.theme = "light"
+        ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
+            _Terminal.theme = "system"
 
-            ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
-                _Terminal.theme = "system"
+        Else
+            _Terminal.theme = TerThemes.SelectedItem.ToString
 
-            Else
-                _Terminal.theme = TerThemes.SelectedItem.ToString
-            End If
+        End If
 
-            ApplyPreview(_Terminal)
-        Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
-        End Try
+        ApplyPreview(_Terminal)
     End Sub
 
     Private Sub TerEditThemeName_Click(sender As Object, e As EventArgs) Handles TerEditThemeName.Click
@@ -610,7 +652,6 @@ Public Class WindowsTerminal
                 .TabTitle = TerminalInfo.Profile.TabTitle
                 .Icon = TerminalInfo.Profile.Icon
                 .TabColor = TerminalInfo.Profile.TabColor
-                .adjustIndistinguishableColors = TerminalInfo.Profile.adjustIndistinguishableColors
             End With
 
             Dim i As Integer = TerProfiles.SelectedIndex
@@ -644,6 +685,8 @@ Public Class WindowsTerminal
 
         XenonTerminal1.Refresh()
         XenonTerminal2.Refresh()
+
+        If Not _Shown Then Exit Sub
 
         With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
             .UseAcrylic = TerAcrylic.Checked
@@ -697,6 +740,12 @@ Public Class WindowsTerminal
             End If
         End If
 
+        If Not _Shown Then Exit Sub
+
+        With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
+            .BackgroundImage = TerBackImage.Text
+        End With
+
         XenonTerminal1.Invalidate()
         XenonTerminal2.Invalidate()
     End Sub
@@ -705,5 +754,69 @@ Public Class WindowsTerminal
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             TerBackImage.Text = OpenFileDialog1.FileName
         End If
+    End Sub
+
+    Private Sub TerMode_CheckedChanged(sender As Object, e As EventArgs) Handles TerMode.CheckedChanged
+        If TerThemes.SelectedIndex > 2 Then
+            _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light = If(Not TerMode.Checked, "light", "dark")
+        End If
+
+        If _Shown Then ApplyPreview(_Terminal)
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Select Case _Mode
+            Case Mode.Stable
+                MainFrm.CP.Terminal_Stable_Enabled = TerEnabled.Checked
+
+            Case Mode.Preview
+                MainFrm.CP.Terminal_Preview_Enabled = TerEnabled.Checked
+
+            Case Mode.Developer
+                MainFrm.CP.Terminal_Developer_Enabled = TerEnabled.Checked
+        End Select
+
+        DialogResult = DialogResult.OK
+
+        Me.Close()
+    End Sub
+
+    Private Sub WindowsTerminal_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If DialogResult <> DialogResult.OK Then
+            With New CP(CP.Mode.Registry)
+                MainFrm.CP.Terminal = .Terminal
+                MainFrm.CP.TerminalPreview = .TerminalPreview
+            End With
+        End If
+
+        DialogResult = DialogResult.Cancel
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+
+        If TerEnabled.Checked Then
+            If My.W10 Or My.W11 Then
+                Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
+
+
+                If IO.File.Exists(TerDir) And _Mode = Mode.Stable Then
+                    _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                End If
+
+                If IO.File.Exists(TerPreDir) And _Mode = Mode.Preview Then
+                    _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, True)
+                End If
+
+                If IO.File.Exists(TerDevDir) And _Mode = Mode.Developer Then
+                    _Terminal.Save(TerDevDir, WinTerminal.Mode.JSONFile, True)
+                End If
+            End If
+
+        Else
+            MsgBox("You should enable terminal editing from the toggle above.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+        End If
+
     End Sub
 End Class

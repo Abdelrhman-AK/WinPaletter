@@ -56,6 +56,7 @@ Namespace My
             Cut
             Paste
             Override
+            Delete
         End Enum
 #End Region
 

@@ -25,7 +25,7 @@ Partial Class WindowsTerminal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(WindowsTerminal))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
-        Me.XenonToggle1 = New WinPaletter.XenonToggle()
+        Me.TerEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
@@ -158,7 +158,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox2.Controls.Add(Me.XenonToggle1)
+        Me.XenonGroupBox2.Controls.Add(Me.TerEnabled)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox2.Controls.Add(Me.Label7)
         Me.XenonGroupBox2.CustomColor = False
@@ -171,17 +171,17 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2.Size = New System.Drawing.Size(634, 40)
         Me.XenonGroupBox2.TabIndex = 197
         '
-        'XenonToggle1
+        'TerEnabled
         '
-        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonToggle1.Checked = False
-        Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(575, 8)
-        Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
-        Me.XenonToggle1.TabIndex = 85
+        Me.TerEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
+        Me.TerEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.TerEnabled.Checked = False
+        Me.TerEnabled.DarkLight_Toggler = False
+        Me.TerEnabled.Location = New System.Drawing.Point(575, 8)
+        Me.TerEnabled.Name = "TerEnabled"
+        Me.TerEnabled.Size = New System.Drawing.Size(50, 24)
+        Me.TerEnabled.TabIndex = 85
         '
         'PictureBox5
         '
@@ -201,7 +201,7 @@ Partial Class WindowsTerminal
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(170, 31)
         Me.Label7.TabIndex = 84
-        Me.Label7.Text = "Enable Editing Terminal ?"
+        Me.Label7.Text = "Enable Editing Terminal"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox1
@@ -234,9 +234,9 @@ Partial Class WindowsTerminal
         Me.TerEditThemeName.Image = CType(resources.GetObject("TerEditThemeName.Image"), System.Drawing.Image)
         Me.TerEditThemeName.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.TerEditThemeName.LineSize = 1
-        Me.TerEditThemeName.Location = New System.Drawing.Point(330, 6)
+        Me.TerEditThemeName.Location = New System.Drawing.Point(342, 3)
         Me.TerEditThemeName.Name = "TerEditThemeName"
-        Me.TerEditThemeName.Size = New System.Drawing.Size(33, 24)
+        Me.TerEditThemeName.Size = New System.Drawing.Size(30, 30)
         Me.TerEditThemeName.TabIndex = 212
         Me.TerEditThemeName.UseVisualStyleBackColor = False
         '
@@ -249,9 +249,9 @@ Partial Class WindowsTerminal
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(367, 6)
+        Me.XenonButton3.Location = New System.Drawing.Point(374, 3)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(33, 24)
+        Me.XenonButton3.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton3.TabIndex = 211
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
@@ -267,9 +267,9 @@ Partial Class WindowsTerminal
         Me.TerThemes.ForeColor = System.Drawing.Color.White
         Me.TerThemes.FormattingEnabled = True
         Me.TerThemes.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerThemes.Location = New System.Drawing.Point(108, 6)
+        Me.TerThemes.Location = New System.Drawing.Point(104, 6)
         Me.TerThemes.Name = "TerThemes"
-        Me.TerThemes.Size = New System.Drawing.Size(214, 24)
+        Me.TerThemes.Size = New System.Drawing.Size(236, 24)
         Me.TerThemes.TabIndex = 210
         '
         'Label4
@@ -489,7 +489,11 @@ Partial Class WindowsTerminal
         Me.XenonTerminal1.Opacity = 0.15!
         Me.XenonTerminal1.OpacityBackImage = 100.0!
         Me.XenonTerminal1.Size = New System.Drawing.Size(373, 177)
+        Me.XenonTerminal1.TabColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.XenonTerminal1.TabIcon = Nothing
+        Me.XenonTerminal1.TabIconButItIsString = ""
         Me.XenonTerminal1.TabIndex = 95
+        Me.XenonTerminal1.TabTitle = ""
         Me.XenonTerminal1.Text = "XenonTerminal1"
         Me.XenonTerminal1.UseAcrylic = False
         Me.XenonTerminal1.UseAcrylicOnTitlebar = False
@@ -552,7 +556,11 @@ Partial Class WindowsTerminal
         Me.XenonTerminal2.Opacity = 0.15!
         Me.XenonTerminal2.OpacityBackImage = 100.0!
         Me.XenonTerminal2.Size = New System.Drawing.Size(344, 160)
+        Me.XenonTerminal2.TabColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.XenonTerminal2.TabIcon = Nothing
+        Me.XenonTerminal2.TabIconButItIsString = ""
         Me.XenonTerminal2.TabIndex = 96
+        Me.XenonTerminal2.TabTitle = ""
         Me.XenonTerminal2.Text = "XenonTerminal2"
         Me.XenonTerminal2.UseAcrylic = False
         Me.XenonTerminal2.UseAcrylicOnTitlebar = False
@@ -648,9 +656,9 @@ Partial Class WindowsTerminal
         Me.XenonButton5.Image = Nothing
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(265, 6)
+        Me.XenonButton5.Location = New System.Drawing.Point(268, 4)
         Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(105, 24)
+        Me.XenonButton5.Size = New System.Drawing.Size(102, 30)
         Me.XenonButton5.TabIndex = 197
         Me.XenonButton5.Text = "Set To Wallpaper"
         Me.XenonButton5.UseVisualStyleBackColor = False
@@ -687,9 +695,9 @@ Partial Class WindowsTerminal
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(376, 6)
+        Me.XenonButton16.Location = New System.Drawing.Point(372, 4)
         Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(24, 24)
+        Me.XenonButton16.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton16.TabIndex = 192
         Me.XenonButton16.UseVisualStyleBackColor = False
         '
@@ -706,7 +714,7 @@ Partial Class WindowsTerminal
         Me.TerBackImage.Multiline = False
         Me.TerBackImage.Name = "TerBackImage"
         Me.TerBackImage.ReadOnly = False
-        Me.TerBackImage.Size = New System.Drawing.Size(121, 24)
+        Me.TerBackImage.Size = New System.Drawing.Size(124, 24)
         Me.TerBackImage.TabIndex = 191
         Me.TerBackImage.Text = "XenonTextBox2"
         Me.TerBackImage.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -781,9 +789,9 @@ Partial Class WindowsTerminal
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 604)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(190, 24)
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(332, 24)
         Me.XenonCheckBox1.TabIndex = 104
-        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts"
+        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong renderering)"
         '
         'XenonGroupBox11
         '
@@ -844,9 +852,9 @@ Partial Class WindowsTerminal
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(144, 11)
+        Me.XenonButton4.Location = New System.Drawing.Point(155, 6)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(33, 24)
+        Me.XenonButton4.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton4.TabIndex = 213
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
@@ -858,9 +866,9 @@ Partial Class WindowsTerminal
         Me.XenonButton12.Image = CType(resources.GetObject("XenonButton12.Image"), System.Drawing.Image)
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(175, 11)
+        Me.XenonButton12.Location = New System.Drawing.Point(187, 6)
         Me.XenonButton12.Name = "XenonButton12"
-        Me.XenonButton12.Size = New System.Drawing.Size(33, 24)
+        Me.XenonButton12.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton12.TabIndex = 129
         Me.XenonButton12.UseVisualStyleBackColor = False
         '
@@ -874,9 +882,9 @@ Partial Class WindowsTerminal
         Me.TerSchemes.ForeColor = System.Drawing.Color.White
         Me.TerSchemes.FormattingEnabled = True
         Me.TerSchemes.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerSchemes.Location = New System.Drawing.Point(6, 44)
+        Me.TerSchemes.Location = New System.Drawing.Point(5, 41)
         Me.TerSchemes.Name = "TerSchemes"
-        Me.TerSchemes.Size = New System.Drawing.Size(203, 24)
+        Me.TerSchemes.Size = New System.Drawing.Size(210, 24)
         Me.TerSchemes.TabIndex = 117
         '
         'TerCursor
@@ -887,7 +895,7 @@ Partial Class WindowsTerminal
         Me.TerCursor.ForceNoNerd = False
         Me.TerCursor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.TerCursor.LineSize = 1
-        Me.TerCursor.Location = New System.Drawing.Point(111, 147)
+        Me.TerCursor.Location = New System.Drawing.Point(116, 143)
         Me.TerCursor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCursor.Name = "TerCursor"
         Me.TerCursor.Size = New System.Drawing.Size(98, 25)
@@ -902,7 +910,7 @@ Partial Class WindowsTerminal
         Me.TerWhiteB.ForceNoNerd = True
         Me.TerWhiteB.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.TerWhiteB.LineSize = 1
-        Me.TerWhiteB.Location = New System.Drawing.Point(164, 346)
+        Me.TerWhiteB.Location = New System.Drawing.Point(169, 347)
         Me.TerWhiteB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhiteB.Name = "TerWhiteB"
         Me.TerWhiteB.Size = New System.Drawing.Size(45, 23)
@@ -913,7 +921,7 @@ Partial Class WindowsTerminal
         '
         Me.Label150.BackColor = System.Drawing.Color.Transparent
         Me.Label150.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label150.Location = New System.Drawing.Point(111, 124)
+        Me.Label150.Location = New System.Drawing.Point(116, 120)
         Me.Label150.Name = "Label150"
         Me.Label150.Size = New System.Drawing.Size(98, 20)
         Me.Label150.TabIndex = 124
@@ -928,7 +936,7 @@ Partial Class WindowsTerminal
         Me.TerBlue.ForceNoNerd = True
         Me.TerBlue.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
         Me.TerBlue.LineSize = 1
-        Me.TerBlue.Location = New System.Drawing.Point(111, 199)
+        Me.TerBlue.Location = New System.Drawing.Point(116, 200)
         Me.TerBlue.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlue.Name = "TerBlue"
         Me.TerBlue.Size = New System.Drawing.Size(45, 23)
@@ -939,7 +947,7 @@ Partial Class WindowsTerminal
         '
         Me.Label151.BackColor = System.Drawing.Color.Transparent
         Me.Label151.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label151.Location = New System.Drawing.Point(111, 323)
+        Me.Label151.Location = New System.Drawing.Point(116, 324)
         Me.Label151.Name = "Label151"
         Me.Label151.Size = New System.Drawing.Size(98, 20)
         Me.Label151.TabIndex = 91
@@ -954,7 +962,7 @@ Partial Class WindowsTerminal
         Me.TerSelection.ForceNoNerd = False
         Me.TerSelection.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.TerSelection.LineSize = 1
-        Me.TerSelection.Location = New System.Drawing.Point(5, 147)
+        Me.TerSelection.Location = New System.Drawing.Point(7, 143)
         Me.TerSelection.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerSelection.Name = "TerSelection"
         Me.TerSelection.Size = New System.Drawing.Size(98, 25)
@@ -965,7 +973,7 @@ Partial Class WindowsTerminal
         '
         Me.Label152.BackColor = System.Drawing.Color.Transparent
         Me.Label152.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label152.Location = New System.Drawing.Point(5, 124)
+        Me.Label152.Location = New System.Drawing.Point(7, 120)
         Me.Label152.Name = "Label152"
         Me.Label152.Size = New System.Drawing.Size(98, 20)
         Me.Label152.TabIndex = 122
@@ -976,7 +984,7 @@ Partial Class WindowsTerminal
         '
         Me.Label147.BackColor = System.Drawing.Color.Transparent
         Me.Label147.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label147.Location = New System.Drawing.Point(111, 73)
+        Me.Label147.Location = New System.Drawing.Point(116, 69)
         Me.Label147.Name = "Label147"
         Me.Label147.Size = New System.Drawing.Size(98, 20)
         Me.Label147.TabIndex = 120
@@ -991,7 +999,7 @@ Partial Class WindowsTerminal
         Me.TerWhite.ForceNoNerd = True
         Me.TerWhite.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
         Me.TerWhite.LineSize = 1
-        Me.TerWhite.Location = New System.Drawing.Point(111, 346)
+        Me.TerWhite.Location = New System.Drawing.Point(116, 347)
         Me.TerWhite.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhite.Name = "TerWhite"
         Me.TerWhite.Size = New System.Drawing.Size(45, 23)
@@ -1006,7 +1014,7 @@ Partial Class WindowsTerminal
         Me.TerForeground.ForceNoNerd = False
         Me.TerForeground.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.TerForeground.LineSize = 1
-        Me.TerForeground.Location = New System.Drawing.Point(111, 96)
+        Me.TerForeground.Location = New System.Drawing.Point(116, 92)
         Me.TerForeground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerForeground.Name = "TerForeground"
         Me.TerForeground.Size = New System.Drawing.Size(98, 25)
@@ -1021,7 +1029,7 @@ Partial Class WindowsTerminal
         Me.TerCyanB.ForceNoNerd = True
         Me.TerCyanB.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
         Me.TerCyanB.LineSize = 1
-        Me.TerCyanB.Location = New System.Drawing.Point(58, 248)
+        Me.TerCyanB.Location = New System.Drawing.Point(60, 249)
         Me.TerCyanB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyanB.Name = "TerCyanB"
         Me.TerCyanB.Size = New System.Drawing.Size(45, 23)
@@ -1032,7 +1040,7 @@ Partial Class WindowsTerminal
         '
         Me.Label145.BackColor = System.Drawing.Color.Transparent
         Me.Label145.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label145.Location = New System.Drawing.Point(5, 225)
+        Me.Label145.Location = New System.Drawing.Point(7, 226)
         Me.Label145.Name = "Label145"
         Me.Label145.Size = New System.Drawing.Size(98, 20)
         Me.Label145.TabIndex = 87
@@ -1047,7 +1055,7 @@ Partial Class WindowsTerminal
         Me.TerCyan.ForceNoNerd = True
         Me.TerCyan.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
         Me.TerCyan.LineSize = 1
-        Me.TerCyan.Location = New System.Drawing.Point(5, 248)
+        Me.TerCyan.Location = New System.Drawing.Point(7, 249)
         Me.TerCyan.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyan.Name = "TerCyan"
         Me.TerCyan.Size = New System.Drawing.Size(45, 23)
@@ -1062,7 +1070,7 @@ Partial Class WindowsTerminal
         Me.TerGreen.ForceNoNerd = True
         Me.TerGreen.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
         Me.TerGreen.LineSize = 1
-        Me.TerGreen.Location = New System.Drawing.Point(111, 248)
+        Me.TerGreen.Location = New System.Drawing.Point(116, 249)
         Me.TerGreen.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreen.Name = "TerGreen"
         Me.TerGreen.Size = New System.Drawing.Size(45, 23)
@@ -1073,7 +1081,7 @@ Partial Class WindowsTerminal
         '
         Me.Label144.BackColor = System.Drawing.Color.Transparent
         Me.Label144.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label144.Location = New System.Drawing.Point(111, 225)
+        Me.Label144.Location = New System.Drawing.Point(116, 226)
         Me.Label144.Name = "Label144"
         Me.Label144.Size = New System.Drawing.Size(98, 20)
         Me.Label144.TabIndex = 86
@@ -1088,7 +1096,7 @@ Partial Class WindowsTerminal
         Me.TerBackground.ForceNoNerd = False
         Me.TerBackground.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.TerBackground.LineSize = 1
-        Me.TerBackground.Location = New System.Drawing.Point(5, 96)
+        Me.TerBackground.Location = New System.Drawing.Point(7, 92)
         Me.TerBackground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBackground.Name = "TerBackground"
         Me.TerBackground.Size = New System.Drawing.Size(98, 25)
@@ -1103,7 +1111,7 @@ Partial Class WindowsTerminal
         Me.TerYellow.ForceNoNerd = True
         Me.TerYellow.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.LineSize = 1
-        Me.TerYellow.Location = New System.Drawing.Point(5, 346)
+        Me.TerYellow.Location = New System.Drawing.Point(7, 347)
         Me.TerYellow.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellow.Name = "TerYellow"
         Me.TerYellow.Size = New System.Drawing.Size(45, 23)
@@ -1118,7 +1126,7 @@ Partial Class WindowsTerminal
         Me.TerGreenB.ForceNoNerd = True
         Me.TerGreenB.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
         Me.TerGreenB.LineSize = 1
-        Me.TerGreenB.Location = New System.Drawing.Point(164, 248)
+        Me.TerGreenB.Location = New System.Drawing.Point(169, 249)
         Me.TerGreenB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreenB.Name = "TerGreenB"
         Me.TerGreenB.Size = New System.Drawing.Size(45, 23)
@@ -1129,7 +1137,7 @@ Partial Class WindowsTerminal
         '
         Me.Label143.BackColor = System.Drawing.Color.Transparent
         Me.Label143.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label143.Location = New System.Drawing.Point(5, 73)
+        Me.Label143.Location = New System.Drawing.Point(7, 69)
         Me.Label143.Name = "Label143"
         Me.Label143.Size = New System.Drawing.Size(98, 20)
         Me.Label143.TabIndex = 118
@@ -1140,7 +1148,7 @@ Partial Class WindowsTerminal
         '
         Me.Label149.BackColor = System.Drawing.Color.Transparent
         Me.Label149.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label149.Location = New System.Drawing.Point(5, 322)
+        Me.Label149.Location = New System.Drawing.Point(7, 323)
         Me.Label149.Name = "Label149"
         Me.Label149.Size = New System.Drawing.Size(98, 20)
         Me.Label149.TabIndex = 90
@@ -1155,7 +1163,7 @@ Partial Class WindowsTerminal
         Me.TerBlack.ForceNoNerd = True
         Me.TerBlack.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.TerBlack.LineSize = 1
-        Me.TerBlack.Location = New System.Drawing.Point(5, 199)
+        Me.TerBlack.Location = New System.Drawing.Point(7, 200)
         Me.TerBlack.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlack.Name = "TerBlack"
         Me.TerBlack.Size = New System.Drawing.Size(45, 23)
@@ -1170,7 +1178,7 @@ Partial Class WindowsTerminal
         Me.TerYellowB.ForceNoNerd = True
         Me.TerYellowB.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
         Me.TerYellowB.LineSize = 1
-        Me.TerYellowB.Location = New System.Drawing.Point(58, 346)
+        Me.TerYellowB.Location = New System.Drawing.Point(60, 347)
         Me.TerYellowB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellowB.Name = "TerYellowB"
         Me.TerYellowB.Size = New System.Drawing.Size(45, 23)
@@ -1181,7 +1189,7 @@ Partial Class WindowsTerminal
         '
         Me.Label142.BackColor = System.Drawing.Color.Transparent
         Me.Label142.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label142.Location = New System.Drawing.Point(111, 175)
+        Me.Label142.Location = New System.Drawing.Point(116, 176)
         Me.Label142.Name = "Label142"
         Me.Label142.Size = New System.Drawing.Size(98, 20)
         Me.Label142.TabIndex = 85
@@ -1196,7 +1204,7 @@ Partial Class WindowsTerminal
         Me.TerBlackB.ForceNoNerd = True
         Me.TerBlackB.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
         Me.TerBlackB.LineSize = 1
-        Me.TerBlackB.Location = New System.Drawing.Point(58, 199)
+        Me.TerBlackB.Location = New System.Drawing.Point(60, 200)
         Me.TerBlackB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlackB.Name = "TerBlackB"
         Me.TerBlackB.Size = New System.Drawing.Size(45, 23)
@@ -1224,7 +1232,7 @@ Partial Class WindowsTerminal
         Me.TerPurple.ForceNoNerd = True
         Me.TerPurple.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
         Me.TerPurple.LineSize = 1
-        Me.TerPurple.Location = New System.Drawing.Point(111, 297)
+        Me.TerPurple.Location = New System.Drawing.Point(116, 298)
         Me.TerPurple.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurple.Name = "TerPurple"
         Me.TerPurple.Size = New System.Drawing.Size(45, 23)
@@ -1245,7 +1253,7 @@ Partial Class WindowsTerminal
         '
         Me.Label140.BackColor = System.Drawing.Color.Transparent
         Me.Label140.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label140.Location = New System.Drawing.Point(5, 175)
+        Me.Label140.Location = New System.Drawing.Point(7, 176)
         Me.Label140.Name = "Label140"
         Me.Label140.Size = New System.Drawing.Size(98, 20)
         Me.Label140.TabIndex = 4
@@ -1260,7 +1268,7 @@ Partial Class WindowsTerminal
         Me.TerPurpleB.ForceNoNerd = True
         Me.TerPurpleB.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
         Me.TerPurpleB.LineSize = 1
-        Me.TerPurpleB.Location = New System.Drawing.Point(164, 297)
+        Me.TerPurpleB.Location = New System.Drawing.Point(169, 298)
         Me.TerPurpleB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurpleB.Name = "TerPurpleB"
         Me.TerPurpleB.Size = New System.Drawing.Size(45, 23)
@@ -1275,7 +1283,7 @@ Partial Class WindowsTerminal
         Me.TerBlueB.ForceNoNerd = True
         Me.TerBlueB.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.LineSize = 1
-        Me.TerBlueB.Location = New System.Drawing.Point(164, 199)
+        Me.TerBlueB.Location = New System.Drawing.Point(169, 200)
         Me.TerBlueB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlueB.Name = "TerBlueB"
         Me.TerBlueB.Size = New System.Drawing.Size(45, 23)
@@ -1286,7 +1294,7 @@ Partial Class WindowsTerminal
         '
         Me.Label146.BackColor = System.Drawing.Color.Transparent
         Me.Label146.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label146.Location = New System.Drawing.Point(5, 273)
+        Me.Label146.Location = New System.Drawing.Point(7, 274)
         Me.Label146.Name = "Label146"
         Me.Label146.Size = New System.Drawing.Size(98, 20)
         Me.Label146.TabIndex = 88
@@ -1297,7 +1305,7 @@ Partial Class WindowsTerminal
         '
         Me.Label148.BackColor = System.Drawing.Color.Transparent
         Me.Label148.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label148.Location = New System.Drawing.Point(111, 274)
+        Me.Label148.Location = New System.Drawing.Point(116, 275)
         Me.Label148.Name = "Label148"
         Me.Label148.Size = New System.Drawing.Size(98, 20)
         Me.Label148.TabIndex = 89
@@ -1312,7 +1320,7 @@ Partial Class WindowsTerminal
         Me.TerRedB.ForceNoNerd = True
         Me.TerRedB.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
         Me.TerRedB.LineSize = 1
-        Me.TerRedB.Location = New System.Drawing.Point(58, 297)
+        Me.TerRedB.Location = New System.Drawing.Point(60, 298)
         Me.TerRedB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRedB.Name = "TerRedB"
         Me.TerRedB.Size = New System.Drawing.Size(45, 23)
@@ -1327,7 +1335,7 @@ Partial Class WindowsTerminal
         Me.TerRed.ForceNoNerd = True
         Me.TerRed.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
         Me.TerRed.LineSize = 1
-        Me.TerRed.Location = New System.Drawing.Point(5, 297)
+        Me.TerRed.Location = New System.Drawing.Point(7, 298)
         Me.TerRed.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRed.Name = "TerRed"
         Me.TerRed.Size = New System.Drawing.Size(45, 23)
@@ -1486,9 +1494,9 @@ Partial Class WindowsTerminal
         Me.XenonButton14.Image = CType(resources.GetObject("XenonButton14.Image"), System.Drawing.Image)
         Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(556, 8)
+        Me.XenonButton14.Location = New System.Drawing.Point(566, 5)
         Me.XenonButton14.Name = "XenonButton14"
-        Me.XenonButton14.Size = New System.Drawing.Size(33, 24)
+        Me.XenonButton14.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton14.TabIndex = 179
         Me.XenonButton14.UseVisualStyleBackColor = False
         '
@@ -1525,9 +1533,9 @@ Partial Class WindowsTerminal
         Me.TerProfiles.ForeColor = System.Drawing.Color.White
         Me.TerProfiles.FormattingEnabled = True
         Me.TerProfiles.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerProfiles.Location = New System.Drawing.Point(123, 8)
+        Me.TerProfiles.Location = New System.Drawing.Point(119, 8)
         Me.TerProfiles.Name = "TerProfiles"
-        Me.TerProfiles.Size = New System.Drawing.Size(427, 24)
+        Me.TerProfiles.Size = New System.Drawing.Size(445, 24)
         Me.TerProfiles.TabIndex = 118
         '
         'XenonButton13
@@ -1539,9 +1547,9 @@ Partial Class WindowsTerminal
         Me.XenonButton13.Image = CType(resources.GetObject("XenonButton13.Image"), System.Drawing.Image)
         Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton13.LineSize = 1
-        Me.XenonButton13.Location = New System.Drawing.Point(595, 8)
+        Me.XenonButton13.Location = New System.Drawing.Point(598, 5)
         Me.XenonButton13.Name = "XenonButton13"
-        Me.XenonButton13.Size = New System.Drawing.Size(33, 24)
+        Me.XenonButton13.Size = New System.Drawing.Size(30, 30)
         Me.XenonButton13.TabIndex = 140
         Me.XenonButton13.UseVisualStyleBackColor = False
         '
@@ -1798,7 +1806,7 @@ Partial Class WindowsTerminal
     Friend WithEvents TerOpacityBar As XenonTrackbar
     Friend WithEvents XenonButton5 As XenonButton
     Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents XenonToggle1 As XenonToggle
+    Friend WithEvents TerEnabled As XenonToggle
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label7 As Label
     Friend WithEvents OpenFileDialog1 As OpenFileDialog

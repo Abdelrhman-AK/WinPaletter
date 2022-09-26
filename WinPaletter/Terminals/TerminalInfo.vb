@@ -4,28 +4,26 @@ Public Class TerminalInfo
 
     Private Sub TerminalInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-
     End Sub
 
     Public Function OpenDialog(Optional IsDefault As Boolean = False) As DialogResult
-        TerPrevName.Text = Profile.Name
-        TerPrevTabTitle.Text = Profile.TabTitle
-        TerPrevTabIcon.Text = Profile.Icon
-        TerPrevTabColor.BackColor = Profile.TabColor
-        TerPrevAdjustColors.Checked = Profile.adjustIndistinguishableColors
-        TerPrevAcrylic.Checked = MainFrm.CP.TerminalPreview.useAcrylicInTabRow
+        TerName.Text = Profile.Name
+        TerTabTitle.Text = Profile.TabTitle
+        TerTabIcon.Text = Profile.Icon
+        TerTabColor.BackColor = Profile.TabColor
+        TerAcrylic.Checked = MainFrm.CP.TerminalPreview.useAcrylicInTabRow
 
         If IsDefault Then
-            TerPrevName.Text = ""
-            TerPrevTabTitle.Text = ""
-            TerPrevTabIcon.Text = ""
-            TerPrevName.Enabled = False
-            TerPrevTabTitle.Enabled = False
-            TerPrevTabIcon.Enabled = False
+            TerName.Text = ""
+            TerTabTitle.Text = ""
+            TerTabIcon.Text = ""
+            TerName.Enabled = False
+            TerTabTitle.Enabled = False
+            TerTabIcon.Enabled = False
         Else
-            TerPrevName.Enabled = True
-            TerPrevTabTitle.Enabled = True
-            TerPrevTabIcon.Enabled = True
+            TerName.Enabled = True
+            TerTabTitle.Enabled = True
+            TerTabIcon.Enabled = True
         End If
 
         Return ShowDialog()
@@ -33,17 +31,16 @@ Public Class TerminalInfo
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
 
-        If WindowsTerminal.TerProfiles.Items.Contains(TerPrevName.Text) And Not WindowsTerminal.TerProfiles.SelectedItem.ToString.ToLower = TerPrevName.Text.ToLower Then
+        If WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) And Not WindowsTerminal.TerProfiles.SelectedItem.ToString.ToLower = TerName.Text.ToLower Then
             MsgBox("You can't set this name as it is already set to another profile.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
             Exit Sub
         End If
 
-        Profile.Name = TerPrevName.Text
-        Profile.TabTitle = TerPrevTabTitle.Text
-        Profile.Icon = TerPrevTabIcon.Text
-        Profile.TabColor = TerPrevTabColor.BackColor
-        Profile.adjustIndistinguishableColors = TerPrevAdjustColors.Checked
-        MainFrm.CP.TerminalPreview.useAcrylicInTabRow = TerPrevAcrylic.Checked
+        Profile.Name = TerName.Text
+        Profile.TabTitle = TerTabTitle.Text
+        Profile.Icon = TerTabIcon.Text
+        Profile.TabColor = TerTabColor.BackColor
+        MainFrm.CP.TerminalPreview.useAcrylicInTabRow = TerAcrylic.Checked
         DialogResult = DialogResult.OK
     End Sub
 
@@ -55,23 +52,31 @@ Public Class TerminalInfo
         If DialogResult <> DialogResult.OK Then DialogResult = DialogResult.Cancel
     End Sub
 
-    Private Sub TerPrevTabColor_Click(sender As Object, e As EventArgs) Handles TerPrevTabColor.Click
+    Private Sub TerTabColor_Click(sender As Object, e As EventArgs) Handles TerTabColor.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
+            Dim cx As Color = SubMenu.ShowMenu(sender)
+
+            With If(WindowsTerminal.TerProfiles.SelectedIndex = 0, WindowsTerminal._Terminal.DefaultProf, WindowsTerminal._Terminal.Profiles(WindowsTerminal.TerProfiles.SelectedIndex - 1))
+                .TabColor = cx
+            End With
+
+            WindowsTerminal.ApplyPreview(WindowsTerminal._Terminal)
+
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, WindowsTerminal.XenonTerminal1, WindowsTerminal.XenonTerminal2}
+        Dim CList As New List(Of Control) From {sender, WindowsTerminal.XenonTerminal1}
 
-        Dim _Conditions As New Conditions
+        Dim _Conditions As New Conditions With {.Terminal_TabColor = True}
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        'ApplyPreview(MainFrm.CP.TerminalPreview)
+        WindowsTerminal.ApplyPreview(WindowsTerminal._Terminal)
 
         sender.backcolor = C
         sender.invalidate
 
         CList.Clear()
     End Sub
+
 End Class

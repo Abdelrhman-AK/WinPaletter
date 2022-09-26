@@ -116,9 +116,9 @@ Public Class ColorPickerDlg
             MainFrm.Width = DestinatedWidth
         End If
 
-        Dim c As Color = Ctrl(0).BackColor
-        ColorEditorManager1.Color = Ctrl(0).BackColor
-        InitColor = Ctrl(0).BackColor
+        Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+        ColorEditorManager1.Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+        InitColor = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
 
         CList = Ctrl
 
@@ -132,9 +132,9 @@ Public Class ColorPickerDlg
         If Me.ShowDialog() = DialogResult.OK Then
             c = ColorEditorManager1.Color
         Else
-            ColorEditorManager1.Color = InitColor
-            CHANGECOLORPREVIEW()
-            c = InitColor
+            'ColorEditorManager1.Color = InitColor
+            'CHANGECOLORPREVIEW()
+            'c = InitColor
         End If
 
         RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
@@ -168,7 +168,9 @@ Public Class ColorPickerDlg
         End If
 
         fr = Nothing
+
         Return c
+
     End Function
 
     Dim CList As New List(Of Control)
@@ -365,6 +367,9 @@ Public Class ColorPickerDlg
 
                     ElseIf _Conditions.Terminal_Cursor Then
                         .Color_Cursor = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    ElseIf _Conditions.Terminal_TabColor Then
+                        .TabColor = Color.FromArgb(255, ColorEditorManager1.Color)
 
                     ElseIf _Conditions.Terminal_TabActive Then
                         .Color_TabFocused = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -713,6 +718,7 @@ Public Class Conditions
     Public Property Terminal_Fore As Boolean = False
     Public Property Terminal_Selection As Boolean = False
     Public Property Terminal_Cursor As Boolean = False
+    Public Property Terminal_TabColor As Boolean = False
     Public Property Terminal_TabActive As Boolean = False
     Public Property Terminal_TabInactive As Boolean = False
     Public Property Terminal_TitlebarActive As Boolean = False

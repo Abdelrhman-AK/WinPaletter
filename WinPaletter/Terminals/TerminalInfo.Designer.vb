@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class TerminalInfo
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,26 +20,26 @@ Partial Class TerminalInfo
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TerminalInfo))
-        Me.TerPrevTabTitle = New WinPaletter.XenonTextBox()
+        Me.TerTabTitle = New WinPaletter.XenonTextBox()
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
         Me.Label174 = New System.Windows.Forms.Label()
-        Me.TerPrevName = New WinPaletter.XenonTextBox()
+        Me.TerName = New WinPaletter.XenonTextBox()
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
         Me.Label164 = New System.Windows.Forms.Label()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.Label153 = New System.Windows.Forms.Label()
         Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.TerPrevTabIcon = New WinPaletter.XenonTextBox()
+        Me.TerTabIcon = New WinPaletter.XenonTextBox()
         Me.Label166 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.TerPrevTabColor = New WinPaletter.XenonGroupBox()
+        Me.TerTabColor = New WinPaletter.XenonGroupBox()
         Me.PictureBox39 = New System.Windows.Forms.PictureBox()
-        Me.TerPrevAdjustColors = New WinPaletter.XenonCheckBox()
+        Me.TerAdjustColors = New WinPaletter.XenonCheckBox()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.TerPrevAcrylic = New WinPaletter.XenonCheckBox()
+        Me.TerAcrylic = New WinPaletter.XenonCheckBox()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
@@ -51,24 +51,24 @@ Partial Class TerminalInfo
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'TerPrevTabTitle
+        'TerTabTitle
         '
-        Me.TerPrevTabTitle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.TerTabTitle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerPrevTabTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerPrevTabTitle.ForeColor = System.Drawing.Color.White
-        Me.TerPrevTabTitle.Hint = Nothing
-        Me.TerPrevTabTitle.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerPrevTabTitle.Location = New System.Drawing.Point(120, 42)
-        Me.TerPrevTabTitle.MaxLength = 32767
-        Me.TerPrevTabTitle.Multiline = False
-        Me.TerPrevTabTitle.Name = "TerPrevTabTitle"
-        Me.TerPrevTabTitle.ReadOnly = False
-        Me.TerPrevTabTitle.Size = New System.Drawing.Size(376, 24)
-        Me.TerPrevTabTitle.TabIndex = 195
-        Me.TerPrevTabTitle.Text = "XenonTextBox4"
-        Me.TerPrevTabTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.TerPrevTabTitle.UseSystemPasswordChar = False
+        Me.TerTabTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.TerTabTitle.ForeColor = System.Drawing.Color.White
+        Me.TerTabTitle.Hint = Nothing
+        Me.TerTabTitle.LineColor = System.Drawing.Color.DodgerBlue
+        Me.TerTabTitle.Location = New System.Drawing.Point(120, 42)
+        Me.TerTabTitle.MaxLength = 32767
+        Me.TerTabTitle.Multiline = False
+        Me.TerTabTitle.Name = "TerTabTitle"
+        Me.TerTabTitle.ReadOnly = False
+        Me.TerTabTitle.Size = New System.Drawing.Size(376, 24)
+        Me.TerTabTitle.TabIndex = 195
+        Me.TerTabTitle.Text = "XenonTextBox4"
+        Me.TerTabTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.TerTabTitle.UseSystemPasswordChar = False
         '
         'PictureBox47
         '
@@ -91,24 +91,24 @@ Partial Class TerminalInfo
         Me.Label174.Text = "Tab Title:"
         Me.Label174.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'TerPrevName
+        'TerName
         '
-        Me.TerPrevName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.TerName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerPrevName.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerPrevName.ForeColor = System.Drawing.Color.White
-        Me.TerPrevName.Hint = Nothing
-        Me.TerPrevName.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerPrevName.Location = New System.Drawing.Point(120, 12)
-        Me.TerPrevName.MaxLength = 32767
-        Me.TerPrevName.Multiline = False
-        Me.TerPrevName.Name = "TerPrevName"
-        Me.TerPrevName.ReadOnly = False
-        Me.TerPrevName.Size = New System.Drawing.Size(376, 24)
-        Me.TerPrevName.TabIndex = 192
-        Me.TerPrevName.Text = "XenonTextBox1"
-        Me.TerPrevName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.TerPrevName.UseSystemPasswordChar = False
+        Me.TerName.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.TerName.ForeColor = System.Drawing.Color.White
+        Me.TerName.Hint = Nothing
+        Me.TerName.LineColor = System.Drawing.Color.DodgerBlue
+        Me.TerName.Location = New System.Drawing.Point(120, 12)
+        Me.TerName.MaxLength = 32767
+        Me.TerName.Multiline = False
+        Me.TerName.Name = "TerName"
+        Me.TerName.ReadOnly = False
+        Me.TerName.Size = New System.Drawing.Size(376, 24)
+        Me.TerName.TabIndex = 192
+        Me.TerName.Text = "XenonTextBox1"
+        Me.TerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.TerName.UseSystemPasswordChar = False
         '
         'PictureBox38
         '
@@ -167,24 +167,24 @@ Partial Class TerminalInfo
         Me.XenonButton11.TabIndex = 189
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
-        'TerPrevTabIcon
+        'TerTabIcon
         '
-        Me.TerPrevTabIcon.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.TerTabIcon.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerPrevTabIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerPrevTabIcon.ForeColor = System.Drawing.Color.White
-        Me.TerPrevTabIcon.Hint = Nothing
-        Me.TerPrevTabIcon.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerPrevTabIcon.Location = New System.Drawing.Point(120, 72)
-        Me.TerPrevTabIcon.MaxLength = 32767
-        Me.TerPrevTabIcon.Multiline = False
-        Me.TerPrevTabIcon.Name = "TerPrevTabIcon"
-        Me.TerPrevTabIcon.ReadOnly = False
-        Me.TerPrevTabIcon.Size = New System.Drawing.Size(338, 24)
-        Me.TerPrevTabIcon.TabIndex = 188
-        Me.TerPrevTabIcon.Text = "XenonTextBox3"
-        Me.TerPrevTabIcon.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.TerPrevTabIcon.UseSystemPasswordChar = False
+        Me.TerTabIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.TerTabIcon.ForeColor = System.Drawing.Color.White
+        Me.TerTabIcon.Hint = Nothing
+        Me.TerTabIcon.LineColor = System.Drawing.Color.DodgerBlue
+        Me.TerTabIcon.Location = New System.Drawing.Point(120, 72)
+        Me.TerTabIcon.MaxLength = 32767
+        Me.TerTabIcon.Multiline = False
+        Me.TerTabIcon.Name = "TerTabIcon"
+        Me.TerTabIcon.ReadOnly = False
+        Me.TerTabIcon.Size = New System.Drawing.Size(338, 24)
+        Me.TerTabIcon.TabIndex = 188
+        Me.TerTabIcon.Text = "XenonTextBox3"
+        Me.TerTabIcon.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.TerTabIcon.UseSystemPasswordChar = False
         '
         'Label166
         '
@@ -207,20 +207,20 @@ Partial Class TerminalInfo
         Me.PictureBox36.TabIndex = 198
         Me.PictureBox36.TabStop = False
         '
-        'TerPrevTabColor
+        'TerTabColor
         '
-        Me.TerPrevTabColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerPrevTabColor.CustomColor = True
-        Me.TerPrevTabColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerPrevTabColor.ForceNoNerd = False
-        Me.TerPrevTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerPrevTabColor.LineSize = 1
-        Me.TerPrevTabColor.Location = New System.Drawing.Point(124, 101)
-        Me.TerPrevTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.TerPrevTabColor.Name = "TerPrevTabColor"
-        Me.TerPrevTabColor.Size = New System.Drawing.Size(88, 25)
-        Me.TerPrevTabColor.TabIndex = 196
-        Me.TerPrevTabColor.Text = "XenonGroupBox31"
+        Me.TerTabColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.TerTabColor.CustomColor = True
+        Me.TerTabColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.TerTabColor.ForceNoNerd = False
+        Me.TerTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.TerTabColor.LineSize = 1
+        Me.TerTabColor.Location = New System.Drawing.Point(120, 101)
+        Me.TerTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.TerTabColor.Name = "TerTabColor"
+        Me.TerTabColor.Size = New System.Drawing.Size(92, 25)
+        Me.TerTabColor.TabIndex = 196
+        Me.TerTabColor.Text = "XenonGroupBox31"
         '
         'PictureBox39
         '
@@ -232,18 +232,18 @@ Partial Class TerminalInfo
         Me.PictureBox39.TabIndex = 199
         Me.PictureBox39.TabStop = False
         '
-        'TerPrevAdjustColors
+        'TerAdjustColors
         '
-        Me.TerPrevAdjustColors.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.TerPrevAdjustColors.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TerPrevAdjustColors.Checked = False
-        Me.TerPrevAdjustColors.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TerPrevAdjustColors.ForeColor = System.Drawing.Color.White
-        Me.TerPrevAdjustColors.Location = New System.Drawing.Point(45, 162)
-        Me.TerPrevAdjustColors.Name = "TerPrevAdjustColors"
-        Me.TerPrevAdjustColors.Size = New System.Drawing.Size(174, 24)
-        Me.TerPrevAdjustColors.TabIndex = 200
-        Me.TerPrevAdjustColors.Text = "Adjust Colors Accessibility"
+        Me.TerAdjustColors.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.TerAdjustColors.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TerAdjustColors.Checked = False
+        Me.TerAdjustColors.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerAdjustColors.ForeColor = System.Drawing.Color.White
+        Me.TerAdjustColors.Location = New System.Drawing.Point(45, 162)
+        Me.TerAdjustColors.Name = "TerAdjustColors"
+        Me.TerAdjustColors.Size = New System.Drawing.Size(174, 24)
+        Me.TerAdjustColors.TabIndex = 200
+        Me.TerAdjustColors.Text = "Adjust Colors Accessibility"
         '
         'PictureBox40
         '
@@ -255,18 +255,18 @@ Partial Class TerminalInfo
         Me.PictureBox40.TabIndex = 201
         Me.PictureBox40.TabStop = False
         '
-        'TerPrevAcrylic
+        'TerAcrylic
         '
-        Me.TerPrevAcrylic.AccentColor = System.Drawing.Color.DodgerBlue
-        Me.TerPrevAcrylic.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TerPrevAcrylic.Checked = False
-        Me.TerPrevAcrylic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TerPrevAcrylic.ForeColor = System.Drawing.Color.White
-        Me.TerPrevAcrylic.Location = New System.Drawing.Point(45, 131)
-        Me.TerPrevAcrylic.Name = "TerPrevAcrylic"
-        Me.TerPrevAcrylic.Size = New System.Drawing.Size(184, 24)
-        Me.TerPrevAcrylic.TabIndex = 202
-        Me.TerPrevAcrylic.Text = "Acrylic Titlebar (All Profiles)"
+        Me.TerAcrylic.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.TerAcrylic.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TerAcrylic.Checked = False
+        Me.TerAcrylic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerAcrylic.ForeColor = System.Drawing.Color.White
+        Me.TerAcrylic.Location = New System.Drawing.Point(45, 131)
+        Me.TerAcrylic.Name = "TerAcrylic"
+        Me.TerAcrylic.Size = New System.Drawing.Size(184, 24)
+        Me.TerAcrylic.TabIndex = 202
+        Me.TerAcrylic.Text = "Acrylic Titlebar (All Profiles)"
         '
         'XenonButton2
         '
@@ -322,22 +322,22 @@ Partial Class TerminalInfo
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.PictureBox39)
-        Me.Controls.Add(Me.TerPrevAdjustColors)
+        Me.Controls.Add(Me.TerAdjustColors)
         Me.Controls.Add(Me.PictureBox40)
-        Me.Controls.Add(Me.TerPrevAcrylic)
+        Me.Controls.Add(Me.TerAcrylic)
         Me.Controls.Add(Me.Label166)
         Me.Controls.Add(Me.PictureBox36)
-        Me.Controls.Add(Me.TerPrevTabColor)
-        Me.Controls.Add(Me.TerPrevTabTitle)
+        Me.Controls.Add(Me.TerTabColor)
+        Me.Controls.Add(Me.TerTabTitle)
         Me.Controls.Add(Me.PictureBox47)
         Me.Controls.Add(Me.Label174)
-        Me.Controls.Add(Me.TerPrevName)
+        Me.Controls.Add(Me.TerName)
         Me.Controls.Add(Me.PictureBox38)
         Me.Controls.Add(Me.Label164)
         Me.Controls.Add(Me.PictureBox28)
         Me.Controls.Add(Me.Label153)
         Me.Controls.Add(Me.XenonButton11)
-        Me.Controls.Add(Me.TerPrevTabIcon)
+        Me.Controls.Add(Me.TerTabIcon)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -359,23 +359,23 @@ Partial Class TerminalInfo
 
     End Sub
 
-    Friend WithEvents TerPrevTabTitle As XenonTextBox
+    Friend WithEvents TerTabTitle As XenonTextBox
     Friend WithEvents PictureBox47 As PictureBox
     Friend WithEvents Label174 As Label
-    Friend WithEvents TerPrevName As XenonTextBox
+    Friend WithEvents TerName As XenonTextBox
     Friend WithEvents PictureBox38 As PictureBox
     Friend WithEvents Label164 As Label
     Friend WithEvents PictureBox28 As PictureBox
     Friend WithEvents Label153 As Label
     Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents TerPrevTabIcon As XenonTextBox
+    Friend WithEvents TerTabIcon As XenonTextBox
     Friend WithEvents Label166 As Label
     Friend WithEvents PictureBox36 As PictureBox
-    Friend WithEvents TerPrevTabColor As XenonGroupBox
+    Friend WithEvents TerTabColor As XenonGroupBox
     Friend WithEvents PictureBox39 As PictureBox
-    Friend WithEvents TerPrevAdjustColors As XenonCheckBox
+    Friend WithEvents TerAdjustColors As XenonCheckBox
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents TerPrevAcrylic As XenonCheckBox
+    Friend WithEvents TerAcrylic As XenonCheckBox
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents XenonSeparator1 As XenonSeparator

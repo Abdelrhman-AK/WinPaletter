@@ -93,6 +93,10 @@ Public Class SubMenu
                     ColorHandle.BackColor = _overrideColor
                     Return ColorHandle.BackColor
 
+                Case My.MyApplication.MenuEvent.Delete
+                    ColorHandle.BackColor = Color.FromArgb(0, 0, 0, 0)
+                    Return ColorHandle.BackColor
+
                 Case My.MyApplication.MenuEvent.None
                     Return Nothing
 
@@ -340,4 +344,10 @@ Public Class SubMenu
         End If
     End Sub
 
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        _eventDone = True
+        My.Application.ColorEvent = My.MyApplication.MenuEvent.Delete
+        DialogResult = DialogResult.OK
+        Close()
+    End Sub
 End Class

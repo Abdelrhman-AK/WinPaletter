@@ -53,6 +53,7 @@ Partial Class SubMenu
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -197,6 +198,7 @@ Partial Class SubMenu
         'XenonComboBox1
         '
         Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox1.CustomFont = False
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -452,12 +454,27 @@ Partial Class SubMenu
         Me.XenonButton1.TabIndex = 0
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
+        'XenonButton5
+        '
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(149, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(121, 13)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton5.TabIndex = 55
+        Me.XenonButton5.UseVisualStyleBackColor = False
+        '
         'SubMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(408, 261)
+        Me.Controls.Add(Me.XenonButton5)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.DefaultDarkestColor)
@@ -537,4 +554,5 @@ Partial Class SubMenu
     Friend WithEvents DefaultLightColor As XenonGroupBox
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents XenonButton5 As XenonButton
 End Class

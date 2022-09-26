@@ -5437,10 +5437,10 @@ Public Class XenonTerminal
         End Set
     End Property
 
-    Public Property Color_Titlebar As Color
-    Public Property Color_Titlebar_Unfocused As Color
-    Public Property Color_TabFocused As Color
-    Public Property Color_TabUnFocused As Color
+    Public Property Color_Titlebar As Color = Color.FromArgb(0, 0, 0, 0)
+    Public Property Color_Titlebar_Unfocused As Color = Color.FromArgb(0, 0, 0, 0)
+    Public Property Color_TabFocused As Color = Color.FromArgb(0, 0, 0, 0)
+    Public Property Color_TabUnFocused As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Color_Background As Color = Color.Black
     Public Property Color_Foreground As Color = Color.White
     Public Property Color_Selection As Color = Color.Gray
@@ -5452,8 +5452,9 @@ Public Class XenonTerminal
     Public Property UseAcrylic As Boolean = False
     Public Property TabTitle As String = ""
     Public Property TabIcon As Image
-    Public Property TabIconButItIsString As String = ""
+    Public Property TabColor As Color = Color.FromArgb(0, 0, 0, 0)
 
+    Public Property TabIconButItIsString As String = ""
     Public Property IsFocused As Boolean = True
     Enum CursorShape_Enum
         bar
@@ -5553,17 +5554,35 @@ Public Class XenonTerminal
         G.SmoothingMode = SmoothingMode.HighQuality
         DoubleBuffered = True
 
+
         If Not Light Then
-            If Color_Titlebar = Nothing Then Color_Titlebar = Color.FromArgb(46, 46, 46)
-            If Color_TabFocused = Nothing Then Color_TabFocused = Color_Background
-            If Color_TabUnFocused = Nothing Then Color_TabUnFocused = Color_Titlebar
-            If Color_Titlebar_Unfocused = Nothing Then Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46)
+            If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(46, 46, 46)
+            If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
+
+            If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
+                If Color_TabFocused = Color_Background Then
+                    Color_TabUnFocused = Color_Titlebar
+                Else
+                    Color_TabUnFocused = ControlPaint.Dark(Color_TabFocused)
+                End If
+            End If
+
+            If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46)
         Else
-            If Color_Titlebar = Nothing Then Color_Titlebar = Color.FromArgb(232, 232, 232)
-            If Color_TabFocused = Nothing Then Color_TabFocused = Color_Background
-            If Color_TabUnFocused = Nothing Then Color_TabUnFocused = Color_Titlebar
-            If Color_Titlebar_Unfocused = Nothing Then Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255)
+            If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(232, 232, 232)
+            If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
+
+            If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
+                If Color_TabFocused = Color_Background Then
+                    Color_TabUnFocused = Color_Titlebar
+                Else
+                    Color_TabUnFocused = ControlPaint.Light(Color_TabFocused)
+                End If
+            End If
+
+            If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255)
         End If
+
 
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim Rect_Titlebar As New Rectangle(0, 0, Width - 1, 32)
@@ -5602,11 +5621,18 @@ Public Class XenonTerminal
             Else
                 FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 180, 255), 232, 232, 232)), Rect_Titlebar)
             End If
-
         End If
 
         If Not UseAcrylicOnTitlebar Then
             FillSemiRect(G, New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
+        End If
+
+        Dim TabFocusedFinalColor As Color
+
+        If TabColor <> Color.FromArgb(0, 0, 0, 0) Then
+            TabFocusedFinalColor = TabColor
+        Else
+            TabFocusedFinalColor = Color_TabFocused
         End If
 
         Dim Radius As Integer = 5
@@ -5616,7 +5642,7 @@ Public Class XenonTerminal
         Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius
 
         Dim IconRect0 As New Rectangle(Rect_Tab0.X + 10, Rect_Tab0.Y + 3, 16, 16)
-        Dim FC0 As Color = If(IsColorDark(Color_TabFocused), Color.White, Color.Black)
+        Dim FC0 As Color = If(IsColorDark(TabFocusedFinalColor), Color.White, Color.Black)
         Dim RectText_Tab0 As New Rectangle(IconRect0.Right + 1, IconRect0.Y + 1, Rect_Tab0.Width - 35 - IconRect0.Width, IconRect0.Height)
         Dim RectClose_Tab0 As New Rectangle(RectText_Tab0.Right + 2, RectText_Tab0.Y - 1, 15, RectText_Tab0.Height)
 
@@ -5626,7 +5652,7 @@ Public Class XenonTerminal
         Dim RectClose_Tab1 As New Rectangle(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height)
 
         If IsFocused Then
-            G.FillPath(New SolidBrush(Color_TabFocused), RR(Rect_Tab0, Radius))
+            G.FillPath(New SolidBrush(TabFocusedFinalColor), RR(Rect_Tab0, Radius))
             If Not UseAcrylicOnTitlebar Then
                 G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
             Else
