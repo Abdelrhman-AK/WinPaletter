@@ -165,22 +165,22 @@ Public Class CP
 #End Region
 
 #Region "Command Prompt"
-    Public Property CMD_ColorTable00 As Color
-    Public Property CMD_ColorTable01 As Color
-    Public Property CMD_ColorTable02 As Color
-    Public Property CMD_ColorTable03 As Color
-    Public Property CMD_ColorTable04 As Color
-    Public Property CMD_ColorTable05 As Color
-    Public Property CMD_ColorTable06 As Color
-    Public Property CMD_ColorTable07 As Color
-    Public Property CMD_ColorTable08 As Color
-    Public Property CMD_ColorTable09 As Color
-    Public Property CMD_ColorTable10 As Color
-    Public Property CMD_ColorTable11 As Color
-    Public Property CMD_ColorTable12 As Color
-    Public Property CMD_ColorTable13 As Color
-    Public Property CMD_ColorTable14 As Color
-    Public Property CMD_ColorTable15 As Color
+    Public Property CMD_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
+    Public Property CMD_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
+    Public Property CMD_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
+    Public Property CMD_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
+    Public Property CMD_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
+    Public Property CMD_ColorTable05 As Color = Color.FromArgb(136, 23, 152)
+    Public Property CMD_ColorTable06 As Color = Color.FromArgb(193, 156, 0)
+    Public Property CMD_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
+    Public Property CMD_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
+    Public Property CMD_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
+    Public Property CMD_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
+    Public Property CMD_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
+    Public Property CMD_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
+    Public Property CMD_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
+    Public Property CMD_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
+    Public Property CMD_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
     Public Property CMD_PopupForeground As Integer = 15
     Public Property CMD_PopupBackground As Integer = 5
     Public Property CMD_ScreenColorsForeground As Integer = 7
@@ -188,82 +188,82 @@ Public Class CP
     Public Property CMD_CursorSize As Integer = 19
     Public Property CMD_FaceName As String = "Consolas"
     Public Property CMD_FontRaster As Boolean = False
-    Public Property CMD_FontSize As Integer = 12 * 65536
+    Public Property CMD_FontSize As Integer = 18 * 65536
     Public Property CMD_FontWeight As Integer = 400
     Public Property CMD_1909_CursorType As Integer = 0
     Public Property CMD_1909_CursorColor As Color = Color.White
     Public Property CMD_1909_ForceV2 As Boolean = True
     Public Property CMD_1909_LineSelection As Boolean = False
     Public Property CMD_1909_TerminalScrolling As Boolean = False
-    Public Property CMD_1909_WindowAlpha As Integer = 100
+    Public Property CMD_1909_WindowAlpha As Integer = 255
 #End Region
 
 #Region "PowerShell 32-bit"
-    Public Property PS_32_ColorTable00 As Color
-    Public Property PS_32_ColorTable01 As Color
-    Public Property PS_32_ColorTable02 As Color
-    Public Property PS_32_ColorTable03 As Color
-    Public Property PS_32_ColorTable04 As Color
-    Public Property PS_32_ColorTable05 As Color
-    Public Property PS_32_ColorTable06 As Color
-    Public Property PS_32_ColorTable07 As Color
-    Public Property PS_32_ColorTable08 As Color
-    Public Property PS_32_ColorTable09 As Color
-    Public Property PS_32_ColorTable10 As Color
-    Public Property PS_32_ColorTable11 As Color
-    Public Property PS_32_ColorTable12 As Color
-    Public Property PS_32_ColorTable13 As Color
-    Public Property PS_32_ColorTable14 As Color
-    Public Property PS_32_ColorTable15 As Color
+    Public Property PS_32_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
+    Public Property PS_32_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
+    Public Property PS_32_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
+    Public Property PS_32_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
+    Public Property PS_32_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
+    Public Property PS_32_ColorTable05 As Color = Color.FromArgb(1, 36, 86)
+    Public Property PS_32_ColorTable06 As Color = Color.FromArgb(238, 237, 240)
+    Public Property PS_32_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
+    Public Property PS_32_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
+    Public Property PS_32_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
+    Public Property PS_32_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
+    Public Property PS_32_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
+    Public Property PS_32_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
+    Public Property PS_32_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
+    Public Property PS_32_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
+    Public Property PS_32_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
     Public Property PS_32_PopupForeground As Integer = 15
     Public Property PS_32_PopupBackground As Integer = 3
     Public Property PS_32_ScreenColorsForeground As Integer = 6
-    Public Property PS_32_ScreenColorsBackground As Integer = 8
+    Public Property PS_32_ScreenColorsBackground As Integer = 5
     Public Property PS_32_CursorSize As Integer = 19
     Public Property PS_32_FaceName As String = "Consolas"
     Public Property PS_32_FontRaster As Boolean = False
-    Public Property PS_32_FontSize As Integer = 12 * 65536
+    Public Property PS_32_FontSize As Integer = 16 * 65536
     Public Property PS_32_FontWeight As Integer = 400
     Public Property PS_32_1909_CursorType As Integer = 0
     Public Property PS_32_1909_CursorColor As Color = Color.White
     Public Property PS_32_1909_ForceV2 As Boolean = True
     Public Property PS_32_1909_LineSelection As Boolean = False
     Public Property PS_32_1909_TerminalScrolling As Boolean = False
-    Public Property PS_32_1909_WindowAlpha As Integer = 100
+    Public Property PS_32_1909_WindowAlpha As Integer = 255
 #End Region
 
 #Region "PowerShell 64-bit"
-    Public Property PS_64_ColorTable00 As Color
-    Public Property PS_64_ColorTable01 As Color
-    Public Property PS_64_ColorTable02 As Color
-    Public Property PS_64_ColorTable03 As Color
-    Public Property PS_64_ColorTable04 As Color
-    Public Property PS_64_ColorTable05 As Color
-    Public Property PS_64_ColorTable06 As Color
-    Public Property PS_64_ColorTable07 As Color
-    Public Property PS_64_ColorTable08 As Color
-    Public Property PS_64_ColorTable09 As Color
-    Public Property PS_64_ColorTable10 As Color
-    Public Property PS_64_ColorTable11 As Color
-    Public Property PS_64_ColorTable12 As Color
-    Public Property PS_64_ColorTable13 As Color
-    Public Property PS_64_ColorTable14 As Color
-    Public Property PS_64_ColorTable15 As Color
+    Public Property PS_64_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
+    Public Property PS_64_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
+    Public Property PS_64_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
+    Public Property PS_64_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
+    Public Property PS_64_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
+    Public Property PS_64_ColorTable05 As Color = Color.FromArgb(1, 36, 86)
+    Public Property PS_64_ColorTable06 As Color = Color.FromArgb(238, 237, 240)
+    Public Property PS_64_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
+    Public Property PS_64_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
+    Public Property PS_64_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
+    Public Property PS_64_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
+    Public Property PS_64_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
+    Public Property PS_64_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
+    Public Property PS_64_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
+    Public Property PS_64_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
+    Public Property PS_64_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
     Public Property PS_64_PopupForeground As Integer = 15
     Public Property PS_64_PopupBackground As Integer = 3
     Public Property PS_64_ScreenColorsForeground As Integer = 6
-    Public Property PS_64_ScreenColorsBackground As Integer = 8
+    Public Property PS_64_ScreenColorsBackground As Integer = 5
     Public Property PS_64_CursorSize As Integer = 19
     Public Property PS_64_FaceName As String = "Consolas"
     Public Property PS_64_FontRaster As Boolean = False
-    Public Property PS_64_FontSize As Integer = 12 * 65536
+    Public Property PS_64_FontSize As Integer = 16 * 65536
     Public Property PS_64_FontWeight As Integer = 400
     Public Property PS_64_1909_CursorType As Integer = 0
     Public Property PS_64_1909_CursorColor As Color = Color.White
     Public Property PS_64_1909_ForceV2 As Boolean = True
     Public Property PS_64_1909_LineSelection As Boolean = False
     Public Property PS_64_1909_TerminalScrolling As Boolean = False
-    Public Property PS_64_1909_WindowAlpha As Integer = 100
+    Public Property PS_64_1909_WindowAlpha As Integer = 255
 #End Region
 
     Public Property Terminal As WinTerminal
@@ -1772,10 +1772,10 @@ Public Class CP
 
 
                     Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "WindowAlpha", 100)
+                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "WindowAlpha", 255)
                         CMD_1909_WindowAlpha = y_cmd
                     Catch
-                        CMD_1909_WindowAlpha = 100
+                        CMD_1909_WindowAlpha = 255
                     End Try
                 End If
 #End Region
@@ -1996,10 +1996,10 @@ Public Class CP
 
 
                         Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 100)
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 255)
                             PS_32_1909_WindowAlpha = y_cmd
                         Catch
-                            PS_32_1909_WindowAlpha = 100
+                            PS_32_1909_WindowAlpha = 255
                         End Try
                     End If
                 End If
@@ -2223,10 +2223,10 @@ Public Class CP
 
 
                         Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 100)
+                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 255)
                             PS_64_1909_WindowAlpha = y_cmd
                         Catch
-                            PS_64_1909_WindowAlpha = 100
+                            PS_64_1909_WindowAlpha = 255
                         End Try
                     End If
                 End If
@@ -2747,6 +2747,19 @@ Public Class CP
                     If lin.StartsWith("*Win32UI_Desktop= ") Then Win32UI_Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
 
+#Region "Terminals"
+                    If My.W10 Or My.W11 Then
+                        Terminal = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile)
+                        TerminalPreview = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+                        TerminalDeveloper = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Developer)
+                    Else
+                        Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                        TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                        TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
+                    End If
+
+#End Region
+
 #Region "Cursors"
                     If lin.StartsWith("*Cursor_Enabled= ") Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
 
@@ -3143,6 +3156,127 @@ Public Class CP
                 Win32UI_Hilight = Color.FromArgb(0, 120, 215)
                 Win32UI_MenuHilight = Color.FromArgb(0, 120, 215)
                 Win32UI_Desktop = Color.FromArgb(0, 0, 0)
+#End Region
+
+#Region "Terminals"
+
+#Region "Locking"
+                Terminal_CMD_Enabled = False
+                Terminal_PS_32_Enabled = False
+                Terminal_PS_64_Enabled = False
+                Terminal_Stable_Enabled = False
+                Terminal_Preview_Enabled = False
+                Terminal_Developer_Enabled = False
+#End Region
+
+#Region "Command Prompt"
+                CMD_ColorTable00 = Color.FromArgb(12, 12, 12)
+                CMD_ColorTable01 = Color.FromArgb(0, 55, 218)
+                CMD_ColorTable02 = Color.FromArgb(19, 161, 14)
+                CMD_ColorTable03 = Color.FromArgb(58, 150, 221)
+                CMD_ColorTable04 = Color.FromArgb(197, 15, 31)
+                CMD_ColorTable05 = Color.FromArgb(136, 23, 152)
+                CMD_ColorTable06 = Color.FromArgb(193, 156, 0)
+                CMD_ColorTable07 = Color.FromArgb(204, 204, 204)
+                CMD_ColorTable08 = Color.FromArgb(118, 118, 118)
+                CMD_ColorTable09 = Color.FromArgb(59, 120, 255)
+                CMD_ColorTable10 = Color.FromArgb(22, 198, 12)
+                CMD_ColorTable11 = Color.FromArgb(97, 214, 214)
+                CMD_ColorTable12 = Color.FromArgb(231, 72, 86)
+                CMD_ColorTable13 = Color.FromArgb(180, 0, 158)
+                CMD_ColorTable14 = Color.FromArgb(249, 241, 165)
+                CMD_ColorTable15 = Color.FromArgb(242, 242, 242)
+                CMD_PopupForeground = 15
+                CMD_PopupBackground = 5
+                CMD_ScreenColorsForeground = 7
+                CMD_ScreenColorsBackground = 0
+                CMD_CursorSize = 19
+                CMD_FaceName = "Consolas"
+                CMD_FontRaster = False
+                CMD_FontSize = 12 * 65536
+                CMD_FontWeight = 400
+                CMD_1909_CursorType = 0
+                CMD_1909_CursorColor = Color.White
+                CMD_1909_ForceV2 = True
+                CMD_1909_LineSelection = False
+                CMD_1909_TerminalScrolling = False
+                CMD_1909_WindowAlpha = 100
+#End Region
+
+#Region "PowerShell x86"
+                PS_32_ColorTable00 = Color.FromArgb(12, 12, 12)
+                PS_32_ColorTable01 = Color.FromArgb(0, 55, 218)
+                PS_32_ColorTable02 = Color.FromArgb(19, 161, 14)
+                PS_32_ColorTable03 = Color.FromArgb(58, 150, 221)
+                PS_32_ColorTable04 = Color.FromArgb(197, 15, 31)
+                PS_32_ColorTable05 = Color.FromArgb(1, 36, 86)
+                PS_32_ColorTable06 = Color.FromArgb(238, 237, 240)
+                PS_32_ColorTable07 = Color.FromArgb(204, 204, 204)
+                PS_32_ColorTable08 = Color.FromArgb(118, 118, 118)
+                PS_32_ColorTable09 = Color.FromArgb(59, 120, 255)
+                PS_32_ColorTable10 = Color.FromArgb(22, 198, 12)
+                PS_32_ColorTable11 = Color.FromArgb(97, 214, 214)
+                PS_32_ColorTable12 = Color.FromArgb(231, 72, 86)
+                PS_32_ColorTable13 = Color.FromArgb(180, 0, 158)
+                PS_32_ColorTable14 = Color.FromArgb(249, 241, 165)
+                PS_32_ColorTable15 = Color.FromArgb(242, 242, 242)
+                PS_32_PopupForeground = 15
+                PS_32_PopupBackground = 3
+                PS_32_ScreenColorsForeground = 6
+                PS_32_ScreenColorsBackground = 8
+                PS_32_CursorSize = 19
+                PS_32_FaceName = "Consolas"
+                PS_32_FontRaster = False
+                PS_32_FontSize = 12 * 65536
+                PS_32_FontWeight = 400
+                PS_32_1909_CursorType = 0
+                PS_32_1909_CursorColor = Color.White
+                PS_32_1909_ForceV2 = True
+                PS_32_1909_LineSelection = False
+                PS_32_1909_TerminalScrolling = False
+                PS_32_1909_WindowAlpha = 100
+#End Region
+
+#Region "PowerShell x64"
+                PS_64_ColorTable00 = Color.FromArgb(12, 12, 12)
+                PS_64_ColorTable01 = Color.FromArgb(0, 55, 218)
+                PS_64_ColorTable02 = Color.FromArgb(19, 161, 14)
+                PS_64_ColorTable03 = Color.FromArgb(58, 150, 221)
+                PS_64_ColorTable04 = Color.FromArgb(197, 15, 31)
+                PS_64_ColorTable05 = Color.FromArgb(1, 36, 86)
+                PS_64_ColorTable06 = Color.FromArgb(238, 237, 240)
+                PS_64_ColorTable07 = Color.FromArgb(204, 204, 204)
+                PS_64_ColorTable08 = Color.FromArgb(118, 118, 118)
+                PS_64_ColorTable09 = Color.FromArgb(59, 120, 255)
+                PS_64_ColorTable10 = Color.FromArgb(22, 198, 12)
+                PS_64_ColorTable11 = Color.FromArgb(97, 214, 214)
+                PS_64_ColorTable12 = Color.FromArgb(231, 72, 86)
+                PS_64_ColorTable13 = Color.FromArgb(180, 0, 158)
+                PS_64_ColorTable14 = Color.FromArgb(249, 241, 165)
+                PS_64_ColorTable15 = Color.FromArgb(242, 242, 242)
+                PS_64_PopupForeground = 15
+                PS_64_PopupBackground = 3
+                PS_64_ScreenColorsForeground = 6
+                PS_64_ScreenColorsBackground = 8
+                PS_64_CursorSize = 19
+                PS_64_FaceName = "Consolas"
+                PS_64_FontRaster = False
+                PS_64_FontSize = 12 * 65536
+                PS_64_FontWeight = 400
+                PS_64_1909_CursorType = 0
+                PS_64_1909_CursorColor = Color.White
+                PS_64_1909_ForceV2 = True
+                PS_64_1909_LineSelection = False
+                PS_64_1909_TerminalScrolling = False
+                PS_64_1909_WindowAlpha = 100
+#End Region
+
+#Region "Windows Terminal"
+                Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
+#End Region
+
 #End Region
 
 #Region "Cursors"
@@ -4765,6 +4899,132 @@ Public Class CP
                 tx.Add("</Win32UI>")
 #End Region
 
+#Region "Terminals"
+                tx.Add(vbCrLf & "<Terminals>")
+                tx.Add("*Terminal_CMD_Enabled= " & Terminal_CMD_Enabled)
+                tx.Add("*Terminal_PS_32_Enabled= " & Terminal_PS_32_Enabled)
+                tx.Add("*Terminal_PS_64_Enabled= " & Terminal_PS_64_Enabled)
+                tx.Add("*Terminal_Stable_Enabled= " & Terminal_Stable_Enabled)
+                tx.Add("*Terminal_Preview_Enabled= " & Terminal_Preview_Enabled)
+                tx.Add("*Terminal_Developer_Enabled= " & Terminal_Developer_Enabled)
+
+                tx.Add(vbCrLf & "<CMD>")
+                tx.Add("*CMD_ColorTable00= " & CMD_ColorTable00.ToArgb)
+                tx.Add("*CMD_ColorTable01= " & CMD_ColorTable01.ToArgb)
+                tx.Add("*CMD_ColorTable02= " & CMD_ColorTable02.ToArgb)
+                tx.Add("*CMD_ColorTable03= " & CMD_ColorTable03.ToArgb)
+                tx.Add("*CMD_ColorTable04= " & CMD_ColorTable04.ToArgb)
+                tx.Add("*CMD_ColorTable05= " & CMD_ColorTable05.ToArgb)
+                tx.Add("*CMD_ColorTable06= " & CMD_ColorTable06.ToArgb)
+                tx.Add("*CMD_ColorTable07= " & CMD_ColorTable07.ToArgb)
+                tx.Add("*CMD_ColorTable08= " & CMD_ColorTable08.ToArgb)
+                tx.Add("*CMD_ColorTable09= " & CMD_ColorTable09.ToArgb)
+                tx.Add("*CMD_ColorTable10= " & CMD_ColorTable10.ToArgb)
+                tx.Add("*CMD_ColorTable11= " & CMD_ColorTable11.ToArgb)
+                tx.Add("*CMD_ColorTable12= " & CMD_ColorTable12.ToArgb)
+                tx.Add("*CMD_ColorTable13= " & CMD_ColorTable13.ToArgb)
+                tx.Add("*CMD_ColorTable14= " & CMD_ColorTable14.ToArgb)
+                tx.Add("*CMD_ColorTable15= " & CMD_ColorTable15.ToArgb)
+                tx.Add("*CMD_PopupForeground= " & CMD_PopupForeground)
+                tx.Add("*CMD_PopupBackground= " & CMD_PopupBackground)
+                tx.Add("*CMD_ScreenColorsBackground= " & CMD_ScreenColorsBackground)
+                tx.Add("*CMD_ScreenColorsBackground= " & CMD_ScreenColorsBackground)
+                tx.Add("*CMD_CursorSize= " & CMD_CursorSize)
+                tx.Add("*CMD_FaceName= " & CMD_FaceName)
+                tx.Add("*CMD_FontRaster= " & CMD_FontRaster)
+                tx.Add("*CMD_FontSize= " & CMD_FontSize)
+                tx.Add("*CMD_FontWeight= " & CMD_FontWeight)
+                tx.Add("*CMD_1909_CursorType= " & CMD_1909_CursorType)
+                tx.Add("*CMD_1909_CursorColor= " & CMD_1909_CursorColor.ToArgb)
+                tx.Add("*CMD_1909_ForceV2= " & CMD_1909_ForceV2)
+                tx.Add("*CMD_1909_LineSelection= " & CMD_1909_LineSelection)
+                tx.Add("*CMD_1909_TerminalScrolling= " & CMD_1909_TerminalScrolling)
+                tx.Add("*CMD_1909_WindowAlpha= " & CMD_1909_WindowAlpha)
+                tx.Add("</CMD>" & vbCrLf)
+
+                tx.Add("<PowerShellx86>")
+                tx.Add("*PS_32_ColorTable00= " & PS_32_ColorTable00.ToArgb)
+                tx.Add("*PS_32_ColorTable01= " & PS_32_ColorTable01.ToArgb)
+                tx.Add("*PS_32_ColorTable02= " & PS_32_ColorTable02.ToArgb)
+                tx.Add("*PS_32_ColorTable03= " & PS_32_ColorTable03.ToArgb)
+                tx.Add("*PS_32_ColorTable04= " & PS_32_ColorTable04.ToArgb)
+                tx.Add("*PS_32_ColorTable05= " & PS_32_ColorTable05.ToArgb)
+                tx.Add("*PS_32_ColorTable06= " & PS_32_ColorTable06.ToArgb)
+                tx.Add("*PS_32_ColorTable07= " & PS_32_ColorTable07.ToArgb)
+                tx.Add("*PS_32_ColorTable08= " & PS_32_ColorTable08.ToArgb)
+                tx.Add("*PS_32_ColorTable09= " & PS_32_ColorTable09.ToArgb)
+                tx.Add("*PS_32_ColorTable10= " & PS_32_ColorTable10.ToArgb)
+                tx.Add("*PS_32_ColorTable11= " & PS_32_ColorTable11.ToArgb)
+                tx.Add("*PS_32_ColorTable12= " & PS_32_ColorTable12.ToArgb)
+                tx.Add("*PS_32_ColorTable13= " & PS_32_ColorTable13.ToArgb)
+                tx.Add("*PS_32_ColorTable14= " & PS_32_ColorTable14.ToArgb)
+                tx.Add("*PS_32_ColorTable15= " & PS_32_ColorTable15.ToArgb)
+                tx.Add("*PS_32_PopupForeground= " & PS_32_PopupForeground)
+                tx.Add("*PS_32_PopupBackground= " & PS_32_PopupBackground)
+                tx.Add("*PS_32_ScreenColorsBackground= " & PS_32_ScreenColorsBackground)
+                tx.Add("*PS_32_ScreenColorsBackground= " & PS_32_ScreenColorsBackground)
+                tx.Add("*PS_32_CursorSize= " & PS_32_CursorSize)
+                tx.Add("*PS_32_FaceName= " & PS_32_FaceName)
+                tx.Add("*PS_32_FontRaster= " & PS_32_FontRaster)
+                tx.Add("*PS_32_FontSize= " & PS_32_FontSize)
+                tx.Add("*PS_32_FontWeight= " & PS_32_FontWeight)
+                tx.Add("*PS_32_1909_CursorType= " & PS_32_1909_CursorType)
+                tx.Add("*PS_32_1909_CursorColor= " & PS_32_1909_CursorColor.ToArgb)
+                tx.Add("*PS_32_1909_ForceV2= " & PS_32_1909_ForceV2)
+                tx.Add("*PS_32_1909_LineSelection= " & PS_32_1909_LineSelection)
+                tx.Add("*PS_32_1909_TerminalScrolling= " & PS_32_1909_TerminalScrolling)
+                tx.Add("*PS_32_1909_WindowAlpha= " & PS_32_1909_WindowAlpha)
+                tx.Add("</PowerShellx86>" & vbCrLf)
+
+                tx.Add("<PowerShellx64>")
+                tx.Add("*PS_64_ColorTable00= " & PS_64_ColorTable00.ToArgb)
+                tx.Add("*PS_64_ColorTable01= " & PS_64_ColorTable01.ToArgb)
+                tx.Add("*PS_64_ColorTable02= " & PS_64_ColorTable02.ToArgb)
+                tx.Add("*PS_64_ColorTable03= " & PS_64_ColorTable03.ToArgb)
+                tx.Add("*PS_64_ColorTable04= " & PS_64_ColorTable04.ToArgb)
+                tx.Add("*PS_64_ColorTable05= " & PS_64_ColorTable05.ToArgb)
+                tx.Add("*PS_64_ColorTable06= " & PS_64_ColorTable06.ToArgb)
+                tx.Add("*PS_64_ColorTable07= " & PS_64_ColorTable07.ToArgb)
+                tx.Add("*PS_64_ColorTable08= " & PS_64_ColorTable08.ToArgb)
+                tx.Add("*PS_64_ColorTable09= " & PS_64_ColorTable09.ToArgb)
+                tx.Add("*PS_64_ColorTable10= " & PS_64_ColorTable10.ToArgb)
+                tx.Add("*PS_64_ColorTable11= " & PS_64_ColorTable11.ToArgb)
+                tx.Add("*PS_64_ColorTable12= " & PS_64_ColorTable12.ToArgb)
+                tx.Add("*PS_64_ColorTable13= " & PS_64_ColorTable13.ToArgb)
+                tx.Add("*PS_64_ColorTable14= " & PS_64_ColorTable14.ToArgb)
+                tx.Add("*PS_64_ColorTable15= " & PS_64_ColorTable15.ToArgb)
+                tx.Add("*PS_64_PopupForeground= " & PS_64_PopupForeground)
+                tx.Add("*PS_64_PopupBackground= " & PS_64_PopupBackground)
+                tx.Add("*PS_64_ScreenColorsBackground= " & PS_64_ScreenColorsBackground)
+                tx.Add("*PS_64_ScreenColorsBackground= " & PS_64_ScreenColorsBackground)
+                tx.Add("*PS_64_CursorSize= " & PS_64_CursorSize)
+                tx.Add("*PS_64_FaceName= " & PS_64_FaceName)
+                tx.Add("*PS_64_FontRaster= " & PS_64_FontRaster)
+                tx.Add("*PS_64_FontSize= " & PS_64_FontSize)
+                tx.Add("*PS_64_FontWeight= " & PS_64_FontWeight)
+                tx.Add("*PS_64_1909_CursorType= " & PS_64_1909_CursorType)
+                tx.Add("*PS_64_1909_CursorColor= " & PS_64_1909_CursorColor.ToArgb)
+                tx.Add("*PS_64_1909_ForceV2= " & PS_64_1909_ForceV2)
+                tx.Add("*PS_64_1909_LineSelection= " & PS_64_1909_LineSelection)
+                tx.Add("*PS_64_1909_TerminalScrolling= " & PS_64_1909_TerminalScrolling)
+                tx.Add("*PS_64_1909_WindowAlpha= " & PS_64_1909_WindowAlpha)
+                tx.Add("</PowerShellx64>" & vbCrLf)
+
+                tx.Add("<WindowsTerminal_Stable>")
+                tx.Add(Terminal.Save("", WinTerminal.Mode.WinPaletterFile))
+                tx.Add("</WindowsTerminal_Stable>" & vbCrLf)
+
+                tx.Add("<WindowsTerminal_Preview>")
+                tx.Add(TerminalPreview.Save("", WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview))
+                tx.Add("</WindowsTerminal_Preview>" & vbCrLf)
+
+                tx.Add("<WindowsTerminal_Developer>")
+                tx.Add(TerminalDeveloper.Save("", WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Developer))
+                tx.Add("</WindowsTerminal_Developer>" & vbCrLf)
+
+                tx.Add("</Terminals>")
+#End Region
+
 #Region "Cursors"
                 tx.Add(vbCrLf & "<Cursors>")
                 tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
@@ -5677,11 +5937,12 @@ Public Class CP_Defaults
         .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
         .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
         .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
+        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
         .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 17 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 17 * 65536
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 17 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 17 * 65536
        }
 
     Public Default_Windows10 As New CP(CP.Mode.Init) With {
@@ -5746,10 +6007,11 @@ Public Class CP_Defaults
         .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
         .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
         .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
+        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows8 As New CP(CP.Mode.Init) With {
@@ -5835,10 +6097,11 @@ Public Class CP_Defaults
         .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
         .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
         .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows7 As New CP(CP.Mode.Init) With {
@@ -5915,11 +6178,12 @@ Public Class CP_Defaults
         .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
         .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
         .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
-         .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
+        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
         .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 8,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 8,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 16 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
+        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
+        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
+        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
        }
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.ActionCenter_AppsLinks.R, Default_Windows11.ActionCenter_AppsLinks.G, Default_Windows11.ActionCenter_AppsLinks.B, 255,
@@ -6080,6 +6344,35 @@ Public Class WinTerminal
                     St.Close()
 
                 Else
+                    Profiles = New List(Of ProfilesList)
+                    Colors = New List(Of TColor)
+                    DefaultProf = New ProfilesList
+                    Themes = New List(Of ThemesList)
+
+                    Colors.Add(New TColor With {
+                           .Name = "Campbell",
+                           .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+                           .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+                           .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
+                           .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
+                           .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
+                           .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
+                           .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
+                           .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
+                           .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
+                           .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
+                           .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
+                           .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+                           .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
+                           .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+                           .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
+                           .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
+                           .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
+                           .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+                           .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+                           .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+                           })
+
                     MsgBox("Settings doesn't exist: " & File, MsgBoxStyle.Critical)
                 End If
 
@@ -6371,6 +6664,62 @@ Public Class WinTerminal
                     Themes.Add(Th)
                 Next
 
+                If Colors.Count = 0 Then
+                    Colors.Add(New TColor With {
+             .Name = "Campbell",
+             .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+             .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+             .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
+             .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
+             .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
+             .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
+             .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
+             .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
+             .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
+             .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
+             .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
+             .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+             .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
+             .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+             .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
+             .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
+             .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
+             .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+             .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+             .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+             })
+                End If
+
+            Case Mode.Empty
+
+                Profiles = New List(Of ProfilesList)
+                Colors = New List(Of TColor)
+                DefaultProf = New ProfilesList
+                Themes = New List(Of ThemesList)
+
+                Colors.Add(New TColor With {
+                           .Name = "Campbell",
+                           .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+                           .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
+                           .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
+                           .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
+                           .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
+                           .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
+                           .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
+                           .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
+                           .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
+                           .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
+                           .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
+                           .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+                           .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
+                           .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+                           .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
+                           .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
+                           .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
+                           .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
+                           .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
+                           .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+                           })
         End Select
     End Sub
 
@@ -6777,7 +7126,7 @@ End Class
 Public Class FontsBase
     Public Property Face As String = "Cascadia Mono"
     Public Property Weight As FontWeight_Enum = FontWeight_Enum.normal
-    Public Property Size As Integer = 10
+    Public Property Size As Integer = 12
 End Class
 
 Public Class ProfilesList

@@ -67,7 +67,8 @@ Public Class SubMenu
     End Sub
 #End Region
 
-    Public Function ShowMenu(ColorHandle As XenonGroupBox) As Color
+    Public Function ShowMenu(ColorHandle As XenonGroupBox, Optional EnableDelete As Boolean = False) As Color
+        XenonButton5.Visible = EnableDelete
         MainColor.BackColor = ColorHandle.BackColor
         DefaultColor.BackColor = ColorHandle.DefaultColor
         DefaultLightestColor.BackColor = ControlPaint.LightLight(ColorHandle.DefaultColor)

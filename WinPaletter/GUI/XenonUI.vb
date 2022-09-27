@@ -5491,6 +5491,33 @@ Public Class XenonTerminal
             Return Nothing
         End Try
     End Function
+
+    Public Function RRNoLine(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+        Try
+            Dim path As New GraphicsPath()
+            Dim d As Integer = radius * 2
+            Dim f0 As Single = 0.5
+            Dim f1 As Single = 2 - f0
+
+            Dim R1 As New Rectangle(r.X + f0 * d, r.Y, d, d)
+            Dim R2 As New Rectangle(r.X + r.Width - f1 * d, r.Y, d, d)
+            Dim R3 As New Rectangle(r.X - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d)
+            Dim R4 As New Rectangle(r.X + r.Width - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d)
+
+            path.AddArc(R4, 90, 90)
+            path.AddLine(New Point(R4.X, R4.Y), New Point(R2.Right, R2.Bottom))
+            path.AddArc(R2, 0, -90)
+            path.AddArc(R1, -90, -90)
+            path.AddArc(R3, 0, 90)
+            path.AddLine(New Point(R3.X + R3.Width, R3.Y + R3.Height), New Point(R4.X, R4.Y + R4.Height))
+
+            path.CloseFigure()
+
+            Return path
+        Catch
+            Return Nothing
+        End Try
+    End Function
     Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
         Try
             If [Radius] = -1 Then [Radius] = 6
@@ -5501,6 +5528,62 @@ Public Class XenonTerminal
                 Graphics.FillPath(Brush, path)
             End Using
 
+        Catch
+        End Try
+    End Sub
+
+    Public Sub FillRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius] = -1 Then [Radius] = 6
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                    Graphics.FillPath(Brush, path)
+                End Using
+            Else
+                Graphics.FillRectangle(Brush, [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+    Public Sub FillImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius] = -1 Then [Radius] = 6
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                    Dim reg As New Region(path)
+                    [Graphics].Clip = reg
+                    [Graphics].DrawImage([Image], [Rectangle])
+                    [Graphics].ResetClip()
+                End Using
+            Else
+                Graphics.DrawImage([Image], [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+    Public Sub DrawRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
+            [Radius_willbe_x2] *= 2
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
+                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
+                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
+                [Graphics].DrawLine([Pen], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
+                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
+            Else
+                [Graphics].DrawRectangle([Pen], [Rectangle])
+            End If
         Catch
         End Try
     End Sub
@@ -5536,7 +5619,6 @@ Public Class XenonTerminal
                 Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
                     Dim reg As New Region(path)
                     [Graphics].Clip = reg
-                    [Graphics].SmoothingMode = SmoothingMode.AntiAlias
                     [Graphics].DrawImage([Image], [Rectangle])
                     [Graphics].ResetClip()
                 End Using
@@ -5551,9 +5633,8 @@ Public Class XenonTerminal
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
-
 
         If Not Light Then
             If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(46, 46, 46)
@@ -5652,7 +5733,12 @@ Public Class XenonTerminal
         Dim RectClose_Tab1 As New Rectangle(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height)
 
         If IsFocused Then
+            G.SmoothingMode = SmoothingMode.Default
             G.FillPath(New SolidBrush(TabFocusedFinalColor), RR(Rect_Tab0, Radius))
+            G.SmoothingMode = SmoothingMode.AntiAlias
+            G.DrawPath(New Pen(TabFocusedFinalColor), RRNoLine(Rect_Tab0, Radius))
+            G.SmoothingMode = SmoothingMode.Default
+
             If Not UseAcrylicOnTitlebar Then
                 G.FillPath(New SolidBrush(Color_TabUnFocused), RR(Rect_Tab1, Radius))
             Else

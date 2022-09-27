@@ -133,7 +133,7 @@
   <data name="XenonButton8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAA2ZJREFUOE9tk11Mk1ccxt9s9WZZshuvpHyVlra0lJZ+KZHpQtCpQRcW1G03Ji5R
+        vAAADrwBlbxySQAAA2ZJREFUOE9tk11Mk1ccxt9s9WZZshuvpHyVlra0lJZ+KZHpQtCpQRcW1G03Ji5R
         LzSvBURM2N6BE4YZ58WBguImbm4SPw4MxzbYpC0VFENfFSuU7w9BwVUyVrolXjw7r1UT5y6e5JyL33PO
         yf93uMMzC+mhjdvIE3sWeeLMJouWtaTB9Tk5VVpLRgwZhcre+TUJPY9J4u9zRHPlPtFemCApZ4aJ8USA
         pFVJ67iyB2FxfuM2/GPPQigrF4vpmahzHUaNUIsx4yopvushr3I/grptFtpLk0j5dgTGkwNIE+/AUuGn
@@ -154,7 +154,7 @@
   <data name="XenonButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAAhRJREFUSEu9k01r4lAUhv1pMzAwMDCrQqHb+R/FK+JIkOAyiFhJrRQKhdmJ1ZhE
+        vAAADrwBlbxySQAAAhRJREFUSEu9k01r4lAUhv1pMzAwMDCrQqHb+R/FK+JIkOAyiFhJrRQKhdmJ1ZhE
         jd+fxSK21c5i+uHChe3MqFE4k5Omaa815HYWvfBAeHPPebgnN553X8lkkiQSCSIiokjiSDxOYkgsRqLR
         qEkkgkSIIEQ/WKVsq9vtwmq1giWy3MTSRDfAvf1+Hwwhu6TT6dgNdP2RBYUOi4UOcwMUTKdT6PV6ILBK
         2obAbM4omEwmMB6PodVqgyAI7pJ22xI4NV8TZDIZSKfTkEqlQNzfB6uN82q2Wg7N19FhNpvD/cNviwfI
@@ -190,6 +190,16 @@
         SK65xuhLZ/boFsXQDa1xVmIXabamu3qgZ5duUax6V4N7CWutet5jaXCLblGs4fcYBUfeTSpu5uQaIlz9
         Kt9l66E4Y0AW7axGAWA3eMaAVX+d9EmAW/51MlQMsE1whL42oHW4ue9xtfCvYtH+QMz0z/+5/lMx9ht0
         ckDn4a7fhwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="XenonButton19.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAARJJREFUOE9j
+        oAsQn/lYV2LOw1BCWHL24yDphU+EodpwA4lpNz9JTLv1Hz++819y1sP/ErMezYVqwwQBT/47Bzz7v8Px
+        3If/hLDx9sf/JaZc/y81+/EqqHZMEPD0/0qggf+JxeITLhEw8Nn/Veia8GHx/ouDwEDLw/f/664/iyIG
+        w2QZKDdj+3/WgskoYjA8cAa6Xfv4n61oKtggdKy38TzpBnrd/Q502Q6w63jr5oMNArFB2OrwA9INRMY0
+        CMMdQO9PQRGDYbIM9L7/47/nrS8oYjBMloH4MMTARyuh2jEBUBFJBkpOuLxOes5DZ6h2TBD4/P88bBpx
+        4E9QbbhB4JP/wv5P/7sQhZ//14JqoyVgYAAAcKq1ggIvE/AAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="TerEditThemeName.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

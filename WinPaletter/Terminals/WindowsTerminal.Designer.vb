@@ -38,6 +38,7 @@ Partial Class WindowsTerminal
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton19 = New WinPaletter.XenonButton()
         Me.TerEditThemeName = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.TerThemes = New WinPaletter.XenonComboBox()
@@ -334,6 +335,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox1.Controls.Add(Me.XenonButton19)
         Me.XenonGroupBox1.Controls.Add(Me.TerEditThemeName)
         Me.XenonGroupBox1.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox1.Controls.Add(Me.TerThemes)
@@ -349,6 +351,21 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(407, 102)
         Me.XenonGroupBox1.TabIndex = 196
+        '
+        'XenonButton19
+        '
+        Me.XenonButton19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton19.ForeColor = System.Drawing.Color.White
+        Me.XenonButton19.Image = CType(resources.GetObject("XenonButton19.Image"), System.Drawing.Image)
+        Me.XenonButton19.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
+        Me.XenonButton19.LineSize = 1
+        Me.XenonButton19.Location = New System.Drawing.Point(310, 3)
+        Me.XenonButton19.Name = "XenonButton19"
+        Me.XenonButton19.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton19.TabIndex = 216
+        Me.XenonButton19.UseVisualStyleBackColor = False
         '
         'TerEditThemeName
         '
@@ -392,9 +409,9 @@ Partial Class WindowsTerminal
         Me.TerThemes.ForeColor = System.Drawing.Color.White
         Me.TerThemes.FormattingEnabled = True
         Me.TerThemes.LineColor = System.Drawing.Color.DodgerBlue
-        Me.TerThemes.Location = New System.Drawing.Point(104, 6)
+        Me.TerThemes.Location = New System.Drawing.Point(98, 6)
         Me.TerThemes.Name = "TerThemes"
-        Me.TerThemes.Size = New System.Drawing.Size(236, 24)
+        Me.TerThemes.Size = New System.Drawing.Size(210, 24)
         Me.TerThemes.TabIndex = 210
         '
         'Label4
@@ -607,6 +624,7 @@ Partial Class WindowsTerminal
         Me.XenonTerminal1.Color_Titlebar_Unfocused = System.Drawing.Color.FromArgb(CType(CType(46, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(46, Byte), Integer))
         Me.XenonTerminal1.CursorHeight = 25
         Me.XenonTerminal1.CursorType = WinPaletter.XenonTerminal.CursorShape_Enum.bar
+        Me.XenonTerminal1.Font = New System.Drawing.Font("Cascadia Mono", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonTerminal1.IsFocused = True
         Me.XenonTerminal1.Light = False
         Me.XenonTerminal1.Location = New System.Drawing.Point(6, 45)
@@ -674,6 +692,7 @@ Partial Class WindowsTerminal
         Me.XenonTerminal2.Color_Titlebar_Unfocused = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonTerminal2.CursorHeight = 25
         Me.XenonTerminal2.CursorType = WinPaletter.XenonTerminal.CursorShape_Enum.bar
+        Me.XenonTerminal2.Font = New System.Drawing.Font("Cascadia Mono", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonTerminal2.IsFocused = False
         Me.XenonTerminal2.Light = False
         Me.XenonTerminal2.Location = New System.Drawing.Point(54, 72)
@@ -1981,4 +2000,5 @@ Partial Class WindowsTerminal
     Friend WithEvents OpenJSONDlg As OpenFileDialog
     Friend WithEvents XenonButton17 As XenonButton
     Friend WithEvents XenonButton18 As XenonButton
+    Friend WithEvents XenonButton19 As XenonButton
 End Class

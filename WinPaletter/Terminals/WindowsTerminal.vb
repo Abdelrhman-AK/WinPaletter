@@ -592,7 +592,7 @@ Public Class WindowsTerminal
                                                                           TerTabActive.Click, TerTabInactive.Click, TerTitlebarActive.Click, TerTitlebarInactive.Click
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            Dim cx As Color = SubMenu.ShowMenu(sender)
+            Dim cx As Color = SubMenu.ShowMenu(sender, sender IsNot TerBackground And sender IsNot TerForeground And sender IsNot TerSelection And sender IsNot TerCursor)
 
             If My.Application.ColorEvent <> My.MyApplication.MenuEvent.None Then
                 If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
@@ -1183,28 +1183,51 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
 
-        With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
-            Dim P As New ProfilesList With {
-            .Name = .Name & " Clone #" & TerProfiles.Items.Count,
-            .BackgroundImage = .BackgroundImage,
-            .BackgroundImageOpacity = .BackgroundImageOpacity,
-            .ColorScheme = .ColorScheme,
-            .commandline = .commandline,
-            .CursorHeight = .CursorHeight,
-            .CursorShape = .CursorShape,
-            .Font = .Font,
-            .Icon = .Icon,
-            .Opacity = .Opacity,
-            .Source = .Source,
-            .TabColor = .TabColor,
-            .TabTitle = .TabTitle,
-            .UseAcrylic = .UseAcrylic}
+        If TerProfiles.SelectedIndex = 0 Then
+            MsgBox("Default Profile isn't cloneable, select a different profile.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
 
-            _Terminal.Profiles.Add(P)
-            FillTerminalProfiles(_Terminal, TerProfiles)
-            TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1
-        End With
+        Dim P As New ProfilesList With {
+            .Name = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Name & " Clone #" & TerProfiles.Items.Count,
+            .BackgroundImage = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImage,
+            .BackgroundImageOpacity = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImageOpacity,
+            .ColorScheme = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).ColorScheme,
+            .commandline = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).commandline,
+            .CursorHeight = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).CursorHeight,
+            .CursorShape = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).CursorShape,
+            .Font = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Font,
+            .Icon = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Icon,
+            .Opacity = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Opacity,
+            .Source = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Source,
+            .TabColor = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).TabColor,
+            .TabTitle = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).TabTitle,
+            .UseAcrylic = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).UseAcrylic
+        }
 
+        _Terminal.Profiles.Add(P)
+        FillTerminalProfiles(_Terminal, TerProfiles)
+        TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1
 
+    End Sub
+
+    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+        If TerThemes.SelectedIndex < 3 Then
+            MsgBox("Default Themes (Dark\Light\System) are not cloneable, select a different theme or create a new theme if you want to clone.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
+
+        Dim Th As New ThemesList With {
+            .Name = _Terminal.Themes(TerThemes.SelectedIndex - 3).Name & " Clone #" & TerThemes.Items.Count,
+            .applicationTheme_light = _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light,
+            .Tab_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active,
+            .Tab_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive,
+            .Titlebar_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active,
+            .Titlebar_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive
+        }
+
+        _Terminal.Themes.Add(Th)
+        FillTerminalThemes(_Terminal, TerThemes)
+        TerThemes.SelectedIndex = TerThemes.Items.Count - 1
     End Sub
 End Class
