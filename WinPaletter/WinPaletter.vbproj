@@ -258,10 +258,28 @@
     <Compile Include="Terminals\cmd.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Terminals\ExternalTerminal.Designer.vb">
+      <DependentUpon>ExternalTerminal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\ExternalTerminal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\NewExtTerminal.Designer.vb">
+      <DependentUpon>NewExtTerminal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\NewExtTerminal.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Terminals\TerminalInfo.Designer.vb">
       <DependentUpon>TerminalInfo.vb</DependentUpon>
     </Compile>
     <Compile Include="Terminals\TerminalInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\TerminalsDashboard.Designer.vb">
+      <DependentUpon>TerminalsDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\TerminalsDashboard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Terminals\WindowsTerminal.Designer.vb">
@@ -270,6 +288,7 @@
     <Compile Include="Terminals\WindowsTerminal.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Terminals\WinTerminal.vb" />
     <Compile Include="Updates\Changelog.Designer.vb">
       <DependentUpon>Changelog.vb</DependentUpon>
     </Compile>
@@ -319,12 +338,14 @@
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
+    <None Include="Resources\icons8_command_line.ico" />
+    <None Include="Resources\icons8_PowerShell.ico" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
-    <None Include="Resources\Newtonsoft.Json.dll" />
+    <Content Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
@@ -378,9 +399,9 @@
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -388,8 +409,17 @@
     <EmbeddedResource Include="Terminals\cmd.resx">
       <DependentUpon>cmd.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\ExternalTerminal.resx">
+      <DependentUpon>ExternalTerminal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\NewExtTerminal.resx">
+      <DependentUpon>NewExtTerminal.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Terminals\TerminalInfo.resx">
       <DependentUpon>TerminalInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\TerminalsDashboard.resx">
+      <DependentUpon>TerminalsDashboard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
       <DependentUpon>WindowsTerminal.vb</DependentUpon>

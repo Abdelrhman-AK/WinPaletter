@@ -194,7 +194,6 @@ Partial Class MainFrm
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonButton24 = New WinPaletter.XenonButton()
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
@@ -2767,7 +2766,6 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonGroupBox3.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton24)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton21)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton16)
@@ -2786,23 +2784,6 @@ Partial Class MainFrm
         Me.XenonGroupBox3.TabIndex = 28
         Me.XenonGroupBox3.Text = "XenonGroupBox3"
         '
-        'XenonButton25
-        '
-        Me.XenonButton25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton25.ForeColor = System.Drawing.Color.White
-        Me.XenonButton25.Image = CType(resources.GetObject("XenonButton25.Image"), System.Drawing.Image)
-        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
-        Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(138, 3)
-        Me.XenonButton25.Name = "XenonButton25"
-        Me.XenonButton25.Size = New System.Drawing.Size(69, 59)
-        Me.XenonButton25.TabIndex = 29
-        Me.XenonButton25.Text = "Terminal"
-        Me.XenonButton25.UseVisualStyleBackColor = False
-        '
         'XenonButton24
         '
         Me.XenonButton24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -2813,11 +2794,11 @@ Partial Class MainFrm
         Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
         Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(208, 3)
+        Me.XenonButton24.Location = New System.Drawing.Point(191, 3)
         Me.XenonButton24.Name = "XenonButton24"
-        Me.XenonButton24.Size = New System.Drawing.Size(69, 59)
+        Me.XenonButton24.Size = New System.Drawing.Size(72, 59)
         Me.XenonButton24.TabIndex = 28
-        Me.XenonButton24.Text = "Terminals"
+        Me.XenonButton24.Text = "Terminals ..."
         Me.XenonButton24.UseVisualStyleBackColor = False
         '
         'XenonButton21
@@ -2830,9 +2811,9 @@ Partial Class MainFrm
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
         Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
         Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(278, 3)
+        Me.XenonButton21.Location = New System.Drawing.Point(264, 3)
         Me.XenonButton21.Name = "XenonButton21"
-        Me.XenonButton21.Size = New System.Drawing.Size(69, 59)
+        Me.XenonButton21.Size = New System.Drawing.Size(72, 59)
         Me.XenonButton21.TabIndex = 27
         Me.XenonButton21.Text = "Cursors"
         Me.XenonButton21.UseVisualStyleBackColor = False
@@ -2847,9 +2828,9 @@ Partial Class MainFrm
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(416, 3)
+        Me.XenonButton16.Location = New System.Drawing.Point(410, 3)
         Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(67, 59)
+        Me.XenonButton16.Size = New System.Drawing.Size(72, 59)
         Me.XenonButton16.TabIndex = 26
         Me.XenonButton16.Text = "LogonUI"
         Me.XenonButton16.UseVisualStyleBackColor = False
@@ -2886,9 +2867,9 @@ Partial Class MainFrm
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(82, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(348, 3)
+        Me.XenonButton4.Location = New System.Drawing.Point(337, 3)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(67, 59)
+        Me.XenonButton4.Size = New System.Drawing.Size(72, 59)
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Text = "Win32UI Elements"
         Me.XenonButton4.UseVisualStyleBackColor = False
@@ -3849,5 +3830,4 @@ Partial Class MainFrm
     Friend WithEvents XenonSeparatorVertical2 As XenonSeparatorVertical
     Friend WithEvents XenonButton23 As XenonButton
     Friend WithEvents XenonButton24 As XenonButton
-    Friend WithEvents XenonButton25 As XenonButton
 End Class

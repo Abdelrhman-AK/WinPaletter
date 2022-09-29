@@ -31,23 +31,14 @@ Partial Class Whatsnew
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage2.SuspendLayout()
-        Me.TabPage6.SuspendLayout()
         Me.TabPage10.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -123,7 +114,7 @@ Partial Class Whatsnew
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(656, 263)
         Me.Label14.TabIndex = 25
-        Me.Label14.Text = resources.GetString("Label14.Text")
+        Me.Label14.Text = "- Minor UI fixes and improvements"
         '
         'XenonTabControl1
         '
@@ -132,8 +123,6 @@ Partial Class Whatsnew
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage2)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage6)
         Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -150,8 +139,8 @@ Partial Class Whatsnew
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.XenonButton4)
         Me.TabPage1.Controls.Add(Me.Label6)
-        Me.TabPage1.Controls.Add(Me.PictureBox2)
         Me.TabPage1.Controls.Add(Me.Label4)
         Me.TabPage1.Location = New System.Drawing.Point(154, 4)
         Me.TabPage1.Name = "TabPage1"
@@ -167,19 +156,9 @@ Partial Class Whatsnew
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(6, 48)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(241, 273)
+        Me.Label6.Size = New System.Drawing.Size(655, 150)
         Me.Label6.TabIndex = 28
         Me.Label6.Text = resources.GetString("Label6.Text")
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(253, 51)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(406, 261)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox2.TabIndex = 27
-        Me.PictureBox2.TabStop = False
         '
         'Label4
         '
@@ -190,78 +169,8 @@ Partial Class Whatsnew
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(661, 45)
         Me.Label4.TabIndex = 26
-        Me.Label4.Text = "Right Click Menus for Colors"
+        Me.Label4.Text = "Modify Windows Terminals"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TabPage2
-        '
-        Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage2.Controls.Add(Me.Label7)
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(667, 332)
-        Me.TabPage2.TabIndex = 6
-        Me.TabPage2.Text = "Nerd Info for Color Palette"
-        '
-        'Label7
-        '
-        Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(6, 48)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(655, 273)
-        Me.Label7.TabIndex = 29
-        Me.Label7.Text = resources.GetString("Label7.Text")
-        '
-        'Label5
-        '
-        Me.Label5.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.ForeColor = System.Drawing.Color.Crimson
-        Me.Label5.Location = New System.Drawing.Point(3, 3)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(661, 45)
-        Me.Label5.TabIndex = 26
-        Me.Label5.Text = "Nerd Info for Color Palette"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TabPage6
-        '
-        Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage6.Controls.Add(Me.Label1)
-        Me.TabPage6.Controls.Add(Me.Label3)
-        Me.TabPage6.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(667, 332)
-        Me.TabPage6.TabIndex = 0
-        Me.TabPage6.Text = "Extended Support"
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(6, 48)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(658, 278)
-        Me.Label1.TabIndex = 26
-        Me.Label1.Text = resources.GetString("Label1.Text")
-        '
-        'Label3
-        '
-        Me.Label3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.Color.Crimson
-        Me.Label3.Location = New System.Drawing.Point(3, 3)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(661, 45)
-        Me.Label3.TabIndex = 25
-        Me.Label3.Text = "Extended Support to Windows 8.1 and Windows 7 (1.0.5.0)"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage10
         '
@@ -312,6 +221,22 @@ Partial Class Whatsnew
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
+        'XenonButton4
+        '
+        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton4.ForeColor = System.Drawing.Color.White
+        Me.XenonButton4.Image = Nothing
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton4.LineSize = 1
+        Me.XenonButton4.Location = New System.Drawing.Point(19, 203)
+        Me.XenonButton4.Name = "XenonButton4"
+        Me.XenonButton4.Size = New System.Drawing.Size(362, 28)
+        Me.XenonButton4.TabIndex = 29
+        Me.XenonButton4.Text = "It is better to Visit Github and see the detailed documentation ..."
+        Me.XenonButton4.UseVisualStyleBackColor = False
+        '
         'Whatsnew
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -336,10 +261,6 @@ Partial Class Whatsnew
         Me.TopMost = True
         Me.XenonTabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage6.ResumeLayout(False)
         Me.TabPage10.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -352,18 +273,12 @@ Partial Class Whatsnew
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents XenonTabControl1 As XenonTabControl
-    Friend WithEvents TabPage6 As TabPage
     Friend WithEvents TabPage10 As TabPage
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents Label4 As Label
-    Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents Label7 As Label
+    Friend WithEvents XenonButton4 As XenonButton
 End Class

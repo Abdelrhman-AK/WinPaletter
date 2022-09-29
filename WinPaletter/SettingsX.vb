@@ -42,6 +42,9 @@ Public Class SettingsX
             If .Nerd_Stats <> XenonCheckBox10.Checked Then Changed = True
             If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then Changed = True
             If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
+            If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
+            If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -108,6 +111,8 @@ Public Class SettingsX
 
             XenonCheckBox10.Checked = .Nerd_Stats
             XenonCheckBox11.Checked = .Nerd_Stats_HexHash
+            XenonCheckBox12.Checked = .Terminal_Bypass
+            XenonCheckBox13.Checked = .Terminal_OtherFonts
 
             Select Case .Nerd_Stats_Kind
                 Case XeSettings.Nerd_Stats_Type.HEX
@@ -170,6 +175,8 @@ Public Class SettingsX
             .Nerd_Stats = XenonCheckBox10.Checked
             .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
             .Nerd_Stats_HexHash = XenonCheckBox11.Checked
+            .Terminal_Bypass = XenonCheckBox12.Checked
+            .Terminal_OtherFonts = XenonCheckBox13.Checked
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -264,6 +271,8 @@ Public Class SettingsX
                 .Nerd_Stats = XenonCheckBox10.Checked
                 .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
                 .Nerd_Stats_HexHash = XenonCheckBox11.Checked
+                .Terminal_Bypass = XenonCheckBox12.Checked
+                .Terminal_OtherFonts = XenonCheckBox13.Checked
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -286,6 +295,9 @@ Public Class SettingsX
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonCheckBox9.Checked = .Win7LivePreview
+
+                XenonCheckBox12.Checked = .Terminal_Bypass
+                XenonCheckBox13.Checked = .Terminal_OtherFonts
 
                 Select Case .CustomPreviewConfig
                     Case XeSettings.WinVer.Eleven
@@ -350,6 +362,9 @@ Public Class SettingsX
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonCheckBox9.Checked = .Win7LivePreview
+
+            XenonCheckBox12.Checked = .Terminal_Bypass
+            XenonCheckBox13.Checked = .Terminal_OtherFonts
 
             Select Case .CustomPreviewConfig
                 Case XeSettings.WinVer.Eleven

@@ -5189,12 +5189,20 @@ Public Class XenonCMD
         Dim F As Font
 
         If Raster Then
-            F = New Font(My.Application.TerminalFont.FontFamily, CSng(FixValue(Font.Size) * 0.9), Font.Style)
-        Else
-            If Not PowerShell Then
-                F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+            If My.W10 Or My.W11 Then
+                F = New Font(My.Application.TerminalFont.FontFamily, CSng(FixValue(Font.Size) * 0.9), Font.Style)
             Else
-                F = New Font(Font.Name, If(Font.Size * 0.7 <= 0, 1, CSng(Font.Size * 0.7)), Font.Style)
+                F = New Font(My.Application.TerminalFont.FontFamily, 12, Font.Style)
+            End If
+        Else
+            If My.W10 Or My.W11 Then
+                If Not PowerShell Then
+                    F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+                Else
+                    F = New Font(Font.Name, If(Font.Size * 0.7 <= 0, 1, CSng(Font.Size * 0.7)), Font.Style)
+                End If
+            Else
+                F = New Font(Font.Name, Font.Size, Font.Style)
             End If
         End If
 

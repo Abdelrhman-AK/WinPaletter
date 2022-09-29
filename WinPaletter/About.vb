@@ -52,6 +52,10 @@ Public Class About
     End Sub
 
     Private Sub LinkLabel9_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel9.LinkClicked
-        Process.Start("http://www.yohng.com/")
+        Process.Start("https://www.dafont.com/perfect-dos-vga-437.font")
+    End Sub
+
+    Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
+        Process.Start("https://www.newtonsoft.com/json")
     End Sub
 End Class

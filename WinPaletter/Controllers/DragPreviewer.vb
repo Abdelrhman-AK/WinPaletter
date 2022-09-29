@@ -20,7 +20,7 @@ Public Class dragPreviewer
             TransparencyKey = Color.Fuchsia
         End If
 
-        CP = New CP(CP.Mode.File, File)
+        CP = New CP(CP.Mode.File, File, True)
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)

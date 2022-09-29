@@ -13,7 +13,7 @@ Public Class XeSettings
     Public Property Win7LivePreview As Boolean = True
     Public Property CustomPreviewConfig_Enabled As Boolean = False
     Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
     Public Property WhatsNewRecord As String() = {""}
@@ -22,6 +22,9 @@ Public Class XeSettings
     Public Property Nerd_Stats As Boolean = True
     Public Property Nerd_Stats_Kind As Nerd_Stats_Type = Nerd_Stats_Type.HEX
     Public Property Nerd_Stats_HexHash As Boolean = True
+    Public Property Terminal_Bypass As Boolean = False
+    Public Property Terminal_OtherFonts As Boolean = False
+
 
 #End Region
 
@@ -95,6 +98,10 @@ Public Class XeSettings
             Case Nerd_Stats_Type.Dec
                 If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 3)
         End Select
+
+        If Key.GetValue("Terminal_Bypass", Nothing) Is Nothing Then Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_OtherFonts", Nothing) Is Nothing Then Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -112,6 +119,8 @@ Public Class XeSettings
                 Win7LivePreview = Key.GetValue("Win7LivePreview", Nothing)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
+                Terminal_Bypass = Key.GetValue("Terminal_Bypass", Nothing)
+                Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", Nothing)
 
                 Select Case Key.GetValue("CustomPreviewConfig", Nothing)
                     Case 0
@@ -166,6 +175,9 @@ Public Class XeSettings
                     If x.StartsWith("Nerd_Stats= ") Then Nerd_Stats = x.Remove(0, "Nerd_Stats= ".Count)
                     If x.StartsWith("Nerd_Stats_HexHash= ") Then Nerd_Stats_HexHash = x.Remove(0, "Nerd_Stats_HexHash= ".Count)
                     If x.StartsWith("Nerd_Stats_Kind= ") Then Nerd_Stats_Kind = x.Remove(0, "Nerd_Stats_Kind= ".Count)
+                    If x.StartsWith("Terminal_Bypass= ") Then Terminal_Bypass = x.Remove(0, "Terminal_Bypass= ".Count)
+                    If x.StartsWith("Terminal_OtherFonts= ") Then Terminal_OtherFonts = x.Remove(0, "Terminal_OtherFonts= ".Count)
+
                 Next
         End Select
     End Sub
@@ -184,6 +196,8 @@ Public Class XeSettings
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
                 Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
+                Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
+                Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven
@@ -230,6 +244,8 @@ Public Class XeSettings
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
                 l.Add(String.Format("Win7LivePreview= {0}", Win7LivePreview))
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
+                l.Add(String.Format("Terminal_Bypass= {0}", Terminal_Bypass))
+                l.Add(String.Format("Terminal_OtherFonts= {0}", Terminal_OtherFonts))
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven

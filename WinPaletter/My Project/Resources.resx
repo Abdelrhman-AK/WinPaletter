@@ -205,6 +205,12 @@
   <data name="GaussianBlurOpaque" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GaussianBlurOpaque.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icons8_command_line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8_command_line.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8_PowerShell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8_PowerShell.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="InactiveApp_Taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\InactiveApp_Taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

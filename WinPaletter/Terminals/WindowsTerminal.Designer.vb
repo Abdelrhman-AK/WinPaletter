@@ -33,7 +33,6 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.TerEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -139,6 +138,7 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar = New WinPaletter.XenonTrackbar()
         Me.TerFonts = New WinPaletter.XenonComboBox()
         Me.TerFontWeight = New WinPaletter.XenonComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox1.SuspendLayout()
@@ -233,9 +233,9 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox2.Controls.Add(Me.Label8)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton7)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox2.Controls.Add(Me.TerEnabled)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox2.Controls.Add(Me.Label7)
@@ -251,14 +251,15 @@ Partial Class WindowsTerminal
         '
         'XenonButton8
         '
+        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(74, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(217, 5)
+        Me.XenonButton8.Location = New System.Drawing.Point(357, 5)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton8.TabIndex = 110
@@ -267,6 +268,7 @@ Partial Class WindowsTerminal
         '
         'XenonButton7
         '
+        Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
@@ -274,33 +276,16 @@ Partial Class WindowsTerminal
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(136, Byte), Integer), CType(CType(130, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(354, 5)
+        Me.XenonButton7.Location = New System.Drawing.Point(494, 5)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton7.TabIndex = 109
         Me.XenonButton7.Text = "External JSON File"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
-        'XenonButton6
-        '
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
-        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(491, 5)
-        Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(135, 29)
-        Me.XenonButton6.TabIndex = 108
-        Me.XenonButton6.Text = "Default Windows"
-        Me.XenonButton6.UseVisualStyleBackColor = False
-        '
         'TerEnabled
         '
         Me.TerEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.TerEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.TerEnabled.Checked = False
         Me.TerEnabled.DarkLight_Toggler = False
@@ -636,7 +621,7 @@ Partial Class WindowsTerminal
         Me.XenonTerminal1.TabIcon = Nothing
         Me.XenonTerminal1.TabIconButItIsString = ""
         Me.XenonTerminal1.TabIndex = 95
-        Me.XenonTerminal1.TabTitle = ""
+        Me.XenonTerminal1.TabTitle = "Command Prompt"
         Me.XenonTerminal1.Text = "XenonTerminal1"
         Me.XenonTerminal1.UseAcrylic = False
         Me.XenonTerminal1.UseAcrylicOnTitlebar = False
@@ -1831,6 +1816,18 @@ Partial Class WindowsTerminal
         Me.TerFontWeight.Size = New System.Drawing.Size(136, 24)
         Me.TerFontWeight.TabIndex = 99
         '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.BackColor = System.Drawing.Color.Transparent
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(276, 4)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(83, 31)
+        Me.Label8.TabIndex = 112
+        Me.Label8.Text = "Open From:"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'WindowsTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1991,7 +1988,6 @@ Partial Class WindowsTerminal
     Friend WithEvents ImgDlg As OpenFileDialog
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents XenonButton9 As XenonButton
     Friend WithEvents XenonButton11 As XenonButton
@@ -2001,4 +1997,5 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonButton17 As XenonButton
     Friend WithEvents XenonButton18 As XenonButton
     Friend WithEvents XenonButton19 As XenonButton
+    Friend WithEvents Label8 As Label
 End Class

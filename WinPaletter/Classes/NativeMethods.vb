@@ -293,33 +293,38 @@ Namespace NativeMethods
 
             For Each oFontFamily As System.Drawing.FontFamily In System.Drawing.FontFamily.Families
 
-                Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
-                    Dim hFont As IntPtr = IntPtr.Zero
-                    Dim hFontDefault As IntPtr = IntPtr.Zero
+                Try
+                    Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
+                        Dim hFont As IntPtr = IntPtr.Zero
+                        Dim hFontDefault As IntPtr = IntPtr.Zero
 
-                    Try
-                        Dim oTextMetric As TEXTMETRICW
-                        hFont = oFont.ToHfont()
-                        hFontDefault = SelectObject(hDC, hFont)
+                        Try
+                            Dim oTextMetric As TEXTMETRICW
+                            hFont = oFont.ToHfont()
+                            hFontDefault = SelectObject(hDC, hFont)
 
-                        If GetTextMetrics(hDC, oTextMetric) Then
+                            If GetTextMetrics(hDC, oTextMetric) Then
 
-                            If (oTextMetric.tmPitchAndFamily And 1) = 0 Then
-                                Yield oFontFamily
+                                If (oTextMetric.tmPitchAndFamily And 1) = 0 Then
+                                    Yield oFontFamily
+                                End If
                             End If
-                        End If
 
-                    Finally
+                        Finally
 
-                        If hFontDefault <> IntPtr.Zero Then
-                            SelectObject(hDC, hFontDefault)
-                        End If
+                            If hFontDefault <> IntPtr.Zero Then
+                                SelectObject(hDC, hFontDefault)
+                            End If
 
-                        If hFont <> IntPtr.Zero Then
-                            DeleteObject(hFont)
-                        End If
-                    End Try
-                End Using
+                            If hFont <> IntPtr.Zero Then
+                                DeleteObject(hFont)
+                            End If
+                        End Try
+                    End Using
+                Catch
+
+                End Try
+
             Next
 
             dc.ReleaseHdc()

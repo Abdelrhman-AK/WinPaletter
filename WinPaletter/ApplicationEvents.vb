@@ -326,7 +326,7 @@ Namespace My
             W10 = My.Computer.Info.OSFullName.Contains("10")
             W8 = My.Computer.Info.OSFullName.Contains("8")
             W7 = My.Computer.Info.OSFullName.Contains("7")
-            W10_1909 = W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString() >= 1909)
+            W10_1909 = W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909)
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
@@ -391,9 +391,7 @@ Namespace My
             SettingsX.Label5,
             SettingsX.Label6,
             Whatsnew.Label2,
-            Whatsnew.Label3,
             Whatsnew.Label4,
-            Whatsnew.Label5,
             Whatsnew.Label13
 }
 

@@ -9,6 +9,8 @@ Public Class WindowsTerminal
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
+        XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
+
         ApplyDarkMode(Me)
         _Shown = False
 
@@ -27,27 +29,32 @@ Public Class WindowsTerminal
                 _Terminal = MainFrm.CP.TerminalDeveloper
                 Text = "(BETA) Windows Terminal - Developer Version"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Developer_Enabled
-
         End Select
 
-        FillFonts(TerFonts, True)
+        FillFonts(TerFonts, Not My.Application._Settings.Terminal_OtherFonts)
 
         If My.W10 Or My.W11 Then
             Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
             Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
-            If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+
+            If My.Application._Settings.Terminal_Bypass Then
                 Load_FromTerminal()
+            Else
+                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                    Load_FromTerminal()
+                End If
+
+                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                    Load_FromTerminal()
+                End If
+
+                If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
+                    Load_FromTerminal()
+                End If
             End If
 
-            If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                Load_FromTerminal()
-            End If
-
-            If IO.File.Exists(TerDevDir) And _Mode = WinTerminal.Version.Developer Then
-                Load_FromTerminal()
-            End If
 
         Else
 
@@ -919,6 +926,8 @@ Public Class WindowsTerminal
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         Dim i As Object = TerFonts.SelectedItem
         FillFonts(TerFonts, Not XenonCheckBox1.Checked)
+        My.Application._Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
+        My.Application._Settings.Save(XeSettings.Mode.Registry)
         TerFonts.SelectedItem = i
     End Sub
 
@@ -1213,7 +1222,7 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
         If TerThemes.SelectedIndex < 3 Then
-            MsgBox("Default Themes (Dark\Light\System) are not cloneable, select a different theme or create a new theme if you want to clone.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox("Default themes (Dark\Light\System) are not cloneable, select a different theme or create a new theme if you want to clone.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
             Exit Sub
         End If
 
@@ -1229,5 +1238,9 @@ Public Class WindowsTerminal
         _Terminal.Themes.Add(Th)
         FillTerminalThemes(_Terminal, TerThemes)
         TerThemes.SelectedIndex = TerThemes.Items.Count - 1
+    End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs)
+
     End Sub
 End Class

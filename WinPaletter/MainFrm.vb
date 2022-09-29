@@ -2349,12 +2349,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton24_Click(sender As Object, e As EventArgs) Handles XenonButton24.Click
-        cmd.ShowDialog()
-    End Sub
-
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        WindowsTerminal._Mode = WinTerminal.Version.Preview
-        WindowsTerminal.ShowDialog()
+        TerminalsDashboard.ShowDialog()
     End Sub
 
 
