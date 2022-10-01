@@ -30,11 +30,11 @@
    
    * How to restore Windows Terminal to default?
    
-   * I don't like the preferences\cutomization I made to Windows Terminal and I feel that it is broken. What should I do?
+   * I don't like the preferences\customization I made to Windows Terminal and I feel that it is broken. What should I do?
    
    * Fonts look weird. What happened?
 
-4) After applying the color palette, Command Prompt and PowerShell are not customized inspite of enabling their toggles. What is the issue?
+4) After applying the color palette, Command Prompt and PowerShell are not customized in spite of enabling their toggles. What is the issue?
 
 ---
 
@@ -52,11 +52,11 @@
 | Windows 10 | Not installed by default, install it from Windows Store                                                            |
 | Windows 11 | Windows Terminal Stable is installed by default, while Preview and Developer versions are not installed by default |
 
-* You can also customize another unmentioned terminal, if it exists in registry in `HKEY_CURRENT_USER\Console`.
+* You can also customize another unmentioned terminal, if it exists as a key in registry in `HKEY_CURRENT_USER\Console`.
 
 * In `HKEY_CURRENT_USER\Console`, please ignore `%%Startup`, `%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe` and `%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe` keys.
   
-  * Anyway, you can add an executable to this key using button "New", it should be a console one (Not a GUI\WinForm\Desktop app\\...) and should be in System Drive (C:\\)
+  * Anyway, you can add an executable to this key using button "New", it should be a console one (Not a GUI\WinForms\Desktop app\\...) and should be in System Drive (C:\\)
 
 ---
 
@@ -77,9 +77,9 @@ All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock 
 
 ###### Q2-B) Fonts look weird. What happened?
 
-* Command Prompt uses the monospaced fonts only if you disable Raster Fonts, if you force a regular\non monospace font, it will be rendered worngly. And if you disable Enahnced Terminals, the regular fonts won't be used at all, and if you enable Raster Fonts, it won't be used at all and the Retro\VGA\Raster font will be used
+* Command Prompt uses the monospaced fonts only if you disable Raster Fonts, if you force a regular\non monospaced font, it will be rendered wrongly. And if you disable Enhanced Terminals, the regular fonts won't be used at all, and if you enable Raster Fonts, it won't be used at all and the Retro\VGA\Raster font will be used
 
-* Raster fonts size isn't rendered in the same way of monospaced fonts, you will find both different in size inspite of selecting the same number of size
+* Raster fonts size isn't rendered in the same way of monospaced fonts, you will find both different in size in spite of selecting the same number of size
 
 ###### Q2-C) I can't colorize or change cursor style. What is the issue?
 
@@ -125,21 +125,21 @@ The pencil is to edit name of color scheme\theme, and properties of selected pro
 
 Press on button "Open "settings.json" in editor" which you will find in the bottom of the form, then you will find Notepad or other editor is open. Erase all text of this "settings.json" and save and open your Windows Terminals, the default settings will be regenerated.
 
-###### Q3-F) I don't like the preferences\cutomization I made to Windows Terminal and I feel that it is broken. What should I do?
+###### Q3-F) I don't like the preferences\customization I made to Windows Terminal and I feel that it is broken. What should I do?
 
 You can do one solution from these:
 
-* Backup "settings.json" (You will find this button below) before you do any preference\customization to the terminal, then when you decide to restore the old preferences, open the backed-up file by notepad or other editor and copy all contents, and then press button: "Open "settings.json" in editor" and override contents of "settings.json", save and open your Windows Terminals, you will find old preferenced are restored.
+* Backup "settings.json" (You will find this button below) before you do any preference\customization to the terminal, then when you decide to restore the old preferences, open the backed-up file by notepad or other editor and copy all contents, and then press button: "Open "settings.json" in editor" and override contents of "settings.json", save and open your Windows Terminals, you will find old preferences are restored.
 
 * Restore Defaults ( As answer of question `Q3-E`)
 
 ###### Q3-G) Fonts look weird. What happened?
 
-Windows Terminal uses the monospaced fonts only, if you force a regular\non monospace font, it will be rendered worngly.
+Windows Terminal uses the monospaced fonts only, if you force a regular\non monospaced font, it will be rendered wrongly.
 
 ---
 
-# Q4) After applying the color palette, Command Prompt and PowerShell are not customized inspite of enabling their toggles. What is the issue?
+# Q4) After applying the color palette, Command Prompt and PowerShell are not customized in spite of enabling their toggles. What is the issue?
 
 * In most version of Windows, Command Prompt applies the colors and the preference from two separate sources, from Registry or from the Shortcut file (.lnk) itself.
 
@@ -185,4 +185,4 @@ Windows Terminal uses the monospaced fonts only, if you force a regular\non mono
   
   9. To maintain this effect, never modify preferences from this terminal shortcut.
 
-* These rules doesn't apply on the new Windows 10\11 Terminal (Stable\Preview\Developer).
+* These rules don't apply on the new Windows 10\11 Terminal (Stable\Preview\Developer).
