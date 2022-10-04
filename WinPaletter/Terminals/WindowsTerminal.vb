@@ -26,9 +26,9 @@ Public Class WindowsTerminal
                 TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
 
             Case WinTerminal.Version.Developer
-                _Terminal = MainFrm.CP.TerminalDeveloper
-                Text = "(BETA) Windows Terminal - Developer Version"
-                TerEnabled.Checked = MainFrm.CP.Terminal_Developer_Enabled
+                '_Terminal = MainFrm.CP.TerminalDeveloper
+                'Text = "(BETA) Windows Terminal - Developer Version"
+                'TerEnabled.Checked = MainFrm.CP.Terminal_Developer_Enabled
         End Select
 
         FillFonts(TerFonts, Not My.Application._Settings.Terminal_OtherFonts)
@@ -204,8 +204,8 @@ Public Class WindowsTerminal
 
             If _Shown Then ApplyPreview(_Terminal)
 
-        Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
+        Catch
+
         End Try
     End Sub
 
@@ -775,8 +775,8 @@ Public Class WindowsTerminal
             XenonTerminal1.Refresh()
             XenonTerminal2.Refresh()
 
-        Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
+        Catch
+
         End Try
     End Sub
 

@@ -5,10 +5,9 @@ Imports System.Runtime.InteropServices
 Imports System.Security.Principal
 Imports System.Text
 Imports System.Threading
+Imports System.Windows.Forms.LinkLabel
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
-Imports Newtonsoft.Json.Linq
-Imports WinPaletter.ProfilesList
 
 Public Class CP
 
@@ -269,7 +268,7 @@ Public Class CP
 #Region "Windows Terminal"
     Public Property Terminal As WinTerminal
     Public Property TerminalPreview As WinTerminal
-    Public Property TerminalDeveloper As WinTerminal
+    'Public Property TerminalDeveloper As WinTerminal
 #End Region
 #End Region
 
@@ -2248,7 +2247,6 @@ Public Class CP
                 If My.W10 Or My.W11 Then
                     Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                     Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
                     If File.Exists(TerDir) Then
                         Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
@@ -2262,16 +2260,9 @@ Public Class CP
                         TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
                     End If
 
-                    If File.Exists(TerDevDir) Then
-                        TerminalDeveloper = New WinTerminal(TerDevDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Developer)
-                    Else
-                        TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
-                    End If
-
                 Else
                     Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
                     TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-                    TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
                 End If
 #End Region
 #End Region
@@ -2646,6 +2637,10 @@ Public Class CP
                 txt.Clear()
                 CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
 
+                Dim ls_stable, ls_preview As New List(Of String)
+                ls_stable.Clear()
+                ls_preview.Clear()
+
                 For Each lin As String In txt
 #Region "Personal Info"
                     If lin.StartsWith("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
@@ -2874,13 +2869,8 @@ Public Class CP
 #Region "Windows Terminal"
                     If Not IgnoreWindowsTerminal Then
                         If My.W10 Or My.W11 Then
-                            Terminal = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile)
-                            TerminalPreview = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
-                            TerminalDeveloper = New WinTerminal(PaletteFile, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Developer)
-                        Else
-                            Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                            TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-                            TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
+                            If lin.ToLower.StartsWith("terminal.") Then ls_stable.Add(lin)
+                            If lin.ToLower.StartsWith("terminalpreview.") Then ls_preview.Add(lin)
                         End If
                     End If
 #End Region
@@ -3174,6 +3164,23 @@ Public Class CP
 #End Region
 
                 Next
+
+#Region "Windows Terminal"
+                If Not IgnoreWindowsTerminal Then
+                    If My.W10 Or My.W11 Then
+
+                        Dim str_stable, str_preview As String
+                        str_stable = CStr_FromList(ls_stable)
+                        str_preview = CStr_FromList(ls_preview)
+
+                        Terminal = New WinTerminal(str_stable, WinTerminal.Mode.WinPaletterFile)
+                        TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+                    Else
+                        Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                        TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                    End If
+                End If
+#End Region
 #End Region
 
             Case Mode.Init
@@ -3400,7 +3407,6 @@ Public Class CP
 #Region "Windows Terminal"
                 Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
                 TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-                TerminalDeveloper = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Developer)
 #End Region
 
 #End Region
@@ -4579,7 +4585,6 @@ Public Class CP
                 If My.W10 Or My.W11 Then
                     Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                     Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
 
                     If Terminal_Stable_Enabled Then
                         If IO.File.Exists(TerDir) Then
@@ -4590,12 +4595,6 @@ Public Class CP
                     If Terminal_Preview_Enabled Then
                         If IO.File.Exists(TerPreDir) Then
                             TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                        End If
-                    End If
-
-                    If Terminal_Developer_Enabled Then
-                        If IO.File.Exists(TerDevDir) Then
-                            TerminalDeveloper.Save(TerDevDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Developer)
                         End If
                     End If
 
@@ -5163,10 +5162,6 @@ Public Class CP
                 tx.Add("<WindowsTerminal_Preview>")
                 tx.Add(TerminalPreview.Save("", WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview))
                 tx.Add("</WindowsTerminal_Preview>" & vbCrLf)
-
-                tx.Add("<WindowsTerminal_Developer>")
-                tx.Add(TerminalDeveloper.Save("", WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Developer))
-                tx.Add("</WindowsTerminal_Developer>" & vbCrLf)
 
                 tx.Add("</Terminals>")
 #End Region

@@ -82,6 +82,7 @@ Public Class TerminalsDashboard
             p.X = 0
         End If
 
+        If My.W10 Then PictureBox1.Image = My.Resources.Native10 Else PictureBox1.Image = My.Resources.Native11
 
         Location = p
 
@@ -158,27 +159,6 @@ Public Class TerminalsDashboard
         End If
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        If My.Application._Settings.Terminal_Bypass Then
-            WindowsTerminal._Mode = WinTerminal.Version.Developer
-            Me.Close()
-            WindowsTerminal.ShowDialog()
-        Else
-            If My.W10 Or My.W11 Then
-                Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
-                If IO.File.Exists(TerDevDir) Then
-                    WindowsTerminal._Mode = WinTerminal.Version.Developer
-                    Me.Close()
-                    WindowsTerminal.ShowDialog()
-                Else
-                    MsgBox("Windows Terminal Developer isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerDevDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.)", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
-                End If
-
-            Else
-                MsgBox("You can't run Windows Terminal in current OS. It is available only in Windows 10 and 11." & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
-            End If
-        End If
-    End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         cmd._Edition = cmd.Edition.CMD

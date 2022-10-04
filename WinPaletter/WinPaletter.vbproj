@@ -66,7 +66,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
@@ -240,11 +241,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb" />
     <Compile Include="My Project\Resources1.Designer.vb" />
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
@@ -339,8 +336,8 @@
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
-    <None Include="Resources\icons8_command_line.ico" />
-    <None Include="Resources\icons8_PowerShell.ico" />
+    <Content Include="Resources\icons8_command_line.ico" />
+    <Content Include="Resources\icons8_PowerShell.ico" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
     <Content Include="Resources\Native10.png" />
@@ -399,10 +396,7 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>

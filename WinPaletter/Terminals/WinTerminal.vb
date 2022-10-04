@@ -2,7 +2,7 @@
 Imports System.IO
 Imports System.Reflection
 Imports WinPaletter.ProfilesList
-
+Imports WinPaletter.XenonCore
 Public Class WinTerminal
     Public Property Colors As List(Of TColor)
     Public Property Profiles As List(Of ProfilesList)
@@ -176,7 +176,11 @@ Public Class WinTerminal
                 Dim Collected As New List(Of String)
                 Dim Preview As Boolean = False
 
-                For Each lin As String In IO.File.ReadAllLines(File)
+                Dim lst As New List(Of String)
+                lst.Clear()
+                CList_FromStr(lst, File)
+
+                For Each lin As String In lst
 
                     Select Case [Version]
                         Case Version.Stable

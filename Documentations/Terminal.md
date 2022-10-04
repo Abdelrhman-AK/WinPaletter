@@ -47,10 +47,10 @@
 | Windows 7, 8.1 | Command Prompt, PowerShell                                                                 |
 | Windows 10, 11 | Command Prompt, PowerShell and Windows Terminal (*It can be installed from Windows Store*) |
 
-| OS         | Windows Terminal                                                                                                   |
-|:----------:|:------------------------------------------------------------------------------------------------------------------:|
-| Windows 10 | Not installed by default, install it from Windows Store                                                            |
-| Windows 11 | Windows Terminal Stable is installed by default, while Preview and Developer versions are not installed by default |
+| OS         | Windows Terminal                                                              |
+|:----------:|:-----------------------------------------------------------------------------:|
+| Windows 10 | Not installed by default, install it from Windows Store                       |
+| Windows 11 | Windows Terminal Stable is installed by default, while Preview version is not |
 
 * You can also customize another unmentioned terminal, if it exists as a key in registry in `HKEY_CURRENT_USER\Console`.
 
@@ -107,7 +107,9 @@ It is simple, you pick-up a profile from profiles list and then pick-up a color 
 
 ### Q3-B) I can't see effects of theme on Terminal, What's wrong?
 
-Themes are effective only for Windows Terminal 1.16 Preview and Developer and Later Versions
+Themes are effective only for Windows Terminal 1.16 Preview and Later Versions.
+
+If future update for Windows Terminal Stable supports that, it will work automatically.
 
 ### Q3-C) I can't see any effect on Terminal too, What's wrong else?
 
@@ -185,4 +187,4 @@ Windows Terminal uses the monospaced fonts only, if you force a regular\non mono
   
   9. To maintain this effect, never modify preferences from this terminal shortcut.
 
-* These rules don't apply on the new Windows 10\11 Terminal (Stable\Preview\Developer).
+* These rules don't apply on the new Windows 10\11 Terminal (Stable\Preview).
