@@ -133,7 +133,7 @@ You can do one solution from these:
 
 * Restore Defaults ( As answer of question `Q3-E`)
 
-#### Q3-G) Fonts look weird. What happened?
+### Q3-G) Fonts look weird. What happened?
 
 Windows Terminal uses the monospaced fonts only, if you force a regular\non monospaced font, it will be rendered wrongly.
 
