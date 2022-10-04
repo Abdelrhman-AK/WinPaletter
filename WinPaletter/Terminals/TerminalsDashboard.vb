@@ -232,4 +232,8 @@ Public Class TerminalsDashboard
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
         End If
     End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        Process.Start(My.Resources.Link_Repository & "Documentations\Terminal")
+    End Sub
 End Class
