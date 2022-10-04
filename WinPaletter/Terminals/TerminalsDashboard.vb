@@ -234,6 +234,6 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        Process.Start(My.Resources.Link_Repository & "Documentations\Terminal")
+        Process.Start(My.Resources.Link_Repository & "blob/master/Documentations/Terminal.md")
     End Sub
 End Class

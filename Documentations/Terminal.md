@@ -71,17 +71,17 @@
 | Cursor Type and Cursor Size                                                                                                                               |
 | Tweaks for Windows 10 19H2 (1909) and Later; Cursor Color, Enhanced Terminal (Terminal Version 2), Line Selection, Terminal Scrolling and Windows Opacity |
 
-###### Q2-A) I can't see any effect on Terminal, What's wrong?
+##### Q2-A) I can't see any effect on Terminal, What's wrong?
 
 All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock to it to avoid unintentional actions on them, so if you want to apply effects to terminals you want, just Enable the toggle which you will find in the upper part of the form.
 
-###### Q2-B) Fonts look weird. What happened?
+##### Q2-B) Fonts look weird. What happened?
 
 * Command Prompt uses the monospaced fonts only if you disable Raster Fonts, if you force a regular\non monospaced font, it will be rendered wrongly. And if you disable Enhanced Terminals, the regular fonts won't be used at all, and if you enable Raster Fonts, it won't be used at all and the Retro\VGA\Raster font will be used
 
 * Raster fonts size isn't rendered in the same way of monospaced fonts, you will find both different in size in spite of selecting the same number of size
 
-###### Q2-C) I can't colorize or change cursor style. What is the issue?
+##### Q2-C) I can't colorize or change cursor style. What is the issue?
 
 * **Windows 7, 8.1 and 10 less than 19H2 (1909):** can't colorize or change cursor style as the terminal doesn't support that.
 
@@ -101,15 +101,15 @@ All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock 
 | Themes; you can customize Titlebar Background (Active and Inactive colors) and Tabs Colors (Active and Inactive colors)                      |
 | Background Image, its opacity and Acrylic effects                                                                                            |
 
-###### Q3-A) How to set a default scheme to specific Windows Terminal profile?
+##### Q3-A) How to set a default scheme to specific Windows Terminal profile?
 
 It is simple, you pick-up a profile from profiles list and then pick-up a color scheme from schemes list.
 
-###### Q3-B) I can't see effects of theme on Terminal, What's wrong?
+##### Q3-B) I can't see effects of theme on Terminal, What's wrong?
 
 Themes are effective only for Windows Terminal 1.16 Preview and Developer and Later Versions
 
-###### Q3-C) I can't see any effect on Terminal too, What's wrong else?
+##### Q3-C) I can't see any effect on Terminal too, What's wrong else?
 
 All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock to it to avoid unintentional actions on them, so if you want to apply effects to terminals you want, just Enable the toggle which you will find in the upper part of the form.
 
@@ -121,11 +121,11 @@ The blue + is to clone a profile\color scheme\theme.
 
 The pencil is to edit name of color scheme\theme, and properties of selected profile.
 
-###### Q3-E) How to restore Windows Terminal to default?
+##### Q3-E) How to restore Windows Terminal to default?
 
 Press on button "Open "settings.json" in editor" which you will find in the bottom of the form, then you will find Notepad or other editor is open. Erase all text of this "settings.json" and save and open your Windows Terminals, the default settings will be regenerated.
 
-###### Q3-F) I don't like the preferences\customization I made to Windows Terminal and I feel that it is broken. What should I do?
+##### Q3-F) I don't like the preferences\customization I made to Windows Terminal and I feel that it is broken. What should I do?
 
 You can do one solution from these:
 
@@ -133,7 +133,7 @@ You can do one solution from these:
 
 * Restore Defaults ( As answer of question `Q3-E`)
 
-###### Q3-G) Fonts look weird. What happened?
+##### Q3-G) Fonts look weird. What happened?
 
 Windows Terminal uses the monospaced fonts only, if you force a regular\non monospaced font, it will be rendered wrongly.
 
