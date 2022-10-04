@@ -1668,12 +1668,11 @@ Public Class CP
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(_Def.CMD_PopupBackground.ToString("X") & _Def.CMD_PopupForeground.ToString("X"), 16))
+                    Dim d As String = CInt(y_cmd).ToString("X")
 
-                    With CInt(y_cmd).ToString("X")
-                        CMD_PopupBackground = Convert.ToInt32(.Chars(0), 16)
-                        CMD_PopupForeground = Convert.ToInt32(.Chars(1), 16)
-                    End With
-
+                    If d.Count = 1 Then d = 0 & d
+                    CMD_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
+                    CMD_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
                 Catch
                     CMD_PopupBackground = _Def.CMD_PopupBackground
                     CMD_PopupForeground = _Def.CMD_PopupForeground
@@ -1681,11 +1680,11 @@ Public Class CP
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(_Def.CMD_ScreenColorsBackground.ToString("X") & _Def.CMD_ScreenColorsForeground.ToString("X"), 16))
+                    Dim d As String = CInt(y_cmd).ToString("X")
 
-                    With CInt(y_cmd).ToString("X")
-                        CMD_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
-                        CMD_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
-                    End With
+                    If d.Count = 1 Then d = 0 & d
+                    CMD_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
+                    CMD_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
                 Catch
                     CMD_ScreenColorsBackground = _Def.CMD_ScreenColorsBackground
                     CMD_ScreenColorsForeground = _Def.CMD_ScreenColorsForeground
@@ -1713,7 +1712,7 @@ Public Class CP
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
-                    CMD_FontRaster = If(y_cmd = 1, True, False)
+                    CMD_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
                 Catch
                     CMD_FontRaster = _Def.CMD_FontRaster
                 End Try
@@ -1901,11 +1900,11 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_32_PopupBackground.ToString("X") & _Def.PS_32_PopupForeground.ToString("X"), 16))
+                        Dim d As String = CInt(y_cmd).ToString("X")
 
-                        With CInt(y_cmd).ToString("X")
-                            PS_32_PopupBackground = Convert.ToInt32(.Chars(0), 16)
-                            PS_32_PopupForeground = Convert.ToInt32(.Chars(1), 16)
-                        End With
+                        If d.Count = 1 Then d = 0 & d
+                        PS_32_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
+                        PS_32_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
                     Catch
                         PS_32_PopupBackground = _Def.PS_32_PopupBackground
                         PS_32_PopupForeground = _Def.PS_32_PopupForeground
@@ -1913,11 +1912,11 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_32_ScreenColorsBackground.ToString("X") & _Def.PS_32_ScreenColorsForeground.ToString("X"), 16))
+                        Dim d As String = CInt(y_cmd).ToString("X")
 
-                        With CInt(y_cmd).ToString("X")
-                            PS_32_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
-                            PS_32_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
-                        End With
+                        If d.Count = 1 Then d = 0 & d
+                        PS_32_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
+                        PS_32_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
                     Catch
                         PS_32_ScreenColorsBackground = _Def.PS_32_ScreenColorsBackground
                         PS_32_ScreenColorsForeground = _Def.PS_32_ScreenColorsForeground
@@ -1943,7 +1942,7 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_32_FontRaster, 54, 1))
-                        PS_32_FontRaster = If(y_cmd = 1, True, False)
+                        PS_32_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
                     Catch
                         PS_32_FontRaster = _Def.PS_32_FontRaster
                     End Try
@@ -2132,11 +2131,11 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_64_PopupBackground.ToString("X") & _Def.PS_64_PopupForeground.ToString("X"), 16))
+                        Dim d As String = CInt(y_cmd).ToString("X")
 
-                        With CInt(y_cmd).ToString("X")
-                            PS_64_PopupBackground = Convert.ToInt32(.Chars(0), 16)
-                            PS_64_PopupForeground = Convert.ToInt32(.Chars(1), 16)
-                        End With
+                        If d.Count = 1 Then d = 0 & d
+                        PS_64_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
+                        PS_64_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
                     Catch
                         PS_64_PopupBackground = _Def.PS_64_PopupBackground
                         PS_64_PopupForeground = _Def.PS_64_PopupForeground
@@ -2144,11 +2143,11 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_64_ScreenColorsBackground.ToString("X") & _Def.PS_64_ScreenColorsForeground.ToString("X"), 16))
+                        Dim d As String = CInt(y_cmd).ToString("X")
 
-                        With CInt(y_cmd).ToString("X")
-                            PS_64_ScreenColorsBackground = Convert.ToInt32(.Chars(0), 16)
-                            PS_64_ScreenColorsForeground = Convert.ToInt32(.Chars(1), 16)
-                        End With
+                        If d.Count = 1 Then d = 0 & d
+                        PS_64_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
+                        PS_64_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
                     Catch
                         PS_64_ScreenColorsBackground = _Def.PS_64_ScreenColorsBackground
                         PS_64_ScreenColorsForeground = _Def.PS_64_ScreenColorsForeground
@@ -2176,7 +2175,7 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_64_FontRaster, 54, 1))
-                        PS_64_FontRaster = If(y_cmd = 1, True, False)
+                        PS_64_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
                     Catch
                         PS_64_FontRaster = _Def.PS_64_FontRaster
                     End Try
@@ -3686,15 +3685,17 @@ Public Class CP
         End Select
     End Sub
 
-    Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "")
+    Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "", Optional ByVal ShowProgress As Boolean = True)
         Select Case [SaveTo]
             Case SavingMode.Registry
 
 #Region "Registry"
 
-                If My.W7 Or My.W8 Then
-                    th = New Thread(AddressOf Task_A)
-                    th.Start()
+                If ShowProgress Then
+                    If My.W7 Or My.W8 Then
+                        th = New Thread(AddressOf Task_A)
+                        th.Start()
+                    End If
                 End If
 
 #Region "Modern Windows"
@@ -4908,7 +4909,10 @@ Public Class CP
                 End If
 #End Region
 
-                If My.W7 Or My.W8 Then f.BeginInvoke(New Action(Sub() f.Close()))
+                If ShowProgress Then
+                    If My.W7 Or My.W8 Then f.BeginInvoke(New Action(Sub() f.Close()))
+                End If
+
 #End Region
 
             Case SavingMode.File

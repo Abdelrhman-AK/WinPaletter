@@ -62,6 +62,7 @@ Public Class TerminalsDashboard
 
     Private Sub TerminalsDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+
         _shown = False
 
         Dim p As Point = MousePosition - New Point(0, Height)
@@ -124,7 +125,7 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox("Windows Terminal Stable isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.)", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox("Windows Terminal Stable isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
                 End If
 
             Else
@@ -149,7 +150,7 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox("Windows Terminal Preview isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.)", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox("Windows Terminal Preview isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
                 End If
 
 
@@ -185,7 +186,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox("Microsoft PowerShell x86 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.)", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox("Microsoft PowerShell x86 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -206,7 +207,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox("Microsoft PowerShell x64 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.)", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox("Microsoft PowerShell x64 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -215,5 +216,6 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
         Process.Start(My.Resources.Link_Repository & "blob/master/Documentations/Terminal.md")
+        Me.Close()
     End Sub
 End Class

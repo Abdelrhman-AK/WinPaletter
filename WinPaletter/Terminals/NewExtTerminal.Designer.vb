@@ -25,12 +25,12 @@ Partial Class NewExtTerminal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(NewExtTerminal))
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label102 = New System.Windows.Forms.Label()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
-        Me.XenonButton16 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonButton16 = New WinPaletter.XenonButton()
+        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -56,57 +56,9 @@ Partial Class NewExtTerminal
         Me.Label102.Text = "Path:"
         Me.Label102.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonTextBox1
+        'OpenFileDialog1
         '
-        Me.XenonTextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonTextBox1.Location = New System.Drawing.Point(87, 12)
-        Me.XenonTextBox1.MaxLength = 32767
-        Me.XenonTextBox1.Multiline = False
-        Me.XenonTextBox1.Name = "XenonTextBox1"
-        Me.XenonTextBox1.ReadOnly = False
-        Me.XenonTextBox1.Size = New System.Drawing.Size(357, 24)
-        Me.XenonTextBox1.TabIndex = 102
-        Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.XenonTextBox1.UseSystemPasswordChar = False
-        '
-        'XenonButton16
-        '
-        Me.XenonButton16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton16.ForeColor = System.Drawing.Color.White
-        Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
-        Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(450, 12)
-        Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(30, 24)
-        Me.XenonButton16.TabIndex = 193
-        Me.XenonButton16.UseVisualStyleBackColor = False
-        '
-        'XenonAlertBox1
-        '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 44)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(468, 49)
-        Me.XenonAlertBox1.TabIndex = 199
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "This feature is experimental, you should be sure that you are selecting a console" &
-    " application not WinForm\Desktop application, and in system drive (C:\)"
+        Me.OpenFileDialog1.Filter = "Executable File (*.exe)|*.exe"
         '
         'XenonButton2
         '
@@ -141,9 +93,57 @@ Partial Class NewExtTerminal
         Me.XenonButton1.Text = "Add to registry entry"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
-        'OpenFileDialog1
+        'XenonAlertBox1
         '
-        Me.OpenFileDialog1.Filter = "Executable File (*.exe)|*.exe"
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox1.CenterText = False
+        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 44)
+        Me.XenonAlertBox1.Name = "XenonAlertBox1"
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(468, 49)
+        Me.XenonAlertBox1.TabIndex = 199
+        Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = "This feature is experimental, you should be sure that you are selecting a console" &
+    " application not WinForm\Desktop application, and in system drive (C:\)"
+        '
+        'XenonButton16
+        '
+        Me.XenonButton16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton16.ForeColor = System.Drawing.Color.White
+        Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
+        Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonButton16.LineSize = 1
+        Me.XenonButton16.Location = New System.Drawing.Point(450, 12)
+        Me.XenonButton16.Name = "XenonButton16"
+        Me.XenonButton16.Size = New System.Drawing.Size(30, 24)
+        Me.XenonButton16.TabIndex = 193
+        Me.XenonButton16.UseVisualStyleBackColor = False
+        '
+        'XenonTextBox1
+        '
+        Me.XenonTextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox1.Hint = Nothing
+        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonTextBox1.Location = New System.Drawing.Point(87, 12)
+        Me.XenonTextBox1.MaxLength = 32767
+        Me.XenonTextBox1.Multiline = False
+        Me.XenonTextBox1.Name = "XenonTextBox1"
+        Me.XenonTextBox1.ReadOnly = False
+        Me.XenonTextBox1.Size = New System.Drawing.Size(357, 24)
+        Me.XenonTextBox1.TabIndex = 102
+        Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox1.UseSystemPasswordChar = False
         '
         'NewExtTerminal
         '

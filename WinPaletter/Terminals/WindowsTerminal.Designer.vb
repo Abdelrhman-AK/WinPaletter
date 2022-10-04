@@ -31,6 +31,7 @@ Partial Class WindowsTerminal
         Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.TerEnabled = New WinPaletter.XenonToggle()
@@ -138,7 +139,6 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar = New WinPaletter.XenonTrackbar()
         Me.TerFonts = New WinPaletter.XenonComboBox()
         Me.TerFontWeight = New WinPaletter.XenonComboBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox1.SuspendLayout()
@@ -248,6 +248,18 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(634, 39)
         Me.XenonGroupBox2.TabIndex = 197
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.BackColor = System.Drawing.Color.Transparent
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(276, 4)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(83, 31)
+        Me.Label8.TabIndex = 112
+        Me.Label8.Text = "Open From:"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton8
         '
@@ -1815,18 +1827,6 @@ Partial Class WindowsTerminal
         Me.TerFontWeight.Name = "TerFontWeight"
         Me.TerFontWeight.Size = New System.Drawing.Size(136, 24)
         Me.TerFontWeight.TabIndex = 99
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(276, 4)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(83, 31)
-        Me.Label8.TabIndex = 112
-        Me.Label8.Text = "Open From:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'WindowsTerminal
         '

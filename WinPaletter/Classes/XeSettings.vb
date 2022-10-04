@@ -25,6 +25,10 @@ Public Class XeSettings
     Public Property Terminal_Bypass As Boolean = False
     Public Property Terminal_OtherFonts As Boolean = False
 
+    Public Property Terminal_Path_Deflection As Boolean = False
+    Public Property Terminal_Stable_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+    Public Property Terminal_Preview_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+
 
 #End Region
 
@@ -101,6 +105,9 @@ Public Class XeSettings
 
         If Key.GetValue("Terminal_Bypass", Nothing) Is Nothing Then Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
         If Key.GetValue("Terminal_OtherFonts", Nothing) Is Nothing Then Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_Path_Deflection", Nothing) Is Nothing Then Key.SetValue("Terminal_Path_Deflection", Terminal_Path_Deflection, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
+        If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
 
     End Sub
 
@@ -119,8 +126,12 @@ Public Class XeSettings
                 Win7LivePreview = Key.GetValue("Win7LivePreview", Nothing)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
+
                 Terminal_Bypass = Key.GetValue("Terminal_Bypass", Nothing)
                 Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", Nothing)
+                Terminal_Path_Deflection = Key.GetValue("Terminal_Path_Deflection", False)
+                Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
+                Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json")
 
                 Select Case Key.GetValue("CustomPreviewConfig", Nothing)
                     Case 0
@@ -177,6 +188,9 @@ Public Class XeSettings
                     If x.StartsWith("Nerd_Stats_Kind= ") Then Nerd_Stats_Kind = x.Remove(0, "Nerd_Stats_Kind= ".Count)
                     If x.StartsWith("Terminal_Bypass= ") Then Terminal_Bypass = x.Remove(0, "Terminal_Bypass= ".Count)
                     If x.StartsWith("Terminal_OtherFonts= ") Then Terminal_OtherFonts = x.Remove(0, "Terminal_OtherFonts= ".Count)
+                    If x.StartsWith("Terminal_Path_Deflection= ") Then Terminal_Path_Deflection = x.Remove(0, "Terminal_Path_Deflection= ".Count)
+                    If x.StartsWith("Terminal_Stable_Path= ") Then Terminal_Stable_Path = x.Remove(0, "Terminal_Stable_Path= ".Count)
+                    If x.StartsWith("Terminal_Preview_Path= ") Then Terminal_Preview_Path = x.Remove(0, "Terminal_Preview_Path= ".Count)
 
                 Next
         End Select
@@ -198,6 +212,9 @@ Public Class XeSettings
                 Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
+                Key.SetValue("Terminal_Path_Deflection", Terminal_Path_Deflection, RegistryValueKind.DWord)
+                Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
+                Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven
@@ -246,6 +263,9 @@ Public Class XeSettings
                 l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
                 l.Add(String.Format("Terminal_Bypass= {0}", Terminal_Bypass))
                 l.Add(String.Format("Terminal_OtherFonts= {0}", Terminal_OtherFonts))
+                l.Add(String.Format("Terminal_Path_Deflection= {0}", Terminal_Path_Deflection))
+                l.Add(String.Format("Terminal_Stable_Path= {0}", Terminal_Stable_Path))
+                l.Add(String.Format("Terminal_Preview_Path= {0}", Terminal_Preview_Path))
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven

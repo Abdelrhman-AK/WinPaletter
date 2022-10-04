@@ -885,7 +885,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
-        SetToExtTerminal(XenonComboBox1.SelectedItem)
+        If XenonComboBox1.SelectedItem IsNot Nothing Then SetToExtTerminal(XenonComboBox1.SelectedItem)
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

@@ -88,10 +88,18 @@ Public Class cmd
         Return v
     End Function
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
-        Dim CPx As New CP(CP.Mode.Registry)
-        ApplyToCP(CPx, _Edition)
-        ApplyToCP(MainFrm.CP, _Edition)
-        CPx.Save(CP.SavingMode.Registry)
+
+        If CMDEnabled.Checked Then
+            Cursor = Cursors.WaitCursor
+            Dim CPx As New CP(CP.Mode.Registry)
+            ApplyToCP(CPx, _Edition)
+            ApplyToCP(MainFrm.CP, _Edition)
+            CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7_Enabled, True, False))
+            Cursor = Cursors.Default
+        Else
+            MsgBox("You should enable terminal editing from the toggle above.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+        End If
+
     End Sub
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         ApplyToCP(MainFrm.CP, _Edition)
@@ -947,6 +955,7 @@ Public Class cmd
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
+        CMD_PreviewCUR2.BackColor = C
         sender.backcolor = C
         sender.invalidate
 

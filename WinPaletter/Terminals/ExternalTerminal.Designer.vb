@@ -1537,12 +1537,12 @@ Partial Class ExternalTerminal
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(11, 624)
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(10, 624)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(656, 24)
         Me.XenonCheckBox1.TabIndex = 125
-        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (May cause wrong renderering in Enhanced terminal, won'" &
-    "t be used in legacy terminal)"
+        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong font renderering in Enhanced terminal, wo" &
+    "n't be used in legacy terminal)"
         '
         'ExternalTerminal
         '

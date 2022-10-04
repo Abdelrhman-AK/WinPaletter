@@ -32,6 +32,10 @@ Public Class Whatsnew
 
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs)
-        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
+        Process.Start(My.Resources.Link_Repository & "blob/master/TranslationContribution.md")
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Process.Start(My.Resources.Link_Repository & "blob/master/Documentations/Terminal.md")
     End Sub
 End Class

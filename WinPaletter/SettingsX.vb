@@ -45,6 +45,10 @@ Public Class SettingsX
             If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
             If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
 
+            If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
+            If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
+            If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -113,6 +117,9 @@ Public Class SettingsX
             XenonCheckBox11.Checked = .Nerd_Stats_HexHash
             XenonCheckBox12.Checked = .Terminal_Bypass
             XenonCheckBox13.Checked = .Terminal_OtherFonts
+            XenonCheckBox14.Checked = .Terminal_Path_Deflection
+            XenonTextBox1.Text = .Terminal_Stable_Path
+            XenonTextBox2.Text = .Terminal_Preview_Path
 
             Select Case .Nerd_Stats_Kind
                 Case XeSettings.Nerd_Stats_Type.HEX
@@ -177,6 +184,9 @@ Public Class SettingsX
             .Nerd_Stats_HexHash = XenonCheckBox11.Checked
             .Terminal_Bypass = XenonCheckBox12.Checked
             .Terminal_OtherFonts = XenonCheckBox13.Checked
+            .Terminal_Path_Deflection = XenonCheckBox14.Checked
+            .Terminal_Stable_Path = XenonTextBox1.Text
+            .Terminal_Preview_Path = XenonTextBox2.Text
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -273,6 +283,9 @@ Public Class SettingsX
                 .Nerd_Stats_HexHash = XenonCheckBox11.Checked
                 .Terminal_Bypass = XenonCheckBox12.Checked
                 .Terminal_OtherFonts = XenonCheckBox13.Checked
+                .Terminal_Path_Deflection = XenonCheckBox14.Checked
+                .Terminal_Stable_Path = XenonTextBox1.Text
+                .Terminal_Preview_Path = XenonTextBox2.Text
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -298,6 +311,9 @@ Public Class SettingsX
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
                 XenonCheckBox13.Checked = .Terminal_OtherFonts
+                XenonCheckBox14.Checked = .Terminal_Path_Deflection
+                XenonTextBox1.Text = .Terminal_Stable_Path
+                XenonTextBox2.Text = .Terminal_Preview_Path
 
                 Select Case .CustomPreviewConfig
                     Case XeSettings.WinVer.Eleven
@@ -365,6 +381,9 @@ Public Class SettingsX
 
             XenonCheckBox12.Checked = .Terminal_Bypass
             XenonCheckBox13.Checked = .Terminal_OtherFonts
+            XenonCheckBox14.Checked = .Terminal_Path_Deflection
+            XenonTextBox1.Text = .Terminal_Stable_Path
+            XenonTextBox2.Text = .Terminal_Preview_Path
 
             Select Case .CustomPreviewConfig
                 Case XeSettings.WinVer.Eleven
@@ -449,5 +468,17 @@ Public Class SettingsX
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
+    End Sub
+
+    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+        If OpenJSONDlg.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenJSONDlg.FileName
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        If OpenJSONDlg.ShowDialog = DialogResult.OK Then
+            XenonTextBox2.Text = OpenJSONDlg.FileName
+        End If
     End Sub
 End Class
