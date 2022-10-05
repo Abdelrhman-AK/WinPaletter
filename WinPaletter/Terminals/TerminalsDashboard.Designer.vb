@@ -50,9 +50,9 @@ Partial Class TerminalsDashboard
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label49.BackColor = System.Drawing.Color.Transparent
         Me.Label49.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label49.Location = New System.Drawing.Point(3, 5)
+        Me.Label49.Location = New System.Drawing.Point(6, 7)
         Me.Label49.Name = "Label49"
-        Me.Label49.Size = New System.Drawing.Size(152, 19)
+        Me.Label49.Size = New System.Drawing.Size(150, 19)
         Me.Label49.TabIndex = 84
         Me.Label49.Text = "Command Prompt:"
         Me.Label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -63,9 +63,9 @@ Partial Class TerminalsDashboard
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(3, 69)
+        Me.Label1.Location = New System.Drawing.Point(6, 71)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(152, 19)
+        Me.Label1.Size = New System.Drawing.Size(150, 19)
         Me.Label1.TabIndex = 88
         Me.Label1.Text = "PowerShell"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -76,9 +76,9 @@ Partial Class TerminalsDashboard
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(3, 132)
+        Me.Label2.Location = New System.Drawing.Point(6, 134)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(124, 19)
+        Me.Label2.Size = New System.Drawing.Size(128, 19)
         Me.Label2.TabIndex = 92
         Me.Label2.Text = "Windows Terminal:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -87,7 +87,7 @@ Partial Class TerminalsDashboard
         '
         Me.PictureBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.Image = Global.WinPaletter.My.Resources.Resources.Native11
-        Me.PictureBox1.Location = New System.Drawing.Point(136, 132)
+        Me.PictureBox1.Location = New System.Drawing.Point(140, 134)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(18, 18)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -102,9 +102,9 @@ Partial Class TerminalsDashboard
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(3, 196)
+        Me.Label3.Location = New System.Drawing.Point(6, 198)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(152, 19)
+        Me.Label3.Size = New System.Drawing.Size(150, 19)
         Me.Label3.TabIndex = 99
         Me.Label3.Text = "Important"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -118,7 +118,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(3, 224)
+        Me.XenonButton9.Location = New System.Drawing.Point(6, 226)
         Me.XenonButton9.Name = "XenonButton9"
         Me.XenonButton9.Size = New System.Drawing.Size(152, 28)
         Me.XenonButton9.TabIndex = 101
@@ -129,7 +129,7 @@ Partial Class TerminalsDashboard
         '
         Me.XenonSeparator4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator4.Location = New System.Drawing.Point(4, 219)
+        Me.XenonSeparator4.Location = New System.Drawing.Point(7, 221)
         Me.XenonSeparator4.Name = "XenonSeparator4"
         Me.XenonSeparator4.Size = New System.Drawing.Size(150, 1)
         Me.XenonSeparator4.TabIndex = 100
@@ -145,7 +145,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(82, 161)
+        Me.XenonButton5.Location = New System.Drawing.Point(85, 163)
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton5.TabIndex = 95
@@ -161,7 +161,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(3, 161)
+        Me.XenonButton6.Location = New System.Drawing.Point(6, 163)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton6.TabIndex = 94
@@ -172,7 +172,7 @@ Partial Class TerminalsDashboard
         '
         Me.XenonSeparator3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator3.Location = New System.Drawing.Point(4, 155)
+        Me.XenonSeparator3.Location = New System.Drawing.Point(7, 157)
         Me.XenonSeparator3.Name = "XenonSeparator3"
         Me.XenonSeparator3.Size = New System.Drawing.Size(150, 1)
         Me.XenonSeparator3.TabIndex = 93
@@ -188,7 +188,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(147, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(82, 97)
+        Me.XenonButton3.Location = New System.Drawing.Point(85, 99)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton3.TabIndex = 91
@@ -204,7 +204,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(147, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(3, 97)
+        Me.XenonButton4.Location = New System.Drawing.Point(6, 99)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton4.TabIndex = 90
@@ -215,7 +215,7 @@ Partial Class TerminalsDashboard
         '
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator2.Location = New System.Drawing.Point(4, 92)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(7, 94)
         Me.XenonSeparator2.Name = "XenonSeparator2"
         Me.XenonSeparator2.Size = New System.Drawing.Size(150, 1)
         Me.XenonSeparator2.TabIndex = 89
@@ -231,7 +231,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(73, Byte), Integer), CType(CType(76, Byte), Integer), CType(CType(78, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(82, 34)
+        Me.XenonButton2.Location = New System.Drawing.Point(85, 36)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton2.TabIndex = 87
@@ -247,7 +247,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(4, 34)
+        Me.XenonButton1.Location = New System.Drawing.Point(7, 36)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(73, 27)
         Me.XenonButton1.TabIndex = 86
@@ -258,7 +258,7 @@ Partial Class TerminalsDashboard
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(4, 28)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(7, 30)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(150, 1)
         Me.XenonSeparator1.TabIndex = 85
@@ -270,7 +270,7 @@ Partial Class TerminalsDashboard
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(158, 255)
+        Me.ClientSize = New System.Drawing.Size(165, 260)
         Me.ControlBox = False
         Me.Controls.Add(Me.XenonButton9)
         Me.Controls.Add(Me.XenonSeparator4)

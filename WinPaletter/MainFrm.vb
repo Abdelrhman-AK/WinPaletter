@@ -900,7 +900,6 @@ Public Class MainFrm
 
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
-        My.Application.AdjustFonts()
 
         For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint

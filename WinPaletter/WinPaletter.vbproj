@@ -330,7 +330,6 @@
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
-    <Content Include="Resources\CodeStr.txt" />
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
@@ -413,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\TerminalInfo.resx">
       <DependentUpon>TerminalInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\TerminalsDashboard.resx">
+      <DependentUpon>TerminalsDashboard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
       <DependentUpon>WindowsTerminal.vb</DependentUpon>

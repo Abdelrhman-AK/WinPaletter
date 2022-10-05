@@ -12,10 +12,10 @@ Public Class NewExtTerminal
         Try
             Registry.CurrentUser.CreateSubKey(String.Format("Console\%SystemDrive%_{0}", XenonTextBox1.Text.Replace("\", "_").Trim(":")(1)), True).Close()
 
-            MsgBox("This key is entered into registry successfully.", MsgBoxStyle.Information + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.ExtTer_NewSuccess, MsgBoxStyle.Information + My.Application.MsgboxRt)
             ExternalTerminal.FillTerminals(ExternalTerminal.XenonComboBox1)
         Catch ex As Exception
-            MsgBox("Couldn't write this entry to registry. Please check if this key already exists or check permissions." & vbCrLf & vbCrLf & "Error Details: " & ex.Message, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.ExtTer_NewError & vbCrLf & vbCrLf & My.Application.LanguageHelper.ErrorDetails & ex.Message, MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End Try
 
     End Sub

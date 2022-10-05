@@ -153,6 +153,7 @@ Public Class SettingsX
         Dim ch_preview As Boolean = False  'Ch = Change
         Dim ch_dark As Boolean = False
         Dim ch_nerd As Boolean = False
+        Dim ch_terminal As Boolean = False
 
         With My.Application._Settings
             If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then ch_preview = True
@@ -164,6 +165,10 @@ Public Class SettingsX
             If .Nerd_Stats <> XenonCheckBox10.Checked Then ch_nerd = True
             If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then ch_nerd = True
             If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then ch_nerd = True
+
+            If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then ch_terminal = True
+            If .Terminal_Stable_Path <> XenonTextBox1.Text Then ch_terminal = True
+            If .Terminal_Preview_Path <> XenonTextBox2.Text Then ch_terminal = True
 
             .AutoAddExt = XenonCheckBox1.Checked
             .DragAndDropPreview = XenonCheckBox3.Checked
@@ -247,6 +252,48 @@ Public Class SettingsX
                 Application.OpenForms(ix).Refresh()
             Next
         End If
+
+        If ch_terminal Then
+            If My.W10 Or My.W11 Then
+                Dim TerDir As String
+                Dim TerPreDir As String
+
+                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Else
+                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                        TerDir = My.Application._Settings.Terminal_Stable_Path
+                    Else
+                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    End If
+
+                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                    Else
+                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    End If
+                End If
+
+
+                If IO.File.Exists(TerDir) Then
+                    MainFrm.CP.Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
+                Else
+                    MainFrm.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                End If
+
+                If IO.File.Exists(TerPreDir) Then
+                    MainFrm.CP.TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                Else
+                    MainFrm.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                End If
+
+            Else
+                MainFrm.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                MainFrm.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+            End If
+        End If
+
 
         Cursor = Cursors.Default
 

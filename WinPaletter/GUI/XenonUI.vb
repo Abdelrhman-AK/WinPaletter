@@ -3067,9 +3067,8 @@ Public Class XenonComboBox : Inherits ComboBox
         SetStyle(ControlStyles.ResizeRedraw, True)
         SetStyle(ControlStyles.UserPaint, True)
         SetStyle(ControlStyles.DoubleBuffer, True)
-        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
         Size = New Size(190, 27)
-        DrawMode = Windows.Forms.DrawMode.OwnerDrawFixed
+        DrawMode = Windows.Forms.DrawMode.OwnerDrawVariable
         If GetDarkMode() Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
         ForeColor = Color.White
         LineColor = Color.DodgerBlue
@@ -3146,9 +3145,7 @@ Public Class XenonComboBox : Inherits ComboBox
     End Sub
 
     Protected Sub DrawTriangle(ByVal Clr As Color, ByVal FirstPoint As Point, ByVal SecondPoint As Point, ByVal ThirdPoint As Point, ByVal G As Graphics)
-
         Dim points As New List(Of Point) From {FirstPoint, SecondPoint, ThirdPoint}
-
         G.FillPolygon(New SolidBrush(Clr), points.ToArray())
     End Sub
 #End Region
@@ -3203,7 +3200,7 @@ Public Class XenonComboBox : Inherits ComboBox
 
             Try
                 If Not DesignMode Then
-                    AddHandler Parent.BackColorChanged, AddressOf Invalidate
+                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf Invalidate
                     AddHandler BackColorChanged, AddressOf Invalidate
                 End If
             Catch
@@ -3211,15 +3208,13 @@ Public Class XenonComboBox : Inherits ComboBox
 
             ColorPalette = New XenonColorPalette(Me)
 
-            If Not DesignMode Then
+            If Not DesignMode And Me IsNot Nothing Then
                 Try
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
-                    AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                    AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
-                    AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
-
-
+                    If FindForm() IsNot Nothing Then AddHandler FindForm.Load, AddressOf Loaded
+                    If FindForm() IsNot Nothing Then AddHandler FindForm.Shown, AddressOf Showed
+                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                    If Parent IsNot Nothing Then AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                    If Parent IsNot Nothing Then AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
                 Catch
                 End Try
             End If

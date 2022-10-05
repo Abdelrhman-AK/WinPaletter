@@ -32,7 +32,7 @@ Public Class TerminalInfo
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
 
         If WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) And Not WindowsTerminal.TerProfiles.SelectedItem.ToString.ToLower = TerName.Text.ToLower Then
-            MsgBox("You can't set this name as it is already set to another profile.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.Terminal_alreadyset, MsgBoxStyle.Critical + My.Application.MsgboxRt)
             Exit Sub
         End If
 

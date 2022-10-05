@@ -1132,7 +1132,7 @@ Public Class Win32UI
             Try
                 IO.File.WriteAllText(SaveFileDialog2.FileName, CStr_FromList(s))
             Catch ex As Exception
-                MsgBox("Error saving file: " & SaveFileDialog2.FileName & "(" & ex.Message & ")" & vbCrLf & vbCrLf & ex.StackTrace)
+                MsgBox(My.Application.LanguageHelper.Win32UISavingThemeError & SaveFileDialog2.FileName & " (" & ex.Message & ")" & vbCrLf & vbCrLf & ex.StackTrace)
             End Try
 
         End If

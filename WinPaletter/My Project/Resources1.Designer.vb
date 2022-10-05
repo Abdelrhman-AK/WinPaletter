@@ -269,30 +269,7 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to @RescueBoxAutoClose = Rescue Box - Press any Keyboard Key to disable auto closing
-        '''@RescueBox = Rescue Box
-        '''@InvalidTheme = Error: Invalid Theme File.
-        '''@ThemeNotExist = &quot;Theme File doesn&apos;t exist.&quot;
-        '''@OK = OK
-        '''@Next_ = Next
-        '''@Yes = Yes
-        '''@No = No
-        '''@NewTag = Create New Theme (Palette) File
-        '''@OpenTag = Open a Theme File
-        '''@SaveTag = Save Theme File
-        '''@SaveAsTag = Save Theme File as ...
-        '''@EditInfoTag = Edit Information of current Theme File
-        '''@NewUpdate = New Update Available
-        '''@OpenForActions = Open Updates form for [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property CodeStr() As String
-            Get
-                Return ResourceManager.GetString("CodeStr", resourceCulture)
-            End Get
-        End Property
-        
+
         '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>

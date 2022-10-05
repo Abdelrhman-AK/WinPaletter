@@ -108,7 +108,6 @@ Public Class TerminalsDashboard
         End If
     End Sub
 
-
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 
         If My.Application._Settings.Terminal_Bypass Then
@@ -118,18 +117,28 @@ Public Class TerminalsDashboard
         Else
 
             If My.W10 Or My.W11 Then
-                Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerDir As String
+
+                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                Else
+                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                        TerDir = My.Application._Settings.Terminal_Stable_Path
+                    Else
+                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                    End If
+                End If
 
                 If IO.File.Exists(TerDir) Then
                     WindowsTerminal._Mode = WinTerminal.Version.Stable
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox("Windows Terminal Stable isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox(My.Application.LanguageHelper.TerminalStable_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
                 End If
 
             Else
-                MsgBox("You can't run Windows Terminal in current OS. It is available only in Windows 10 and 11." & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Application.LanguageHelper.Terminal_CantRun & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
 
         End If
@@ -143,23 +152,31 @@ Public Class TerminalsDashboard
             WindowsTerminal.ShowDialog()
         Else
             If My.W10 Or My.W11 Then
-                Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Dim TerPreDir As String
+
+                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Else
+                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                    Else
+                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    End If
+                End If
 
                 If IO.File.Exists(TerPreDir) Then
                     WindowsTerminal._Mode = WinTerminal.Version.Preview
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox("Windows Terminal Preview isn't installed or ""settings.json"" isn't accessible." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox(My.Application.LanguageHelper.TerminalPreview_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
                 End If
 
-
             Else
-                MsgBox("You can't run Windows Terminal in current OS. It is available only in Windows 10 and 11." & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it.", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Application.LanguageHelper.Terminal_CantRun & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
         End If
     End Sub
-
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         cmd._Edition = cmd.Edition.CMD
@@ -186,7 +203,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox("Microsoft PowerShell x86 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Application.LanguageHelper.PowerShellx86_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -207,7 +224,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox("Microsoft PowerShell x64 is not installed." & vbCrLf & vbCrLf & "It is supposed to be located in: " & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it).", MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Application.LanguageHelper.PowerShellx64_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)

@@ -35,7 +35,7 @@ Public Class ExternalTerminal
     Sub GetFromExtTerminal(RegKey As String)
 
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(RegKey) Then
-            MsgBox("Terminal not found. Select a valid one from the list.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
             Exit Sub
         End If
 
@@ -383,7 +383,7 @@ Public Class ExternalTerminal
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 
-            MsgBox("Terminal Preferences are set successfully!", MsgBoxStyle.Information + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.ExtTer_Set, MsgBoxStyle.Information + My.Application.MsgboxRt)
         Catch ex As Exception
             MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
         End Try

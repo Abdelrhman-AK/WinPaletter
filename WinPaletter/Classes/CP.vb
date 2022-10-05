@@ -1,39 +1,10 @@
-﻿Imports System.Drawing.Imaging
-Imports System.IO
-Imports System.Reflection
-Imports System.Runtime.InteropServices
-Imports System.Security.Principal
-Imports System.Text
-Imports System.Threading
-Imports System.Windows.Forms.LinkLabel
-Imports Microsoft.Win32
+﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Public Class CP
 
-#Region "System DLLs Functions"
-    <DllImport("user32.dll")>
-    Private Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
-    End Function
-
-    <DllImport("UxTheme.DLL", BestFitMapping:=False, CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="#65")>
-    Shared Function SetSystemVisualStyle(ByVal pszFilename As String, ByVal pszColor As String, ByVal pszSize As String, ByVal dwReserved As Integer) As Integer
-    End Function
-
-    <DllImport("uxtheme", ExactSpelling:=True)>
-    Public Shared Function EnableTheming(ByVal fEnable As Integer) As Integer
-    End Function
-
-    Declare Unicode Function GetCurrentThemeName Lib "uxtheme" (ByVal stringThemeName As StringBuilder, ByVal lengthThemeName As Integer, ByVal stringColorName As StringBuilder, ByVal lengthColorName As Integer, ByVal stringSizeName As StringBuilder, ByVal lengthSizeName As Integer) As Int32
-
-    <DllImport("user32", CharSet:=CharSet.Auto)>
-    Public Shared Function SystemParametersInfo(intAction As Integer, intParam As Integer, strParam As String, intWinIniFlag As Integer) As Integer
-    End Function
-    Private Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByVal lpvParam As Integer, fuWinIni As Integer) As Integer
-#End Region
-
 #Region "Properties"
-    ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+    ReadOnly isElevated As Boolean = New System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator)
 
 #Region "General Info"
     Public Property AppVersion As String = My.Application.Info.Version.ToString
@@ -160,7 +131,6 @@ Public Class CP
     Public Property Terminal_PS_64_Enabled As Boolean = False
     Public Property Terminal_Stable_Enabled As Boolean = False
     Public Property Terminal_Preview_Enabled As Boolean = False
-    Public Property Terminal_Developer_Enabled As Boolean = False
 #End Region
 
 #Region "Command Prompt"
@@ -788,11 +758,11 @@ Public Class CP
 
     End Sub
     Public Function ListColors() As List(Of Color)
-        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+        Dim type1 As Type = [GetType]() : Dim properties1 As System.Reflection.PropertyInfo() = type1.GetProperties()
         Dim CL As New List(Of Color)
         CL.Clear()
 
-        For Each [property] As PropertyInfo In properties1
+        For Each [property] As System.Reflection.PropertyInfo In properties1
             If [property].PropertyType.Name.ToLower = "color" Then
                 CL.Add([property].GetValue(Me, Nothing))
             End If
@@ -802,15 +772,41 @@ Public Class CP
 
         Return CL
     End Function
-#End Region
+    Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
+        Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
 
+        If Not installed Then
+            installed = IsFontInstalled(fontName, FontStyle.Bold)
+        End If
+
+        If Not installed Then
+            installed = IsFontInstalled(fontName, FontStyle.Italic)
+        End If
+
+        Return installed
+    End Function
+    Public Shared Function IsFontInstalled(ByVal fontName As String, ByVal style As FontStyle) As Boolean
+        Dim installed As Boolean = False
+        Const emSize As Single = 8.0F
+
+        Try
+
+            Using testFont = New Font(fontName, emSize, style)
+                installed = (0 = String.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase))
+            End Using
+
+        Catch
+        End Try
+
+        Return installed
+    End Function
     Public f As Form
-    Dim th As System.Threading.Thread
-
+    Dim th As Threading.Thread
     Public Sub Task_A()
         f = New ApplyingTheme()
         Application.Run(f)
     End Sub
+#End Region
 
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "", Optional IgnoreWindowsTerminal As Boolean = False)
         Select Case [Mode]
@@ -1026,9 +1022,9 @@ Public Class CP
                         Dim Classic As Boolean = False
 
                         Try
-                            Dim stringThemeName As StringBuilder = New StringBuilder(260)
-                            GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
-                            Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not File.Exists(stringThemeName.ToString)
+                            Dim stringThemeName As System.Text.StringBuilder = New System.Text.StringBuilder(260)
+                            NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                            Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
                         Catch
                             Classic = False
                         End Try
@@ -1073,8 +1069,8 @@ Public Class CP
                 If My.W8 Then
                     Dim Def As CP = New CP_Defaults().Default_Windows8
 
-                    Dim stringThemeName As StringBuilder = New StringBuilder(260)
-                    GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                    Dim stringThemeName As System.Text.StringBuilder = New System.Text.StringBuilder(260)
+                    NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
 
                     If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Or String.IsNullOrWhiteSpace(stringThemeName.ToString) Then
                         Metro_Theme = AeroTheme.AeroLite
@@ -1181,7 +1177,6 @@ Public Class CP
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
-                    Dim y As Object
 
                     Try
                         LogonUI_DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", Def.LogonUI_DisableAcrylicBackgroundOnLogon)
@@ -1546,11 +1541,6 @@ Public Class CP
                     Terminal_Preview_Enabled = False
                 End Try
 
-                Try
-                    Terminal_Developer_Enabled = rLogX.GetValue("Terminal_Developer_Enabled", False)
-                Catch
-                    Terminal_Developer_Enabled = False
-                End Try
 #End Region
 
 #Region "Command Prompt"
@@ -2244,16 +2234,34 @@ Public Class CP
 
 #Region "Windows Terminal"
                 If My.W10 Or My.W11 Then
-                    Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerDir As String
+                    Dim TerPreDir As String
 
-                    If File.Exists(TerDir) Then
+                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Else
+                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        Else
+                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+
+                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        Else
+                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+                    End If
+
+
+                    If IO.File.Exists(TerDir) Then
                         Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
                     Else
                         Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
                     End If
 
-                    If File.Exists(TerPreDir) Then
+                    If IO.File.Exists(TerPreDir) Then
                         TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
                     Else
                         TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
@@ -2760,7 +2768,6 @@ Public Class CP
                     If lin.StartsWith("*Terminal_PS_64_Enabled= ") Then Terminal_PS_64_Enabled = lin.Remove(0, "*Terminal_PS_64_Enabled= ".Count)
                     If lin.StartsWith("*Terminal_Stable_Enabled= ") Then Terminal_Stable_Enabled = lin.Remove(0, "*Terminal_Stable_Enabled= ".Count)
                     If lin.StartsWith("*Terminal_Preview_Enabled= ") Then Terminal_Preview_Enabled = lin.Remove(0, "*Terminal_Preview_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_Developer_Enabled= ") Then Terminal_Developer_Enabled = lin.Remove(0, "*Terminal_Developer_Enabled= ".Count)
 #End Region
 
 #Region "Command Prompt"
@@ -3298,7 +3305,6 @@ Public Class CP
                 Terminal_PS_64_Enabled = False
                 Terminal_Stable_Enabled = False
                 Terminal_Preview_Enabled = False
-                Terminal_Developer_Enabled = False
 #End Region
 
 #Region "Command Prompt"
@@ -3693,7 +3699,7 @@ Public Class CP
 
                 If ShowProgress Then
                     If My.W7 Or My.W8 Then
-                        th = New Thread(AddressOf Task_A)
+                        th = New Threading.Thread(AddressOf Task_A)
                         th.Start()
                     End If
                 End If
@@ -3734,24 +3740,24 @@ Public Class CP
 
                     Select Case Aero_Theme
                         Case AeroTheme.Aero
-                            EnableTheming(1)
-                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                         Case AeroTheme.AeroOpaque
-                            EnableTheming(1)
-                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
 
                         Case AeroTheme.Basic
-                            EnableTheming(1)
-                            SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
@@ -3759,7 +3765,7 @@ Public Class CP
 
 
                         Case AeroTheme.Classic
-                            EnableTheming(0)
+                            NativeMethods.Uxtheme.EnableTheming(0)
 
                     End Select
 
@@ -3790,11 +3796,11 @@ Public Class CP
                     Try
                         Select Case Metro_Theme
                             Case AeroTheme.Aero
-                                EnableTheming(1)
-                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                                NativeMethods.Uxtheme.EnableTheming(1)
+                                NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
                             Case AeroTheme.AeroLite
-                                EnableTheming(1)
-                                SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                                NativeMethods.Uxtheme.EnableTheming(1)
+                                NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
                         End Select
                     Catch
                     End Try
@@ -3998,7 +4004,7 @@ Public Class CP
                         Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
                         Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
 
-                        Directory.CreateDirectory(DirX)
+                        IO.Directory.CreateDirectory(DirX)
 
                         For Each fileX As String In My.Computer.FileSystem.GetFiles(DirX)
                             Try : Kill(fileX) : Catch : End Try
@@ -4017,7 +4023,7 @@ Public Class CP
                             Case LogonUI7_Modes.CustomImage
 
                                 If IO.File.Exists(LogonUI7_ImagePath) Then
-                                    bmpList.Add(Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+                                    bmpList.Add(Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
                                 Else
                                     bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
                                 End If
@@ -4038,10 +4044,10 @@ Public Class CP
                         Next
 
                         If bmpList.Count = 1 Then
-                            bmpList(0).Save(DirX & "\backgroundDefault.jpg", ImageFormat.Jpeg)
+                            bmpList(0).Save(DirX & "\backgroundDefault.jpg", Drawing.Imaging.ImageFormat.Jpeg)
                         Else
                             For x = 0 To bmpList.Count - 1
-                                bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), ImageFormat.Jpeg)
+                                bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Drawing.Imaging.ImageFormat.Jpeg)
                             Next
                         End If
                         NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -4147,8 +4153,8 @@ Public Class CP
                                     syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", MainFrm.CP.Metro_LockScreenSystemID)
                                 End If
 
-                                If File.Exists(syslock) Then
-                                    bmp = Image.FromStream(New FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
+                                If IO.File.Exists(syslock) Then
+                                    bmp = Image.FromStream(New IO.FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
                                 Else
                                     bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
                                 End If
@@ -4156,7 +4162,7 @@ Public Class CP
                             Case LogonUI7_Modes.CustomImage
 
                                 If IO.File.Exists(LogonUI7_ImagePath) Then
-                                    bmp = Image.FromStream(New FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
+                                    bmp = Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
                                 Else
                                     bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
                                 End If
@@ -4173,7 +4179,7 @@ Public Class CP
                         If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
                         If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
                         If LogonUI7_Effect_Noise Then bmp = NoiseBitmap(bmp, LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
-                        bmp.Save(lockimg, ImageFormat.Png)
+                        bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
                     End If
 
                 End If
@@ -4281,14 +4287,14 @@ Public Class CP
                 C1.Add(22)
                 C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonLight))
 
-                SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
+                NativeMethods.User32.SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
 
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
 
-                SystemParametersInfo(&H1023, 0, If(Win32UI_EnableTheming, 1, 0), 0)
-                SystemParametersInfo(&H1009, 0, If(Win32UI_EnableGradient, 1, 0), 0)
+                NativeMethods.User32.SystemParametersInfo(&H1023, 0, If(Win32UI_EnableTheming, 1, 0), 0)
+                NativeMethods.User32.SystemParametersInfo(&H1009, 0, If(Win32UI_EnableGradient, 1, 0), 0)
 
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
@@ -4329,12 +4335,14 @@ Public Class CP
 #Region "Terminals"
 
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
+
+#Region "Locking"
                 rLogX.SetValue("Terminal_CMD_Enabled", If(Terminal_CMD_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_PS_32_Enabled", If(Terminal_PS_32_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_PS_64_Enabled", If(Terminal_PS_64_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal_Stable_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_Preview_Enabled", If(Terminal_Preview_Enabled, 1, 0))
-                rLogX.SetValue("Terminal_Developer_Enabled", If(Terminal_Developer_Enabled, 1, 0))
+#End Region
 
 #Region "Command Prompt"
                 If Terminal_CMD_Enabled Then
@@ -4584,8 +4592,25 @@ Public Class CP
 
 #Region "Windows Terminals"
                 If My.W10 Or My.W11 Then
-                    Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Dim TerDir As String
+                    Dim TerPreDir As String
+
+                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Else
+                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        Else
+                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+
+                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        Else
+                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+                    End If
 
                     If Terminal_Stable_Enabled Then
                         If IO.File.Exists(TerDir) Then
@@ -5055,7 +5080,6 @@ Public Class CP
                 tx.Add("*Terminal_PS_64_Enabled= " & Terminal_PS_64_Enabled)
                 tx.Add("*Terminal_Stable_Enabled= " & Terminal_Stable_Enabled)
                 tx.Add("*Terminal_Preview_Enabled= " & Terminal_Preview_Enabled)
-                tx.Add("*Terminal_Developer_Enabled= " & Terminal_Developer_Enabled)
 
                 tx.Add(vbCrLf & "<CMD>")
                 tx.Add("*CMD_ColorTable00= " & CMD_ColorTable00.ToArgb)
@@ -5467,45 +5491,6 @@ Public Class CP
 
     End Sub
 
-    Sub CopyCat(CP As CP)
-
-        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
-
-        For Each [property] As PropertyInfo In properties1
-            [property].SetValue(CP, [property].GetValue(Me))
-        Next
-
-    End Sub
-
-    Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
-        Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
-
-        If Not installed Then
-            installed = IsFontInstalled(fontName, FontStyle.Bold)
-        End If
-
-        If Not installed Then
-            installed = IsFontInstalled(fontName, FontStyle.Italic)
-        End If
-
-        Return installed
-    End Function
-
-    Public Shared Function IsFontInstalled(ByVal fontName As String, ByVal style As FontStyle) As Boolean
-        Dim installed As Boolean = False
-        Const emSize As Single = 8.0F
-
-        Try
-
-            Using testFont = New Font(fontName, emSize, style)
-                installed = (0 = String.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase))
-            End Using
-
-        Catch
-        End Try
-
-        Return installed
-    End Function
 
 #Region "Cursors Render"
     Sub ExportCursors([CP] As CP)
@@ -5591,11 +5576,11 @@ Public Class CP
             If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
             Dim Path As String = String.Format(My.Application.curPath & "\{0}.cur", CurName)
 
-            Dim fs As New FileStream(Path, FileMode.Create)
+            Dim fs As New IO.FileStream(Path, IO.FileMode.Create)
             Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
 
             For i As Single = 1 To 4 Step 0.5
-                Dim bmp As New Bitmap(32 * i, 32 * i, PixelFormat.Format32bppPArgb)
+                Dim bmp As New Bitmap(32 * i, 32 * i, Drawing.Imaging.PixelFormat.Format32bppPArgb)
                 Dim HotPoint As New Point(1, 1)
 
                 Select Case [Type]
@@ -5882,7 +5867,7 @@ Public Class CP
                 Next
 
                 If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
-                Dim fs As New FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), FileMode.Create)
+                Dim fs As New IO.FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), IO.FileMode.Create)
 
                 Dim AN As New EOANIWriter(fs, Count, Speed, frameRates, seqNums, Nothing, Nothing, HotPoint)
 
@@ -6002,10 +5987,10 @@ Public Class CP
     Public Overrides Function Equals(obj As Object) As Boolean
         Dim _Equals As Boolean = True
 
-        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
-        Dim type2 As Type = obj.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+        Dim type1 As Type = [GetType]() : Dim properties1 As System.Reflection.PropertyInfo() = type1.GetProperties()
+        Dim type2 As Type = obj.[GetType]() : Dim properties2 As System.Reflection.PropertyInfo() = type2.GetProperties()
 
-        For Each [property] As PropertyInfo In properties1
+        For Each [property] As System.Reflection.PropertyInfo In properties1
 
             If [property].PropertyType.Name.ToLower <> "winterminal" Then
                 If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
@@ -6350,5 +6335,3 @@ Public Class CP_Defaults
                                                     0, 0, 0, 255}
 
 End Class
-
-

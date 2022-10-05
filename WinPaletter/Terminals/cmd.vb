@@ -97,7 +97,7 @@ Public Class cmd
             CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7_Enabled, True, False))
             Cursor = Cursors.Default
         Else
-            MsgBox("You should enable terminal editing from the toggle above.", MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End If
 
     End Sub

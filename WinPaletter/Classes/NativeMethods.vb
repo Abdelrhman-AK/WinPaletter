@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports Microsoft.Win32
 
 Namespace NativeMethods
@@ -90,6 +91,13 @@ Namespace NativeMethods
         <DllImport("user32.dll", EntryPoint:="DestroyIcon")>
         Public Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
+
+        <DllImport("user32.dll")>
+        Public Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
+        End Function
+
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByVal lpvParam As Integer, fuWinIni As Integer) As Integer
+
 
         Public Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
             Return (high << 16) Or (low And &HFFFF)
@@ -292,7 +300,6 @@ Namespace NativeMethods
             Dim hDC As IntPtr = dc.GetHdc()
 
             For Each oFontFamily As System.Drawing.FontFamily In System.Drawing.FontFamily.Families
-
                 Try
                     Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
                         Dim hFont As IntPtr = IntPtr.Zero
@@ -324,11 +331,21 @@ Namespace NativeMethods
                 Catch
 
                 End Try
-
             Next
-
             dc.ReleaseHdc()
         End Function
     End Class
 
+    Public Class Uxtheme
+        <DllImport("UxTheme.DLL", BestFitMapping:=False, CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="#65")>
+        Public Shared Function SetSystemVisualStyle(ByVal pszFilename As String, ByVal pszColor As String, ByVal pszSize As String, ByVal dwReserved As Integer) As Integer
+        End Function
+
+        <DllImport("uxtheme", ExactSpelling:=True)>
+        Public Shared Function EnableTheming(ByVal fEnable As Integer) As Integer
+        End Function
+
+        Public Declare Unicode Function GetCurrentThemeName Lib "uxtheme" (ByVal stringThemeName As StringBuilder, ByVal lengthThemeName As Integer, ByVal stringColorName As StringBuilder, ByVal lengthColorName As Integer, ByVal stringSizeName As StringBuilder, ByVal lengthSizeName As Integer) As Int32
+
+    End Class
 End Namespace
