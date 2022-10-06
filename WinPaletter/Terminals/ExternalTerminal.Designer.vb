@@ -122,6 +122,7 @@ Partial Class ExternalTerminal
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox52.SuspendLayout()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox54.SuspendLayout()
@@ -163,7 +164,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox52.ForceNoNerd = False
         Me.XenonGroupBox52.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox52.LineSize = 1
-        Me.XenonGroupBox52.Location = New System.Drawing.Point(11, 366)
+        Me.XenonGroupBox52.Location = New System.Drawing.Point(11, 376)
         Me.XenonGroupBox52.Name = "XenonGroupBox52"
         Me.XenonGroupBox52.Size = New System.Drawing.Size(259, 250)
         Me.XenonGroupBox52.TabIndex = 121
@@ -380,7 +381,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox54.ForceNoNerd = False
         Me.XenonGroupBox54.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox54.LineSize = 1
-        Me.XenonGroupBox54.Location = New System.Drawing.Point(273, 492)
+        Me.XenonGroupBox54.Location = New System.Drawing.Point(273, 502)
         Me.XenonGroupBox54.Name = "XenonGroupBox54"
         Me.XenonGroupBox54.Size = New System.Drawing.Size(221, 124)
         Me.XenonGroupBox54.TabIndex = 119
@@ -552,7 +553,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox55.ForceNoNerd = False
         Me.XenonGroupBox55.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox55.LineSize = 1
-        Me.XenonGroupBox55.Location = New System.Drawing.Point(273, 366)
+        Me.XenonGroupBox55.Location = New System.Drawing.Point(273, 376)
         Me.XenonGroupBox55.Name = "XenonGroupBox55"
         Me.XenonGroupBox55.Size = New System.Drawing.Size(221, 123)
         Me.XenonGroupBox55.TabIndex = 118
@@ -727,7 +728,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox56.ForceNoNerd = False
         Me.XenonGroupBox56.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox56.LineSize = 1
-        Me.XenonGroupBox56.Location = New System.Drawing.Point(11, 85)
+        Me.XenonGroupBox56.Location = New System.Drawing.Point(11, 95)
         Me.XenonGroupBox56.Name = "XenonGroupBox56"
         Me.XenonGroupBox56.Size = New System.Drawing.Size(259, 278)
         Me.XenonGroupBox56.TabIndex = 116
@@ -1184,7 +1185,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox73.ForceNoNerd = False
         Me.XenonGroupBox73.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox73.LineSize = 1
-        Me.XenonGroupBox73.Location = New System.Drawing.Point(273, 85)
+        Me.XenonGroupBox73.Location = New System.Drawing.Point(273, 95)
         Me.XenonGroupBox73.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox73.Name = "XenonGroupBox73"
         Me.XenonGroupBox73.Padding = New System.Windows.Forms.Padding(1)
@@ -1380,7 +1381,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox53.ForceNoNerd = False
         Me.XenonGroupBox53.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox53.LineSize = 1
-        Me.XenonGroupBox53.Location = New System.Drawing.Point(497, 366)
+        Me.XenonGroupBox53.Location = New System.Drawing.Point(497, 376)
         Me.XenonGroupBox53.Name = "XenonGroupBox53"
         Me.XenonGroupBox53.Size = New System.Drawing.Size(166, 250)
         Me.XenonGroupBox53.TabIndex = 120
@@ -1537,12 +1538,21 @@ Partial Class ExternalTerminal
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(10, 624)
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(10, 631)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(656, 24)
         Me.XenonCheckBox1.TabIndex = 125
         Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong font renderering in Enhanced terminal, wo" &
     "n't be used in legacy terminal)"
+        '
+        'XenonSeparator2
+        '
+        Me.XenonSeparator2.Location = New System.Drawing.Point(11, 88)
+        Me.XenonSeparator2.Name = "XenonSeparator2"
+        Me.XenonSeparator2.Size = New System.Drawing.Size(652, 1)
+        Me.XenonSeparator2.TabIndex = 200
+        Me.XenonSeparator2.TabStop = False
+        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'ExternalTerminal
         '
@@ -1550,6 +1560,7 @@ Partial Class ExternalTerminal
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(674, 701)
+        Me.Controls.Add(Me.XenonSeparator2)
         Me.Controls.Add(Me.XenonCheckBox1)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton2)
@@ -1689,4 +1700,5 @@ Partial Class ExternalTerminal
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
     Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonSeparator2 As XenonSeparator
 End Class

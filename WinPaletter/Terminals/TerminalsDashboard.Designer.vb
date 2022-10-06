@@ -143,7 +143,7 @@ Partial Class TerminalsDashboard
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
         Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.XenonButton5.LineSize = 1
         Me.XenonButton5.Location = New System.Drawing.Point(85, 163)
         Me.XenonButton5.Name = "XenonButton5"

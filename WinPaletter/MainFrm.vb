@@ -1324,7 +1324,7 @@ Public Class MainFrm
         If My.Application._Settings.AutoRestartExplorer Then
             RestartExplorer()
         Else
-            If Not My.W7 And Not My.W8 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
+            If Not My.W7 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
         End If
 
     End Sub

@@ -5171,6 +5171,8 @@ Public Class XenonCMD
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+
         DoubleBuffered = True
 
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -5453,6 +5455,7 @@ Public Class XenonTerminal
     Public Property TabIcon As Image
     Public Property TabColor As Color = Color.FromArgb(0, 0, 0, 0)
 
+    Public Property PreviewVersion As Boolean = True
     Public Property TabIconButItIsString As String = ""
     Public Property IsFocused As Boolean = True
     Enum CursorShape_Enum
@@ -5635,32 +5638,46 @@ Public Class XenonTerminal
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
 
-        If Not Light Then
-            If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(46, 46, 46)
-            If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
+        If PreviewVersion Then
+            If Not Light Then
+                If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(46, 46, 46)
+                If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
 
-            If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
-                If Color_TabFocused = Color_Background Then
-                    Color_TabUnFocused = Color_Titlebar
-                Else
-                    Color_TabUnFocused = ControlPaint.Dark(Color_TabFocused)
+                If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
+                    If Color_TabFocused = Color_Background Then
+                        Color_TabUnFocused = Color_Titlebar
+                    Else
+                        Color_TabUnFocused = ControlPaint.Dark(Color_TabFocused)
+                    End If
                 End If
-            End If
 
-            If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46)
+                If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46)
+            Else
+                If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(232, 232, 232)
+                If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
+
+                If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
+                    If Color_TabFocused = Color_Background Then
+                        Color_TabUnFocused = Color_Titlebar
+                    Else
+                        Color_TabUnFocused = ControlPaint.Light(Color_TabFocused)
+                    End If
+                End If
+
+                If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255)
+            End If
         Else
-            If Color_Titlebar = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar = Color.FromArgb(232, 232, 232)
-            If Color_TabFocused = Color.FromArgb(0, 0, 0, 0) Then Color_TabFocused = Color_Background
-
-            If Color_TabUnFocused = Color.FromArgb(0, 0, 0, 0) Then
-                If Color_TabFocused = Color_Background Then
-                    Color_TabUnFocused = Color_Titlebar
-                Else
-                    Color_TabUnFocused = ControlPaint.Light(Color_TabFocused)
-                End If
+            If Not Light Then
+                Color_Titlebar = Color.FromArgb(10, 10, 10)
+                Color_Titlebar_Unfocused = Color.FromArgb(10, 10, 10)
+                Color_TabFocused = Color.FromArgb(40, 40, 40)
+                Color_TabUnFocused = Color_Titlebar
+            Else
+                Color_Titlebar = Color.FromArgb(218, 218, 218)
+                Color_Titlebar_Unfocused = Color.FromArgb(218, 218, 218)
+                Color_TabFocused = Color.FromArgb(249, 249, 249)
+                Color_TabUnFocused = Color_Titlebar
             End If
-
-            If Color_Titlebar_Unfocused = Color.FromArgb(0, 0, 0, 0) Then Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255)
         End If
 
 
@@ -5684,12 +5701,12 @@ Public Class XenonTerminal
         If UseAcrylic Then
             FillImg(G, adaptedBackBlurred, Rect)
             FillRect(G, Noise, Rect)
-            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 200, 35, 35, 35)), Rect)
-            If BackImage IsNot Nothing Then FillImg(G, img, Rect_Console)
+            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
+            If BackImage IsNot Nothing Then FillImg(G, img, Rect)
         Else
             FillImg(G, adaptedBack, Rect)
             FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
-            If BackImage IsNot Nothing Then FillImg(G, img, Rect_Console)
+            If BackImage IsNot Nothing Then FillImg(G, img, Rect)
         End If
 
         If UseAcrylicOnTitlebar And Not DesignMode Then
@@ -5765,9 +5782,9 @@ Public Class XenonTerminal
 
         G.DrawString(s1, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText0, StringAligner(ContentAlignment.TopLeft))
 
-        G.FillRectangle(New SolidBrush(Color_Selection), Rect_ConsoleText1)
+        G.FillRectangle(New SolidBrush(Color.FromArgb(125, Color_Selection)), Rect_ConsoleText1)
 
-        G.DrawString(s2, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText1, StringAligner(ContentAlignment.TopLeft))
+        G.DrawString(s2, Font, New SolidBrush(Color.FromArgb(255 - 125, Color_Foreground)), Rect_ConsoleText1, StringAligner(ContentAlignment.TopLeft))
 
         G.DrawString(s3, Font, New SolidBrush(Color_Foreground), Rect_ConsoleText2, StringAligner(ContentAlignment.TopLeft))
 
@@ -5848,7 +5865,7 @@ Public Class XenonTerminal
     End Sub
 
     Sub GetBack()
-        adaptedBack = My.Application.GetCurrentWallpaper.Clone(RectangleToScreen(Bounds), My.Application.Wallpaper.PixelFormat)
+        adaptedBack = My.Application.Wallpaper '.Clone(RectangleToScreen(Bounds), My.Application.Wallpaper.PixelFormat)
         adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 5)
     End Sub
 

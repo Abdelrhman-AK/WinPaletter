@@ -131,7 +131,7 @@ Press on button "Open "settings.json" in editor" which you will find in the bott
 
 You can do one solution from these:
 
-* Backup "settings.json" (You will find this button below) before you do any preference\customization to the terminal, then when you decide to restore the old preferences, open the backed-up file by notepad or other editor and copy all contents, and then press button: "Open "settings.json" in editor" and override contents of "settings.json", save and open your Windows Terminals, you will find old preferences are restored.
+* Backup "settings.json" (You will find this button in the upper part of the form) before you do any preference\customization to the terminal, then when you decide to restore the old preferences, open the backed-up file by notepad or other editor and copy all contents, and then press button: "Open "settings.json" in editor" and override contents of "settings.json", save and open your Windows Terminals, you will find old preferences are restored.
 
 * Restore Defaults ( As answer of question `Q3-E`)
 

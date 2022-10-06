@@ -58,19 +58,18 @@ Public Class XeSettings
     End Enum
 
     Sub CheckRegIfIntact()
-
         Dim Key As RegistryKey
         Dim AppReg As String = "Software\WinPaletter\Settings"
         Key = Registry.CurrentUser.CreateSubKey(AppReg)
 
-        If Key.GetValue("AutoUpdatesChecking", Nothing) Is Nothing Then Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
-        If Key.GetValue("AutoAddExt", Nothing) Is Nothing Then Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
-        If Key.GetValue("DragAndDropPreview", Nothing) Is Nothing Then Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
-        If Key.GetValue("Win7LivePreview", Nothing) Is Nothing Then Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
-        If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
-        If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
-        If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
-        If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
+        If Key.GetValue("AutoUpdatesChecking", Nothing) Is Nothing Then Key.SetValue("AutoUpdatesChecking", True, RegistryValueKind.DWord)
+        If Key.GetValue("AutoAddExt", Nothing) Is Nothing Then Key.SetValue("AutoAddExt", True, RegistryValueKind.DWord)
+        If Key.GetValue("DragAndDropPreview", Nothing) Is Nothing Then Key.SetValue("DragAndDropPreview", True, RegistryValueKind.DWord)
+        If Key.GetValue("Win7LivePreview", Nothing) Is Nothing Then Key.SetValue("Win7LivePreview", True, RegistryValueKind.DWord)
+        If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", True, RegistryValueKind.DWord)
+        If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", True, RegistryValueKind.DWord)
+        If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", False, RegistryValueKind.DWord)
+        If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", False, RegistryValueKind.DWord)
 
         Select Case CustomPreviewConfig
             Case WinVer.Eleven
@@ -84,13 +83,13 @@ Public Class XeSettings
         End Select
 
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
-        If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
-        If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
-        If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
-        If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", Language, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", True, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", True, RegistryValueKind.DWord)
+        If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", {""}, RegistryValueKind.MultiString)
+        If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", False, RegistryValueKind.DWord)
         If Key.GetValue("Language_File", Nothing) Is Nothing Then Key.SetValue("Language_File", "", RegistryValueKind.String)
-        If Key.GetValue("Nerd_Stats", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats", Nerd_Stats, RegistryValueKind.DWord)
-        If Key.GetValue("Nerd_Stats_HexHash", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_HexHash", Nerd_Stats_HexHash, RegistryValueKind.DWord)
+        If Key.GetValue("Nerd_Stats", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats", True, RegistryValueKind.DWord)
+        If Key.GetValue("Nerd_Stats_HexHash", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_HexHash", True, RegistryValueKind.DWord)
 
         Select Case Nerd_Stats_Kind
             Case Nerd_Stats_Type.HEX
@@ -103,37 +102,38 @@ Public Class XeSettings
                 If Key.GetValue("Nerd_Stats_Kind", Nothing) Is Nothing Then Key.SetValue("Nerd_Stats_Kind", 3)
         End Select
 
-        If Key.GetValue("Terminal_Bypass", Nothing) Is Nothing Then Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
-        If Key.GetValue("Terminal_OtherFonts", Nothing) Is Nothing Then Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
-        If Key.GetValue("Terminal_Path_Deflection", Nothing) Is Nothing Then Key.SetValue("Terminal_Path_Deflection", Terminal_Path_Deflection, RegistryValueKind.DWord)
-        If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
-        If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
-
+        If Key.GetValue("Terminal_Bypass", Nothing) Is Nothing Then Key.SetValue("Terminal_Bypass", False, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_OtherFonts", Nothing) Is Nothing Then Key.SetValue("Terminal_OtherFonts", False, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_Path_Deflection", Nothing) Is Nothing Then Key.SetValue("Terminal_Path_Deflection", False, RegistryValueKind.DWord)
+        If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
+        If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
         Select Case LoadFrom
             Case Mode.Registry
                 CheckRegIfIntact()
+
                 Dim Key As RegistryKey
                 Dim AppReg As String = "Software\WinPaletter\Settings"
                 Key = Registry.CurrentUser.CreateSubKey(AppReg)
-                AutoAddExt = Key.GetValue("AutoAddExt", Nothing)
-                AutoApplyCursors = Key.GetValue("AutoApplyCursors", Nothing)
-                DragAndDropPreview = Key.GetValue("DragAndDropPreview", Nothing)
-                OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing)
-                AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", Nothing)
-                Win7LivePreview = Key.GetValue("Win7LivePreview", Nothing)
-                AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", Nothing)
-                CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", Nothing)
 
-                Terminal_Bypass = Key.GetValue("Terminal_Bypass", Nothing)
-                Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", Nothing)
+                AutoAddExt = Key.GetValue("AutoAddExt", True)
+                AutoApplyCursors = Key.GetValue("AutoApplyCursors", False)
+                DragAndDropPreview = Key.GetValue("DragAndDropPreview", True)
+                OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", True)
+                AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", True)
+                Win7LivePreview = Key.GetValue("Win7LivePreview", True)
+                AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", True)
+                CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", False)
+
+                Terminal_Bypass = Key.GetValue("Terminal_Bypass", False)
+                Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", False)
                 Terminal_Path_Deflection = Key.GetValue("Terminal_Path_Deflection", False)
                 Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
                 Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json")
 
-                Select Case Key.GetValue("CustomPreviewConfig", Nothing)
+                Select Case Key.GetValue("CustomPreviewConfig", 0)
                     Case 0
                         CustomPreviewConfig = WinVer.Eleven
                     Case 1
@@ -144,17 +144,17 @@ Public Class XeSettings
                         CustomPreviewConfig = WinVer.Seven
                 End Select
 
-                UpdateChannel = If(Key.GetValue("UpdateChannel", Nothing) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
-                Appearance_Dark = Key.GetValue("Appearance_Dark", Nothing)
-                Appearance_Auto = Key.GetValue("Appearance_Auto", Nothing)
-                WhatsNewRecord = Key.GetValue("WhatsNewRecord", Nothing)
+                UpdateChannel = If(Key.GetValue("UpdateChannel", UpdateChannels.Stable) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
+                Appearance_Dark = Key.GetValue("Appearance_Dark", True)
+                Appearance_Auto = Key.GetValue("Appearance_Auto", True)
+                WhatsNewRecord = Key.GetValue("WhatsNewRecord", {""})
                 Language = Key.GetValue("Language", False)
-                Language_File = Key.GetValue("Language_File", Nothing)
+                Language_File = Key.GetValue("Language_File", "")
 
                 Nerd_Stats = Key.GetValue("Nerd_Stats", True)
                 Nerd_Stats_HexHash = Key.GetValue("Nerd_Stats_HexHash", True)
 
-                Select Case Key.GetValue("Nerd_Stats_Kind", 0)
+                Select Case Key.GetValue("Nerd_Stats_Kind", Nerd_Stats_Type.HEX)
                     Case 0
                         Nerd_Stats_Kind = Nerd_Stats_Type.HEX
                     Case 1

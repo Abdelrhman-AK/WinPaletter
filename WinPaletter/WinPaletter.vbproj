@@ -284,6 +284,12 @@
     <Compile Include="Terminals\WindowsTerminal.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Terminals\WindowsTerminalDecide.Designer.vb">
+      <DependentUpon>WindowsTerminalDecide.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalDecide.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Terminals\WinTerminal.vb" />
     <Compile Include="Updates\Changelog.Designer.vb">
       <DependentUpon>Changelog.vb</DependentUpon>
@@ -418,6 +424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
       <DependentUpon>WindowsTerminal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\WindowsTerminalDecide.resx">
+      <DependentUpon>WindowsTerminalDecide.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\Changelog.resx">
       <DependentUpon>Changelog.vb</DependentUpon>

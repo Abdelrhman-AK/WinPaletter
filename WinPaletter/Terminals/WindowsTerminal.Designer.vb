@@ -27,12 +27,12 @@ Partial Class WindowsTerminal
         Me.SaveJSONDlg = New System.Windows.Forms.SaveFileDialog()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.XenonButton9 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.TerEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
@@ -139,6 +139,7 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar = New WinPaletter.XenonTrackbar()
         Me.TerFonts = New WinPaletter.XenonComboBox()
         Me.TerFontWeight = New WinPaletter.XenonComboBox()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox1.SuspendLayout()
@@ -177,64 +178,16 @@ Partial Class WindowsTerminal
         '
         Me.OpenJSONDlg.Filter = "JSON File (*.json)|*.json"
         '
-        'XenonButton11
-        '
-        Me.XenonButton11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton11.ForeColor = System.Drawing.Color.White
-        Me.XenonButton11.Image = Nothing
-        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(463, 626)
-        Me.XenonButton11.Name = "XenonButton11"
-        Me.XenonButton11.Size = New System.Drawing.Size(182, 22)
-        Me.XenonButton11.TabIndex = 200
-        Me.XenonButton11.Text = "Open ""Settings.json"" in editor"
-        Me.XenonButton11.UseVisualStyleBackColor = False
-        '
-        'XenonButton9
-        '
-        Me.XenonButton9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton9.ForeColor = System.Drawing.Color.White
-        Me.XenonButton9.Image = Nothing
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(463, 599)
-        Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(182, 22)
-        Me.XenonButton9.TabIndex = 199
-        Me.XenonButton9.Text = "Backup ""Settings.json"""
-        Me.XenonButton9.UseVisualStyleBackColor = False
-        '
-        'XenonAlertBox1
-        '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 600)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(445, 47)
-        Me.XenonAlertBox1.TabIndex = 198
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "You should create a backup to Terminal Settings File ""settings.json"" to avoid und" &
-    "esired actions as terminal editing feature is still under development"
-        '
         'XenonGroupBox2
         '
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox2.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox2.Controls.Add(Me.Label8)
+        Me.XenonGroupBox2.Controls.Add(Me.XenonButton9)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton8)
+        Me.XenonGroupBox2.Controls.Add(Me.XenonAlertBox1)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton7)
         Me.XenonGroupBox2.Controls.Add(Me.TerEnabled)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
@@ -246,20 +199,50 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
-        Me.XenonGroupBox2.Size = New System.Drawing.Size(634, 39)
+        Me.XenonGroupBox2.Size = New System.Drawing.Size(634, 90)
         Me.XenonGroupBox2.TabIndex = 197
+        '
+        'XenonButton11
+        '
+        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton11.ForeColor = System.Drawing.Color.White
+        Me.XenonButton11.Image = Nothing
+        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.XenonButton11.LineSize = 1
+        Me.XenonButton11.Location = New System.Drawing.Point(408, 63)
+        Me.XenonButton11.Name = "XenonButton11"
+        Me.XenonButton11.Size = New System.Drawing.Size(223, 23)
+        Me.XenonButton11.TabIndex = 200
+        Me.XenonButton11.Text = "Open ""Settings.json"" in editor"
+        Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'Label8
         '
         Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(276, 4)
+        Me.Label8.Location = New System.Drawing.Point(330, 5)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(83, 31)
+        Me.Label8.Size = New System.Drawing.Size(73, 29)
         Me.Label8.TabIndex = 112
         Me.Label8.Text = "Open From:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonButton9
+        '
+        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton9.ForeColor = System.Drawing.Color.White
+        Me.XenonButton9.Image = Nothing
+        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.XenonButton9.LineSize = 1
+        Me.XenonButton9.Location = New System.Drawing.Point(408, 37)
+        Me.XenonButton9.Name = "XenonButton9"
+        Me.XenonButton9.Size = New System.Drawing.Size(223, 23)
+        Me.XenonButton9.TabIndex = 199
+        Me.XenonButton9.Text = "Backup ""Settings.json"""
+        Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'XenonButton8
         '
@@ -271,12 +254,29 @@ Partial Class WindowsTerminal
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(357, 5)
+        Me.XenonButton8.Location = New System.Drawing.Point(408, 5)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(135, 29)
+        Me.XenonButton8.Size = New System.Drawing.Size(136, 29)
         Me.XenonButton8.TabIndex = 110
         Me.XenonButton8.Text = "WinPaletter Theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
+        '
+        'XenonAlertBox1
+        '
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox1.CenterText = False
+        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 38)
+        Me.XenonAlertBox1.Name = "XenonAlertBox1"
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(400, 47)
+        Me.XenonAlertBox1.TabIndex = 198
+        Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = "You should create a backup to Terminal Settings File ""settings.json"" to avoid und" &
+    "esired actions or errors."
         '
         'XenonButton7
         '
@@ -288,11 +288,11 @@ Partial Class WindowsTerminal
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(136, Byte), Integer), CType(CType(130, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(494, 5)
+        Me.XenonButton7.Location = New System.Drawing.Point(546, 5)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(135, 29)
+        Me.XenonButton7.Size = New System.Drawing.Size(85, 29)
         Me.XenonButton7.TabIndex = 109
-        Me.XenonButton7.Text = "External JSON File"
+        Me.XenonButton7.Text = "JSON File"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'TerEnabled
@@ -301,7 +301,7 @@ Partial Class WindowsTerminal
         Me.TerEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.TerEnabled.Checked = False
         Me.TerEnabled.DarkLight_Toggler = False
-        Me.TerEnabled.Location = New System.Drawing.Point(147, 8)
+        Me.TerEnabled.Location = New System.Drawing.Point(147, 7)
         Me.TerEnabled.Name = "TerEnabled"
         Me.TerEnabled.Size = New System.Drawing.Size(50, 24)
         Me.TerEnabled.TabIndex = 85
@@ -344,7 +344,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(238, 340)
+        Me.XenonGroupBox1.Location = New System.Drawing.Point(238, 400)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(407, 102)
         Me.XenonGroupBox1.TabIndex = 196
@@ -598,7 +598,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox22.ForceNoNerd = False
         Me.XenonGroupBox22.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox22.LineSize = 1
-        Me.XenonGroupBox22.Location = New System.Drawing.Point(238, 97)
+        Me.XenonGroupBox22.Location = New System.Drawing.Point(238, 157)
         Me.XenonGroupBox22.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox22.Name = "XenonGroupBox22"
         Me.XenonGroupBox22.Padding = New System.Windows.Forms.Padding(1)
@@ -628,6 +628,7 @@ Partial Class WindowsTerminal
         Me.XenonTerminal1.Name = "XenonTerminal1"
         Me.XenonTerminal1.Opacity = 0.15!
         Me.XenonTerminal1.OpacityBackImage = 100.0!
+        Me.XenonTerminal1.PreviewVersion = True
         Me.XenonTerminal1.Size = New System.Drawing.Size(373, 177)
         Me.XenonTerminal1.TabColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.XenonTerminal1.TabIcon = Nothing
@@ -696,6 +697,7 @@ Partial Class WindowsTerminal
         Me.XenonTerminal2.Name = "XenonTerminal2"
         Me.XenonTerminal2.Opacity = 0.15!
         Me.XenonTerminal2.OpacityBackImage = 100.0!
+        Me.XenonTerminal2.PreviewVersion = True
         Me.XenonTerminal2.Size = New System.Drawing.Size(344, 160)
         Me.XenonTerminal2.TabColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.XenonTerminal2.TabIcon = Nothing
@@ -746,7 +748,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox15.ForceNoNerd = False
         Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox15.LineSize = 1
-        Me.XenonGroupBox15.Location = New System.Drawing.Point(238, 445)
+        Me.XenonGroupBox15.Location = New System.Drawing.Point(238, 505)
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
         Me.XenonGroupBox15.Size = New System.Drawing.Size(407, 100)
         Me.XenonGroupBox15.TabIndex = 193
@@ -980,7 +982,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox11.ForceNoNerd = False
         Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox11.LineSize = 1
-        Me.XenonGroupBox11.Location = New System.Drawing.Point(12, 97)
+        Me.XenonGroupBox11.Location = New System.Drawing.Point(12, 157)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(223, 378)
         Me.XenonGroupBox11.TabIndex = 116
@@ -1514,7 +1516,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox14.ForceNoNerd = False
         Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox14.LineSize = 1
-        Me.XenonGroupBox14.Location = New System.Drawing.Point(12, 478)
+        Me.XenonGroupBox14.Location = New System.Drawing.Point(12, 538)
         Me.XenonGroupBox14.Name = "XenonGroupBox14"
         Me.XenonGroupBox14.Size = New System.Drawing.Size(223, 66)
         Me.XenonGroupBox14.TabIndex = 192
@@ -1638,7 +1640,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox13.ForceNoNerd = False
         Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox13.LineSize = 1
-        Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 54)
+        Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 114)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(634, 40)
         Me.XenonGroupBox13.TabIndex = 117
@@ -1742,7 +1744,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox21.ForceNoNerd = False
         Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox21.LineSize = 1
-        Me.XenonGroupBox21.Location = New System.Drawing.Point(12, 548)
+        Me.XenonGroupBox21.Location = New System.Drawing.Point(12, 608)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
         Me.XenonGroupBox21.Size = New System.Drawing.Size(634, 37)
         Me.XenonGroupBox21.TabIndex = 194
@@ -1828,15 +1830,22 @@ Partial Class WindowsTerminal
         Me.TerFontWeight.Size = New System.Drawing.Size(136, 24)
         Me.TerFontWeight.TabIndex = 99
         '
+        'XenonSeparator1
+        '
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 108)
+        Me.XenonSeparator1.Name = "XenonSeparator1"
+        Me.XenonSeparator1.Size = New System.Drawing.Size(634, 1)
+        Me.XenonSeparator1.TabIndex = 198
+        Me.XenonSeparator1.TabStop = False
+        Me.XenonSeparator1.Text = "XenonSeparator1"
+        '
         'WindowsTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(657, 697)
-        Me.Controls.Add(Me.XenonButton11)
-        Me.Controls.Add(Me.XenonButton9)
-        Me.Controls.Add(Me.XenonAlertBox1)
+        Me.ClientSize = New System.Drawing.Size(657, 696)
+        Me.Controls.Add(Me.XenonSeparator1)
         Me.Controls.Add(Me.XenonGroupBox2)
         Me.Controls.Add(Me.XenonGroupBox1)
         Me.Controls.Add(Me.XenonButton2)
@@ -1998,4 +2007,5 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonButton18 As XenonButton
     Friend WithEvents XenonButton19 As XenonButton
     Friend WithEvents Label8 As Label
+    Friend WithEvents XenonSeparator1 As XenonSeparator
 End Class

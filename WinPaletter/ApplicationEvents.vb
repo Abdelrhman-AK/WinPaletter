@@ -367,38 +367,41 @@ Namespace My
         Public Sub AdjustFonts()
             Dim f As String = "Segoe UI"
 
-            If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then f = "Segoe UI Variable Display"
+            If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then
+                f = "Segoe UI Variable Display"
 
-            With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.Label10 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.themename_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.author_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With MainFrm.Label10 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With MainFrm.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With MainFrm.themename_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With MainFrm.author_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With ColorPickerDlg.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ColorPickerDlg.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ColorPickerDlg.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ColorPickerDlg.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ColorPickerDlg.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With About.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With About.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With About.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With About.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With About.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With About.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With ComplexSave.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ComplexSave.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ComplexSave.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ComplexSave.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ComplexSave.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With ComplexSave.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With SettingsX.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            End If
+
         End Sub
 
         Public Function GetFormFromName(Name As String) As Form
@@ -426,14 +429,10 @@ Namespace My
             If Name.ToLower = "TerminalInfo".ToLower Then Return TerminalInfo
             If Name.ToLower = "TerminalsDashboard".ToLower Then Return TerminalsDashboard
             If Name.ToLower = "WindowsTerminal".ToLower Then Return WindowsTerminal
+            If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Dim sw, sw_all As New Stopwatch
-            sw.Reset() : sw.Start()
-            sw.Start()
-            sw_all.Reset()
-            sw_all.Start()
 
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
@@ -449,64 +448,51 @@ Namespace My
 
             FontsList.Clear()
             FontsFixedList.Clear()
-
             For Each [font] As FontFamily In FontFamily.Families
                 FontsList.Add([font].Name)
             Next
-
             Dim B As New Bitmap(30, 30)
             Dim G As Graphics = Graphics.FromImage(B)
-
             For Each [font] As FontFamily In NativeMethods.GDI32.GetFixedWidthFonts(G)
                 FontsFixedList.Add([font].Name)
             Next
-
             B.Dispose()
             G.Dispose()
-
-            sw_all.Stop()
-            MsgBox("Populating Fonts: " & sw.ElapsedMilliseconds)
-            sw.Reset() : sw.Start()
-            sw_all.Start()
 
             _Settings = New XeSettings(XeSettings.Mode.Registry)
             allForms = New List(Of String) From {
                         "About",
-"Changelog",
-"ColorPickerDlg",
-"ComplexSave",
-"dragPreviewer",
-"EditInfo",
-"LogonUI",
-"MainFrm",
-"Whatsnew",
-"Updates",
-"Win32UI",
-"SettingsX",
-"CursorsStudio",
-"ApplyingTheme",
-"LogonUI7",
-"LogonUI8Colors",
-"LogonUI8_Pics",
-"Start8Selector",
-"cmd",
-"ExternalTerminal",
-"NewExtTerminal",
-"TerminalInfo",
-"TerminalsDashboard",
-"WindowsTerminal"
-}
+                        "Changelog",
+                        "ColorPickerDlg",
+                        "ComplexSave",
+                        "dragPreviewer",
+                        "EditInfo",
+                        "LogonUI",
+                        "MainFrm",
+                        "Whatsnew",
+                        "Updates",
+                        "Win32UI",
+                        "SettingsX",
+                        "CursorsStudio",
+                        "ApplyingTheme",
+                        "LogonUI7",
+                        "LogonUI8Colors",
+                        "LogonUI8_Pics",
+                        "Start8Selector",
+                        "cmd",
+                        "ExternalTerminal",
+                        "NewExtTerminal",
+                        "TerminalInfo",
+                        "TerminalsDashboard",
+                        "WindowsTerminal",
+                        "WindowsTerminalDecide"
+                        }
 
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
             Else
                 My.Application.LanguageHelper.LoadInternal()
             End If
-
-            sw_all.Stop()
-            MsgBox("LoadLanguage: " & sw.ElapsedMilliseconds)
-            sw.Reset() : sw.Start()
-            sw_all.Start()
 
             Dim ProcessKillerInfo As New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
@@ -515,7 +501,6 @@ Namespace My
                 .WindowStyle = ProcessWindowStyle.Hidden,
                 .UseShellExecute = True
             }
-
             Dim processExplorerInfo As New ProcessStartInfo With {
 .FileName = explorerPath,
 .Arguments = "",
@@ -523,9 +508,9 @@ Namespace My
 .UseShellExecute = True
 }
             If Not My.W8 Then processExplorerInfo.Verb = "runas"
-
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
+
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     Dim arg As String = Environment.GetCommandLineArgs(x)
@@ -550,21 +535,12 @@ Namespace My
 
             DetectOS()
 
-            '#If Not DEBUG Then
-            'If My.W7 Or My.W8 Then
-            'MsgBox("WinPaletter doesn't fully support " & My.Computer.Info.OSFullName & vbCrLf & vbCrLf &
-            '"You can use some features like Colorizing Cursors and Win32UI (unstable in current OS only) until the others features are developed to support both Windows 7 and 8 (Coming Soon)." _
-            ', MsgBoxStyle.Exclamation + MsgboxRt())
-            'End If
-            '#End If
-
-
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
+
             Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
             Monitor()
             ApplyDarkMode()
-
 
 #Region "WhatsNew"
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
@@ -582,73 +558,78 @@ Namespace My
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
             End If
-
-
 #End Region
 
-            If _Settings.AutoAddExt Then
-                If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+            Try
                 If _Settings.AutoAddExt Then
                     If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
-                    Dim file As System.IO.FileStream = New System.IO.FileStream(appData & "\fileextension.ico", System.IO.FileMode.OpenOrCreate)
-                    My.Resources.fileextension.Save(file)
-                    file.Close()
+                    If _Settings.AutoAddExt Then
+                        If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
-                    file = New System.IO.FileStream(appData & "\settingsfile.ico", System.IO.FileMode.OpenOrCreate)
-                    My.Resources.settingsfile.Save(file)
-                    file.Close()
+                        Dim file As System.IO.FileStream = New System.IO.FileStream(appData & "\fileextension.ico", System.IO.FileMode.OpenOrCreate)
+                        My.Resources.fileextension.Save(file)
+                        file.Close()
 
-                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
-                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
+                        file = New System.IO.FileStream(appData & "\settingsfile.ico", System.IO.FileMode.OpenOrCreate)
+                        My.Resources.settingsfile.Save(file)
+                        file.Close()
+
+                        CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
+                        CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
+                    End If
                 End If
-            End If
+            Catch
+            End Try
 
             AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
-                ExternalLink = False
-                ExternalLink_File = ""
-                ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
 
-                CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
-                CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
-                ChangeLogImgLst.ColorDepth = ColorDepth.Depth32Bit
-                ChangeLogImgLst.ImageSize = New Size(24, 24)
-                ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
-                ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
-                ChangeLogImgLst.Images.Add("Add", My.Resources.CL_add)
-                ChangeLogImgLst.Images.Add("Removed", My.Resources.CL_Removed)
-                ChangeLogImgLst.Images.Add("BugFix", My.Resources.CL_BugFix)
-                ChangeLogImgLst.Images.Add("New", My.Resources.CL_New)
-                ChangeLogImgLst.Images.Add("Channel", My.Resources.CL_channel)
-                ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
-                ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
-                Try
-                    For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                        Dim arg As String = Environment.GetCommandLineArgs(x)
+            ExternalLink = False
+            ExternalLink_File = ""
+            ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
 
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                            If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                                ExternalLink = True
-                                ExternalLink_File = arg
-                            Else
-                                Dim CPx As New CP(CP.Mode.File, arg)
-                                CPx.Save(CP.SavingMode.Registry, arg)
-                                RestartExplorer()
-                                Process.GetCurrentProcess.Kill()
-                            End If
-                        End If
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                            SettingsX._External = True
-                            SettingsX._File = arg
-                            SettingsX.ShowDialog()
+            CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
+            CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
+
+            ChangeLogImgLst.ColorDepth = ColorDepth.Depth32Bit
+            ChangeLogImgLst.ImageSize = New Size(24, 24)
+            ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
+            ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
+            ChangeLogImgLst.Images.Add("Add", My.Resources.CL_add)
+            ChangeLogImgLst.Images.Add("Removed", My.Resources.CL_Removed)
+            ChangeLogImgLst.Images.Add("BugFix", My.Resources.CL_BugFix)
+            ChangeLogImgLst.Images.Add("New", My.Resources.CL_New)
+            ChangeLogImgLst.Images.Add("Channel", My.Resources.CL_channel)
+            ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
+            ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
+
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                            ExternalLink = True
+                            ExternalLink_File = arg
+                        Else
+                            Dim CPx As New CP(CP.Mode.File, arg)
+                            CPx.Save(CP.SavingMode.Registry, arg)
+                            RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
-                    Next
-                Catch
-                End Try
-                WinRes = New WinResources
-                MsgBox("Overall: " & sw_all.ElapsedMilliseconds)
+                    End If
 
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                        SettingsX._External = True
+                        SettingsX._File = arg
+                        SettingsX.ShowDialog()
+                        Process.GetCurrentProcess.Kill()
+                    End If
+                Next
+            Catch
+            End Try
+
+            Try : WinRes = New WinResources : Catch : End Try
         End Sub
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try
@@ -746,21 +727,31 @@ Namespace My
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
 
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
-            If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
-            If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(My.Resources.Cyotek_Windows_Forms_ColorPicker)
-            If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
-            If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(My.Resources.AnimCur)
-            If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(My.Resources.Newtonsoft_Json)
-#Disable Warning BC42105
+
+            Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(My.Resources.Cyotek_Windows_Forms_ColorPicker)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(My.Resources.AnimCur)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(My.Resources.Newtonsoft_Json)
+            Catch : End Try
+
         End Function
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-#If DEBUG Then
-            MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical)
-#End If
+            '#If DEBUG Then
+            Throw e.Exception
+            'MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical + MsgboxRt())
+            '#End If
         End Sub
 
-#Enable Warning BC42105
 
     End Class
 End Namespace

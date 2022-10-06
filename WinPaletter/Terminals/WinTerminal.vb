@@ -582,7 +582,7 @@ Public Class WinTerminal
 #End Region
 
 #Region "Schemes"
-                CType(JSonFile("schemes"), JArray).Clear()
+                If JSonFile("schemes") IsNot Nothing Then CType(JSonFile("schemes"), JArray).Clear() Else JSonFile("schemes") = New JArray()
                 For x = 0 To Colors.Count - 1
                     Dim JS As New JObject
                     JS("background") = RGB2HEX(Colors(x).Background)
@@ -682,7 +682,8 @@ Public Class WinTerminal
 #End Region
 
 #Region "Profiles"
-                CType(JSonFile("profiles")("list"), JArray).Clear()
+                If JSonFile("profiles")("list") IsNot Nothing Then CType(JSonFile("profiles")("list"), JArray).Clear() Else JSonFile("profiles")("list") = New JArray()
+
                 For x = 0 To Profiles.Count - 1
                     Dim JS As New JObject
                     JS("name") = Profiles(x).Name
@@ -749,7 +750,7 @@ Public Class WinTerminal
 #Region "Themes"
 
                 If Themes.Count <> 0 Then
-                    CType(JSonFile("themes"), JArray).Clear()
+                    If JSonFile("themes") IsNot Nothing Then CType(JSonFile("themes"), JArray).Clear() Else JSonFile("themes") = New JArray()
 
                     For x = 0 To Themes.Count - 1
                         Dim JS As New JObject

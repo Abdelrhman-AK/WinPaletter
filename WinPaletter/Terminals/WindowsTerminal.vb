@@ -17,12 +17,12 @@ Public Class WindowsTerminal
         Select Case _Mode
             Case WinTerminal.Version.Stable
                 _Terminal = MainFrm.CP.Terminal
-                Text = "(BETA) Windows Terminal - Stable Version"
+                Text = "(BETA) - Windows Terminal Stable"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Stable_Enabled
 
             Case WinTerminal.Version.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
-                Text = "(BETA) Windows Terminal - Preview Version"
+                Text = "(BETA) - Windows Terminal Preview"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
 
             Case WinTerminal.Version.Developer
@@ -33,27 +33,8 @@ Public Class WindowsTerminal
 
         FillFonts(TerFonts, Not My.Application._Settings.Terminal_OtherFonts)
 
-        If My.W10 Or My.W11 Then
-            Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-            Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        Load_FromTerminal()
 
-
-            If My.Application._Settings.Terminal_Bypass Then
-                Load_FromTerminal()
-            Else
-                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                    Load_FromTerminal()
-                End If
-
-                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                    Load_FromTerminal()
-                End If
-            End If
-
-
-        Else
-
-        End If
     End Sub
 
     Sub Load_FromTerminal()
@@ -765,8 +746,8 @@ Public Class WindowsTerminal
                 XenonTerminal2.Font = f_cmd
             End With
 
-
-
+            XenonTerminal1.PreviewVersion = (_Mode <> WinTerminal.Version.Stable)
+            XenonTerminal2.PreviewVersion = (_Mode <> WinTerminal.Version.Stable)
             XenonTerminal1.Refresh()
             XenonTerminal2.Refresh()
 
@@ -933,21 +914,36 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe"
-        Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe"
-        Dim TerDevDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe"
+        Dim TerDir As String
+        Dim TerPreDir As String
+
+        If Not My.Application._Settings.Terminal_Path_Deflection Then
+            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        Else
+            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                TerDir = My.Application._Settings.Terminal_Stable_Path
+            Else
+                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            End If
+
+            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                TerPreDir = My.Application._Settings.Terminal_Preview_Path
+            Else
+                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            End If
+        End If
 
         Select Case _Mode
             Case WinTerminal.Version.Stable
-                If IO.Directory.Exists(TerDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App")
+                If IO.File.Exists(TerDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App")
 
             Case WinTerminal.Version.Preview
-                If IO.Directory.Exists(TerPreDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App")
-
-            Case WinTerminal.Version.Developer
-                If IO.Directory.Exists(TerDevDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe!App")
+                If IO.File.Exists(TerPreDir) Then Shell("explorer.exe shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App")
 
         End Select
+
+
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
@@ -956,8 +952,8 @@ Public Class WindowsTerminal
 
     Private Sub TerBackImage_TextChanged(sender As Object, e As EventArgs) Handles TerBackImage.TextChanged
         If TerBackImage.Text = "desktopWallpaper" Then
-            XenonTerminal1.BackImage = ResizeImage(BitmapFillScaler(My.Application.GetCurrentWallpaper, XenonTerminal1.Size), XenonTerminal1.Width - 2, XenonTerminal1.Height - 32)
-            XenonTerminal2.BackImage = ResizeImage(BitmapFillScaler(My.Application.GetCurrentWallpaper, XenonTerminal2.Size), XenonTerminal2.Width - 2, XenonTerminal2.Height - 32)
+            XenonTerminal1.BackImage = My.Application.Wallpaper
+            XenonTerminal2.BackImage = My.Application.Wallpaper
         Else
             If IO.File.Exists(TerBackImage.Text) Then
                 XenonTerminal1.BackImage = ResizeImage(BitmapFillScaler(Image.FromStream(New FileStream(TerBackImage.Text, IO.FileMode.Open, IO.FileAccess.Read)), XenonTerminal1.Size), XenonTerminal1.Width - 2, XenonTerminal1.Height - 32)
@@ -1024,144 +1020,10 @@ Public Class WindowsTerminal
 
         If TerEnabled.Checked Then
             If My.W10 Or My.W11 Then
-                Cursor = Cursors.WaitCursor
 
-                Dim TerDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                Dim TerPreDir As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                Try
+                    Cursor = Cursors.WaitCursor
 
-                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                    _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-                End If
-
-                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                    _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                End If
-
-                Cursor = Cursors.Default
-            End If
-
-        Else
-            MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
-        End If
-
-    End Sub
-
-    Private Sub WindowsTerminal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
-    End Sub
-
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
-        If My.W10 Or My.W11 Then
-            Dim TerDir As String
-            Dim TerPreDir As String
-
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
-                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                        TerDir = My.Application._Settings.Terminal_Stable_Path
-                    Else
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-
-                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                    Else
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-                End If
-
-            If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                Process.Start(TerDir)
-            End If
-
-            If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                Process.Start(TerPreDir)
-            End If
-
-        End If
-    End Sub
-
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        If SaveJSONDlg.ShowDialog = DialogResult.OK Then
-            If My.W10 Or My.W11 Then
-                Dim TerDir As String
-                Dim TerPreDir As String
-
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
-                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                        TerDir = My.Application._Settings.Terminal_Stable_Path
-                    Else
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-
-                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                    Else
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-                End If
-
-                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                    IO.File.Copy(TerDir, SaveJSONDlg.FileName)
-                End If
-
-                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                    IO.File.Copy(TerPreDir, SaveJSONDlg.FileName)
-                End If
-
-            End If
-        End If
-    End Sub
-
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
-
-            If My.W10 Or My.W11 Then
-                Dim TerDir As String
-                Dim TerPreDir As String
-
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
-                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                        TerDir = My.Application._Settings.Terminal_Stable_Path
-                    Else
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-
-                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                    Else
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    End If
-                End If
-
-                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile)
-                    Load_FromTerminal()
-                End If
-
-                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
-                    Load_FromTerminal()
-                End If
-
-            End If
-
-        End If
-    End Sub
-
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        If OpenJSONDlg.ShowDialog = DialogResult.OK Then
-
-            Try
-                If My.W10 Or My.W11 Then
                     Dim TerDir As String
                     Dim TerPreDir As String
 
@@ -1183,16 +1045,117 @@ Public Class WindowsTerminal
                     End If
 
                     If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
-                        _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile)
-                        Load_FromTerminal()
+                        _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
                     End If
 
                     If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
-                        _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                        Load_FromTerminal()
+                        _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
                     End If
 
+                    Cursor = Cursors.Default
+
+                Catch ex As Exception
+                    Throw ex
+                End Try
+
+            End If
+
+        Else
+            MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+        End If
+
+    End Sub
+
+    Private Sub WindowsTerminal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If My.W10 Or My.W11 Then
+            Dim TerDir As String
+            Dim TerPreDir As String
+
+            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+
+
+            If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                Process.Start(TerDir)
+            End If
+
+            If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                Process.Start(TerPreDir)
+            End If
+
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        If SaveJSONDlg.ShowDialog = DialogResult.OK Then
+            If My.W10 Or My.W11 Then
+                Dim TerDir As String
+                Dim TerPreDir As String
+
+                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+
+                If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
+                    IO.File.Copy(TerDir, SaveJSONDlg.FileName)
                 End If
+
+                If IO.File.Exists(TerPreDir) And _Mode = WinTerminal.Version.Preview Then
+                    IO.File.Copy(TerPreDir, SaveJSONDlg.FileName)
+                End If
+
+            End If
+        End If
+    End Sub
+
+    Public SaveState As WinTerminal.Version = _Mode
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
+
+            If WindowsTerminalDecide.ShowDialog = DialogResult.OK Then
+                If SaveState = WinTerminal.Version.Stable Then
+                    Dim ls_stable As New List(Of String)
+                    ls_stable.Clear()
+                    For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
+                        If lin.ToLower.StartsWith("terminal.") Then ls_stable.Add(lin)
+                    Next
+                    _Terminal = New WinTerminal(CStr_FromList(ls_stable), WinTerminal.Mode.WinPaletterFile)
+                    Load_FromTerminal()
+                End If
+
+                If SaveState = WinTerminal.Version.Preview Then
+                    Dim ls_preview As New List(Of String)
+                    ls_preview.Clear()
+                    For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
+                        If lin.ToLower.StartsWith("terminalpreview.") Then ls_preview.Add(lin)
+                    Next
+                    _Terminal = New WinTerminal(CStr_FromList(ls_preview), WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+                    Load_FromTerminal()
+                End If
+            End If
+
+        End If
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        If OpenJSONDlg.ShowDialog = DialogResult.OK Then
+
+            Try
+
+                If _Mode = WinTerminal.Version.Stable Then
+                    _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile)
+                    Load_FromTerminal()
+                End If
+
+                If _Mode = WinTerminal.Version.Preview Then
+                    _Terminal = New WinTerminal(OpenJSONDlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                    Load_FromTerminal()
+                End If
+
             Catch ex As Exception
                 MsgBox(My.Application.LanguageHelper.Terminal_ErrorFile & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
             End Try

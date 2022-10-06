@@ -80,7 +80,7 @@ Public Class SubMenu
             Select Case My.Application.ColorEvent
                 Case My.MyApplication.MenuEvent.Copy
                     My.Application.CopiedColor = MainColor.BackColor
-                    Return Nothing
+                    Return ColorHandle.BackColor
 
                 Case My.MyApplication.MenuEvent.Cut
                     My.Application.CopiedColor = MainColor.BackColor

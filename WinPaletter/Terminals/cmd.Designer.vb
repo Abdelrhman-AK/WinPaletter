@@ -127,6 +127,7 @@ Partial Class cmd
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -275,7 +276,7 @@ Partial Class cmd
         Me.XenonGroupBox2.ForceNoNerd = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.LineSize = 1
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 356)
+        Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 362)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(259, 260)
         Me.XenonGroupBox2.TabIndex = 102
@@ -480,7 +481,7 @@ Partial Class cmd
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 627)
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 630)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(677, 24)
         Me.XenonCheckBox1.TabIndex = 100
@@ -505,7 +506,7 @@ Partial Class cmd
         Me.XenonGroupBox12.ForceNoNerd = False
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox12.LineSize = 1
-        Me.XenonGroupBox12.Location = New System.Drawing.Point(514, 356)
+        Me.XenonGroupBox12.Location = New System.Drawing.Point(514, 362)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(175, 260)
         Me.XenonGroupBox12.TabIndex = 100
@@ -642,7 +643,7 @@ Partial Class cmd
         Me.XenonGroupBox34.ForceNoNerd = False
         Me.XenonGroupBox34.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox34.LineSize = 1
-        Me.XenonGroupBox34.Location = New System.Drawing.Point(277, 492)
+        Me.XenonGroupBox34.Location = New System.Drawing.Point(277, 498)
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(231, 124)
         Me.XenonGroupBox34.TabIndex = 99
@@ -831,7 +832,7 @@ Partial Class cmd
         Me.XenonGroupBox4.ForceNoNerd = False
         Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox4.LineSize = 1
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(277, 356)
+        Me.XenonGroupBox4.Location = New System.Drawing.Point(277, 362)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(231, 130)
         Me.XenonGroupBox4.TabIndex = 98
@@ -1022,7 +1023,7 @@ Partial Class cmd
         Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.LineSize = 1
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 57)
+        Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 63)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(259, 293)
         Me.XenonGroupBox1.TabIndex = 87
@@ -1480,7 +1481,7 @@ Partial Class cmd
         Me.XenonGroupBox8.ForceNoNerd = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.LineSize = 1
-        Me.XenonGroupBox8.Location = New System.Drawing.Point(277, 57)
+        Me.XenonGroupBox8.Location = New System.Drawing.Point(277, 63)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
         Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
@@ -1581,12 +1582,22 @@ Partial Class cmd
         '
         Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth"
         '
+        'XenonSeparator2
+        '
+        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 57)
+        Me.XenonSeparator2.Name = "XenonSeparator2"
+        Me.XenonSeparator2.Size = New System.Drawing.Size(677, 1)
+        Me.XenonSeparator2.TabIndex = 199
+        Me.XenonSeparator2.TabStop = False
+        Me.XenonSeparator2.Text = "XenonSeparator2"
+        '
         'cmd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(703, 701)
+        Me.Controls.Add(Me.XenonSeparator2)
         Me.Controls.Add(Me.XenonGroupBox3)
         Me.Controls.Add(Me.XenonGroupBox2)
         Me.Controls.Add(Me.XenonCheckBox1)
@@ -1732,4 +1743,5 @@ Partial Class cmd
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
+    Friend WithEvents XenonSeparator2 As XenonSeparator
 End Class
