@@ -125,7 +125,7 @@ The pencil is to edit name of color scheme\theme, and properties of selected pro
 
 ### Q3-E) How to restore Windows Terminal to default?
 
-Press on button "Open "settings.json" in editor" which you will find in the bottom of the form, then you will find Notepad or other editor is open. Erase all text of this "settings.json" and save and open your Windows Terminals, the default settings will be regenerated.
+Press on button "Open "settings.json" in editor" which you will find in the upper part of the form, then you will find Notepad or other editor is open. Erase all text of this "settings.json" and save and open your Windows Terminals, the default settings will be regenerated.
 
 ### Q3-F) I don't like the preferences\customization I made to Windows Terminal and I feel that it is broken. What should I do?
 
