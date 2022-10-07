@@ -193,11 +193,6 @@ Public Class WinTerminal
                                 Collected.Add(lin.Remove(0, "terminalpreview.".Count))
                             End If
 
-                        Case Version.Developer
-                            If lin.ToLower.StartsWith("terminaldeveloper.") And Not lin.ToLower.StartsWith("terminal.") And Not lin.ToLower.StartsWith("terminalpreview.") Then
-                                Collected.Add(lin.Remove(0, "terminaldeveloper.".Count))
-                            End If
-
                     End Select
 
 
@@ -532,7 +527,6 @@ Public Class WinTerminal
     Enum Version As Integer
         Stable
         Preview
-        Developer
     End Enum
 
     Public Function Save(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable) As String
@@ -793,9 +787,6 @@ Public Class WinTerminal
                     Case Version.Preview
                         First = "TerminalPreview."
 
-                    Case Version.Developer
-                        First = "TerminalDeveloper."
-
                 End Select
 
 
@@ -944,7 +935,7 @@ Public Class ThemesList
     Public Property applicationTheme_light As String = "dark"
 End Class
 Public Class FontsBase
-    Public Property Face As String = "Cascadia Mono"
+    Public Property Face As String = If(My.W11, "Cascadia Mono", "Consolas")
     Public Property Weight As FontWeight_Enum = FontWeight_Enum.normal
     Public Property Size As Integer = 12
 End Class

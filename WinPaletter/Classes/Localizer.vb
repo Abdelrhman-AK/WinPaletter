@@ -96,6 +96,7 @@ Public Class Localizer
     Property MenuAppliedReg As String = "From Current Applied Palette"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the situable size will be loaded according to your DPI settings."
     Property Win32UISavingThemeError As String = "Error saving file: "
+
     Property CMD_Enable As String = "You should enable terminal editing from the toggle above."
     Property ExtTer_NotFound As String = "Terminal not found. Select a valid one from the list."
     Property ExtTer_Set As String = "Terminal Preferences are set successfully!"
@@ -114,7 +115,22 @@ Public Class Localizer
     Property Terminal_ProfileNotCloneable As String = "Default Profile isn't cloneable, select a different profile."
     Property Terminal_ThemeNotCloneable As String = "Default themes (Dark\Light\System) are not cloneable, select a different theme or create a new theme if you want to clone."
     Property Terminal_Clone As String = "Clone"
+    Property Terminal_NewProfile As String = "New Profile"
+    Property Terminal_NewScheme As String = "New Scheme"
+    Property Terminal_NewTheme As String = "New Theme"
     Property Terminal_SettingsNotExist As String = "Settings doesn't exist: "
+
+    Property CP_TerminalError As String = "Error occured while saving Windows Terminal Settings. Anyway, WinPaletter will continue saving without Windows Terminal."
+    Property CP_ApplyingTheme As String = "Applying Theme ..."
+    Property CP_ApplyingColorsAndTweaks As String = "Applying Colors and Tweaks ..."
+    Property CP_ApplyingCustomLogonUI As String = "Applying Custom LogonUI ..."
+    Property CP_RenderingCustomLogonUI_Progress As String = "Rendering Custom LogonUI:"
+    Property CP_RenderingCustomLogonUI As String = "Rendering Custom LogonUI ..."
+    Property CP_ApplyingTerminalColors As String = "Applying Terminals Colors ..."
+    Property CP_SavingCursorsColors As String = "Saving Cursors Colors ..."
+    Property CP_RenderingCursors As String = "Rendering Cursors ..."
+    Property CP_ApplyingCursors As String = "Applying Cursors ..."
+    Property CP_ApplyingWin32UI As String = "Applying Win32UI Colors (Classic Windows Elements) ..."
 #End Region
 
     Public Sub ExportNativeLang(File As String)

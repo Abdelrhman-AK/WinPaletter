@@ -5710,18 +5710,36 @@ Public Class XenonTerminal
         End If
 
         If UseAcrylicOnTitlebar And Not DesignMode Then
-            FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar)
-            FillSemiRect(G, Noise, Rect_Titlebar)
+            If GetRoundedCorners() Then
+                FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar)
+                FillSemiRect(G, Noise, Rect_Titlebar)
+            Else
+                G.DrawImage(adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar)
+                G.FillRectangle(Noise, Rect_Titlebar)
+            End If
 
             If Not Light Then
-                FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 100, 255), 35, 35, 35)), Rect_Titlebar)
+                If GetRoundedCorners() Then
+                    FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 100, 255), 35, 35, 35)), Rect_Titlebar)
+                Else
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(If(IsFocused, 100, 255), 35, 35, 35)), Rect_Titlebar)
+                End If
             Else
-                FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 180, 255), 232, 232, 232)), Rect_Titlebar)
+                If GetRoundedCorners() Then
+                    FillSemiRect(G, New SolidBrush(Color.FromArgb(If(IsFocused, 180, 255), 232, 232, 232)), Rect_Titlebar)
+                Else
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(If(IsFocused, 180, 255), 232, 232, 232)), Rect_Titlebar)
+                End If
             End If
+
         End If
 
         If Not UseAcrylicOnTitlebar Then
-            FillSemiRect(G, New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
+            If GetRoundedCorners() Then
+                FillSemiRect(G, New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
+            Else
+                G.FillRectangle(New SolidBrush(If(IsFocused, Color_Titlebar, Color_Titlebar_Unfocused)), Rect_Titlebar)
+            End If
         End If
 
         Dim TabFocusedFinalColor As Color
@@ -5764,13 +5782,21 @@ Public Class XenonTerminal
             End If
         End If
 
+        Dim fx As Font
+
+        If My.W11 Then
+            fx = New Font("Segoe Fluent Icons", 12)
+        Else
+            fx = New Font("Segoe MDL2 Assets", 12)
+        End If
+
         If TabIcon IsNot Nothing Then
             G.DrawImage(TabIcon, IconRect0)
         Else
-            G.DrawString(TabIconButItIsString, New Font("Segoe Fluent Icons", 12), New SolidBrush(FC0), IconRect0, StringAligner(ContentAlignment.TopCenter))
+            G.DrawString(TabIconButItIsString, fx, New SolidBrush(FC0), IconRect0, StringAligner(ContentAlignment.TopCenter))
         End If
 
-        G.DrawString(TabIconButItIsString, New Font("Segoe Fluent Icons", 12), New SolidBrush(FC1), IconRect1, StringAligner(ContentAlignment.TopCenter))
+        G.DrawString(TabIconButItIsString, fx, New SolidBrush(FC1), IconRect1, StringAligner(ContentAlignment.TopCenter))
 
         TextRenderer.DrawText(G, TabTitle, New Font("Segoe UI", 8, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis)
         TextRenderer.DrawText(G, "Other Terminal", New Font("Segoe UI", 8, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis)
@@ -5817,7 +5843,7 @@ Public Class XenonTerminal
             G.SmoothingMode = SmoothingMode.AntiAlias
         End If
 
-        DrawRect(G, New Pen(Color.FromArgb(100, 150, 150, 150)), Rect)
+        DrawRect(G, New Pen(Color.FromArgb(45, 45, 45)), Rect)
     End Sub
 
     Dim tk As Boolean = False

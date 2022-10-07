@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Win32
+Imports Newtonsoft.Json.Serialization
 Imports WinPaletter.XenonCore
 
 Public Class CP
@@ -3706,6 +3707,7 @@ Public Class CP
 
 #Region "Modern Windows"
                 If Not My.W7 And Not My.W8 Then
+
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
                     Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
@@ -3734,7 +3736,7 @@ Public Class CP
 
 #Region "Aero"
                 If My.W7 Then
-                    SetCtrlTxt("Applying Theme ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
 
                     Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
 
@@ -3769,7 +3771,7 @@ Public Class CP
 
                     End Select
 
-                    SetCtrlTxt("Applying Colors and Tweaks ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
@@ -3789,7 +3791,7 @@ Public Class CP
 
 #Region "Metro"
                 If My.W8 Then
-                    SetCtrlTxt("Applying Theme ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
 
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
@@ -3805,7 +3807,7 @@ Public Class CP
                     Catch
                     End Try
 
-                    SetCtrlTxt("Applying Colors and Tweaks ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
@@ -3865,6 +3867,7 @@ Public Class CP
 
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
+
                     If isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
@@ -3915,7 +3918,7 @@ Public Class CP
 
 #Region "LogonUI 7"
                 If My.W7 Then
-                    SetCtrlTxt("Applying Custom LogonUI ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
 
                     If isElevated Then
 
@@ -4037,7 +4040,7 @@ Public Class CP
 
 
                         For x = 0 To bmpList.Count - 1
-                            SetCtrlTxt(String.Format("Rendering Custom LogonUI: {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
+                            SetCtrlTxt(String.Format(My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
                             If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
                             If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
                             If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
@@ -4057,7 +4060,7 @@ Public Class CP
 
 #Region "LogonUI 8"
                 If My.W8 Then
-                    SetCtrlTxt("Applying Custom LogonUI ...", f)
+                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
 
                     Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
@@ -4174,7 +4177,7 @@ Public Class CP
                                 bmp = My.Application.GetCurrentWallpaper
                         End Select
 
-                        SetCtrlTxt("Rendering Custom LogonUI ...", f)
+                        SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCustomLogonUI, f)
 
                         If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
                         If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
@@ -4186,7 +4189,7 @@ Public Class CP
 #End Region
 
 #Region "Win32UI"
-                If My.W7 Or My.W8 Then SetCtrlTxt("Applying Win32UI Colors (Classic Windows Elements) ...", f)
+                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingWin32UI, f)
 
                 Dim C1 As New List(Of Integer)
                 Dim C2 As New List(Of UInteger)
@@ -4333,6 +4336,7 @@ Public Class CP
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
 #Region "Terminals"
+                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTerminalColors, f)
 
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
 
@@ -4592,37 +4596,41 @@ Public Class CP
 
 #Region "Windows Terminals"
                 If My.W10 Or My.W11 Then
-                    Dim TerDir As String
-                    Dim TerPreDir As String
+                    Try
+                        Dim TerDir As String
+                        Dim TerPreDir As String
 
-                    If Not My.Application._Settings.Terminal_Path_Deflection Then
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                    Else
-                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Application._Settings.Terminal_Stable_Path
-                        Else
+                        If Not My.Application._Settings.Terminal_Path_Deflection Then
                             TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                        End If
-
-                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                        Else
                             TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                        End If
-                    End If
+                        Else
+                            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                                TerDir = My.Application._Settings.Terminal_Stable_Path
+                            Else
+                                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                            End If
 
-                    If Terminal_Stable_Enabled Then
-                        If IO.File.Exists(TerDir) Then
-                            Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                                TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                            Else
+                                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                            End If
                         End If
-                    End If
 
-                    If Terminal_Preview_Enabled Then
-                        If IO.File.Exists(TerPreDir) Then
-                            TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                        If Terminal_Stable_Enabled Then
+                            If IO.File.Exists(TerDir) Then
+                                Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                            End If
                         End If
-                    End If
+
+                        If Terminal_Preview_Enabled Then
+                            If IO.File.Exists(TerPreDir) Then
+                                TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                            End If
+                        End If
+                    Catch ex As Exception
+                        MsgBox(My.Application.LanguageHelper.CP_TerminalError & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                    End Try
 
                 End If
 #End Region
@@ -4630,7 +4638,7 @@ Public Class CP
 #End Region
 
 #Region "Cursors"
-                If My.W7 Or My.W8 Then SetCtrlTxt("Saving Cursors Colors ...", f)
+                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_SavingCursorsColors, f)
 
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
                 rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
@@ -4925,10 +4933,10 @@ Public Class CP
                 rMain.Close()
 
                 If Cursor_Enabled Then
-                    If My.W7 Or My.W8 Then SetCtrlTxt("Rendering Cursors ...", f)
+                    If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCursors, f)
                     ExportCursors(Me)
                     If My.Application._Settings.AutoApplyCursors Then
-                        If My.W7 Or My.W8 Then SetCtrlTxt("Applying Cursors ...", f)
+                        If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCursors, f)
                         ApplyCursorsToReg()
                     End If
                 End If

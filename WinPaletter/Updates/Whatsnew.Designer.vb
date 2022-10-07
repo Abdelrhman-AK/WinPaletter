@@ -110,11 +110,12 @@ Partial Class Whatsnew
         Me.Label14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(8, 53)
+        Me.Label14.Location = New System.Drawing.Point(6, 48)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(656, 263)
         Me.Label14.TabIndex = 25
-        Me.Label14.Text = "- Minor UI fixes and improvements"
+        Me.Label14.Text = "- Minor UI fixes and improvements" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Minor Improvement in Application Start Spe" &
+    "ed"
         '
         'XenonTabControl1
         '
@@ -147,7 +148,7 @@ Partial Class Whatsnew
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(667, 332)
         Me.TabPage1.TabIndex = 5
-        Me.TabPage1.Text = "Right Click Menus"
+        Me.TabPage1.Text = "Windows Terminals"
         '
         'XenonButton4
         '
@@ -160,7 +161,7 @@ Partial Class Whatsnew
         Me.XenonButton4.LineSize = 1
         Me.XenonButton4.Location = New System.Drawing.Point(19, 203)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(362, 28)
+        Me.XenonButton4.Size = New System.Drawing.Size(362, 34)
         Me.XenonButton4.TabIndex = 29
         Me.XenonButton4.Text = "It is better to Visit Github and see the detailed documentation ..."
         Me.XenonButton4.UseVisualStyleBackColor = False
