@@ -30,12 +30,15 @@
 - **You can modify Windows 7\8.1 LogonUI screen\Lock Screen**, using Default Backgrounds, Wallpaper, Custom colors and external image, with effects can be applied like Blur, Acrylic Noise, Aero Glass,...
   ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/LogonUI7.png?raw=true)
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) You can now modify All terminals in Windows.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) You can now modify all terminals in Windows.
+
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
-- You should read the documentation before you start editing terminals: https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Terminal.md
+- You should read the documentation before you start editing terminals: [Read it](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Terminal.md)
+
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal0.png?raw=true)
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal1.png?raw=true)
+
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) You can colorize the classic apps accents (Like what we did in the 90s and 2000s :))
 
