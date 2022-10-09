@@ -308,7 +308,7 @@ Public Class XenonCore
         Else
             Try
                 If My.Application._Settings.Appearance_Auto Then
-                    i = CLng(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0))
+                    i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
                     If i = 1 Then
                         Return False
                     Else
@@ -318,7 +318,11 @@ Public Class XenonCore
                     Return My.Application._Settings.Appearance_Dark
                 End If
             Catch
-                Return True
+                Try
+                    Return My.Application._Settings.Appearance_Dark
+                Catch
+                    Return True
+                End Try
             End Try
         End If
     End Function

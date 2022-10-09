@@ -210,7 +210,7 @@ Partial Class cmd
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = Global.WinPaletter.My.Resources.Resources.Native11
+        Me.XenonButton6.Image = Nothing
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton6.LineSize = 1
@@ -692,11 +692,11 @@ Partial Class cmd
         '
         Me.CMD_CursorColor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_CursorColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.CMD_CursorColor.BackColor = System.Drawing.Color.White
         Me.CMD_CursorColor.CustomColor = True
-        Me.CMD_CursorColor.DefaultColor = System.Drawing.Color.Black
+        Me.CMD_CursorColor.DefaultColor = System.Drawing.Color.White
         Me.CMD_CursorColor.ForceNoNerd = False
-        Me.CMD_CursorColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.CMD_CursorColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
         Me.CMD_CursorColor.LineSize = 1
         Me.CMD_CursorColor.Location = New System.Drawing.Point(93, 38)
         Me.CMD_CursorColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)

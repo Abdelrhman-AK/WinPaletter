@@ -11,7 +11,7 @@ Public Class MainFrm
     Public CP, CP_Original, CP_FirstTime As CP
     Dim CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
-    Private ReadOnly ReorderAfterPreviewConfigChange As Boolean = True
+    Private ReadOnly ReorderAfterPreviewConfigChange As Boolean = False
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
@@ -19,7 +19,7 @@ Public Class MainFrm
 
 #Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
-        Dim AnimX1 As Integer = 30
+        Dim AnimX1 As Integer = 25
         Dim AnimX2 As Integer = 1
 
         If Not PreviewConfig = WinVer.Seven And Not PreviewConfig = WinVer.Eight Then
@@ -88,96 +88,81 @@ Public Class MainFrm
                             pnl3.Top = pnl4.Bottom + 2
                         End If
                 End Select
+
             Else
-                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
-                    lbl1.Text = My.Application.LanguageHelper.X16
-                    lbl2.Text = My.Application.LanguageHelper.X16
-                    lbl3.Text = My.Application.LanguageHelper.X16
-                    lbl4.Text = My.Application.LanguageHelper.X5
-                    lbl5.Text = My.Application.LanguageHelper.X12
-                    lbl7.Text = My.Application.LanguageHelper.X16
-                    lbl8.Text = My.Application.LanguageHelper.X14
+                Select Case Not [CP].WinMode_Light
+                    Case True
+                        lbl2.Text = "Action Center Links"
+                        lbl3.Text = "Taskbar App Underline"
+                        lbl6.Text = "Start Menu Icon Hover"
+                        lbl7.Text = "Not Used"
+                        lbl5.Text = "Settings Icons, Links & Some Pressed Buttons"
 
-                    pic1.Image = My.Resources.Mini_NotUsed
-                    pic2.Image = My.Resources.Mini_NotUsed
-                    pic3.Image = My.Resources.Mini_NotUsed
-                    pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                    pic5.Image = My.Resources.Mini_SettingsIcons
-                    pic6.Image = My.Resources.Native10
-                    pic7.Image = My.Resources.Mini_NotUsed
-                    pic8.Image = My.Resources.Mini_ACHover_Links
-
-                    If ReorderAfterPreviewConfigChange Then
-                        pnl4.Top = Label10.Bottom + 3
-                        pnl5.Top = pnl4.Bottom + 2
-                        pnl8.Top = pnl5.Bottom + 2
-                        pnl6.Top = pnl8.Bottom + 2
-                        pnl1.Top = pnl6.Bottom + 2
-                        pnl2.Top = pnl1.Bottom + 2
-                        pnl3.Top = pnl2.Bottom + 2
-                        pnl7.Top = pnl3.Bottom + 2
-                    End If
-
-                Else
-                    If [CP].Transparency Then
-                        lbl1.Text = My.Application.LanguageHelper.X16
-                        lbl2.Text = My.Application.LanguageHelper.X14
-                        lbl3.Text = My.Application.LanguageHelper.X15
-                        lbl4.Text = My.Application.LanguageHelper.X5
-                        lbl5.Text = My.Application.LanguageHelper.X7
-                        lbl7.Text = My.Application.LanguageHelper.X16
-                        lbl8.Text = My.Application.LanguageHelper.X6
-
-                        pic1.Image = My.Resources.Mini_NotUsed
-                        pic2.Image = My.Resources.Mini_ACHover_Links
-                        pic3.Image = My.Resources.Mini_TaskbarActiveIcon
-                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        pic5.Image = My.Resources.Mini_SettingsIcons
-                        pic6.Image = My.Resources.Native10
-                        pic7.Image = My.Resources.Mini_NotUsed
-                        pic8.Image = My.Resources.Mini_StartMenuAccent
-
-                        If ReorderAfterPreviewConfigChange Then
-                            pnl4.Top = Label10.Bottom + 3
-                            pnl8.Top = pnl4.Bottom + 2
-                            pnl3.Top = pnl8.Bottom + 2
-                            pnl5.Top = pnl3.Bottom + 2
-                            pnl2.Top = pnl5.Bottom + 2
-                            pnl6.Top = pnl2.Bottom + 2
-                            pnl1.Top = pnl6.Bottom + 2
-                            pnl7.Top = pnl1.Bottom + 2
+                        If [CP].Transparency Then
+                            lbl1.Text = "Sliding Hamburger Menu"
+                            lbl4.Text = "Start Menu & Action Center Colors"
+                            lbl8.Text = "Taskbar Color"
+                            If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                                lbl5.Text = "Settings Icons, Links, Taskbar Focused App & Some Pressed Buttons"
+                            End If
+                        Else
+                            lbl1.Text = "Taskbar Color"
+                            lbl4.Text = "Start Menu, Action Center & Taskbar Focused App"
+                            lbl8.Text = "Not Used"
                         End If
 
-                    Else
-                        lbl1.Text = My.Application.LanguageHelper.X6
-                        lbl2.Text = My.Application.LanguageHelper.X14
-                        lbl3.Text = My.Application.LanguageHelper.X15
-                        lbl4.Text = My.Application.LanguageHelper.X13
-                        lbl5.Text = My.Application.LanguageHelper.X7
-                        lbl7.Text = My.Application.LanguageHelper.X16
-                        lbl8.Text = My.Application.LanguageHelper.X16
+                    Case False
+                        If [CP].Transparency Then
+                            lbl1.Text = "Sliding Hamburger Menu"
+                            lbl4.Text = "Start Menu, Action Center"
+                            lbl6.Text = "Start Menu Icon Hover"
+                            lbl7.Text = "Not Used"
 
-                        pic1.Image = My.Resources.Mini_StartMenuAccent
-                        pic2.Image = My.Resources.Mini_ACHover_Links
-                        pic3.Image = My.Resources.Mini_TaskbarActiveIcon
-                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        pic5.Image = My.Resources.Mini_SettingsIcons
-                        pic6.Image = My.Resources.Native10
-                        pic7.Image = My.Resources.Mini_NotUsed
-                        pic8.Image = My.Resources.Mini_NotUsed
+                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                                lbl2.Text = "Not Used"
+                                lbl3.Text = "Not Used"
+                                lbl5.Text = "Settings Icons, Links, Taskbar App Underline & Some Pressed Buttons"
+                                lbl8.Text = "Taskbar Color & Links in Action Center"
 
-                        If ReorderAfterPreviewConfigChange Then
-                            pnl4.Top = Label10.Bottom + 3
-                            pnl1.Top = pnl4.Bottom + 2
-                            pnl3.Top = pnl1.Bottom + 2
-                            pnl5.Top = pnl3.Bottom + 2
-                            pnl2.Top = pnl5.Bottom + 2
-                            pnl6.Top = pnl2.Bottom + 2
-                            pnl7.Top = pnl6.Bottom + 2
-                            pnl8.Top = pnl7.Bottom + 2
+                            ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                                lbl2.Text = "Not Used"
+                                lbl3.Text = "Taskbar App Underline"
+                                lbl5.Text = "Settings Icons, Links & Some Pressed Buttons"
+                                lbl8.Text = "Taskbar Color & Links in Action Center"
+                            Else
+                                lbl2.Text = "Links in Action Center"
+                                lbl3.Text = "Taskbar App Underline"
+                                lbl5.Text = "Settings Icons, Links, & Some Pressed Buttons"
+                                lbl8.Text = "Taskbar Color"
+                            End If
+                        Else
+                            lbl1.Text = "Taskbar Color"
+                            lbl6.Text = "Start Menu Icon Hover"
+                            lbl7.Text = "Not Used"
+
+                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                                lbl2.Text = "Not Used"
+                                lbl3.Text = "Not Used"
+                                lbl4.Text = "Start Menu, Action Center"
+                                lbl5.Text = "Settings Icons, Links, Taskbar App Underline & Some Pressed Buttons"
+                                lbl8.Text = "Links in Action Center"
+
+                            ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                                lbl2.Text = "Not Used"
+                                lbl3.Text = "Taskbar App Underline"
+                                lbl4.Text = "Taskbar Focused App & Start Button Hover"
+                                lbl5.Text = "Settings Icons, Links & Some Pressed Buttons"
+                                lbl8.Text = "Links in Action Center"
+
+                            Else
+                                lbl2.Text = "Links"
+                                lbl3.Text = "Taskbar App Underline"
+                                lbl4.Text = "Start Menu, Action Center & Taskbar App"
+                                lbl5.Text = "Settings Icons, Links & Some Pressed Buttons"
+                                lbl8.Text = "Not Used"
+                            End If
                         End If
-                    End If
-                End If
+                End Select
             End If
 
 
@@ -205,15 +190,25 @@ Public Class MainFrm
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        If [CP].ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                        Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
-                        End If
+                        Select Case [CP].ApplyAccentonTaskbar
+                            Case ApplyAccentonTaskbar_Level.None
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+
+                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+
+                            Case ApplyAccentonTaskbar_Level.Taskbar
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+
+                        End Select
+
+
 
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
@@ -222,22 +217,31 @@ Public Class MainFrm
                         Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
 
                         Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        If [CP].ApplyAccentonTaskbar Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
-                        Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                            Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
-                        End If
+                        Select Case [CP].ApplyAccentonTaskbar
+                            Case ApplyAccentonTaskbar_Level.None
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+
+                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+
+                            Case ApplyAccentonTaskbar_Level.Taskbar
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
+
+                        End Select
+
 
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
@@ -246,7 +250,7 @@ Public Class MainFrm
                         Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
 
                         Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
                 End Select
 
                 ReValidateLivePreview(pnl_preview)
@@ -277,48 +281,67 @@ Public Class MainFrm
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
+                If [CP].WinMode_Light And [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(237, 237, 237), AnimX1, AnimX2)
                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(227, 227, 227), AnimX1, AnimX2)
                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(227, 227, 227), AnimX1, AnimX2)
                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
                 Else
-                    If Not [CP].ApplyAccentonTaskbar Then
+                    If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                         Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(23, 23, 23), AnimX1, AnimX2)
                         Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(36, 36, 36), AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(36, 36, 36), AnimX1, AnimX2)
                         Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
 
                     Else
-                        Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                            Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
 
-                        If [CP].Transparency Then
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                            If [CP].Transparency Then
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                            Else
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                            End If
+
+                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+
+
                         Else
-                            Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+
+                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+
+                            If [CP].Transparency Then
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                            Else
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                            End If
+
                         End If
 
                     End If
                 End If
 
-                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
+                If [CP].WinMode_Light And [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                     Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Taskbar_Background, AnimX1, AnimX2)
                     Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.Transparent, AnimX1, AnimX2)
                 Else
+
                     Visual.FadeColor(Label3, "Forecolor", Label3.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                    Visual.FadeColor(Label12, "Forecolor", Label12.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+
 
                     If Not [CP].Transparency And Not [CP].ApplyAccentonTaskbar Then
                         Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.Transparent, AnimX1, AnimX2)
                     Else
                         Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
                     End If
+
                 End If
 
                 ReValidateLivePreview(pnl_preview)
@@ -518,7 +541,7 @@ Public Class MainFrm
     Sub Adjust_Preview()
         If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
         Panel3.Visible = True
-        Label12.Visible = True
+        lnk_preview.Visible = True
 
         start.Visible = True
         taskbar.Visible = True
@@ -579,7 +602,7 @@ Public Class MainFrm
 
             Case WinVer.Eight
                 Panel3.Visible = False
-                Label12.Visible = False
+                lnk_preview.Visible = False
 
                 start.Visible = False
                 taskbar.Visible = True
@@ -617,7 +640,7 @@ Public Class MainFrm
                 End If
 
                 Panel3.Visible = False
-                Label12.Visible = False
+                lnk_preview.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
                 taskbar.NoisePower = CP.Aero_ColorizationGlassReflectionIntensity / 100
@@ -664,7 +687,21 @@ Public Class MainFrm
         AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
         Transparency_Toggle.Checked = ColorPalette.Transparency
         ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
-        AccentOnStartAndTaskbar_Toggle.Checked = ColorPalette.ApplyAccentonTaskbar
+
+        Select Case ColorPalette.ApplyAccentonTaskbar
+            Case ApplyAccentonTaskbar_Level.None
+                Accent_None.Checked = True
+
+            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                Accent_StartTaskbar.Checked = True
+
+            Case ApplyAccentonTaskbar_Level.Taskbar
+                Accent_Taskbar.Checked = True
+
+        End Select
+
+
+
         ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active
         InactiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Inactive
         StartAccent_picker.BackColor = ColorPalette.StartMenu_Accent
@@ -1085,28 +1122,52 @@ Public Class MainFrm
     End Sub
 
     Private Sub WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WinMode_Toggle.CheckedChanged
-        CP.WinMode_Light = Not sender.Checked
-        ApplyLivePreviewFromCP(CP)
+        If _Shown Then
+            CP.WinMode_Light = Not sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
     Private Sub AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles AppMode_Toggle.CheckedChanged
-        CP.AppMode_Light = Not sender.Checked
-        ApplyLivePreviewFromCP(CP)
+        If _Shown Then
+            CP.AppMode_Light = Not sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
     Private Sub Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Transparency_Toggle.CheckedChanged
-        CP.Transparency = sender.Checked
-        ApplyLivePreviewFromCP(CP)
+        If _Shown Then
+            CP.Transparency = sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
     Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
-        CP.ApplyAccentonTitlebars = sender.Checked
-        ApplyLivePreviewFromCP(CP)
+        If _Shown Then
+            CP.ApplyAccentonTitlebars = sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
-    Private Sub AccentOnStartAndTaskbar_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles AccentOnStartAndTaskbar_Toggle.CheckedChanged
-        CP.ApplyAccentonTaskbar = sender.Checked
-        ApplyLivePreviewFromCP(CP)
+    Private Sub Accent_None_CheckedChanged(sender As Object) Handles Accent_None.CheckedChanged
+        If _Shown Then
+            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub Accent_Taskbar_CheckedChanged(sender As Object) Handles Accent_Taskbar.CheckedChanged
+        If _Shown Then
+            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub Accent_StartTaskbar_CheckedChanged(sender As Object) Handles Accent_StartTaskbar.CheckedChanged
+        If _Shown Then
+            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
     Private Sub TaskbarIconUnderline_picker_Click(sender As Object, e As EventArgs) Handles TaskbarIconUnderline_picker.Click
@@ -1129,11 +1190,6 @@ Public Class MainFrm
             If Not CP.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(start)
-                CList.Add(ShowAccentOnTitlebarAndBorders_Toggle)
-                CList.Add(WinMode_Toggle)
-                CList.Add(AppMode_Toggle)
-                CList.Add(Transparency_Toggle)
-                CList.Add(AccentOnStartAndTaskbar_Toggle)
 
                 Dim _Conditions As New Conditions With {
                     .AppUnderlineOnly = True,
@@ -1145,15 +1201,19 @@ Public Class MainFrm
             Else
                 C = ColorPickerDlg.Pick(CList)
             End If
-        Else
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-            Else
-                CList.Add(taskbar)
 
-                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
+        Else
+            Select Case Not [CP].WinMode_Light
+                Case True
+                    CList.Add(taskbar)  ''AppUnderline
+                Case False
+                    If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                        CList.Add(taskbar)  ''AppUnderline
+                    End If
+            End Select
         End If
+
+
 
         CP.Taskbar_Icon_Underline = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
@@ -1165,7 +1225,7 @@ Public Class MainFrm
 
 
         If PreviewConfig = WinVer.Ten Then
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
+            If CP.WinMode_Light And CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                 Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
             End If
         End If
@@ -1189,15 +1249,13 @@ Public Class MainFrm
                 CList.Add(start)
                 CList.Add(ActionCenter)
             Else
-                CList.Add(Label12)
+                CList.Add(lnk_preview)
             End If
         Else
-            If Not CP.Transparency Then
-                If Not CP.WinMode_Light Then
-                    CList.Add(taskbar)
-                Else
-                    If CP.ApplyAccentonTaskbar Then CList.Add(taskbar)
-                End If
+            If [CP].Transparency Then
+                CList.Add(start) ''Hamburger
+            Else
+                CList.Add(taskbar)
             End If
         End If
 
@@ -1211,13 +1269,11 @@ Public Class MainFrm
         CList.Clear()
 
         If PreviewConfig = WinVer.Eleven Then
-            If Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
+            If Not CP.WinMode_Light And CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                 Notify(My.Application.LanguageHelper.X20, My.Resources.notify_info, 5000)
             End If
         Else
-            If Not CP.Transparency And Not CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
-            End If
+
         End If
 
     End Sub
@@ -1243,19 +1299,23 @@ Public Class MainFrm
                 CList.Add(ActionCenter)
                 C = ColorPickerDlg.Pick(CList)
             Else
-                CList.Add(Label12)
+                CList.Add(lnk_preview)
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         Else
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-
-            Else
-                CList.Add(ActionCenter)
-                CList.Add(Label12)
-                Dim _Conditions As New Conditions With {.ActionCenterLink = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
+            Select Case Not CP.WinMode_Light
+                Case True
+                    CList.Add(ActionCenter) ''Link
+                Case False
+                    If [CP].Transparency Then
+                        CList.Add(ActionCenter) ''Link
+                    Else
+                        If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                            CList.Add(lnk_preview)
+                        End If
+                    End If
+            End Select
         End If
 
         CP.ActionCenter_AppsLinks = Color.FromArgb(255, C)
@@ -1266,11 +1326,6 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If PreviewConfig = WinVer.Ten Then
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                Notify(My.Application.LanguageHelper.X21, My.Resources.notify_info, 5000)
-            End If
-        End If
     End Sub
 
     Private Sub SettingsIconsAndLinks_picker_Click(sender As Object, e As EventArgs) Handles SettingsIconsAndLinks_picker.Click
@@ -1292,15 +1347,28 @@ Public Class MainFrm
             CList.Add(Label3)
             C = ColorPickerDlg.Pick(CList)
         Else
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-                CList.Add(Label3)
-                CList.Add(taskbar)
-                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            Else
-                CList.Add(Label3)
-                C = ColorPickerDlg.Pick(CList)
-            End If
+
+            Select Case Not [CP].WinMode_Light
+                Case True
+                    If [CP].Transparency Then
+                        CList.Add(Label3)
+                        CList.Add(lnk_preview)
+                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                            CList.Add(taskbar)  ''AppBackground
+                        End If
+                    Else
+                        CList.Add(Label3)
+                        CList.Add(lnk_preview)
+                    End If
+                Case False
+                    CList.Add(Label3)
+                    CList.Add(lnk_preview)
+
+                    If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                        CList.Add(taskbar)  ''AppBackground
+                    End If
+            End Select
+
         End If
 
         CP.SettingsIconsAndLinks = Color.FromArgb(255, C)
@@ -1365,15 +1433,27 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         Else
 
-            If CP.WinMode_Light Then
-                If CP.Transparency Then
-                    If CP.ApplyAccentonTaskbar Then CList.Add(taskbar) Else CList.Add(Label12)
-                Else
-                    CList.Add(Label12)
-                End If
-            Else
-                If CP.Transparency Then CList.Add(taskbar)
-            End If
+            Select Case Not [CP].WinMode_Light
+                Case True
+
+                    If [CP].Transparency Then
+                        CList.Add(taskbar)
+                    End If
+
+                Case False
+                    If [CP].Transparency Then
+                        CList.Add(taskbar)
+
+                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                            CList.Add(ActionCenter) ''ActionCenterLinks
+                        End If
+
+                    Else
+                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                            CList.Add(ActionCenter) ''ActionCenterLinks
+                        End If
+                    End If
+            End Select
 
             C = ColorPickerDlg.Pick(CList)
         End If
@@ -1385,21 +1465,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-
-        If PreviewConfig = WinVer.Ten Then
-            If CP.WinMode_Light And Not CP.ApplyAccentonTaskbar Then
-
-            Else
-                If CP.Transparency Then
-                    If Not CP.ApplyAccentonTaskbar Then
-                        Notify(My.Application.LanguageHelper.X19, My.Resources.notify_info, 5000)
-                    End If
-                Else
-
-                End If
-            End If
-        End If
     End Sub
 
     Private Sub StartAccent_picker_Click(sender As Object, e As EventArgs) Handles StartAccent_picker.Click
@@ -1445,6 +1510,10 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender}
 
+        If PreviewConfig = WinVer.Ten Then
+            CList.Add(taskbar) 'Start Icon Hover
+        End If
+
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.StartButton_Hover = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
@@ -1481,11 +1550,6 @@ Public Class MainFrm
 
             If CP.WinMode_Light Then
                 CList.Add(start)
-                CList.Add(ShowAccentOnTitlebarAndBorders_Toggle)
-                CList.Add(WinMode_Toggle)
-                CList.Add(AppMode_Toggle)
-                CList.Add(Transparency_Toggle)
-                CList.Add(AccentOnStartAndTaskbar_Toggle)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
 
@@ -1502,17 +1566,39 @@ Public Class MainFrm
             End If
 
         Else
-            If CP.Transparency Then
-                CList.Add(start)
-                CList.Add(ActionCenter)
-                C = ColorPickerDlg.Pick(CList)
-            Else
-                CList.Add(start)
-                CList.Add(ActionCenter)
-                CList.Add(taskbar)
-                Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
+
+            Select Case Not [CP].WinMode_Light
+                Case True
+
+                    If [CP].Transparency Then
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                    Else
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                        CList.Add(taskbar)  'AppBackground
+                    End If
+
+                Case False
+                    If [CP].Transparency Then
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                    Else
+                        If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            CList.Add(start)
+                            CList.Add(ActionCenter)
+                        ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                            CList.Add(start)
+                            CList.Add(ActionCenter)
+                            CList.Add(taskbar)  'Start Button Hover
+                        Else
+                            CList.Add(start)
+                            CList.Add(ActionCenter)
+                            CList.Add(taskbar)  'AppBackground
+                        End If
+                    End If
+            End Select
+
         End If
 
         CP.StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(255, C)
@@ -1522,13 +1608,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-
-        If PreviewConfig = WinVer.Ten Then
-            If Not CP.ApplyAccentonTaskbar Then
-                Notify(My.Application.LanguageHelper.X21, My.Resources.notify_info, 5000)
-            End If
-        End If
     End Sub
 
 

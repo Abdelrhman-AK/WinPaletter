@@ -31,8 +31,14 @@ Public Class CP
     Public Property AppMode_Light As Boolean
     Public Property Transparency As Boolean = True
     Public Property ApplyAccentonTitlebars As Boolean = False
-    Public Property ApplyAccentonTaskbar As Boolean = False
+    Public Property ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level = 0
 #End Region
+
+    Enum ApplyAccentonTaskbar_Level
+        None
+        Taskbar_Start_AC
+        Taskbar
+    End Enum
 
 #Region "Aero"
     Public Property Aero_ColorizationColor As Color
@@ -930,7 +936,17 @@ Public Class CP
                     End Try
 
                     Try
-                        ApplyAccentonTaskbar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", Def.ApplyAccentonTaskbar)
+                        Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+                            Case 0
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                            Case 1
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                            Case 2
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                            Case Else
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                        End Select
+
                     Catch
                         ApplyAccentonTaskbar = Def.ApplyAccentonTaskbar
                     End Try
@@ -2661,24 +2677,47 @@ Public Class CP
 #End Region
 
 #Region "Modern Windows"
-                    If Not My.W7 And Not My.W8 Then
 
-                        If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
-                        If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
-                        If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
-                        If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
-                        If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then ApplyAccentonTaskbar = lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
-                        If lin.StartsWith("*Titlebar_Active= ") Then Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
-                        If lin.StartsWith("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
-                        If lin.StartsWith("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
-                        If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
-                        If lin.StartsWith("*StartButton_Hover= ") Then StartButton_Hover = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
-                        If lin.StartsWith("*SettingsIconsAndLinks= ") Then SettingsIconsAndLinks = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
-                        If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
-                        If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
-                        If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
-                        If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                    If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
+                    If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
+                    If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
+                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
+                    If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then
+                        Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
+                            Case "false"
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+
+                            Case "true"
+                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+
+                            Case Else
+                                Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
+                                    Case 0
+                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+
+                                    Case 1
+                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+
+                                    Case 2
+                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+
+                                    Case Else
+                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                End Select
+
+
+                        End Select
                     End If
+                    If lin.StartsWith("*Titlebar_Active= ") Then Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
+                    If lin.StartsWith("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
+                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
+                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
+                    If lin.StartsWith("*StartButton_Hover= ") Then StartButton_Hover = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
+                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then SettingsIconsAndLinks = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
+                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
+                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
+                    If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
+                    If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
 #End Region
 
 #Region "Aero"
@@ -3214,7 +3253,7 @@ Public Class CP
                 AppMode_Light = False
                 Transparency = True
                 ApplyAccentonTitlebars = False
-                ApplyAccentonTaskbar = False
+                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 #End Region
 
 #Region "Aero"
@@ -3729,7 +3768,21 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", If(ApplyAccentonTaskbar, 1, 0))
+
+                    Select Case ApplyAccentonTaskbar
+                        Case ApplyAccentonTaskbar_Level.None
+                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+
+                        Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 1)
+
+                        Case ApplyAccentonTaskbar_Level.Taskbar
+                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 2)
+
+                        Case Else
+                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+
+                    End Select
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
                 End If
 #End Region
@@ -6021,7 +6074,7 @@ Public Class CP_Defaults
         .PaletteVersion = "1.0.0.0",
         .Author = "Microsoft",
         .AuthorSocialMediaLink = "www.microsoft.com",
-        .WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
+        .WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
         .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
@@ -6090,7 +6143,7 @@ Public Class CP_Defaults
         .PaletteVersion = "1.0.0.0",
         .Author = "Microsoft",
         .AuthorSocialMediaLink = "www.microsoft.com",
-        .WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = False,
+        .WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
         .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),

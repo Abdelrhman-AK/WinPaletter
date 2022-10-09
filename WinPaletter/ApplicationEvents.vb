@@ -488,6 +488,18 @@ Namespace My
                         "WindowsTerminalDecide"
                         }
 
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+                    If arg.ToLower = "/exportlanguage" Then
+                        LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                        MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
+                        Process.GetCurrentProcess.Kill()
+                    End If
+                Next
+            Catch
+            End Try
+
             If My.Application._Settings.Language Then
                 My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
             Else
@@ -514,11 +526,6 @@ Namespace My
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     Dim arg As String = Environment.GetCommandLineArgs(x)
-                    If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang("Language.wplng")
-                        Process.GetCurrentProcess.Kill()
-                    End If
-
                     If arg.ToLower.StartsWith("/apply:") Then
                         Dim File As String = arg.Remove(0, "/apply:".Count)
                         File = File.Replace("""", "")
@@ -638,10 +645,8 @@ Namespace My
                 If arg = "" Then
                     e.BringToForeground = True
                 Else
-
-                    If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang("Language.wplng")
-                        MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information)
+                    If arg.ToLower = "/exportlanguage".ToLower Then
+                        MsgBox(LanguageHelper.LngShouldClose, MsgBoxStyle.Critical + MsgboxRt())
                     Else
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                             If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then

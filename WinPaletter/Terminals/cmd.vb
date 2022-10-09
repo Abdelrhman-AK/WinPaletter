@@ -30,17 +30,17 @@ Public Class cmd
 
         Select Case _Edition
             Case Edition.CMD
-                Text = "(BETA) - Command Prompt"
+                Text = "Command Prompt"
                 Icon = My.Resources.icons8_command_line
                 XenonButton4.Text = "Open Command Prompt for testing"
 
             Case Edition.PowerShellx86
-                Text = "(BETA) - PowerShell x86"
+                Text = "PowerShell x86"
                 Icon = My.Resources.icons8_PowerShell
                 XenonButton4.Text = "Open PowerShell x86 for testing"
 
             Case Edition.PowerShellx64
-                Text = "(BETA) - PowerShell x64"
+                Text = "PowerShell x64"
                 Icon = My.Resources.icons8_PowerShell
                 XenonButton4.Text = "Open PowerShell x64 for testing"
 
@@ -218,6 +218,8 @@ Public Class cmd
     End Sub
 
     Sub UpdateFromTrack(i As Integer)
+        Dim steps As Integer = 15
+        Dim delay As Integer = 10
 
         If i = 1 Then
             Select Case CMD_PopupForegroundBar.Value
@@ -258,6 +260,9 @@ Public Class cmd
             Dim FC0 As Color = If(IsColorDark(CMD_PopupForegroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupForegroundLbl.BackColor), ControlPaint.Dark(CMD_PopupForegroundLbl.BackColor, 0.9))
             CMD_PopupForegroundLbl.ForeColor = FC0
 
+            Visual.FadeColor(CMD_PopupForegroundBar, "AccentColor", CMD_PopupForegroundBar.AccentColor, CMD_PopupForegroundLbl.BackColor, steps, delay)
+            CMD_PopupForegroundBar.Invalidate()
+
         ElseIf i = 2 Then
 
             Select Case CMD_PopupBackgroundBar.Value
@@ -297,6 +302,8 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_PopupBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupBackgroundLbl.BackColor), ControlPaint.Dark(CMD_PopupBackgroundLbl.BackColor, 0.9))
             CMD_PopupBackgroundLbl.ForeColor = FC0
+            Visual.FadeColor(CMD_PopupBackgroundBar, "AccentColor", CMD_PopupBackgroundBar.AccentColor, CMD_PopupBackgroundLbl.BackColor, steps, delay)
+            CMD_PopupBackgroundBar.Invalidate()
 
         ElseIf i = 3 Then
 
@@ -337,6 +344,8 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_AccentBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentBackgroundLbl.BackColor), ControlPaint.Dark(CMD_AccentBackgroundLbl.BackColor, 0.9))
             CMD_AccentBackgroundLbl.ForeColor = FC0
+            Visual.FadeColor(CMD_AccentBackgroundBar, "AccentColor", CMD_AccentBackgroundBar.AccentColor, CMD_AccentBackgroundLbl.BackColor, steps, delay)
+            CMD_AccentBackgroundBar.Invalidate()
 
         ElseIf i = 4 Then
 
@@ -381,6 +390,9 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_AccentForegroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentForegroundLbl.BackColor), ControlPaint.Dark(CMD_AccentForegroundLbl.BackColor, 0.9))
             CMD_AccentForegroundLbl.ForeColor = FC0
+            Visual.FadeColor(CMD_AccentForegroundBar, "AccentColor", CMD_AccentForegroundBar.AccentColor, CMD_AccentForegroundLbl.BackColor, steps, delay)
+            CMD_AccentForegroundBar.Invalidate()
+
         End If
     End Sub
 #End Region
@@ -974,6 +986,7 @@ Public Class cmd
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             ApplyPreview()
+            UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
             Exit Sub
         End If
 

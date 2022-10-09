@@ -1136,6 +1136,8 @@ Public Class XenonRadioImage
 
     Public Property Image As Image
     Private _Checked As Boolean
+    Public Property ShowText As Boolean = False
+
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -1299,6 +1301,7 @@ Public Class XenonRadioImage
 
             If Image IsNot Nothing Then G.DrawImage(Image, CenterRect)
 
+            If ShowText Then G.DrawString(Text, Font, New SolidBrush(ForeColor), MainRectInner, StringAligner(ContentAlignment.MiddleCenter))
         Catch
 
         End Try
@@ -4898,7 +4901,7 @@ Public Class XenonTrackbar
     Private ThumbDown As Boolean
     Private Circle As Rectangle
     Dim Colors As XenonColorPalette
-
+    Public Property AccentColor As Color = If(GetDarkMode(), ControlPaint.LightLight(Color.FromArgb(0, 81, 210)), ControlPaint.Dark(Color.FromArgb(0, 81, 210), 0.1))
     Enum MouseState
         None
         Over
@@ -4963,7 +4966,7 @@ Public Class XenonTrackbar
         Dim c_back As Color = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
         Dim c_btn As Color = If(Dark, Color.FromArgb(165, 165, 165), Color.FromArgb(100, 100, 100))
 
-        Dim C As Color = Colors.Color_Core
+        Dim C As Color = AccentColor 'Colors.Color_Core
 
         Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
 

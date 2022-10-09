@@ -53,7 +53,7 @@ Public Class Localizer
     Property X20 As String = "To colorize start menu, action center and taskbar, please activate the toggle"
     Property X21 As String = "To colorize start menu and action center, please activate the toggle"
     Property X22 As String = "This will restart the explorer, don't worry this won't close other applications."
-    Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow this color"
+    Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
     Property NoDefResExplorer = "Restarting Explorer is diabled from settings. If the palette is not applied correctly, <br> restart explorer."
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save Settings?"
@@ -96,7 +96,7 @@ Public Class Localizer
     Property MenuAppliedReg As String = "From Current Applied Palette"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the situable size will be loaded according to your DPI settings."
     Property Win32UISavingThemeError As String = "Error saving file: "
-
+    Property LngShouldClose As String = "You should close the app if you want to export language."
     Property CMD_Enable As String = "You should enable terminal editing from the toggle above."
     Property ExtTer_NotFound As String = "Terminal not found. Select a valid one from the list."
     Property ExtTer_Set As String = "Terminal Preferences are set successfully!"
@@ -144,18 +144,34 @@ Public Class Localizer
         lx.Add("!AppVer = " & My.Application.Info.Version.ToString)
         lx.Add("!RightToLeft = False")
 
-        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+        Dim newL As New Localizer
+
+        Dim type1 As Type = newL.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
         For Each [property] As PropertyInfo In properties1
-            If Not String.IsNullOrWhiteSpace([property].GetValue(Me)) Then lx.Add(String.Format("@{0} = {1}", [property].Name, [property].GetValue(Me)))
+
+            If Not String.IsNullOrWhiteSpace([property].GetValue(newL)) _
+                 And Not [property].Name.ToLower = "Name".ToLower _
+                 And Not [property].Name.ToLower = "TrVer".ToLower _
+                 And Not [property].Name.ToLower = "Lang".ToLower _
+                 And Not [property].Name.ToLower = "LangCode".ToLower _
+                 And Not [property].Name.ToLower = "AppVer".ToLower _
+                 And Not [property].Name.ToLower = "RightToLeft".ToLower Then
+
+                lx.Add(String.Format("@{0} = {1}", [property].Name, [property].GetValue(newL).ToString.Replace(vbCrLf, "<br>")))
+
+            End If
+
         Next
 
         Dim LS As New List(Of String)
         LS.Clear()
 
         For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
-            Using ins = DirectCast(Activator.CreateInstance(f), Form)
-                LS.Add(ins.Name & ".Text = " & ins.Text)
+            Dim ins As New Form()
+            ins = DirectCast(Activator.CreateInstance(f), Form)
+
+            LS.Add(ins.Name & ".Text = " & ins.Text)
                 For Each ctrl In GetAllControls(ins)
                     If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
                         LS.Add(ins.Name & "." & ctrl.Name & ".Text = " & ctrl.Text.Replace(vbCrLf, "<br>"))
@@ -165,7 +181,7 @@ Public Class Localizer
                         LS.Add(ins.Name & "." & ctrl.Name & ".Tag = " & ctrl.Tag.Replace(vbCrLf, "<br>"))
                     End If
                 Next
-            End Using
+            ins.Dispose()
         Next
 
 
@@ -216,7 +232,7 @@ Public Class Localizer
                             Prop = X.Split("=")(0).Trim.Split(".")(1)
                     End Select
 
-                    Value = X.Split("=")(1).Trim
+                    Value = X.Split("=")(1).Trim.Replace("<br>", vbCrLf)
 
                     Dic.Add(New ControlsBase(FormName, ControlName, Prop, Value))
                 End If

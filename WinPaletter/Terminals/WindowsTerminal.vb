@@ -20,14 +20,14 @@ Public Class WindowsTerminal
             Case WinTerminal.Version.Stable
                 _Terminal = MainFrm.CP.Terminal
                 _TerminalDefault = MainFrm.CP.Terminal
-                Text = "(BETA) - Windows Terminal Stable"
+                Text = "Windows Terminal Stable"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Stable_Enabled
 
             Case WinTerminal.Version.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
                 _TerminalDefault = MainFrm.CP.TerminalPreview
 
-                Text = "(BETA) - Windows Terminal Preview"
+                Text = "Windows Terminal Preview"
                 TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
 
         End Select
