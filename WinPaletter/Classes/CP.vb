@@ -27,6 +27,7 @@ Public Class CP
     Public Property StartListFolders_TaskbarFront As Color
     Public Property ActionCenter_AppsLinks As Color
     Public Property SettingsIconsAndLinks As Color
+    Public Property UWP_Undefined As Color = Color.Black
     Public Property WinMode_Light As Boolean
     Public Property AppMode_Light As Boolean
     Public Property Transparency As Boolean = True
@@ -867,6 +868,7 @@ Public Class CP
                         StartMenuBackground_ActiveTaskbarButton = Colors(4)
                         StartListFolders_TaskbarFront = Colors(5)
                         Taskbar_Background = Colors(6)
+                        UWP_Undefined = BizareColorInvertor(Colors(7))
 
                     Catch
                         x = If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes)
@@ -887,6 +889,8 @@ Public Class CP
                         StartMenuBackground_ActiveTaskbarButton = Colors(4)
                         StartListFolders_TaskbarFront = Colors(5)
                         Taskbar_Background = Colors(6)
+                        UWP_Undefined = Colors(7)
+
                     End Try
 
                     Try
@@ -2718,6 +2722,7 @@ Public Class CP
                     If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
                     If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
                     If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                    If lin.StartsWith("*UWP_Undefined= ") Then UWP_Undefined = Color.FromArgb(lin.Remove(0, "*UWP_Undefined= ".Count))
 #End Region
 
 #Region "Aero"
@@ -3249,6 +3254,7 @@ Public Class CP
                 StartListFolders_TaskbarFront = Color.Black
                 SettingsIconsAndLinks = Color.Black
                 ActionCenter_AppsLinks = Color.Black
+                UWP_Undefined = Color.Black
                 WinMode_Light = False
                 AppMode_Light = False
                 Transparency = True
@@ -3756,7 +3762,7 @@ Public Class CP
                          , (StartMenuBackground_ActiveTaskbarButton).R, (StartMenuBackground_ActiveTaskbarButton).G, (StartMenuBackground_ActiveTaskbarButton).B, (StartMenuBackground_ActiveTaskbarButton).A _
                          , (StartListFolders_TaskbarFront).R, (StartListFolders_TaskbarFront).G, (StartListFolders_TaskbarFront).B, (StartListFolders_TaskbarFront).A _
                          , (Taskbar_Background).R, (Taskbar_Background).G, (Taskbar_Background).B, (Taskbar_Background).A _
-                         , 255, 0, 0, 0}
+                         , (UWP_Undefined).R, (UWP_Undefined).G, (UWP_Undefined).B, (UWP_Undefined).A}
 
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
@@ -5039,7 +5045,7 @@ Public Class CP
                 tx.Add("*StartListFolders_TaskbarFront= " & StartListFolders_TaskbarFront.ToArgb)
                 tx.Add("*Taskbar_Background= " & Taskbar_Background.ToArgb)
                 tx.Add("*StartMenu_Accent= " & StartMenu_Accent.ToArgb)
-                tx.Add("*Undefined= " & Color.FromArgb(255, 0, 0, 0).ToArgb)
+                tx.Add("*UWP_Undefined= " & UWP_Undefined.ToArgb)
                 tx.Add("</ModernWindows>" & vbCrLf)
 #End Region
 
@@ -6078,7 +6084,7 @@ Public Class CP_Defaults
         .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
-        .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192),
+        .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192), .UWP_Undefined = Color.Black,
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
         .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
         .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
@@ -6147,7 +6153,7 @@ Public Class CP_Defaults
         .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
         .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
         .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
-        .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158),
+        .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158), .UWP_Undefined = Color.Black,
         .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
         .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
         .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),

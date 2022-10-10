@@ -241,6 +241,11 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Resources1.Designer.vb" />
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
@@ -352,6 +357,8 @@
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
+    <None Include="Resources\StartBtn_10Dark.png" />
+    <None Include="Resources\StartBtn_10Light.png" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <Content Include="Resources\Win7BasicActive.png" />
@@ -401,7 +408,10 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>

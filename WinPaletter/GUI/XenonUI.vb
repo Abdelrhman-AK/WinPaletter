@@ -4134,6 +4134,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 G.DrawImage(If(DarkMode, My.Resources.AC_10_Dark, My.Resources.AC_10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
                 G.FillRectangle(New SolidBrush(LinkColor), rect1)
                 G.FillRectangle(New SolidBrush(LinkColor), rect2)
+                G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(0, Height - 1))
 
             End If
 
@@ -4177,25 +4178,29 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.DrawImage(My.Resources.InactiveApp_Taskbar, App2ImgRect)
                     FillRect(G, New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
 
+                    G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
+
                 Case TaskbarVersion.Ten
+                    G.SmoothingMode = SmoothingMode.HighSpeed
+
                     Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
                     Dim StartBtnImgRect As New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
 
 
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2 + 1, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
                     Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
 
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2 + 1, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
                     Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
 
 
-                    Dim StartColor As Color = If(Transparency, Color.FromArgb(100, 100, 100, 100), _StartColor)
+                    Dim StartColor As Color = _StartColor
                     G.FillRectangle(New SolidBrush(StartColor), StartBtnRect)
                     G.DrawImage(If(DarkMode, My.Resources.StartBtn_10Dark, My.Resources.StartBtn_10Light), StartBtnImgRect)
 
-                    Dim AppColor As Color = If(Transparency, Color.FromArgb(80, 100, 100, 100), _AppBackground)
+                    Dim AppColor As Color = _AppBackground
                     G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)
                     G.FillRectangle(New SolidBrush(ControlPaint.Light(_AppUnderline)), AppBtnRectUnderline)
                     G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
