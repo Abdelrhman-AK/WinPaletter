@@ -48,7 +48,7 @@ https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%
    
    - Confirm saving the file.
    
-   - Create a pull request, one this request is approved, your new translation will be merged with the Main WinPaletter Repository and so anyone can access your translation\language from this link: https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages
+   - Create a pull request, once this request is approved, your new translation will be merged with the Main WinPaletter Repository and so anyone can access your translation\language from this link: https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages
 
 ---
 
