@@ -1,8 +1,12 @@
+# Note
+
+Telegram group deleted as it isn't necessary now. We will depend on GitHub only   
+
 # Get Languages
 
 Visit this folder in WinPaletter GitHub Repository and download the language you want:
 
-
+https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Translations
 
 Download Translation > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings > Restart the application for better results
 
@@ -22,8 +26,17 @@ https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%
 
 6) Test the file you created in WinPaletter
 
-7) Upload it to Telegram Group
-   https://t.me/WinPaletter
+7) Upload to GitHub `New`: How ?
+   
+   - Create a GitHub Account if you don't have an account, or login if you already have one.
+   
+   - Visit WinPaletter Repository: https://github.com/Abdelrhman-AK/WinPaletter/
+   
+   - Fork (You will find this button in the upper part of the page)
+   
+   - Now visit your personal account main page, you will find WinPaletter Forked (as if cloned to your account if you don't know the meaning of Fork)
+   
+   - Navigate to folder ""
 
 8) Note: First Version Supports Translation is 1.0.3.0
 
