@@ -1,8 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
-Imports System.Runtime.InteropServices
-Imports System.Security.AccessControl
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
@@ -40,119 +38,174 @@ Public Class MainFrm
             Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
             If PreviewConfig = WinVer.Eleven Then
-                lbl5.Text = My.Application.LanguageHelper.X7
-                lbl6.Text = My.Application.LanguageHelper.X8
-                lbl7.Text = My.Application.LanguageHelper.X9
-                lbl8.Text = My.Application.LanguageHelper.X10
-
+                lbl5.Text = My.Application.LanguageHelper.CP_11_Settings
+                lbl6.Text = My.Application.LanguageHelper.CP_11_SomePressedButtons
+                lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+                lbl8.Text = My.Application.LanguageHelper.CP_Undefined
                 pic5.Image = My.Resources.Mini_SettingsIcons
-                pic6.Image = My.Resources.Native11
-                pic7.Image = My.Resources.Mini_StartMenuAccent
-                pic8.Image = My.Resources.Mini_Taskbar
+                pic6.Image = My.Resources.Mini_PressedButton
+                pic7.Image = My.Resources.Mini_Undefined
+                pic8.Image = My.Resources.Mini_Undefined
+                pic9.Image = My.Resources.Mini_Undefined
 
                 Select Case Not [CP].WinMode_Light
                     Case True   ''''''''''Dark
-                        lbl1.Text = My.Application.LanguageHelper.X1
-                        lbl2.Text = My.Application.LanguageHelper.X2
-                        lbl3.Text = My.Application.LanguageHelper.X3
-                        lbl4.Text = My.Application.LanguageHelper.X4
+                        lbl1.Text = My.Application.LanguageHelper.CP_11_StartMenu_Taskbar_AC
+                        lbl2.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
+                        lbl3.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
+                        lbl4.Text = My.Application.LanguageHelper.CP_Undefined
 
                         pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         pic2.Image = My.Resources.Mini_ACHover_Links
                         pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
-                        pic4.Image = My.Resources.Mini_TaskbarActiveIcon
-
+                        pic4.Image = My.Resources.Mini_Undefined
 
 
                     Case False   ''''''''''Light
-                        lbl1.Text = My.Application.LanguageHelper.X2
-                        lbl2.Text = My.Application.LanguageHelper.X5
-                        lbl3.Text = My.Application.LanguageHelper.X6
-                        lbl4.Text = My.Application.LanguageHelper.X3
+                        lbl1.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
+                        lbl2.Text = My.Application.LanguageHelper.CP_11_StartMenu_AC
+                        lbl3.Text = My.Application.LanguageHelper.CP_11_Taskbar
+                        lbl4.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
 
                         pic1.Image = My.Resources.Mini_ACHover_Links
                         pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        pic3.Image = My.Resources.Mini_StartMenuAccent
+                        pic3.Image = My.Resources.Mini_Taskbar
                         pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
                 End Select
 
             Else
                 Select Case Not [CP].WinMode_Light
-                    Case True
-                        lbl2.Text = "Action Center Links"
-                        lbl3.Text = "Taskbar App Underline"
-                        lbl6.Text = "Start Menu Icon Hover"
-                        lbl7.Text = "Not Used"
-                        lbl5.Text = "Settings Icons, Links && Some Pressed Buttons"
+                    Case True ''''''''''Dark
+                        lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                        lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                        lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                        lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                        lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                        pic2.Image = My.Resources.Mini_ACHover_Links
+                        pic3.Image = My.Resources.Mini_TaskbarApp
+                        pic5.Image = My.Resources.Mini_SettingsIcons
+                        pic6.Image = My.Resources.Native10
+                        pic7.Image = My.Resources.Mini_Undefined
 
                         If [CP].Transparency Then
-                            lbl1.Text = "Sliding Hamburger Menu"
-                            lbl4.Text = "Start Menu && Action Center Colors"
-                            lbl8.Text = "Taskbar Color"
+                            lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
+                            lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                            lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+
+                            pic1.Image = My.Resources.Mini_Hamburger
+                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                            pic8.Image = My.Resources.Mini_Taskbar
+
                             If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                lbl5.Text = "Settings Icons, Links, Taskbar Focused App && Some Pressed Buttons"
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_Taskbar_SomeBtns
                             End If
+
                         Else
-                            lbl1.Text = "Taskbar Color"
+                            lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            pic1.Image = My.Resources.Mini_Taskbar
+                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
 
                             If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                lbl4.Text = "Start Menu, Action Center && Taskbar Active App"
+                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
                             Else
-                                lbl4.Text = "Start Menu && Action Center"
+                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
                             End If
 
-                            lbl8.Text = "Not Used"
+                            lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+                            pic8.Image = My.Resources.Mini_Undefined
+
                         End If
 
-                    Case False
+                    Case False ''''''''''Light
                         If [CP].Transparency Then
-                            lbl1.Text = "Sliding Hamburger Menu"
-                            lbl4.Text = "Start Menu && Action Center"
-                            lbl6.Text = "Start Menu Icon Hover"
-                            lbl7.Text = "Not Used"
+                            lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
+                            lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                            lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                            lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                            pic1.Image = My.Resources.Mini_Hamburger
+                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                            pic5.Image = My.Resources.Mini_SettingsIcons
+                            pic6.Image = My.Resources.Native10
+                            pic7.Image = My.Resources.Mini_Undefined
+                            pic8.Image = My.Resources.Mini_Taskbar
 
                             If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                lbl2.Text = "Not Used"
-                                lbl3.Text = "Not Used"
-                                lbl5.Text = "Settings Icons, Links, Taskbar App Underline && Some Pressed Buttons"
-                                lbl8.Text = "Taskbar Color && Links in Action Center"
+                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl3.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+
+                                pic2.Image = My.Resources.Mini_Undefined
+                                pic3.Image = My.Resources.Mini_Undefined
 
                             ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                lbl2.Text = "Not Used"
-                                lbl3.Text = "Taskbar App Underline"
-                                lbl5.Text = "Settings Icons, Links && Some Pressed Buttons"
-                                lbl8.Text = "Taskbar Color && Links in Action Center"
+                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+
+                                pic2.Image = My.Resources.Mini_Undefined
+                                pic3.Image = My.Resources.Mini_TaskbarApp
+
                             Else
-                                lbl2.Text = "Links in Action Center"
-                                lbl3.Text = "Taskbar App Underline"
-                                lbl5.Text = "Settings Icons, Links && Some Pressed Buttons"
-                                lbl8.Text = "Taskbar Color"
+                                lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+
+                                pic2.Image = My.Resources.Mini_ACHover_Links
+                                pic3.Image = My.Resources.Mini_TaskbarApp
+
                             End If
                         Else
-                            lbl1.Text = "Taskbar Color"
-                            lbl6.Text = "Start Menu Icon Hover"
-                            lbl7.Text = "Not Used"
+                            lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                            lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                            pic1.Image = My.Resources.Mini_Taskbar
+                            pic6.Image = My.Resources.Native10
+                            pic7.Image = My.Resources.Mini_Undefined
 
                             If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                lbl2.Text = "Not Used"
-                                lbl3.Text = "Not Used"
-                                lbl4.Text = "Start Menu && Action Center"
-                                lbl5.Text = "Settings Icons, Links, Taskbar App Underline && Some Pressed Buttons"
-                                lbl8.Text = "Links in Action Center"
+                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl3.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+
+                                pic2.Image = My.Resources.Mini_Undefined
+                                pic3.Image = My.Resources.Mini_Undefined
+                                pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                                pic5.Image = My.Resources.Mini_SettingsIcons
+                                pic8.Image = My.Resources.Mini_ACHover_Links
 
                             ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                lbl2.Text = "Not Used"
-                                lbl3.Text = "Taskbar App Underline"
-                                lbl4.Text = "Taskbar Focused App && Start Button Hover"
-                                lbl5.Text = "Settings Icons, Links && Some Pressed Buttons"
-                                lbl8.Text = "Links in Action Center"
+                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                lbl4.Text = My.Application.LanguageHelper.CP_10_TaskbarFocusedApp_StartButtonHover
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+
+                                pic2.Image = My.Resources.Mini_Undefined
+                                pic3.Image = My.Resources.Mini_TaskbarApp
+                                pic4.Image = My.Resources.Mini_TaskbarActiveIcon
+                                pic5.Image = My.Resources.Mini_SettingsIcons
+                                pic8.Image = My.Resources.Mini_ACHover_Links
 
                             Else
-                                lbl2.Text = "Links in Action Center"
-                                lbl3.Text = "Taskbar App Underline"
-                                lbl4.Text = "Start Menu, Action Center && Taskbar App"
-                                lbl5.Text = "Settings Icons, Links && Some Pressed Buttons"
-                                lbl8.Text = "Not Used"
+                                lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
+                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+
+                                pic2.Image = My.Resources.Mini_ACHover_Links
+                                pic3.Image = My.Resources.Mini_TaskbarApp
+                                pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                                pic5.Image = My.Resources.Mini_SettingsIcons
+                                pic8.Image = My.Resources.Mini_Undefined
                             End If
                         End If
                 End Select
@@ -658,6 +711,9 @@ Public Class MainFrm
                 ActionCenter.Location = New Point(398, 161)
                 ActionCenter.Dock = Nothing
                 ActionCenter.RoundedCorners = True
+                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                ActionCenter.BlurPower = 7
+                ActionCenter.NoisePower = 0.2
 
                 taskbar.Height = 42
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
@@ -678,6 +734,9 @@ Public Class MainFrm
                 ActionCenter.Visible = True
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
+                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                ActionCenter.BlurPower = 7
+                ActionCenter.NoisePower = 0.2
 
                 taskbar.Height = 35
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
@@ -1030,10 +1089,15 @@ Public Class MainFrm
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
 
+        pnl_preview.Visible = False
+
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
 
-        For Each btn As XenonButton In XenonGroupBox2.Controls.OfType(Of XenonButton)
+        Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
+        Me.WindowState = My.Application._Settings.MainFormStatus
+
+        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
             AddHandler btn.Enter, AddressOf UpdateHint
             AddHandler btn.MouseLeave, AddressOf EraseHint
@@ -1100,12 +1164,29 @@ Public Class MainFrm
         ApplyCPValues(CP)
         ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
+
+        pnl_preview.Visible = True
+
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
 
         If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
+    End Sub
+
+    Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+        If Me.WindowState = FormWindowState.Normal Then
+            My.Application._Settings.MainFormWidth = Me.Size.Width
+            My.Application._Settings.MainFormHeight = Me.Size.Height
+        End If
+
+        If Me.WindowState <> FormWindowState.Minimized Then
+            My.Application._Settings.MainFormStatus = Me.WindowState
+        End If
+
+        My.Application._Settings.Save(XeSettings.Mode.Registry)
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
@@ -1728,8 +1809,8 @@ Public Class MainFrm
     Dim wpth_or_wpsf As Boolean = True
     Dim DragAccepted As Boolean
 
-    Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, XenonGroupBox8.DragEnter, pnl_preview.DragEnter,
-        PaletteContainer_W1x.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, XenonGroupBox2.DragEnter, XenonGroupBox13.DragEnter
+    Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, pnl_preview.DragEnter,
+        PaletteContainer_W1x.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, MainToolbar.DragEnter, XenonGroupBox13.DragEnter
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
@@ -1764,13 +1845,13 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, XenonGroupBox8.DragOver, pnl_preview.DragOver,
-        PaletteContainer_W1x.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, XenonGroupBox2.DragOver, XenonGroupBox13.DragOver
+    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, pnl_preview.DragOver,
+        PaletteContainer_W1x.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
         If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
-    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, XenonGroupBox8.DragDrop, pnl_preview.DragDrop,
-        PaletteContainer_W1x.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, XenonGroupBox2.DragDrop, XenonGroupBox13.DragDrop
+    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, pnl_preview.DragDrop,
+        PaletteContainer_W1x.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, MainToolbar.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
@@ -2563,6 +2644,14 @@ Public Class MainFrm
     End Sub
 
 
+    Private Sub MainFrm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
+        pnl_preview.Visible = False
+    End Sub
+
+    Private Sub MainFrm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+        pnl_preview.Visible = True
+    End Sub
+
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
         Dim NB As New XenonAlertBox With {
@@ -2603,6 +2692,7 @@ Public Class MainFrm
         End If
 
     End Sub
+
 
     ReadOnly NotificationsList As New List(Of Notifier)
     Dim WithEvents NTimer As New Timer With {.Enabled = False, .Interval = 100}

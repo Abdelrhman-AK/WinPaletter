@@ -12,9 +12,13 @@ Public Class ColorPickerDlg
         ApplyDarkMode(Me)
         _shown = False
         CP.PopulateThemeToListbox(XenonComboBox1)
-        Me.Left = fr.Right - 14
-        Me.Top = fr.Top
-        Me.Height = fr.Height
+
+        If fr.WindowState = FormWindowState.Normal Then
+            Me.Left = fr.Right - 14
+            Me.Top = fr.Top
+            Me.Height = fr.Height
+        End If
+
         XenonComboBox2.SelectedIndex = 0
         GetColorsFromPalette(MainFrm.CP)
     End Sub
@@ -100,19 +104,21 @@ Public Class ColorPickerDlg
 
     Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing, Optional ShowAlpha As Boolean = False) As Color
         fr = Ctrl(0).FindForm
+        Dim PrevoiusMin As Size = fr.MinimumSize
 
-        If fr Is MainFrm Then
+        If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W1x, True)
             My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
             My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonGroupBox2, True)
+            My.Application.AnimatorX.Hide(MainFrm.MainToolbar, True)
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton19, True)
 
             PreviousWidth = MainFrm.Width
-            DestinatedWidth = MainFrm.XenonGroupBox8.Width + MainFrm.XenonGroupBox2.Left * 3.25
+            DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
+            MainFrm.MinimumSize = Size.Empty
             MainFrm.Width = DestinatedWidth
         End If
 
@@ -139,7 +145,7 @@ Public Class ColorPickerDlg
 
         RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
-        If fr Is MainFrm Then
+        If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             MainFrm.Width = PreviousWidth
 
             If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
@@ -160,12 +166,14 @@ Public Class ColorPickerDlg
                 My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
             End If
 
-            My.Application.AnimatorX.Show(MainFrm.XenonGroupBox2, True)
+            My.Application.AnimatorX.Show(MainFrm.MainToolbar, True)
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton19, True)
         End If
+
+        MainFrm.MinimumSize = PrevoiusMin
 
         fr = Nothing
 

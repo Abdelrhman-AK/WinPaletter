@@ -868,7 +868,7 @@ Public Class CP
                         StartMenuBackground_ActiveTaskbarButton = Colors(4)
                         StartListFolders_TaskbarFront = Colors(5)
                         Taskbar_Background = Colors(6)
-                        UWP_Undefined = BizareColorInvertor(Colors(7))
+                        UWP_Undefined = Colors(7)
 
                     Catch
                         x = If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes)
@@ -2722,7 +2722,8 @@ Public Class CP
                     If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
                     If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
                     If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*UWP_Undefined= ") Then UWP_Undefined = Color.FromArgb(lin.Remove(0, "*UWP_Undefined= ".Count))
+                    If lin.StartsWith("*Undefined= ") Then UWP_Undefined = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
+
 #End Region
 
 #Region "Aero"
@@ -5045,7 +5046,7 @@ Public Class CP
                 tx.Add("*StartListFolders_TaskbarFront= " & StartListFolders_TaskbarFront.ToArgb)
                 tx.Add("*Taskbar_Background= " & Taskbar_Background.ToArgb)
                 tx.Add("*StartMenu_Accent= " & StartMenu_Accent.ToArgb)
-                tx.Add("*UWP_Undefined= " & UWP_Undefined.ToArgb)
+                tx.Add("*Undefined= " & UWP_Undefined.ToArgb)
                 tx.Add("</ModernWindows>" & vbCrLf)
 #End Region
 

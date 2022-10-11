@@ -644,6 +644,7 @@ Partial Class ColorPickerDlg
         'XenonComboBox1
         '
         Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonComboBox1.CustomFont = False
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -769,6 +770,7 @@ Partial Class ColorPickerDlg
         'XenonComboBox2
         '
         Me.XenonComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox2.CustomFont = False
         Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -788,7 +790,7 @@ Partial Class ColorPickerDlg
         Me.PaletteContainer.AutoScroll = True
         Me.PaletteContainer.Location = New System.Drawing.Point(8, 77)
         Me.PaletteContainer.Name = "PaletteContainer"
-        Me.PaletteContainer.Size = New System.Drawing.Size(442, 430)
+        Me.PaletteContainer.Size = New System.Drawing.Size(442, 0)
         Me.PaletteContainer.TabIndex = 48
         '
         'Label9
@@ -842,6 +844,7 @@ Partial Class ColorPickerDlg
         Me.Name = "ColorPickerDlg"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Color Picker"
+        Me.TopMost = True
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()

@@ -29,7 +29,9 @@ Public Class XeSettings
     Public Property Terminal_Stable_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
     Public Property Terminal_Preview_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
 
-
+    Public Property MainFormWidth As Integer = 1110
+    Public Property MainFormHeight As Integer = 725
+    Public Property MainFormStatus As FormWindowState = FormWindowState.Normal
 #End Region
 
     Public Enum WinVer
@@ -71,6 +73,10 @@ Public Class XeSettings
         If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", False, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", False, RegistryValueKind.DWord)
         If Key.GetValue("ShowLogWhileSaving", Nothing) Is Nothing Then Key.SetValue("ShowLogWhileSaving", False, RegistryValueKind.DWord)
+
+        If Key.GetValue("MainFormWidth", Nothing) Is Nothing Then Key.SetValue("MainFormWidth", 1110, RegistryValueKind.DWord)
+        If Key.GetValue("MainFormHeight", Nothing) Is Nothing Then Key.SetValue("MainFormHeight", 725, RegistryValueKind.DWord)
+        If Key.GetValue("MainFormStatus", Nothing) Is Nothing Then Key.SetValue("MainFormStatus", FormWindowState.Normal, RegistryValueKind.DWord)
 
         Select Case CustomPreviewConfig
             Case WinVer.Eleven
@@ -127,6 +133,10 @@ Public Class XeSettings
                 Win7LivePreview = Key.GetValue("Win7LivePreview", True)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", True)
                 CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", False)
+
+                MainFormWidth = Key.GetValue("MainFormWidth", 1110)
+                MainFormHeight = Key.GetValue("MainFormHeight", 725)
+                MainFormStatus = Key.GetValue("MainFormStatus", FormWindowState.Normal)
 
                 Terminal_Bypass = Key.GetValue("Terminal_Bypass", False)
                 Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", False)
@@ -236,6 +246,10 @@ Public Class XeSettings
                 Key.SetValue("Language_File", Language_File, RegistryValueKind.String)
                 Key.SetValue("Nerd_Stats", Nerd_Stats, RegistryValueKind.DWord)
                 Key.SetValue("Nerd_Stats_HexHash", Nerd_Stats_HexHash, RegistryValueKind.DWord)
+
+                Key.SetValue("MainFormWidth", MainFormWidth, RegistryValueKind.DWord)
+                Key.SetValue("MainFormHeight", MainFormHeight, RegistryValueKind.DWord)
+                Key.SetValue("MainFormStatus", MainFormStatus, RegistryValueKind.DWord)
 
                 Select Case Nerd_Stats_Kind
                     Case Nerd_Stats_Type.HEX
