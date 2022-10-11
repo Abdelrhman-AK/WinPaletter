@@ -4,16 +4,21 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Idea.png?raw=true) Ideas & Plans
 
-| Plan                                                   | Status                                       |
-| ------------------------------------------------------ | -------------------------------------------- |
-| Windows Metrics                                        | :yellow_square:                              |
-| Mini-Store for themes                                  | :yellow_square:                              |
-|                                                        |                                              |
-| Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)    |
-| Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)    |
-| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Beta: 1.0.5.9 (Done), Stable: 1.0.6.0 (Coming Soon)|
+| Plan                                                   | Status                                                                 |
+| ------------------------------------------------------ | ---------------------------------------------------------------------- |
+| Windows Metrics                                        | :yellow_square:                                                        |
+| Mini-Store for themes                                  | :yellow_square:                                                        |
+|                                                        |                                                                        |
+| Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
+| Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
+| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Beta: 1.0.5.9 (Done), Stable: 1.0.6.0 (Coming Soon) |
 
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
+
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
+
+- [You will find the uploaded languages here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
+- [Visit this page to know how to contribute in translation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 
@@ -38,7 +43,6 @@
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal0.png?raw=true)
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal1.png?raw=true)
-
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) You can colorize the classic apps accents (Like what we did in the 90s and 2000s :))
 
