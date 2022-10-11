@@ -48,6 +48,8 @@ Namespace My
         Public FontsList As New List(Of String)
         Public FontsFixedList As New List(Of String)
 
+        Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+
         Enum MenuEvent
             None
             Copy

@@ -1,12 +1,8 @@
-# Note
+# Get Languages
 
-This contribution (through Telegram) is only temporary, when Translation becomes more stable, We will shift to GitHub only (i.e. we won't need Telegram anymore)
+Visit this folder in WinPaletter GitHub Repository and download the language you want:
 
-# Get Translations
 
-https://t.me/WinPaletter
-
-People contributing in translations will upload files to this channel temporarily
 
 Download Translation > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings > Restart the application for better results
 

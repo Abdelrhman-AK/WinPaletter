@@ -577,7 +577,7 @@ Public Class XenonToggle
         RaiseEvent CheckedChanged(Me, EventArgs.Empty)
         If Not DesignMode Then
             If Checked Then
-                If Not DesignMode Then
+                If Not DesignMode And _Shown Then
                     Dim s As Integer = (Width - 19) * 0.5
                     For i As Integer = CheckC.Left To Width - 19 Step +5
                         CheckC.X = i + s
@@ -592,7 +592,7 @@ Public Class XenonToggle
                 End If
                 CheckC.X = Width - 19
             Else
-                If Not DesignMode Then
+                If Not DesignMode And _Shown Then
                     Dim s As Integer = 10
                     For i As Integer = CheckC.Left To 5 Step -5
                         CheckC.X = i - s

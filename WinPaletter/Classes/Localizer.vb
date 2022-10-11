@@ -39,7 +39,6 @@ Public Class Localizer
     Property CP_11_Taskbar As String = "Taskbar Color"
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"
     Property CP_11_SomePressedButtons As String = "Some Pressed Buttons"
-
     Property CP_10_ACLinks As String = "Action Center Links"
     Property CP_10_TaskbarAppUnderline As String = "Taskbar App Underline"
     Property CP_10_StartMenuIconHover As String = "Start Menu Icon Hover"
@@ -52,10 +51,9 @@ Public Class Localizer
     Property CP_10_Taskbar As String = "Taskbar Color"
     Property CP_10_Taskbar_ACLinks As String = "Taskbar Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
-
-
     Property CP_Undefined As String = "Undefined"
 
+    Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
     Property X17 As String = "To colorize active titlebar, please activate the toggle"
     Property X18 As String = "To colorize inactive titlebar, please activate the toggle"
     Property X19 As String = "To colorize taskbar, please activate the toggle"

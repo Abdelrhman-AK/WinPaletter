@@ -5,7 +5,6 @@ Imports WinPaletter.XenonCore
 Public Class CP
 
 #Region "Properties"
-    ReadOnly isElevated As Boolean = New System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator)
 
 #Region "General Info"
     Public Property AppVersion As String = My.Application.Info.Version.ToString
@@ -71,7 +70,7 @@ Public Class CP
     Public Property Metro_PersonalColors_Background As Color = Color.FromArgb(30, 0, 84)
     Public Property Metro_PersonalColors_Accent As Color = Color.FromArgb(72, 29, 178)
     Public Property Metro_NoLockScreen As Boolean = False
-    Public Property Metro_LockScreenType As LogonUI8_Modes = LogonUI8_Modes.System
+    Public Property Metro_LockScreenType As LogonUI_Modes = LogonUI_Modes.Default_
     Public Property Metro_LockScreenSystemID As Integer = 0
 #End Region
 
@@ -83,7 +82,7 @@ Public Class CP
 
 #Region "LogonUI_Win7"
     Public Property LogonUI7_Enabled As Boolean = False
-    Public Property LogonUI7_Mode As LogonUI7_Modes = LogonUI7_Modes.Default_
+    Public Property LogonUI7_Mode As LogonUI_Modes = LogonUI_Modes.Default_
     Public Property LogonUI7_ImagePath As String = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
     Public Property LogonUI7_Color As Color = Color.Black
     Public Property LogonUI7_Effect_Blur As Boolean = False
@@ -521,18 +520,13 @@ Public Class CP
 #End Region
 #End Region
 
-    Enum LogonUI7_Modes
+    Enum LogonUI_Modes
         Default_
         Wallpaper
         CustomImage
         SolidColor
     End Enum
-    Enum LogonUI8_Modes
-        System
-        Wallpaper
-        CustomImage
-        SolidColor
-    End Enum
+
     Enum LogonUI7_NoiseMode
         Aero
         Acrylic
@@ -1101,7 +1095,7 @@ Public Class CP
 
                     Registry.CurrentUser.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
                         Registry.LocalMachine.CreateSubKey("SOFTWARE\Policies\Microsoft\Windows\Personalization")
                         Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
                     Else
@@ -1233,9 +1227,9 @@ Public Class CP
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
                     Try
-                        LogonUI7_Mode = rLog.GetValue("Mode", LogonUI7_Modes.Default_)
+                        LogonUI7_Mode = rLog.GetValue("Mode", LogonUI_Modes.Default_)
                     Catch
-                        LogonUI7_Mode = LogonUI7_Modes.Default_
+                        LogonUI7_Mode = LogonUI_Modes.Default_
                     End Try
 
                     Try
@@ -1308,9 +1302,9 @@ Public Class CP
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
                     Try
-                        Metro_LockScreenType = rLog.GetValue("Mode", LogonUI8_Modes.System)
+                        Metro_LockScreenType = rLog.GetValue("Mode", LogonUI_Modes.Default_)
                     Catch
-                        Metro_LockScreenType = LogonUI8_Modes.System
+                        Metro_LockScreenType = LogonUI_Modes.Default_
                     End Try
 
                     Try
@@ -3284,7 +3278,7 @@ Public Class CP
                 Metro_PersonalColors_Background = Color.Black
                 Metro_PersonalColors_Accent = Color.Black
                 Metro_NoLockScreen = False
-                Metro_LockScreenType = LogonUI8_Modes.System
+                Metro_LockScreenType = LogonUI_Modes.Default_
                 Metro_LockScreenSystemID = 0
 #End Region
 
@@ -3296,7 +3290,7 @@ Public Class CP
 
 #Region "LogonUI 7"
                 LogonUI7_Enabled = False
-                LogonUI7_Mode = LogonUI7_Modes.Default_
+                LogonUI7_Mode = LogonUI_Modes.Default_
                 LogonUI7_ImagePath = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
                 LogonUI7_Color = Color.Black
                 LogonUI7_Effect_Blur = False
@@ -3878,7 +3872,7 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
 
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Metro_Start)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False), False, True)
@@ -3928,7 +3922,7 @@ Public Class CP
 #Region "LogonUI"
                 If Not My.W7 And Not My.W8 Then
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
                         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
@@ -3980,7 +3974,7 @@ Public Class CP
                 If My.W7 Then
                     SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
 
                         My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
                         My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
@@ -4029,16 +4023,16 @@ Public Class CP
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
                     Select Case LogonUI7_Mode
-                        Case LogonUI7_Modes.Default_
+                        Case LogonUI_Modes.Default_
                             rLog.SetValue("Mode", 0)
 
-                        Case LogonUI7_Modes.Wallpaper
+                        Case LogonUI_Modes.Wallpaper
                             rLog.SetValue("Mode", 1)
 
-                        Case LogonUI7_Modes.CustomImage
+                        Case LogonUI_Modes.CustomImage
                             rLog.SetValue("Mode", 2)
 
-                        Case LogonUI7_Modes.SolidColor
+                        Case LogonUI_Modes.SolidColor
                             rLog.SetValue("Mode", 3)
                     End Select
 
@@ -4077,13 +4071,13 @@ Public Class CP
                         bmpList.Clear()
 
                         Select Case LogonUI7_Mode
-                            Case LogonUI7_Modes.Default_
+                            Case LogonUI_Modes.Default_
 
                                 For i As Integer = 5031 To 5043 Step +1
                                     bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                                 Next
 
-                            Case LogonUI7_Modes.CustomImage
+                            Case LogonUI_Modes.CustomImage
 
                                 If IO.File.Exists(LogonUI7_ImagePath) Then
                                     bmpList.Add(Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
@@ -4091,10 +4085,10 @@ Public Class CP
                                     bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
                                 End If
 
-                            Case LogonUI7_Modes.SolidColor
+                            Case LogonUI_Modes.SolidColor
                                 bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
 
-                            Case LogonUI7_Modes.Wallpaper
+                            Case LogonUI_Modes.Wallpaper
                                 bmpList.Add(My.Application.GetCurrentWallpaper)
                         End Select
 
@@ -4124,7 +4118,7 @@ Public Class CP
 
                     Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
                         My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\Personalization")
                         My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Metro_NoLockScreen, 1, 0))
                         My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg)
@@ -4168,16 +4162,16 @@ Public Class CP
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
                     Select Case Metro_LockScreenType
-                        Case LogonUI8_Modes.System
+                        Case LogonUI_Modes.Default_
                             rLog.SetValue("Mode", 0)
 
-                        Case LogonUI8_Modes.Wallpaper
+                        Case LogonUI_Modes.Wallpaper
                             rLog.SetValue("Mode", 1)
 
-                        Case LogonUI8_Modes.CustomImage
+                        Case LogonUI_Modes.CustomImage
                             rLog.SetValue("Mode", 2)
 
-                        Case LogonUI8_Modes.SolidColor
+                        Case LogonUI_Modes.SolidColor
                             rLog.SetValue("Mode", 3)
                     End Select
 
@@ -4208,7 +4202,7 @@ Public Class CP
 
                         Select Case Metro_LockScreenType
 
-                            Case LogonUI8_Modes.System
+                            Case LogonUI_Modes.Default_
                                 Dim syslock As String
                                 If Not MainFrm.CP.Metro_LockScreenSystemID = 1 And Not MainFrm.CP.Metro_LockScreenSystemID = 3 Then
                                     syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", MainFrm.CP.Metro_LockScreenSystemID)
@@ -4222,7 +4216,7 @@ Public Class CP
                                     bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
                                 End If
 
-                            Case LogonUI7_Modes.CustomImage
+                            Case LogonUI_Modes.CustomImage
 
                                 If IO.File.Exists(LogonUI7_ImagePath) Then
                                     bmp = Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
@@ -4230,10 +4224,10 @@ Public Class CP
                                     bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
                                 End If
 
-                            Case LogonUI7_Modes.SolidColor
+                            Case LogonUI_Modes.SolidColor
                                 bmp = ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size)
 
-                            Case LogonUI7_Modes.Wallpaper
+                            Case LogonUI_Modes.Wallpaper
                                 bmp = My.Application.GetCurrentWallpaper
                         End Select
 
@@ -4445,7 +4439,7 @@ Public Class CP
                     End If
 
 
-                    If isElevated Then
+                    If My.Application.isElevated Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
                     Else
                         Dim ls As New List(Of String)
@@ -4527,7 +4521,7 @@ Public Class CP
                             EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_32_1909_TerminalScrolling, 1, 0))
                         End If
 
-                        If isElevated Then
+                        If My.Application.isElevated Then
                             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_32_FaceName, False, True)
                         Else
                             Dim ls As New List(Of String)
@@ -4613,7 +4607,7 @@ Public Class CP
                         End If
 
 
-                        If isElevated Then
+                        If My.Application.isElevated Then
                             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_64_FaceName, False, True)
                         Else
                             Dim ls As New List(Of String)
@@ -6072,334 +6066,3 @@ Public Class CP
     End Function
 End Class
 
-Public Class CP_Defaults
-
-    Public Default_Windows11 As New CP(CP.Mode.Init) With {
-        .AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 11 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com",
-        .WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .ActionCenter_AppsLinks = Color.FromArgb(153, 235, 255), .Taskbar_Icon_Underline = Color.FromArgb(76, 194, 255), .StartButton_Hover = Color.FromArgb(0, 145, 248),
-        .SettingsIconsAndLinks = Color.FromArgb(0, 120, 212), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 103, 192), .StartListFolders_TaskbarFront = Color.FromArgb(0, 62, 146),
-        .Taskbar_Background = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192), .UWP_Undefined = Color.Black,
-        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
-        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
-        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
-        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
-        .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
-        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 17 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 17 * 65536
-       }
-
-    Public Default_Windows10 As New CP(CP.Mode.Init) With {
-        .AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 10 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com",
-        .WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .ActionCenter_AppsLinks = Color.FromArgb(166, 216, 255), .Taskbar_Icon_Underline = Color.FromArgb(118, 185, 237), .StartButton_Hover = Color.FromArgb(66, 156, 227),
-        .SettingsIconsAndLinks = Color.FromArgb(0, 120, 215), .StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(0, 90, 158), .StartListFolders_TaskbarFront = Color.FromArgb(0, 66, 117),
-        .Taskbar_Background = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158), .UWP_Undefined = Color.Black,
-        .LogonUI_DisableAcrylicBackgroundOnLogon = False, .LogonUI_DisableLogonBackgroundImage = False, .LogonUI_NoLockScreen = False,
-        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
-        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
-        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .CMD_FontRaster = False, .PS_32_FontRaster = False, .PS_64_FontRaster = False,
-        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
-        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
-       }
-
-    Public Default_Windows8 As New CP(CP.Mode.Init) With {
-        .AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 8.1 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com",
-        .Aero_ColorizationColor = Color.FromArgb(246, 195, 74),
-        .Aero_ColorizationAfterglow = Color.FromArgb(0, 0, 0),
-        .Aero_ColorizationColorBalance = 78,
-        .Aero_ColorizationAfterglowBalance = 31,
-        .Aero_ColorizationBlurBalance = 31,
-        .Aero_ColorizationGlassReflectionIntensity = 0,
-        .Aero_EnableAeroPeek = True,
-        .Aero_AlwaysHibernateThumbnails = False,
-        .Metro_PersonalColors_Background = Color.FromArgb(30, 0, 84),
-        .Metro_PersonalColors_Accent = Color.FromArgb(72, 29, 178),
-        .Metro_StartColor = Color.FromArgb(30, 0, 84),
-        .Metro_AccentColor = Color.FromArgb(72, 29, 178),
-        .Metro_Start = 0,
-        .Metro_Theme = CP.AeroTheme.Aero,
-        .Metro_LogonUI = 0,
-        .Metro_NoLockScreen = False,
-        .Metro_LockScreenType = CP.LogonUI8_Modes.System,
-        .Metro_LockScreenSystemID = 0,
-        .LogonUI7_Enabled = False,
-        .LogonUI7_ImagePath = "",
-        .LogonUI7_Color = Color.FromArgb(0, 0, 0),
-        .LogonUI7_Effect_Blur = False,
-        .LogonUI7_Effect_Blur_Intensity = 0,
-        .LogonUI7_Effect_Grayscale = False,
-        .LogonUI7_Effect_Noise = False,
-        .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
-        .LogonUI7_Effect_Noise_Intensity = 0,
-        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
-        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
-        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
-        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
-        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
-       }
-
-    Public Default_Windows7 As New CP(CP.Mode.Init) With {
-        .AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 7 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com",
-        .Aero_ColorizationColor = Color.FromArgb(116, 184, 252),
-        .Aero_ColorizationAfterglow = Color.FromArgb(116, 184, 252),
-        .Aero_ColorizationColorBalance = 8,
-        .Aero_ColorizationAfterglowBalance = 43,
-        .Aero_ColorizationBlurBalance = 49,
-        .Aero_ColorizationGlassReflectionIntensity = 0,
-        .Aero_EnableAeroPeek = True,
-        .Aero_AlwaysHibernateThumbnails = False,
-        .Aero_Theme = CP.AeroTheme.Aero,
-        .LogonUI7_Enabled = False,
-        .LogonUI7_Mode = CP.LogonUI7_Modes.Default_,
-        .LogonUI7_ImagePath = "",
-        .LogonUI7_Color = Color.FromArgb(0, 0, 0),
-        .LogonUI7_Effect_Blur = False,
-        .LogonUI7_Effect_Blur_Intensity = 0,
-        .LogonUI7_Effect_Grayscale = False,
-        .LogonUI7_Effect_Noise = False,
-        .LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic,
-        .LogonUI7_Effect_Noise_Intensity = 0,
-        .CMD_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .CMD_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .CMD_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .CMD_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .CMD_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .CMD_ColorTable05 = Color.FromArgb(136, 23, 152),
-        .CMD_ColorTable06 = Color.FromArgb(193, 156, 0),
-        .CMD_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .CMD_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .CMD_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .CMD_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .CMD_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .CMD_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .CMD_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .CMD_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .CMD_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_32_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_32_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_32_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_32_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_32_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_32_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_32_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_32_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_32_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_32_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_32_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_32_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_32_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_32_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_32_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_32_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PS_64_ColorTable00 = Color.FromArgb(12, 12, 12),
-        .PS_64_ColorTable01 = Color.FromArgb(0, 55, 218),
-        .PS_64_ColorTable02 = Color.FromArgb(19, 161, 14),
-        .PS_64_ColorTable03 = Color.FromArgb(58, 150, 221),
-        .PS_64_ColorTable04 = Color.FromArgb(197, 15, 31),
-        .PS_64_ColorTable05 = Color.FromArgb(1, 36, 86),
-        .PS_64_ColorTable06 = Color.FromArgb(238, 237, 240),
-        .PS_64_ColorTable07 = Color.FromArgb(204, 204, 204),
-        .PS_64_ColorTable08 = Color.FromArgb(118, 118, 118),
-        .PS_64_ColorTable09 = Color.FromArgb(59, 120, 255),
-        .PS_64_ColorTable10 = Color.FromArgb(22, 198, 12),
-        .PS_64_ColorTable11 = Color.FromArgb(97, 214, 214),
-        .PS_64_ColorTable12 = Color.FromArgb(231, 72, 86),
-        .PS_64_ColorTable13 = Color.FromArgb(180, 0, 158),
-        .PS_64_ColorTable14 = Color.FromArgb(249, 241, 165),
-        .PS_64_ColorTable15 = Color.FromArgb(242, 242, 242),
-        .CMD_FontRaster = True, .PS_32_FontRaster = True, .PS_64_FontRaster = True,
-        .CMD_1909_WindowAlpha = 255, .PS_32_1909_WindowAlpha = 255, .PS_64_1909_WindowAlpha = 255,
-        .CMD_PopupBackground = 15, .CMD_PopupForeground = 5, .CMD_ScreenColorsForeground = 7, .CMD_ScreenColorsBackground = 0,
-        .PS_32_PopupBackground = 15, .PS_32_PopupForeground = 3, .PS_32_ScreenColorsForeground = 6, .PS_32_ScreenColorsBackground = 5,
-        .PS_64_PopupBackground = 15, .PS_64_PopupForeground = 3, .PS_64_ScreenColorsForeground = 6, .PS_64_ScreenColorsBackground = 5,
-        .CMD_FaceName = "Consolas", .CMD_FontSize = 18 * 65536, .PS_32_FaceName = "Consolas", .PS_32_FontSize = 14 * 65536, .PS_64_FaceName = "Consolas", .PS_64_FontSize = 14 * 65536
-       }
-
-    Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.ActionCenter_AppsLinks.R, Default_Windows11.ActionCenter_AppsLinks.G, Default_Windows11.ActionCenter_AppsLinks.B, 255,
-                                                    Default_Windows11.Taskbar_Icon_Underline.R, Default_Windows11.Taskbar_Icon_Underline.G, Default_Windows11.Taskbar_Icon_Underline.B, 255,
-                                                    Default_Windows11.StartButton_Hover.R, Default_Windows11.StartButton_Hover.G, Default_Windows11.StartButton_Hover.B, 255,
-                                                    Default_Windows11.SettingsIconsAndLinks.R, Default_Windows11.SettingsIconsAndLinks.G, Default_Windows11.SettingsIconsAndLinks.B, 255,
-                                                    Default_Windows11.StartMenuBackground_ActiveTaskbarButton.R, Default_Windows11.StartMenuBackground_ActiveTaskbarButton.G, Default_Windows11.StartMenuBackground_ActiveTaskbarButton.B, 255,
-                                                    Default_Windows11.StartListFolders_TaskbarFront.R, Default_Windows11.StartListFolders_TaskbarFront.G, Default_Windows11.StartListFolders_TaskbarFront.B, 255,
-                                                    Default_Windows11.Taskbar_Background.R, Default_Windows11.Taskbar_Background.G, Default_Windows11.Taskbar_Background.B, 255,
-                                                    0, 0, 0, 255}
-
-    Public Default_Windows10Accents_Bytes As Byte() = {Default_Windows10.ActionCenter_AppsLinks.R, Default_Windows10.ActionCenter_AppsLinks.G, Default_Windows10.ActionCenter_AppsLinks.B, 255,
-                                                    Default_Windows10.Taskbar_Icon_Underline.R, Default_Windows10.Taskbar_Icon_Underline.G, Default_Windows10.Taskbar_Icon_Underline.B, 255,
-                                                    Default_Windows10.StartButton_Hover.R, Default_Windows10.StartButton_Hover.G, Default_Windows10.StartButton_Hover.B, 255,
-                                                    Default_Windows10.SettingsIconsAndLinks.R, Default_Windows10.SettingsIconsAndLinks.G, Default_Windows10.SettingsIconsAndLinks.B, 255,
-                                                    Default_Windows10.StartMenuBackground_ActiveTaskbarButton.R, Default_Windows10.StartMenuBackground_ActiveTaskbarButton.G, Default_Windows10.StartMenuBackground_ActiveTaskbarButton.B, 255,
-                                                    Default_Windows10.StartListFolders_TaskbarFront.R, Default_Windows10.StartListFolders_TaskbarFront.G, Default_Windows10.StartListFolders_TaskbarFront.B, 255,
-                                                    Default_Windows10.Taskbar_Background.R, Default_Windows10.Taskbar_Background.G, Default_Windows10.Taskbar_Background.B, 255,
-                                                    0, 0, 0, 255}
-
-End Class

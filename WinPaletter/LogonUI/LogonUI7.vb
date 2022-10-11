@@ -37,16 +37,16 @@ Public Class LogonUI7
             XenonToggle1.Checked = Not CP.Metro_NoLockScreen
 
             Select Case CP.Metro_LockScreenType
-                Case CP.LogonUI8_Modes.System
+                Case CP.LogonUI_Modes.Default_
                     XenonRadioButton1.Checked = True
 
-                Case CP.LogonUI8_Modes.Wallpaper
+                Case CP.LogonUI_Modes.Wallpaper
                     XenonRadioButton2.Checked = True
 
-                Case CP.LogonUI8_Modes.CustomImage
+                Case CP.LogonUI_Modes.CustomImage
                     XenonRadioButton4.Checked = True
 
-                Case CP.LogonUI8_Modes.SolidColor
+                Case CP.LogonUI_Modes.SolidColor
                     XenonRadioButton3.Checked = True
             End Select
 
@@ -55,16 +55,16 @@ Public Class LogonUI7
             XenonToggle1.Checked = CP.LogonUI7_Enabled
 
             Select Case CP.LogonUI7_Mode
-                Case CP.LogonUI7_Modes.Default_
+                Case CP.LogonUI_Modes.Default_
                     XenonRadioButton1.Checked = True
 
-                Case CP.LogonUI7_Modes.Wallpaper
+                Case CP.LogonUI_Modes.Wallpaper
                     XenonRadioButton2.Checked = True
 
-                Case CP.LogonUI7_Modes.CustomImage
+                Case CP.LogonUI_Modes.CustomImage
                     XenonRadioButton4.Checked = True
 
-                Case CP.LogonUI7_Modes.SolidColor
+                Case CP.LogonUI_Modes.SolidColor
                     XenonRadioButton3.Checked = True
             End Select
         End If
@@ -94,19 +94,19 @@ Public Class LogonUI7
         If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
             CP.Metro_NoLockScreen = Not XenonToggle1.Checked
 
-            If XenonRadioButton1.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.System
-            If XenonRadioButton2.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.Wallpaper
-            If XenonRadioButton3.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.SolidColor
-            If XenonRadioButton4.Checked Then CP.Metro_LockScreenType = CP.LogonUI8_Modes.CustomImage
+            If XenonRadioButton1.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.Default_
+            If XenonRadioButton2.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.CustomImage
 
             CP.Metro_LockScreenSystemID = ID
         Else
             CP.LogonUI7_Enabled = XenonToggle1.Checked
 
-            If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Default_
-            If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.Wallpaper
-            If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.SolidColor
-            If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI7_Modes.CustomImage
+            If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.Default_
+            If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.CustomImage
         End If
 
 

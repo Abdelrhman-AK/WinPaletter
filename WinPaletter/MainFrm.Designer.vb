@@ -76,6 +76,7 @@ Partial Class MainFrm
         Me.SettingsIconsAndLinks_picker = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.Accent_Taskbar = New WinPaletter.XenonRadioImage()
         Me.Accent_StartTaskbar = New WinPaletter.XenonRadioImage()
         Me.Accent_None = New WinPaletter.XenonRadioImage()
@@ -1110,6 +1111,7 @@ Partial Class MainFrm
         Me.XenonGroupBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonGroupBox6.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox6.Controls.Add(Me.Accent_Taskbar)
         Me.XenonGroupBox6.Controls.Add(Me.Accent_StartTaskbar)
         Me.XenonGroupBox6.Controls.Add(Me.Accent_None)
@@ -1126,6 +1128,22 @@ Partial Class MainFrm
         Me.XenonGroupBox6.Size = New System.Drawing.Size(524, 29)
         Me.XenonGroupBox6.TabIndex = 16
         Me.XenonGroupBox6.Text = "XenonGroupBox6"
+        '
+        'XenonButton25
+        '
+        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(52, Byte), Integer))
+        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton25.ForeColor = System.Drawing.Color.White
+        Me.XenonButton25.Image = Nothing
+        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton25.LineSize = 1
+        Me.XenonButton25.Location = New System.Drawing.Point(164, 3)
+        Me.XenonButton25.Name = "XenonButton25"
+        Me.XenonButton25.Size = New System.Drawing.Size(20, 23)
+        Me.XenonButton25.TabIndex = 28
+        Me.XenonButton25.Text = "?"
+        Me.XenonButton25.UseVisualStyleBackColor = False
         '
         'Accent_Taskbar
         '
@@ -1414,7 +1432,7 @@ Partial Class MainFrm
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = Nothing
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
@@ -1433,7 +1451,7 @@ Partial Class MainFrm
         Me.ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Checked = False
         Me.ShowAccentOnTitlebarAndBorders_Toggle.DarkLight_Toggler = False
-        Me.ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(474, 9)
+        Me.ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(476, 9)
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Name = "ShowAccentOnTitlebarAndBorders_Toggle"
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.ShowAccentOnTitlebarAndBorders_Toggle.TabIndex = 6
@@ -3635,7 +3653,7 @@ Partial Class MainFrm
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.MinimumSize = New System.Drawing.Size(1060, 720)
+        Me.MinimumSize = New System.Drawing.Size(1075, 720)
         Me.Name = "MainFrm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter"
@@ -3941,4 +3959,5 @@ Partial Class MainFrm
     Friend WithEvents Label12 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label34 As Label
+    Friend WithEvents XenonButton25 As XenonButton
 End Class

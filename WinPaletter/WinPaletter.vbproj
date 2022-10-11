@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Classes\CP.vb" />
+    <Compile Include="Classes\CP_Defaults.vb" />
     <Compile Include="Classes\Localizer.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />

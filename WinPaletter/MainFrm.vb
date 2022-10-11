@@ -1089,8 +1089,6 @@ Public Class MainFrm
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
 
-        pnl_preview.Visible = False
-
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
 
@@ -1165,7 +1163,6 @@ Public Class MainFrm
         ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
 
-        pnl_preview.Visible = True
 
     End Sub
 
@@ -2650,6 +2647,10 @@ Public Class MainFrm
 
     Private Sub MainFrm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         pnl_preview.Visible = True
+    End Sub
+
+    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
 
 #Region "Notifications Base"

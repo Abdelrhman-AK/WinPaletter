@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
+Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
 Public Class dragPreviewer
@@ -52,7 +53,7 @@ Public Class dragPreviewer
             XenonWindow1.DarkMode = Not [CP].AppMode_Light
             XenonWindow2.DarkMode = Not [CP].AppMode_Light
 
-            lbl_uwp.ForeColor = If([CP].AppMode_Light, Color.Black, Color.White)
+            Label8.ForeColor = If([CP].AppMode_Light, Color.Black, Color.White)
 
         Else
             XenonWindow1.Active = True
@@ -78,115 +79,260 @@ Public Class dragPreviewer
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        If [CP].ApplyAccentonTaskbar Then
-                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront)
-                            start.BackColor = Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront)
-                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront)
-                        Else
-                            taskbar.BackColor = Color.FromArgb(55, 55, 55)
-                            start.BackColor = Color.FromArgb(40, 40, 40)
-                            ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
-                        End If
+                        Select Case [CP].ApplyAccentonTaskbar
+                            Case ApplyAccentonTaskbar_Level.None
+                                taskbar.BackColor = Color.FromArgb(55, 55, 55)
+                                start.BackColor = Color.FromArgb(40, 40, 40)
+                                ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
 
-                        ActionCenter.ActionCenterButton_Normal = [CP].Taskbar_Icon_Underline
-                        ActionCenter.ActionCenterButton_Hover = [CP].ActionCenter_AppsLinks
-                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
-                        start.SearchBoxAccent = [CP].Taskbar_Icon_Underline
-                        taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
-                        Labelx3x.ForeColor = [CP].SettingsIconsAndLinks
-                        lblx_linkx.ForeColor = [CP].ActionCenter_AppsLinks
+                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront)
+                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront)
+                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront)
+
+                            Case ApplyAccentonTaskbar_Level.Taskbar
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront)
+                                start.BackColor = Color.FromArgb(40, 40, 40)
+                                ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
+
+                        End Select
+
+
+                        ActionCenter.ActionCenterButton_Normal=  [CP].Taskbar_Icon_Underline
+                        ActionCenter.ActionCenterButton_Hover=  [CP].ActionCenter_AppsLinks
+                       ActionCenter.ActionCenterButton_Pressed=  [CP].StartButton_Hover
+                      start.SearchBoxAccent=  [CP].Taskbar_Icon_Underline
+                      taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
+
+                         setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                       lnk_preview.ForeColor=  [CP].ActionCenter_AppsLinks
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        If [CP].ApplyAccentonTaskbar Then
-                            taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline)
-                            start.BackColor = Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks)
-                            ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks)
-                        Else
-                            taskbar.BackColor = Color.FromArgb(255, 255, 255)
-                            start.BackColor = Color.FromArgb(255, 255, 255)
-                            ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
-                        End If
+                        Select Case [CP].ApplyAccentonTaskbar
+                            Case ApplyAccentonTaskbar_Level.None
+                                taskbar.BackColor = Color.FromArgb(255, 255, 255)
+                                start.BackColor = Color.FromArgb(255, 255, 255)
+                                ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
 
-                        ActionCenter.ActionCenterButton_Normal = [CP].StartMenuBackground_ActiveTaskbarButton
-                        ActionCenter.ActionCenterButton_Hover = [CP].StartListFolders_TaskbarFront
-                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
-                        start.SearchBoxAccent = [CP].StartMenuBackground_ActiveTaskbarButton
-                        taskbar.AppUnderline = [CP].StartMenuBackground_ActiveTaskbarButton
-                        Labelx3x.ForeColor = [CP].SettingsIconsAndLinks
-                        lblx_linkx.ForeColor = [CP].StartListFolders_TaskbarFront
+                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline)
+                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks)
+                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks)
 
+                            Case ApplyAccentonTaskbar_Level.Taskbar
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline)
+                                start.BackColor = Color.FromArgb(255, 255, 255)
+                                ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
+
+                        End Select
+
+
+                        ActionCenter.ActionCenterButton_Normal=  [CP].StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.ActionCenterButton_Hover=  [CP].StartListFolders_TaskbarFront
+                       ActionCenter.ActionCenterButton_Pressed=  [CP].StartButton_Hover
+                      start.SearchBoxAccent=  [CP].StartMenuBackground_ActiveTaskbarButton
+                      taskbar.AppUnderline=  [CP].StartMenuBackground_ActiveTaskbarButton
+
+                         setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                       lnk_preview.ForeColor=  [CP].StartListFolders_TaskbarFront
                 End Select
+
+                ReValidateLivePreview(pnl_preview)
 #End Region
             Case MainFrm.WinVer.Ten
 #Region "Win10"
+
                 start.DarkMode = Not [CP].WinMode_Light
                 taskbar.DarkMode = Not [CP].WinMode_Light
                 ActionCenter.DarkMode = Not [CP].WinMode_Light
-
                 taskbar.Transparency = [CP].Transparency
                 start.Transparency = [CP].Transparency
                 ActionCenter.Transparency = [CP].Transparency
-
                 start.Top = taskbar.Top - start.Height
 
-                taskbar.AppUnderline = ControlPaint.Light(Color.FromArgb(255, [CP].Taskbar_Icon_Underline))
-
                 If [CP].Transparency Then
-                    taskbar.BackColorAlpha = 150
-                    start.BackColorAlpha = 150
-                    ActionCenter.BackColorAlpha = 150
+                    If Not [CP].WinMode_Light Then
+                        taskbar.BackColorAlpha = 150
+                        start.BackColorAlpha = 150
+                        ActionCenter.BackColorAlpha = 150
+                    Else
+                        taskbar.BackColorAlpha = 200
+                        start.BackColorAlpha = 200
+                        ActionCenter.BackColorAlpha = 200
+                    End If
                 Else
                     taskbar.BackColorAlpha = 255
                     start.BackColorAlpha = 255
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
-                    taskbar.BackColor = Color.FromArgb(237, 237, 237)
-                    start.BackColor = Color.FromArgb(227, 227, 227)
-                    ActionCenter.BackColor = Color.FromArgb(227, 227, 227)
-                    taskbar.StartColor = Color.Transparent
-                Else
-                    If Not [CP].ApplyAccentonTaskbar Then
-                        taskbar.BackColor = Color.FromArgb(23, 23, 23)
-                        start.BackColor = Color.FromArgb(36, 36, 36)
-                        ActionCenter.BackColor = Color.FromArgb(36, 36, 36)
-                        taskbar.StartColor = Color.Transparent
-                    Else
-                        start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
-                        taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
-                        ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                Select Case Not [CP].WinMode_Light
+                    Case True
 
                         If [CP].Transparency Then
-                            taskbar.BackColor = [CP].Taskbar_Background
+                            Select Case [CP].ApplyAccentonTaskbar
+                                Case ApplyAccentonTaskbar_Level.None
+                                    taskbar.BackColor = Color.FromArgb(16, 16, 16)
+                                    taskbar.StartColor = Color.FromArgb(150, 150, 150, 150)
+                                    start.BackColor = Color.FromArgb(31, 31, 31)
+                                    ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
+
+                                    taskbar.AppBackground = Color.FromArgb(150, 150, 150, 150)
+                                    ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                    taskbar.BackColor = [CP].Taskbar_Background
+                                    taskbar.StartColor = Color.FromArgb(0, 0, 0, 0)
+                                    start.BackColor = Color.FromArgb(31, 31, 31)
+                                    ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
+
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].SettingsIconsAndLinks)
+                                    ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                    taskbar.BackColor = [CP].Taskbar_Background
+                                    taskbar.StartColor = Color.FromArgb(0, 0, 0, 0)
+                                    start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].SettingsIconsAndLinks)
+                                    ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                            End Select
+
                         Else
-                            taskbar.BackColor = [CP].StartListFolders_TaskbarFront
+                            Select Case [CP].ApplyAccentonTaskbar
+                                Case ApplyAccentonTaskbar_Level.None
+                                    taskbar.BackColor = Color.FromArgb(16, 16, 16)
+                                    taskbar.StartColor = Color.FromArgb(31, 31, 31)
+                                    start.BackColor = Color.FromArgb(31, 31, 31)
+                                    ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                    taskbar.BackColor = [CP].StartListFolders_TaskbarFront
+                                    taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    start.BackColor = Color.FromArgb(31, 31, 31)
+                                    ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                    taskbar.BackColor = [CP].StartListFolders_TaskbarFront
+                                    taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                            End Select
+
+                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                                taskbar.AppBackground = Color.FromArgb(150, 100, 100, 100)
+                            Else
+                                taskbar.AppBackground = [CP].StartMenuBackground_ActiveTaskbarButton
+                            End If
+
+                            ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                            taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                            setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                            lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
                         End If
 
-                    End If
-                End If
+                    Case False
+                        If [CP].Transparency Then
 
-                If [CP].WinMode_Light And Not [CP].ApplyAccentonTaskbar Then
-                    Labelx3x.ForeColor = [CP].SettingsIconsAndLinks
-                    lblx_linkx.ForeColor = [CP].Taskbar_Background
-                    ActionCenter.LinkColor = [CP].Taskbar_Background
-                    taskbar.AppBackground = Color.Transparent
-                Else
-                    Labelx3x.ForeColor = [CP].SettingsIconsAndLinks
-                    lblx_linkx.ForeColor = [CP].ActionCenter_AppsLinks
-                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
-                    ActionCenter.LinkColor = [CP].Taskbar_Icon_Underline
+                            Select Case [CP].ApplyAccentonTaskbar
+                                Case ApplyAccentonTaskbar_Level.None
+                                    taskbar.BackColor = Color.FromArgb(238, 238, 238)
+                                    taskbar.StartColor = Color.Transparent
+                                    start.BackColor = Color.FromArgb(228, 228, 228)
+                                    ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
-                    If Not [CP].Transparency And Not [CP].ApplyAccentonTaskbar Then
-                        taskbar.AppBackground = Color.Transparent
-                    Else
-                        taskbar.AppBackground = [CP].StartMenuBackground_ActiveTaskbarButton
-                    End If
-                End If
+                                    taskbar.AppBackground = Color.FromArgb(150, 238, 238, 238)
+                                    ActionCenter.LinkColor = [CP].Taskbar_Background
+                                    taskbar.AppUnderline = [CP].SettingsIconsAndLinks
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                    taskbar.BackColor = [CP].Taskbar_Background
+                                    taskbar.StartColor = Color.Transparent
+                                    start.BackColor = Color.FromArgb(228, 228, 228)
+                                    ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
+
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].SettingsIconsAndLinks)
+                                    ActionCenter.LinkColor = [CP].Taskbar_Background
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                    taskbar.BackColor = [CP].Taskbar_Background
+                                    taskbar.StartColor = Color.Transparent
+                                    start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].SettingsIconsAndLinks)
+                                    ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+
+                            End Select
+
+                        Else
+
+                            Select Case [CP].ApplyAccentonTaskbar
+                                Case ApplyAccentonTaskbar_Level.None
+                                    taskbar.BackColor = Color.FromArgb(238, 238, 238)
+                                    taskbar.StartColor = Color.FromArgb(241, 241, 241)
+                                    start.BackColor = Color.FromArgb(228, 228, 228)
+                                    ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
+
+                                    taskbar.AppBackground = Color.FromArgb(252, 252, 252)
+                                    ActionCenter.LinkColor=  [CP].Taskbar_Background
+                                  taskbar.AppUnderline=  [CP].SettingsIconsAndLinks
+                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                    taskbar.BackColor = [CP].StartListFolders_TaskbarFront
+                                    taskbar.StartColor=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    start.BackColor = Color.FromArgb(228, 228, 228)
+                                    ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
+
+                                    taskbar.AppBackground=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.LinkColor=  [CP].Taskbar_Background
+                                  taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
+                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+
+                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                    taskbar.BackColor = [CP].StartListFolders_TaskbarFront
+                                    taskbar.StartColor=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
+
+
+                                    taskbar.AppBackground=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.LinkColor=  [CP].ActionCenter_AppsLinks
+                                  taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
+                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+
+                            End Select
+
+                        End If
+                End Select
+
+
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
@@ -373,8 +519,8 @@ Public Class dragPreviewer
     End Sub
 
     Sub Adjust_Preview()
-        PanelX3X.Visible = True
-        lblx_linkx.Visible = True
+        Panel5.Visible = True
+        lnk_preview.Visible = True
 
         start.Visible = True
         taskbar.Visible = True
@@ -433,8 +579,8 @@ Public Class dragPreviewer
                 XenonWindow2.RoundedCorners = False
 
             Case MainFrm.WinVer.Eight
-                PanelX3X.Visible = False
-                lblx_linkx.Visible = False
+                Panel5.Visible = False
+                lnk_preview.Visible = False
 
                 start.Visible = False
                 taskbar.Visible = True
@@ -470,8 +616,8 @@ Public Class dragPreviewer
                     ActionCenter.Visible = False
                 End If
 
-                PanelX3X.Visible = False
-                lblx_linkx.Visible = False
+                Panel5.Visible = False
+                lnk_preview.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
                 taskbar.NoisePower = CP.Aero_ColorizationGlassReflectionIntensity / 100
