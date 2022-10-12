@@ -117,12 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>- Language Translation now depends on GitHub only (Not Telegram; Deleted as it isn't necessary)
+
+- You can resize the main form as colors descriptions may be partially invisible (Some languages)
+
+- Fixing bug causing the translation not opening the application completely
+
+- Application Language: improved and fixed minor bugs
+
+- Minor UI fixes and improvements
+
+- Minor Improvement in Application Start Speed</value>
+  </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>- Now you can modify Command Prompt Colors, schemes of foreground and background, fonts, cursor color and other tweaks.
 
 - This is applicable also for PowerShell
 
 - Windows Terminal of Windows 11 and 10 also can be modified, but it is different from the previous ones.</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>- You can now apply accent on taskbar alone or on Taskbar, Start &amp;&amp; Action Center
+
+- Windows 10 Colors ID\Descriptions changed to better ones instead of old\misleading ones
+
+- A new 9th color added, it was found in registry accent array, but without known usage
+
+- Reordering colors after changing toggles removed, the colors stay in the same order of accent array in registry. Each accent color has a number beside it, it is its order in registry's array
+
+- If you find a color "Undefined", that doesn't mean that it is not usable, you can use it but its effect on system is Unknown\Undefined</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

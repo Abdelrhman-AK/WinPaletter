@@ -514,7 +514,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md")
+        Process.Start(My.Resources.Link_Repository & "blob/master/TranslationContribution.md")
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
@@ -527,5 +527,9 @@ Public Class SettingsX
         If OpenJSONDlg.ShowDialog = DialogResult.OK Then
             XenonTextBox2.Text = OpenJSONDlg.FileName
         End If
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        Process.Start(My.Resources.Link_Repository & "tree/master/Languages")
     End Sub
 End Class

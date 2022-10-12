@@ -1162,8 +1162,6 @@ Public Class MainFrm
         ApplyCPValues(CP)
         ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
-
-
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1562,7 +1560,6 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
 
@@ -1574,11 +1571,10 @@ Public Class MainFrm
         If My.Application._Settings.AutoRestartExplorer Then
             RestartExplorer()
         Else
-            If Not My.W7 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 7500)
+            If Not My.W7 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 3500)
         End If
 
     End Sub
-
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.Application._Settings.AutoRestartExplorer Then
@@ -2408,7 +2404,7 @@ Public Class MainFrm
         If theme_classic.Checked Then
             CP.Aero_Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
-            Notify("Classic theme is editable by Win32UI Editor", My.Resources.notify_warning, 5000)
+            Notify(My.Application.LanguageHelper.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
         End If
 
     End Sub
@@ -2605,12 +2601,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        If XenonButton23.Text.ToLower = "hide" Then
+        If XenonButton23.Text.ToLower = My.Application.LanguageHelper.Hide.ToLower Then
             pnl_preview.Visible = False
-            XenonButton23.Text = "Show"
+            XenonButton23.Text = My.Application.LanguageHelper.Show
         Else
             pnl_preview.Visible = True
-            XenonButton23.Text = "Hide"
+            XenonButton23.Text = My.Application.LanguageHelper.Hide
         End If
     End Sub
 
@@ -2624,7 +2620,7 @@ Public Class MainFrm
 
     Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles XenonGroupBox16.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
+            CP.UWP_Undefined = SubMenu.ShowMenu(sender)
             Exit Sub
         End If
 

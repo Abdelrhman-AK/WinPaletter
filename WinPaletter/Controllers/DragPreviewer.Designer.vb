@@ -726,7 +726,7 @@ Partial Class dragPreviewer
         Me.pnl_preview.Controls.Add(Me.XenonWindow2)
         Me.pnl_preview.Controls.Add(Me.start)
         Me.pnl_preview.Controls.Add(Me.taskbar)
-        Me.pnl_preview.Location = New System.Drawing.Point(402, 256)
+        Me.pnl_preview.Location = New System.Drawing.Point(402, 254)
         Me.pnl_preview.Name = "pnl_preview"
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
         Me.pnl_preview.TabIndex = 8
@@ -799,25 +799,30 @@ Partial Class dragPreviewer
         '
         'lnk_preview
         '
+        Me.lnk_preview.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
-        Me.lnk_preview.Location = New System.Drawing.Point(25, 120)
+        Me.lnk_preview.Location = New System.Drawing.Point(5, 120)
         Me.lnk_preview.Name = "lnk_preview"
-        Me.lnk_preview.Size = New System.Drawing.Size(138, 25)
+        Me.lnk_preview.Size = New System.Drawing.Size(179, 25)
         Me.lnk_preview.TabIndex = 16
         Me.lnk_preview.Text = "Settings Link Preview"
         Me.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel5
         '
+        Me.Panel5.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel5.BackColor = System.Drawing.Color.Transparent
         Me.Panel5.Controls.Add(Me.Label8)
         Me.Panel5.Controls.Add(Me.setting_icon_preview)
-        Me.Panel5.Location = New System.Drawing.Point(51, 27)
+        Me.Panel5.Location = New System.Drawing.Point(5, 27)
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Padding = New System.Windows.Forms.Padding(1)
-        Me.Panel5.Size = New System.Drawing.Size(87, 90)
+        Me.Panel5.Size = New System.Drawing.Size(179, 90)
         Me.Panel5.TabIndex = 0
         '
         'Label8
@@ -825,12 +830,12 @@ Partial Class dragPreviewer
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label8.Location = New System.Drawing.Point(1, 44)
+        Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(85, 45)
+        Me.Label8.Size = New System.Drawing.Size(177, 43)
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "This is a setting icon"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'setting_icon_preview
         '
@@ -839,7 +844,7 @@ Partial Class dragPreviewer
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
-        Me.setting_icon_preview.Size = New System.Drawing.Size(85, 43)
+        Me.setting_icon_preview.Size = New System.Drawing.Size(177, 45)
         Me.setting_icon_preview.TabIndex = 14
         Me.setting_icon_preview.Text = ""
         Me.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -948,7 +953,7 @@ Partial Class dragPreviewer
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Fuchsia
-        Me.ClientSize = New System.Drawing.Size(691, 239)
+        Me.ClientSize = New System.Drawing.Size(690, 240)
         Me.ControlBox = False
         Me.Controls.Add(Me.pnl_preview)
         Me.Controls.Add(Me.Panel1)

@@ -1,5 +1,6 @@
 ﻿Imports System.Management
 Imports System.Reflection
+Imports System.Reflection.Emit
 Imports System.Security.Principal
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
@@ -400,8 +401,10 @@ Namespace My
                 With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
                 With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+                With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
             End If
 
         End Sub

@@ -482,7 +482,6 @@ Partial Class MainFrm
         '
         'pic8
         '
-        Me.pic8.Image = CType(resources.GetObject("pic8.Image"), System.Drawing.Image)
         Me.pic8.Location = New System.Drawing.Point(2, 2)
         Me.pic8.Name = "pic8"
         Me.pic8.Size = New System.Drawing.Size(24, 24)
@@ -559,7 +558,6 @@ Partial Class MainFrm
         '
         'pic7
         '
-        Me.pic7.Image = CType(resources.GetObject("pic7.Image"), System.Drawing.Image)
         Me.pic7.Location = New System.Drawing.Point(2, 2)
         Me.pic7.Name = "pic7"
         Me.pic7.Size = New System.Drawing.Size(24, 24)
@@ -636,7 +634,6 @@ Partial Class MainFrm
         '
         'pic4
         '
-        Me.pic4.Image = CType(resources.GetObject("pic4.Image"), System.Drawing.Image)
         Me.pic4.Location = New System.Drawing.Point(2, 2)
         Me.pic4.Name = "pic4"
         Me.pic4.Size = New System.Drawing.Size(24, 24)
@@ -723,7 +720,6 @@ Partial Class MainFrm
         '
         'pic6
         '
-        Me.pic6.Image = CType(resources.GetObject("pic6.Image"), System.Drawing.Image)
         Me.pic6.Location = New System.Drawing.Point(2, 2)
         Me.pic6.Name = "pic6"
         Me.pic6.Size = New System.Drawing.Size(24, 24)
@@ -800,7 +796,6 @@ Partial Class MainFrm
         '
         'pic1
         '
-        Me.pic1.Image = CType(resources.GetObject("pic1.Image"), System.Drawing.Image)
         Me.pic1.Location = New System.Drawing.Point(2, 2)
         Me.pic1.Name = "pic1"
         Me.pic1.Size = New System.Drawing.Size(24, 24)
@@ -877,7 +872,6 @@ Partial Class MainFrm
         '
         'pic3
         '
-        Me.pic3.Image = CType(resources.GetObject("pic3.Image"), System.Drawing.Image)
         Me.pic3.Location = New System.Drawing.Point(2, 2)
         Me.pic3.Name = "pic3"
         Me.pic3.Size = New System.Drawing.Size(24, 24)
@@ -983,7 +977,6 @@ Partial Class MainFrm
         '
         'pic2
         '
-        Me.pic2.Image = CType(resources.GetObject("pic2.Image"), System.Drawing.Image)
         Me.pic2.Location = New System.Drawing.Point(2, 2)
         Me.pic2.Name = "pic2"
         Me.pic2.Size = New System.Drawing.Size(24, 24)
@@ -1043,7 +1036,6 @@ Partial Class MainFrm
         '
         'pic5
         '
-        Me.pic5.Image = CType(resources.GetObject("pic5.Image"), System.Drawing.Image)
         Me.pic5.Location = New System.Drawing.Point(2, 2)
         Me.pic5.Name = "pic5"
         Me.pic5.Size = New System.Drawing.Size(24, 24)
@@ -1138,7 +1130,7 @@ Partial Class MainFrm
         Me.XenonButton25.Image = Nothing
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(164, 3)
+        Me.XenonButton25.Location = New System.Drawing.Point(165, 3)
         Me.XenonButton25.Name = "XenonButton25"
         Me.XenonButton25.Size = New System.Drawing.Size(20, 23)
         Me.XenonButton25.TabIndex = 28
@@ -1154,7 +1146,7 @@ Partial Class MainFrm
         Me.Accent_Taskbar.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Accent_Taskbar.ForeColor = System.Drawing.Color.White
         Me.Accent_Taskbar.Image = Nothing
-        Me.Accent_Taskbar.Location = New System.Drawing.Point(252, 3)
+        Me.Accent_Taskbar.Location = New System.Drawing.Point(253, 3)
         Me.Accent_Taskbar.Name = "Accent_Taskbar"
         Me.Accent_Taskbar.ShowText = True
         Me.Accent_Taskbar.Size = New System.Drawing.Size(76, 23)
@@ -1170,7 +1162,7 @@ Partial Class MainFrm
         Me.Accent_StartTaskbar.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Accent_StartTaskbar.ForeColor = System.Drawing.Color.White
         Me.Accent_StartTaskbar.Image = Nothing
-        Me.Accent_StartTaskbar.Location = New System.Drawing.Point(330, 3)
+        Me.Accent_StartTaskbar.Location = New System.Drawing.Point(331, 3)
         Me.Accent_StartTaskbar.Name = "Accent_StartTaskbar"
         Me.Accent_StartTaskbar.ShowText = True
         Me.Accent_StartTaskbar.Size = New System.Drawing.Size(190, 23)
@@ -1186,7 +1178,7 @@ Partial Class MainFrm
         Me.Accent_None.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Accent_None.ForeColor = System.Drawing.Color.White
         Me.Accent_None.Image = Nothing
-        Me.Accent_None.Location = New System.Drawing.Point(186, 3)
+        Me.Accent_None.Location = New System.Drawing.Point(187, 3)
         Me.Accent_None.Name = "Accent_None"
         Me.Accent_None.ShowText = True
         Me.Accent_None.Size = New System.Drawing.Size(64, 23)
@@ -1451,7 +1443,7 @@ Partial Class MainFrm
         Me.ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Checked = False
         Me.ShowAccentOnTitlebarAndBorders_Toggle.DarkLight_Toggler = False
-        Me.ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(476, 9)
+        Me.ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(477, 9)
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Name = "ShowAccentOnTitlebarAndBorders_Toggle"
         Me.ShowAccentOnTitlebarAndBorders_Toggle.Size = New System.Drawing.Size(50, 24)
         Me.ShowAccentOnTitlebarAndBorders_Toggle.TabIndex = 6
@@ -3091,25 +3083,30 @@ Partial Class MainFrm
         '
         'lnk_preview
         '
+        Me.lnk_preview.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
-        Me.lnk_preview.Location = New System.Drawing.Point(25, 120)
+        Me.lnk_preview.Location = New System.Drawing.Point(5, 120)
         Me.lnk_preview.Name = "lnk_preview"
-        Me.lnk_preview.Size = New System.Drawing.Size(138, 25)
+        Me.lnk_preview.Size = New System.Drawing.Size(178, 25)
         Me.lnk_preview.TabIndex = 16
         Me.lnk_preview.Text = "Settings Link Preview"
         Me.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel3
         '
+        Me.Panel3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel3.BackColor = System.Drawing.Color.Transparent
         Me.Panel3.Controls.Add(Me.Label8)
         Me.Panel3.Controls.Add(Me.setting_icon_preview)
-        Me.Panel3.Location = New System.Drawing.Point(51, 27)
+        Me.Panel3.Location = New System.Drawing.Point(5, 27)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Padding = New System.Windows.Forms.Padding(1)
-        Me.Panel3.Size = New System.Drawing.Size(87, 90)
+        Me.Panel3.Size = New System.Drawing.Size(179, 90)
         Me.Panel3.TabIndex = 0
         '
         'Label8
@@ -3117,12 +3114,12 @@ Partial Class MainFrm
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label8.Location = New System.Drawing.Point(1, 44)
+        Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(85, 45)
+        Me.Label8.Size = New System.Drawing.Size(177, 43)
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "This is a setting icon"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'setting_icon_preview
         '
@@ -3131,7 +3128,7 @@ Partial Class MainFrm
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
-        Me.setting_icon_preview.Size = New System.Drawing.Size(85, 43)
+        Me.setting_icon_preview.Size = New System.Drawing.Size(177, 45)
         Me.setting_icon_preview.TabIndex = 14
         Me.setting_icon_preview.Text = ""
         Me.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -3653,7 +3650,7 @@ Partial Class MainFrm
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.MinimumSize = New System.Drawing.Size(1075, 720)
+        Me.MinimumSize = New System.Drawing.Size(1060, 720)
         Me.Name = "MainFrm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter"

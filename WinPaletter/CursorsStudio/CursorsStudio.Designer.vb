@@ -216,7 +216,7 @@ Partial Class CursorsStudio
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(124, 5)
+        Me.XenonButton7.Location = New System.Drawing.Point(123, 5)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(185, 25)
         Me.XenonButton7.TabIndex = 69
@@ -232,7 +232,7 @@ Partial Class CursorsStudio
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(468, 5)
+        Me.XenonButton8.Location = New System.Drawing.Point(467, 5)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(161, 25)
         Me.XenonButton8.TabIndex = 68
@@ -248,7 +248,7 @@ Partial Class CursorsStudio
         Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(82, Byte), Integer))
         Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(311, 5)
+        Me.XenonButton9.Location = New System.Drawing.Point(310, 5)
         Me.XenonButton9.Name = "XenonButton9"
         Me.XenonButton9.Size = New System.Drawing.Size(155, 25)
         Me.XenonButton9.TabIndex = 67
@@ -407,6 +407,7 @@ Partial Class CursorsStudio
         '
         Me.XenonComboBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.XenonComboBox3.CustomFont = False
         Me.XenonComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -563,6 +564,7 @@ Partial Class CursorsStudio
         '
         Me.XenonComboBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.XenonComboBox2.CustomFont = False
         Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -736,6 +738,7 @@ Partial Class CursorsStudio
         '
         Me.XenonComboBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.XenonComboBox1.CustomFont = False
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -919,6 +922,7 @@ Partial Class CursorsStudio
         '
         Me.XenonComboBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonComboBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.XenonComboBox4.CustomFont = False
         Me.XenonComboBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1178,6 +1182,7 @@ Partial Class CursorsStudio
         '
         'XenonTrackbar1
         '
+        Me.XenonTrackbar1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar1.LargeChange = 50

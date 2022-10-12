@@ -98,14 +98,14 @@ Public Class dragPreviewer
                         End Select
 
 
-                        ActionCenter.ActionCenterButton_Normal=  [CP].Taskbar_Icon_Underline
-                        ActionCenter.ActionCenterButton_Hover=  [CP].ActionCenter_AppsLinks
-                       ActionCenter.ActionCenterButton_Pressed=  [CP].StartButton_Hover
-                      start.SearchBoxAccent=  [CP].Taskbar_Icon_Underline
-                      taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
+                        ActionCenter.ActionCenterButton_Normal = [CP].Taskbar_Icon_Underline
+                        ActionCenter.ActionCenterButton_Hover = [CP].ActionCenter_AppsLinks
+                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
+                        start.SearchBoxAccent = [CP].Taskbar_Icon_Underline
+                        taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
 
-                         setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
-                       lnk_preview.ForeColor=  [CP].ActionCenter_AppsLinks
+                        setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                        lnk_preview.ForeColor = [CP].ActionCenter_AppsLinks
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
@@ -131,14 +131,14 @@ Public Class dragPreviewer
                         End Select
 
 
-                        ActionCenter.ActionCenterButton_Normal=  [CP].StartMenuBackground_ActiveTaskbarButton
-                        ActionCenter.ActionCenterButton_Hover=  [CP].StartListFolders_TaskbarFront
-                       ActionCenter.ActionCenterButton_Pressed=  [CP].StartButton_Hover
-                      start.SearchBoxAccent=  [CP].StartMenuBackground_ActiveTaskbarButton
-                      taskbar.AppUnderline=  [CP].StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.ActionCenterButton_Normal = [CP].StartMenuBackground_ActiveTaskbarButton
+                        ActionCenter.ActionCenterButton_Hover = [CP].StartListFolders_TaskbarFront
+                        ActionCenter.ActionCenterButton_Pressed = [CP].StartButton_Hover
+                        start.SearchBoxAccent = [CP].StartMenuBackground_ActiveTaskbarButton
+                        taskbar.AppUnderline = [CP].StartMenuBackground_ActiveTaskbarButton
 
-                         setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
-                       lnk_preview.ForeColor=  [CP].StartListFolders_TaskbarFront
+                        setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                        lnk_preview.ForeColor = [CP].StartListFolders_TaskbarFront
                 End Select
 
                 ReValidateLivePreview(pnl_preview)
@@ -297,35 +297,35 @@ Public Class dragPreviewer
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
                                     taskbar.AppBackground = Color.FromArgb(252, 252, 252)
-                                    ActionCenter.LinkColor=  [CP].Taskbar_Background
-                                  taskbar.AppUnderline=  [CP].SettingsIconsAndLinks
-                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
-                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                    ActionCenter.LinkColor = [CP].Taskbar_Background
+                                    taskbar.AppUnderline = [CP].SettingsIconsAndLinks
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     taskbar.BackColor = [CP].StartListFolders_TaskbarFront
-                                    taskbar.StartColor=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
                                     start.BackColor = Color.FromArgb(228, 228, 228)
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
-                                    taskbar.AppBackground=  [CP].StartMenuBackground_ActiveTaskbarButton
-                                    ActionCenter.LinkColor=  [CP].Taskbar_Background
-                                  taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
-                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
-                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                    taskbar.AppBackground = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.LinkColor = [CP].Taskbar_Background
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     taskbar.BackColor = [CP].StartListFolders_TaskbarFront
-                                    taskbar.StartColor=  [CP].StartMenuBackground_ActiveTaskbarButton
+                                    taskbar.StartColor = [CP].StartMenuBackground_ActiveTaskbarButton
                                     start.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
                                     ActionCenter.BackColor = [CP].StartMenuBackground_ActiveTaskbarButton
 
 
-                                    taskbar.AppBackground=  [CP].StartMenuBackground_ActiveTaskbarButton
-                                    ActionCenter.LinkColor=  [CP].ActionCenter_AppsLinks
-                                  taskbar.AppUnderline=  [CP].Taskbar_Icon_Underline
-                                     setting_icon_preview.ForeColor=  [CP].SettingsIconsAndLinks
-                                   lnk_preview.ForeColor=  [CP].SettingsIconsAndLinks
+                                    taskbar.AppBackground = [CP].StartMenuBackground_ActiveTaskbarButton
+                                    ActionCenter.LinkColor = [CP].ActionCenter_AppsLinks
+                                    taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
+                                    setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
 
                             End Select
 

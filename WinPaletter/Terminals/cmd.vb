@@ -260,9 +260,8 @@ Public Class cmd
             Dim FC0 As Color = If(IsColorDark(CMD_PopupForegroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupForegroundLbl.BackColor), ControlPaint.Dark(CMD_PopupForegroundLbl.BackColor, 0.9))
             CMD_PopupForegroundLbl.ForeColor = FC0
 
-            Visual.FadeColor(CMD_PopupForegroundBar, "AccentColor", CMD_PopupForegroundBar.AccentColor, CMD_PopupForegroundLbl.BackColor, steps, delay)
+            CMD_PopupForegroundBar.AccentColor = CMD_PopupForegroundLbl.BackColor
             CMD_PopupForegroundBar.Invalidate()
-
         ElseIf i = 2 Then
 
             Select Case CMD_PopupBackgroundBar.Value
@@ -302,9 +301,8 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_PopupBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupBackgroundLbl.BackColor), ControlPaint.Dark(CMD_PopupBackgroundLbl.BackColor, 0.9))
             CMD_PopupBackgroundLbl.ForeColor = FC0
-            Visual.FadeColor(CMD_PopupBackgroundBar, "AccentColor", CMD_PopupBackgroundBar.AccentColor, CMD_PopupBackgroundLbl.BackColor, steps, delay)
+            CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
             CMD_PopupBackgroundBar.Invalidate()
-
         ElseIf i = 3 Then
 
             Select Case CMD_AccentBackgroundBar.Value
@@ -344,7 +342,7 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_AccentBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentBackgroundLbl.BackColor), ControlPaint.Dark(CMD_AccentBackgroundLbl.BackColor, 0.9))
             CMD_AccentBackgroundLbl.ForeColor = FC0
-            Visual.FadeColor(CMD_AccentBackgroundBar, "AccentColor", CMD_AccentBackgroundBar.AccentColor, CMD_AccentBackgroundLbl.BackColor, steps, delay)
+            CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
             CMD_AccentBackgroundBar.Invalidate()
 
         ElseIf i = 4 Then
@@ -390,7 +388,7 @@ Public Class cmd
 
             Dim FC0 As Color = If(IsColorDark(CMD_AccentForegroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentForegroundLbl.BackColor), ControlPaint.Dark(CMD_AccentForegroundLbl.BackColor, 0.9))
             CMD_AccentForegroundLbl.ForeColor = FC0
-            Visual.FadeColor(CMD_AccentForegroundBar, "AccentColor", CMD_AccentForegroundBar.AccentColor, CMD_AccentForegroundLbl.BackColor, steps, delay)
+            CMD_AccentForegroundBar.AccentColor = CMD_AccentForegroundLbl.BackColor
             CMD_AccentForegroundBar.Invalidate()
 
         End If

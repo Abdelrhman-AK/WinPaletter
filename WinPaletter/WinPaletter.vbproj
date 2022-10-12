@@ -242,11 +242,12 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb" />
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -339,9 +340,8 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
-    <Content Include="My Project\Application.myapp" />
-    <None Include="Resources\AC_10_Light.png" />
-    <None Include="Resources\AC_10_Dark.png" />
+    <Content Include="Resources\AC_10_Dark.png" />
+    <Content Include="Resources\AC_10_Light.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
@@ -352,17 +352,16 @@
     <Content Include="Resources\icons8_PowerShell.ico" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
-    <None Include="Resources\Mini_Hamburger.png" />
-    <None Include="Resources\Mini_ACHover_Links.png" />
-    <None Include="Resources\Mini_Hamburger.png" />
-    <None Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <None Include="Resources\Mini_PressedButton.png" />
-    <None Include="Resources\Mini_SettingsIcons.png" />
-    <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
-    <None Include="Resources\Mini_Taskbar.png" />
-    <None Include="Resources\Mini_TaskbarActiveIcon.png" />
-    <None Include="Resources\Mini_TaskbarApp.png" />
-    <None Include="Resources\Mini_Undefined.png" />
+    <Content Include="Resources\Mini_ACHover_Links.png" />
+    <Content Include="Resources\Mini_Hamburger.png" />
+    <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
+    <Content Include="Resources\Mini_PressedButton.png" />
+    <Content Include="Resources\Mini_SettingsIcons.png" />
+    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
+    <Content Include="Resources\Mini_Taskbar.png" />
+    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
+    <Content Include="Resources\Mini_TaskbarApp.png" />
+    <Content Include="Resources\Mini_Undefined.png" />
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
@@ -370,8 +369,8 @@
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
-    <None Include="Resources\StartBtn_10Dark.png" />
-    <None Include="Resources\StartBtn_10Light.png" />
+    <Content Include="Resources\StartBtn_10Dark.png" />
+    <Content Include="Resources\StartBtn_10Light.png" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <Content Include="Resources\Win7BasicActive.png" />
@@ -422,9 +421,8 @@
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

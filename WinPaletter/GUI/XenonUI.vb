@@ -3178,6 +3178,21 @@ Public Class XenonComboBox : Inherits ComboBox
         Invalidate()
     End Sub
 
+    Private Sub XenonComboBox_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        Try
+            If e.Delta < 0 Then
+                If SelectedIndex < Items.Count - 1 Then
+                    If e.Delta <= -240 Then SelectedIndex += 1
+                End If
+            Else
+                If SelectedIndex > 0 Then
+                    If e.Delta >= 240 Then SelectedIndex -= 1
+                End If
+            End If
+        Catch
+        End Try
+    End Sub
+
     Private Sub XenonComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         State = MouseState.Down
         _Shown = True
@@ -5028,12 +5043,15 @@ Public Class XenonTrackbar
                 Return
             Else
                 If e.X < Circle.X Then
+
                     I1 = _Value - _LargeChange
                 Else
                     I1 = _Value + _LargeChange
                 End If
             End If
+
             Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+
             InvalidatePosition()
         End If
     End Sub
@@ -5054,7 +5072,7 @@ Public Class XenonTrackbar
             'I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
             'Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
 
-            Value = Math.Min((e.X / Width) * Maximum, _Maximum)
+            Value = Math.Min(Math.Max((e.X / Width) * Maximum, _Minimum), _Maximum)
             InvalidatePosition()
         End If
 
@@ -5091,10 +5109,14 @@ Public Class XenonTrackbar
     End Sub
 
     Private Sub XenonScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
-        If e.Delta > 0 Then
-            If e.Delta <= -240 Then Value = Value + LargeChange Else Value = Value + SmallChange
+        If e.Delta < 0 Then
+            If Value < Maximum Then
+                If e.Delta <= -240 Then Value = Value + LargeChange Else Value = Value + SmallChange
+            End If
         Else
-            If e.Delta >= 240 Then Value = Value - LargeChange Else Value = Value - SmallChange
+            If Value > Minimum Then
+                If e.Delta >= 240 Then Value = Value - LargeChange Else Value = Value - SmallChange
+            End If
         End If
     End Sub
 

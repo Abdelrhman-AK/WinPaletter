@@ -246,9 +246,9 @@ Public Class XenonCore
         If opacity > 1 Then opacity = 1
         If opacity < 0 Then opacity = 0
 
-        If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
-            Return originalImage
-        End If
+        'If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
+        'Return originalImage
+        'End If
 
         Dim bmp As Bitmap = CType(originalImage.Clone(), Bitmap)
         Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
