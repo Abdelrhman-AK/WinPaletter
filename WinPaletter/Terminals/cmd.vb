@@ -1052,4 +1052,8 @@ Public Class cmd
             CMDEnabled.Checked = ee
         End If
     End Sub
+
+    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        MsgBox(My.Application.LanguageHelper.CMD_RasterInfo, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
 End Class

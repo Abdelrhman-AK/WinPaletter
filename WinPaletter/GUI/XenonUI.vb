@@ -4145,11 +4145,11 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                 Dim rect3 As New Rectangle(42, 201, 34, 24)
 
-                G.FillRectangle(New SolidBrush(LinkColor), rect3)
+                G.FillRectangle(New SolidBrush(ActionCenterButton_Normal), rect3)
                 G.DrawImage(If(DarkMode, My.Resources.AC_10_Dark, My.Resources.AC_10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
                 G.FillRectangle(New SolidBrush(LinkColor), rect1)
                 G.FillRectangle(New SolidBrush(LinkColor), rect2)
-                G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(0, Height - 1))
+                G.DrawLine(New Pen(Color.FromArgb(150, 100, 100, 100)), New Point(0, 0), New Point(0, Height - 1))
 
             End If
 

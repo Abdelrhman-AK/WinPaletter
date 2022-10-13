@@ -128,6 +128,7 @@ Partial Class cmd
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
+        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -363,6 +364,7 @@ Partial Class cmd
         '
         'CMD_AccentBackgroundBar
         '
+        Me.CMD_AccentBackgroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_AccentBackgroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentBackgroundBar.LargeChange = 10
@@ -378,6 +380,7 @@ Partial Class cmd
         '
         'CMD_PopupBackgroundBar
         '
+        Me.CMD_PopupBackgroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_PopupBackgroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupBackgroundBar.LargeChange = 10
@@ -393,6 +396,7 @@ Partial Class cmd
         '
         'CMD_AccentForegroundBar
         '
+        Me.CMD_AccentForegroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_AccentForegroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentForegroundBar.LargeChange = 10
@@ -447,6 +451,7 @@ Partial Class cmd
         '
         'CMD_PopupForegroundBar
         '
+        Me.CMD_PopupForegroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_PopupForegroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupForegroundBar.LargeChange = 10
@@ -574,7 +579,7 @@ Partial Class cmd
         Me.CMD_EnhancedTerminal.Name = "CMD_EnhancedTerminal"
         Me.CMD_EnhancedTerminal.Size = New System.Drawing.Size(155, 23)
         Me.CMD_EnhancedTerminal.TabIndex = 118
-        Me.CMD_EnhancedTerminal.Text = "Use Enhanced Terminal"
+        Me.CMD_EnhancedTerminal.Text = "Enhanced Terminal"
         '
         'Label91
         '
@@ -610,6 +615,7 @@ Partial Class cmd
         '
         'CMD_OpacityBar
         '
+        Me.CMD_OpacityBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_OpacityBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_OpacityBar.LargeChange = 10
@@ -749,6 +755,7 @@ Partial Class cmd
         '
         'CMD_CursorSizeBar
         '
+        Me.CMD_CursorSizeBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_CursorSizeBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_CursorSizeBar.LargeChange = 1
@@ -817,6 +824,7 @@ Partial Class cmd
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeLbl)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontsBox)
@@ -851,6 +859,7 @@ Partial Class cmd
         '
         'CMD_FontSizeBar
         '
+        Me.CMD_FontSizeBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_FontSizeBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_FontSizeBar.LargeChange = 10
@@ -917,7 +926,7 @@ Partial Class cmd
         Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_RasterToggle.Checked = False
         Me.CMD_RasterToggle.DarkLight_Toggler = False
-        Me.CMD_RasterToggle.Location = New System.Drawing.Point(174, 99)
+        Me.CMD_RasterToggle.Location = New System.Drawing.Point(174, 98)
         Me.CMD_RasterToggle.Name = "CMD_RasterToggle"
         Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.CMD_RasterToggle.TabIndex = 95
@@ -938,7 +947,7 @@ Partial Class cmd
         Me.Label58.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label58.Location = New System.Drawing.Point(33, 98)
         Me.Label58.Name = "Label58"
-        Me.Label58.Size = New System.Drawing.Size(98, 24)
+        Me.Label58.Size = New System.Drawing.Size(108, 24)
         Me.Label58.TabIndex = 94
         Me.Label58.Text = "Raster Font ?"
         Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1591,6 +1600,22 @@ Partial Class cmd
         Me.XenonSeparator2.TabStop = False
         Me.XenonSeparator2.Text = "XenonSeparator2"
         '
+        'XenonButton25
+        '
+        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton25.ForeColor = System.Drawing.Color.White
+        Me.XenonButton25.Image = Nothing
+        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton25.LineSize = 1
+        Me.XenonButton25.Location = New System.Drawing.Point(147, 99)
+        Me.XenonButton25.Name = "XenonButton25"
+        Me.XenonButton25.Size = New System.Drawing.Size(20, 23)
+        Me.XenonButton25.TabIndex = 104
+        Me.XenonButton25.Text = "?"
+        Me.XenonButton25.UseVisualStyleBackColor = False
+        '
         'cmd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1744,4 +1769,5 @@ Partial Class cmd
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
     Friend WithEvents XenonSeparator2 As XenonSeparator
+    Friend WithEvents XenonButton25 As XenonButton
 End Class

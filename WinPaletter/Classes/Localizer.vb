@@ -42,7 +42,7 @@ Public Class Localizer
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"
     Property CP_11_SomePressedButtons As String = "Some Pressed Buttons"
 
-    Property CP_10_ACLinks As String = "Action Center Links && Buttons"
+    Property CP_10_ACLinks As String = "Action Center Links"
     Property CP_10_TaskbarAppUnderline As String = "Taskbar App Underline"
     Property CP_10_StartMenuIconHover As String = "Start Menu Icon Hover"
     Property CP_10_Settings_Links_SomeBtns As String = "Settings Icons, Links && Some Pressed Buttons"
@@ -52,15 +52,14 @@ Public Class Localizer
     Property CP_10_StartMenu_AC As String = "Start Menu && Action Center"
     Property CP_10_StartMenu_AC_TaskbarActiveApp As String = "Start Menu, Action Center && Taskbar Active App"
     Property CP_10_Taskbar As String = "Taskbar"
-    Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links && Buttons"
+    Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
     Property CP_Undefined As String = "Undefined"
-
     Property CP_ClassicThemeEditable As String = "Classic theme is editable by Win32UI Editor"
     Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
+
     Property X17 As String = "To colorize active titlebar, please activate the toggle"
     Property X18 As String = "To colorize inactive titlebar,please activate the toggle"
-
     Property X19 As String = "To colorize taskbar, please activate the toggle"
     Property X20 As String = "To colorize start menu, action center and taskbar, please activate the toggle"
     Property X21 As String = "To colorize start menu and action center, please activate the toggle"
@@ -133,7 +132,7 @@ Public Class Localizer
     Property Terminal_NewScheme As String = "New Scheme"
     Property Terminal_NewTheme As String = "New Theme"
     Property Terminal_SettingsNotExist As String = "Settings doesn't exist: "
-
+    Property CMD_RasterInfo As String = "This might be not effective except if you disable Enhanced Terminal."
     Property CP_TerminalError As String = "Error occured while saving Windows Terminal Settings. Anyway, WinPaletter will continue saving without Windows Terminal."
     Property CP_ApplyingTheme As String = "Applying Theme ..."
     Property CP_ApplyingColorsAndTweaks As String = "Applying Colors and Tweaks ..."

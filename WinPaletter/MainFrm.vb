@@ -343,6 +343,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
@@ -355,6 +356,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
@@ -367,6 +369,8 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+
                             End Select
 
                         Else
@@ -400,6 +404,8 @@ Public Class MainFrm
                             Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                             Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                             Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+
                         End If
 
                     Case False
@@ -417,6 +423,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
@@ -429,6 +436,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
@@ -441,6 +449,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                             End Select
 
@@ -458,6 +467,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
@@ -470,6 +480,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
@@ -483,6 +494,7 @@ Public Class MainFrm
                                     Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
                                     Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
                                     Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
 
                             End Select
 
@@ -865,7 +877,7 @@ Public Class MainFrm
         TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
         ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
         SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
-        XenonGroupBox16.BackColor = ColorPalette.UWP_Undefined
+        UWP_Undefined_pick.BackColor = ColorPalette.UWP_Undefined
 
         Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
         Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Aero_ColorizationAfterglow
@@ -938,6 +950,8 @@ Public Class MainFrm
         TaskbarFrontAndFoldersOnStart_picker.DefaultColor = DefCP.StartListFolders_TaskbarFront
         ActionCenter_picker.DefaultColor = DefCP.ActionCenter_AppsLinks
         SettingsIconsAndLinks_picker.DefaultColor = DefCP.SettingsIconsAndLinks
+        UWP_Undefined_pick.DefaultColor = DefCP.UWP_Undefined
+
         Aero_ColorizationColor_pick.DefaultColor = DefCP.Aero_ColorizationColor
         Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Aero_ColorizationAfterglow
         ColorizationColor8_pick.DefaultColor = DefCP.Aero_ColorizationColor
@@ -1527,6 +1541,7 @@ Public Class MainFrm
                 Case True
                     If [CP].Transparency Then
                         CList.Add(setting_icon_preview)
+                        CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                         CList.Add(lnk_preview)
                         If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                             CList.Add(taskbar)  ''AppBackground
@@ -1535,10 +1550,12 @@ Public Class MainFrm
                         End If
                     Else
                         CList.Add(setting_icon_preview)
+                        CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                         CList.Add(lnk_preview)
                     End If
                 Case False
                     CList.Add(setting_icon_preview)
+                    CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                     CList.Add(lnk_preview)
 
                     If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
@@ -2618,7 +2635,7 @@ Public Class MainFrm
         TerminalsDashboard.ShowDialog()
     End Sub
 
-    Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles XenonGroupBox16.Click
+    Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles UWP_Undefined_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             CP.UWP_Undefined = SubMenu.ShowMenu(sender)
             Exit Sub
