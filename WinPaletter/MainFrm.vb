@@ -1274,7 +1274,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.X17, My.Resources.notify_info, 5000)
+            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -1302,7 +1302,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.X18, My.Resources.notify_info, 5000)
+            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -1452,14 +1452,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-        If PreviewConfig = WinVer.Eleven Then
-            If Not CP.WinMode_Light And CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                Notify(My.Application.LanguageHelper.X20, My.Resources.notify_info, 5000)
-            End If
-        Else
-
-        End If
 
     End Sub
 

@@ -28,6 +28,7 @@ Public Class XeSettings
     Public Property Terminal_Path_Deflection As Boolean = False
     Public Property Terminal_Stable_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
     Public Property Terminal_Preview_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+    Public Property CMD_OverrideUserPreferences As Boolean = True
 
     Public Property MainFormWidth As Integer = 1110
     Public Property MainFormHeight As Integer = 725
@@ -114,6 +115,8 @@ Public Class XeSettings
         If Key.GetValue("Terminal_Path_Deflection", Nothing) Is Nothing Then Key.SetValue("Terminal_Path_Deflection", False, RegistryValueKind.DWord)
         If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
         If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
+        If Key.GetValue("CMD_OverrideUserPreferences", Nothing) Is Nothing Then Key.SetValue("CMD_OverrideUserPreferences", True, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -143,7 +146,6 @@ Public Class XeSettings
                 Terminal_Path_Deflection = Key.GetValue("Terminal_Path_Deflection", False)
                 Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
                 Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json")
-
                 Select Case Key.GetValue("CustomPreviewConfig", 0)
                     Case 0
                         CustomPreviewConfig = WinVer.Eleven
@@ -154,6 +156,7 @@ Public Class XeSettings
                     Case 3
                         CustomPreviewConfig = WinVer.Seven
                 End Select
+                CMD_OverrideUserPreferences = Key.GetValue("CMD_OverrideUserPreferences", True)
 
                 UpdateChannel = If(Key.GetValue("UpdateChannel", UpdateChannels.Stable) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
                 Appearance_Dark = Key.GetValue("Appearance_Dark", True)
@@ -202,6 +205,7 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("Terminal_Path_Deflection= ".ToLower) Then Terminal_Path_Deflection = x.Remove(0, "Terminal_Path_Deflection= ".Count)
                     If x.ToLower.StartsWith("Terminal_Stable_Path= ".ToLower) Then Terminal_Stable_Path = x.Remove(0, "Terminal_Stable_Path= ".Count)
                     If x.ToLower.StartsWith("Terminal_Preview_Path= ".ToLower) Then Terminal_Preview_Path = x.Remove(0, "Terminal_Preview_Path= ".Count)
+                    If x.ToLower.StartsWith("CMD_OverrideUserPreferences= ".ToLower) Then CMD_OverrideUserPreferences = x.Remove(0, "CMD_OverrideUserPreferences= ".Count)
 
                 Next
         End Select
@@ -226,6 +230,7 @@ Public Class XeSettings
                 Key.SetValue("Terminal_Path_Deflection", Terminal_Path_Deflection, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
                 Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
+                Key.SetValue("CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord)
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven
@@ -281,6 +286,7 @@ Public Class XeSettings
                 l.Add(String.Format("Terminal_Path_Deflection= {0}", Terminal_Path_Deflection))
                 l.Add(String.Format("Terminal_Stable_Path= {0}", Terminal_Stable_Path))
                 l.Add(String.Format("Terminal_Preview_Path= {0}", Terminal_Preview_Path))
+                l.Add(String.Format("CMD_OverrideUserPreferences= {0}", CMD_OverrideUserPreferences))
 
                 Select Case CustomPreviewConfig
                     Case WinVer.Eleven

@@ -57,12 +57,7 @@ Public Class Localizer
     Property CP_Undefined As String = "Undefined"
     Property CP_ClassicThemeEditable As String = "Classic theme is editable by Win32UI Editor"
     Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
-
-    Property X17 As String = "To colorize active titlebar, please activate the toggle"
-    Property X18 As String = "To colorize inactive titlebar,please activate the toggle"
-    Property X19 As String = "To colorize taskbar, please activate the toggle"
-    Property X20 As String = "To colorize start menu, action center and taskbar, please activate the toggle"
-    Property X21 As String = "To colorize start menu and action center, please activate the toggle"
+    Property CP_TitlebarToggle As String = "To colorize Titlebar, please activate its toggle."
 
     Property X22 As String = "This will restart the explorer, don't worry this won't close other applications."
     Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
@@ -132,7 +127,12 @@ Public Class Localizer
     Property Terminal_NewScheme As String = "New Scheme"
     Property Terminal_NewTheme As String = "New Theme"
     Property Terminal_SettingsNotExist As String = "Settings doesn't exist: "
-    Property CMD_RasterInfo As String = "This might be not effective except if you disable Enhanced Terminal."
+
+    Property Terminal_External_Empty As String = "Terminal can't be empty. Enter a valid one."
+    Property Terminal_External_NotExist As String = "Terminal doesn't exist. Enter a valid one."
+    Property Terminal_External_Reversed As String = "This terminal is reserved for system. Try again with another one."
+    Property Terminal_External_Exists As String = "This terminal already exists. Try again with another one."
+
     Property CP_TerminalError As String = "Error occured while saving Windows Terminal Settings. Anyway, WinPaletter will continue saving without Windows Terminal."
     Property CP_ApplyingTheme As String = "Applying Theme ..."
     Property CP_ApplyingColorsAndTweaks As String = "Applying Colors and Tweaks ..."

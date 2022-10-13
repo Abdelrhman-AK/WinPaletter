@@ -24,6 +24,7 @@ Public Class ExternalTerminal
 
         For Each x As String In Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames()
             If Not x.ToLower = "%%Startup".ToLower And
+                Not x.ToLower = "%SystemRoot%_System32_cmd.exe".ToLower And
                 Not x.ToLower = "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe".ToLower And
                 Not x.ToLower = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe".ToLower Then
                 [ListBox].Items.Add(x)

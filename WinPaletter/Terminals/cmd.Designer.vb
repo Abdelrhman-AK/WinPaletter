@@ -128,7 +128,6 @@ Partial Class cmd
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
-        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -824,7 +823,6 @@ Partial Class cmd
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox4.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeLbl)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontsBox)
@@ -1600,22 +1598,6 @@ Partial Class cmd
         Me.XenonSeparator2.TabStop = False
         Me.XenonSeparator2.Text = "XenonSeparator2"
         '
-        'XenonButton25
-        '
-        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XenonButton25.ForeColor = System.Drawing.Color.White
-        Me.XenonButton25.Image = Nothing
-        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(147, 99)
-        Me.XenonButton25.Name = "XenonButton25"
-        Me.XenonButton25.Size = New System.Drawing.Size(20, 23)
-        Me.XenonButton25.TabIndex = 104
-        Me.XenonButton25.Text = "?"
-        Me.XenonButton25.UseVisualStyleBackColor = False
-        '
         'cmd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1769,5 +1751,4 @@ Partial Class cmd
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
     Friend WithEvents XenonSeparator2 As XenonSeparator
-    Friend WithEvents XenonButton25 As XenonButton
 End Class

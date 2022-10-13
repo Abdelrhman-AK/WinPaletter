@@ -48,7 +48,7 @@ Public Class SettingsX
             If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
             If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
             If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
-
+            If .CMD_OverrideUserPreferences <> XenonCheckBox15.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -120,6 +120,7 @@ Public Class SettingsX
             XenonCheckBox14.Checked = .Terminal_Path_Deflection
             XenonTextBox1.Text = .Terminal_Stable_Path
             XenonTextBox2.Text = .Terminal_Preview_Path
+            XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
 
             Select Case .Nerd_Stats_Kind
                 Case XeSettings.Nerd_Stats_Type.HEX
@@ -192,6 +193,8 @@ Public Class SettingsX
             .Terminal_Path_Deflection = XenonCheckBox14.Checked
             .Terminal_Stable_Path = XenonTextBox1.Text
             .Terminal_Preview_Path = XenonTextBox2.Text
+            .CMD_OverrideUserPreferences = XenonCheckBox15.Checked
+
             .Save(XeSettings.Mode.Registry)
         End With
 
@@ -333,6 +336,8 @@ Public Class SettingsX
                 .Terminal_Path_Deflection = XenonCheckBox14.Checked
                 .Terminal_Stable_Path = XenonTextBox1.Text
                 .Terminal_Preview_Path = XenonTextBox2.Text
+                .CMD_OverrideUserPreferences = XenonCheckBox15.Checked
+
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -361,6 +366,7 @@ Public Class SettingsX
                 XenonCheckBox14.Checked = .Terminal_Path_Deflection
                 XenonTextBox1.Text = .Terminal_Stable_Path
                 XenonTextBox2.Text = .Terminal_Preview_Path
+                XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
 
                 Select Case .CustomPreviewConfig
                     Case XeSettings.WinVer.Eleven
@@ -431,6 +437,7 @@ Public Class SettingsX
             XenonCheckBox14.Checked = .Terminal_Path_Deflection
             XenonTextBox1.Text = .Terminal_Stable_Path
             XenonTextBox2.Text = .Terminal_Preview_Path
+            XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
 
             Select Case .CustomPreviewConfig
                 Case XeSettings.WinVer.Eleven

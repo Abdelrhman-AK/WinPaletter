@@ -35,8 +35,8 @@
    * Fonts look weird. What happened?
 
 4) After applying the color palette, Command Prompt and PowerShell are not customized in spite of enabling their toggles. What is the issue?
-
-5) After doing the previous steps, nothing works!!
+   
+   
 
 ---
 
@@ -190,11 +190,3 @@ Windows Terminal uses the monospaced fonts only, if you force a regular\non mono
   9. To maintain this effect, never modify preferences from this terminal shortcut.
 
 * These rules don't apply on the new Windows 10\11 Terminal (Stable\Preview).
-
-
-
-# Q5) After doing the previous steps, nothing works!!
-
-You can go to registry `HKEY_CURRENT_USER\Console` and delete the key causing conflict.
-
-e.g. Command Prompt causing conflict, then delete `%SystemRoot%_System32_cmd.exe` if it is found.

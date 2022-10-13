@@ -186,6 +186,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     taskbar.BackColor = [CP].Taskbar_Background
@@ -198,6 +199,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     taskbar.BackColor = [CP].Taskbar_Background
@@ -210,6 +212,8 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
+
                             End Select
 
                         Else
@@ -243,6 +247,8 @@ Public Class dragPreviewer
                             taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                             setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                             lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                            ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
+
                         End If
 
                     Case False
@@ -260,6 +266,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].SettingsIconsAndLinks
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     taskbar.BackColor = [CP].Taskbar_Background
@@ -272,6 +279,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     taskbar.BackColor = [CP].Taskbar_Background
@@ -284,6 +292,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                             End Select
 
@@ -301,6 +310,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].SettingsIconsAndLinks
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
                                     taskbar.BackColor = [CP].StartListFolders_TaskbarFront
@@ -313,6 +323,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                     taskbar.BackColor = [CP].StartListFolders_TaskbarFront
@@ -326,6 +337,7 @@ Public Class dragPreviewer
                                     taskbar.AppUnderline = [CP].Taskbar_Icon_Underline
                                     setting_icon_preview.ForeColor = [CP].SettingsIconsAndLinks
                                     lnk_preview.ForeColor = [CP].SettingsIconsAndLinks
+                                    ActionCenter.ActionCenterButton_Normal = [CP].SettingsIconsAndLinks
 
                             End Select
 
