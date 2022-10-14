@@ -44,7 +44,6 @@ Namespace My
 
         Public ConsoleFont As New Font("Lucida Console", 7.5)
         Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
-        Public TerminalFont As New Font("Lucida Console", 7.5)
 
         Public FontsList As New List(Of String)
         Public FontsFixedList As New List(Of String)
@@ -441,11 +440,9 @@ Namespace My
 
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
-                MemoryFonts.AddMemoryFont(My.Resources.TerminalFont)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
 
-                TerminalFont = MemoryFonts.GetFont(1)
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)

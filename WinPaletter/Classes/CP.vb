@@ -1724,10 +1724,11 @@ Public Class CP
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontSize", _Def.CMD_FontSize)
-                    If y_cmd = 0 Then CMD_FontSize = _Def.CMD_FontSize Else CMD_FontSize = _Def.CMD_FontSize
+                    If y_cmd = 0 Then CMD_FontSize = _Def.CMD_FontSize Else CMD_FontSize = y_cmd
                 Catch
                     CMD_FontSize = _Def.CMD_FontSize
                 End Try
+
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontWeight", 400)
@@ -1954,7 +1955,7 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", _Def.PS_32_FontSize)
-                        If y_cmd = 0 Then PS_32_FontSize = _Def.PS_32_FontSize Else PS_32_FontSize = _Def.PS_32_FontSize
+                        If y_cmd = 0 Then PS_32_FontSize = _Def.PS_32_FontSize Else PS_32_FontSize = y_cmd
                     Catch
                         PS_32_FontSize = _Def.PS_32_FontSize
                     End Try
@@ -2187,7 +2188,7 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", CMD_FontSize)
-                        If y_cmd = 0 Then PS_64_FontSize = _Def.PS_64_FontSize Else PS_64_FontSize = _Def.PS_64_FontSize
+                        If y_cmd = 0 Then PS_64_FontSize = _Def.PS_64_FontSize Else PS_64_FontSize = y_cmd
                     Catch
                         PS_64_FontSize = CMD_FontSize
                     End Try

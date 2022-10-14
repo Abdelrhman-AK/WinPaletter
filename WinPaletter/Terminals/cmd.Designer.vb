@@ -25,6 +25,8 @@ Partial Class cmd
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(cmd))
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -74,6 +76,7 @@ Partial Class cmd
         Me.Label60 = New System.Windows.Forms.Label()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.RasterList = New WinPaletter.XenonComboBox()
         Me.CMD_FontSizeLbl = New System.Windows.Forms.Label()
         Me.CMD_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.CMD_FontsBox = New WinPaletter.XenonComboBox()
@@ -126,8 +129,6 @@ Partial Class cmd
         Me.XenonCMD1 = New WinPaletter.XenonCMD()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -153,6 +154,19 @@ Partial Class cmd
         Me.ImageList1.Images.SetKeyName(0, "0.png")
         Me.ImageList1.Images.SetKeyName(1, "1.png")
         Me.ImageList1.Images.SetKeyName(2, "3.png")
+        '
+        'OpenWPTHDlg
+        '
+        Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth"
+        '
+        'XenonSeparator2
+        '
+        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 57)
+        Me.XenonSeparator2.Name = "XenonSeparator2"
+        Me.XenonSeparator2.Size = New System.Drawing.Size(677, 1)
+        Me.XenonSeparator2.TabIndex = 199
+        Me.XenonSeparator2.TabStop = False
+        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'XenonGroupBox3
         '
@@ -833,6 +847,7 @@ Partial Class cmd
         Me.XenonGroupBox4.Controls.Add(Me.Label58)
         Me.XenonGroupBox4.Controls.Add(Me.Label59)
         Me.XenonGroupBox4.Controls.Add(Me.Label35)
+        Me.XenonGroupBox4.Controls.Add(Me.RasterList)
         Me.XenonGroupBox4.CustomColor = False
         Me.XenonGroupBox4.DefaultColor = System.Drawing.Color.Black
         Me.XenonGroupBox4.ForceNoNerd = False
@@ -842,6 +857,23 @@ Partial Class cmd
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(231, 130)
         Me.XenonGroupBox4.TabIndex = 98
+        '
+        'RasterList
+        '
+        Me.RasterList.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.RasterList.CustomFont = False
+        Me.RasterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.RasterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RasterList.ForeColor = System.Drawing.Color.White
+        Me.RasterList.FormattingEnabled = True
+        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
+        Me.RasterList.LineColor = System.Drawing.Color.DodgerBlue
+        Me.RasterList.Location = New System.Drawing.Point(93, 71)
+        Me.RasterList.Name = "RasterList"
+        Me.RasterList.Size = New System.Drawing.Size(130, 24)
+        Me.RasterList.TabIndex = 104
+        Me.RasterList.Visible = False
         '
         'CMD_FontSizeLbl
         '
@@ -901,7 +933,7 @@ Partial Class cmd
         Me.CMD_FontWeightBox.FormattingEnabled = True
         Me.CMD_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
         Me.CMD_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
-        Me.CMD_FontWeightBox.Location = New System.Drawing.Point(93, 42)
+        Me.CMD_FontWeightBox.Location = New System.Drawing.Point(93, 41)
         Me.CMD_FontWeightBox.Name = "CMD_FontWeightBox"
         Me.CMD_FontWeightBox.Size = New System.Drawing.Size(130, 24)
         Me.CMD_FontWeightBox.TabIndex = 99
@@ -910,7 +942,7 @@ Partial Class cmd
         '
         Me.Label61.BackColor = System.Drawing.Color.Transparent
         Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label61.Location = New System.Drawing.Point(33, 41)
+        Me.Label61.Location = New System.Drawing.Point(33, 40)
         Me.Label61.Name = "Label61"
         Me.Label61.Size = New System.Drawing.Size(54, 22)
         Me.Label61.TabIndex = 97
@@ -924,7 +956,7 @@ Partial Class cmd
         Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_RasterToggle.Checked = False
         Me.CMD_RasterToggle.DarkLight_Toggler = False
-        Me.CMD_RasterToggle.Location = New System.Drawing.Point(174, 98)
+        Me.CMD_RasterToggle.Location = New System.Drawing.Point(174, 99)
         Me.CMD_RasterToggle.Name = "CMD_RasterToggle"
         Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 24)
         Me.CMD_RasterToggle.TabIndex = 95
@@ -943,7 +975,7 @@ Partial Class cmd
         '
         Me.Label58.BackColor = System.Drawing.Color.Transparent
         Me.Label58.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label58.Location = New System.Drawing.Point(33, 98)
+        Me.Label58.Location = New System.Drawing.Point(33, 99)
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(108, 24)
         Me.Label58.TabIndex = 94
@@ -1554,6 +1586,7 @@ Partial Class cmd
         Me.XenonCMD1.Name = "XenonCMD1"
         Me.XenonCMD1.PowerShell = False
         Me.XenonCMD1.Raster = False
+        Me.XenonCMD1.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
         Me.XenonCMD1.Size = New System.Drawing.Size(404, 244)
         Me.XenonCMD1.TabIndex = 90
         Me.XenonCMD1.Text = "XenonCMD1"
@@ -1584,19 +1617,6 @@ Partial Class cmd
         Me.XenonButton1.TabIndex = 65
         Me.XenonButton1.Text = "Load"
         Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'OpenWPTHDlg
-        '
-        Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth"
-        '
-        'XenonSeparator2
-        '
-        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 57)
-        Me.XenonSeparator2.Name = "XenonSeparator2"
-        Me.XenonSeparator2.Size = New System.Drawing.Size(677, 1)
-        Me.XenonSeparator2.TabIndex = 199
-        Me.XenonSeparator2.TabStop = False
-        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'cmd
         '
@@ -1751,4 +1771,5 @@ Partial Class cmd
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
     Friend WithEvents XenonSeparator2 As XenonSeparator
+    Friend WithEvents RasterList As XenonComboBox
 End Class

@@ -5178,25 +5178,26 @@ Public Class XenonCMD
     Public Property CMD_PopupBackground As Integer = 5
     Public Property PowerShell As Boolean = False
     Public Property Raster As Boolean = True
+    Public Property RasterSize As Raster_Sizes = Raster_Sizes._8x12
+
     Public Property CustomTerminal As Boolean = False
 
     Dim S1 As String = "(c) Microsoft Corporation. All rights reserved."
     Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
     Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 
-    Function FixValue(i As Integer) As Integer
-        Dim v As Integer
-        v = i
-        If v < 12 Then v = 12
-        If v > 12 And v < 18 Then v = 12
-        If v > 18 And v < 24 Then v = 18
-        If v > 24 And v < 30 Then v = 24
-        If v > 30 And v < 36 Then v = 30
-        If v > 36 And v < 42 Then v = 36
-        If v > 42 And v < 48 Then v = 42
-        If v > 48 Then v = 48
-        Return v
-    End Function
+    Enum Raster_Sizes
+        _4x6
+        _6x8
+        _8x8
+        _16x8
+        _5x12
+        _7x12
+        _8x12
+        _16x12
+        _12x16
+        _10x18
+    End Enum
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -5207,21 +5208,22 @@ Public Class XenonCMD
 
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim RectCMD As New Rectangle(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10)
-        Dim RectMiddle As New Rectangle(Rect.X + (Rect.Width - 200) / 2, Rect.Y + (Rect.Height - 50) / 2, 200, 50)
-        Dim RectMiddleBorder As New Rectangle(RectMiddle.X + 3, RectMiddle.Y + 9, RectMiddle.Width - 6, RectMiddle.Height - 18)
+
+        Dim pW0, pH0, pX0, pY0 As Integer
+        pW0 = 240 * (Font.Size / 18)
+        pH0 = 54 * (Font.Size / 18)
+        pX0 = 5 * (Font.Size / 18)
+        pY0 = 10 * (Font.Size / 18)
+
+        Dim RectMiddle As New Rectangle(Rect.X + (Rect.Width - pW0) / 2, Rect.Y + (Rect.Height - pH0) / 2, pW0, pH0)
+        Dim RectMiddleBorder As New Rectangle(RectMiddle.X + pX0, RectMiddle.Y + pY0, RectMiddle.Width - pX0 * 2, RectMiddle.Height - pY0 * 2)
 
         Dim FC, BK, PCF, PCB As Color
         Dim S As String
 
         Dim F As Font
 
-        If Raster Then
-            If My.W10 Or My.W11 Then
-                F = New Font(My.Application.TerminalFont.FontFamily, CSng(FixValue(Font.Size) * 0.9), Font.Style)
-            Else
-                F = New Font(My.Application.TerminalFont.FontFamily, 12, Font.Style)
-            End If
-        Else
+        If Not Raster Then
             If Not PowerShell Then
                 F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
             Else
@@ -5392,14 +5394,145 @@ Public Class XenonCMD
             S &= vbCrLf & vbCrLf & "*Note: Raster Font will look different from the preview."
         End If
 
-        G.DrawString(S, F, New SolidBrush(FC), RectCMD)
+        If Not Raster Then
+            G.DrawString(S, F, New SolidBrush(FC), RectCMD)
 
-        G.FillRectangle(New SolidBrush(PCB), RectMiddle)
-        G.FillRectangle(New SolidBrush(PCB), RectMiddle)
-        G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
-        G.DrawString("This is a pop-up", F, New SolidBrush(PCF), RectMiddleBorder, StringAligner(ContentAlignment.MiddleCenter))
+            G.FillRectangle(New SolidBrush(PCB), RectMiddle)
+            G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
+
+            G.DrawString("This is a pop-up", F, New SolidBrush(PCF), RectMiddleBorder, StringAligner(ContentAlignment.MiddleCenter))
+
+        Else
+            Dim i0, i1 As Bitmap
+            Dim pW, pH, pX, pY As Integer
+
+            Select Case RasterSize
+                Case Raster_Sizes._4x6
+                    i0 = My.Resources.CMD_4x6
+                    i1 = My.Resources.CMD_4x6_P
+                    pW = 120
+                    pH = 18
+                    pX = 2
+                    pY = 3
+
+                Case Raster_Sizes._6x8
+                    i0 = My.Resources.CMD_6x8
+                    i1 = My.Resources.CMD_6x8_P
+                    pW = 180
+                    pH = 24
+                    pX = 3
+                    pY = 4
+
+                Case Raster_Sizes._8x8
+                    i0 = My.Resources.CMD_8x8
+                    i1 = My.Resources.CMD_8x8_P
+                    pW = 240
+                    pH = 24
+                    pX = 4
+                    pY = 4
+
+                Case Raster_Sizes._16x8
+                    i0 = My.Resources.CMD_16x8
+                    i1 = My.Resources.CMD_16x8_P
+                    pW = 480
+                    pH = 24
+                    pX = 8
+                    pY = 4
+
+                Case Raster_Sizes._5x12
+                    i0 = My.Resources.CMD_5x12
+                    i1 = My.Resources.CMD_5x12_P
+                    pW = 150
+                    pH = 36
+                    pX = 3
+                    pY = 6
+
+                Case Raster_Sizes._7x12
+                    i0 = My.Resources.CMD_7x12
+                    i1 = My.Resources.CMD_7x12_P
+                    pW = 210
+                    pH = 36
+                    pX = 4
+                    pY = 6
+
+                Case Raster_Sizes._8x12
+                    i0 = My.Resources.CMD_8x12
+                    i1 = My.Resources.CMD_8x12_P
+                    pW = 240
+                    pH = 36
+                    pX = 4
+                    pY = 6
+
+                Case Raster_Sizes._16x12
+                    i0 = My.Resources.CMD_16x12
+                    i1 = My.Resources.CMD_16x12_P
+                    pW = 480
+                    pH = 36
+                    pX = 8
+                    pY = 6
+
+                Case Raster_Sizes._12x16
+                    i0 = My.Resources.CMD_12x16
+                    i1 = My.Resources.CMD_12x16_P
+                    pW = 360
+                    pH = 48
+                    pX = 6
+                    pY = 8
+
+                Case Raster_Sizes._10x18
+                    i0 = My.Resources.CMD_10x18
+                    i1 = My.Resources.CMD_10x18_P
+                    pW = 300
+                    pH = 54
+                    pX = 8
+                    pY = 9
+
+                Case Else
+                    i0 = My.Resources.CMD_8x12
+                    i1 = My.Resources.CMD_8x12_P
+                    pW = 240
+                    pH = 36
+                    pX = 4
+                    pY = 6
+
+            End Select
+
+            G.DrawImage(ColorReplace(i0, Color.FromArgb(204, 204, 204), FC), New Point(0, 1))
+
+            RectMiddle = New Rectangle(Rect.X + (Rect.Width - pW) / 2, Rect.Y + (Rect.Height - 36) / 2, pW, pH)
+            RectMiddleBorder = New Rectangle(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2)
+
+            G.FillRectangle(New SolidBrush(PCB), RectMiddle)
+            G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
+
+
+            G.DrawImage(ColorReplace(i1, Color.FromArgb(204, 204, 204), PCF), New Point(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2, RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2))
+
+        End If
     End Sub
 
+    Public Shared Function ColorReplace(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Image
+        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
+        Dim G As Graphics = Graphics.FromImage(outputImage)
+
+
+        For y As Int32 = 0 To inputImage.Height - 1
+
+            For x As Int32 = 0 To inputImage.Width - 1
+                Dim PixelColor As Color = inputImage.GetPixel(x, y)
+
+                If PixelColor = oldColor Then
+                    outputImage.SetPixel(x, y, NewColor)
+                Else
+                    outputImage.SetPixel(x, y, PixelColor)
+                End If
+
+            Next
+        Next
+
+        G.DrawImage(outputImage, 0, 0)
+        Return outputImage
+    End Function
 End Class
 
 <DefaultEvent("Click")>

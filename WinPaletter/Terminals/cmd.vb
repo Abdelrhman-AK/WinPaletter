@@ -19,8 +19,11 @@ Public Class cmd
         ApplyDarkMode(Me)
         XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
         FillFonts(CMD_FontsBox, Not My.Application._Settings.Terminal_OtherFonts)
+        RasterList.BringToFront()
+
         ApplyFromCP(MainFrm.CP, _Edition)
         ApplyPreview()
+
         CMD_PopupForegroundLbl.Font = My.Application.ConsoleFont
         CMD_PopupBackgroundLbl.Font = My.Application.ConsoleFont
         CMD_AccentForegroundLbl.Font = My.Application.ConsoleFont
@@ -74,19 +77,7 @@ Public Class cmd
 
         If [ListBox].SelectedItem = Nothing Then [ListBox].SelectedIndex = 0
     End Sub
-    Function FixValue(i As Integer) As Integer
-        Dim v As Integer
-        v = i
-        If v < 12 Then v = 12
-        If v > 12 And v < 18 Then v = 12
-        If v > 18 And v < 24 Then v = 18
-        If v > 24 And v < 30 Then v = 24
-        If v > 30 And v < 36 Then v = 30
-        If v > 36 And v < 42 Then v = 36
-        If v > 42 And v < 48 Then v = 42
-        If v > 48 Then v = 48
-        Return v
-    End Function
+
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
 
         If CMDEnabled.Checked Then
@@ -211,10 +202,45 @@ Public Class cmd
         XenonCMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value
         XenonCMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
         XenonCMD1.Font = New Font(f_cmd.Name, f_cmd.Size, f_cmd.Style)
-        XenonCMD1.Raster = CMD_RasterToggle.Checked
-        XenonCMD1.Refresh()
-
         XenonCMD1.PowerShell = (_Edition = Edition.PowerShellx64) Or (_Edition = Edition.PowerShellx86)
+        XenonCMD1.Raster = CMD_RasterToggle.Checked
+        Select Case RasterList.SelectedItem
+            Case "4x6"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._4x6
+
+            Case "6x8"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._6x8
+
+            Case "8x8"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x8
+
+            Case "16x8"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._16x8
+
+            Case "5x12"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._5x12
+
+            Case "7x12"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._7x12
+
+            Case "8x12"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+            Case "16x12"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._16x12
+
+            Case "12x16"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._12x16
+
+            Case "10x18"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._10x18
+
+            Case Else
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+        End Select
+
+        XenonCMD1.Refresh()
     End Sub
 
     Sub UpdateFromTrack(i As Integer)
@@ -428,6 +454,8 @@ Public Class cmd
                 CMD_AccentForegroundBar.Value = CP.CMD_ScreenColorsForeground
                 CMD_AccentBackgroundBar.Value = CP.CMD_ScreenColorsBackground
                 CMD_RasterToggle.Checked = CP.CMD_FontRaster
+                RasterList.Visible = CP.CMD_FontRaster
+
                 Select Case CP.CMD_FontWeight
                     Case 0
                         CMD_FontWeightBox.SelectedIndex = 0
@@ -463,9 +491,25 @@ Public Class cmd
                         CMD_FontWeightBox.SelectedIndex = 4
 
                 End Select
+
                 With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.CMD_FaceName, .lfWeight = CP.CMD_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.CMD_FontSize / 65536), .Style) : End With
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
+                CMD_FontSizeLbl.Text = f_cmd.Size
+
+                If CP.CMD_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
+                If CP.CMD_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
+                If CP.CMD_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
+                If CP.CMD_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
+                If CP.CMD_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
+                If CP.CMD_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
+                If CP.CMD_FontSize = 0 Then RasterList.SelectedItem = "8x12"
+                If CP.CMD_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
+                If CP.CMD_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
+                If CP.CMD_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
+                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
+
                 CP.CMD_CursorSize = CMD_CursorSizeBar.Value
                 If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
                 If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
@@ -511,6 +555,8 @@ Public Class cmd
                 CMD_AccentForegroundBar.Value = CP.PS_32_ScreenColorsForeground
                 CMD_AccentBackgroundBar.Value = CP.PS_32_ScreenColorsBackground
                 CMD_RasterToggle.Checked = CP.PS_32_FontRaster
+                RasterList.Visible = CP.PS_32_FontRaster
+
                 Select Case CP.PS_32_FontWeight
                     Case 0
                         CMD_FontWeightBox.SelectedIndex = 0
@@ -549,6 +595,20 @@ Public Class cmd
                 With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_32_FaceName, .lfWeight = CP.PS_32_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_32_FontSize / 65536), .Style) : End With
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
+                CMD_FontSizeLbl.Text = f_cmd.Size
+
+                If CP.PS_32_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
+                If CP.PS_32_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
+                If CP.PS_32_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
+                If CP.PS_32_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
+                If CP.PS_32_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
+                If CP.PS_32_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
+                If CP.PS_32_FontSize = 0 Then RasterList.SelectedItem = "8x12"
+                If CP.PS_32_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
+                If CP.PS_32_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
+                If CP.PS_32_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
+                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
                 CP.PS_32_CursorSize = CMD_CursorSizeBar.Value
                 If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
                 If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
@@ -594,6 +654,8 @@ Public Class cmd
                 CMD_AccentForegroundBar.Value = CP.PS_64_ScreenColorsForeground
                 CMD_AccentBackgroundBar.Value = CP.PS_64_ScreenColorsBackground
                 CMD_RasterToggle.Checked = CP.PS_64_FontRaster
+                RasterList.Visible = CP.PS_64_FontRaster
+
                 Select Case CP.PS_64_FontWeight
                     Case 0
                         CMD_FontWeightBox.SelectedIndex = 0
@@ -629,9 +691,24 @@ Public Class cmd
                         CMD_FontWeightBox.SelectedIndex = 4
 
                 End Select
+
                 With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_64_FaceName, .lfWeight = CP.PS_64_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_64_FontSize / 65536), .Style) : End With
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
+                CMD_FontSizeLbl.Text = f_cmd.Size
+
+                If CP.PS_64_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
+                If CP.PS_64_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
+                If CP.PS_64_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
+                If CP.PS_64_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
+                If CP.PS_64_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
+                If CP.PS_64_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
+                If CP.PS_64_FontSize = 0 Then RasterList.SelectedItem = "8x12"
+                If CP.PS_64_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
+                If CP.PS_64_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
+                If CP.PS_64_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
+                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
                 CP.PS_64_CursorSize = CMD_CursorSizeBar.Value
                 If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
                 If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
@@ -682,11 +759,47 @@ Public Class cmd
                 CP.CMD_FaceName = f_cmd.Name
                 CP.CMD_FontRaster = CMD_RasterToggle.Checked
                 CP.CMD_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+
                 If Not CMD_RasterToggle.Checked Then
                     CP.CMD_FontSize = CMD_FontSizeBar.Value * 65536
                 Else
-                    CP.CMD_FontSize = FixValue(CMD_FontSizeBar.Value) * 65536
+                    Select Case RasterList.SelectedItem
+                        Case "4x6"
+                            CP.CMD_FontSize = 393220
+
+                        Case "6x8"
+                            CP.CMD_FontSize = 524294
+
+                        Case "8x8"
+                            CP.CMD_FontSize = 524296
+
+                        Case "16x8"
+                            CP.CMD_FontSize = 524304
+
+                        Case "5x12"
+                            CP.CMD_FontSize = 786437
+
+                        Case "7x12"
+                            CP.CMD_FontSize = 786439
+
+                        Case "8x12"
+                            CP.CMD_FontSize = 0
+
+                        Case "16x12"
+                            CP.CMD_FontSize = 786448
+
+                        Case "12x16"
+                            CP.CMD_FontSize = 1048588
+
+                        Case "10x18"
+                            CP.CMD_FontSize = 1179658
+
+                        Case Else
+                            CP.CMD_FontSize = 0
+
+                    End Select
                 End If
+
                 If CMD_CursorSizeBar.Value < 20 Then
                     CP.CMD_CursorSize = 20
                 ElseIf CMD_CursorSizeBar.Value > 100 Then
@@ -731,10 +844,45 @@ Public Class cmd
                 CP.PS_32_FaceName = f_cmd.Name
                 CP.PS_32_FontRaster = CMD_RasterToggle.Checked
                 CP.PS_32_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+
                 If Not CMD_RasterToggle.Checked Then
                     CP.PS_32_FontSize = CMD_FontSizeBar.Value * 65536
                 Else
-                    CP.PS_32_FontSize = FixValue(CMD_FontSizeBar.Value) * 65536
+                    Select Case RasterList.SelectedItem
+                        Case "4x6"
+                            CP.PS_32_FontSize = 393220
+
+                        Case "6x8"
+                            CP.PS_32_FontSize = 524294
+
+                        Case "8x8"
+                            CP.PS_32_FontSize = 524296
+
+                        Case "16x8"
+                            CP.PS_32_FontSize = 524304
+
+                        Case "5x12"
+                            CP.PS_32_FontSize = 786437
+
+                        Case "7x12"
+                            CP.PS_32_FontSize = 786439
+
+                        Case "8x12"
+                            CP.PS_32_FontSize = 0
+
+                        Case "16x12"
+                            CP.PS_32_FontSize = 786448
+
+                        Case "12x16"
+                            CP.PS_32_FontSize = 1048588
+
+                        Case "10x18"
+                            CP.PS_32_FontSize = 1179658
+
+                        Case Else
+                            CP.PS_32_FontSize = 0
+
+                    End Select
                 End If
 
                 If CMD_CursorSizeBar.Value < 20 Then
@@ -781,10 +929,45 @@ Public Class cmd
                 CP.PS_64_FaceName = f_cmd.Name
                 CP.PS_64_FontRaster = CMD_RasterToggle.Checked
                 CP.PS_64_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+
                 If Not CMD_RasterToggle.Checked Then
                     CP.PS_64_FontSize = CMD_FontSizeBar.Value * 65536
                 Else
-                    CP.PS_64_FontSize = FixValue(CMD_FontSizeBar.Value) * 65536
+                    Select Case RasterList.SelectedItem
+                        Case "4x6"
+                            CP.PS_64_FontSize = 393220
+
+                        Case "6x8"
+                            CP.PS_64_FontSize = 524294
+
+                        Case "8x8"
+                            CP.PS_64_FontSize = 524296
+
+                        Case "16x8"
+                            CP.PS_64_FontSize = 524304
+
+                        Case "5x12"
+                            CP.PS_64_FontSize = 786437
+
+                        Case "7x12"
+                            CP.PS_64_FontSize = 786439
+
+                        Case "8x12"
+                            CP.PS_64_FontSize = 0
+
+                        Case "16x12"
+                            CP.PS_64_FontSize = 786448
+
+                        Case "12x16"
+                            CP.PS_64_FontSize = 1048588
+
+                        Case "10x18"
+                            CP.PS_64_FontSize = 1179658
+
+                        Case Else
+                            CP.PS_64_FontSize = 0
+
+                    End Select
                 End If
 
                 If CMD_CursorSizeBar.Value < 20 Then
@@ -805,8 +988,6 @@ Public Class cmd
                 End If
 #End Region
         End Select
-
-
 
     End Sub
 #End Region
@@ -907,13 +1088,7 @@ Public Class cmd
 
     Private Sub CMD_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles CMD_RasterToggle.CheckedChanged
         If _Shown Then
-
-            If CMD_RasterToggle.Enabled Then
-                XenonCMD1.Font = New Font(f_cmd.Name, 12, f_cmd.Style)
-            Else
-                XenonCMD1.Font = f_cmd
-            End If
-
+            RasterList.Visible = CMD_RasterToggle.Checked
             ApplyPreview()
         End If
     End Sub
@@ -941,6 +1116,12 @@ Public Class cmd
         CMD_FontSizeLbl.Text = CMD_FontSizeBar.Value
         If _Shown Then
             f_cmd = New Font(f_cmd.Name, CMD_FontSizeBar.Value, f_cmd.Style)
+            ApplyPreview()
+        End If
+    End Sub
+
+    Private Sub RasterList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles RasterList.SelectedIndexChanged
+        If _Shown Then
             ApplyPreview()
         End If
     End Sub
@@ -1052,5 +1233,6 @@ Public Class cmd
             CMDEnabled.Checked = ee
         End If
     End Sub
+
 
 End Class

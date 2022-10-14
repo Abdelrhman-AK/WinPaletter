@@ -9,6 +9,8 @@ Public Class ExternalTerminal
         ApplyDarkMode(Me)
         _Shown = False
         FillTerminals(XenonComboBox1)
+        RasterList.BringToFront()
+
         XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
         FillFonts(ExtTerminal_FontsBox, Not My.Application._Settings.Terminal_OtherFonts)
         MainFrm.Visible = False
@@ -42,141 +44,155 @@ Public Class ExternalTerminal
 
         Dim y_cmd As Object
 
+        Dim _Def As CP
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+            _Def = New CP_Defaults().Default_Windows11
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+            _Def = New CP_Defaults().Default_Windows10
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+            _Def = New CP_Defaults().Default_Windows8
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+            _Def = New CP_Defaults().Default_Windows7
+        Else
+            _Def = New CP_Defaults().Default_Windows11
+        End If
+
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", BizareColorInvertor(_Def.CMD_ColorTable00).ToArgb)
             ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable00.BackColor = Color.Black
+            ExtTerminal_ColorTable00.BackColor = _Def.CMD_ColorTable00
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", BizareColorInvertor(_Def.CMD_ColorTable01).ToArgb)
             ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable01.BackColor = Color.Black
+            ExtTerminal_ColorTable01.BackColor = _Def.CMD_ColorTable01
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", BizareColorInvertor(_Def.CMD_ColorTable02).ToArgb)
             ExtTerminal_ColorTable02.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable02.BackColor = Color.Black
+            ExtTerminal_ColorTable02.BackColor = _Def.CMD_ColorTable02
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", BizareColorInvertor(_Def.CMD_ColorTable03).ToArgb)
             ExtTerminal_ColorTable03.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable03.BackColor = Color.Black
+            ExtTerminal_ColorTable03.BackColor = _Def.CMD_ColorTable03
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", BizareColorInvertor(_Def.CMD_ColorTable04).ToArgb)
             ExtTerminal_ColorTable04.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable04.BackColor = Color.Black
+            ExtTerminal_ColorTable04.BackColor = _Def.CMD_ColorTable04
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", BizareColorInvertor(_Def.CMD_ColorTable05).ToArgb)
             ExtTerminal_ColorTable05.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable05.BackColor = Color.Black
+            ExtTerminal_ColorTable05.BackColor = _Def.CMD_ColorTable05
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", BizareColorInvertor(_Def.CMD_ColorTable06).ToArgb)
             ExtTerminal_ColorTable06.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable06.BackColor = Color.Black
+            ExtTerminal_ColorTable06.BackColor = _Def.CMD_ColorTable06
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", BizareColorInvertor(_Def.CMD_ColorTable07).ToArgb)
             ExtTerminal_ColorTable07.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable07.BackColor = Color.Black
+            ExtTerminal_ColorTable07.BackColor = _Def.CMD_ColorTable07
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", BizareColorInvertor(_Def.CMD_ColorTable08).ToArgb)
             ExtTerminal_ColorTable08.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable08.BackColor = Color.Black
+            ExtTerminal_ColorTable08.BackColor = _Def.CMD_ColorTable08
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", BizareColorInvertor(_Def.CMD_ColorTable09).ToArgb)
             ExtTerminal_ColorTable09.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable09.BackColor = Color.Black
+            ExtTerminal_ColorTable09.BackColor = _Def.CMD_ColorTable09
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", BizareColorInvertor(_Def.CMD_ColorTable10).ToArgb)
             ExtTerminal_ColorTable10.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable10.BackColor = Color.Black
+            ExtTerminal_ColorTable10.BackColor = _Def.CMD_ColorTable10
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", BizareColorInvertor(_Def.CMD_ColorTable11).ToArgb)
             ExtTerminal_ColorTable11.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable11.BackColor = Color.Black
+            ExtTerminal_ColorTable11.BackColor = _Def.CMD_ColorTable11
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", BizareColorInvertor(_Def.CMD_ColorTable12).ToArgb)
             ExtTerminal_ColorTable12.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable12.BackColor = Color.Black
+            ExtTerminal_ColorTable12.BackColor = _Def.CMD_ColorTable12
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", BizareColorInvertor(_Def.CMD_ColorTable13).ToArgb)
             ExtTerminal_ColorTable13.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable13.BackColor = Color.Black
+            ExtTerminal_ColorTable13.BackColor = _Def.CMD_ColorTable13
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", BizareColorInvertor(_Def.CMD_ColorTable14).ToArgb)
             ExtTerminal_ColorTable14.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable14.BackColor = Color.Black
+            ExtTerminal_ColorTable14.BackColor = _Def.CMD_ColorTable14
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", BizareColorInvertor(Color.Black).ToArgb)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", BizareColorInvertor(_Def.CMD_ColorTable15).ToArgb)
             ExtTerminal_ColorTable15.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
         Catch
-            ExtTerminal_ColorTable15.BackColor = Color.Black
+            ExtTerminal_ColorTable15.BackColor = _Def.CMD_ColorTable15
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "PopupColors", 245)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "PopupColors", Convert.ToInt32(_Def.CMD_PopupBackground.ToString("X") & _Def.CMD_PopupForeground.ToString("X"), 16))
+            Dim d As String = CInt(y_cmd).ToString("X")
 
-            With CInt(y_cmd).ToString("X")
-                ExtTerminal_PopupBackgroundBar.Value = Convert.ToInt32(.Chars(0), 16)
-                ExtTerminal_PopupForegroundBar.Value = Convert.ToInt32(.Chars(1), 16)
-            End With
+            If d.Count = 1 Then d = 0 & d
+            ExtTerminal_PopupBackgroundBar.Value = Convert.ToInt32(d.Chars(0), 16)
+            ExtTerminal_PopupForegroundBar.Value = Convert.ToInt32(d.Chars(1), 16)
         Catch
-            ExtTerminal_PopupBackgroundBar.Value = 15
-            ExtTerminal_PopupForegroundBar.Value = 5
+            ExtTerminal_PopupBackgroundBar.Value = _Def.CMD_PopupBackground
+            ExtTerminal_PopupForegroundBar.Value = _Def.CMD_PopupForeground
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", 7)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", Convert.ToInt32(_Def.CMD_ScreenColorsBackground.ToString("X") & _Def.CMD_ScreenColorsForeground.ToString("X"), 16))
+            Dim d As String = CInt(y_cmd).ToString("X")
 
-            With CInt(y_cmd).ToString("X")
-                ExtTerminal_AccentBackgroundBar.Value = Convert.ToInt32(.Chars(0), 16)
-                ExtTerminal_AccentForegroundBar.Value = Convert.ToInt32(.Chars(1), 16)
-            End With
+            If d.Count = 1 Then d = 0 & d
+            ExtTerminal_AccentBackgroundBar.Value = Convert.ToInt32(d.Chars(0), 16)
+            ExtTerminal_AccentForegroundBar.Value = Convert.ToInt32(d.Chars(1), 16)
         Catch
-            ExtTerminal_AccentBackgroundBar.Value = 0
-            ExtTerminal_AccentForegroundBar.Value = 7
+            ExtTerminal_AccentBackgroundBar.Value = _Def.CMD_ScreenColorsBackground
+            ExtTerminal_AccentForegroundBar.Value = _Def.CMD_ScreenColorsForeground
         End Try
+
 
         Try
             y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorSize", 25)
@@ -186,18 +202,35 @@ Public Class ExternalTerminal
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", 54)
-            ExtTerminal_RasterToggle.Checked = If(y_cmd = 0, True, False)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
+            ExtTerminal_RasterToggle.Checked = If(y_cmd = 1 Or y_cmd = 0, True, False)
         Catch
             ExtTerminal_RasterToggle.Checked = False
         End Try
 
         Try
             y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 16 * 65536)
+
             ExtTerminal_FontSizeBar.Value = y_cmd / 65536
+
+            If y_cmd = 393220 Then RasterList.SelectedItem = "4x6"
+            If y_cmd = 524294 Then RasterList.SelectedItem = "6x8"
+            If y_cmd = 524296 Then RasterList.SelectedItem = "8x8"
+            If y_cmd = 524304 Then RasterList.SelectedItem = "16x8"
+            If y_cmd = 786437 Then RasterList.SelectedItem = "5x12"
+            If y_cmd = 786439 Then RasterList.SelectedItem = "7x12"
+            If y_cmd = 0 Then RasterList.SelectedItem = "8x12"
+            If y_cmd = 786448 Then RasterList.SelectedItem = "16x12"
+            If y_cmd = 1048588 Then RasterList.SelectedItem = "12x16"
+            If y_cmd = 1179658 Then RasterList.SelectedItem = "10x18"
+            If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
         Catch
             ExtTerminal_FontSizeBar.Value = 16
+            RasterList.SelectedItem = "8x12"
         End Try
+
+        ExtTerminal_FontSizeLbl.Text = ExtTerminal_FontSizeBar.Value
 
         Dim wg As Integer
 
@@ -260,40 +293,40 @@ Public Class ExternalTerminal
 
         If My.W10_1909 Then
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", BizareColorInvertor(Color.White).ToArgb)
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", BizareColorInvertor(_Def.CMD_1909_CursorColor).ToArgb)
                 ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
             Catch
-                ExtTerminal_CursorColor.BackColor = Color.White
+                ExtTerminal_CursorColor.BackColor = _Def.CMD_1909_CursorColor
             End Try
             ExtTerminal_PreviewCUR2.BackColor = ExtTerminal_CursorColor.BackColor
 
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", 0)
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", _Def.CMD_1909_CursorType)
                 ExtTerminal_CursorStyle.SelectedIndex = y_cmd
             Catch
-                ExtTerminal_CursorStyle.SelectedIndex = 1
+                ExtTerminal_CursorStyle.SelectedIndex = _Def.CMD_1909_CursorType
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", True)
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", _Def.CMD_1909_ForceV2)
                 ExtTerminal_EnhancedTerminal.Checked = y_cmd
             Catch
-                ExtTerminal_EnhancedTerminal.Checked = True
+                ExtTerminal_EnhancedTerminal.Checked = _Def.CMD_1909_ForceV2
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", False)
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", _Def.CMD_1909_LineSelection)
                 ExtTerminal_LineSelection.Checked = y_cmd
             Catch
-                ExtTerminal_LineSelection.Checked = False
+                ExtTerminal_LineSelection.Checked = _Def.CMD_1909_LineSelection
             End Try
 
 
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", False)
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", _Def.CMD_1909_TerminalScrolling)
                 ExtTerminal_TerminalScrolling.Checked = y_cmd
             Catch
-                ExtTerminal_TerminalScrolling.Checked = False
+                ExtTerminal_TerminalScrolling.Checked = _Def.CMD_1909_TerminalScrolling
             End Try
 
 
@@ -380,8 +413,49 @@ Public Class ExternalTerminal
                 Kill(tempreg)
             End If
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 0, 54))
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
+
+            If Not ExtTerminal_RasterToggle.Checked Then
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
+            Else
+                Select Case RasterList.SelectedItem
+                    Case "4x6"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 393220)
+
+                    Case "6x8"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
+
+                    Case "8x8"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
+
+                    Case "16x8"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524304)
+
+                    Case "5x12"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786437)
+
+                    Case "7x12"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786439)
+
+                    Case "8x12"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
+
+                    Case "16x12"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786448)
+
+                    Case "12x16"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1048588)
+
+                    Case "10x18"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1179658)
+
+                    Case Else
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
+
+                End Select
+            End If
+
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
+
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 
             MsgBox(My.Application.LanguageHelper.ExtTer_Set, MsgBoxStyle.Information + My.Application.MsgboxRt)
@@ -453,13 +527,7 @@ Public Class ExternalTerminal
 
     Private Sub ExtTerminal_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ExtTerminal_RasterToggle.CheckedChanged
         If _Shown Then
-
-            If ExtTerminal_RasterToggle.Enabled Then
-                XenonCMD4.Font = New Font(f_extterminal.Name, 12, f_extterminal.Style)
-            Else
-                XenonCMD4.Font = f_extterminal
-            End If
-
+            RasterList.Visible = ExtTerminal_RasterToggle.Checked
             ApplyPreview()
         End If
     End Sub
@@ -704,6 +772,43 @@ Public Class ExternalTerminal
         XenonCMD4.CMD_ScreenColorsBackground = ExtTerminal_AccentBackgroundBar.Value
         XenonCMD4.Font = New Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style)
         XenonCMD4.Raster = ExtTerminal_RasterToggle.Checked
+
+        Select Case RasterList.SelectedItem
+            Case "4x6"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._4x6
+
+            Case "6x8"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._6x8
+
+            Case "8x8"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x8
+
+            Case "16x8"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._16x8
+
+            Case "5x12"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._5x12
+
+            Case "7x12"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._7x12
+
+            Case "8x12"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+            Case "16x12"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._16x12
+
+            Case "12x16"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._12x16
+
+            Case "10x18"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._10x18
+
+            Case Else
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+        End Select
+
 #End Region
 
 
@@ -899,5 +1004,11 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         NewExtTerminal.ShowDialog()
+    End Sub
+
+    Private Sub RasterList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles RasterList.SelectedIndexChanged
+        If _Shown Then
+            ApplyPreview()
+        End If
     End Sub
 End Class

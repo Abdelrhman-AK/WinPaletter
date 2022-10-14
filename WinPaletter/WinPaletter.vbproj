@@ -140,7 +140,6 @@
     <None Include="packages.config" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\RetroThemesDB.wpdb" />
-    <None Include="Resources\TerminalFont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.Designer.vb">
@@ -247,7 +246,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Resources1.Designer.vb" />
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -340,11 +338,32 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\0.png" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
+    <None Include="Resources\CMD_4x6.png" />
+    <None Include="Resources\CMD_4x6_P.png" />
+    <None Include="Resources\CMD_5x12.png" />
+    <None Include="Resources\CMD_5x12_P.png" />
+    <None Include="Resources\CMD_6x8.png" />
+    <None Include="Resources\CMD_6x8_P.png" />
+    <None Include="Resources\CMD_7x12.png" />
+    <None Include="Resources\CMD_7x12_P.png" />
+    <None Include="Resources\CMD_8x8.png" />
+    <None Include="Resources\CMD_8x8_P.png" />
+    <None Include="Resources\CMD_8x12.png" />
+    <None Include="Resources\CMD_8x12_P.png" />
+    <None Include="Resources\CMD_10x18.png" />
+    <None Include="Resources\CMD_10x18_P.png" />
+    <None Include="Resources\CMD_12x16.png" />
+    <None Include="Resources\CMD_12x16_P.png" />
+    <None Include="Resources\CMD_16x8.png" />
+    <None Include="Resources\CMD_16x8_P.png" />
+    <None Include="Resources\CMD_16x12.png" />
+    <None Include="Resources\CMD_16x12_P.png" />
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
@@ -421,8 +440,9 @@
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
