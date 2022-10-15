@@ -1239,7 +1239,7 @@ Public Class WindowsTerminal
             .Name = _Terminal.Themes(TerThemes.SelectedIndex - 3).Name & " " & My.Application.LanguageHelper.Terminal_Clone & " #" & TerThemes.Items.Count,
             .applicationTheme_light = _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light,
             .Tab_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active,
-            .Tab_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive,
+            .Tab_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive,
             .Titlebar_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active,
             .Titlebar_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive
         }
@@ -1253,5 +1253,224 @@ Public Class WindowsTerminal
         DialogResult = DialogResult.Cancel
 
         Me.Close()
+    End Sub
+
+    Public CCat As String
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        With WindowsTerminalCopycat.XenonComboBox1
+            .Items.Clear()
+            CCat = Nothing
+
+            For Each x In TerProfiles.Items
+                .Items.Add(x)
+            Next
+        End With
+
+        If WindowsTerminalCopycat.ShowDialog = DialogResult.OK Then
+            For x As Integer = 0 To TerProfiles.Items.Count - 1
+                If TerProfiles.Items.Item(x).ToString.ToLower = CCat.ToLower Then
+
+                    Dim CCatFrom As ProfilesList = If(x = 0, _Terminal.DefaultProf, _Terminal.Profiles(x - 1))
+
+                    With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
+                        .BackgroundImage = CCatFrom.BackgroundImage
+                        .BackgroundImageOpacity = CCatFrom.BackgroundImageOpacity
+                        .ColorScheme = CCatFrom.ColorScheme
+                        .CursorHeight = CCatFrom.CursorHeight
+                        .CursorShape = CCatFrom.CursorShape
+                        .Font.Face = CCatFrom.Font.Face
+                        .Font.Weight = CCatFrom.Font.Weight
+                        .Font.Size = CCatFrom.Font.Size
+                        .Icon = CCatFrom.Icon
+                        .Opacity = CCatFrom.Opacity
+                        .Source = CCatFrom.Source
+                        .TabColor = CCatFrom.TabColor
+                        .TabTitle = CCatFrom.TabTitle
+                        .UseAcrylic = CCatFrom.UseAcrylic
+                    End With
+
+                    With CCatFrom
+                        Try
+                            If TerSchemes.Items.Contains(.ColorScheme) Then TerSchemes.SelectedItem = .ColorScheme Else TerSchemes.SelectedItem = _Terminal.DefaultProf.ColorScheme
+                        Catch
+                        End Try
+
+                        TerBackImage.Text = .BackgroundImage
+                        TerImageOpacity.Value = .BackgroundImageOpacity * 100
+
+                        TerCursorStyle.SelectedIndex = .CursorShape
+                        TerCursorHeightBar.Value = .CursorHeight
+
+                        TerFonts.SelectedItem = .Font.Face
+                        TerFontSizeBar.Value = .Font.Size
+                        TerFontWeight.SelectedIndex = .Font.Weight
+
+                        TerAcrylic.Checked = .UseAcrylic
+                        TerOpacityBar.Value = .Opacity
+
+                        XenonTerminal1.Opacity = .Opacity
+                        XenonTerminal1.OpacityBackImage = .BackgroundImageOpacity * 100
+
+                        If Not String.IsNullOrEmpty(.TabTitle) Then
+                            XenonTerminal1.TabTitle = .TabTitle
+                        Else
+                            If Not String.IsNullOrEmpty(.Name) Then
+                                XenonTerminal1.TabTitle = .Name
+                            ElseIf TerProfiles.SelectedIndex = 0 Then
+                                XenonTerminal1.TabTitle = "Default"
+                            Else
+                                XenonTerminal1.TabTitle = "Untitled"
+                            End If
+                        End If
+
+                        If File.Exists(.Icon) Then
+                            XenonTerminal1.TabIcon = Image.FromStream(New FileStream(.Icon, FileMode.Open, FileAccess.Read))
+
+                        Else
+                            NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+                            Dim path As String
+                            If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+                            NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+
+                            If File.Exists(path) Then
+                                XenonTerminal1.TabIcon = NativeMethods.User32.ExtractSmallIcon(path).ToBitmap
+                            Else
+                                XenonTerminal1.TabIcon = Nothing
+                                XenonTerminal1.TabIconButItIsString = ""
+                            End If
+
+                        End If
+
+                    End With
+
+                    Exit For
+                End If
+
+            Next
+
+            ApplyPreview(_Terminal)
+
+        End If
+
+    End Sub
+
+    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+        With WindowsTerminalCopycat.XenonComboBox1
+            .Items.Clear()
+            CCat = Nothing
+
+            For Each x In TerSchemes.Items
+                .Items.Add(x)
+            Next
+        End With
+
+        If WindowsTerminalCopycat.ShowDialog = DialogResult.OK Then
+            For x As Integer = 0 To TerSchemes.Items.Count - 1
+                If TerSchemes.Items.Item(x).ToString.ToLower = CCat.ToLower Then
+
+                    Dim CCatFrom As TColor = _Terminal.Colors(x)
+
+                    With _Terminal.Colors(TerSchemes.SelectedIndex)
+                        .Background = CCatFrom.Background
+                        .Black = CCatFrom.Black
+                        .Blue = CCatFrom.Blue
+                        .BrightBlack = CCatFrom.BrightBlack
+                        .BrightBlue = CCatFrom.BrightBlue
+                        .BrightCyan = CCatFrom.BrightCyan
+                        .BrightGreen = CCatFrom.BrightGreen
+                        .BrightPurple = CCatFrom.BrightPurple
+                        .BrightRed = CCatFrom.BrightRed
+                        .BrightWhite = CCatFrom.BrightWhite
+                        .BrightYellow = CCatFrom.BrightYellow
+                        .CursorColor = CCatFrom.CursorColor
+                        .Cyan = CCatFrom.Cyan
+                        .Foreground = CCatFrom.Foreground
+                        .Green = CCatFrom.Green
+                        .Purple = CCatFrom.Purple
+                        .Red = CCatFrom.Red
+                        .SelectionBackground = CCatFrom.SelectionBackground
+                        .White = CCatFrom.White
+                        .Yellow = CCatFrom.Yellow
+
+                        TerBackground.BackColor = .Background
+                        TerForeground.BackColor = .Foreground
+                        TerSelection.BackColor = .SelectionBackground
+                        TerCursor.BackColor = .CursorColor
+
+                        TerBlack.BackColor = .Black
+                        TerBlue.BackColor = .Blue
+                        TerGreen.BackColor = .Green
+                        TerCyan.BackColor = .Cyan
+                        TerRed.BackColor = .Red
+                        TerPurple.BackColor = .Purple
+                        TerYellow.BackColor = .Yellow
+                        TerWhite.BackColor = .White
+
+                        TerBlackB.BackColor = .BrightBlack
+                        TerBlueB.BackColor = .BrightBlue
+                        TerGreenB.BackColor = .BrightGreen
+                        TerCyanB.BackColor = .BrightCyan
+                        TerRedB.BackColor = .BrightRed
+                        TerPurpleB.BackColor = .BrightPurple
+                        TerYellowB.BackColor = .BrightYellow
+                        TerWhiteB.BackColor = .BrightWhite
+                    End With
+
+                    ApplyPreview(_Terminal)
+
+                    Exit For
+                End If
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
+        If TerThemes.SelectedIndex < 3 Then
+            MsgBox(My.Application.LanguageHelper.Terminal_ThemeNotCloneable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
+
+        With WindowsTerminalCopycat.XenonComboBox1
+            .Items.Clear()
+            CCat = Nothing
+
+            For Each x In TerThemes.Items
+                .Items.Add(x)
+            Next
+        End With
+
+        If WindowsTerminalCopycat.ShowDialog = DialogResult.OK Then
+            For x As Integer = 0 To TerThemes.Items.Count - 1
+                If TerThemes.Items.Item(x).ToString.ToLower = CCat.ToLower Then
+
+                    Dim CCatFrom As ThemesList = _Terminal.Themes(x - 3)
+
+                    With _Terminal.Themes(TerThemes.SelectedIndex - 3)
+                        .applicationTheme_light = CCatFrom.applicationTheme_light
+                        .Tab_Active = CCatFrom.Tab_Active
+                        .Tab_Inactive = CCatFrom.Tab_Inactive
+                        .Titlebar_Active = CCatFrom.Titlebar_Active
+                        .Titlebar_Inactive = CCatFrom.Titlebar_Inactive
+                    End With
+
+                    With CCatFrom
+                        TerTitlebarActive.BackColor = .Titlebar_Active
+                        TerTitlebarInactive.BackColor = .Titlebar_Inactive
+                        TerTabActive.BackColor = .Tab_Active
+                        TerTabInactive.BackColor = .Tab_Inactive
+                        TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
+                    End With
+
+                    Exit For
+                End If
+
+            Next
+
+            ApplyPreview(_Terminal)
+        End If
     End Sub
 End Class

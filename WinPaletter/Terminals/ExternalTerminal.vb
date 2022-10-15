@@ -201,34 +201,6 @@ Public Class ExternalTerminal
             ExtTerminal_CursorSizeBar.Value = 25
         End Try
 
-        Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
-            ExtTerminal_RasterToggle.Checked = If(y_cmd = 1 Or y_cmd = 0, True, False)
-        Catch
-            ExtTerminal_RasterToggle.Checked = False
-        End Try
-
-        Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 16 * 65536)
-
-            ExtTerminal_FontSizeBar.Value = y_cmd / 65536
-
-            If y_cmd = 393220 Then RasterList.SelectedItem = "4x6"
-            If y_cmd = 524294 Then RasterList.SelectedItem = "6x8"
-            If y_cmd = 524296 Then RasterList.SelectedItem = "8x8"
-            If y_cmd = 524304 Then RasterList.SelectedItem = "16x8"
-            If y_cmd = 786437 Then RasterList.SelectedItem = "5x12"
-            If y_cmd = 786439 Then RasterList.SelectedItem = "7x12"
-            If y_cmd = 0 Then RasterList.SelectedItem = "8x12"
-            If y_cmd = 786448 Then RasterList.SelectedItem = "16x12"
-            If y_cmd = 1048588 Then RasterList.SelectedItem = "12x16"
-            If y_cmd = 1179658 Then RasterList.SelectedItem = "10x18"
-            If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
-
-        Catch
-            ExtTerminal_FontSizeBar.Value = 16
-            RasterList.SelectedItem = "8x12"
-        End Try
 
         ExtTerminal_FontSizeLbl.Text = ExtTerminal_FontSizeBar.Value
 
@@ -289,6 +261,40 @@ Public Class ExternalTerminal
 
         Catch
             ExtTerminal_FontsBox.SelectedItem = "Consolas"
+        End Try
+
+        Try
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
+            ExtTerminal_RasterToggle.Checked = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+
+            Try
+                If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Consolas").ToLower = "terminal" Then ExtTerminal_RasterToggle.Checked = True
+            Catch ex As Exception
+
+            End Try
+        Catch
+            ExtTerminal_RasterToggle.Checked = False
+        End Try
+
+        Try
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 16 * 65536)
+            If y_cmd = 0 And Not ExtTerminal_RasterToggle.Checked Then ExtTerminal_FontSizeBar.Value = _Def.CMD_FontSize / 65536 Else ExtTerminal_FontSizeBar.Value = y_cmd / 65536
+
+            If y_cmd = 393220 Then RasterList.SelectedItem = "4x6"
+            If y_cmd = 524294 Then RasterList.SelectedItem = "6x8"
+            If y_cmd = 524296 Then RasterList.SelectedItem = "8x8"
+            If y_cmd = 524304 Then RasterList.SelectedItem = "16x8"
+            If y_cmd = 786437 Then RasterList.SelectedItem = "5x12"
+            If y_cmd = 786439 Then RasterList.SelectedItem = "7x12"
+            If y_cmd = 0 Then RasterList.SelectedItem = "8x12"
+            If y_cmd = 786448 Then RasterList.SelectedItem = "16x12"
+            If y_cmd = 1048588 Then RasterList.SelectedItem = "12x16"
+            If y_cmd = 1179658 Then RasterList.SelectedItem = "10x18"
+            If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
+        Catch
+            ExtTerminal_FontSizeBar.Value = 16
+            RasterList.SelectedItem = "8x12"
         End Try
 
         If My.W10_1909 Then
@@ -374,7 +380,6 @@ Public Class ExternalTerminal
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
             End If
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, False, True)
 
             If New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator) Then
                 CP.EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, False, True)
@@ -454,7 +459,15 @@ Public Class ExternalTerminal
                 End Select
             End If
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
+            If ExtTerminal_RasterToggle.Checked Then
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", 48)
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", False, True)
+            Else
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, False, True)
+            End If
+
+
 
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 

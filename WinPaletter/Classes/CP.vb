@@ -1717,14 +1717,15 @@ Public Class CP
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
-                    CMD_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
+                    CMD_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                    If CMD_FaceName.ToLower = "terminal" Then CMD_FontRaster = True
                 Catch
                     CMD_FontRaster = _Def.CMD_FontRaster
                 End Try
 
                 Try
                     y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontSize", _Def.CMD_FontSize)
-                    If y_cmd = 0 Then CMD_FontSize = _Def.CMD_FontSize Else CMD_FontSize = y_cmd
+                    If y_cmd = 0 And Not CMD_FontRaster Then CMD_FontSize = _Def.CMD_FontSize Else CMD_FontSize = y_cmd
                 Catch
                     CMD_FontSize = _Def.CMD_FontSize
                 End Try
@@ -1948,14 +1949,15 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_32_FontRaster, 54, 1))
-                        PS_32_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
+                        PS_32_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                        If PS_32_FaceName.ToLower = "terminal" Then PS_32_FontRaster = True
                     Catch
                         PS_32_FontRaster = _Def.PS_32_FontRaster
                     End Try
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", _Def.PS_32_FontSize)
-                        If y_cmd = 0 Then PS_32_FontSize = _Def.PS_32_FontSize Else PS_32_FontSize = y_cmd
+                        If y_cmd = 0 And Not PS_32_FontRaster Then PS_32_FontSize = _Def.PS_32_FontSize Else PS_32_FontSize = y_cmd
                     Catch
                         PS_32_FontSize = _Def.PS_32_FontSize
                     End Try
@@ -2181,14 +2183,15 @@ Public Class CP
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_64_FontRaster, 54, 1))
-                        PS_64_FontRaster = If(y_cmd = 1 Or y_cmd = 0, True, False)
+                        PS_64_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                        If PS_64_FaceName.ToLower = "terminal" Then PS_64_FontRaster = True
                     Catch
                         PS_64_FontRaster = _Def.PS_64_FontRaster
                     End Try
 
                     Try
                         y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", CMD_FontSize)
-                        If y_cmd = 0 Then PS_64_FontSize = _Def.PS_64_FontSize Else PS_64_FontSize = y_cmd
+                        If y_cmd = 0 And Not PS_64_FontRaster Then PS_64_FontSize = _Def.PS_64_FontSize Else PS_64_FontSize = y_cmd
                     Catch
                         PS_64_FontSize = CMD_FontSize
                     End Try
@@ -4425,8 +4428,15 @@ Public Class CP
                     EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
                     EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
                     EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
-                    EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
-                    EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 1, 54))
+
+                    If CMD_FontRaster Then
+                        EditReg("HKEY_CURRENT_USER\Console", "FaceName", "Terminal", False, True)
+                        EditReg("HKEY_CURRENT_USER\Console", "FontFamily", 48)
+                    Else
+                        EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
+                        EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 1, 54))
+                    End If
+
                     EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
                     EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
 
@@ -4440,6 +4450,11 @@ Public Class CP
                     End If
 
                     If My.Application._Settings.CMD_OverrideUserPreferences Then
+                        Try
+                            Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_cmd.exe")
+                        Catch
+                        End Try
+
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "EnableColorSelection", 1)
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
@@ -4460,9 +4475,18 @@ Public Class CP
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorSize", CMD_CursorSize)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", CMD_FaceName, False, True)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", If(CMD_FontRaster, 1, 54))
+
+                        If CMD_FontRaster Then
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", "Terminal", False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", 48)
+                        Else
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", CMD_FaceName, False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", If(CMD_FontRaster, 1, 54))
+                        End If
+
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontSize", CMD_FontSize)
+
+
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontWeight", CMD_FontWeight)
 
                         If My.W10_1909 Then
@@ -4544,8 +4568,15 @@ Public Class CP
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_32_PopupBackground.ToString("X") & PS_32_PopupForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_32_ScreenColorsBackground.ToString("X") & PS_32_ScreenColorsForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_32_CursorSize)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 1, 54))
+
+                        If PS_32_FontRaster Then
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
+                        Else
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 1, 54))
+                        End If
+
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_32_FontSize)
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_32_FontWeight)
 
@@ -4629,8 +4660,16 @@ Public Class CP
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_64_PopupBackground.ToString("X") & PS_64_PopupForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_64_ScreenColorsBackground.ToString("X") & PS_64_ScreenColorsForeground.ToString("X"), 16))
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_64_CursorSize)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 1, 54))
+
+                        If PS_64_FontRaster Then
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
+                        Else
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
+                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 1, 54))
+                        End If
+
+
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_64_FontSize)
                         EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_64_FontWeight)
 

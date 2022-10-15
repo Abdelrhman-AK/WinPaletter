@@ -492,7 +492,10 @@ Public Class cmd
 
                 End Select
 
-                With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.CMD_FaceName, .lfWeight = CP.CMD_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.CMD_FontSize / 65536), .Style) : End With
+                If Not CP.CMD_FontRaster Then
+                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.CMD_FaceName, .lfWeight = CP.CMD_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.CMD_FontSize / 65536), .Style) : End With
+                End If
+
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
                 CMD_FontSizeLbl.Text = f_cmd.Size

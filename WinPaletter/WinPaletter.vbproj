@@ -289,6 +289,12 @@
     <Compile Include="Terminals\WindowsTerminal.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Terminals\WindowsTerminalCopycat.Designer.vb">
+      <DependentUpon>WindowsTerminalCopycat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalCopycat.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Terminals\WindowsTerminalDecide.Designer.vb">
       <DependentUpon>WindowsTerminalDecide.vb</DependentUpon>
     </Compile>
@@ -464,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
       <DependentUpon>WindowsTerminal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\WindowsTerminalCopycat.resx">
+      <DependentUpon>WindowsTerminalCopycat.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminalDecide.resx">
       <DependentUpon>WindowsTerminalDecide.vb</DependentUpon>

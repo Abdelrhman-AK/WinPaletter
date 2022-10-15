@@ -26,7 +26,7 @@
    
    * I can't see any effect on Terminal too, What's wrong else?
    
-   * What are the buttons of (+) and (pencil)?
+   * What are the buttons of (+), (pencil) and (blue link file)?
    
    * How to restore Windows Terminal to default?
    
@@ -35,8 +35,6 @@
    * Fonts look weird. What happened?
 
 4) After applying the color palette, Command Prompt and PowerShell are not customized in spite of enabling their toggles. What is the issue?
-   
-   
 
 ---
 
@@ -117,13 +115,15 @@ If future update for Windows Terminal Stable supports that, it will work automat
 
 All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock to it to avoid unintentional actions on them, so if you want to apply effects to terminals you want, just Enable the toggle which you will find in the upper part of the form.
 
-### Q3-D) What are the buttons of (+) and (pencil)?
+### Q3-D) What are the buttons of (+), (pencil) and (blue link file)?
 
-The green + is to create a new profile\color scheme\theme.
+- The green + is to create a new profile\color scheme\theme.
 
-The blue + is to clone a profile\color scheme\theme.
+- The blue + is to clone a profile\color scheme\theme.
 
-The pencil is to edit name of color scheme\theme, and properties of selected profile.
+- The pencil is to edit name of color scheme\theme, and properties of selected profile.
+
+- The blue link file is to copycat a profile\color scheme\theme to the current selected item.
 
 ### Q3-E) How to restore Windows Terminal to default?
 

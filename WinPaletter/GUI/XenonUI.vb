@@ -5531,7 +5531,10 @@ Public Class XenonCMD
         Next
 
         G.DrawImage(outputImage, 0, 0)
+        G.Dispose()
         Return outputImage
+        outputImage.Dispose()
+
     End Function
 End Class
 
@@ -5799,6 +5802,8 @@ Public Class XenonTerminal
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+
         DoubleBuffered = True
 
         If PreviewVersion Then
