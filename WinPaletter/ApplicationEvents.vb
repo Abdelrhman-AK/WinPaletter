@@ -75,11 +75,12 @@ Namespace My
 
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
 
-            Dim key1, key2, key3, key4 As RegistryKey
+            Dim key1, key2, key3, key4, key5 As RegistryKey
             key1 = Nothing
             key2 = Nothing
             key3 = Nothing
             key4 = Nothing
+            key5 = Nothing
 
             Try
                 ' create a value for this key that contains the classname
@@ -90,13 +91,26 @@ Namespace My
                 key2.CreateSubKey(className, True).SetValue("", description)
                 ' associate the program to open the files with this extension
                 key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+
                 key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
+                key3.CreateSubKey(className & "\Shell\Edit in WinPaletter\Command", True).SetValue("", exeProgram & "  /edit:""%1""")
+                key3.CreateSubKey(className & "\Shell\Apply by WinPaletter\Command", True).SetValue("", exeProgram & "  /apply:""%1""")
+
+                key3.OpenSubKey(className & "\Shell\Open", True).SetValue("Icon", exeProgram.Replace("""", "") & ", 0")
+
                 ' associate file icon
                 key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
 
                 If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
                 key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", If(className = "WinPaletter.ThemeFile", appData & "\fileextension.ico", appData & "\settingsfile.ico"))
+
+                key5 = Registry.CurrentUser.OpenSubKey("Software", True)
+                With key5.CreateSubKey("WinPaletter", True)
+                    .SetValue("DisplayName", My.Application.Info.ProductName)
+                    .SetValue("Publisher", My.Application.Info.CompanyName)
+                    .SetValue("Version", My.Application.Info.Version.ToString)
+                End With
 
             Catch e As Exception
                 Return False
@@ -105,6 +119,7 @@ Namespace My
                 If key2 IsNot Nothing Then key2.Close()
                 If key3 IsNot Nothing Then key3.Close()
                 If key4 IsNot Nothing Then key4.Close()
+                If key5 IsNot Nothing Then key5.Close()
             End Try
 
             ' notify Windows that file associations have changed
@@ -128,7 +143,6 @@ Namespace My
 
                 key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
                 key2.DeleteSubKeyTree(className, False)
-
 
             Catch e As Exception
                 Return False
@@ -525,22 +539,7 @@ Namespace My
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
 
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
-                    If arg.ToLower.StartsWith("/apply:") Then
-                        Dim File As String = arg.Remove(0, "/apply:".Count)
-                        File = File.Replace("""", "")
-                        If IO.File.Exists(File) Then
-                            Dim CPx As New CP(CP.Mode.File, File)
-                            CPx.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                        End If
-                        Process.GetCurrentProcess.Kill()
-                    End If
-                Next
-            Catch
-            End Try
+
 
             DetectOS()
 
@@ -551,23 +550,65 @@ Namespace My
             Monitor()
             ApplyDarkMode()
 
-#Region "WhatsNew"
-            If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
-                '### Pop up WhatsNew
-                Whatsnew.ShowDialog()
-                Dim ver As New List(Of String)
-                ver.Clear()
-                ver.Add(My.Application.Info.Version.ToString)
+            ExternalLink = False
+            ExternalLink_File = ""
+            ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
 
-                For Each X As String In _Settings.WhatsNewRecord.ToArray()
-                    ver.Add(X)
+            Try
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    Dim arg As String = Environment.GetCommandLineArgs(x)
+
+                    Try
+                        If arg.ToLower.StartsWith("/apply:") Then
+                            Dim File As String = arg.Remove(0, "/apply:".Count)
+                            File = File.Replace("""", "")
+                            If IO.File.Exists(File) Then
+                                Dim CPx As New CP(CP.Mode.File, File)
+                                CPx.Save(CP.SavingMode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                            End If
+                            Process.GetCurrentProcess.Kill()
+                        End If
+                    Catch
+                    End Try
+
+                    Try
+                        If arg.ToLower.StartsWith("/edit:") Then
+                            Dim File As String = arg.Remove(0, "/edit:".Count)
+                            File = File.Replace("""", "")
+                            ExternalLink = True
+                            ExternalLink_File = File
+                        End If
+                    Catch
+                    End Try
+
+                    Try
+                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                            If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                                ExternalLink = True
+                                ExternalLink_File = arg
+                            Else
+                                Dim CPx As New CP(CP.Mode.File, arg)
+                                CPx.Save(CP.SavingMode.Registry, arg)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                Process.GetCurrentProcess.Kill()
+                            End If
+                        End If
+                    Catch
+                    End Try
+
+                    Try
+                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                            SettingsX._External = True
+                            SettingsX._File = arg
+                            SettingsX.ShowDialog()
+                            Process.GetCurrentProcess.Kill()
+                        End If
+                    Catch
+                    End Try
                 Next
-
-                ver = RemoveDuplicate(ver)
-                _Settings.WhatsNewRecord = ver.ToArray
-                _Settings.Save(XeSettings.Mode.Registry)
-            End If
-#End Region
+            Catch
+            End Try
 
             Try
                 If _Settings.AutoAddExt Then
@@ -593,10 +634,6 @@ Namespace My
 
             AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
 
-            ExternalLink = False
-            ExternalLink_File = ""
-            ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
-
             CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
             CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
 
@@ -612,33 +649,26 @@ Namespace My
             ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
             ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
 
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
-
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                            ExternalLink = True
-                            ExternalLink_File = arg
-                        Else
-                            Dim CPx As New CP(CP.Mode.File, arg)
-                            CPx.Save(CP.SavingMode.Registry, arg)
-                            RestartExplorer()
-                            Process.GetCurrentProcess.Kill()
-                        End If
-                    End If
-
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                        SettingsX._External = True
-                        SettingsX._File = arg
-                        SettingsX.ShowDialog()
-                        Process.GetCurrentProcess.Kill()
-                    End If
-                Next
-            Catch
-            End Try
 
             Try : WinRes = New WinResources : Catch : End Try
+
+#Region "WhatsNew"
+            If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
+                '### Pop up WhatsNew
+                Whatsnew.ShowDialog()
+                Dim ver As New List(Of String)
+                ver.Clear()
+                ver.Add(My.Application.Info.Version.ToString)
+
+                For Each X As String In _Settings.WhatsNewRecord.ToArray()
+                    ver.Add(X)
+                Next
+
+                ver = RemoveDuplicate(ver)
+                _Settings.WhatsNewRecord = ver.ToArray
+                _Settings.Save(XeSettings.Mode.Registry)
+            End If
+#End Region
         End Sub
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try
