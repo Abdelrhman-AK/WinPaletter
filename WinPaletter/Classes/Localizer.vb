@@ -106,6 +106,7 @@ Public Class Localizer
     Property Win32UISavingThemeError As String = "Error saving file: "
     Property LngShouldClose As String = "You should close the app if you want to export language."
     Property CMD_Enable As String = "You should enable terminal editing from the toggle above."
+    Property CMD_NotAllWeights As String = "Not all weights are avaliable according to your OS and the font itself. Normal and Bold ones are the basic ones."
     Property ExtTer_NotFound As String = "Terminal not found. Select a valid one from the list."
     Property ExtTer_Set As String = "Terminal Preferences are set successfully!"
     Property ExtTer_NewSuccess As String = "This key is entered into registry successfully."

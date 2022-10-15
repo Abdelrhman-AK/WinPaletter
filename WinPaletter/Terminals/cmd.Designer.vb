@@ -76,7 +76,6 @@ Partial Class cmd
         Me.Label60 = New System.Windows.Forms.Label()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.RasterList = New WinPaletter.XenonComboBox()
         Me.CMD_FontSizeLbl = New System.Windows.Forms.Label()
         Me.CMD_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.CMD_FontsBox = New WinPaletter.XenonComboBox()
@@ -87,6 +86,7 @@ Partial Class cmd
         Me.Label58 = New System.Windows.Forms.Label()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
+        Me.RasterList = New WinPaletter.XenonComboBox()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
         Me.Label31 = New System.Windows.Forms.Label()
@@ -129,6 +129,7 @@ Partial Class cmd
         Me.XenonCMD1 = New WinPaletter.XenonCMD()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -837,6 +838,7 @@ Partial Class cmd
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.XenonButton25)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeLbl)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontsBox)
@@ -857,23 +859,6 @@ Partial Class cmd
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(231, 130)
         Me.XenonGroupBox4.TabIndex = 98
-        '
-        'RasterList
-        '
-        Me.RasterList.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.RasterList.CustomFont = False
-        Me.RasterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.RasterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.RasterList.ForeColor = System.Drawing.Color.White
-        Me.RasterList.FormattingEnabled = True
-        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
-        Me.RasterList.LineColor = System.Drawing.Color.DodgerBlue
-        Me.RasterList.Location = New System.Drawing.Point(93, 71)
-        Me.RasterList.Name = "RasterList"
-        Me.RasterList.Size = New System.Drawing.Size(130, 24)
-        Me.RasterList.TabIndex = 104
-        Me.RasterList.Visible = False
         '
         'CMD_FontSizeLbl
         '
@@ -942,7 +927,7 @@ Partial Class cmd
         '
         Me.Label61.BackColor = System.Drawing.Color.Transparent
         Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label61.Location = New System.Drawing.Point(33, 40)
+        Me.Label61.Location = New System.Drawing.Point(33, 42)
         Me.Label61.Name = "Label61"
         Me.Label61.Size = New System.Drawing.Size(54, 22)
         Me.Label61.TabIndex = 97
@@ -1003,6 +988,23 @@ Partial Class cmd
         Me.Label35.TabIndex = 103
         Me.Label35.Text = "Size:"
         Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'RasterList
+        '
+        Me.RasterList.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.RasterList.CustomFont = False
+        Me.RasterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.RasterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RasterList.ForeColor = System.Drawing.Color.White
+        Me.RasterList.FormattingEnabled = True
+        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
+        Me.RasterList.LineColor = System.Drawing.Color.DodgerBlue
+        Me.RasterList.Location = New System.Drawing.Point(93, 71)
+        Me.RasterList.Name = "RasterList"
+        Me.RasterList.Size = New System.Drawing.Size(130, 24)
+        Me.RasterList.TabIndex = 104
+        Me.RasterList.Visible = False
         '
         'XenonButton2
         '
@@ -1596,7 +1598,7 @@ Partial Class cmd
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.Location = New System.Drawing.Point(47, 6)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(231, 35)
+        Me.Label41.Size = New System.Drawing.Size(121, 35)
         Me.Label41.TabIndex = 3
         Me.Label41.Text = "Preview"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1617,6 +1619,22 @@ Partial Class cmd
         Me.XenonButton1.TabIndex = 65
         Me.XenonButton1.Text = "Load"
         Me.XenonButton1.UseVisualStyleBackColor = False
+        '
+        'XenonButton25
+        '
+        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton25.ForeColor = System.Drawing.Color.White
+        Me.XenonButton25.Image = Nothing
+        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton25.LineSize = 1
+        Me.XenonButton25.Location = New System.Drawing.Point(11, 41)
+        Me.XenonButton25.Name = "XenonButton25"
+        Me.XenonButton25.Size = New System.Drawing.Size(20, 24)
+        Me.XenonButton25.TabIndex = 105
+        Me.XenonButton25.Text = "?"
+        Me.XenonButton25.UseVisualStyleBackColor = False
         '
         'cmd
         '
@@ -1772,4 +1790,5 @@ Partial Class cmd
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
     Friend WithEvents XenonSeparator2 As XenonSeparator
     Friend WithEvents RasterList As XenonComboBox
+    Friend WithEvents XenonButton25 As XenonButton
 End Class
