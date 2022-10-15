@@ -5802,7 +5802,7 @@ Public Class XenonTerminal
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
         DoubleBuffered = True
 
