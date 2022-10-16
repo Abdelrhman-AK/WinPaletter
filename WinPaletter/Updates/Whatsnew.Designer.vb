@@ -182,8 +182,8 @@ Partial Class Whatsnew
         Me.Label6.Size = New System.Drawing.Size(655, 89)
         Me.Label6.TabIndex = 28
         Me.Label6.Text = "- Now you can modify Colors, schemes of foreground and background, fonts, cursor " &
-    "color and other tweaks." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Multiple bugs and isses fixed from the previuos bet" &
-    "a (1.0.5.9)"
+    "color and other tweaks." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Multiple bugs and issues fixed from the previous be" &
+    "ta (1.0.5.9)"
         '
         'Label4
         '
