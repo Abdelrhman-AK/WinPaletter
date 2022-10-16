@@ -1150,7 +1150,7 @@ Public Class cmd
 
     Private Sub CMD_CursorColor_Click(sender As Object, e As EventArgs) Handles CMD_CursorColor.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
+            CMD_PreviewCUR2.BackColor = SubMenu.ShowMenu(sender)
             Exit Sub
         End If
 

@@ -1473,4 +1473,21 @@ Public Class WindowsTerminal
             ApplyPreview(_Terminal)
         End If
     End Sub
+
+    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+        Dim CPx As New CP(CP.Mode.Registry)
+
+        Select Case _Mode
+            Case WinTerminal.Version.Stable
+                _Terminal = CPx.Terminal
+                TerEnabled.Checked = CPx.Terminal_Stable_Enabled
+
+            Case WinTerminal.Version.Preview
+                _Terminal = CPx.TerminalPreview
+                TerEnabled.Checked = CPx.Terminal_Preview_Enabled
+        End Select
+
+        Load_FromTerminal()
+
+    End Sub
 End Class

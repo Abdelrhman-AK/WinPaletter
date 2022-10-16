@@ -1102,80 +1102,88 @@ Public Class MainFrm
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
+        Visible = False
 
-        ApplyDarkMode(Me)
-        MakeItDoubleBuffered(Me)
+        Try
+            ApplyDarkMode(Me)
+            MakeItDoubleBuffered(Me)
 
-        Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
-        Me.WindowState = My.Application._Settings.MainFormStatus
+            Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
+            Me.WindowState = My.Application._Settings.MainFormStatus
 
-        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
-            AddHandler btn.MouseEnter, AddressOf UpdateHint
-            AddHandler btn.Enter, AddressOf UpdateHint
-            AddHandler btn.MouseLeave, AddressOf EraseHint
-            AddHandler btn.Leave, AddressOf EraseHint
-        Next
+            For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+                AddHandler btn.MouseEnter, AddressOf UpdateHint
+                AddHandler btn.Enter, AddressOf UpdateHint
+                AddHandler btn.MouseLeave, AddressOf EraseHint
+                AddHandler btn.Leave, AddressOf EraseHint
+            Next
 
-        If Not My.Application.ExternalLink Then
-            CP = New CP(CP.Mode.Registry)
-            CP_Original = New CP(CP.Mode.Registry)
-            CP_FirstTime = New CP(CP.Mode.Registry)
-        Else
-            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            OpenFileDialog1.FileName = My.Application.ExternalLink_File
-            SaveFileDialog1.FileName = My.Application.ExternalLink_File
-            My.Application.ExternalLink = False
-            My.Application.ExternalLink_File = ""
-        End If
+            If Not My.Application.ExternalLink Then
+                CP = New CP(CP.Mode.Registry)
+                CP_Original = New CP(CP.Mode.Registry)
+                CP_FirstTime = New CP(CP.Mode.Registry)
+            Else
+                CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+                CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+                CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+                OpenFileDialog1.FileName = My.Application.ExternalLink_File
+                SaveFileDialog1.FileName = My.Application.ExternalLink_File
+                My.Application.ExternalLink = False
+                My.Application.ExternalLink_File = ""
+            End If
 
-        If My.Application._Settings.CustomPreviewConfig_Enabled Then
-            PreviewConfig = My.Application._Settings.CustomPreviewConfig
-        Else
-            If My.W11 Then PreviewConfig = WinVer.Eleven
-            If My.W10 Then PreviewConfig = WinVer.Ten
-            If My.W8 Then PreviewConfig = WinVer.Eight
-            If My.W7 Then PreviewConfig = WinVer.Seven
-        End If
+            If My.Application._Settings.CustomPreviewConfig_Enabled Then
+                PreviewConfig = My.Application._Settings.CustomPreviewConfig
+            Else
+                If My.W11 Then PreviewConfig = WinVer.Eleven
+                If My.W10 Then PreviewConfig = WinVer.Ten
+                If My.W8 Then PreviewConfig = WinVer.Eight
+                If My.W7 Then PreviewConfig = WinVer.Seven
+            End If
 
-        If PreviewConfig = WinVer.Eleven Then
-            XenonButton20.Image = My.Resources.Native11
-        ElseIf PreviewConfig = WinVer.Ten Then
-            XenonButton20.Image = My.Resources.Native10
-        ElseIf PreviewConfig = WinVer.Eight Then
-            XenonButton20.Image = My.Resources.Native8
-        ElseIf PreviewConfig = WinVer.Seven Then
-            XenonButton20.Image = My.Resources.Native7
-        Else
-            XenonButton20.Image = My.Resources.Native11
-        End If
+            If PreviewConfig = WinVer.Eleven Then
+                XenonButton20.Image = My.Resources.Native11
+            ElseIf PreviewConfig = WinVer.Ten Then
+                XenonButton20.Image = My.Resources.Native10
+            ElseIf PreviewConfig = WinVer.Eight Then
+                XenonButton20.Image = My.Resources.Native8
+            ElseIf PreviewConfig = WinVer.Seven Then
+                XenonButton20.Image = My.Resources.Native7
+            Else
+                XenonButton20.Image = My.Resources.Native11
+            End If
 
-        If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
-            PaletteContainer_W1x.Visible = True
-            PaletteContainer_W8.Visible = False
-            PaletteContainer_W7.Visible = False
-        End If
+            If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
+                PaletteContainer_W1x.Visible = True
+                PaletteContainer_W8.Visible = False
+                PaletteContainer_W7.Visible = False
+            End If
 
-        If PreviewConfig = WinVer.Seven Then
-            PaletteContainer_W1x.Visible = False
-            PaletteContainer_W8.Visible = False
-            PaletteContainer_W7.Visible = True
-        End If
+            If PreviewConfig = WinVer.Seven Then
+                PaletteContainer_W1x.Visible = False
+                PaletteContainer_W8.Visible = False
+                PaletteContainer_W7.Visible = True
+            End If
 
-        If PreviewConfig = WinVer.Eight Then
-            PaletteContainer_W1x.Visible = False
-            PaletteContainer_W8.Visible = True
-            PaletteContainer_W7.Visible = False
-        End If
+            If PreviewConfig = WinVer.Eight Then
+                PaletteContainer_W1x.Visible = False
+                PaletteContainer_W8.Visible = True
+                PaletteContainer_W7.Visible = False
+            End If
 
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+            pnl_preview.BackgroundImage = My.Application.Wallpaper
+            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
-        Adjust_Preview()
-        ApplyCPValues(CP)
-        ApplyDefaultCPValues()
-        ApplyLivePreviewFromCP(CP)
+            Adjust_Preview()
+            ApplyCPValues(CP)
+            ApplyDefaultCPValues()
+            ApplyLivePreviewFromCP(CP)
+
+        Catch ex As Exception
+            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
+        End Try
+
+        Visible = True
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown

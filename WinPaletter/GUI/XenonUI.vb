@@ -5190,7 +5190,7 @@ Public Class XenonCMD
     Public Property CustomTerminal As Boolean = False
 
     Dim S1 As String = "(c) Microsoft Corporation. All rights reserved."
-    Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
+    Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
     Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 
     Enum Raster_Sizes
@@ -5387,8 +5387,14 @@ Public Class XenonCMD
 
         If Not CustomTerminal Then
             If Not PowerShell Then
-                S = String.Format("Microsoft Windows [Version {0}]", String.Format("{0}.{1}", Microsoft.Win32.Registry.GetValue(CV, "CurrentBuildNumber", 0),
-                    Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))) & vbCrLf & S1 & vbCrLf & vbCrLf & S2
+                Dim sx As String = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", "")
+                sx = sx.Replace("S", "").Trim
+
+                Dim sy As String = "." & Microsoft.Win32.Registry.GetValue(CV, "UBR", 0).ToString
+                If sy = ".0" Then sy = ""
+
+                S = String.Format("Microsoft Windows [Version {0}{1}]", sx, sy) & vbCrLf & S1 & vbCrLf & vbCrLf & S2
+
             Else
                 S = "Windows PowerShell" & vbCrLf & S1 & vbCrLf & vbCrLf & "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" & vbCrLf & vbCrLf & "PS " & S2
             End If
@@ -5402,7 +5408,7 @@ Public Class XenonCMD
         End If
 
         If Not Raster Then
-            G.DrawString(S, F, New SolidBrush(FC), RectCMD)
+            G.DrawString(S, F, New SolidBrush(FC), RectCMD.Location)
 
             G.FillRectangle(New SolidBrush(PCB), RectMiddle)
             G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
@@ -5862,7 +5868,7 @@ Public Class XenonTerminal
 
         Dim s1 As String = "Console Sample"
         Dim s2 As String = "This is a selection"
-        Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & ">"
+        Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
 
         Dim s1X As SizeF = MeasureString(s1, Font) + New SizeF(5, 0)
         Dim s2X As SizeF = MeasureString(s2, Font) + New SizeF(2, 0)
@@ -6067,7 +6073,7 @@ Public Class XenonTerminal
 
     Sub GetBack()
         adaptedBack = My.Application.Wallpaper '.Clone(RectangleToScreen(Bounds), My.Application.Wallpaper.PixelFormat)
-        adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 5)
+        adaptedBackBlurred = BlurBitmap(New Bitmap(adaptedBack), 13)
     End Sub
 
     Sub NoiseBack()
