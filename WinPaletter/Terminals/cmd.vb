@@ -329,6 +329,7 @@ Public Class cmd
             CMD_PopupBackgroundLbl.ForeColor = FC0
             CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
             CMD_PopupBackgroundBar.Invalidate()
+
         ElseIf i = 3 Then
 
             Select Case CMD_AccentBackgroundBar.Value
@@ -370,6 +371,7 @@ Public Class cmd
             CMD_AccentBackgroundLbl.ForeColor = FC0
             CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
             CMD_AccentBackgroundBar.Invalidate()
+            CMD_PreviewCUR.BackColor = CMD_AccentBackgroundLbl.BackColor
 
         ElseIf i = 4 Then
 
@@ -595,7 +597,11 @@ Public Class cmd
                         CMD_FontWeightBox.SelectedIndex = 4
 
                 End Select
-                With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_32_FaceName, .lfWeight = CP.PS_32_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_32_FontSize / 65536), .Style) : End With
+
+                If Not CP.PS_32_FontRaster Then
+                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_32_FaceName, .lfWeight = CP.PS_32_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_32_FontSize / 65536), .Style) : End With
+                End If
+
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
                 CMD_FontSizeLbl.Text = f_cmd.Size
@@ -695,7 +701,10 @@ Public Class cmd
 
                 End Select
 
-                With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_64_FaceName, .lfWeight = CP.PS_64_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_64_FontSize / 65536), .Style) : End With
+                If Not CP.PS_64_FontRaster Then
+                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_64_FaceName, .lfWeight = CP.PS_64_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_64_FontSize / 65536), .Style) : End With
+                End If
+
                 CMD_FontsBox.SelectedItem = f_cmd.Name
                 CMD_FontSizeBar.Value = f_cmd.Size
                 CMD_FontSizeLbl.Text = f_cmd.Size
@@ -1239,5 +1248,13 @@ Public Class cmd
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         MsgBox(My.Application.LanguageHelper.CMD_NotAllWeights, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        Dim CPx As New CP(CP.Mode.Registry)
+        Dim ee As Boolean = CMDEnabled.Checked
+        ApplyFromCP(CPx, _Edition)
+        ApplyPreview()
+        CMDEnabled.Checked = ee
     End Sub
 End Class

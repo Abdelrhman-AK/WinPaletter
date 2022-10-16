@@ -42,4 +42,8 @@ Public Class NewExtTerminal
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
+
+    Private Sub NewExtTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Icon = ExternalTerminal.Icon
+    End Sub
 End Class

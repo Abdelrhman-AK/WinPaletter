@@ -680,6 +680,81 @@ Namespace My
                     If arg.ToLower = "/exportlanguage".ToLower Then
                         MsgBox(LanguageHelper.LngShouldClose, MsgBoxStyle.Critical + MsgboxRt())
                     Else
+
+                        Try
+                            If arg.ToLower.StartsWith("/apply:") Then
+                                Dim File As String = arg.Remove(0, "/apply:".Count)
+                                File = File.Replace("""", "")
+                                If IO.File.Exists(File) Then
+                                    Dim CPx As New CP(CP.Mode.File, File)
+                                    CPx.Save(CP.SavingMode.Registry)
+                                    If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                End If
+                            End If
+                        Catch
+                        End Try
+
+                        Try
+                            If arg.ToLower.StartsWith("/edit:") Then
+                                Dim File As String = arg.Remove(0, "/edit:".Count)
+                                File = File.Replace("""", "")
+
+                                If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
+                                    Select Case ComplexSave.ShowDialog()
+                                        Case DialogResult.Yes
+                                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
+                                            Dim r1 As String = r(0)
+                                            Dim r2 As String = r(1)
+                                            Select Case r1
+                                                Case 0              '' Save
+                                                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                        MainFrm.CP_Original = MainFrm.CP
+                                                    Else
+                                                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP
+                                                        Else
+                                                            Exit Sub
+                                                        End If
+                                                    End If
+
+                                                Case 1              '' Save As
+                                                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                        MainFrm.CP_Original = MainFrm.CP
+                                                    Else
+                                                        Exit Sub
+                                                    End If
+                                            End Select
+
+                                            Select Case r2
+                                                Case 1      '' Apply   ' Case 0= Don't Apply
+                                                    MainFrm.CP.Save(CP.SavingMode.Registry)
+                                                    RestartExplorer()
+                                            End Select
+
+                                        Case DialogResult.No
+
+
+                                        Case DialogResult.Cancel
+                                            Exit Sub
+                                    End Select
+
+
+                                End If
+
+                                MainFrm.CP = New CP(CP.Mode.File, File)
+                                MainFrm.CP_Original = New CP(CP.Mode.File, File)
+                                MainFrm.OpenFileDialog1.FileName = File
+                                MainFrm.SaveFileDialog1.FileName = File
+                                MainFrm.ApplyCPValues(MainFrm.CP)
+                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+
+                            End If
+                        Catch
+                        End Try
+
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                             If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
                                 If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then

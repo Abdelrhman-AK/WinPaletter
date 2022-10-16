@@ -54,7 +54,7 @@
 
 * You can also customize another unmentioned terminal, if it exists as a key in registry in `HKEY_CURRENT_USER\Console`.
 
-* In `HKEY_CURRENT_USER\Console`, please ignore `%%Startup`, `%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe` and `%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe` keys.
+* In `HKEY_CURRENT_USER\Console`, please ignore `%%Startup`, `%SystemRoot%_System32_cmd.exe` , `%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe` and `%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe` keys.
   
   * Anyway, you can add an executable to this key using button "New", it should be a console one (Not a GUI\WinForms\Desktop app\\...) and should be in System Drive (C:\\)
 

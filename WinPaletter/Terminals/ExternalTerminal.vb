@@ -1,5 +1,6 @@
 ﻿Imports System.Security.Principal
 Imports Microsoft.Win32
+Imports WinPaletter.cmd
 Imports WinPaletter.XenonCore
 Public Class ExternalTerminal
     Private _Shown As Boolean = False
@@ -249,19 +250,6 @@ Public Class ExternalTerminal
             ExtTerminal_FontWeightBox.SelectedIndex = 4
         End Try
 
-        Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Consolas")
-
-            If CP.IsFontInstalled(y_cmd) Then
-                With Font.FromLogFont(New LOGFONT With {.lfFaceName = y_cmd, .lfWeight = wg}) : f_extterminal = New Font(.FontFamily, CInt(ExtTerminal_FontSizeBar.Value), .Style) : End With
-                ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
-            Else
-                ExtTerminal_FontsBox.SelectedItem = "Consolas"
-            End If
-
-        Catch
-            ExtTerminal_FontsBox.SelectedItem = "Consolas"
-        End Try
 
         Try
             y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
@@ -276,8 +264,9 @@ Public Class ExternalTerminal
             ExtTerminal_RasterToggle.Checked = False
         End Try
 
+
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 16 * 65536)
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 18 * 65536)
             If y_cmd = 0 And Not ExtTerminal_RasterToggle.Checked Then ExtTerminal_FontSizeBar.Value = _Def.CMD_FontSize / 65536 Else ExtTerminal_FontSizeBar.Value = y_cmd / 65536
 
             If y_cmd = 393220 Then RasterList.SelectedItem = "4x6"
@@ -293,8 +282,26 @@ Public Class ExternalTerminal
             If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
 
         Catch
-            ExtTerminal_FontSizeBar.Value = 16
+            ExtTerminal_FontSizeBar.Value = 18
             RasterList.SelectedItem = "8x12"
+        End Try
+
+        Try
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Consolas")
+
+            If CP.IsFontInstalled(y_cmd) Then
+
+                If Not ExtTerminal_RasterToggle.Checked Then
+                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = y_cmd, .lfWeight = wg}) : f_extterminal = New Font(.FontFamily, CInt(ExtTerminal_FontSizeBar.Value), .Style) : End With
+                    ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
+                End If
+
+            Else
+                ExtTerminal_FontsBox.SelectedItem = "Consolas"
+            End If
+
+        Catch
+            ExtTerminal_FontsBox.SelectedItem = "Consolas"
         End Try
 
         If My.W10_1909 Then
@@ -344,7 +351,9 @@ Public Class ExternalTerminal
             End Try
         End If
 
+        UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
         ApplyPreview()
+
     End Sub
 
     Sub SetToExtTerminal(RegKey As String)
@@ -489,7 +498,7 @@ Public Class ExternalTerminal
             If .Value = 15 Then ExtTerminal_PopupForegroundLbl.Text &= " (F)"
         End With
 
-        UpdateFromTrack(13)
+        UpdateFromTrack(1)
         ApplyPreview()
     End Sub
 
@@ -504,7 +513,7 @@ Public Class ExternalTerminal
             If .Value = 15 Then ExtTerminal_PopupBackgroundLbl.Text &= " (F)"
         End With
 
-        UpdateFromTrack(14)
+        UpdateFromTrack(2)
         ApplyPreview()
     End Sub
 
@@ -519,7 +528,7 @@ Public Class ExternalTerminal
             If .Value = 15 Then ExtTerminal_AccentForegroundLbl.Text &= " (F)"
         End With
 
-        UpdateFromTrack(15) : UpdateFromTrack(16)
+        UpdateFromTrack(3) : UpdateFromTrack(4)
         ApplyPreview()
     End Sub
 
@@ -534,7 +543,7 @@ Public Class ExternalTerminal
             If .Value = 15 Then ExtTerminal_AccentBackgroundLbl.Text &= " (F)"
         End With
 
-        UpdateFromTrack(15) : UpdateFromTrack(16)
+        UpdateFromTrack(3) : UpdateFromTrack(4)
         ApplyPreview()
     End Sub
 
@@ -867,6 +876,8 @@ Public Class ExternalTerminal
 
             Dim FC0 As Color = If(IsColorDark(ExtTerminal_PopupForegroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_PopupForegroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_PopupForegroundLbl.BackColor, 0.9))
             ExtTerminal_PopupForegroundLbl.ForeColor = FC0
+            ExtTerminal_PopupForegroundBar.AccentColor = ExtTerminal_PopupForegroundLbl.BackColor
+            ExtTerminal_PopupForegroundBar.Invalidate()
 
         ElseIf i = 2 Then
 
@@ -907,6 +918,8 @@ Public Class ExternalTerminal
 
             Dim FC0 As Color = If(IsColorDark(ExtTerminal_PopupBackgroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_PopupBackgroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_PopupBackgroundLbl.BackColor, 0.9))
             ExtTerminal_PopupBackgroundLbl.ForeColor = FC0
+            ExtTerminal_PopupBackgroundBar.AccentColor = ExtTerminal_PopupBackgroundLbl.BackColor
+            ExtTerminal_PopupBackgroundBar.Invalidate()
 
         ElseIf i = 3 Then
 
@@ -947,7 +960,9 @@ Public Class ExternalTerminal
 
             Dim FC0 As Color = If(IsColorDark(ExtTerminal_AccentBackgroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_AccentBackgroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_AccentBackgroundLbl.BackColor, 0.9))
             ExtTerminal_AccentBackgroundLbl.ForeColor = FC0
-
+            ExtTerminal_AccentBackgroundBar.AccentColor = ExtTerminal_AccentBackgroundLbl.BackColor
+            ExtTerminal_AccentBackgroundBar.Invalidate()
+            ExtTerminal_PreviewCUR.BackColor = ExtTerminal_AccentBackgroundLbl.BackColor
         ElseIf i = 4 Then
 
             Select Case ExtTerminal_AccentForegroundBar.Value
@@ -991,6 +1006,8 @@ Public Class ExternalTerminal
 
             Dim FC0 As Color = If(IsColorDark(ExtTerminal_AccentForegroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_AccentForegroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_AccentForegroundLbl.BackColor, 0.9))
             ExtTerminal_AccentForegroundLbl.ForeColor = FC0
+            ExtTerminal_AccentForegroundBar.AccentColor = ExtTerminal_AccentForegroundLbl.BackColor
+            ExtTerminal_AccentForegroundBar.Invalidate()
         End If
     End Sub
 #End Region
@@ -1023,5 +1040,157 @@ Public Class ExternalTerminal
         If _Shown Then
             ApplyPreview()
         End If
+    End Sub
+
+
+
+    Sub ApplyFromCP(CP As CP)
+
+        ExtTerminal_ColorTable00.BackColor = CP.CMD_ColorTable00
+        ExtTerminal_ColorTable01.BackColor = CP.CMD_ColorTable01
+        ExtTerminal_ColorTable02.BackColor = CP.CMD_ColorTable02
+        ExtTerminal_ColorTable03.BackColor = CP.CMD_ColorTable03
+        ExtTerminal_ColorTable04.BackColor = CP.CMD_ColorTable04
+        ExtTerminal_ColorTable05.BackColor = CP.CMD_ColorTable05
+        ExtTerminal_ColorTable06.BackColor = CP.CMD_ColorTable06
+        ExtTerminal_ColorTable07.BackColor = CP.CMD_ColorTable07
+        ExtTerminal_ColorTable08.BackColor = CP.CMD_ColorTable08
+        ExtTerminal_ColorTable09.BackColor = CP.CMD_ColorTable09
+        ExtTerminal_ColorTable10.BackColor = CP.CMD_ColorTable10
+        ExtTerminal_ColorTable11.BackColor = CP.CMD_ColorTable11
+        ExtTerminal_ColorTable12.BackColor = CP.CMD_ColorTable12
+        ExtTerminal_ColorTable13.BackColor = CP.CMD_ColorTable13
+        ExtTerminal_ColorTable14.BackColor = CP.CMD_ColorTable14
+        ExtTerminal_ColorTable15.BackColor = CP.CMD_ColorTable15
+
+        ExtTerminal_ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152)
+        ExtTerminal_ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0)
+
+        ExtTerminal_PopupForegroundBar.Value = CP.CMD_PopupForeground
+        ExtTerminal_PopupBackgroundBar.Value = CP.CMD_PopupBackground
+        ExtTerminal_AccentForegroundBar.Value = CP.CMD_ScreenColorsForeground
+        ExtTerminal_AccentBackgroundBar.Value = CP.CMD_ScreenColorsBackground
+        ExtTerminal_RasterToggle.Checked = CP.CMD_FontRaster
+        RasterList.Visible = CP.CMD_FontRaster
+
+        Select Case CP.CMD_FontWeight
+            Case 0
+                ExtTerminal_FontWeightBox.SelectedIndex = 0
+
+            Case 100
+                ExtTerminal_FontWeightBox.SelectedIndex = 1
+
+            Case 200
+                ExtTerminal_FontWeightBox.SelectedIndex = 2
+
+            Case 300
+                ExtTerminal_FontWeightBox.SelectedIndex = 3
+
+            Case 400
+                ExtTerminal_FontWeightBox.SelectedIndex = 4
+
+            Case 500
+                ExtTerminal_FontWeightBox.SelectedIndex = 5
+
+            Case 600
+                ExtTerminal_FontWeightBox.SelectedIndex = 6
+
+            Case 700
+                ExtTerminal_FontWeightBox.SelectedIndex = 7
+
+            Case 800
+                ExtTerminal_FontWeightBox.SelectedIndex = 8
+
+            Case 900
+                ExtTerminal_FontWeightBox.SelectedIndex = 9
+
+            Case Else
+                ExtTerminal_FontWeightBox.SelectedIndex = 4
+
+        End Select
+
+        If Not CP.CMD_FontRaster Then
+            With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.CMD_FaceName, .lfWeight = CP.CMD_FontWeight}) : f_extterminal = New Font(.FontFamily, CInt(CP.CMD_FontSize / 65536), .Style) : End With
+        End If
+
+        ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
+        ExtTerminal_FontSizeBar.Value = f_extterminal.Size
+        ExtTerminal_FontSizeLbl.Text = f_extterminal.Size
+
+        If CP.CMD_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
+        If CP.CMD_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
+        If CP.CMD_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
+        If CP.CMD_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
+        If CP.CMD_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
+        If CP.CMD_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
+        If CP.CMD_FontSize = 0 Then RasterList.SelectedItem = "8x12"
+        If CP.CMD_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
+        If CP.CMD_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
+        If CP.CMD_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
+        If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
+
+        CP.CMD_CursorSize = ExtTerminal_CursorSizeBar.Value
+        If ExtTerminal_CursorSizeBar.Value > 100 Then ExtTerminal_CursorSizeBar.Value = 100
+        If ExtTerminal_CursorSizeBar.Value < 20 Then ExtTerminal_CursorSizeBar.Value = 20
+        If My.W10_1909 Then
+            ExtTerminal_CursorStyle.SelectedIndex = CP.CMD_1909_CursorType
+            ExtTerminal_CursorColor.BackColor = CP.CMD_1909_CursorColor
+            ExtTerminal_PreviewCUR2.BackColor = CP.CMD_1909_CursorColor
+            ExtTerminal_EnhancedTerminal.Checked = CP.CMD_1909_ForceV2
+            ExtTerminal_OpacityBar.Value = CP.CMD_1909_WindowAlpha
+            ExtTerminal_OpacityLbl.Text = Fix((CP.CMD_1909_WindowAlpha / 255) * 100)
+            ExtTerminal_LineSelection.Checked = CP.CMD_1909_LineSelection
+            ExtTerminal_TerminalScrolling.Checked = CP.CMD_1909_TerminalScrolling
+            ApplyCursorShape()
+        End If
+        UpdateCurPreview()
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
+
+        If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
+            Dim CPx As New CP(CP.Mode.File, OpenWPTHDlg.FileName)
+            ApplyFromCP(CPx)
+            ApplyPreview()
+        End If
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
+
+        Dim CPx As New CP(CP.Mode.Registry)
+        ApplyFromCP(CPx)
+        ApplyPreview()
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            Exit Sub
+        End If
+
+        Dim _Def As CP
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+            _Def = New CP_Defaults().Default_Windows11
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+            _Def = New CP_Defaults().Default_Windows10
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+            _Def = New CP_Defaults().Default_Windows8
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+            _Def = New CP_Defaults().Default_Windows7
+        Else
+            _Def = New CP_Defaults().Default_Windows11
+        End If
+
+        ApplyFromCP(_Def)
+        ApplyPreview()
     End Sub
 End Class

@@ -4,6 +4,7 @@ Public Class TerminalInfo
 
     Private Sub TerminalInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        Icon = WindowsTerminal.Icon
     End Sub
 
     Public Function OpenDialog(Optional IsDefault As Boolean = False) As DialogResult

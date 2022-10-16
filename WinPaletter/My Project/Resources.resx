@@ -355,6 +355,36 @@
   <data name="notify_warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PS_10x18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_10x18.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_12x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_12x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_16x12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_16x12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_16x8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_16x8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_4x6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_4x6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_5x12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_5x12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_6x8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_6x8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_7x12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_7x12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_8x12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_8x12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS_8x8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS_8x8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="RetroThemesDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RetroThemesDB.wpdb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1256</value>
   </data>

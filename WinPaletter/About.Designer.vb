@@ -188,7 +188,7 @@ Partial Class About
         '
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 423)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(12, 441)
         Me.XenonSeparator2.Name = "XenonSeparator2"
         Me.XenonSeparator2.Size = New System.Drawing.Size(501, 1)
         Me.XenonSeparator2.TabIndex = 14
@@ -201,7 +201,7 @@ Partial Class About
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Gray
-        Me.Label3.Location = New System.Drawing.Point(10, 445)
+        Me.Label3.Location = New System.Drawing.Point(10, 462)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(229, 15)
         Me.Label3.TabIndex = 15
@@ -218,7 +218,7 @@ Partial Class About
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(276, 436)
+        Me.XenonButton1.Location = New System.Drawing.Point(276, 453)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(80, 33)
         Me.XenonButton1.TabIndex = 16
@@ -235,7 +235,7 @@ Partial Class About
         Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(362, 436)
+        Me.XenonButton2.Location = New System.Drawing.Point(362, 453)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(79, 33)
         Me.XenonButton2.TabIndex = 17
@@ -251,7 +251,7 @@ Partial Class About
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(447, 436)
+        Me.XenonButton3.Location = New System.Drawing.Point(447, 453)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(66, 33)
         Me.XenonButton3.TabIndex = 18
@@ -328,11 +328,12 @@ Partial Class About
         Me.LinkLabel6.LinkColor = System.Drawing.Color.White
         Me.LinkLabel6.Location = New System.Drawing.Point(42, 385)
         Me.LinkLabel6.Name = "LinkLabel6"
-        Me.LinkLabel6.Size = New System.Drawing.Size(471, 35)
+        Me.LinkLabel6.Size = New System.Drawing.Size(471, 51)
         Me.LinkLabel6.TabIndex = 25
         Me.LinkLabel6.TabStop = True
         Me.LinkLabel6.Text = "Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows X" &
-    "P Classic Themes)"
+    "P Classic Themes)." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Command Prompt and PowerShell Raster Fonts previews are by M" &
+    "icrosoft too."
         '
         'PictureBox7
         '
@@ -434,7 +435,7 @@ Partial Class About
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(525, 481)
+        Me.ClientSize = New System.Drawing.Size(525, 498)
         Me.Controls.Add(Me.LinkLabel10)
         Me.Controls.Add(Me.PictureBox11)
         Me.Controls.Add(Me.XenonButton1)

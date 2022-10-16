@@ -847,6 +847,106 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_10x18() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_10x18", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_12x16() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_12x16", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_16x12() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_16x12", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_16x8() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_16x8", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_4x6() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_4x6", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_5x12() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_5x12", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_6x8() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_6x8", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_7x12() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_7x12", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_8x12() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_8x12", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property PS_8x8() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PS_8x8", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Aero Fallback (Default Windows)|ActiveBorder=180 180 180|ActiveTitle=153 180 209|AppWorkspace=171 171 171|Background=0 0 0|ButtonAlternateFace=0 0 0|ButtonDkShadow=105 105 105|ButtonFace=240 240 240|ButtonHilight=255 255 255|ButtonLight=227 227 227|ButtonShadow=160 160 160|ButtonText=0 0 0|GradientActiveTitle=185 209 234|GradientInactiveTitle=215 228 242|GrayText=109 109 109|HilightText=255 255 255|HotTrackingColor=0 102 204|InactiveBorder=244 247 252|InactiveTitle=191 205 219|InactiveTitleText=0 0 0|InfoTe [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property RetroThemesDB() As String

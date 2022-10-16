@@ -4921,6 +4921,8 @@ Public Class XenonTrackbar
     Private ThumbDown As Boolean
     Private Circle As Rectangle
     Dim Colors As XenonColorPalette
+    Private _Shown As Boolean = False
+
     Public Property AccentColor As Color = If(GetDarkMode(), ControlPaint.LightLight(Color.FromArgb(0, 81, 210)), ControlPaint.Dark(Color.FromArgb(0, 81, 210), 0.1))
     Enum MouseState
         None
@@ -4936,7 +4938,7 @@ Public Class XenonTrackbar
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
-            If State = MouseState.Over Then
+            If State = MouseState.Over And _Shown Then
                 If alpha + Factor <= 255 Then
                     alpha += Factor
                 ElseIf alpha + Factor > 255 Then
@@ -4949,7 +4951,7 @@ Public Class XenonTrackbar
                 Invalidate()
             End If
 
-            If Not State = MouseState.Over Or State = MouseState.Down Then
+            If _Shown And (Not State = MouseState.Over Or State = MouseState.Down) Then
                 If alpha - Factor >= 0 Then
                     alpha -= Factor
                 ElseIf alpha - Factor < 0 Then
@@ -5124,6 +5126,7 @@ Public Class XenonTrackbar
 
         Try
             If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
                 AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                 AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
@@ -5141,8 +5144,12 @@ Public Class XenonTrackbar
         End Try
     End Sub
 
+    Sub Loaded()
+        _Shown = False
+    End Sub
 
     Sub Showed()
+        _Shown = True
         Colors = New XenonColorPalette(Me)
         Invalidate()
     End Sub
@@ -5408,7 +5415,7 @@ Public Class XenonCMD
 
             Select Case RasterSize
                 Case Raster_Sizes._4x6
-                    i0 = My.Resources.CMD_4x6
+                    If Not PowerShell Then i0 = My.Resources.CMD_4x6 Else i0 = My.Resources.PS_4x6
                     i1 = My.Resources.CMD_4x6_P
                     pW = 120
                     pH = 18
@@ -5416,7 +5423,7 @@ Public Class XenonCMD
                     pY = 3
 
                 Case Raster_Sizes._6x8
-                    i0 = My.Resources.CMD_6x8
+                    If Not PowerShell Then i0 = My.Resources.CMD_6x8 Else i0 = My.Resources.PS_6x8
                     i1 = My.Resources.CMD_6x8_P
                     pW = 180
                     pH = 24
@@ -5424,7 +5431,7 @@ Public Class XenonCMD
                     pY = 4
 
                 Case Raster_Sizes._8x8
-                    i0 = My.Resources.CMD_8x8
+                    If Not PowerShell Then i0 = My.Resources.CMD_8x8 Else i0 = My.Resources.PS_8x8
                     i1 = My.Resources.CMD_8x8_P
                     pW = 240
                     pH = 24
@@ -5432,7 +5439,7 @@ Public Class XenonCMD
                     pY = 4
 
                 Case Raster_Sizes._16x8
-                    i0 = My.Resources.CMD_16x8
+                    If Not PowerShell Then i0 = My.Resources.CMD_16x8 Else i0 = My.Resources.PS_16x8
                     i1 = My.Resources.CMD_16x8_P
                     pW = 480
                     pH = 24
@@ -5440,7 +5447,7 @@ Public Class XenonCMD
                     pY = 4
 
                 Case Raster_Sizes._5x12
-                    i0 = My.Resources.CMD_5x12
+                    If Not PowerShell Then i0 = My.Resources.CMD_5x12 Else i0 = My.Resources.PS_5x12
                     i1 = My.Resources.CMD_5x12_P
                     pW = 150
                     pH = 36
@@ -5448,7 +5455,7 @@ Public Class XenonCMD
                     pY = 6
 
                 Case Raster_Sizes._7x12
-                    i0 = My.Resources.CMD_7x12
+                    If Not PowerShell Then i0 = My.Resources.CMD_7x12 Else i0 = My.Resources.PS_7x12
                     i1 = My.Resources.CMD_7x12_P
                     pW = 210
                     pH = 36
@@ -5456,7 +5463,7 @@ Public Class XenonCMD
                     pY = 6
 
                 Case Raster_Sizes._8x12
-                    i0 = My.Resources.CMD_8x12
+                    If Not PowerShell Then i0 = My.Resources.CMD_8x12 Else i0 = My.Resources.PS_8x12
                     i1 = My.Resources.CMD_8x12_P
                     pW = 240
                     pH = 36
@@ -5464,7 +5471,7 @@ Public Class XenonCMD
                     pY = 6
 
                 Case Raster_Sizes._16x12
-                    i0 = My.Resources.CMD_16x12
+                    If Not PowerShell Then i0 = My.Resources.CMD_16x12 Else i0 = My.Resources.PS_16x12
                     i1 = My.Resources.CMD_16x12_P
                     pW = 480
                     pH = 36
@@ -5472,7 +5479,7 @@ Public Class XenonCMD
                     pY = 6
 
                 Case Raster_Sizes._12x16
-                    i0 = My.Resources.CMD_12x16
+                    If Not PowerShell Then i0 = My.Resources.CMD_12x16 Else i0 = My.Resources.PS_12x16
                     i1 = My.Resources.CMD_12x16_P
                     pW = 360
                     pH = 48
@@ -5480,7 +5487,7 @@ Public Class XenonCMD
                     pY = 8
 
                 Case Raster_Sizes._10x18
-                    i0 = My.Resources.CMD_10x18
+                    If Not PowerShell Then i0 = My.Resources.CMD_10x18 Else i0 = My.Resources.PS_10x18
                     i1 = My.Resources.CMD_10x18_P
                     pW = 300
                     pH = 54
@@ -5488,7 +5495,7 @@ Public Class XenonCMD
                     pY = 9
 
                 Case Else
-                    i0 = My.Resources.CMD_8x12
+                    If Not PowerShell Then i0 = My.Resources.CMD_8x12 Else i0 = My.Resources.PS_8x12
                     i1 = My.Resources.CMD_8x12_P
                     pW = 240
                     pH = 36

@@ -264,7 +264,7 @@ Partial Class WindowsTerminal
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton8.LineSize = 1
         Me.XenonButton8.Location = New System.Drawing.Point(408, 5)
         Me.XenonButton8.Name = "XenonButton8"
@@ -298,7 +298,7 @@ Partial Class WindowsTerminal
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = CType(resources.GetObject("XenonButton7.Image"), System.Drawing.Image)
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(135, Byte), Integer), CType(CType(136, Byte), Integer), CType(CType(130, Byte), Integer))
+        Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(159, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(153, Byte), Integer))
         Me.XenonButton7.LineSize = 1
         Me.XenonButton7.Location = New System.Drawing.Point(546, 5)
         Me.XenonButton7.Name = "XenonButton7"

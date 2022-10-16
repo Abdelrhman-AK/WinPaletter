@@ -246,7 +246,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -344,7 +343,6 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
-    <None Include="Resources\0.png" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
     <Content Include="Resources\AeroGlass.png" />
@@ -391,6 +389,16 @@
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
     <Content Include="Resources\Newtonsoft.Json.dll" />
+    <None Include="Resources\PS_4x6.png" />
+    <None Include="Resources\PS_5x12.png" />
+    <None Include="Resources\PS_6x8.png" />
+    <None Include="Resources\PS_7x12.png" />
+    <None Include="Resources\PS_8x8.png" />
+    <None Include="Resources\PS_8x12.png" />
+    <None Include="Resources\PS_10x18.png" />
+    <None Include="Resources\PS_12x16.png" />
+    <None Include="Resources\PS_16x8.png" />
+    <None Include="Resources\PS_16x12.png" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />

@@ -245,6 +245,7 @@ Public Class SettingsX
             End If
 
             MainFrm.Adjust_Preview()
+            MainFrm.ApplyDefaultCPValues()
             MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
         End If
 
