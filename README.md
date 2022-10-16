@@ -11,7 +11,7 @@
 |                                                        |                                                                        |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
-| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Beta: 1.0.5.9 (Done), Stable: 1.0.6.0 (Coming Soon) |
+| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Beta: 1.0.5.9, Stable: 1.0.6.0                      |
 
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
 
