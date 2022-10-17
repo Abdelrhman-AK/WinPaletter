@@ -61,7 +61,7 @@ Public Class Localizer
 
     Property X22 As String = "This will restart the explorer, don't worry this won't close other applications."
     Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
-    Property NoDefResExplorer = "Restarting Explorer is diabled from settings. If the palette is not applied correctly, <br> restart explorer."
+    Property NoDefResExplorer As String = "Restarting Explorer is diabled from settings. If the palette is not applied correctly, <br> restart explorer."
 
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save Settings?"
@@ -85,14 +85,11 @@ Public Class Localizer
     Property Error_Online As String = "Error reading changelog online"
     Property NoNetwork As String = "No Network is Available"
     Property CheckConnection As String = "Check your connection and try again"
-    Property XenonButton1_UpdateAvailable As String = "Do Action"
-    Property XenonAlertBox2_UpdateAvailable As String = "Update Available"
-    Property XenonButton1_NoUpdateAvailable As String = "Check for updates"
-    Property XenonAlertBox2_NoUpdateAvailable As String = "No Available Updates"
-    Property XenonButton1_Error As String = "Check for updates"
-    Property XenonAlertBox2_Error As String = "Network Error"
-    Property XenonButton1_ServerError As String = "Check for updates"
-    Property XenonAlertBox2_ServerError As String = "Error: Network issues or Github repository is private or deleted. Visit Github page for details."
+    Property DoAction_Update As String = "Do Action"
+    Property NoUpdateAvailable As String = "No Available Updates"
+    Property CheckForUpdates As String = "Check for updates"
+    Property NetworkError As String = "Network Error"
+    Property ServerError As String = "Error: Network issues or Github repository is private or deleted. Visit Github page for details."
     Property Msgbox_Downloaded As String = "Downloaded Successfully"
     Property MBSizeUnit As String = "MB"
     Property Stable As String = "Stable"
@@ -186,15 +183,15 @@ Public Class Localizer
             ins = DirectCast(Activator.CreateInstance(f), Form)
 
             LS.Add(ins.Name & ".Text = " & ins.Text)
-                For Each ctrl In GetAllControls(ins)
-                    If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
-                        LS.Add(ins.Name & "." & ctrl.Name & ".Text = " & ctrl.Text.Replace(vbCrLf, "<br>"))
-                    End If
+            For Each ctrl In GetAllControls(ins)
+                If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
+                    LS.Add(ins.Name & "." & ctrl.Name & ".Text = " & ctrl.Text.Replace(vbCrLf, "<br>"))
+                End If
 
-                    If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
-                        LS.Add(ins.Name & "." & ctrl.Name & ".Tag = " & ctrl.Tag.Replace(vbCrLf, "<br>"))
-                    End If
-                Next
+                If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                    LS.Add(ins.Name & "." & ctrl.Name & ".Tag = " & ctrl.Tag.Replace(vbCrLf, "<br>"))
+                End If
+            Next
             ins.Dispose()
         Next
 
@@ -205,35 +202,38 @@ Public Class Localizer
 
     Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
         If IO.File.Exists(File) Then
-            Dim Dic As New List(Of ControlsBase)
+            Dim Dic As New List(Of Tuple(Of String, String, String, Object))()
             Dic.Clear()
+            Dim Definer As New Dictionary(Of String, String)
+            Definer.Clear()
 
             For Each X As String In IO.File.ReadAllLines(File)
                 If X.StartsWith("!") Then
-                    If X.StartsWith("!Name = ") Then Name = X.Remove(0, "!Name = ".Count)
-                    If X.StartsWith("!TrVer = ") Then TrVer = X.Remove(0, "!TrVer = ".Count)
-                    If X.StartsWith("!Lang = ") Then Lang = X.Remove(0, "!Lang = ".Count)
-                    If X.StartsWith("!LangCode = ") Then LangCode = X.Remove(0, "!LangCode = ".Count)
-                    If X.StartsWith("!AppVer = ") Then AppVer = X.Remove(0, "!AppVer = ".Count)
-                    If X.StartsWith("!RightToLeft = ") Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
+                    If X.ToLower.StartsWith("!Name = ".ToLower) Then Name = X.Remove(0, "!Name = ".Count)
+                    If X.ToLower.StartsWith("!TrVer = ".ToLower) Then TrVer = X.Remove(0, "!TrVer = ".Count)
+                    If X.ToLower.StartsWith("!Lang = ".ToLower) Then Lang = X.Remove(0, "!Lang = ".Count)
+                    If X.ToLower.StartsWith("!LangCode = ".ToLower) Then LangCode = X.Remove(0, "!LangCode = ".Count)
+                    If X.ToLower.StartsWith("!AppVer = ".ToLower) Then AppVer = X.Remove(0, "!AppVer = ".Count)
+
+                    Try
+                        If X.ToLower.StartsWith("!RightToLeft = ".ToLower) Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
+                    Catch
+                        RightToLeft = False
+                    End Try
 
                 ElseIf X.StartsWith("@") Then
                     Dim x0, x1 As String
-                    x0 = X.Split("=")(0).Trim
+                    x0 = X.Split("=")(0).Replace("@", "").Trim
                     x1 = X.Split("=")(1).Trim
-                    x1 = x1
 
-                    Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
-
-                    For Each [property] As PropertyInfo In properties1
-                        If [property].Name.ToLower = x0.Remove(0, 1).ToLower Then
-                            [property].SetValue(Me, Convert.ChangeType(x1.Replace("<br>", vbCrLf), [property].PropertyType), Nothing)
-                        End If
-                    Next
+                    Definer.Add(x0, x1)
 
                 Else
                     Dim FormName, ControlName, Prop, Value As String
-
+                    FormName = Nothing
+                    ControlName = Nothing
+                    Prop = Nothing
+                    Value = Nothing
 
                     Select Case X.Split("=")(0).Trim.Split(".").Count
                         Case 3
@@ -246,10 +246,22 @@ Public Class Localizer
                             Prop = X.Split("=")(0).Trim.Split(".")(1)
                     End Select
 
-                    Value = X.Split("=")(1).Trim.Replace("<br>", vbCrLf)
+                    Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
 
-                    Dic.Add(New ControlsBase(FormName, ControlName, Prop, Value))
+                    Dic.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
                 End If
+            Next
+
+
+            Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
+            For Each [property] As PropertyInfo In properties1
+                Try
+                    If Definer.Keys.Contains([property].Name) Then
+                        [property].SetValue(Me, Convert.ChangeType(Definer([property].Name).ToString.Replace("<br>", vbCrLf), [property].PropertyType))
+                    End If
+                Catch
+                End Try
             Next
 
             If [_Form] Is Nothing Then
@@ -262,6 +274,8 @@ Public Class Localizer
 
             My.Application.AdjustFonts()
 
+            Dic.Clear()
+            Definer.Clear()
         End If
     End Sub
 
@@ -272,52 +286,45 @@ Public Class Localizer
         My.Application.AdjustFonts()
     End Sub
 
-    Sub Populate(ByVal Dic As List(Of ControlsBase), [Form] As Form)
+    Sub Populate(ByVal Dic As List(Of Tuple(Of String, String, String, Object)), [Form] As Form)
         [Form].SuspendLayout()
 
-        For Each dicX As ControlsBase In Dic
+        'Item1 = FormName
+        'Item2 = ControlName
+        'Item3 = Prop
+        'Item4 = Value
 
-            If [Form].Name = dicX.Form Then
-                [Form].SuspendLayout()
 
-                If dicX.Control = Nothing Then
+        For Each dicX In Dic
+
+            If [Form].Name.ToLower = dicX.Item1.ToLower Then
+
+                If dicX.Item2 = Nothing Then
                     '# Form
+                    Try : If dicX.Item3.ToLower = "text" Then [Form].Text = dicX.Item4
+                    Catch : End Try
 
-
-                    If dicX.Prop.ToLower = "text" Then [Form].Text = dicX.Value
-                    If dicX.Prop.ToLower = "tag" Then [Form].Tag = dicX.Value
-
-                    '[Form].RightToLeft = If(RightToLeft, 1, 0)
-
-                    [Form].RightToLeftLayout = RightToLeft
-
-                    'RTL([Form])
+                    Try : If dicX.Item3.ToLower = "tag" Then [Form].Tag = dicX.Item4.ToString.Replace("<br>", vbCrLf)
+                    Catch : End Try
 
                 Else
                     '# Control
-                    For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
+                    For Each ctrl As Control In [Form].Controls.Find(dicX.Item2, True)
 
-                        ctrl.SuspendLayout()
-
-                        Try : If dicX.Prop.ToLower = "text" Then ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        Try : If dicX.Item3.ToLower = "text" Then ctrl.Text = dicX.Item4.ToString.Replace("<br>", vbCrLf)
                         Catch : End Try
 
-                        Try : If dicX.Prop.ToLower = "tag" Then ctrl.Tag = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        Try : If dicX.Item3.ToLower = "tag" Then ctrl.Tag = dicX.Item4.ToString.Replace("<br>", vbCrLf)
                         Catch : End Try
 
                         'ctrl.RightToLeft = If(RightToLeft, 1, 0)
 
                         ctrl.Refresh()
-
-                        ctrl.ResumeLayout()
-
                     Next
 
                 End If
 
-                [Form].ResumeLayout()
 
-                [Form].Refresh()
             End If
 
         Next
@@ -325,7 +332,12 @@ Public Class Localizer
         MainFrm.ToolStripMenuItem2.Text = MenuInit
         MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
 
+        [Form].RightToLeftLayout = RightToLeft
+        '[Form].RightToLeft = If(RightToLeft, 1, 0)
+        'RTL([Form])
+
         [Form].ResumeLayout()
+        [Form].Refresh()
     End Sub
     Sub RTL(Parent As Control)
 
@@ -365,19 +377,5 @@ Public Class Localizer
         Dim cs = parent.Controls.OfType(Of Control)
         Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
     End Function
-
-End Class
-
-Public Class ControlsBase
-    Public Sub New(Form As String, Control As String, Prop As String, Value As Object)
-        Me.Form = Form
-        Me.Control = Control
-        Me.Prop = Prop
-        Me.Value = Value
-    End Sub
-    Public Property Form As String
-    Public Property Control As String
-    Public Property Prop As String
-    Public Property Value As Object
 
 End Class
