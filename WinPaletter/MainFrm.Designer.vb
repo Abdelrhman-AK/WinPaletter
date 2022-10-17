@@ -2030,12 +2030,14 @@ Partial Class MainFrm
         '
         'Label19
         '
+        Me.Label19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.AutoEllipsis = True
         Me.Label19.BackColor = System.Drawing.Color.Transparent
         Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.Location = New System.Drawing.Point(30, 3)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(100, 22)
+        Me.Label19.Size = New System.Drawing.Size(129, 22)
         Me.Label19.TabIndex = 3
         Me.Label19.Text = "Accent Color on:"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

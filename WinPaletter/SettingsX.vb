@@ -38,7 +38,7 @@ Public Class SettingsX
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
             If .Language <> XenonCheckBox8.Checked Then Changed = True
-            If .Language_File <> OpenFileDialog2.FileName Then Changed = True
+            If .Language_File <> XenonTextBox3.Text Then Changed = True
             If .Nerd_Stats <> XenonCheckBox10.Checked Then Changed = True
             If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then Changed = True
             If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
@@ -111,7 +111,7 @@ Public Class SettingsX
             XenonCheckBox6.Checked = .Appearance_Auto
 
             XenonCheckBox8.Checked = .Language
-            OpenFileDialog2.FileName = .Language_File
+            XenonTextBox3.Text = .Language_File
 
             XenonCheckBox10.Checked = .Nerd_Stats
             XenonCheckBox11.Checked = .Nerd_Stats_HexHash
@@ -145,7 +145,7 @@ Public Class SettingsX
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
-        OpenFileDialog2.FileName = My.Application._Settings.Language_File
+        XenonTextBox3.Text = My.Application._Settings.Language_File
     End Sub
 
     Sub SaveSettings()
@@ -184,7 +184,7 @@ Public Class SettingsX
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
             .Language = XenonCheckBox8.Checked
-            .Language_File = OpenFileDialog2.FileName
+            .Language_File = XenonTextBox3.Text
             .Nerd_Stats = XenonCheckBox10.Checked
             .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
             .Nerd_Stats_HexHash = XenonCheckBox11.Checked
@@ -328,7 +328,7 @@ Public Class SettingsX
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
                 .Language = XenonCheckBox8.Checked
-                .Language_File = OpenFileDialog2.FileName
+                .Language_File = XenonTextBox3.Text
                 .Nerd_Stats = XenonCheckBox10.Checked
                 .Nerd_Stats_Kind = XenonComboBox3.SelectedIndex
                 .Nerd_Stats_HexHash = XenonCheckBox11.Checked
@@ -401,7 +401,7 @@ Public Class SettingsX
                 XenonRadioButton4.Checked = Not .Appearance_Dark
                 XenonCheckBox6.Checked = .Appearance_Auto
                 XenonCheckBox8.Checked = .Language
-                OpenFileDialog2.FileName = .Language_File
+                XenonTextBox3.Text = .Language_File
             End With
         End If
     End Sub
@@ -472,7 +472,7 @@ Public Class SettingsX
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
             XenonCheckBox8.Checked = .Language
-            OpenFileDialog2.FileName = .Language_File
+            XenonTextBox3.Text = .Language_File
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -504,20 +504,11 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        With My.Application.LanguageHelper
-            My.Application.LanguageHelper = New Localizer()
 
-            If OpenFileDialog2.ShowDialog = DialogResult.OK Then
-                .LoadLanguageFromFile(OpenFileDialog2.FileName)
-                Label11.Text = .Name
-                Label12.Text = .TrVer
-                Label14.Text = .AppVer
-                Label19.Text = .Lang
-                Label16.Text = .LangCode
-                Label21.Text = If(.RightToLeft, .Yes, .No)
-            End If
-        End With
-
+        If OpenFileDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox3.Text = OpenFileDialog2.FileName
+            MsgBox("To apply this language, save settings and restart WinPaletter", MsgBoxStyle.Information + My.Application.MsgboxRt)
+        End If
 
     End Sub
 

@@ -8,11 +8,11 @@ Public Class Localizer
     End Sub
 
 #Region "Language Info"
-    Property Name
-    Property TrVer
-    Property Lang
-    Property LangCode
-    Property AppVer
+    Property Name As String = "Abdelrhman-AK"
+    Property TrVer As String = "1.0"
+    Property Lang As String = "English"
+    Property LangCode As String = "EN-US"
+    Property AppVer As String = "1.0.0.0"
     Property RightToLeft As Boolean = False
 #End Region
 
@@ -278,28 +278,46 @@ Public Class Localizer
         For Each dicX As ControlsBase In Dic
 
             If [Form].Name = dicX.Form Then
+                [Form].SuspendLayout()
+
                 If dicX.Control = Nothing Then
                     '# Form
+
+
                     If dicX.Prop.ToLower = "text" Then [Form].Text = dicX.Value
                     If dicX.Prop.ToLower = "tag" Then [Form].Tag = dicX.Value
-                    [Form].RightToLeft = If(RightToLeft, 1, 0)
+
+                    '[Form].RightToLeft = If(RightToLeft, 1, 0)
+
                     [Form].RightToLeftLayout = RightToLeft
-                    RTL([Form])
-                    [Form].Refresh()
+
+                    'RTL([Form])
 
                 Else
                     '# Control
                     For Each ctrl As Control In [Form].Controls.Find(dicX.Control, True)
+
                         ctrl.SuspendLayout()
-                        If dicX.Prop.ToLower = "text" Then ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
-                        If dicX.Prop.ToLower = "tag" Then ctrl.Tag = dicX.Value.ToString.Replace("<br>", vbCrLf)
-                        ctrl.RightToLeft = If(RightToLeft, 1, 0)
+
+                        Try : If dicX.Prop.ToLower = "text" Then ctrl.Text = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        Catch : End Try
+
+                        Try : If dicX.Prop.ToLower = "tag" Then ctrl.Tag = dicX.Value.ToString.Replace("<br>", vbCrLf)
+                        Catch : End Try
+
+                        'ctrl.RightToLeft = If(RightToLeft, 1, 0)
+
                         ctrl.Refresh()
-                        [Form].Refresh()
+
                         ctrl.ResumeLayout()
+
                     Next
 
                 End If
+
+                [Form].ResumeLayout()
+
+                [Form].Refresh()
             End If
 
         Next
@@ -310,6 +328,7 @@ Public Class Localizer
         [Form].ResumeLayout()
     End Sub
     Sub RTL(Parent As Control)
+
         If RightToLeft Then
 
             For Each XeTP As XenonTabControl In Parent.Controls.OfType(Of XenonTabControl)
@@ -328,7 +347,7 @@ Public Class Localizer
             Next
 
             For Each XeTP As Control In Parent.Controls
-                If TypeOf XeTP Is XenonGroupBox Or TypeOf XeTP Is Panel Then
+                If TypeOf XeTP Is XenonGroupBox Or TypeOf XeTP Is Panel Or TypeOf XeTP Is ContainerControl Then
                     XeTP.RightToLeft = If(RightToLeft, 1, 0)
                     For Each Cx As Control In XeTP.Controls
                         Cx.Left = XeTP.Width - Cx.Left - Cx.Width
@@ -338,6 +357,8 @@ Public Class Localizer
             Next
 
         End If
+
+
     End Sub
 
     Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
