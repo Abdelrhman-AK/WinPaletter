@@ -1,6 +1,10 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
-![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total)  ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter) [![issues - WinPaletter](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter)](https://github.com/Abdelrhman-AK/WinPaletter/issues)
+![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge)
+
+[![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network)
+
+[![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Idea.png?raw=true) Ideas & Plans
 
@@ -73,6 +77,9 @@
 - Colorizing Modern Windows Elements (UWP/WinUI3) Inspired by u/aveyo and u/Egg-Tricky (Reddit): 
   •https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent/?utm_medium=android_app&utm_source=share
   •https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well/?utm_medium=android_app&utm_source=share
+
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License: MIT
+[See Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Antiviruses or some browsers download issue
 
