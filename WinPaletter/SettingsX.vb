@@ -507,7 +507,7 @@ Public Class SettingsX
 
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             XenonTextBox3.Text = OpenFileDialog2.FileName
-            MsgBox("To apply this language, save settings and restart WinPaletter", MsgBoxStyle.Information + My.Application.MsgboxRt)
+            MsgBox(My.Application.LanguageHelper.LanguageRestart, MsgBoxStyle.Information + My.Application.MsgboxRt)
         End If
 
     End Sub

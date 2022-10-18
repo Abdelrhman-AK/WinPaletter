@@ -63,6 +63,7 @@
 @Hide = اخفاء
 @InvalidTheme = خطأ: ملف ثيم غير صالح
 @Label5_Checking = جار التحقق...
+@LanguageRestart = من أجل تطبيق هذه اللغة، من فضلك قم بحفظ الإعدادات و أعد تشغيل WinPaletter.
 @LngExported = تم استخراج اللغة بنجاح
 @LngShouldClose = يجب عليك إغلاق التطبيق إذا كنت تريد تصدير اللغة.
 @MBSizeUnit = م.ب

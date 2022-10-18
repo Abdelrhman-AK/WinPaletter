@@ -33,7 +33,7 @@ Public Class Localizer
     Property By As String = "By"
     Property Show As String = "Show"
     Property Hide As String = "Hide"
-
+    Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
