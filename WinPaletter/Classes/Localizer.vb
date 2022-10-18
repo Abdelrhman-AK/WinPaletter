@@ -195,15 +195,15 @@ Public Class Localizer
             ins.Dispose()
         Next
 
-
-
         IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & CStr_FromList(LS))
     End Sub
 
     Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
         If IO.File.Exists(File) Then
-            Dim Dic As New List(Of Tuple(Of String, String, String, Object))()
-            Dic.Clear()
+
+            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, Object))()
+            PopCtrlList.Clear()
+
             Dim Definer As New Dictionary(Of String, String)
             Definer.Clear()
 
@@ -248,10 +248,9 @@ Public Class Localizer
 
                     Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
 
-                    Dic.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
+                    PopCtrlList.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
                 End If
             Next
-
 
             Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
@@ -264,18 +263,33 @@ Public Class Localizer
                 End Try
             Next
 
+
             If [_Form] Is Nothing Then
                 For x As Integer = 0 To My.Application.allForms.Count - 1
-                    Populate(Dic, My.Application.GetFormFromName(My.Application.allForms(x)))
+
+                    With My.Application.GetFormFromName(My.Application.allForms(x))
+                        '.SuspendLayout()
+
+                        Populate(PopCtrlList, My.Application.GetFormFromName(My.Application.allForms(x)))
+                        .RightToLeftLayout = RightToLeft
+
+                        '.RightToLeft = If(RightToLeft, 1, 0)
+                        'RTL(My.Application.GetFormFromName(My.Application.allForms(x)))
+                        '.ResumeLayout()
+                        '.Refresh()
+                    End With
+
                 Next
+                LoadInternal()
             Else
-                Populate(Dic, [_Form])
+                Populate(PopCtrlList, [_Form])
             End If
 
             My.Application.AdjustFonts()
 
-            Dic.Clear()
+            PopCtrlList.Clear()
             Definer.Clear()
+
         End If
     End Sub
 
@@ -286,58 +300,42 @@ Public Class Localizer
         My.Application.AdjustFonts()
     End Sub
 
-    Sub Populate(ByVal Dic As List(Of Tuple(Of String, String, String, Object)), [Form] As Form)
-        [Form].SuspendLayout()
-
+    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, Object)), [Form] As Form)
         'Item1 = FormName
         'Item2 = ControlName
         'Item3 = Prop
         'Item4 = Value
 
+        For Each member In PopCtrlList
 
-        For Each dicX In Dic
+            If [Form].Name.ToLower = member.Item1.ToLower Then
 
-            If [Form].Name.ToLower = dicX.Item1.ToLower Then
-
-                If dicX.Item2 = Nothing Then
+                If member.Item2 = Nothing Then
                     '# Form
-                    Try : If dicX.Item3.ToLower = "text" Then [Form].Text = dicX.Item4
+                    Try : If member.Item3.ToLower = "text" Then [Form].Text = member.Item4
                     Catch : End Try
 
-                    Try : If dicX.Item3.ToLower = "tag" Then [Form].Tag = dicX.Item4.ToString.Replace("<br>", vbCrLf)
+                    Try : If member.Item3.ToLower = "tag" Then [Form].Tag = member.Item4.ToString.Replace("<br>", vbCrLf)
                     Catch : End Try
 
                 Else
                     '# Control
-                    For Each ctrl As Control In [Form].Controls.Find(dicX.Item2, True)
+                    For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
 
-                        Try : If dicX.Item3.ToLower = "text" Then ctrl.Text = dicX.Item4.ToString.Replace("<br>", vbCrLf)
+                        Try : If member.Item3.ToLower = "text" Then ctrl.Text = member.Item4.ToString.Replace("<br>", vbCrLf)
                         Catch : End Try
 
-                        Try : If dicX.Item3.ToLower = "tag" Then ctrl.Tag = dicX.Item4.ToString.Replace("<br>", vbCrLf)
+                        Try : If member.Item3.ToLower = "tag" Then ctrl.Tag = member.Item4.ToString.Replace("<br>", vbCrLf)
                         Catch : End Try
 
                         'ctrl.RightToLeft = If(RightToLeft, 1, 0)
-
-                        ctrl.Refresh()
+                        'ctrl.Refresh()
                     Next
 
                 End If
-
-
             End If
-
         Next
 
-        MainFrm.ToolStripMenuItem2.Text = MenuInit
-        MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
-
-        [Form].RightToLeftLayout = RightToLeft
-        '[Form].RightToLeft = If(RightToLeft, 1, 0)
-        'RTL([Form])
-
-        [Form].ResumeLayout()
-        [Form].Refresh()
     End Sub
     Sub RTL(Parent As Control)
 

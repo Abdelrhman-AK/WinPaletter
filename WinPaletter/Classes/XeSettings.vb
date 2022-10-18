@@ -4,6 +4,7 @@ Imports WinPaletter.XenonCore
 Public Class XeSettings
 
 #Region "Settings"
+    Public Property LicenseAccepted As Boolean = False
     Public Property AutoAddExt As Boolean = True
     Public Property AutoApplyCursors As Boolean = False
     Public Property DragAndDropPreview As Boolean = True
@@ -64,6 +65,7 @@ Public Class XeSettings
         Dim Key As RegistryKey
         Dim AppReg As String = "Software\WinPaletter\Settings"
         Key = Registry.CurrentUser.CreateSubKey(AppReg)
+        If Key.GetValue("LicenseAccepted", Nothing) Is Nothing Then Key.SetValue("LicenseAccepted", False, RegistryValueKind.DWord)
 
         If Key.GetValue("AutoUpdatesChecking", Nothing) Is Nothing Then Key.SetValue("AutoUpdatesChecking", True, RegistryValueKind.DWord)
         If Key.GetValue("AutoAddExt", Nothing) Is Nothing Then Key.SetValue("AutoAddExt", True, RegistryValueKind.DWord)
@@ -127,6 +129,8 @@ Public Class XeSettings
                 Dim Key As RegistryKey
                 Dim AppReg As String = "Software\WinPaletter\Settings"
                 Key = Registry.CurrentUser.CreateSubKey(AppReg)
+
+                LicenseAccepted = Key.GetValue("LicenseAccepted", False)
 
                 AutoAddExt = Key.GetValue("AutoAddExt", True)
                 AutoApplyCursors = Key.GetValue("AutoApplyCursors", False)
@@ -217,6 +221,9 @@ Public Class XeSettings
                 Dim Key As RegistryKey
                 Dim AppReg As String = "Software\WinPaletter\Settings"
                 Key = Registry.CurrentUser.CreateSubKey(AppReg)
+
+                Key.SetValue("LicenseAccepted", LicenseAccepted, RegistryValueKind.DWord)
+
                 Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
                 Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
                 Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)

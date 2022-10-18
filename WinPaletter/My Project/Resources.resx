@@ -274,6 +274,9 @@
   <data name="JetBrainsMono_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JetBrainsMono-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="LICENSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LICENSE.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1256</value>
+  </data>
   <data name="lightmode_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\lightmode_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -282,6 +285,9 @@
   </data>
   <data name="Link_Changelog" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Changelog?raw=true</value>
+  </data>
+  <data name="Link_License" xml:space="preserve">
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true</value>
   </data>
   <data name="Link_Releases" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/releases</value>

@@ -104,6 +104,7 @@ Partial Class ExternalTerminal
         Me.XenonCMD4 = New WinPaletter.XenonCMD()
         Me.Label137 = New System.Windows.Forms.Label()
         Me.XenonGroupBox51 = New WinPaletter.XenonGroupBox()
+        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -129,7 +130,6 @@ Partial Class ExternalTerminal
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox52.SuspendLayout()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox54.SuspendLayout()
@@ -410,7 +410,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorStyle.FormattingEnabled = True
         Me.ExtTerminal_CursorStyle.Items.AddRange(New Object() {"Default", "Legacy", "Underscore", "Empty Box", "Vertical Bar", "Solid Box"})
         Me.ExtTerminal_CursorStyle.LineColor = System.Drawing.Color.DodgerBlue
-        Me.ExtTerminal_CursorStyle.Location = New System.Drawing.Point(93, 69)
+        Me.ExtTerminal_CursorStyle.Location = New System.Drawing.Point(93, 68)
         Me.ExtTerminal_CursorStyle.Name = "ExtTerminal_CursorStyle"
         Me.ExtTerminal_CursorStyle.Size = New System.Drawing.Size(120, 24)
         Me.ExtTerminal_CursorStyle.TabIndex = 110
@@ -419,7 +419,7 @@ Partial Class ExternalTerminal
         '
         Me.Label111.BackColor = System.Drawing.Color.Transparent
         Me.Label111.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label111.Location = New System.Drawing.Point(35, 69)
+        Me.Label111.Location = New System.Drawing.Point(35, 70)
         Me.Label111.Name = "Label111"
         Me.Label111.Size = New System.Drawing.Size(41, 21)
         Me.Label111.TabIndex = 109
@@ -1307,6 +1307,15 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox51.Size = New System.Drawing.Size(652, 109)
         Me.XenonGroupBox51.TabIndex = 115
         '
+        'XenonSeparator1
+        '
+        Me.XenonSeparator1.Location = New System.Drawing.Point(6, 73)
+        Me.XenonSeparator1.Name = "XenonSeparator1"
+        Me.XenonSeparator1.Size = New System.Drawing.Size(640, 1)
+        Me.XenonSeparator1.TabIndex = 201
+        Me.XenonSeparator1.TabStop = False
+        Me.XenonSeparator1.Text = "XenonSeparator1"
+        '
         'Label4
         '
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1658,15 +1667,6 @@ Partial Class ExternalTerminal
         'OpenWPTHDlg
         '
         Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth"
-        '
-        'XenonSeparator1
-        '
-        Me.XenonSeparator1.Location = New System.Drawing.Point(6, 73)
-        Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(640, 1)
-        Me.XenonSeparator1.TabIndex = 201
-        Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'ExternalTerminal
         '

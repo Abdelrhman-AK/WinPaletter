@@ -1151,7 +1151,7 @@ Partial Class MainFrm
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label13.Location = New System.Drawing.Point(44, 5)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(47, 55)
+        Me.Label13.Size = New System.Drawing.Size(70, 55)
         Me.Label13.TabIndex = 0
         Me.Label13.Text = "Misc"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

@@ -29,6 +29,9 @@ Partial Class Whatsnew
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -43,6 +46,7 @@ Partial Class Whatsnew
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage10.SuspendLayout()
@@ -128,6 +132,7 @@ Partial Class Whatsnew
         Me.XenonTabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage3)
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
         Me.XenonTabControl1.Controls.Add(Me.TabPage10)
@@ -142,6 +147,43 @@ Partial Class Whatsnew
         Me.XenonTabControl1.Size = New System.Drawing.Size(825, 340)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 4
+        '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.Label5)
+        Me.TabPage3.Controls.Add(Me.Label7)
+        Me.TabPage3.ForeColor = System.Drawing.Color.White
+        Me.TabPage3.Location = New System.Drawing.Point(154, 4)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(667, 332)
+        Me.TabPage3.TabIndex = 7
+        Me.TabPage3.Text = "Announcement"
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(6, 48)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(655, 269)
+        Me.Label5.TabIndex = 30
+        Me.Label5.Text = resources.GetString("Label5.Text")
+        '
+        'Label7
+        '
+        Me.Label7.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.OrangeRed
+        Me.Label7.Location = New System.Drawing.Point(3, 3)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(661, 45)
+        Me.Label7.TabIndex = 29
+        Me.Label7.Text = "ANNOUNCEMENT (Temporary until mid-January 2023)"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage1
         '
@@ -195,7 +237,7 @@ Partial Class Whatsnew
         Me.Label4.Size = New System.Drawing.Size(661, 45)
         Me.Label4.TabIndex = 26
         Me.Label4.Text = "Modify All Windows Terminals (Command Prompt, PowerShell, Terminal)"
-        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage2
         '
@@ -336,6 +378,7 @@ Partial Class Whatsnew
         Me.Text = "What's new!"
         Me.TopMost = True
         Me.XenonTabControl1.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage10.ResumeLayout(False)
@@ -363,4 +406,7 @@ Partial Class Whatsnew
     Friend WithEvents Label1 As Label
     Friend WithEvents XenonButton10 As XenonButton
     Friend WithEvents XenonButton8 As XenonButton
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label7 As Label
 End Class

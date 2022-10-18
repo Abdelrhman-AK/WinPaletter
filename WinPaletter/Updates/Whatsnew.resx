@@ -132,6 +132,17 @@
 
 - Minor Improvement in Application Start Speed (You may not notice it)</value>
   </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>- I'll pause working on WinPaletter because I will start final college exams in the next weeks for about 3 months and so I'll be so busy. 
+
+- I won't be able to work on new features until mid-January 2023.
+
+- If you have an issue, post it in GitHub Issues, and when I have time to fix it, I'll fix and post an update.
+
+- When I'm back, I will work on Windows Metrics, Mini-Store for Themes and other features/improvements. 
+
+- Thanks for your patience and for understanding this ... </value>
+  </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>- You can now apply accent on taskbar alone or on Taskbar, Start &amp;&amp; Action Center
 

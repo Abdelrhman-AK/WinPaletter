@@ -581,6 +581,26 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to MIT License
+        '''
+        '''Copyright (c) 2022 Abdelrhman-AK
+        '''
+        '''Permission is hereby granted, free of charge, to any person obtaining a copy
+        '''of this software and associated documentation files (the &quot;Software&quot;), to deal
+        '''in the Software without restriction, including without limitation the rights
+        '''to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        '''copies of the Software, and to permit persons to whom the Software is
+        '''furnished to do so, subject to the following conditions:
+        '''
+        '''The above copyright  [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property LICENSE() As String
+            Get
+                Return ResourceManager.GetString("LICENSE", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property lightmode_dark() As System.Drawing.Bitmap
@@ -606,6 +626,15 @@ Namespace My.Resources
         Public ReadOnly Property Link_Changelog() As String
             Get
                 Return ResourceManager.GetString("Link_Changelog", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true.
+        '''</summary>
+        Public ReadOnly Property Link_License() As String
+            Get
+                Return ResourceManager.GetString("Link_License", resourceCulture)
             End Get
         End Property
         

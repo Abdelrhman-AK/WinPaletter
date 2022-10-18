@@ -44,6 +44,7 @@ Namespace My
 
         Public ConsoleFont As New Font("Lucida Console", 7.5)
         Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
+        Public ConsoleFontLarge As New Font("Lucida Console", 10)
 
         Public FontsList As New List(Of String)
         Public FontsFixedList As New List(Of String)
@@ -417,7 +418,7 @@ Namespace My
                 With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
+                With Whatsnew.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             End If
 
         End Sub
@@ -448,6 +449,8 @@ Namespace My
             If Name.ToLower = "TerminalsDashboard".ToLower Then Return TerminalsDashboard
             If Name.ToLower = "WindowsTerminal".ToLower Then Return WindowsTerminal
             If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
+            If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
+            If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
@@ -456,10 +459,13 @@ Namespace My
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
+                ConsoleFontLarge = MemoryFonts.GetFont(0, 10)
 
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
+                ConsoleFontLarge = New Font("Lucida Console", 10)
+
             End Try
 
             FontsList.Clear()
@@ -501,7 +507,9 @@ Namespace My
                         "TerminalInfo",
                         "TerminalsDashboard",
                         "WindowsTerminal",
-                        "WindowsTerminalDecide"
+                        "WindowsTerminalDecide",
+                        "WindowsTerminalCopycat",
+                        "LicenseForm"
                         }
 
             Try
@@ -539,8 +547,6 @@ Namespace My
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
 
-
-
             DetectOS()
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
@@ -553,6 +559,10 @@ Namespace My
             ExternalLink = False
             ExternalLink_File = ""
             ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
+
+            If Not _Settings.LicenseAccepted Then
+                If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
+            End If
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
