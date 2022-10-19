@@ -118,13 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Label14.Text" xml:space="preserve">
-    <value>- Right Click on a theme file to open, edit or direct apply
+    <value>- Fixed bug: Applying accent on titlebar was not working on Windows 11 22H2
+
+- Right Click on a theme file to open, edit or direct apply
 
 - Language Translation now depends on GitHub only (Not Telegram; Deleted as it isn't necessary)
-
-- You can resize the main form as colors descriptions may be partially invisible (Some languages)
-
-- Fixing bug in translation causing the application not opening completely
 
 - Application Language: improved and fixed minor bugs
 
