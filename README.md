@@ -50,7 +50,7 @@
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
 - You should read the documentation before you start editing terminals: [Read it](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Terminal.md)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png?raw=true)
 
 ---
 
