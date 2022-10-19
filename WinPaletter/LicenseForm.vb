@@ -3,8 +3,9 @@ Imports WinPaletter.XenonCore
 
 Public Class LicenseForm
     Private Sub LicenseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        XenonTextBox1.Font = My.Application.ConsoleFontLarge
+        ApplyDarkMode(Me)
 
+        XenonTextBox1.Font = My.Application.ConsoleFontLarge
 
         XenonTextBox1.Text = My.Resources.LICENSE
 

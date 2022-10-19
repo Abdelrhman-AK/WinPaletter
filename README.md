@@ -26,9 +26,12 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 
-- **Windows 7 and Windows 8.1:** Use WinPaletter version starting from **1.0.5.0** and higher, and you should install at least .NET Framework 4.7, or better 4.8, then reboot your Windows (Necessary) [Download it from here, choose "Runtime"](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+| Operation System                                       | Requirements                                                                             |
+| ------------------------------------------------------ | -----------------------------------------------------------------------------------------|
+| **Windows 7 and Windows 8.1**                          | WinPaletter version `1.0.5.0` and **Higher** & .NET Framework 4.7, or better 4.8, then reboot your Windows (Necessary) [Download it from here, choose "Runtime"](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                      |
+| **Windows 10 and Windows 11**                          | .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
 
-- **Windows 10 and Windows 11:** .Net Framework 4.8 is already pre-installed, so no extra step is required.
+---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Colorizing Windows Accents.
 
@@ -39,14 +42,17 @@
 - **You can modify Windows 7\8.1 LogonUI screen\Lock Screen**, using Default Backgrounds, Wallpaper, Custom colors and external image, with effects can be applied like Blur, Acrylic Noise, Aero Glass,...
   ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/LogonUI7.png?raw=true)
 
+---
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) You can now modify all terminals in Windows.
 
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
 - You should read the documentation before you start editing terminals: [Read it](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Terminal.md)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal0.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminal1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png.png?raw=true)
+
+---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) You can colorize the classic apps accents (Like what we did in the 90s and 2000s :))
 
@@ -65,21 +71,23 @@
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/2.png?raw=true)
 
+---
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Mechanism.png?raw=true) Idea of the program
 
 - The Accent colors are stored in the Windows registry, one of them is stored as an array, and the others are stored singly in keys' values, and this is complex for a normal user. This program eases changing Windows elements' colors freely (i.e. You won't select one color as in Settings) and also save this to a theme file to apply it later or for sharing it.
 
-- Some screenshots for changing colors features:
-  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/A.png?raw=true)
-  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/B.png?raw=true)
-  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/C.png?raw=true)
+- You can change the colors by 3 methods\controllers:
+  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/ColorsPicking.png?raw=true)
 
-- Colorizing Modern Windows Elements (UWP/WinUI3) Inspired by u/aveyo and u/Egg-Tricky (Reddit): 
-  •https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent/?utm_medium=android_app&utm_source=share
-  •https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well/?utm_medium=android_app&utm_source=share
+- Colorizing Modern Windows Elements (UWP/WinUI3) Inspired by [u/aveyo](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well) and [u/Egg-Tricky](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent) in Reddit.
+
+---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License: MIT
 [See Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+
+---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Antiviruses or some browsers download issue
 
