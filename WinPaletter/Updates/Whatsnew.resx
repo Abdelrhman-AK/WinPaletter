@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Label14.Text" xml:space="preserve">
-    <value>- Fixed bug: Applying accent on titlebar was not working on Windows 11 22H2
+    <value>- Fixed bug: Applying accent on titlebar was not working on Windows 11 22H2 for some users
 
 - Right Click on a theme file to open, edit or direct apply
 
@@ -129,6 +129,23 @@
 - Minor UI fixes and improvements
 
 - Minor Improvement in Application Start Speed (You may not notice it)</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAk9JREFUSEvt
+        1s9r02AYB/AqDg968j+wTGG0Ju86VMTLHP4AvQ38gQjOq0dBT8ImnkUUPehFBfEgzoNIu67TmCapVScd
+        soM4QymorJd5UcE16dfnrW+WblX6vqkdHvaFh/AmeZ9PfvGS2FraBYitg8WOwmEjMAY3iN3dD5z+E/h4
+        GajcBOEXYGm78WpoFoVdj5Hu3ShO+zeBzU7C0q/B2hGnux1D+Trw6S5o/x283JPGgkMXcoPG+rCY0nlQ
+        SPVi9mwd1SfA60NOA7YZR3/DNjPw4SJQOsafwIiY1nkIGsS7M8CX+0Bhb+WPcDAW7x1GYrOYHj0NOITK
+        beHiviJmTns0PiBaRIsSnCf4zRFg7hLovFHRIlqkYYuKw3xL5ZtsTLSIFilYYAFcz68GbC2HOdoNeIEq
+        F471R3S8uBpwWAEmSoDl7sErQF4BtlSmJEwL//qaqR/8Ptl3eG7FekuNQ1gSlYcd/Rxv7Jk6vmWTb+ez
+        2iZxKIQV0AZsSMHaEDVfDPFEujq+ff/0rYGeyoP4VVW0/oLgZ5LvmL7Q4wTXm3DMj2/D54fxkhJqEPpc
+        AeahtXa08Vib8K9P+5bBf0XpLptQ+DkVmP9d2OxeM/4jl1yCpdEpRZgH0wM99LFNBbhvaqUWsD0KP6sI
+        86CQ2ELoe4G3wu3QSYZaFJgHpraV0GoLLIF6Wdpm2HnRSj30se2kf62iKupNMH9xQkuJNtECOzVM6E8F
+        FLVM/xUxvbPA0JJ+nt0mdIbKJdQl1CXUJdQl1CXUJdT0MvopMW0t/0NisV9ARjGRkVeAzQAAAABJRU5E
+        rkJggg==
+</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>- I'll pause working on WinPaletter because I will start final college exams in the next weeks for about 3 months and so I'll be so busy. 
@@ -152,7 +169,6 @@
 
 - If you find a color "Undefined", that doesn't mean that it is not usable, you can use it but its effect on system is Unknown\Undefined</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAzkAAABLCAYAAABTEElOAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO

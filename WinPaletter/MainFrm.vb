@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
@@ -2664,6 +2665,22 @@ Public Class MainFrm
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+        Dim s As New StringBuilder
+        s.Clear()
+        s.AppendLine("Announcement (Temporary until mid-January 2023)")
+        s.AppendLine(vbCrLf)
+        s.AppendLine("- I'll pause working on WinPaletter because I will start final college exams in the next weeks for about 3 months and so I'll be so busy.")
+        s.AppendLine("- I won't be able to work on new features until mid-January 2023.")
+        s.AppendLine("- If you have an issue, post it in GitHub Issues, And when I have time to fix it, I'll fix and post an update.")
+        s.AppendLine("- When I'm back, I will work on Windows Metrics, Mini-Store for Themes and other features/improvements. ")
+        s.AppendLine(vbCrLf)
+        s.AppendLine("- Thanks for your patience And for understanding this ... ")
+
+        MsgBox(s.ToString, MsgBoxStyle.Information + My.Application.MsgboxRt)
+
     End Sub
 
 #Region "Notifications Base"

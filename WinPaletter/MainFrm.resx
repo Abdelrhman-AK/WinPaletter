@@ -1118,6 +1118,19 @@
         dAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="XenonButton26.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAGLSURBVDhP1dS9S8NAGAbwoCCdBMFZ/MIl2l6o4OTHLKI4OAlmcFEcnBzd/QccHRSpEtrJpa1i
+        bZOioC1VrIIlk0XEoQ6WUrHt43vptS42CR0EHziSHO/9OO4j0p8HVxPdSCpTgNQhutoLYjMeaEudSC0c
+        4eUQMJRVZNQs0osBUeI+0Md68LBZxJ2aQHI8iNQ8kGS7eNwCMsvvosx9YPhk3K4AN3MFgjQYrA7yp8He
+        YPj7kFCmRblzLLAx+DfwejaI+7VPUe4cW1CnPp1ptQSDKHdOS1Cvg4S1DZYJeLbedd8lBwkqUDttF+Qz
+        ajaONFvcBqSDu/4RlTeymtxlfTdAG6wlyG8ADc5xoBiVD/LHgyP5wJDqhNUu7GYY9w4QSOeL0IiM19Bw
+        zhaLMVTPHdYQhneSwDJHS9FRC7TDqmcuNoUwlYM1WgInrHrqAuShDdqhM/cDtsAqEVYSQ+xj/WF0Zc8B
+        QyWshMQQ5yDW76HLv01YmnbTJMwkzCTM/Iqwp0qY7ePE3yvK/1Uk6RseM+brn1D26wAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>53</value>
   </metadata>

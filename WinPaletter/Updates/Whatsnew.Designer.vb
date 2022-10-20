@@ -30,6 +30,7 @@ Partial Class Whatsnew
         Me.Label14 = New System.Windows.Forms.Label()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -47,6 +48,7 @@ Partial Class Whatsnew
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage10.SuspendLayout()
@@ -151,6 +153,7 @@ Partial Class Whatsnew
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.PictureBox2)
         Me.TabPage3.Controls.Add(Me.Label5)
         Me.TabPage3.Controls.Add(Me.Label7)
         Me.TabPage3.ForeColor = System.Drawing.Color.White
@@ -160,6 +163,17 @@ Partial Class Whatsnew
         Me.TabPage3.Size = New System.Drawing.Size(667, 332)
         Me.TabPage3.TabIndex = 7
         Me.TabPage3.Text = "Announcement"
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
+        Me.PictureBox2.Location = New System.Drawing.Point(3, 2)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(48, 48)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox2.TabIndex = 31
+        Me.PictureBox2.TabStop = False
         '
         'Label5
         '
@@ -379,6 +393,7 @@ Partial Class Whatsnew
         Me.TopMost = True
         Me.XenonTabControl1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage10.ResumeLayout(False)
@@ -409,4 +424,5 @@ Partial Class Whatsnew
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents Label5 As Label
     Friend WithEvents Label7 As Label
+    Friend WithEvents PictureBox2 As PictureBox
 End Class
