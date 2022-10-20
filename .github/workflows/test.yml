@@ -19,7 +19,7 @@ jobs:
         id: list-files
         uses: mirko-felice/list-files-action@v3.0.1
         with:
-          repo: ${{ Abdelrhman-AK/WinPaletter }}
+          repo: ${{ WinPaletter }}
           ref: ${{ Master }}
           path: "WinPaletter"
           ext: ".vb"
