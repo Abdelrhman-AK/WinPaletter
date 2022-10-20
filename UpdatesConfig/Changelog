@@ -5,6 +5,13 @@
 #Added= String
 #Removed= String
 
+[1.0.6.1]
+Channel= Stable
+Date= -8585353900854775808
+Removed= WinPaletter Development Paused to mid-January 2023, visit repos at Github for information
+BugFix= Fixing bugs in applying accent on titlebar for Windows 11 22H2
+BugFix= Fixing bugs in translation
+
 [1.0.6.0]
 Channel= Stable
 Date= -8585357356854775808
