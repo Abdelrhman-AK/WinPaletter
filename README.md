@@ -6,16 +6,23 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Announcement.png?raw=true) Temporary Announcement: Development Paused (until mid-January 2023): 
+- I'll pause working on WinPaletter because I will start final college exams in the next weeks for about 3 months and so I'll be so busy. 
+- I won't be able to work on new features until mid-January 2023.
+- If you have an issue, post it in GitHub Issues, and when I have time to fix it, I'll fix and post an update.
+- When I'm back, I will work on Windows Metrics, Mini-Store for Themes and other features/improvements. 
+- Thanks for your patience and for understanding this ... 
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Idea.png?raw=true) Ideas & Plans
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Windows Metrics                                        | :yellow_square:                                                        |
-| Mini-Store for themes                                  | :yellow_square:                                                        |
+| Windows Metrics                                        | :yellow_square: Postponed to Mid-January 2023                          |
+| Mini-Store for themes                                  | :yellow_square: Postponed to Mid-January 2023                          |
 |                                                        |                                                                        |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
-| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Beta: 1.0.5.9, Stable: 1.0.6.0                      |
+| Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Done (Beta: 1.0.5.9, Stable: 1.0.6.0)               |
 
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
 
@@ -28,8 +35,8 @@
 
 | Operation System                                       | Requirements                                                                             |
 | ------------------------------------------------------ | -----------------------------------------------------------------------------------------|
-| **Windows 7 and Windows 8.1**                          | WinPaletter version `1.0.5.0` and **Higher** & .NET Framework 4.7, or better 4.8, then reboot your Windows (Necessary) [Download it from here, choose "Runtime"](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                      |
-| **Windows 10 and Windows 11**                          | .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
+| **Windows 7 and Windows 8.1**                          | WinPaletter Version `1.0.5.0` and **Higher** + [.NET Framework 4.7, or better 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot (Necessary)    |
+| **Windows 10 and Windows 11**                          | WinPaletter `Any Version` + .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
 
 ---
 
