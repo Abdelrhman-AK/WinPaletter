@@ -1,5 +1,9 @@
-﻿Imports Microsoft.Win32
+﻿Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography
+Imports System.Text
+Imports Microsoft.Win32
 Imports Newtonsoft.Json.Serialization
+Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 
 Public Class CP
@@ -243,10 +247,37 @@ Public Class CP
 #End Region
 
 #Region "Windows Terminal"
-    Public Property Terminal As WinTerminal
-    Public Property TerminalPreview As WinTerminal
-    'Public Property TerminalDeveloper As WinTerminal
+    Public Terminal As WinTerminal
+    Public TerminalPreview As WinTerminal
+    'Public TerminalDeveloper As WinTerminal
 #End Region
+#End Region
+
+#Region "Metrics"
+    Public Property Metrics_BorderWidth As Integer
+    Public Property Metrics_CaptionHeight As Integer
+    Public Property Metrics_CaptionWidth As Integer
+    Public Property Metrics_IconSpacing As Integer
+    Public Property Metrics_IconTitleWrap As Integer
+    Public Property Metrics_IconVerticalSpacing As Integer
+    Public Property Metrics_MenuHeight As Integer
+    Public Property Metrics_MenuWidth As Integer
+    Public Property Metrics_MinAnimate As Integer
+    Public Property Metrics_PaddedBorderWidth As Integer
+    Public Property Metrics_ScrollHeight As Integer
+    Public Property Metrics_ScrollWidth As Integer
+    Public Property Metrics_ShellIconSize As Integer
+    Public Property Metrics_SmCaptionHeight As Integer
+    Public Property Metrics_SmCaptionWidth As Integer
+#End Region
+
+#Region "Fonts"
+    Public Property Fonts_CaptionFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_IconFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_MenuFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_MessageFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_SmCaptionFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_StatusFont As New Font("Segoe UI", 12, FontStyle.Regular)
 #End Region
 
 #Region "Cursors"
@@ -601,8 +632,8 @@ Public Class CP
             Else
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
             End If
-        Catch 'ex As Exception
-            'MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
+        Catch ex As Exception
+            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
 
         Finally
             If R IsNot Nothing Then
@@ -802,6 +833,7 @@ Public Class CP
 
         Return installed
     End Function
+
     Public f As Form
     Dim th As Threading.Thread
     Public Sub Task_A()
@@ -1518,6 +1550,53 @@ Public Class CP
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
                     If .ToString.Split(" ").Count = 3 Then Win32UI_Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                 End With
+#End Region
+
+#Region "Metrics"
+                Metrics_BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", -15) / -15
+
+                Metrics_CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", -330) / -15
+
+                Metrics_CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", -330) / -15
+
+                Metrics_IconSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", -1125) / -15
+
+                Metrics_IconTitleWrap = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconTitleWrap", 1) '/ -15
+
+                Metrics_IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", -1125) / -15
+
+                Metrics_MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", -285) / -15
+
+                Metrics_MenuWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", -285) / -15
+
+                Metrics_MinAnimate = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", 1) '/ -15
+
+                Metrics_PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", -60) / -15
+
+                Metrics_ScrollHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", -255) / -15
+
+                Metrics_ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", -255) / -15
+
+                Metrics_ShellIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", 32) '/ -15
+
+                Metrics_SmCaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", -330) / -15
+
+                Metrics_SmCaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", -330) / -15
+#End Region
+
+#Region "Fonts"
+
+                Fonts_CaptionFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", Nothing)))
+
+                Fonts_IconFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", Nothing)))
+
+                Fonts_MenuFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", Nothing)))
+
+                Fonts_MessageFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", Nothing)))
+
+                Fonts_SmCaptionFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", Nothing)))
+
+                Fonts_StatusFont = Font.FromLogFont(LogFontHelper.ByteToLogFont(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", Nothing)))
 #End Region
 
 #Region "Terminals"
@@ -4359,8 +4438,8 @@ Public Class CP
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
 
-                NativeMethods.User32.SystemParametersInfo(&H1023, 0, If(Win32UI_EnableTheming, 1, 0), 0)
-                NativeMethods.User32.SystemParametersInfo(&H1009, 0, If(Win32UI_EnableGradient, 1, 0), 0)
+                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, If(Win32UI_EnableTheming, 1, 0), 0)
+                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, If(Win32UI_EnableGradient, 1, 0), 0)
 
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
@@ -4397,6 +4476,86 @@ Public Class CP
 #End Region
 
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
+
+#Region "Metrics With Fonts"
+                Try
+                    Dim NCM As New NONCLIENTMETRICS() With {.cbSize = Marshal.SizeOf(NCM)}
+                    SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
+
+                    Dim lfCaptionFont As New LogFont : Fonts_CaptionFont.ToLogFont(lfCaptionFont)
+                    Dim lfIconFont As New LogFont : Fonts_IconFont.ToLogFont(lfIconFont)
+                    Dim lfMenuFont As New LogFont : Fonts_MenuFont.ToLogFont(lfMenuFont)
+                    Dim lfMessageFont As New LogFont : Fonts_MessageFont.ToLogFont(lfMessageFont)
+                    Dim lfSMCaptionFont As New LogFont : Fonts_SmCaptionFont.ToLogFont(lfSMCaptionFont)
+                    Dim lfStatusFont As New LogFont : Fonts_StatusFont.ToLogFont(lfStatusFont)
+
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", LogFontHelper.LogFontToByte(lfCaptionFont), True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", LogFontHelper.LogFontToByte(lfIconFont), True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", LogFontHelper.LogFontToByte(lfMenuFont), True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", LogFontHelper.LogFontToByte(lfMessageFont), True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), True)
+
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", Metrics_BorderWidth * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", Metrics_CaptionHeight * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", Metrics_CaptionWidth * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", Metrics_IconSpacing * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconTitleWrap", Metrics_IconTitleWrap, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", Metrics_IconVerticalSpacing * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", Metrics_MenuHeight * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", Metrics_MenuWidth * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", Metrics_MinAnimate, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", Metrics_PaddedBorderWidth * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", Metrics_ScrollHeight * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", Metrics_ScrollWidth * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", Metrics_ShellIconSize, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", Metrics_SmCaptionHeight * -15, False, True)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", Metrics_SmCaptionWidth * -15, False, True)
+
+                    NCM.lfCaptionFont = lfCaptionFont       ' Requires LogOff
+                    NCM.lfMenuFont = lfMenuFont
+                    NCM.lfMessageFont = lfMessageFont
+                    NCM.lfSMCaptionFont = lfSMCaptionFont   ' Requires LogOff
+                    NCM.lfStatusFont = lfStatusFont         ' Requires LogOff
+
+                    NCM.iBorderWidth = Metrics_BorderWidth
+                    NCM.iScrollWidth = Metrics_ScrollWidth
+                    NCM.iScrollHeight = Metrics_ScrollHeight
+                    NCM.iCaptionWidth = Metrics_CaptionWidth + 14
+                    NCM.iCaptionHeight = Metrics_CaptionHeight
+                    NCM.iSMCaptionWidth = Metrics_SmCaptionWidth
+                    NCM.iSMCaptionHeight = Metrics_SmCaptionHeight
+                    NCM.iMenuWidth = Metrics_MenuWidth
+                    NCM.iMenuHeight = Metrics_MenuHeight
+                    NCM.iPaddedBorderWidth = Metrics_PaddedBorderWidth
+
+                    Dim lfIconFontSt As New LogFontStr
+
+                    With lfIconFontSt
+                        .lfHeight = lfIconFont.lfHeight
+                        .lfWidth = lfIconFont.lfWidth
+                        .lfEscapement = lfIconFont.lfEscapement
+                        .lfOrientation = lfIconFont.lfOrientation
+                        .lfWeight = lfIconFont.lfWeight
+                        .lfItalic = lfIconFont.lfItalic
+                        .lfUnderline = lfIconFont.lfUnderline
+                        .lfStrikeOut = lfIconFont.lfStrikeOut
+                        .lfCharSet = lfIconFont.lfCharSet
+                        .lfOutPrecision = lfIconFont.lfOutPrecision
+                        .lfClipPrecision = lfIconFont.lfClipPrecision
+                        .lfQuality = lfIconFont.lfQuality
+                        .lfPitchAndFamily = lfIconFont.lfPitchAndFamily
+                        .lfFaceName = lfIconFont.lfFaceName
+                    End With
+
+                    SystemParametersInfo(SPI.SPI_SETICONTITLELOGFONT, Marshal.SizeOf(lfIconFontSt), lfIconFontSt, SPIF.SPIF_SENDCHANGE)
+
+                    SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
+
+                Catch ex As Exception
+                    MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
+                End Try
+#End Region
 
 #Region "Terminals"
                 If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTerminalColors, f)
@@ -6136,10 +6295,13 @@ Public Class CP
         For Each [property] As System.Reflection.PropertyInfo In properties1
 
             If [property].PropertyType.Name.ToLower <> "winterminal" Then
-                If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
-                    _Equals = False
-                    Exit For
-                End If
+                Try
+                    If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
+                        _Equals = False
+                        Exit For
+                    End If
+                Catch
+                End Try
             End If
         Next
 

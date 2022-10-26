@@ -245,6 +245,14 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Metrics_Fonts\EditFonts.Designer.vb">
+      <DependentUpon>EditFonts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics_Fonts\EditFonts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metrics_Fonts\LogFont.vb" />
+    <Compile Include="Metrics_Fonts\Metrics.vb" />
     <Compile Include="My Project\Application1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -470,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Metrics_Fonts\EditFonts.resx">
+      <DependentUpon>EditFonts.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>

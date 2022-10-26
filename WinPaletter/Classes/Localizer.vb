@@ -208,47 +208,58 @@ Public Class Localizer
             Definer.Clear()
 
             For Each X As String In IO.File.ReadAllLines(File)
-                If X.StartsWith("!") Then
-                    If X.ToLower.StartsWith("!Name = ".ToLower) Then Name = X.Remove(0, "!Name = ".Count)
-                    If X.ToLower.StartsWith("!TrVer = ".ToLower) Then TrVer = X.Remove(0, "!TrVer = ".Count)
-                    If X.ToLower.StartsWith("!Lang = ".ToLower) Then Lang = X.Remove(0, "!Lang = ".Count)
-                    If X.ToLower.StartsWith("!LangCode = ".ToLower) Then LangCode = X.Remove(0, "!LangCode = ".Count)
-                    If X.ToLower.StartsWith("!AppVer = ".ToLower) Then AppVer = X.Remove(0, "!AppVer = ".Count)
+                If X.Contains("=") Then
+                    If X.StartsWith("!") Then
+                        Try
+                            If X.ToLower.StartsWith("!Name = ".ToLower) Then Name = X.Remove(0, "!Name = ".Count)
+                            If X.ToLower.StartsWith("!TrVer = ".ToLower) Then TrVer = X.Remove(0, "!TrVer = ".Count)
+                            If X.ToLower.StartsWith("!Lang = ".ToLower) Then Lang = X.Remove(0, "!Lang = ".Count)
+                            If X.ToLower.StartsWith("!LangCode = ".ToLower) Then LangCode = X.Remove(0, "!LangCode = ".Count)
+                            If X.ToLower.StartsWith("!AppVer = ".ToLower) Then AppVer = X.Remove(0, "!AppVer = ".Count)
 
-                    Try
-                        If X.ToLower.StartsWith("!RightToLeft = ".ToLower) Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
-                    Catch
-                        RightToLeft = False
-                    End Try
+                            Try
+                                If X.ToLower.StartsWith("!RightToLeft = ".ToLower) Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
+                            Catch
+                                RightToLeft = False
+                            End Try
+                        Catch
 
-                ElseIf X.StartsWith("@") Then
-                    Dim x0, x1 As String
-                    x0 = X.Split("=")(0).Replace("@", "").Trim
-                    x1 = X.Split("=")(1).Trim
+                        End Try
+                    ElseIf X.StartsWith("@") Then
+                        Try
+                            Dim x0, x1 As String
+                            x0 = X.Split("=")(0).Replace("@", "").Trim
+                            x1 = X.Split("=")(1).Trim
 
-                    Definer.Add(x0, x1)
-
-                Else
-                    Dim FormName, ControlName, Prop, Value As String
-                    FormName = Nothing
-                    ControlName = Nothing
-                    Prop = Nothing
-                    Value = Nothing
-
-                    Select Case X.Split("=")(0).Trim.Split(".").Count
-                        Case 3
-                            FormName = X.Split("=")(0).Trim.Split(".")(0)
-                            ControlName = X.Split("=")(0).Trim.Split(".")(1)
-                            Prop = X.Split("=")(0).Trim.Split(".")(2)
-                        Case 2
-                            FormName = X.Split("=")(0).Trim.Split(".")(0)
+                            Definer.Add(x0, x1)
+                        Catch
+                        End Try
+                    Else
+                        Try
+                            Dim FormName, ControlName, Prop, Value As String
+                            FormName = Nothing
                             ControlName = Nothing
-                            Prop = X.Split("=")(0).Trim.Split(".")(1)
-                    End Select
+                            Prop = Nothing
+                            Value = Nothing
 
-                    Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
+                            Select Case X.Split("=")(0).Trim.Split(".").Count
+                                Case 3
+                                    FormName = X.Split("=")(0).Trim.Split(".")(0)
+                                    ControlName = X.Split("=")(0).Trim.Split(".")(1)
+                                    Prop = X.Split("=")(0).Trim.Split(".")(2)
+                                Case 2
+                                    FormName = X.Split("=")(0).Trim.Split(".")(0)
+                                    ControlName = Nothing
+                                    Prop = X.Split("=")(0).Trim.Split(".")(1)
+                            End Select
 
-                    PopCtrlList.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
+                            Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
+
+                            PopCtrlList.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
+                        Catch
+
+                        End Try
+                    End If
                 End If
             Next
 

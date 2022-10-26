@@ -2683,6 +2683,10 @@ Public Class MainFrm
 
     End Sub
 
+    Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click
+        EditFonts.ShowDialog()
+    End Sub
+
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
         Dim NB As New XenonAlertBox With {
