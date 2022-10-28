@@ -17,7 +17,7 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Windows Metrics                                        | :yellow_square: Postponed to Mid-January 2023                          |
+| Windows Metrics                                        | :large_blue_circle: Postponed to Mid-January 2023                          |
 | Mini-Store for themes                                  | :yellow_square: Postponed to Mid-January 2023                          |
 |                                                        |                                                                        |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
