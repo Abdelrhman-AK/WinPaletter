@@ -6,6 +6,7 @@ Public Class EditFonts
         ApplyFromCP(MainFrm.CP)
     End Sub
 
+
     Sub ApplyFromCP(CP As CP)
         Label1.Font = CP.Fonts_CaptionFont
         Label2.Font = CP.Fonts_IconFont
@@ -13,6 +14,23 @@ Public Class EditFonts
         Label4.Font = CP.Fonts_MessageFont
         Label5.Font = CP.Fonts_SmCaptionFont
         Label6.Font = CP.Fonts_StatusFont
+
+        XenonTrackbar1.Value = CP.Metrics_BorderWidth
+        XenonTrackbar2.Value = CP.Metrics_CaptionHeight
+        XenonTrackbar3.Value = CP.Metrics_CaptionWidth
+        XenonTrackbar6.Value = CP.Metrics_IconSpacing
+        XenonTrackbar5.Value = CP.Metrics_IconTitleWrap
+        XenonTrackbar4.Value = CP.Metrics_IconVerticalSpacing
+        XenonTrackbar9.Value = CP.Metrics_MenuHeight
+        XenonTrackbar8.Value = CP.Metrics_MenuWidth
+        XenonTrackbar7.Value = CP.Metrics_MinAnimate
+        XenonTrackbar12.Value = CP.Metrics_PaddedBorderWidth
+        XenonTrackbar11.Value = CP.Metrics_ScrollHeight
+        XenonTrackbar10.Value = CP.Metrics_ScrollWidth
+        XenonTrackbar15.Value = CP.Metrics_ShellIconSize
+        XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
+        XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
+
     End Sub
 
     Sub ApplyToCP(CP As CP)
@@ -22,6 +40,22 @@ Public Class EditFonts
         CP.Fonts_MessageFont = Label4.Font
         CP.Fonts_SmCaptionFont = Label5.Font
         CP.Fonts_StatusFont = Label6.Font
+
+        CP.Metrics_BorderWidth = XenonTrackbar1.Value
+        CP.Metrics_CaptionHeight = XenonTrackbar2.Value
+        CP.Metrics_CaptionWidth = XenonTrackbar3.Value
+        CP.Metrics_IconSpacing = XenonTrackbar6.Value
+        CP.Metrics_IconTitleWrap = XenonTrackbar5.Value
+        CP.Metrics_IconVerticalSpacing = XenonTrackbar4.Value
+        CP.Metrics_MenuHeight = XenonTrackbar9.Value
+        CP.Metrics_MenuWidth = XenonTrackbar8.Value
+        CP.Metrics_MinAnimate = XenonTrackbar7.Value
+        CP.Metrics_PaddedBorderWidth = XenonTrackbar12.Value
+        CP.Metrics_ScrollHeight = XenonTrackbar11.Value
+        CP.Metrics_ScrollWidth = XenonTrackbar10.Value
+        CP.Metrics_ShellIconSize = XenonTrackbar15.Value
+        CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
+        CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -69,5 +103,69 @@ Public Class EditFonts
         ApplyToCP(CPx)
         CPx.Save(CP.SavingMode.Registry)
         Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Label14_Click(sender As Object, e As EventArgs) Handles Label14.Click
+
+    End Sub
+
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+        Label36.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+        Label35.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
+        Label34.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
+        Label33.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
+        Label32.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
+        Label31.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
+        Label30.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
+        Label29.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar7_Scroll(sender As Object) Handles XenonTrackbar7.Scroll
+        Label28.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar12_Scroll(sender As Object) Handles XenonTrackbar12.Scroll
+        Label27.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar11_Scroll(sender As Object) Handles XenonTrackbar11.Scroll
+        Label26.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar10_Scroll(sender As Object) Handles XenonTrackbar10.Scroll
+        Label25.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar15_Scroll(sender As Object) Handles XenonTrackbar15.Scroll
+        Label24.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar14_Scroll(sender As Object) Handles XenonTrackbar14.Scroll
+        Label23.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar13_Scroll(sender As Object) Handles XenonTrackbar13.Scroll
+        Label15.Text = sender.Value
     End Sub
 End Class

@@ -120,28 +120,4 @@
   <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="XenonButton10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAadJREFUOE+F
-        kE0rRFEYx2ftC5hzE4MIE5lsZCGvS81k5X2mZIGlkNh5XShZTI17JjELI2/DwhSKbzATKaSYc4d5M0mx
-        ouZxDk+u6Rjzq3/d57m/87+na8iEcZVVKJS1ihAaKsd1dhQ1VEcoCxKqaTzHmDCh4UAufahF7W+IGu5W
-        qBZR3JoNVz/wgnZeFFVUrQNX6eSusiL+5bi4Oq4kjCoz85IYcd8V4EqHqJqLuNkEjhnh3hS/oRNHHd7M
-        xC1wzEieK1xC3No9jjq84KMvBKlFfwDerF1SXm3dMHdyCcLh/+kdj+nwgtleBilHKAWJzgGpIDgyDXYG
-        IBzh4rF0LEfPF9VHz+AbmoHr9n5o817Brc0BL81WcE5SEO94zlGXqfQnzyoPk9CweQtN3hsQz76ecXiq
-        aYTBRf/XXHWYPEVdxnyQ2DUfPMHvzA4vw2OhBeo919+7/eQO6jJle3G1bC8Bv9NIL2BmcEnf7cZXUJcp
-        3Y4vlG7FIEvmUZcp3oiO8UCWjKIuY/JEHSZPBP7NetSOuoyyEsnJX3tozl9/bPkz/J1wUOcYDJ8UmE6E
-        VZmvjAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="XenonButton8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
-        oBlY53nVaY3X1T8gDGJDhYkHq72vhgI1/wfhdUA2VJh4ADNgrTcFBoA0k20ASNMQNWBd4HXh/wz/Gcky
-        ABTfQA3f1/pcnbze62oYsgETjfZ7TDTYu3WS4SFRqHJMsNr7SjlME9CQrTD2EqezLZP0930HGvB/ov7e
-        Pqhy7GCN59UWmEagzf/X+Vz9P9vq2O9JBvv+Aw042W+wXwCqFDdY7XWlGW4IxID/QANOzjTezQ9Vgh+A
-        AnGV++VpMEPm25162mO8XwQqTTxY6nT+5Aq3S18WOB1VhgpRGzAwAAAVer8KFxeKpgAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
 </root>
