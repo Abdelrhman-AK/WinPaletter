@@ -868,16 +868,16 @@ Public Class MainFrm
 
 
 
-        ActiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Active
-        InactiveTitlebar_picker.BackColor = ColorPalette.Titlebar_Inactive
-        StartAccent_picker.BackColor = ColorPalette.StartMenu_Accent
-        StartButtonHover_picker.BackColor = ColorPalette.StartButton_Hover
-        TaskbarBackground_Picker.BackColor = ColorPalette.Taskbar_Background
-        TaskbarIconUnderline_picker.BackColor = ColorPalette.Taskbar_Icon_Underline
-        StartBackgroundAndTaskbarButton_picker.BackColor = ColorPalette.StartMenuBackground_ActiveTaskbarButton
-        TaskbarFrontAndFoldersOnStart_picker.BackColor = ColorPalette.StartListFolders_TaskbarFront
-        ActionCenter_picker.BackColor = ColorPalette.ActionCenter_AppsLinks
-        SettingsIconsAndLinks_picker.BackColor = ColorPalette.SettingsIconsAndLinks
+        ActiveTitlebar_pick.BackColor = ColorPalette.Titlebar_Active
+        InactiveTitlebar_pick.BackColor = ColorPalette.Titlebar_Inactive
+        StartAccent_pick.BackColor = ColorPalette.StartMenu_Accent
+        StartButtonHover_pick.BackColor = ColorPalette.StartButton_Hover
+        TaskbarBackground_pick.BackColor = ColorPalette.Taskbar_Background
+        TaskbarIconUnderline_pick.BackColor = ColorPalette.Taskbar_Icon_Underline
+        StartBackgroundAndTaskbarButton_pick.BackColor = ColorPalette.StartMenuBackground_ActiveTaskbarButton
+        TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.StartListFolders_TaskbarFront
+        ActionCenter_pick.BackColor = ColorPalette.ActionCenter_AppsLinks
+        SettingsIconsAndLinks_pick.BackColor = ColorPalette.SettingsIconsAndLinks
         UWP_Undefined_pick.BackColor = ColorPalette.UWP_Undefined
 
         Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
@@ -941,16 +941,16 @@ Public Class MainFrm
             DefCP = New CP_Defaults().Default_Windows11
         End If
 
-        ActiveTitlebar_picker.DefaultColor = DefCP.Titlebar_Active
-        InactiveTitlebar_picker.DefaultColor = DefCP.Titlebar_Inactive
-        StartAccent_picker.DefaultColor = DefCP.StartMenu_Accent
-        StartButtonHover_picker.DefaultColor = DefCP.StartButton_Hover
-        TaskbarBackground_Picker.DefaultColor = DefCP.Taskbar_Background
-        TaskbarIconUnderline_picker.DefaultColor = DefCP.Taskbar_Icon_Underline
-        StartBackgroundAndTaskbarButton_picker.DefaultColor = DefCP.StartMenuBackground_ActiveTaskbarButton
-        TaskbarFrontAndFoldersOnStart_picker.DefaultColor = DefCP.StartListFolders_TaskbarFront
-        ActionCenter_picker.DefaultColor = DefCP.ActionCenter_AppsLinks
-        SettingsIconsAndLinks_picker.DefaultColor = DefCP.SettingsIconsAndLinks
+        ActiveTitlebar_pick.DefaultColor = DefCP.Titlebar_Active
+        InactiveTitlebar_pick.DefaultColor = DefCP.Titlebar_Inactive
+        StartAccent_pick.DefaultColor = DefCP.StartMenu_Accent
+        StartButtonHover_pick.DefaultColor = DefCP.StartButton_Hover
+        TaskbarBackground_pick.DefaultColor = DefCP.Taskbar_Background
+        TaskbarIconUnderline_pick.DefaultColor = DefCP.Taskbar_Icon_Underline
+        StartBackgroundAndTaskbarButton_pick.DefaultColor = DefCP.StartMenuBackground_ActiveTaskbarButton
+        TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.StartListFolders_TaskbarFront
+        ActionCenter_pick.DefaultColor = DefCP.ActionCenter_AppsLinks
+        SettingsIconsAndLinks_pick.DefaultColor = DefCP.SettingsIconsAndLinks
         UWP_Undefined_pick.DefaultColor = DefCP.UWP_Undefined
 
         Aero_ColorizationColor_pick.DefaultColor = DefCP.Aero_ColorizationColor
@@ -1261,7 +1261,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_picker.Click
+    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1287,7 +1287,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonGroupBox21_Click(sender As Object, e As EventArgs) Handles InactiveTitlebar_picker.Click
+    Private Sub XenonGroupBox21_Click(sender As Object, e As EventArgs) Handles InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1364,7 +1364,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub TaskbarIconUnderline_picker_Click(sender As Object, e As EventArgs) Handles TaskbarIconUnderline_picker.Click
+    Private Sub TaskbarIconUnderline_pick_Click(sender As Object, e As EventArgs) Handles TaskbarIconUnderline_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1425,7 +1425,7 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
+    Private Sub TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1464,7 +1464,7 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub ActionCenter_picker_Click(sender As Object, e As EventArgs) Handles ActionCenter_picker.Click
+    Private Sub ActionCenter_pick_Click(sender As Object, e As EventArgs) Handles ActionCenter_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1517,7 +1517,7 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub SettingsIconsAndLinks_picker_Click(sender As Object, e As EventArgs) Handles SettingsIconsAndLinks_picker.Click
+    Private Sub SettingsIconsAndLinks_pick_Click(sender As Object, e As EventArgs) Handles SettingsIconsAndLinks_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1608,7 +1608,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonGroupBox12_Click(sender As Object, e As EventArgs) Handles TaskbarBackground_Picker.Click
+    Private Sub XenonGroupBox12_Click(sender As Object, e As EventArgs) Handles TaskbarBackground_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1668,7 +1668,7 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub StartAccent_picker_Click(sender As Object, e As EventArgs) Handles StartAccent_picker.Click
+    Private Sub StartAccent_pick_Click(sender As Object, e As EventArgs) Handles StartAccent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1698,7 +1698,7 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub StartButtonHover_picker_Click(sender As Object, e As EventArgs) Handles StartButtonHover_picker.Click
+    Private Sub StartButtonHover_pick_Click(sender As Object, e As EventArgs) Handles StartButtonHover_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -1726,7 +1726,7 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub StartBackgroundAndTaskbarButton_picker_Click(sender As Object, e As EventArgs) Handles StartBackgroundAndTaskbarButton_picker.Click
+    Private Sub StartBackgroundAndTaskbarButton_pick_Click(sender As Object, e As EventArgs) Handles StartBackgroundAndTaskbarButton_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -2680,12 +2680,12 @@ Public Class MainFrm
         s.AppendLine("- Thanks for your patience And for understanding this ... ")
 
         MsgBox(s.ToString, MsgBoxStyle.Information + My.Application.MsgboxRt)
-
     End Sub
 
     Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click
         EditFonts.ShowDialog()
     End Sub
+
 
 #Region "Notifications Base"
     Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)

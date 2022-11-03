@@ -61,11 +61,7 @@ Partial Class LogonUI
         Me.XenonGroupBox3.Controls.Add(Me.XenonGroupBox17)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox3.Controls.Add(Me.Label13)
-        Me.XenonGroupBox3.CustomColor = False
-        Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 12)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
@@ -81,11 +77,7 @@ Partial Class LogonUI
         Me.XenonGroupBox21.Controls.Add(Me.LogonUI_Lockscreen_Toggle)
         Me.XenonGroupBox21.Controls.Add(Me.PictureBox22)
         Me.XenonGroupBox21.Controls.Add(Me.Label20)
-        Me.XenonGroupBox21.CustomColor = False
-        Me.XenonGroupBox21.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox21.ForceNoNerd = False
         Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
-        Me.XenonGroupBox21.LineSize = 1
         Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 103)
         Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
@@ -138,11 +130,7 @@ Partial Class LogonUI
         Me.XenonGroupBox19.Controls.Add(Me.LogonUI_Background_Toggle)
         Me.XenonGroupBox19.Controls.Add(Me.PictureBox16)
         Me.XenonGroupBox19.Controls.Add(Me.Label18)
-        Me.XenonGroupBox19.CustomColor = False
-        Me.XenonGroupBox19.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox19.ForceNoNerd = False
         Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
-        Me.XenonGroupBox19.LineSize = 1
         Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 72)
         Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
@@ -195,11 +183,7 @@ Partial Class LogonUI
         Me.XenonGroupBox17.Controls.Add(Me.LogonUI_Acrylic_Toggle)
         Me.XenonGroupBox17.Controls.Add(Me.PictureBox15)
         Me.XenonGroupBox17.Controls.Add(Me.Label16)
-        Me.XenonGroupBox17.CustomColor = False
-        Me.XenonGroupBox17.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox17.ForceNoNerd = False
         Me.XenonGroupBox17.LineColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
-        Me.XenonGroupBox17.LineSize = 1
         Me.XenonGroupBox17.Location = New System.Drawing.Point(3, 41)
         Me.XenonGroupBox17.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox17.Name = "XenonGroupBox17"

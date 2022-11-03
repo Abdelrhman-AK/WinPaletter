@@ -65,7 +65,7 @@ Partial Class cmd
         Me.CMD_CursorStyle = New WinPaletter.XenonComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CMD_CursorColor = New WinPaletter.XenonGroupBox()
+        Me.CMD_CursorColor = New WinPaletter.XenonCP()
         Me.CMD_PreviewCUR_LBL = New System.Windows.Forms.Label()
         Me.CMD_PreviewCUR = New System.Windows.Forms.Panel()
         Me.CMD_PreviewCUR2 = New System.Windows.Forms.Panel()
@@ -93,37 +93,37 @@ Partial Class cmd
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
-        Me.ColorTable00 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable00 = New WinPaletter.XenonCP()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
-        Me.ColorTable01 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable01 = New WinPaletter.XenonCP()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.ColorTable02 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable03 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable02 = New WinPaletter.XenonCP()
+        Me.ColorTable03 = New WinPaletter.XenonCP()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.ColorTable04 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable04 = New WinPaletter.XenonCP()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
-        Me.ColorTable05 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable05 = New WinPaletter.XenonCP()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.ColorTable06 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable06 = New WinPaletter.XenonCP()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
-        Me.ColorTable15 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable07 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable15 = New WinPaletter.XenonCP()
+        Me.ColorTable07 = New WinPaletter.XenonCP()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.ColorTable08 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable14 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable08 = New WinPaletter.XenonCP()
+        Me.ColorTable14 = New WinPaletter.XenonCP()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.ColorTable09 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable13 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable09 = New WinPaletter.XenonCP()
+        Me.ColorTable13 = New WinPaletter.XenonCP()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.ColorTable12 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable10 = New WinPaletter.XenonGroupBox()
-        Me.ColorTable11 = New WinPaletter.XenonGroupBox()
+        Me.ColorTable12 = New WinPaletter.XenonCP()
+        Me.ColorTable10 = New WinPaletter.XenonCP()
+        Me.ColorTable11 = New WinPaletter.XenonCP()
         Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
@@ -180,11 +180,7 @@ Partial Class cmd
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox3.Controls.Add(Me.CMDEnabled)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox5)
-        Me.XenonGroupBox3.CustomColor = False
-        Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(677, 39)
@@ -298,11 +294,7 @@ Partial Class cmd
         Me.XenonGroupBox2.Controls.Add(Me.Label49)
         Me.XenonGroupBox2.Controls.Add(Me.CMD_PopupForegroundBar)
         Me.XenonGroupBox2.Controls.Add(Me.Label6)
-        Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox2.ForceNoNerd = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 362)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(259, 260)
@@ -532,11 +524,7 @@ Partial Class cmd
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox12.Controls.Add(Me.Label57)
         Me.XenonGroupBox12.Controls.Add(Me.CMD_OpacityBar)
-        Me.XenonGroupBox12.CustomColor = False
-        Me.XenonGroupBox12.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox12.ForceNoNerd = False
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox12.LineSize = 1
         Me.XenonGroupBox12.Location = New System.Drawing.Point(514, 362)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(175, 260)
@@ -670,11 +658,7 @@ Partial Class cmd
         Me.XenonGroupBox34.Controls.Add(Me.Label123)
         Me.XenonGroupBox34.Controls.Add(Me.PictureBox16)
         Me.XenonGroupBox34.Controls.Add(Me.Label60)
-        Me.XenonGroupBox34.CustomColor = False
-        Me.XenonGroupBox34.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox34.ForceNoNerd = False
         Me.XenonGroupBox34.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox34.LineSize = 1
         Me.XenonGroupBox34.Location = New System.Drawing.Point(277, 498)
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(231, 124)
@@ -725,11 +709,9 @@ Partial Class cmd
         Me.CMD_CursorColor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_CursorColor.BackColor = System.Drawing.Color.White
-        Me.CMD_CursorColor.CustomColor = True
         Me.CMD_CursorColor.DefaultColor = System.Drawing.Color.White
         Me.CMD_CursorColor.ForceNoNerd = False
         Me.CMD_CursorColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
-        Me.CMD_CursorColor.LineSize = 1
         Me.CMD_CursorColor.Location = New System.Drawing.Point(93, 38)
         Me.CMD_CursorColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.CMD_CursorColor.Name = "CMD_CursorColor"
@@ -862,11 +844,7 @@ Partial Class cmd
         Me.XenonGroupBox4.Controls.Add(Me.Label59)
         Me.XenonGroupBox4.Controls.Add(Me.Label35)
         Me.XenonGroupBox4.Controls.Add(Me.RasterList)
-        Me.XenonGroupBox4.CustomColor = False
-        Me.XenonGroupBox4.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox4.ForceNoNerd = False
         Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox4.LineSize = 1
         Me.XenonGroupBox4.Location = New System.Drawing.Point(277, 362)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(231, 130)
@@ -1087,11 +1065,7 @@ Partial Class cmd
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable12)
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable10)
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable11)
-        Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 63)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(259, 293)
@@ -1134,11 +1108,9 @@ Partial Class cmd
         'ColorTable00
         '
         Me.ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ColorTable00.CustomColor = True
         Me.ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable00.ForceNoNerd = False
         Me.ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ColorTable00.LineSize = 1
         Me.ColorTable00.Location = New System.Drawing.Point(28, 44)
         Me.ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable00.Name = "ColorTable00"
@@ -1171,11 +1143,9 @@ Partial Class cmd
         'ColorTable01
         '
         Me.ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ColorTable01.CustomColor = True
         Me.ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ColorTable01.ForceNoNerd = False
         Me.ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
-        Me.ColorTable01.LineSize = 1
         Me.ColorTable01.Location = New System.Drawing.Point(28, 75)
         Me.ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable01.Name = "ColorTable01"
@@ -1197,11 +1167,9 @@ Partial Class cmd
         'ColorTable02
         '
         Me.ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.ColorTable02.CustomColor = True
         Me.ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ColorTable02.ForceNoNerd = False
         Me.ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
-        Me.ColorTable02.LineSize = 1
         Me.ColorTable02.Location = New System.Drawing.Point(28, 106)
         Me.ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable02.Name = "ColorTable02"
@@ -1212,11 +1180,9 @@ Partial Class cmd
         'ColorTable03
         '
         Me.ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.ColorTable03.CustomColor = True
         Me.ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ColorTable03.ForceNoNerd = False
         Me.ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
-        Me.ColorTable03.LineSize = 1
         Me.ColorTable03.Location = New System.Drawing.Point(28, 137)
         Me.ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable03.Name = "ColorTable03"
@@ -1260,11 +1226,9 @@ Partial Class cmd
         'ColorTable04
         '
         Me.ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.ColorTable04.CustomColor = True
         Me.ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ColorTable04.ForceNoNerd = False
         Me.ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
-        Me.ColorTable04.LineSize = 1
         Me.ColorTable04.Location = New System.Drawing.Point(28, 168)
         Me.ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable04.Name = "ColorTable04"
@@ -1297,11 +1261,9 @@ Partial Class cmd
         'ColorTable05
         '
         Me.ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ColorTable05.CustomColor = True
         Me.ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ColorTable05.ForceNoNerd = False
         Me.ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.ColorTable05.LineSize = 1
         Me.ColorTable05.Location = New System.Drawing.Point(28, 199)
         Me.ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable05.Name = "ColorTable05"
@@ -1323,11 +1285,9 @@ Partial Class cmd
         'ColorTable06
         '
         Me.ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ColorTable06.CustomColor = True
         Me.ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorTable06.ForceNoNerd = False
         Me.ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ColorTable06.LineSize = 1
         Me.ColorTable06.Location = New System.Drawing.Point(28, 230)
         Me.ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable06.Name = "ColorTable06"
@@ -1360,11 +1320,9 @@ Partial Class cmd
         'ColorTable15
         '
         Me.ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.ColorTable15.CustomColor = True
         Me.ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ColorTable15.ForceNoNerd = False
         Me.ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ColorTable15.LineSize = 1
         Me.ColorTable15.Location = New System.Drawing.Point(165, 261)
         Me.ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable15.Name = "ColorTable15"
@@ -1375,11 +1333,9 @@ Partial Class cmd
         'ColorTable07
         '
         Me.ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.ColorTable07.CustomColor = True
         Me.ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ColorTable07.ForceNoNerd = False
         Me.ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.ColorTable07.LineSize = 1
         Me.ColorTable07.Location = New System.Drawing.Point(28, 261)
         Me.ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable07.Name = "ColorTable07"
@@ -1401,11 +1357,9 @@ Partial Class cmd
         'ColorTable08
         '
         Me.ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.ColorTable08.CustomColor = True
         Me.ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ColorTable08.ForceNoNerd = False
         Me.ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
-        Me.ColorTable08.LineSize = 1
         Me.ColorTable08.Location = New System.Drawing.Point(165, 44)
         Me.ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable08.Name = "ColorTable08"
@@ -1416,11 +1370,9 @@ Partial Class cmd
         'ColorTable14
         '
         Me.ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.ColorTable14.CustomColor = True
         Me.ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ColorTable14.ForceNoNerd = False
         Me.ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.ColorTable14.LineSize = 1
         Me.ColorTable14.Location = New System.Drawing.Point(165, 230)
         Me.ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable14.Name = "ColorTable14"
@@ -1453,11 +1405,9 @@ Partial Class cmd
         'ColorTable09
         '
         Me.ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ColorTable09.CustomColor = True
         Me.ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ColorTable09.ForceNoNerd = False
         Me.ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ColorTable09.LineSize = 1
         Me.ColorTable09.Location = New System.Drawing.Point(165, 75)
         Me.ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable09.Name = "ColorTable09"
@@ -1468,11 +1418,9 @@ Partial Class cmd
         'ColorTable13
         '
         Me.ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.ColorTable13.CustomColor = True
         Me.ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ColorTable13.ForceNoNerd = False
         Me.ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
-        Me.ColorTable13.LineSize = 1
         Me.ColorTable13.Location = New System.Drawing.Point(165, 199)
         Me.ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable13.Name = "ColorTable13"
@@ -1494,11 +1442,9 @@ Partial Class cmd
         'ColorTable12
         '
         Me.ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.ColorTable12.CustomColor = True
         Me.ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ColorTable12.ForceNoNerd = False
         Me.ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
-        Me.ColorTable12.LineSize = 1
         Me.ColorTable12.Location = New System.Drawing.Point(165, 168)
         Me.ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable12.Name = "ColorTable12"
@@ -1509,11 +1455,9 @@ Partial Class cmd
         'ColorTable10
         '
         Me.ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ColorTable10.CustomColor = True
         Me.ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable10.ForceNoNerd = False
         Me.ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
-        Me.ColorTable10.LineSize = 1
         Me.ColorTable10.Location = New System.Drawing.Point(165, 106)
         Me.ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable10.Name = "ColorTable10"
@@ -1524,11 +1468,9 @@ Partial Class cmd
         'ColorTable11
         '
         Me.ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.ColorTable11.CustomColor = True
         Me.ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ColorTable11.ForceNoNerd = False
         Me.ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
-        Me.ColorTable11.LineSize = 1
         Me.ColorTable11.Location = New System.Drawing.Point(165, 137)
         Me.ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable11.Name = "ColorTable11"
@@ -1545,11 +1487,7 @@ Partial Class cmd
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.XenonCMD1)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
-        Me.XenonGroupBox8.CustomColor = False
-        Me.XenonGroupBox8.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox8.ForceNoNerd = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox8.LineSize = 1
         Me.XenonGroupBox8.Location = New System.Drawing.Point(277, 63)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
@@ -1697,23 +1635,23 @@ Partial Class cmd
 
     End Sub
 
-    Friend WithEvents ColorTable00 As XenonGroupBox
+    Friend WithEvents ColorTable00 As XenonCP
     Friend WithEvents Label7 As Label
-    Friend WithEvents ColorTable01 As XenonGroupBox
-    Friend WithEvents ColorTable03 As XenonGroupBox
-    Friend WithEvents ColorTable02 As XenonGroupBox
-    Friend WithEvents ColorTable07 As XenonGroupBox
-    Friend WithEvents ColorTable06 As XenonGroupBox
-    Friend WithEvents ColorTable05 As XenonGroupBox
-    Friend WithEvents ColorTable04 As XenonGroupBox
-    Friend WithEvents ColorTable15 As XenonGroupBox
-    Friend WithEvents ColorTable14 As XenonGroupBox
-    Friend WithEvents ColorTable13 As XenonGroupBox
-    Friend WithEvents ColorTable12 As XenonGroupBox
-    Friend WithEvents ColorTable11 As XenonGroupBox
-    Friend WithEvents ColorTable10 As XenonGroupBox
-    Friend WithEvents ColorTable09 As XenonGroupBox
-    Friend WithEvents ColorTable08 As XenonGroupBox
+    Friend WithEvents ColorTable01 As XenonCP
+    Friend WithEvents ColorTable03 As XenonCP
+    Friend WithEvents ColorTable02 As XenonCP
+    Friend WithEvents ColorTable07 As XenonCP
+    Friend WithEvents ColorTable06 As XenonCP
+    Friend WithEvents ColorTable05 As XenonCP
+    Friend WithEvents ColorTable04 As XenonCP
+    Friend WithEvents ColorTable15 As XenonCP
+    Friend WithEvents ColorTable14 As XenonCP
+    Friend WithEvents ColorTable13 As XenonCP
+    Friend WithEvents ColorTable12 As XenonCP
+    Friend WithEvents ColorTable11 As XenonCP
+    Friend WithEvents ColorTable10 As XenonCP
+    Friend WithEvents ColorTable09 As XenonCP
+    Friend WithEvents ColorTable08 As XenonCP
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents XenonButton10 As XenonButton
@@ -1775,7 +1713,7 @@ Partial Class cmd
     Friend WithEvents CMD_PreviewCursorInner As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents CMD_CursorColor As XenonGroupBox
+    Friend WithEvents CMD_CursorColor As XenonCP
     Friend WithEvents CMD_CursorStyle As XenonComboBox
     Friend WithEvents Label5 As Label
     Friend WithEvents XenonGroupBox12 As XenonGroupBox

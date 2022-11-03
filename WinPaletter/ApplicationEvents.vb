@@ -1,7 +1,9 @@
 ﻿Imports System.Management
 Imports System.Reflection
-Imports System.Reflection.Emit
+Imports System
+Imports System.Windows.Forms
 Imports System.Security.Principal
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
@@ -17,6 +19,8 @@ Namespace My
     Partial Friend Class MyApplication
 
 #Region "Variables"
+        Public WithEvents Domain As AppDomain = AppDomain.CurrentDomain
+
         Public _Settings As XeSettings
         Public Wallpaper As Bitmap
         Public BackColor_Dark As Color = Color.FromArgb(24, 24, 26)
@@ -45,12 +49,14 @@ Namespace My
         Public ConsoleFont As New Font("Lucida Console", 7.5)
         Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
         Public ConsoleFontLarge As New Font("Lucida Console", 10)
+        Public ConsoleFontMedium As New Font("Lucida Console", 9)
 
         Public FontsList As New List(Of String)
         Public FontsFixedList As New List(Of String)
 
         Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
+        Public ExitAfterException As Boolean = False
         Enum MenuEvent
             None
             Copy
@@ -451,21 +457,27 @@ Namespace My
             If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
             If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
             If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
+            If Name.ToLower = "BugReport".ToLower Then Return BugReport
         End Function
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            _Settings = New XeSettings(XeSettings.Mode.Registry)
+
+            AddHandler System.Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+
 
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
                 ConsoleFontLarge = MemoryFonts.GetFont(0, 10)
+                ConsoleFontMedium = MemoryFonts.GetFont(0, 9)
 
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
                 ConsoleFontLarge = New Font("Lucida Console", 10)
-
+                ConsoleFontMedium = New Font("Lucida Console", 9)
             End Try
 
             FontsList.Clear()
@@ -481,7 +493,7 @@ Namespace My
             B.Dispose()
             G.Dispose()
 
-            _Settings = New XeSettings(XeSettings.Mode.Registry)
+
             allForms = New List(Of String) From {
                         "About",
                         "Changelog",
@@ -509,7 +521,8 @@ Namespace My
                         "WindowsTerminal",
                         "WindowsTerminalDecide",
                         "WindowsTerminalCopycat",
-                        "LicenseForm"
+                        "LicenseForm",
+                        "BugReport"
                         }
 
             Try
@@ -658,7 +671,6 @@ Namespace My
             ChangeLogImgLst.Images.Add("Channel", My.Resources.CL_channel)
             ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
             ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
-
 
             Try : WinRes = New WinResources : Catch : End Try
 
@@ -846,8 +858,6 @@ Namespace My
             End Try
         End Sub
 
-        Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
-
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
 
             Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
@@ -864,16 +874,23 @@ Namespace My
 
             Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(My.Resources.Newtonsoft_Json)
             Catch : End Try
-
         End Function
 
-        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            '#If DEBUG Then
-            Throw e.Exception
-            'MsgBox(e.Exception.Message & vbCrLf & vbCrLf & e.Exception.StackTrace, MsgBoxStyle.Critical + MsgboxRt())
-            '#End If
+        Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)
+            BugReport.ThrowError(e.Exception)
+            If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
 
+        Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            BugReport.ThrowError(e.Exception)
+            e.ExitApplication = ExitAfterException
+            If ExitAfterException Then Process.GetCurrentProcess.Kill()
 
+        End Sub
+
+        Private Sub Domain_UnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs) Handles Domain.UnhandledException
+            Throw DirectCast(e.ExceptionObject, Exception)
+            If ExitAfterException Then Process.GetCurrentProcess.Kill()
+        End Sub
     End Class
 End Namespace

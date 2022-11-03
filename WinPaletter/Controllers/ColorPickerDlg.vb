@@ -26,7 +26,7 @@ Public Class ColorPickerDlg
     Sub GetColorsFromPalette(CP As CP)
         PaletteContainer.SuspendLayout()
 
-        For Each c As XenonGroupBox In PaletteContainer.Controls.OfType(Of XenonGroupBox)
+        For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
             c.Dispose()
             PaletteContainer.Controls.Remove(c)
         Next
@@ -34,8 +34,12 @@ Public Class ColorPickerDlg
         PaletteContainer.Controls.Clear()
 
         For Each c As Color In CP.ListColors
-            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20), .CustomColor = True}
-            pnl.BackColor = c
+
+            Dim pnl As New XenonCP With {
+                .Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 90, 30), 25),
+                .BackColor = c
+            }
+
             PaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
         Next
@@ -115,6 +119,7 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton19, True)
+            My.Application.AnimatorX.Hide(MainFrm.XenonButton26, True)
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
@@ -171,6 +176,7 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton19, True)
+            My.Application.AnimatorX.Show(MainFrm.XenonButton26, True)
         End If
 
         MainFrm.MinimumSize = PrevoiusMin
@@ -334,7 +340,7 @@ Public Class ColorPickerDlg
                 If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
                     DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                 Else
-                    If Not TypeOf ctrl Is XenonGroupBox Then
+                    If Not TypeOf ctrl Is XenonGroupBox And Not TypeOf ctrl Is XenonCP Then
                         If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                         If TypeOf ctrl Is RetroPanel Then
                             If _Conditions.RetroButtonHilight Then DirectCast(ctrl, RetroPanel).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -346,8 +352,8 @@ Public Class ColorPickerDlg
                     End If
                 End If
 
-                If TypeOf ctrl Is XenonGroupBox Then
-                    If DirectCast(ctrl, XenonGroupBox).CustomColor Then Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                If TypeOf ctrl Is XenonCP Then
+                    Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                 End If
                 ctrl.Invalidate()
 
@@ -588,7 +594,7 @@ Public Class ColorPickerDlg
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
-            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
+            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
             pnl.BackColor = Color.FromArgb(255, C)
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
@@ -601,7 +607,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub Pnl_click(ByVal sender As Object, ByVal e As EventArgs)
-        With CType(sender, XenonGroupBox)
+        With CType(sender, XenonCP)
             ColorEditorManager1.Color = .BackColor
             ColorEditor1.Color = .BackColor
             ColorGrid1.Color = .BackColor
@@ -643,7 +649,7 @@ Public Class ColorPickerDlg
 
             Try
                 For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
+                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
@@ -663,7 +669,7 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25), .CustomColor = True}
+                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click

@@ -8,54 +8,54 @@ Public Class EditFonts
 
 
     Sub ApplyFromCP(CP As CP)
-        Label1.Font = CP.Fonts_CaptionFont
-        Label2.Font = CP.Fonts_IconFont
-        Label3.Font = CP.Fonts_MenuFont
-        Label4.Font = CP.Fonts_MessageFont
-        Label5.Font = CP.Fonts_SmCaptionFont
-        Label6.Font = CP.Fonts_StatusFont
+        'Label1.Font = CP.Fonts_CaptionFont
+        'Label2.Font = CP.Fonts_IconFont
+        'Label3.Font = CP.Fonts_MenuFont
+        'Label4.Font = CP.Fonts_MessageFont
+        'Label5.Font = CP.Fonts_SmCaptionFont
+        'Label6.Font = CP.Fonts_StatusFont
 
-        XenonTrackbar1.Value = CP.Metrics_BorderWidth
-        XenonTrackbar2.Value = CP.Metrics_CaptionHeight
-        XenonTrackbar3.Value = CP.Metrics_CaptionWidth
-        XenonTrackbar6.Value = CP.Metrics_IconSpacing
-        XenonTrackbar5.Value = CP.Metrics_IconTitleWrap
-        XenonTrackbar4.Value = CP.Metrics_IconVerticalSpacing
-        XenonTrackbar9.Value = CP.Metrics_MenuHeight
-        XenonTrackbar8.Value = CP.Metrics_MenuWidth
-        XenonTrackbar7.Value = CP.Metrics_MinAnimate
-        XenonTrackbar12.Value = CP.Metrics_PaddedBorderWidth
-        XenonTrackbar11.Value = CP.Metrics_ScrollHeight
-        XenonTrackbar10.Value = CP.Metrics_ScrollWidth
-        XenonTrackbar15.Value = CP.Metrics_ShellIconSize
-        XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
-        XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
+        'XenonTrackbar1.Value = CP.Metrics_BorderWidth
+        'XenonTrackbar2.Value = CP.Metrics_CaptionHeight
+        'XenonTrackbar3.Value = CP.Metrics_CaptionWidth
+        'XenonTrackbar6.Value = CP.Metrics_IconSpacing
+        'XenonTrackbar5.Value = CP.Metrics_IconTitleWrap
+        'XenonTrackbar4.Value = CP.Metrics_IconVerticalSpacing
+        'XenonTrackbar9.Value = CP.Metrics_MenuHeight
+        'XenonTrackbar8.Value = CP.Metrics_MenuWidth
+        'XenonTrackbar7.Value = CP.Metrics_MinAnimate
+        'XenonTrackbar12.Value = CP.Metrics_PaddedBorderWidth
+        'XenonTrackbar11.Value = CP.Metrics_ScrollHeight
+        'XenonTrackbar10.Value = CP.Metrics_ScrollWidth
+        'XenonTrackbar15.Value = CP.Metrics_ShellIconSize
+        'XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
+        'XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
 
     End Sub
 
     Sub ApplyToCP(CP As CP)
-        CP.Fonts_CaptionFont = Label1.Font
-        CP.Fonts_IconFont = Label2.Font
-        CP.Fonts_MenuFont = Label3.Font
-        CP.Fonts_MessageFont = Label4.Font
-        CP.Fonts_SmCaptionFont = Label5.Font
-        CP.Fonts_StatusFont = Label6.Font
+        'CP.Fonts_CaptionFont = Label1.Font
+        'CP.Fonts_IconFont = Label2.Font
+        'CP.Fonts_MenuFont = Label3.Font
+        'CP.Fonts_MessageFont = Label4.Font
+        'CP.Fonts_SmCaptionFont = Label5.Font
+        'CP.Fonts_StatusFont = Label6.Font
 
-        CP.Metrics_BorderWidth = XenonTrackbar1.Value
-        CP.Metrics_CaptionHeight = XenonTrackbar2.Value
-        CP.Metrics_CaptionWidth = XenonTrackbar3.Value
-        CP.Metrics_IconSpacing = XenonTrackbar6.Value
-        CP.Metrics_IconTitleWrap = XenonTrackbar5.Value
-        CP.Metrics_IconVerticalSpacing = XenonTrackbar4.Value
-        CP.Metrics_MenuHeight = XenonTrackbar9.Value
-        CP.Metrics_MenuWidth = XenonTrackbar8.Value
-        CP.Metrics_MinAnimate = XenonTrackbar7.Value
-        CP.Metrics_PaddedBorderWidth = XenonTrackbar12.Value
-        CP.Metrics_ScrollHeight = XenonTrackbar11.Value
-        CP.Metrics_ScrollWidth = XenonTrackbar10.Value
-        CP.Metrics_ShellIconSize = XenonTrackbar15.Value
-        CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
-        CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
+        'CP.Metrics_BorderWidth = XenonTrackbar1.Value
+        'CP.Metrics_CaptionHeight = XenonTrackbar2.Value
+        'CP.Metrics_CaptionWidth = XenonTrackbar3.Value
+        'CP.Metrics_IconSpacing = XenonTrackbar6.Value
+        'CP.Metrics_IconTitleWrap = XenonTrackbar5.Value
+        'CP.Metrics_IconVerticalSpacing = XenonTrackbar4.Value
+        'CP.Metrics_MenuHeight = XenonTrackbar9.Value
+        'CP.Metrics_MenuWidth = XenonTrackbar8.Value
+        'CP.Metrics_MinAnimate = XenonTrackbar7.Value
+        'CP.Metrics_PaddedBorderWidth = XenonTrackbar12.Value
+        'CP.Metrics_ScrollHeight = XenonTrackbar11.Value
+        'CP.Metrics_ScrollWidth = XenonTrackbar10.Value
+        'CP.Metrics_ShellIconSize = XenonTrackbar15.Value
+        'CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
+        'CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

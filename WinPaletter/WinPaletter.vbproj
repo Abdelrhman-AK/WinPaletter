@@ -72,6 +72,9 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -132,12 +135,95 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
+    <Content Include="My Project\Application.myapp" />
+    <Content Include="Resources\AC_10_Dark.png" />
+    <Content Include="Resources\AC_10_Light.png" />
+    <Content Include="Resources\AeroGlass.png" />
+    <Content Include="Resources\AeroPeek.png" />
+    <Content Include="Resources\BasicTaskbar.png" />
+    <Content Include="Resources\CMD_10x18.png" />
+    <Content Include="Resources\CMD_10x18_P.png" />
+    <Content Include="Resources\CMD_12x16.png" />
+    <Content Include="Resources\CMD_12x16_P.png" />
+    <Content Include="Resources\CMD_16x12.png" />
+    <Content Include="Resources\CMD_16x12_P.png" />
+    <Content Include="Resources\CMD_16x8.png" />
+    <Content Include="Resources\CMD_16x8_P.png" />
+    <Content Include="Resources\CMD_4x6.png" />
+    <Content Include="Resources\CMD_4x6_P.png" />
+    <Content Include="Resources\CMD_5x12.png" />
+    <Content Include="Resources\CMD_5x12_P.png" />
+    <Content Include="Resources\CMD_6x8.png" />
+    <Content Include="Resources\CMD_6x8_P.png" />
+    <Content Include="Resources\CMD_7x12.png" />
+    <Content Include="Resources\CMD_7x12_P.png" />
+    <Content Include="Resources\CMD_8x12.png" />
+    <Content Include="Resources\CMD_8x12_P.png" />
+    <Content Include="Resources\CMD_8x8.png" />
+    <Content Include="Resources\CMD_8x8_P.png" />
+    <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
+    <Content Include="Resources\GaussianBlur.png" />
+    <Content Include="Resources\GaussianBlurOpaque.png" />
+    <Content Include="Resources\icons8_command_line.ico" />
+    <Content Include="Resources\icons8_PowerShell.ico" />
+    <Content Include="Resources\LICENSE.txt" />
+    <Content Include="Resources\LogonUI7.png" />
+    <Content Include="Resources\LogonUI8.png" />
+    <Content Include="Resources\Mini_ACHover_Links.png" />
+    <Content Include="Resources\Mini_Hamburger.png" />
+    <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
+    <Content Include="Resources\Mini_PressedButton.png" />
+    <Content Include="Resources\Mini_SettingsIcons.png" />
+    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
+    <Content Include="Resources\Mini_Taskbar.png" />
+    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
+    <Content Include="Resources\Mini_TaskbarApp.png" />
+    <Content Include="Resources\Mini_Undefined.png" />
+    <Content Include="Resources\Native10.png" />
+    <Content Include="Resources\Native7.png" />
+    <Content Include="Resources\Native8.png" />
+    <Content Include="Resources\Newtonsoft.Json.dll" />
+    <Content Include="Resources\PS_10x18.png" />
+    <Content Include="Resources\PS_12x16.png" />
+    <Content Include="Resources\PS_16x12.png" />
+    <Content Include="Resources\PS_16x8.png" />
+    <Content Include="Resources\PS_4x6.png" />
+    <Content Include="Resources\PS_5x12.png" />
+    <Content Include="Resources\PS_6x8.png" />
+    <Content Include="Resources\PS_7x12.png" />
+    <Content Include="Resources\PS_8x12.png" />
+    <Content Include="Resources\PS_8x8.png" />
+    <Content Include="Resources\Start7.png" />
+    <Content Include="Resources\Start7Basic.png" />
+    <Content Include="Resources\Start7Glass.png" />
+    <Content Include="Resources\StartBtn_10Dark.png" />
+    <Content Include="Resources\StartBtn_10Light.png" />
+    <Content Include="Resources\Taskbar_ActiveApp7.png" />
+    <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <Content Include="Resources\Win7BasicActive.png" />
+    <Content Include="Resources\Win7BasicInactive.png" />
+    <Content Include="Resources\Win7Logo.png" />
+    <Content Include="Resources\Win7ORB.png" />
+    <Content Include="Resources\Win7Sides.png" />
+    <Content Include="Resources\Win7TaskbarSides.png" />
+    <Content Include="Resources\Win7_Close_Active.png" />
+    <Content Include="Resources\Win7_Close_inactive.png" />
+    <Content Include="Resources\Win8ORB.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
+    <None Include="Resources\CMD_7x12.png" />
+    <None Include="Resources\CMD_8x12.png" />
+    <None Include="Resources\CMD_12x16.png" />
+    <None Include="Resources\CMD_16x12.png" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
@@ -149,6 +235,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="BugReport.Designer.vb">
+      <DependentUpon>BugReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BugReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\CP_Defaults.vb" />
     <Compile Include="Classes\Localizer.vb" />
@@ -253,17 +345,14 @@
     </Compile>
     <Compile Include="Metrics_Fonts\LogFont.vb" />
     <Compile Include="Metrics_Fonts\Metrics.vb" />
-    <Compile Include="My Project\Application1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Application1.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -357,91 +446,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ICON.ico" />
-    <Content Include="Icons\fileextension.ico" />
-    <Content Include="Icons\settingsfile.ico" />
-    <Content Include="My Project\Application.myapp" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application1.Designer.vb</LastGenOutput>
-    </None>
-    <Content Include="Resources\AC_10_Dark.png" />
-    <Content Include="Resources\AC_10_Light.png" />
-    <Content Include="Resources\AeroGlass.png" />
-    <Content Include="Resources\AeroPeek.png" />
-    <Content Include="Resources\BasicTaskbar.png" />
-    <None Include="Resources\CMD_4x6.png" />
-    <None Include="Resources\CMD_4x6_P.png" />
-    <None Include="Resources\CMD_5x12.png" />
-    <None Include="Resources\CMD_5x12_P.png" />
-    <None Include="Resources\CMD_6x8.png" />
-    <None Include="Resources\CMD_6x8_P.png" />
-    <None Include="Resources\CMD_7x12.png" />
-    <None Include="Resources\CMD_7x12_P.png" />
-    <None Include="Resources\CMD_8x8.png" />
-    <None Include="Resources\CMD_8x8_P.png" />
-    <None Include="Resources\CMD_8x12.png" />
-    <None Include="Resources\CMD_8x12_P.png" />
-    <None Include="Resources\CMD_10x18.png" />
-    <None Include="Resources\CMD_10x18_P.png" />
-    <None Include="Resources\CMD_12x16.png" />
-    <None Include="Resources\CMD_12x16_P.png" />
-    <None Include="Resources\CMD_16x8.png" />
-    <None Include="Resources\CMD_16x8_P.png" />
-    <None Include="Resources\CMD_16x12.png" />
-    <None Include="Resources\CMD_16x12_P.png" />
-    <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
-    <Content Include="Resources\GaussianBlur.png" />
-    <Content Include="Resources\GaussianBlurOpaque.png" />
-    <Content Include="Resources\icons8_command_line.ico" />
-    <Content Include="Resources\icons8_PowerShell.ico" />
-    <None Include="Resources\LICENSE.txt" />
-    <Content Include="Resources\LogonUI7.png" />
-    <Content Include="Resources\LogonUI8.png" />
-    <Content Include="Resources\Mini_ACHover_Links.png" />
-    <Content Include="Resources\Mini_Hamburger.png" />
-    <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <Content Include="Resources\Mini_PressedButton.png" />
-    <Content Include="Resources\Mini_SettingsIcons.png" />
-    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
-    <Content Include="Resources\Mini_Taskbar.png" />
-    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
-    <Content Include="Resources\Mini_TaskbarApp.png" />
-    <Content Include="Resources\Mini_Undefined.png" />
-    <Content Include="Resources\Native10.png" />
-    <Content Include="Resources\Native7.png" />
-    <Content Include="Resources\Native8.png" />
-    <Content Include="Resources\Newtonsoft.Json.dll" />
-    <None Include="Resources\PS_4x6.png" />
-    <None Include="Resources\PS_5x12.png" />
-    <None Include="Resources\PS_6x8.png" />
-    <None Include="Resources\PS_7x12.png" />
-    <None Include="Resources\PS_8x8.png" />
-    <None Include="Resources\PS_8x12.png" />
-    <None Include="Resources\PS_10x18.png" />
-    <None Include="Resources\PS_12x16.png" />
-    <None Include="Resources\PS_16x8.png" />
-    <None Include="Resources\PS_16x12.png" />
-    <Content Include="Resources\Start7.png" />
-    <Content Include="Resources\Start7Basic.png" />
-    <Content Include="Resources\Start7Glass.png" />
-    <Content Include="Resources\StartBtn_10Dark.png" />
-    <Content Include="Resources\StartBtn_10Light.png" />
-    <Content Include="Resources\Taskbar_ActiveApp7.png" />
-    <Content Include="Resources\Taskbar_InactiveApp7.png" />
-    <Content Include="Resources\Win7BasicActive.png" />
-    <Content Include="Resources\Win7BasicInactive.png" />
-    <Content Include="Resources\Win7Logo.png" />
-    <Content Include="Resources\Win7ORB.png" />
-    <Content Include="Resources\Win7Sides.png" />
-    <Content Include="Resources\Win7TaskbarSides.png" />
-    <Content Include="Resources\Win7_Close_Active.png" />
-    <Content Include="Resources\Win7_Close_inactive.png" />
-    <Content Include="Resources\Win8ORB.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BugReport.resx">
+      <DependentUpon>BugReport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -484,8 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

@@ -710,7 +710,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorBack1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -719,8 +719,8 @@ Public Class CursorsStudio
         _SelectedControl.Prop_PrimaryColor1 = c
         _SelectedControl.Invalidate()
 
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -737,7 +737,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorBack2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -745,8 +745,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_PrimaryColor2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -763,7 +763,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorLine1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -771,8 +771,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_SecondaryColor1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -789,7 +789,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorLine2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -797,8 +797,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_SecondaryColor2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -815,7 +815,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorCircle1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -823,8 +823,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_LoadingCircleBack1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -944,7 +944,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorCircle2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -952,8 +952,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_LoadingCircleBack2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -970,7 +970,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorCircleHot1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -978,8 +978,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_LoadingCircleHot1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 
@@ -996,7 +996,7 @@ Public Class CursorsStudio
         End If
 
         Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonGroupBox))
+        CList.Add(DirectCast(sender, XenonCP))
         CList.Add(_SelectedControl)
 
         Dim _Condition As New Conditions With {.CursorCircleHot2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
@@ -1004,8 +1004,8 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_LoadingCircleHot2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonGroupBox).BackColor = c
-        DirectCast(sender, XenonGroupBox).Invalidate()
+        DirectCast(sender, XenonCP).BackColor = c
+        DirectCast(sender, XenonCP).Invalidate()
 
         CList.Clear()
 

@@ -573,7 +573,7 @@ Public Class Win32UI
                 C = ColorPickerDlg.Pick(CList)
         End Select
 
-        CType(sender, XenonGroupBox).BackColor = C
+        CType(sender, XenonCP).BackColor = C
 
         CList.Clear()
 

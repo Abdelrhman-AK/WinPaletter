@@ -43,7 +43,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorStyle = New WinPaletter.XenonComboBox()
         Me.Label111 = New System.Windows.Forms.Label()
         Me.Label112 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_CursorColor = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_CursorColor = New WinPaletter.XenonCP()
         Me.ExtTerminal_PreviewCUR_LBL = New System.Windows.Forms.Label()
         Me.ExtTerminal_PreviewCUR = New System.Windows.Forms.Panel()
         Me.ExtTerminal_PreviewCUR2 = New System.Windows.Forms.Panel()
@@ -68,37 +68,37 @@ Partial Class ExternalTerminal
         Me.Label119 = New System.Windows.Forms.Label()
         Me.Label120 = New System.Windows.Forms.Label()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
-        Me.ExtTerminal_ColorTable00 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable00 = New WinPaletter.XenonCP()
         Me.Label121 = New System.Windows.Forms.Label()
         Me.Label122 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable01 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable01 = New WinPaletter.XenonCP()
         Me.Label124 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable02 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable03 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable02 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable03 = New WinPaletter.XenonCP()
         Me.Label125 = New System.Windows.Forms.Label()
         Me.Label126 = New System.Windows.Forms.Label()
         Me.Label127 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable04 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable04 = New WinPaletter.XenonCP()
         Me.Label128 = New System.Windows.Forms.Label()
         Me.Label129 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable05 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable05 = New WinPaletter.XenonCP()
         Me.Label130 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable06 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable06 = New WinPaletter.XenonCP()
         Me.Label131 = New System.Windows.Forms.Label()
         Me.Label132 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable15 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable07 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable15 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable07 = New WinPaletter.XenonCP()
         Me.Label133 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable08 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable14 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable08 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable14 = New WinPaletter.XenonCP()
         Me.Label134 = New System.Windows.Forms.Label()
         Me.Label135 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable09 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable13 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable09 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable13 = New WinPaletter.XenonCP()
         Me.Label136 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable12 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable10 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_ColorTable11 = New WinPaletter.XenonGroupBox()
+        Me.ExtTerminal_ColorTable12 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable10 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable11 = New WinPaletter.XenonCP()
         Me.XenonGroupBox73 = New WinPaletter.XenonGroupBox()
         Me.PictureBox23 = New System.Windows.Forms.PictureBox()
         Me.XenonCMD4 = New WinPaletter.XenonCMD()
@@ -166,11 +166,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox52.Controls.Add(Me.Label106)
         Me.XenonGroupBox52.Controls.Add(Me.ExtTerminal_PopupForegroundBar)
         Me.XenonGroupBox52.Controls.Add(Me.Label107)
-        Me.XenonGroupBox52.CustomColor = False
-        Me.XenonGroupBox52.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox52.ForceNoNerd = False
         Me.XenonGroupBox52.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox52.LineSize = 1
         Me.XenonGroupBox52.Location = New System.Drawing.Point(11, 416)
         Me.XenonGroupBox52.Name = "XenonGroupBox52"
         Me.XenonGroupBox52.Size = New System.Drawing.Size(259, 250)
@@ -387,11 +383,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox54.Controls.Add(Me.Label113)
         Me.XenonGroupBox54.Controls.Add(Me.PictureBox20)
         Me.XenonGroupBox54.Controls.Add(Me.Label114)
-        Me.XenonGroupBox54.CustomColor = False
-        Me.XenonGroupBox54.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox54.ForceNoNerd = False
         Me.XenonGroupBox54.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox54.LineSize = 1
         Me.XenonGroupBox54.Location = New System.Drawing.Point(273, 542)
         Me.XenonGroupBox54.Name = "XenonGroupBox54"
         Me.XenonGroupBox54.Size = New System.Drawing.Size(221, 124)
@@ -442,11 +434,9 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorColor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_CursorColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.ExtTerminal_CursorColor.CustomColor = True
         Me.ExtTerminal_CursorColor.DefaultColor = System.Drawing.Color.Black
         Me.ExtTerminal_CursorColor.ForceNoNerd = False
         Me.ExtTerminal_CursorColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.ExtTerminal_CursorColor.LineSize = 1
         Me.ExtTerminal_CursorColor.Location = New System.Drawing.Point(93, 39)
         Me.ExtTerminal_CursorColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_CursorColor.Name = "ExtTerminal_CursorColor"
@@ -561,11 +551,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox55.Controls.Add(Me.Label117)
         Me.XenonGroupBox55.Controls.Add(Me.Label118)
         Me.XenonGroupBox55.Controls.Add(Me.RasterList)
-        Me.XenonGroupBox55.CustomColor = False
-        Me.XenonGroupBox55.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox55.ForceNoNerd = False
         Me.XenonGroupBox55.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox55.LineSize = 1
         Me.XenonGroupBox55.Location = New System.Drawing.Point(273, 416)
         Me.XenonGroupBox55.Name = "XenonGroupBox55"
         Me.XenonGroupBox55.Size = New System.Drawing.Size(221, 123)
@@ -754,11 +740,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox56.Controls.Add(Me.ExtTerminal_ColorTable12)
         Me.XenonGroupBox56.Controls.Add(Me.ExtTerminal_ColorTable10)
         Me.XenonGroupBox56.Controls.Add(Me.ExtTerminal_ColorTable11)
-        Me.XenonGroupBox56.CustomColor = False
-        Me.XenonGroupBox56.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox56.ForceNoNerd = False
         Me.XenonGroupBox56.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox56.LineSize = 1
         Me.XenonGroupBox56.Location = New System.Drawing.Point(11, 135)
         Me.XenonGroupBox56.Name = "XenonGroupBox56"
         Me.XenonGroupBox56.Size = New System.Drawing.Size(259, 278)
@@ -801,11 +783,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable00
         '
         Me.ExtTerminal_ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ExtTerminal_ColorTable00.CustomColor = True
         Me.ExtTerminal_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable00.ForceNoNerd = False
         Me.ExtTerminal_ColorTable00.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ExtTerminal_ColorTable00.LineSize = 1
         Me.ExtTerminal_ColorTable00.Location = New System.Drawing.Point(28, 44)
         Me.ExtTerminal_ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable00.Name = "ExtTerminal_ColorTable00"
@@ -838,11 +818,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable01
         '
         Me.ExtTerminal_ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ExtTerminal_ColorTable01.CustomColor = True
         Me.ExtTerminal_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ExtTerminal_ColorTable01.ForceNoNerd = False
         Me.ExtTerminal_ColorTable01.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
-        Me.ExtTerminal_ColorTable01.LineSize = 1
         Me.ExtTerminal_ColorTable01.Location = New System.Drawing.Point(28, 73)
         Me.ExtTerminal_ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable01.Name = "ExtTerminal_ColorTable01"
@@ -864,11 +842,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable02
         '
         Me.ExtTerminal_ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.ExtTerminal_ColorTable02.CustomColor = True
         Me.ExtTerminal_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ExtTerminal_ColorTable02.ForceNoNerd = False
         Me.ExtTerminal_ColorTable02.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
-        Me.ExtTerminal_ColorTable02.LineSize = 1
         Me.ExtTerminal_ColorTable02.Location = New System.Drawing.Point(28, 102)
         Me.ExtTerminal_ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable02.Name = "ExtTerminal_ColorTable02"
@@ -879,11 +855,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable03
         '
         Me.ExtTerminal_ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.ExtTerminal_ColorTable03.CustomColor = True
         Me.ExtTerminal_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ExtTerminal_ColorTable03.ForceNoNerd = False
         Me.ExtTerminal_ColorTable03.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
-        Me.ExtTerminal_ColorTable03.LineSize = 1
         Me.ExtTerminal_ColorTable03.Location = New System.Drawing.Point(28, 131)
         Me.ExtTerminal_ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable03.Name = "ExtTerminal_ColorTable03"
@@ -927,11 +901,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable04
         '
         Me.ExtTerminal_ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.ExtTerminal_ColorTable04.CustomColor = True
         Me.ExtTerminal_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ExtTerminal_ColorTable04.ForceNoNerd = False
         Me.ExtTerminal_ColorTable04.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
-        Me.ExtTerminal_ColorTable04.LineSize = 1
         Me.ExtTerminal_ColorTable04.Location = New System.Drawing.Point(28, 160)
         Me.ExtTerminal_ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable04.Name = "ExtTerminal_ColorTable04"
@@ -964,11 +936,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable05
         '
         Me.ExtTerminal_ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ExtTerminal_ColorTable05.CustomColor = True
         Me.ExtTerminal_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ExtTerminal_ColorTable05.ForceNoNerd = False
         Me.ExtTerminal_ColorTable05.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.ExtTerminal_ColorTable05.LineSize = 1
         Me.ExtTerminal_ColorTable05.Location = New System.Drawing.Point(28, 189)
         Me.ExtTerminal_ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable05.Name = "ExtTerminal_ColorTable05"
@@ -990,11 +960,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable06
         '
         Me.ExtTerminal_ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ExtTerminal_ColorTable06.CustomColor = True
         Me.ExtTerminal_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ExtTerminal_ColorTable06.ForceNoNerd = False
         Me.ExtTerminal_ColorTable06.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ExtTerminal_ColorTable06.LineSize = 1
         Me.ExtTerminal_ColorTable06.Location = New System.Drawing.Point(28, 218)
         Me.ExtTerminal_ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable06.Name = "ExtTerminal_ColorTable06"
@@ -1027,11 +995,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable15
         '
         Me.ExtTerminal_ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.ExtTerminal_ColorTable15.CustomColor = True
         Me.ExtTerminal_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ExtTerminal_ColorTable15.ForceNoNerd = False
         Me.ExtTerminal_ColorTable15.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ExtTerminal_ColorTable15.LineSize = 1
         Me.ExtTerminal_ColorTable15.Location = New System.Drawing.Point(165, 247)
         Me.ExtTerminal_ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable15.Name = "ExtTerminal_ColorTable15"
@@ -1042,11 +1008,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable07
         '
         Me.ExtTerminal_ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.ExtTerminal_ColorTable07.CustomColor = True
         Me.ExtTerminal_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ExtTerminal_ColorTable07.ForceNoNerd = False
         Me.ExtTerminal_ColorTable07.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.ExtTerminal_ColorTable07.LineSize = 1
         Me.ExtTerminal_ColorTable07.Location = New System.Drawing.Point(28, 247)
         Me.ExtTerminal_ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable07.Name = "ExtTerminal_ColorTable07"
@@ -1068,11 +1032,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable08
         '
         Me.ExtTerminal_ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.ExtTerminal_ColorTable08.CustomColor = True
         Me.ExtTerminal_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ExtTerminal_ColorTable08.ForceNoNerd = False
         Me.ExtTerminal_ColorTable08.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
-        Me.ExtTerminal_ColorTable08.LineSize = 1
         Me.ExtTerminal_ColorTable08.Location = New System.Drawing.Point(165, 44)
         Me.ExtTerminal_ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable08.Name = "ExtTerminal_ColorTable08"
@@ -1083,11 +1045,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable14
         '
         Me.ExtTerminal_ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.ExtTerminal_ColorTable14.CustomColor = True
         Me.ExtTerminal_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ExtTerminal_ColorTable14.ForceNoNerd = False
         Me.ExtTerminal_ColorTable14.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.ExtTerminal_ColorTable14.LineSize = 1
         Me.ExtTerminal_ColorTable14.Location = New System.Drawing.Point(165, 218)
         Me.ExtTerminal_ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable14.Name = "ExtTerminal_ColorTable14"
@@ -1120,11 +1080,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable09
         '
         Me.ExtTerminal_ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ExtTerminal_ColorTable09.CustomColor = True
         Me.ExtTerminal_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ExtTerminal_ColorTable09.ForceNoNerd = False
         Me.ExtTerminal_ColorTable09.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ExtTerminal_ColorTable09.LineSize = 1
         Me.ExtTerminal_ColorTable09.Location = New System.Drawing.Point(165, 73)
         Me.ExtTerminal_ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable09.Name = "ExtTerminal_ColorTable09"
@@ -1135,11 +1093,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable13
         '
         Me.ExtTerminal_ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.ExtTerminal_ColorTable13.CustomColor = True
         Me.ExtTerminal_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ExtTerminal_ColorTable13.ForceNoNerd = False
         Me.ExtTerminal_ColorTable13.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
-        Me.ExtTerminal_ColorTable13.LineSize = 1
         Me.ExtTerminal_ColorTable13.Location = New System.Drawing.Point(165, 189)
         Me.ExtTerminal_ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable13.Name = "ExtTerminal_ColorTable13"
@@ -1161,11 +1117,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable12
         '
         Me.ExtTerminal_ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.ExtTerminal_ColorTable12.CustomColor = True
         Me.ExtTerminal_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ExtTerminal_ColorTable12.ForceNoNerd = False
         Me.ExtTerminal_ColorTable12.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
-        Me.ExtTerminal_ColorTable12.LineSize = 1
         Me.ExtTerminal_ColorTable12.Location = New System.Drawing.Point(165, 160)
         Me.ExtTerminal_ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable12.Name = "ExtTerminal_ColorTable12"
@@ -1176,11 +1130,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable10
         '
         Me.ExtTerminal_ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ExtTerminal_ColorTable10.CustomColor = True
         Me.ExtTerminal_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable10.ForceNoNerd = False
         Me.ExtTerminal_ColorTable10.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
-        Me.ExtTerminal_ColorTable10.LineSize = 1
         Me.ExtTerminal_ColorTable10.Location = New System.Drawing.Point(165, 102)
         Me.ExtTerminal_ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable10.Name = "ExtTerminal_ColorTable10"
@@ -1191,11 +1143,9 @@ Partial Class ExternalTerminal
         'ExtTerminal_ColorTable11
         '
         Me.ExtTerminal_ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.ExtTerminal_ColorTable11.CustomColor = True
         Me.ExtTerminal_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ExtTerminal_ColorTable11.ForceNoNerd = False
         Me.ExtTerminal_ColorTable11.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
-        Me.ExtTerminal_ColorTable11.LineSize = 1
         Me.ExtTerminal_ColorTable11.Location = New System.Drawing.Point(165, 131)
         Me.ExtTerminal_ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable11.Name = "ExtTerminal_ColorTable11"
@@ -1211,11 +1161,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox73.Controls.Add(Me.PictureBox23)
         Me.XenonGroupBox73.Controls.Add(Me.XenonCMD4)
         Me.XenonGroupBox73.Controls.Add(Me.Label137)
-        Me.XenonGroupBox73.CustomColor = False
-        Me.XenonGroupBox73.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox73.ForceNoNerd = False
         Me.XenonGroupBox73.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox73.LineSize = 1
         Me.XenonGroupBox73.Location = New System.Drawing.Point(273, 135)
         Me.XenonGroupBox73.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox73.Name = "XenonGroupBox73"
@@ -1297,11 +1243,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox51.Controls.Add(Me.XenonComboBox1)
         Me.XenonGroupBox51.Controls.Add(Me.PictureBox17)
         Me.XenonGroupBox51.Controls.Add(Me.Label102)
-        Me.XenonGroupBox51.CustomColor = False
-        Me.XenonGroupBox51.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox51.ForceNoNerd = False
         Me.XenonGroupBox51.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox51.LineSize = 1
         Me.XenonGroupBox51.Location = New System.Drawing.Point(11, 12)
         Me.XenonGroupBox51.Name = "XenonGroupBox51"
         Me.XenonGroupBox51.Size = New System.Drawing.Size(652, 109)
@@ -1485,11 +1427,7 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox53.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox53.Controls.Add(Me.Label110)
         Me.XenonGroupBox53.Controls.Add(Me.ExtTerminal_OpacityBar)
-        Me.XenonGroupBox53.CustomColor = False
-        Me.XenonGroupBox53.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox53.ForceNoNerd = False
         Me.XenonGroupBox53.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox53.LineSize = 1
         Me.XenonGroupBox53.Location = New System.Drawing.Point(497, 416)
         Me.XenonGroupBox53.Name = "XenonGroupBox53"
         Me.XenonGroupBox53.Size = New System.Drawing.Size(166, 250)
@@ -1735,7 +1673,7 @@ Partial Class ExternalTerminal
     Friend WithEvents ExtTerminal_CursorStyle As XenonComboBox
     Friend WithEvents Label111 As Label
     Friend WithEvents Label112 As Label
-    Friend WithEvents ExtTerminal_CursorColor As XenonGroupBox
+    Friend WithEvents ExtTerminal_CursorColor As XenonCP
     Friend WithEvents ExtTerminal_PreviewCUR_LBL As Label
     Friend WithEvents ExtTerminal_PreviewCUR As Panel
     Friend WithEvents ExtTerminal_PreviewCUR2 As Panel
@@ -1759,37 +1697,37 @@ Partial Class ExternalTerminal
     Friend WithEvents Label119 As Label
     Friend WithEvents Label120 As Label
     Friend WithEvents PictureBox22 As PictureBox
-    Friend WithEvents ExtTerminal_ColorTable00 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable00 As XenonCP
     Friend WithEvents Label121 As Label
     Friend WithEvents Label122 As Label
-    Friend WithEvents ExtTerminal_ColorTable01 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable01 As XenonCP
     Friend WithEvents Label124 As Label
-    Friend WithEvents ExtTerminal_ColorTable02 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable03 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable02 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable03 As XenonCP
     Friend WithEvents Label125 As Label
     Friend WithEvents Label126 As Label
     Friend WithEvents Label127 As Label
-    Friend WithEvents ExtTerminal_ColorTable04 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable04 As XenonCP
     Friend WithEvents Label128 As Label
     Friend WithEvents Label129 As Label
-    Friend WithEvents ExtTerminal_ColorTable05 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable05 As XenonCP
     Friend WithEvents Label130 As Label
-    Friend WithEvents ExtTerminal_ColorTable06 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable06 As XenonCP
     Friend WithEvents Label131 As Label
     Friend WithEvents Label132 As Label
-    Friend WithEvents ExtTerminal_ColorTable15 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable07 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable15 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable07 As XenonCP
     Friend WithEvents Label133 As Label
-    Friend WithEvents ExtTerminal_ColorTable08 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable14 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable08 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable14 As XenonCP
     Friend WithEvents Label134 As Label
     Friend WithEvents Label135 As Label
-    Friend WithEvents ExtTerminal_ColorTable09 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable13 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable09 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable13 As XenonCP
     Friend WithEvents Label136 As Label
-    Friend WithEvents ExtTerminal_ColorTable12 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable10 As XenonGroupBox
-    Friend WithEvents ExtTerminal_ColorTable11 As XenonGroupBox
+    Friend WithEvents ExtTerminal_ColorTable12 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable10 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable11 As XenonCP
     Friend WithEvents XenonGroupBox73 As XenonGroupBox
     Friend WithEvents PictureBox23 As PictureBox
     Friend WithEvents XenonCMD4 As XenonCMD

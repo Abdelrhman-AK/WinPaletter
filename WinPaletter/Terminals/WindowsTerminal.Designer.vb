@@ -45,12 +45,12 @@ Partial Class WindowsTerminal
         Me.TerThemesContainer = New System.Windows.Forms.Panel()
         Me.TerMode = New WinPaletter.XenonToggle()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TerTitlebarActive = New WinPaletter.XenonGroupBox()
-        Me.TerTitlebarInactive = New WinPaletter.XenonGroupBox()
+        Me.TerTitlebarActive = New WinPaletter.XenonCP()
+        Me.TerTitlebarInactive = New WinPaletter.XenonCP()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.TerTabActive = New WinPaletter.XenonGroupBox()
-        Me.TerTabInactive = New WinPaletter.XenonGroupBox()
+        Me.TerTabActive = New WinPaletter.XenonCP()
+        Me.TerTabInactive = New WinPaletter.XenonCP()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox22 = New WinPaletter.XenonGroupBox()
@@ -81,40 +81,40 @@ Partial Class WindowsTerminal
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonButton12 = New WinPaletter.XenonButton()
         Me.TerSchemes = New WinPaletter.XenonComboBox()
-        Me.TerCursor = New WinPaletter.XenonGroupBox()
-        Me.TerWhiteB = New WinPaletter.XenonGroupBox()
+        Me.TerCursor = New WinPaletter.XenonCP()
+        Me.TerWhiteB = New WinPaletter.XenonCP()
         Me.Label150 = New System.Windows.Forms.Label()
-        Me.TerBlue = New WinPaletter.XenonGroupBox()
+        Me.TerBlue = New WinPaletter.XenonCP()
         Me.Label151 = New System.Windows.Forms.Label()
-        Me.TerSelection = New WinPaletter.XenonGroupBox()
+        Me.TerSelection = New WinPaletter.XenonCP()
         Me.Label152 = New System.Windows.Forms.Label()
         Me.Label147 = New System.Windows.Forms.Label()
-        Me.TerWhite = New WinPaletter.XenonGroupBox()
-        Me.TerForeground = New WinPaletter.XenonGroupBox()
-        Me.TerCyanB = New WinPaletter.XenonGroupBox()
+        Me.TerWhite = New WinPaletter.XenonCP()
+        Me.TerForeground = New WinPaletter.XenonCP()
+        Me.TerCyanB = New WinPaletter.XenonCP()
         Me.Label145 = New System.Windows.Forms.Label()
-        Me.TerCyan = New WinPaletter.XenonGroupBox()
-        Me.TerGreen = New WinPaletter.XenonGroupBox()
+        Me.TerCyan = New WinPaletter.XenonCP()
+        Me.TerGreen = New WinPaletter.XenonCP()
         Me.Label144 = New System.Windows.Forms.Label()
-        Me.TerBackground = New WinPaletter.XenonGroupBox()
-        Me.TerYellow = New WinPaletter.XenonGroupBox()
-        Me.TerGreenB = New WinPaletter.XenonGroupBox()
+        Me.TerBackground = New WinPaletter.XenonCP()
+        Me.TerYellow = New WinPaletter.XenonCP()
+        Me.TerGreenB = New WinPaletter.XenonCP()
         Me.Label143 = New System.Windows.Forms.Label()
         Me.Label149 = New System.Windows.Forms.Label()
-        Me.TerBlack = New WinPaletter.XenonGroupBox()
-        Me.TerYellowB = New WinPaletter.XenonGroupBox()
+        Me.TerBlack = New WinPaletter.XenonCP()
+        Me.TerYellowB = New WinPaletter.XenonCP()
         Me.Label142 = New System.Windows.Forms.Label()
-        Me.TerBlackB = New WinPaletter.XenonGroupBox()
+        Me.TerBlackB = New WinPaletter.XenonCP()
         Me.Label139 = New System.Windows.Forms.Label()
-        Me.TerPurple = New WinPaletter.XenonGroupBox()
+        Me.TerPurple = New WinPaletter.XenonCP()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
         Me.Label140 = New System.Windows.Forms.Label()
-        Me.TerPurpleB = New WinPaletter.XenonGroupBox()
-        Me.TerBlueB = New WinPaletter.XenonGroupBox()
+        Me.TerPurpleB = New WinPaletter.XenonCP()
+        Me.TerBlueB = New WinPaletter.XenonCP()
         Me.Label146 = New System.Windows.Forms.Label()
         Me.Label148 = New System.Windows.Forms.Label()
-        Me.TerRedB = New WinPaletter.XenonGroupBox()
-        Me.TerRed = New WinPaletter.XenonGroupBox()
+        Me.TerRedB = New WinPaletter.XenonCP()
+        Me.TerRed = New WinPaletter.XenonCP()
         Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -295,11 +295,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox1.Controls.Add(Me.Label4)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox1.Controls.Add(Me.TerThemesContainer)
-        Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(238, 406)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(407, 102)
@@ -448,11 +444,9 @@ Partial Class WindowsTerminal
         'TerTitlebarActive
         '
         Me.TerTitlebarActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTitlebarActive.CustomColor = True
         Me.TerTitlebarActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarActive.ForceNoNerd = False
         Me.TerTitlebarActive.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerTitlebarActive.LineSize = 1
         Me.TerTitlebarActive.Location = New System.Drawing.Point(4, 31)
         Me.TerTitlebarActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarActive.Name = "TerTitlebarActive"
@@ -463,11 +457,9 @@ Partial Class WindowsTerminal
         'TerTitlebarInactive
         '
         Me.TerTitlebarInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTitlebarInactive.CustomColor = True
         Me.TerTitlebarInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarInactive.ForceNoNerd = False
         Me.TerTitlebarInactive.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerTitlebarInactive.LineSize = 1
         Me.TerTitlebarInactive.Location = New System.Drawing.Point(88, 31)
         Me.TerTitlebarInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarInactive.Name = "TerTitlebarInactive"
@@ -500,11 +492,9 @@ Partial Class WindowsTerminal
         'TerTabActive
         '
         Me.TerTabActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTabActive.CustomColor = True
         Me.TerTabActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabActive.ForceNoNerd = False
         Me.TerTabActive.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerTabActive.LineSize = 1
         Me.TerTabActive.Location = New System.Drawing.Point(172, 31)
         Me.TerTabActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabActive.Name = "TerTabActive"
@@ -515,11 +505,9 @@ Partial Class WindowsTerminal
         'TerTabInactive
         '
         Me.TerTabInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTabInactive.CustomColor = True
         Me.TerTabInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabInactive.ForceNoNerd = False
         Me.TerTabInactive.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerTabInactive.LineSize = 1
         Me.TerTabInactive.Location = New System.Drawing.Point(256, 31)
         Me.TerTabInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabInactive.Name = "TerTabInactive"
@@ -564,11 +552,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox22.Controls.Add(Me.PictureBox27)
         Me.XenonGroupBox22.Controls.Add(Me.Label141)
         Me.XenonGroupBox22.Controls.Add(Me.XenonTerminal2)
-        Me.XenonGroupBox22.CustomColor = False
-        Me.XenonGroupBox22.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox22.ForceNoNerd = False
         Me.XenonGroupBox22.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox22.LineSize = 1
         Me.XenonGroupBox22.Location = New System.Drawing.Point(238, 163)
         Me.XenonGroupBox22.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox22.Name = "XenonGroupBox22"
@@ -714,11 +698,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox15.Controls.Add(Me.PictureBox33)
         Me.XenonGroupBox15.Controls.Add(Me.TerImageOpacity)
         Me.XenonGroupBox15.Controls.Add(Me.Label2)
-        Me.XenonGroupBox15.CustomColor = False
-        Me.XenonGroupBox15.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox15.ForceNoNerd = False
         Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox15.LineSize = 1
         Me.XenonGroupBox15.Location = New System.Drawing.Point(238, 511)
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
         Me.XenonGroupBox15.Size = New System.Drawing.Size(407, 100)
@@ -951,11 +931,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox11.Controls.Add(Me.Label148)
         Me.XenonGroupBox11.Controls.Add(Me.TerRedB)
         Me.XenonGroupBox11.Controls.Add(Me.TerRed)
-        Me.XenonGroupBox11.CustomColor = False
-        Me.XenonGroupBox11.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox11.ForceNoNerd = False
         Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox11.LineSize = 1
         Me.XenonGroupBox11.Location = New System.Drawing.Point(12, 163)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(223, 378)
@@ -1038,11 +1014,9 @@ Partial Class WindowsTerminal
         'TerCursor
         '
         Me.TerCursor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerCursor.CustomColor = True
         Me.TerCursor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerCursor.ForceNoNerd = False
         Me.TerCursor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerCursor.LineSize = 1
         Me.TerCursor.Location = New System.Drawing.Point(116, 143)
         Me.TerCursor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCursor.Name = "TerCursor"
@@ -1053,11 +1027,9 @@ Partial Class WindowsTerminal
         'TerWhiteB
         '
         Me.TerWhiteB.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.TerWhiteB.CustomColor = True
         Me.TerWhiteB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.TerWhiteB.ForceNoNerd = True
         Me.TerWhiteB.LineColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.TerWhiteB.LineSize = 1
         Me.TerWhiteB.Location = New System.Drawing.Point(169, 347)
         Me.TerWhiteB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhiteB.Name = "TerWhiteB"
@@ -1079,11 +1051,9 @@ Partial Class WindowsTerminal
         'TerBlue
         '
         Me.TerBlue.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.TerBlue.CustomColor = True
         Me.TerBlue.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.TerBlue.ForceNoNerd = True
         Me.TerBlue.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(222, Byte), Integer))
-        Me.TerBlue.LineSize = 1
         Me.TerBlue.Location = New System.Drawing.Point(116, 200)
         Me.TerBlue.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlue.Name = "TerBlue"
@@ -1105,11 +1075,9 @@ Partial Class WindowsTerminal
         'TerSelection
         '
         Me.TerSelection.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerSelection.CustomColor = True
         Me.TerSelection.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerSelection.ForceNoNerd = False
         Me.TerSelection.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerSelection.LineSize = 1
         Me.TerSelection.Location = New System.Drawing.Point(7, 143)
         Me.TerSelection.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerSelection.Name = "TerSelection"
@@ -1142,11 +1110,9 @@ Partial Class WindowsTerminal
         'TerWhite
         '
         Me.TerWhite.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.TerWhite.CustomColor = True
         Me.TerWhite.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.TerWhite.ForceNoNerd = True
         Me.TerWhite.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer), CType(CType(184, Byte), Integer))
-        Me.TerWhite.LineSize = 1
         Me.TerWhite.Location = New System.Drawing.Point(116, 347)
         Me.TerWhite.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhite.Name = "TerWhite"
@@ -1157,11 +1123,9 @@ Partial Class WindowsTerminal
         'TerForeground
         '
         Me.TerForeground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerForeground.CustomColor = True
         Me.TerForeground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerForeground.ForceNoNerd = False
         Me.TerForeground.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerForeground.LineSize = 1
         Me.TerForeground.Location = New System.Drawing.Point(116, 92)
         Me.TerForeground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerForeground.Name = "TerForeground"
@@ -1172,11 +1136,9 @@ Partial Class WindowsTerminal
         'TerCyanB
         '
         Me.TerCyanB.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.TerCyanB.CustomColor = True
         Me.TerCyanB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.TerCyanB.ForceNoNerd = True
         Me.TerCyanB.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(193, Byte), Integer), CType(CType(193, Byte), Integer))
-        Me.TerCyanB.LineSize = 1
         Me.TerCyanB.Location = New System.Drawing.Point(60, 249)
         Me.TerCyanB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyanB.Name = "TerCyanB"
@@ -1198,11 +1160,9 @@ Partial Class WindowsTerminal
         'TerCyan
         '
         Me.TerCyan.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.TerCyan.CustomColor = True
         Me.TerCyan.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.TerCyan.ForceNoNerd = True
         Me.TerCyan.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(199, Byte), Integer))
-        Me.TerCyan.LineSize = 1
         Me.TerCyan.Location = New System.Drawing.Point(7, 249)
         Me.TerCyan.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyan.Name = "TerCyan"
@@ -1213,11 +1173,9 @@ Partial Class WindowsTerminal
         'TerGreen
         '
         Me.TerGreen.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.TerGreen.CustomColor = True
         Me.TerGreen.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.TerGreen.ForceNoNerd = True
         Me.TerGreen.LineColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(38, Byte), Integer))
-        Me.TerGreen.LineSize = 1
         Me.TerGreen.Location = New System.Drawing.Point(116, 249)
         Me.TerGreen.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreen.Name = "TerGreen"
@@ -1239,11 +1197,9 @@ Partial Class WindowsTerminal
         'TerBackground
         '
         Me.TerBackground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerBackground.CustomColor = True
         Me.TerBackground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBackground.ForceNoNerd = False
         Me.TerBackground.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerBackground.LineSize = 1
         Me.TerBackground.Location = New System.Drawing.Point(7, 92)
         Me.TerBackground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBackground.Name = "TerBackground"
@@ -1254,11 +1210,9 @@ Partial Class WindowsTerminal
         'TerYellow
         '
         Me.TerYellow.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.TerYellow.CustomColor = True
         Me.TerYellow.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.ForceNoNerd = True
         Me.TerYellow.LineColor = System.Drawing.Color.FromArgb(CType(CType(174, Byte), Integer), CType(CType(140, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.TerYellow.LineSize = 1
         Me.TerYellow.Location = New System.Drawing.Point(7, 347)
         Me.TerYellow.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellow.Name = "TerYellow"
@@ -1269,11 +1223,9 @@ Partial Class WindowsTerminal
         'TerGreenB
         '
         Me.TerGreenB.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerGreenB.CustomColor = True
         Me.TerGreenB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerGreenB.ForceNoNerd = True
         Me.TerGreenB.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(178, Byte), Integer), CType(CType(11, Byte), Integer))
-        Me.TerGreenB.LineSize = 1
         Me.TerGreenB.Location = New System.Drawing.Point(169, 249)
         Me.TerGreenB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreenB.Name = "TerGreenB"
@@ -1306,11 +1258,9 @@ Partial Class WindowsTerminal
         'TerBlack
         '
         Me.TerBlack.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerBlack.CustomColor = True
         Me.TerBlack.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBlack.ForceNoNerd = True
         Me.TerBlack.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerBlack.LineSize = 1
         Me.TerBlack.Location = New System.Drawing.Point(7, 200)
         Me.TerBlack.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlack.Name = "TerBlack"
@@ -1321,11 +1271,9 @@ Partial Class WindowsTerminal
         'TerYellowB
         '
         Me.TerYellowB.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.TerYellowB.CustomColor = True
         Me.TerYellowB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.TerYellowB.ForceNoNerd = True
         Me.TerYellowB.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(217, Byte), Integer), CType(CType(148, Byte), Integer))
-        Me.TerYellowB.LineSize = 1
         Me.TerYellowB.Location = New System.Drawing.Point(60, 347)
         Me.TerYellowB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellowB.Name = "TerYellowB"
@@ -1347,11 +1295,9 @@ Partial Class WindowsTerminal
         'TerBlackB
         '
         Me.TerBlackB.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.TerBlackB.CustomColor = True
         Me.TerBlackB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.TerBlackB.ForceNoNerd = True
         Me.TerBlackB.LineColor = System.Drawing.Color.FromArgb(CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(132, Byte), Integer))
-        Me.TerBlackB.LineSize = 1
         Me.TerBlackB.Location = New System.Drawing.Point(60, 200)
         Me.TerBlackB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlackB.Name = "TerBlackB"
@@ -1375,11 +1321,9 @@ Partial Class WindowsTerminal
         'TerPurple
         '
         Me.TerPurple.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.TerPurple.CustomColor = True
         Me.TerPurple.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.TerPurple.ForceNoNerd = True
         Me.TerPurple.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.TerPurple.LineSize = 1
         Me.TerPurple.Location = New System.Drawing.Point(116, 298)
         Me.TerPurple.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurple.Name = "TerPurple"
@@ -1411,11 +1355,9 @@ Partial Class WindowsTerminal
         'TerPurpleB
         '
         Me.TerPurpleB.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.TerPurpleB.CustomColor = True
         Me.TerPurpleB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.TerPurpleB.ForceNoNerd = True
         Me.TerPurpleB.LineColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(168, Byte), Integer))
-        Me.TerPurpleB.LineSize = 1
         Me.TerPurpleB.Location = New System.Drawing.Point(169, 298)
         Me.TerPurpleB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurpleB.Name = "TerPurpleB"
@@ -1426,11 +1368,9 @@ Partial Class WindowsTerminal
         'TerBlueB
         '
         Me.TerBlueB.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.TerBlueB.CustomColor = True
         Me.TerBlueB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.ForceNoNerd = True
         Me.TerBlueB.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.TerBlueB.LineSize = 1
         Me.TerBlueB.Location = New System.Drawing.Point(169, 200)
         Me.TerBlueB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlueB.Name = "TerBlueB"
@@ -1463,11 +1403,9 @@ Partial Class WindowsTerminal
         'TerRedB
         '
         Me.TerRedB.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.TerRedB.CustomColor = True
         Me.TerRedB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.TerRedB.ForceNoNerd = True
         Me.TerRedB.LineColor = System.Drawing.Color.FromArgb(CType(CType(233, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(103, Byte), Integer))
-        Me.TerRedB.LineSize = 1
         Me.TerRedB.Location = New System.Drawing.Point(60, 298)
         Me.TerRedB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRedB.Name = "TerRedB"
@@ -1478,11 +1416,9 @@ Partial Class WindowsTerminal
         'TerRed
         '
         Me.TerRed.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.TerRed.CustomColor = True
         Me.TerRed.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.TerRed.ForceNoNerd = True
         Me.TerRed.LineColor = System.Drawing.Color.FromArgb(CType(CType(203, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(53, Byte), Integer))
-        Me.TerRed.LineSize = 1
         Me.TerRed.Location = New System.Drawing.Point(7, 298)
         Me.TerRed.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRed.Name = "TerRed"
@@ -1500,11 +1436,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox14.Controls.Add(Me.PictureBox32)
         Me.XenonGroupBox14.Controls.Add(Me.TerCursorHeightLbl)
         Me.XenonGroupBox14.Controls.Add(Me.TerCursorStyle)
-        Me.XenonGroupBox14.CustomColor = False
-        Me.XenonGroupBox14.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox14.ForceNoNerd = False
         Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox14.LineSize = 1
         Me.XenonGroupBox14.Location = New System.Drawing.Point(12, 544)
         Me.XenonGroupBox14.Name = "XenonGroupBox14"
         Me.XenonGroupBox14.Size = New System.Drawing.Size(223, 67)
@@ -1626,11 +1558,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox13.Controls.Add(Me.Label155)
         Me.XenonGroupBox13.Controls.Add(Me.TerProfiles)
         Me.XenonGroupBox13.Controls.Add(Me.XenonButton13)
-        Me.XenonGroupBox13.CustomColor = False
-        Me.XenonGroupBox13.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox13.ForceNoNerd = False
         Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox13.LineSize = 1
         Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 120)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(633, 40)
@@ -1745,11 +1673,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox21.Controls.Add(Me.TerFontSizeBar)
         Me.XenonGroupBox21.Controls.Add(Me.TerFonts)
         Me.XenonGroupBox21.Controls.Add(Me.TerFontWeight)
-        Me.XenonGroupBox21.CustomColor = False
-        Me.XenonGroupBox21.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox21.ForceNoNerd = False
         Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox21.LineSize = 1
         Me.XenonGroupBox21.Location = New System.Drawing.Point(12, 614)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
         Me.XenonGroupBox21.Size = New System.Drawing.Size(633, 36)
@@ -1852,11 +1776,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton7)
         Me.XenonGroupBox3.Controls.Add(Me.TerEnabled)
-        Me.XenonGroupBox3.CustomColor = False
-        Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(633, 98)
@@ -1975,40 +1895,40 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonGroupBox11 As XenonGroupBox
     Friend WithEvents XenonButton12 As XenonButton
     Friend WithEvents TerSchemes As XenonComboBox
-    Friend WithEvents TerCursor As XenonGroupBox
-    Friend WithEvents TerWhiteB As XenonGroupBox
+    Friend WithEvents TerCursor As XenonCP
+    Friend WithEvents TerWhiteB As XenonCP
     Friend WithEvents Label150 As Label
-    Friend WithEvents TerBlue As XenonGroupBox
+    Friend WithEvents TerBlue As XenonCP
     Friend WithEvents Label151 As Label
-    Friend WithEvents TerSelection As XenonGroupBox
+    Friend WithEvents TerSelection As XenonCP
     Friend WithEvents Label152 As Label
     Friend WithEvents Label147 As Label
-    Friend WithEvents TerWhite As XenonGroupBox
-    Friend WithEvents TerForeground As XenonGroupBox
-    Friend WithEvents TerCyanB As XenonGroupBox
+    Friend WithEvents TerWhite As XenonCP
+    Friend WithEvents TerForeground As XenonCP
+    Friend WithEvents TerCyanB As XenonCP
     Friend WithEvents Label145 As Label
-    Friend WithEvents TerCyan As XenonGroupBox
-    Friend WithEvents TerGreen As XenonGroupBox
+    Friend WithEvents TerCyan As XenonCP
+    Friend WithEvents TerGreen As XenonCP
     Friend WithEvents Label144 As Label
-    Friend WithEvents TerBackground As XenonGroupBox
-    Friend WithEvents TerYellow As XenonGroupBox
-    Friend WithEvents TerGreenB As XenonGroupBox
+    Friend WithEvents TerBackground As XenonCP
+    Friend WithEvents TerYellow As XenonCP
+    Friend WithEvents TerGreenB As XenonCP
     Friend WithEvents Label143 As Label
     Friend WithEvents Label149 As Label
-    Friend WithEvents TerBlack As XenonGroupBox
-    Friend WithEvents TerYellowB As XenonGroupBox
+    Friend WithEvents TerBlack As XenonCP
+    Friend WithEvents TerYellowB As XenonCP
     Friend WithEvents Label142 As Label
-    Friend WithEvents TerBlackB As XenonGroupBox
+    Friend WithEvents TerBlackB As XenonCP
     Friend WithEvents Label139 As Label
-    Friend WithEvents TerPurple As XenonGroupBox
+    Friend WithEvents TerPurple As XenonCP
     Friend WithEvents PictureBox24 As PictureBox
     Friend WithEvents Label140 As Label
-    Friend WithEvents TerPurpleB As XenonGroupBox
-    Friend WithEvents TerBlueB As XenonGroupBox
+    Friend WithEvents TerPurpleB As XenonCP
+    Friend WithEvents TerBlueB As XenonCP
     Friend WithEvents Label146 As Label
     Friend WithEvents Label148 As Label
-    Friend WithEvents TerRedB As XenonGroupBox
-    Friend WithEvents TerRed As XenonGroupBox
+    Friend WithEvents TerRedB As XenonCP
+    Friend WithEvents TerRed As XenonCP
     Friend WithEvents XenonGroupBox14 As XenonGroupBox
     Friend WithEvents Label157 As Label
     Friend WithEvents TerCursorHeightBar As XenonTrackbar
@@ -2040,12 +1960,12 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonTerminal2 As XenonTerminal
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents Label9 As Label
-    Friend WithEvents TerTabInactive As XenonGroupBox
-    Friend WithEvents TerTabActive As XenonGroupBox
+    Friend WithEvents TerTabInactive As XenonCP
+    Friend WithEvents TerTabActive As XenonCP
     Friend WithEvents Label10 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents TerTitlebarInactive As XenonGroupBox
-    Friend WithEvents TerTitlebarActive As XenonGroupBox
+    Friend WithEvents TerTitlebarInactive As XenonCP
+    Friend WithEvents TerTitlebarActive As XenonCP
     Friend WithEvents Label6 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox4 As PictureBox

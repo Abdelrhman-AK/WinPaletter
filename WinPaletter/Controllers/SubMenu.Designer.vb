@@ -30,25 +30,25 @@ Partial Class SubMenu
         Me.PaletteContainer = New System.Windows.Forms.FlowLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.DefaultDarkestColor = New WinPaletter.XenonGroupBox()
-        Me.DefaultDarkColor = New WinPaletter.XenonGroupBox()
-        Me.DefaultLightestColor = New WinPaletter.XenonGroupBox()
-        Me.DefaultLightColor = New WinPaletter.XenonGroupBox()
+        Me.DefaultDarkestColor = New WinPaletter.XenonCP()
+        Me.DefaultDarkColor = New WinPaletter.XenonCP()
+        Me.DefaultLightestColor = New WinPaletter.XenonCP()
+        Me.DefaultLightColor = New WinPaletter.XenonCP()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
-        Me.IDarkestColor = New WinPaletter.XenonGroupBox()
-        Me.IDarkerColor = New WinPaletter.XenonGroupBox()
-        Me.ILightestColor = New WinPaletter.XenonGroupBox()
-        Me.ILighterColor = New WinPaletter.XenonGroupBox()
-        Me.DarkestColor = New WinPaletter.XenonGroupBox()
-        Me.LightestColor = New WinPaletter.XenonGroupBox()
-        Me.InvertedColor = New WinPaletter.XenonGroupBox()
-        Me.DarkerColor = New WinPaletter.XenonGroupBox()
-        Me.LighterColor = New WinPaletter.XenonGroupBox()
-        Me.DefaultColor = New WinPaletter.XenonGroupBox()
-        Me.MainColor = New WinPaletter.XenonGroupBox()
+        Me.IDarkestColor = New WinPaletter.XenonCP()
+        Me.IDarkerColor = New WinPaletter.XenonCP()
+        Me.ILightestColor = New WinPaletter.XenonCP()
+        Me.ILighterColor = New WinPaletter.XenonCP()
+        Me.DarkestColor = New WinPaletter.XenonCP()
+        Me.LightestColor = New WinPaletter.XenonCP()
+        Me.InvertedColor = New WinPaletter.XenonCP()
+        Me.DarkerColor = New WinPaletter.XenonCP()
+        Me.LighterColor = New WinPaletter.XenonCP()
+        Me.DefaultColor = New WinPaletter.XenonCP()
+        Me.MainColor = New WinPaletter.XenonCP()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
@@ -129,11 +129,9 @@ Partial Class SubMenu
         'DefaultDarkestColor
         '
         Me.DefaultDarkestColor.BackColor = System.Drawing.Color.Crimson
-        Me.DefaultDarkestColor.CustomColor = True
         Me.DefaultDarkestColor.DefaultColor = System.Drawing.Color.Black
         Me.DefaultDarkestColor.ForceNoNerd = True
         Me.DefaultDarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DefaultDarkestColor.LineSize = 1
         Me.DefaultDarkestColor.Location = New System.Drawing.Point(149, 158)
         Me.DefaultDarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultDarkestColor.Name = "DefaultDarkestColor"
@@ -144,11 +142,9 @@ Partial Class SubMenu
         'DefaultDarkColor
         '
         Me.DefaultDarkColor.BackColor = System.Drawing.Color.Crimson
-        Me.DefaultDarkColor.CustomColor = True
         Me.DefaultDarkColor.DefaultColor = System.Drawing.Color.Black
         Me.DefaultDarkColor.ForceNoNerd = True
         Me.DefaultDarkColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DefaultDarkColor.LineSize = 1
         Me.DefaultDarkColor.Location = New System.Drawing.Point(104, 158)
         Me.DefaultDarkColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultDarkColor.Name = "DefaultDarkColor"
@@ -159,11 +155,9 @@ Partial Class SubMenu
         'DefaultLightestColor
         '
         Me.DefaultLightestColor.BackColor = System.Drawing.Color.Crimson
-        Me.DefaultLightestColor.CustomColor = True
         Me.DefaultLightestColor.DefaultColor = System.Drawing.Color.Black
         Me.DefaultLightestColor.ForceNoNerd = True
         Me.DefaultLightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DefaultLightestColor.LineSize = 1
         Me.DefaultLightestColor.Location = New System.Drawing.Point(13, 158)
         Me.DefaultLightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultLightestColor.Name = "DefaultLightestColor"
@@ -174,11 +168,9 @@ Partial Class SubMenu
         'DefaultLightColor
         '
         Me.DefaultLightColor.BackColor = System.Drawing.Color.Crimson
-        Me.DefaultLightColor.CustomColor = True
         Me.DefaultLightColor.DefaultColor = System.Drawing.Color.Black
         Me.DefaultLightColor.ForceNoNerd = True
         Me.DefaultLightColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DefaultLightColor.LineSize = 1
         Me.DefaultLightColor.Location = New System.Drawing.Point(59, 158)
         Me.DefaultLightColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultLightColor.Name = "DefaultLightColor"
@@ -240,11 +232,9 @@ Partial Class SubMenu
         'IDarkestColor
         '
         Me.IDarkestColor.BackColor = System.Drawing.Color.Crimson
-        Me.IDarkestColor.CustomColor = True
         Me.IDarkestColor.DefaultColor = System.Drawing.Color.Black
         Me.IDarkestColor.ForceNoNerd = True
         Me.IDarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.IDarkestColor.LineSize = 1
         Me.IDarkestColor.Location = New System.Drawing.Point(149, 227)
         Me.IDarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.IDarkestColor.Name = "IDarkestColor"
@@ -255,11 +245,9 @@ Partial Class SubMenu
         'IDarkerColor
         '
         Me.IDarkerColor.BackColor = System.Drawing.Color.Crimson
-        Me.IDarkerColor.CustomColor = True
         Me.IDarkerColor.DefaultColor = System.Drawing.Color.Black
         Me.IDarkerColor.ForceNoNerd = True
         Me.IDarkerColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.IDarkerColor.LineSize = 1
         Me.IDarkerColor.Location = New System.Drawing.Point(104, 227)
         Me.IDarkerColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.IDarkerColor.Name = "IDarkerColor"
@@ -270,11 +258,9 @@ Partial Class SubMenu
         'ILightestColor
         '
         Me.ILightestColor.BackColor = System.Drawing.Color.Crimson
-        Me.ILightestColor.CustomColor = True
         Me.ILightestColor.DefaultColor = System.Drawing.Color.Black
         Me.ILightestColor.ForceNoNerd = True
         Me.ILightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.ILightestColor.LineSize = 1
         Me.ILightestColor.Location = New System.Drawing.Point(13, 227)
         Me.ILightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ILightestColor.Name = "ILightestColor"
@@ -285,11 +271,9 @@ Partial Class SubMenu
         'ILighterColor
         '
         Me.ILighterColor.BackColor = System.Drawing.Color.Crimson
-        Me.ILighterColor.CustomColor = True
         Me.ILighterColor.DefaultColor = System.Drawing.Color.Black
         Me.ILighterColor.ForceNoNerd = True
         Me.ILighterColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.ILighterColor.LineSize = 1
         Me.ILighterColor.Location = New System.Drawing.Point(59, 227)
         Me.ILighterColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ILighterColor.Name = "ILighterColor"
@@ -300,11 +284,9 @@ Partial Class SubMenu
         'DarkestColor
         '
         Me.DarkestColor.BackColor = System.Drawing.Color.Crimson
-        Me.DarkestColor.CustomColor = True
         Me.DarkestColor.DefaultColor = System.Drawing.Color.Black
         Me.DarkestColor.ForceNoNerd = True
         Me.DarkestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DarkestColor.LineSize = 1
         Me.DarkestColor.Location = New System.Drawing.Point(149, 90)
         Me.DarkestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DarkestColor.Name = "DarkestColor"
@@ -315,11 +297,9 @@ Partial Class SubMenu
         'LightestColor
         '
         Me.LightestColor.BackColor = System.Drawing.Color.Crimson
-        Me.LightestColor.CustomColor = True
         Me.LightestColor.DefaultColor = System.Drawing.Color.Black
         Me.LightestColor.ForceNoNerd = True
         Me.LightestColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.LightestColor.LineSize = 1
         Me.LightestColor.Location = New System.Drawing.Point(14, 90)
         Me.LightestColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LightestColor.Name = "LightestColor"
@@ -330,11 +310,9 @@ Partial Class SubMenu
         'InvertedColor
         '
         Me.InvertedColor.BackColor = System.Drawing.Color.Crimson
-        Me.InvertedColor.CustomColor = True
         Me.InvertedColor.DefaultColor = System.Drawing.Color.Black
         Me.InvertedColor.ForceNoNerd = False
         Me.InvertedColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.InvertedColor.LineSize = 1
         Me.InvertedColor.Location = New System.Drawing.Point(104, 200)
         Me.InvertedColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InvertedColor.Name = "InvertedColor"
@@ -345,11 +323,9 @@ Partial Class SubMenu
         'DarkerColor
         '
         Me.DarkerColor.BackColor = System.Drawing.Color.Crimson
-        Me.DarkerColor.CustomColor = True
         Me.DarkerColor.DefaultColor = System.Drawing.Color.Black
         Me.DarkerColor.ForceNoNerd = True
         Me.DarkerColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DarkerColor.LineSize = 1
         Me.DarkerColor.Location = New System.Drawing.Point(104, 90)
         Me.DarkerColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DarkerColor.Name = "DarkerColor"
@@ -360,11 +336,9 @@ Partial Class SubMenu
         'LighterColor
         '
         Me.LighterColor.BackColor = System.Drawing.Color.Crimson
-        Me.LighterColor.CustomColor = True
         Me.LighterColor.DefaultColor = System.Drawing.Color.Black
         Me.LighterColor.ForceNoNerd = True
         Me.LighterColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.LighterColor.LineSize = 1
         Me.LighterColor.Location = New System.Drawing.Point(59, 90)
         Me.LighterColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LighterColor.Name = "LighterColor"
@@ -375,11 +349,9 @@ Partial Class SubMenu
         'DefaultColor
         '
         Me.DefaultColor.BackColor = System.Drawing.Color.Crimson
-        Me.DefaultColor.CustomColor = True
         Me.DefaultColor.DefaultColor = System.Drawing.Color.Black
         Me.DefaultColor.ForceNoNerd = False
         Me.DefaultColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.DefaultColor.LineSize = 1
         Me.DefaultColor.Location = New System.Drawing.Point(104, 131)
         Me.DefaultColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.DefaultColor.Name = "DefaultColor"
@@ -390,11 +362,9 @@ Partial Class SubMenu
         'MainColor
         '
         Me.MainColor.BackColor = System.Drawing.Color.Crimson
-        Me.MainColor.CustomColor = True
         Me.MainColor.DefaultColor = System.Drawing.Color.Black
         Me.MainColor.ForceNoNerd = False
         Me.MainColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(80, Byte), Integer))
-        Me.MainColor.LineSize = 1
         Me.MainColor.Location = New System.Drawing.Point(104, 62)
         Me.MainColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MainColor.Name = "MainColor"
@@ -528,30 +498,30 @@ Partial Class SubMenu
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents MainColor As XenonGroupBox
+    Friend WithEvents MainColor As XenonCP
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents PictureBox5 As PictureBox
-    Friend WithEvents DefaultColor As XenonGroupBox
-    Friend WithEvents LighterColor As XenonGroupBox
-    Friend WithEvents DarkerColor As XenonGroupBox
-    Friend WithEvents InvertedColor As XenonGroupBox
-    Friend WithEvents LightestColor As XenonGroupBox
-    Friend WithEvents DarkestColor As XenonGroupBox
-    Friend WithEvents ILighterColor As XenonGroupBox
-    Friend WithEvents ILightestColor As XenonGroupBox
-    Friend WithEvents IDarkerColor As XenonGroupBox
-    Friend WithEvents IDarkestColor As XenonGroupBox
+    Friend WithEvents DefaultColor As XenonCP
+    Friend WithEvents LighterColor As XenonCP
+    Friend WithEvents DarkerColor As XenonCP
+    Friend WithEvents InvertedColor As XenonCP
+    Friend WithEvents LightestColor As XenonCP
+    Friend WithEvents DarkestColor As XenonCP
+    Friend WithEvents ILighterColor As XenonCP
+    Friend WithEvents ILightestColor As XenonCP
+    Friend WithEvents IDarkerColor As XenonCP
+    Friend WithEvents IDarkestColor As XenonCP
     Friend WithEvents XenonSeparator3 As XenonSeparator
     Friend WithEvents XenonButton4 As XenonButton
     Friend WithEvents PaletteContainer As FlowLayoutPanel
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents XenonSeparator2 As XenonSeparator
-    Friend WithEvents DefaultDarkestColor As XenonGroupBox
-    Friend WithEvents DefaultDarkColor As XenonGroupBox
-    Friend WithEvents DefaultLightestColor As XenonGroupBox
-    Friend WithEvents DefaultLightColor As XenonGroupBox
+    Friend WithEvents DefaultDarkestColor As XenonCP
+    Friend WithEvents DefaultDarkColor As XenonCP
+    Friend WithEvents DefaultLightestColor As XenonCP
+    Friend WithEvents DefaultLightColor As XenonCP
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents XenonButton5 As XenonButton

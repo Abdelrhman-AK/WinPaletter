@@ -371,10 +371,12 @@ Partial Class ColorPickerDlg
         Me.TextBox1.Multiline = False
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = False
+        Me.TextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.TextBox1.Size = New System.Drawing.Size(264, 24)
         Me.TextBox1.TabIndex = 9
         Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.TextBox1.UseSystemPasswordChar = False
+        Me.TextBox1.WordWrap = True
         '
         'XenonRadioButton2
         '
@@ -705,10 +707,12 @@ Partial Class ColorPickerDlg
         Me.XenonTextBox1.Multiline = False
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = False
+        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonTextBox1.Size = New System.Drawing.Size(184, 24)
         Me.XenonTextBox1.TabIndex = 29
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
+        Me.XenonTextBox1.WordWrap = True
         '
         'XenonButton7
         '
@@ -785,12 +789,10 @@ Partial Class ColorPickerDlg
         '
         'PaletteContainer
         '
-        Me.PaletteContainer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PaletteContainer.AutoScroll = True
         Me.PaletteContainer.Location = New System.Drawing.Point(8, 77)
         Me.PaletteContainer.Name = "PaletteContainer"
-        Me.PaletteContainer.Size = New System.Drawing.Size(442, 0)
+        Me.PaletteContainer.Size = New System.Drawing.Size(442, 433)
         Me.PaletteContainer.TabIndex = 48
         '
         'Label9

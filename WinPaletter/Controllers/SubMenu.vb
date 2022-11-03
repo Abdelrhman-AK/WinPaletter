@@ -67,7 +67,8 @@ Public Class SubMenu
     End Sub
 #End Region
 
-    Public Function ShowMenu(ColorHandle As XenonGroupBox, Optional EnableDelete As Boolean = False) As Color
+
+    Public Function ShowMenu(ColorHandle As XenonCP, Optional EnableDelete As Boolean = False) As Color
         XenonButton5.Visible = EnableDelete
         MainColor.BackColor = ColorHandle.BackColor
         DefaultColor.BackColor = ColorHandle.DefaultColor
@@ -256,7 +257,7 @@ Public Class SubMenu
     Sub GetColorsFromPalette(CP As CP)
         PaletteContainer.SuspendLayout()
 
-        For Each c As XenonGroupBox In PaletteContainer.Controls.OfType(Of XenonGroupBox)
+        For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
             c.Dispose()
             PaletteContainer.Controls.Remove(c)
         Next
@@ -264,7 +265,7 @@ Public Class SubMenu
         PaletteContainer.Controls.Clear()
 
         For Each c As Color In CP.ListColors
-            Dim pnl As New XenonGroupBox With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20), .CustomColor = True}
+            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20)}
             pnl.BackColor = c
             PaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_Click

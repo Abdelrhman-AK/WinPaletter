@@ -35,7 +35,7 @@ Partial Class TerminalInfo
         Me.TerTabIcon = New WinPaletter.XenonTextBox()
         Me.Label166 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.TerTabColor = New WinPaletter.XenonGroupBox()
+        Me.TerTabColor = New WinPaletter.XenonCP()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
         Me.TerAcrylic = New WinPaletter.XenonCheckBox()
         Me.XenonButton2 = New WinPaletter.XenonButton()
@@ -208,11 +208,9 @@ Partial Class TerminalInfo
         'TerTabColor
         '
         Me.TerTabColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTabColor.CustomColor = True
         Me.TerTabColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabColor.ForceNoNerd = False
         Me.TerTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.TerTabColor.LineSize = 1
         Me.TerTabColor.Location = New System.Drawing.Point(120, 101)
         Me.TerTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabColor.Name = "TerTabColor"
@@ -362,7 +360,7 @@ Partial Class TerminalInfo
     Friend WithEvents TerTabIcon As XenonTextBox
     Friend WithEvents Label166 As Label
     Friend WithEvents PictureBox36 As PictureBox
-    Friend WithEvents TerTabColor As XenonGroupBox
+    Friend WithEvents TerTabColor As XenonCP
     Friend WithEvents PictureBox40 As PictureBox
     Friend WithEvents TerAcrylic As XenonCheckBox
     Friend WithEvents XenonButton2 As XenonButton

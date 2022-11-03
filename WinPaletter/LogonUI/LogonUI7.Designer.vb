@@ -43,7 +43,7 @@ Partial Class LogonUI7
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.color_pick = New WinPaletter.XenonGroupBox()
+        Me.color_pick = New WinPaletter.XenonCP()
         Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
         Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
@@ -128,11 +128,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox8)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox3.Controls.Add(Me.Label2)
-        Me.XenonGroupBox3.CustomColor = False
-        Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 241)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(324, 156)
@@ -140,6 +136,7 @@ Partial Class LogonUI7
         '
         'XenonTrackbar2
         '
+        Me.XenonTrackbar2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar2.LargeChange = 10
         Me.XenonTrackbar2.Location = New System.Drawing.Point(165, 98)
         Me.XenonTrackbar2.Maximum = 100
@@ -153,6 +150,7 @@ Partial Class LogonUI7
         '
         'XenonTrackbar1
         '
+        Me.XenonTrackbar1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar1.LargeChange = 4
         Me.XenonTrackbar1.Location = New System.Drawing.Point(165, 67)
         Me.XenonTrackbar1.Maximum = 20
@@ -199,6 +197,7 @@ Partial Class LogonUI7
         Me.XenonComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonComboBox1.CustomFont = False
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -295,11 +294,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox2.Controls.Add(Me.XenonRadioButton4)
         Me.XenonGroupBox2.Controls.Add(Me.Label1)
-        Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox2.ForceNoNerd = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 49)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(324, 186)
@@ -365,11 +360,9 @@ Partial Class LogonUI7
         '
         Me.color_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.color_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.color_pick.CustomColor = True
         Me.color_pick.DefaultColor = System.Drawing.Color.Black
         Me.color_pick.ForceNoNerd = False
         Me.color_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.color_pick.LineSize = 1
         Me.color_pick.Location = New System.Drawing.Point(233, 94)
         Me.color_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color_pick.Name = "color_pick"
@@ -499,11 +492,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox1.Controls.Add(Me.XenonToggle1)
         Me.XenonGroupBox1.Controls.Add(Me.Label16)
-        Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(324, 31)
@@ -553,11 +542,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
         Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
-        Me.XenonGroupBox8.CustomColor = False
-        Me.XenonGroupBox8.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox8.ForceNoNerd = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox8.LineSize = 1
         Me.XenonGroupBox8.Location = New System.Drawing.Point(343, 12)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
@@ -620,9 +605,9 @@ Partial Class LogonUI7
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.XenonGroupBox3)
-        Me.Controls.Add(Me.XenonGroupBox2)
         Me.Controls.Add(Me.XenonGroupBox1)
         Me.Controls.Add(Me.XenonGroupBox8)
+        Me.Controls.Add(Me.XenonGroupBox2)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -671,7 +656,7 @@ Partial Class LogonUI7
     Friend WithEvents Label1 As Label
     Friend WithEvents XenonTextBox1 As XenonTextBox
     Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents color_pick As XenonGroupBox
+    Friend WithEvents color_pick As XenonCP
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents XenonCheckBox6 As XenonCheckBox

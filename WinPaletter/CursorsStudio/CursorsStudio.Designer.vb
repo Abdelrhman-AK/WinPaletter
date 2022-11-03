@@ -37,8 +37,8 @@ Partial Class CursorsStudio
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
         Me.XenonNumericUpDown4 = New WinPaletter.XenonTextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox8 = New WinPaletter.XenonCP()
+        Me.XenonGroupBox7 = New WinPaletter.XenonCP()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
         Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
@@ -50,8 +50,8 @@ Partial Class CursorsStudio
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.XenonNumericUpDown1 = New WinPaletter.XenonTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox4 = New WinPaletter.XenonCP()
+        Me.XenonGroupBox5 = New WinPaletter.XenonCP()
         Me.XenonComboBox2 = New WinPaletter.XenonComboBox()
         Me.XenonCheckBox4 = New WinPaletter.XenonCheckBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -67,9 +67,9 @@ Partial Class CursorsStudio
         Me.XenonCheckBox5 = New WinPaletter.XenonCheckBox()
         Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox3 = New WinPaletter.XenonCP()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.TaskbarFrontAndFoldersOnStart_picker = New WinPaletter.XenonGroupBox()
+        Me.TaskbarFrontAndFoldersOnStart_picker = New WinPaletter.XenonCP()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
@@ -80,9 +80,9 @@ Partial Class CursorsStudio
         Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.XenonComboBox4 = New WinPaletter.XenonComboBox()
         Me.XenonCheckBox8 = New WinPaletter.XenonCheckBox()
-        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox9 = New WinPaletter.XenonCP()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox10 = New WinPaletter.XenonCP()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
@@ -163,11 +163,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox13.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox13.Controls.Add(Me.XenonButton9)
         Me.XenonGroupBox13.Controls.Add(Me.Label12)
-        Me.XenonGroupBox13.CustomColor = False
-        Me.XenonGroupBox13.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox13.ForceNoNerd = False
         Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox13.LineSize = 1
         Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(632, 39)
@@ -278,12 +274,8 @@ Partial Class CursorsStudio
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox11)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox12.Controls.Add(Me.XenonCheckBox6)
-        Me.XenonGroupBox12.CustomColor = False
-        Me.XenonGroupBox12.DefaultColor = System.Drawing.Color.Black
         Me.XenonGroupBox12.Enabled = False
-        Me.XenonGroupBox12.ForceNoNerd = False
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox12.LineSize = 1
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 436)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(321, 119)
@@ -332,11 +324,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox8.CustomColor = True
         Me.XenonGroupBox8.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonGroupBox8.ForceNoNerd = False
         Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox8.LineSize = 1
         Me.XenonGroupBox8.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
@@ -348,11 +338,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox7.CustomColor = True
         Me.XenonGroupBox7.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonGroupBox7.ForceNoNerd = False
         Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox7.LineSize = 1
         Me.XenonGroupBox7.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
@@ -462,12 +450,8 @@ Partial Class CursorsStudio
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox10)
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox11.Controls.Add(Me.XenonCheckBox3)
-        Me.XenonGroupBox11.CustomColor = False
-        Me.XenonGroupBox11.DefaultColor = System.Drawing.Color.Black
         Me.XenonGroupBox11.Enabled = False
-        Me.XenonGroupBox11.ForceNoNerd = False
         Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox11.LineSize = 1
         Me.XenonGroupBox11.Location = New System.Drawing.Point(12, 184)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(321, 120)
@@ -516,11 +500,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox4.CustomColor = True
         Me.XenonGroupBox4.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonGroupBox4.ForceNoNerd = False
         Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox4.LineSize = 1
         Me.XenonGroupBox4.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
@@ -532,11 +514,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox5.CustomColor = True
         Me.XenonGroupBox5.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonGroupBox5.ForceNoNerd = False
         Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox5.LineSize = 1
         Me.XenonGroupBox5.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
@@ -646,12 +626,8 @@ Partial Class CursorsStudio
         Me.XenonGroupBox2.Controls.Add(Me.TaskbarFrontAndFoldersOnStart_picker)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox2.CustomColor = False
-        Me.XenonGroupBox2.DefaultColor = System.Drawing.Color.Black
         Me.XenonGroupBox2.Enabled = False
-        Me.XenonGroupBox2.ForceNoNerd = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 58)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(321, 120)
@@ -754,11 +730,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox3.CustomColor = True
         Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.White
         Me.XenonGroupBox3.ForceNoNerd = False
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox3.LineSize = 1
         Me.XenonGroupBox3.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
@@ -782,11 +756,9 @@ Partial Class CursorsStudio
         '
         Me.TaskbarFrontAndFoldersOnStart_picker.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TaskbarFrontAndFoldersOnStart_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.TaskbarFrontAndFoldersOnStart_picker.CustomColor = True
         Me.TaskbarFrontAndFoldersOnStart_picker.DefaultColor = System.Drawing.Color.White
         Me.TaskbarFrontAndFoldersOnStart_picker.ForceNoNerd = False
         Me.TaskbarFrontAndFoldersOnStart_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.TaskbarFrontAndFoldersOnStart_picker.LineSize = 1
         Me.TaskbarFrontAndFoldersOnStart_picker.Location = New System.Drawing.Point(142, 32)
         Me.TaskbarFrontAndFoldersOnStart_picker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TaskbarFrontAndFoldersOnStart_picker.Name = "TaskbarFrontAndFoldersOnStart_picker"
@@ -830,12 +802,8 @@ Partial Class CursorsStudio
         Me.XenonGroupBox6.Controls.Add(Me.XenonGroupBox10)
         Me.XenonGroupBox6.Controls.Add(Me.Label10)
         Me.XenonGroupBox6.Controls.Add(Me.PictureBox19)
-        Me.XenonGroupBox6.CustomColor = False
-        Me.XenonGroupBox6.DefaultColor = System.Drawing.Color.Black
         Me.XenonGroupBox6.Enabled = False
-        Me.XenonGroupBox6.ForceNoNerd = False
         Me.XenonGroupBox6.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox6.LineSize = 1
         Me.XenonGroupBox6.Location = New System.Drawing.Point(12, 310)
         Me.XenonGroupBox6.Name = "XenonGroupBox6"
         Me.XenonGroupBox6.Size = New System.Drawing.Size(321, 120)
@@ -938,11 +906,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox9.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox9.CustomColor = True
         Me.XenonGroupBox9.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.XenonGroupBox9.ForceNoNerd = False
         Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox9.LineSize = 1
         Me.XenonGroupBox9.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox9.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox9.Name = "XenonGroupBox9"
@@ -966,11 +932,9 @@ Partial Class CursorsStudio
         '
         Me.XenonGroupBox10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonGroupBox10.CustomColor = True
         Me.XenonGroupBox10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.XenonGroupBox10.ForceNoNerd = False
         Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.XenonGroupBox10.LineSize = 1
         Me.XenonGroupBox10.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
@@ -1065,11 +1029,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox1.Controls.Add(Me.FlowLayoutPanel1)
-        Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(339, 58)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Padding = New System.Windows.Forms.Padding(3)
@@ -1904,18 +1864,18 @@ Partial Class CursorsStudio
     Friend WithEvents XenonGroupBox2 As XenonGroupBox
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
+    Friend WithEvents XenonGroupBox3 As XenonCP
     Friend WithEvents Label3 As Label
-    Friend WithEvents TaskbarFrontAndFoldersOnStart_picker As XenonGroupBox
+    Friend WithEvents TaskbarFrontAndFoldersOnStart_picker As XenonCP
     Friend WithEvents XenonComboBox1 As XenonComboBox
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
     Friend WithEvents Label9 As Label
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents XenonCheckBox5 As XenonCheckBox
     Friend WithEvents XenonComboBox2 As XenonComboBox
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
+    Friend WithEvents XenonGroupBox4 As XenonCP
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonGroupBox5 As XenonGroupBox
+    Friend WithEvents XenonGroupBox5 As XenonCP
     Friend WithEvents PictureBox10 As PictureBox
     Friend WithEvents XenonCheckBox3 As XenonCheckBox
     Friend WithEvents PictureBox8 As PictureBox
@@ -1935,16 +1895,16 @@ Partial Class CursorsStudio
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents XenonCheckBox7 As XenonCheckBox
     Friend WithEvents XenonComboBox3 As XenonComboBox
-    Friend WithEvents XenonGroupBox7 As XenonGroupBox
+    Friend WithEvents XenonGroupBox7 As XenonCP
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonGroupBox8 As XenonGroupBox
+    Friend WithEvents XenonGroupBox8 As XenonCP
     Friend WithEvents Label7 As Label
     Friend WithEvents PictureBox18 As PictureBox
     Friend WithEvents XenonComboBox4 As XenonComboBox
     Friend WithEvents XenonCheckBox8 As XenonCheckBox
-    Friend WithEvents XenonGroupBox9 As XenonGroupBox
+    Friend WithEvents XenonGroupBox9 As XenonCP
     Friend WithEvents Label8 As Label
-    Friend WithEvents XenonGroupBox10 As XenonGroupBox
+    Friend WithEvents XenonGroupBox10 As XenonCP
     Friend WithEvents Label10 As Label
     Friend WithEvents PictureBox19 As PictureBox
     Friend WithEvents XenonButton1 As XenonButton

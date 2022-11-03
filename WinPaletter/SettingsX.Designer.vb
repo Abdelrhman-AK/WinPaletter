@@ -957,11 +957,7 @@ Partial Class SettingsX
         Me.XenonGroupBox1.Controls.Add(Me.Label11)
         Me.XenonGroupBox1.Controls.Add(Me.Label10)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox21)
-        Me.XenonGroupBox1.CustomColor = False
-        Me.XenonGroupBox1.DefaultColor = System.Drawing.Color.Black
-        Me.XenonGroupBox1.ForceNoNerd = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(80, 191)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(494, 192)

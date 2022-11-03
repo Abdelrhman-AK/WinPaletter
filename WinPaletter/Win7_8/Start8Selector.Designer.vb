@@ -370,9 +370,7 @@ Partial Class Start8Selector
         Me.XenonGroupBox1.Controls.Add(Me.img11)
         Me.XenonGroupBox1.Controls.Add(Me.img13)
         Me.XenonGroupBox1.Controls.Add(Me.img10)
-        Me.XenonGroupBox1.CustomColor = False
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(344, 468)

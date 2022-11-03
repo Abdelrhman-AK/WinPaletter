@@ -78,9 +78,8 @@ Partial Class ComplexSave
         Me.XenonGroupBox1.Controls.Add(Me.XenonRadioButton1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
-        Me.XenonGroupBox1.CustomColor = False
+
         Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(26, Byte), Integer))
-        Me.XenonGroupBox1.LineSize = 1
         Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 77)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
@@ -155,9 +154,7 @@ Partial Class ComplexSave
         Me.XenonGroupBox2.Controls.Add(Me.XenonCheckBox1)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
-        Me.XenonGroupBox2.CustomColor = False
         Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(26, Byte), Integer))
-        Me.XenonGroupBox2.LineSize = 1
         Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 213)
         Me.XenonGroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"

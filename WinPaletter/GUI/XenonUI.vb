@@ -1612,15 +1612,47 @@ Public Class XenonGroupBox
             LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.1, -0.1))
         Catch
         End Try
-
-        LineSize = 1
     End Sub
 
 #Region "Properties"
-    Public Property LineSize As Integer = 1
+    Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
+#End Region
+
+
+    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaint(e)
+        Dim G As Graphics = e.Graphics
+        DoubleBuffered = True
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+
+        G.Clear(GetParentColor(Me))
+
+
+        BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.05))
+        LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.03, -0.06))
+
+        FillRect(G, New SolidBrush(BackColor), Rect)
+        DrawRect(G, New Pen(LineColor), Rect)
+    End Sub
+
+
+
+End Class
+
+<DefaultEvent("Click")>
+Public Class XenonCP
+    Inherits Panel
+
+    Sub New()
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        DoubleBuffered = True
+    End Sub
+
+#Region "Properties"
     Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
     Public Property DefaultColor As Color = Color.Black
-    Public Property CustomColor As Boolean = False
     Public Property ForceNoNerd As Boolean = False
 #End Region
 
@@ -1636,38 +1668,30 @@ Public Class XenonGroupBox
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         State = MouseState.Down
-        If CustomColor Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         State = MouseState.Over
-        If CustomColor Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
-        If CustomColor Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         State = MouseState.None
-        If CustomColor Then
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End If
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
     End Sub
 
     Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
@@ -1678,11 +1702,11 @@ Public Class XenonGroupBox
 
 #Region "Animator"
     Dim alpha As Integer
-    ReadOnly Factor As Integer = 25
+    ReadOnly Factor As Integer = 15
     Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
-        If Not DesignMode And CustomColor Then
+        If Not DesignMode Then
 
             If State = MouseState.Over Then
                 If alpha + Factor <= 255 Then
@@ -1717,70 +1741,66 @@ Public Class XenonGroupBox
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
+        DoubleBuffered = True
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         G.Clear(GetParentColor(Me))
 
-        If Not CustomColor Then
-            BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.05))
-            LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.03, -0.06))
+        Select Case State
+            Case MouseState.None
+                LineColor = ControlPaint.Light(BackColor, 0.1)
 
-            FillRect(G, New SolidBrush(BackColor), Rect)
-            DrawRect(G, New Pen(LineColor), Rect)
-        Else
-            Select Case State
-                Case MouseState.None
-                    LineColor = CCB(BackColor, If(IsColorDark(BackColor), 0.1, -0.1))
+            Case MouseState.Over
+                LineColor = ControlPaint.Light(BackColor, 0.5)
 
-                Case MouseState.Over
-                    LineColor = CCB(BackColor, If(IsColorDark(BackColor), 0.25, -0.25))
-
-                Case MouseState.Down
-                    LineColor = CCB(BackColor, If(IsColorDark(BackColor), 0.17, -0.17))
-            End Select
-
-            LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
-
-            FillRect(G, New SolidBrush(BackColor), RectInner)
-            DrawRect_LikeW11(G, LineColor, RectInner)
-
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
-            DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect)
-
-            If Not DesignMode Then
-                If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
-                    G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-                    Dim IsDefault As Boolean = (BackColor = DefaultColor)
-                    Dim FC0 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
-                    Dim FC1 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
-
-                    FC0 = Color.FromArgb(If(Not IsDefault, 150, 200), FC0)
-                    FC1 = Color.FromArgb(alpha, FC1)
-
-                    Dim RectX As Rectangle = Rect
-                    RectX.Y += 1
-
-                    Dim CF As ColorFormat = ColorFormat.HEX
-                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
-                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
-                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
-                    If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
+            Case MouseState.Down
+                LineColor = ControlPaint.Light(BackColor, 0.9)
+        End Select
 
 
-                    Dim S As String = If(IsDefault, "D ", "") & ReturnColorFormat(BackColor, CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
-                    Dim F As Font
+        LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
 
-                    If IsDefault Then
-                        F = My.Application.ConsoleFontDef
-                    Else
-                        F = My.Application.ConsoleFont
-                    End If
+        Dim R As Integer = 6
 
-                    G.DrawString(S, F, New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
-                    G.DrawString(S, F, New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
+        FillRect(G, New SolidBrush(BackColor), RectInner, R)
+        DrawRect_LikeW11(G, LineColor, RectInner, R)
 
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect, R)
+        DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect, R)
+
+        If Not DesignMode Then
+            If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
+                G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                Dim IsDefault As Boolean = (BackColor = DefaultColor)
+                Dim FC0 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
+                Dim FC1 As Color = If(IsColorDark(BackColor), ControlPaint.LightLight(LineColor), ControlPaint.Dark(LineColor, 0.9))
+
+                FC0 = Color.FromArgb(100, FC0)
+                FC1 = Color.FromArgb(alpha, FC1)
+
+                Dim RectX As Rectangle = Rect
+                RectX.Y += 1
+
+                Dim CF As ColorFormat = ColorFormat.HEX
+                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
+                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
+                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
+                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
+
+
+                Dim S As String = If(IsDefault, "D ", "") & ReturnColorFormat(BackColor, CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
+                Dim F As Font
+
+                If IsDefault Then
+                    F = My.Application.ConsoleFontDef
+                Else
+                    F = My.Application.ConsoleFont
                 End If
+
+                G.DrawString(S, F, New SolidBrush(FC0), RectX, StringAligner(ContentAlignment.MiddleCenter))
+                G.DrawString(S, F, New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
+
             End If
         End If
 
@@ -1915,7 +1935,6 @@ Public Class XenonButton : Inherits Button
     End Sub
 
     Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
-        MyBase.OnMouseDown(e)
 
         Dim C_Before As Color = BackColor
         Dim C_After As Color
@@ -1934,10 +1953,12 @@ Public Class XenonButton : Inherits Button
         End If
 
         Invalidate()
+
+        MyBase.OnMouseDown(e)
     End Sub
 
     Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
-        Try : MyBase.OnMouseUp(e) : Catch : End Try
+        MyBase.OnMouseUp(e)
 
         Dim C_Before As Color = BackColor
         Dim C_After As Color
@@ -2634,9 +2655,12 @@ End Class
         TB.BorderStyle = BorderStyle.None
         TB.Location = New Point(1, 0)
         TB.Width = Width - 3
-
         TB.Cursor = Cursors.IBeam
         LineColor = Color.DodgerBlue
+
+        TB.ScrollBars = Scrollbars
+        TB.WordWrap = WordWrap
+
         If _Multiline Then
             TB.Height = Height - 8
         Else
@@ -2646,8 +2670,6 @@ End Class
         AddHandler TB.TextChanged, AddressOf OnBaseTextChanged
         AddHandler TB.KeyDown, AddressOf OnBaseKeyDown
     End Sub
-
-    Public ColorPalette As New XenonColorPalette()
 
 #Region "Variables"
 
@@ -2817,6 +2839,32 @@ End Class
 #End Region
 
 #Region "Other Properties"
+
+
+    Private _Scrollbars As Windows.Forms.ScrollBars = Scrollbars.None
+    Public Property Scrollbars As Windows.Forms.ScrollBars
+        Get
+            Return _Scrollbars
+        End Get
+        Set(value As Windows.Forms.ScrollBars)
+            _Scrollbars = value
+            TB.ScrollBars = value
+        End Set
+    End Property
+
+    Private _WordWrap As Boolean = True
+    Public Property WordWrap As Boolean
+        Get
+            Return _WordWrap
+        End Get
+        Set(value As Boolean)
+            _WordWrap = value
+            TB.WordWrap = value
+        End Set
+    End Property
+
+
+
 #Region "Line Color Property"
     Private LineColorValue As Color = Color.DodgerBlue
     Public Event LineColorChanged As PropertyChangedEventHandler
@@ -2934,13 +2982,10 @@ End Class
                 MyBase.OnHandleCreated(e)
                 If Not String.IsNullOrEmpty(Hint) Then UpdateHint()
                 alpha = 0
-                ColorPalette = New XenonColorPalette(Me)
                 If Not DesignMode Then
                     Try
                         AddHandler FindForm.Load, AddressOf Loaded
                         AddHandler FindForm.Shown, AddressOf Showed
-                        AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                        AddHandler EnabledChanged, AddressOf RefreshColorPalette
                     Catch
                     End Try
                 End If
@@ -2976,28 +3021,37 @@ End Class
             If ForeColor <> Color.Black Then ForeColor = Color.Black
         End If
 
+
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
 
+        Dim ParentColor As Color = GetParentColor(Me)
+        Dim LineNone, LineHovered As Color
+        Dim BackNone, BackHovered As Color
 
-        Dim FadeInColor As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
-        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Parent_Hover)
+        LineNone = If(GetDarkMode(), ControlPaint.Light(ParentColor, 0.3), ControlPaint.Dark(ParentColor, 0.3))
+        LineHovered = If(GetDarkMode(), ControlPaint.Light(LineColor, 0.3), ControlPaint.Dark(LineColor, 0.3))
 
-        G.Clear(ColorPalette.Color_Parent)
+        BackNone = If(GetDarkMode(), ControlPaint.Light(ParentColor, 0.05), ControlPaint.Light(ParentColor, 0.3))
+        BackHovered = If(GetDarkMode(), ControlPaint.Dark(LineColor, 0.2), ControlPaint.Light(LineColor, 0.5))
+
+        Dim FadeInColor As Color = Color.FromArgb(alpha, LineHovered)
+        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, LineNone)
+
+        G.Clear(GetParentColor(Me))
 
         TB.ForeColor = ForeColor
 
-        If TB.Focused Or Focused Then
-            FillRect(G, New SolidBrush(ColorPalette.Color_Back_Checked), OuterRect)
-            DrawRect_LikeW11(G, ColorPalette.Color_Border_Checked_Hover, OuterRect)
-            TB.BackColor = ColorPalette.Color_Back_Checked
+        If TB.Focused Or Focused Or State Then
+            FillRect(G, New SolidBrush(BackHovered), OuterRect)
+            DrawRect_LikeW11(G, LineHovered, OuterRect)
+            TB.BackColor = BackHovered
         Else
-            FillRect(G, New SolidBrush(ColorPalette.Color_Back), InnerRect)
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back)), OuterRect)
-
+            FillRect(G, New SolidBrush(BackNone), InnerRect)
+            FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackNone)), OuterRect)
             DrawRect_LikeW11(G, FadeInColor, OuterRect)
             DrawRect_LikeW11(G, FadeOutColor, InnerRect)
-            TB.BackColor = ColorPalette.Color_Back
+            TB.BackColor = BackNone
         End If
 
 
@@ -3034,12 +3088,10 @@ End Class
 
     Private Sub XenonTextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         alpha = 0
-        ColorPalette = New XenonColorPalette(Me)
         If Not DesignMode Then
             Try
                 AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
-                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
             Catch
             End Try
         End If
@@ -3053,16 +3105,8 @@ End Class
 
     Sub Showed()
         _Shown = True
-        ColorPalette = New XenonColorPalette(Me)
-        Invalidate()
     End Sub
 
-    Public Sub RefreshColorPalette()
-        If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
-            Invalidate()
-        End If
-    End Sub
 End Class
 Public Class XenonComboBox : Inherits ComboBox
     Sub New()
