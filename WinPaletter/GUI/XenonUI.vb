@@ -292,11 +292,11 @@ Module XenonModule
             Dim [Pen2] As Pen
 
             If GetDarkMode() Then
-                [Pen] = New Pen(BorderColor)
+                [Pen] = New Pen(CCB(BorderColor, 0.05))
                 [Pen2] = New Pen(CCB(BorderColor, -0.3)) '-0.085)) 
             Else
-                [Pen] = New Pen(BorderColor)
-                [Pen2] = New Pen(CCB(BorderColor, -0.1))
+                [Pen] = New Pen(CCB(BorderColor, -0.05))
+                [Pen2] = New Pen(CCB(BorderColor, -0.15))
             End If
 
             Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
@@ -2080,7 +2080,7 @@ Public Class XenonButton : Inherits Button
     End Sub
 #End Region
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.4))
+    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.6))
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -2088,10 +2088,10 @@ Public Class XenonButton : Inherits Button
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
 
-        Try
-            If Image IsNot Nothing Then : LineColor = GetAverageColor(CType(Image, Bitmap))
-            Else : LineImage = LineColor : End If
-        Catch : End Try
+        'Try
+        'If Image IsNot Nothing Then : LineColor = GetAverageColor(CType(Image, Bitmap))
+        'Else : LineImage = LineColor : End If
+        'Catch : End Try
 
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -2104,50 +2104,14 @@ Public Class XenonButton : Inherits Button
 
         FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+
         If Not State = MouseState.None Then FillRect(G, Noise, Rect)
 
         c1 = Color.FromArgb(255 - alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.04, -0.04)))
         c1x = Color.FromArgb(alpha, CCB(BackColor, If(IsColorDark(ParentColor), 0.04, -0.04)))
 
-        DrawRect_LikeW11(G, c1, InnerRect)
         DrawRect_LikeW11(G, c1x, Rect)
-
-        Select Case State
-            Case MouseState.Over
-                If GetDarkMode() Then
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(LineColor, 0.005))
-                Else
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(LineColor, 0.5))
-                End If
-
-                DrawRect_LikeW11(G, c2, Rect)
-                ForeColor = If(GetDarkMode(), ControlPaint.Light(c2), ControlPaint.Dark(c2))
-
-            Case MouseState.Down
-                If GetDarkMode() Then
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(LineColor, 0.1))
-                Else
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(LineColor, 0.3))
-                End If
-
-                DrawRect_LikeW11(G, c2, InnerRect)
-                ForeColor = If(GetDarkMode(), ControlPaint.Light(c2), ControlPaint.Dark(c2))
-
-            Case MouseState.None
-
-                If GetDarkMode() Then
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(BC, 0.07))
-                Else
-                    c2 = Color.FromArgb(alpha, ControlPaint.Light(BC, 0.5))
-                End If
-
-                If Focused Then c2 = Color.FromArgb(255 - alpha, LineColor)
-
-                DrawRect_LikeW11(G, c2, InnerRect)
-                ForeColor = If(GetDarkMode(), Color.White, Color.Black)
-        End Select
-
-
+        DrawRect_LikeW11(G, c1, InnerRect)
 
 #Region "Text and Image Render"
         Dim ButtonString As New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
@@ -2258,6 +2222,7 @@ Public Class XenonButton : Inherits Button
 
     Sub Showed()
         _Shown = True
+        Rfrsh()
     End Sub
 
     Sub Rfrsh()
@@ -3029,8 +2994,8 @@ End Class
         Dim LineNone, LineHovered As Color
         Dim BackNone, BackHovered As Color
 
-        LineNone = If(GetDarkMode(), ControlPaint.Light(ParentColor, 0.3), ControlPaint.Dark(ParentColor, 0.3))
-        LineHovered = If(GetDarkMode(), ControlPaint.Light(LineColor, 0.3), ControlPaint.Dark(LineColor, 0.3))
+        LineNone = If(GetDarkMode(), ControlPaint.Light(ParentColor, 0.3), ControlPaint.Light(ParentColor, 0.05))
+        LineHovered = If(GetDarkMode(), ControlPaint.Light(LineColor, 0.3), ControlPaint.Light(LineColor, 0.05))
 
         BackNone = If(GetDarkMode(), ControlPaint.Light(ParentColor, 0.05), ControlPaint.Light(ParentColor, 0.3))
         BackHovered = If(GetDarkMode(), ControlPaint.Dark(LineColor, 0.2), ControlPaint.Light(LineColor, 0.5))
@@ -3042,7 +3007,7 @@ End Class
 
         TB.ForeColor = ForeColor
 
-        If TB.Focused Or Focused Or State Then
+        If TB.Focused Or Focused Then
             FillRect(G, New SolidBrush(BackHovered), OuterRect)
             DrawRect_LikeW11(G, LineHovered, OuterRect)
             TB.BackColor = BackHovered

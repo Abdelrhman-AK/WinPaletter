@@ -39,17 +39,19 @@ Namespace NativeMethods
 
         Public Const CS_DROPSHADOW As Integer = &H20000
         Public Const WM_NCPAINT As Integer = &H85
+
         Public Enum CompositionAction As Integer
             DWM_EC_DISABLECOMPOSITION = 0
             DWM_EC_ENABLECOMPOSITION = 1
         End Enum
 
-        <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure MARGINS
+        <StructLayout(LayoutKind.Sequential)> Public Structure MARGINS
             Public leftWidth As Integer
             Public rightWidth As Integer
             Public topHeight As Integer
             Public bottomHeight As Integer
         End Structure
+
 
         Public Structure DWM_COLORIZATION_PARAMS
             Public clrColor As Integer

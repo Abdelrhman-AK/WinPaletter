@@ -4,6 +4,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 
@@ -701,40 +702,80 @@ End Structure
 
 Public Class Acrylism
 
-    <Runtime.InteropServices.StructLayout(Runtime.InteropServices.LayoutKind.Sequential)> Public Structure Side
-        Public Left As Integer
-        Public Right As Integer
-        Public Top As Integer
-        Public Buttom As Integer
-    End Structure
-
-    <Runtime.InteropServices.DllImport("dwmapi.dll")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarinset As Side) As Integer
-    End Function
-
     Public Shared Sub EnableBlur(ByVal [Form] As Form, Optional ByVal Border As Boolean = True)
         If My.W11 Or My.W10 Then
-            Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
-            If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
-            Dim accentStructSize = Marshal.SizeOf(accent)
-            Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
-            Marshal.StructureToPtr(accent, accentPtr, False)
+            [Form].BackColor = Color.Black
+            [Form].Opacity = 1
+            [Form].FormBorderStyle = FormBorderStyle.None
 
-            Dim Data = New User32.WindowCompositionAttributeData With {
-                    .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                    .SizeOfData = accentStructSize,
-                    .Data = accentPtr
-                }
+            Try
+                If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True) Then
+                    Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+                    If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
+                    Dim accentStructSize = Marshal.SizeOf(accent)
+                    Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
+                    Marshal.StructureToPtr(accent, accentPtr, False)
 
-            User32.SetWindowCompositionAttribute([Form].Handle, Data)
-            Marshal.FreeHGlobal(accentPtr)
-        Else
+                    Dim Data = New User32.WindowCompositionAttributeData With {
+                            .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                            .SizeOfData = accentStructSize,
+                            .Data = accentPtr
+                        }
+
+                    User32.SetWindowCompositionAttribute([Form].Handle, Data)
+                    Marshal.FreeHGlobal(accentPtr)
+
+                Else
+                    GrayscaleMe([Form])
+                End If
+
+            Catch
+                Try
+                    Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+                    If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
+                    Dim accentStructSize = Marshal.SizeOf(accent)
+                    Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
+                    Marshal.StructureToPtr(accent, accentPtr, False)
+
+                    Dim Data = New User32.WindowCompositionAttributeData With {
+                            .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                            .SizeOfData = accentStructSize,
+                            .Data = accentPtr
+                        }
+
+                    User32.SetWindowCompositionAttribute([Form].Handle, Data)
+                    Marshal.FreeHGlobal(accentPtr)
+
+                Catch ex As Exception
+                    GrayscaleMe([Form])
+                End Try
+            End Try
+
+        ElseIf My.W7 Then
+
             Dim Com As Boolean
             NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
-            If Com Then Dim result As Integer = DwmExtendFrameIntoClientArea([Form].Handle, New Side With {.Left = -1, .Right = -1, .Top = -1, .Buttom = -1})
+
+            [Form].FormBorderStyle = FormBorderStyle.Sizable
+
+            If Com Then
+                Dwmapi.DwmExtendFrameIntoClientArea([Form].Handle, New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1})
+            Else
+                GrayscaleMe([Form])
+            End If
+
+        Else
+            GrayscaleMe([Form])
+
         End If
 
-
     End Sub
+
+    Shared Sub GrayscaleMe([Form] As Form)
+        [Form].BackColor = Color.FromArgb(20, 20, 20)
+        [Form].Opacity = 0.8
+    End Sub
+
 End Class
 
 Public Class Visual

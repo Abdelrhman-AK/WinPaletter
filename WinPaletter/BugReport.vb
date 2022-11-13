@@ -12,10 +12,11 @@ Public Class BugReport
         BackColor = c2
 
         XenonTextBox1.LineColor = c1
-        XenonTextBox2.LineColor = c1
 
         XenonTextBox1.Font = My.Application.ConsoleFontMedium
-        XenonTextBox2.Font = My.Application.ConsoleFontMedium
+
+        Try : bk.Close() : Catch : End Try
+        bk.Show()
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
 
@@ -34,14 +35,16 @@ Public Class BugReport
 
         Label3.Text = My.Application.Info.Version.ToString
 
-        XenonTextBox1.Text = ex.Message
-        XenonTextBox2.Text = ex.StackTrace.Replace("   at ", "- ").Trim
+        XenonTextBox1.Text = "• Error Message:" & vbCrLf & "   " & ex.Message & vbCrLf & vbCrLf &
+                             "• Stack Trace:" & vbCrLf & ex.StackTrace '.Replace("   at ", "     - ").Trim
 
         If Not IO.Directory.Exists(My.Application.appData & "\Reports") Then IO.Directory.CreateDirectory(My.Application.appData & "\Reports")
 
         IO.File.WriteAllText(String.Format(My.Application.appData & "\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year), GetDetails)
 
         ShowDialog()
+
+        bk.Close()
 
         If DialogResult = DialogResult.Abort Then My.Application.ExitAfterException = True Else My.Application.ExitAfterException = False
 
@@ -59,6 +62,7 @@ Public Class BugReport
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         Process.Start(My.Resources.Link_Repository & "issues")
+        Try : bk.Close() : Catch : End Try
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
@@ -74,15 +78,14 @@ Public Class BugReport
     Function GetDetails() As String
         Dim SB As New StringBuilder
         SB.Clear()
-        SB.AppendLine(String.Format("Date of report: {0}", Now.ToLongDateString & " - " & Now.ToLongTimeString))
-        SB.AppendLine(String.Format("OS: {0}", Label2.Text))
-        SB.AppendLine(String.Format("WinPaletter Version: {0}", Label3.Text))
+        SB.AppendLine(String.Format("• Date of report: {0}", Now.ToLongDateString & " - " & Now.ToLongTimeString))
+        SB.AppendLine(String.Format("• OS: {0}", Label2.Text))
+        SB.AppendLine(String.Format("• WinPaletter Version: {0}", Label3.Text))
         SB.AppendLine("--------")
         SB.AppendLine()
 
-        SB.AppendLine(String.Format("Message: {0}", XenonTextBox1.Text))
+        SB.AppendLine(XenonTextBox1.Text)
         SB.AppendLine()
-        SB.AppendLine(String.Format("StackTrace: {0}{1}", vbCrLf, XenonTextBox2.Text))
 
         Return SB.ToString
     End Function
@@ -91,6 +94,7 @@ Public Class BugReport
 
         If IO.Directory.Exists(My.Application.appData & "\Reports") Then
             Process.Start(My.Application.appData & "\Reports")
+            Try : bk.Close() : Catch : End Try
         Else
             MsgBox(String.Format("There is no previous saved report in ""{0}""", My.Application.appData & "\Reports"), MsgBoxStyle.Critical + My.Application.MsgboxRt)
         End If

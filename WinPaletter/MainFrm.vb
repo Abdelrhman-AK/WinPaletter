@@ -2668,6 +2668,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+        Try
+            Kill("shakal.exe")
+        Catch ex As Exception
+            BugReport.ThrowError(ex)
+        End Try
+
         Dim s As New StringBuilder
         s.Clear()
         s.AppendLine("Announcement (Temporary until mid-January 2023)")
