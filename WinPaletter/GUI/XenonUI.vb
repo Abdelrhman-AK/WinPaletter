@@ -582,7 +582,7 @@ Public Class XenonToggle
                     For i As Integer = CheckC.Left To Width - 19 Step +5
                         CheckC.X = i + s
                         If _Shown Then
-                            Threading.Thread.Sleep(15)
+                            Threading.Thread.Sleep(1)
                             Refresh()
                         End If
                         If i + s >= Width - 19 Then Exit For
@@ -597,7 +597,7 @@ Public Class XenonToggle
                     For i As Integer = CheckC.Left To 5 Step -5
                         CheckC.X = i - s
                         If _Shown Then
-                            Threading.Thread.Sleep(15)
+                            Threading.Thread.Sleep(1)
                             Refresh()
                         End If
                         If i - s <= 5 Then Exit For

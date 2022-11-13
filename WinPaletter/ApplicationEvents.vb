@@ -23,7 +23,7 @@ Namespace My
 
         Public _Settings As XeSettings
         Public Wallpaper As Bitmap
-        Public BackColor_Dark As Color = Color.FromArgb(24, 24, 26)
+        Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
         Public BackColor_Light As Color = Color.FromArgb(235, 235, 235)
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
@@ -347,7 +347,7 @@ Namespace My
             W10 = My.Computer.Info.OSFullName.Contains("10")
             W8 = My.Computer.Info.OSFullName.Contains("8")
             W7 = My.Computer.Info.OSFullName.Contains("7")
-            W10_1909 = W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909)
+            W10_1909 = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
@@ -465,6 +465,7 @@ Namespace My
 
             AddHandler System.Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
+            DetectOS()
 
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
@@ -492,7 +493,6 @@ Namespace My
             Next
             B.Dispose()
             G.Dispose()
-
 
             allForms = New List(Of String) From {
                         "About",
@@ -560,7 +560,6 @@ Namespace My
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
 
-            DetectOS()
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try

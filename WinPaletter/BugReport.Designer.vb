@@ -27,14 +27,14 @@ Partial Class BugReport
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton6 = New WinPaletter.XenonButton()
+        Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
@@ -92,25 +92,9 @@ Partial Class BugReport
         '
         Me.SaveFileDialog1.Filter = "Text File (*.txt)|*.txt"
         '
-        'XenonButton6
-        '
-        Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = Nothing
-        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(214, 350)
-        Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(100, 34)
-        Me.XenonButton6.TabIndex = 121
-        Me.XenonButton6.Text = "Previous Reports"
-        Me.XenonButton6.UseVisualStyleBackColor = False
-        '
         'XenonButton5
         '
-        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
@@ -123,38 +107,6 @@ Partial Class BugReport
         Me.XenonButton5.TabIndex = 120
         Me.XenonButton5.Text = "Github Issues"
         Me.XenonButton5.UseVisualStyleBackColor = False
-        '
-        'XenonButton4
-        '
-        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = Nothing
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(98, 350)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(110, 34)
-        Me.XenonButton4.TabIndex = 119
-        Me.XenonButton4.Text = "Save Details as ..."
-        Me.XenonButton4.UseVisualStyleBackColor = False
-        '
-        'XenonButton3
-        '
-        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(12, 350)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton3.TabIndex = 118
-        Me.XenonButton3.Text = "Copy Details"
-        Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
         '
@@ -205,6 +157,9 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton6)
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox3.Controls.Add(Me.XenonTextBox1)
         Me.XenonGroupBox3.Controls.Add(Me.Label4)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox4)
@@ -213,6 +168,54 @@ Partial Class BugReport
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(605, 202)
         Me.XenonGroupBox3.TabIndex = 114
+        '
+        'XenonButton6
+        '
+        Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton6.ForeColor = System.Drawing.Color.White
+        Me.XenonButton6.Image = Nothing
+        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton6.LineSize = 1
+        Me.XenonButton6.Location = New System.Drawing.Point(501, 5)
+        Me.XenonButton6.Name = "XenonButton6"
+        Me.XenonButton6.Size = New System.Drawing.Size(100, 24)
+        Me.XenonButton6.TabIndex = 121
+        Me.XenonButton6.Text = "Previous Reports"
+        Me.XenonButton6.UseVisualStyleBackColor = False
+        '
+        'XenonButton4
+        '
+        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton4.ForeColor = System.Drawing.Color.White
+        Me.XenonButton4.Image = Nothing
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton4.LineSize = 1
+        Me.XenonButton4.Location = New System.Drawing.Point(389, 5)
+        Me.XenonButton4.Name = "XenonButton4"
+        Me.XenonButton4.Size = New System.Drawing.Size(110, 24)
+        Me.XenonButton4.TabIndex = 119
+        Me.XenonButton4.Text = "Save Details as ..."
+        Me.XenonButton4.UseVisualStyleBackColor = False
+        '
+        'XenonButton3
+        '
+        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton3.ForeColor = System.Drawing.Color.White
+        Me.XenonButton3.Image = Nothing
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton3.LineSize = 1
+        Me.XenonButton3.Location = New System.Drawing.Point(307, 5)
+        Me.XenonButton3.Name = "XenonButton3"
+        Me.XenonButton3.Size = New System.Drawing.Size(80, 24)
+        Me.XenonButton3.TabIndex = 118
+        Me.XenonButton3.Text = "Copy Details"
+        Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonTextBox1
         '
@@ -241,9 +244,9 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(33, 3)
+        Me.Label4.Location = New System.Drawing.Point(33, 5)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(569, 24)
+        Me.Label4.Size = New System.Drawing.Size(259, 24)
         Me.Label4.TabIndex = 86
         Me.Label4.Text = "Error Details:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -251,7 +254,7 @@ Partial Class BugReport
         'PictureBox4
         '
         Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox4.Location = New System.Drawing.Point(3, 5)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -347,10 +350,7 @@ Partial Class BugReport
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(629, 396)
-        Me.Controls.Add(Me.XenonButton6)
         Me.Controls.Add(Me.XenonButton5)
-        Me.Controls.Add(Me.XenonButton4)
-        Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.XenonSeparator1)
