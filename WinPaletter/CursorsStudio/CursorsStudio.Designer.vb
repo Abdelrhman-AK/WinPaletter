@@ -302,11 +302,13 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown4.Multiline = False
         Me.XenonNumericUpDown4.Name = "XenonNumericUpDown4"
         Me.XenonNumericUpDown4.ReadOnly = False
+        Me.XenonNumericUpDown4.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonNumericUpDown4.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown4.TabIndex = 66
         Me.XenonNumericUpDown4.Text = "25"
         Me.XenonNumericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown4.UseSystemPasswordChar = False
+        Me.XenonNumericUpDown4.WordWrap = True
         '
         'Label6
         '
@@ -326,7 +328,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox8.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonGroupBox8.ForceNoNerd = False
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox8.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
@@ -340,7 +342,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox7.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonGroupBox7.ForceNoNerd = False
-        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox7.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
@@ -478,11 +480,13 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown1.Multiline = False
         Me.XenonNumericUpDown1.Name = "XenonNumericUpDown1"
         Me.XenonNumericUpDown1.ReadOnly = False
+        Me.XenonNumericUpDown1.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonNumericUpDown1.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown1.TabIndex = 65
         Me.XenonNumericUpDown1.Text = "25"
         Me.XenonNumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown1.UseSystemPasswordChar = False
+        Me.XenonNumericUpDown1.WordWrap = True
         '
         'Label4
         '
@@ -502,7 +506,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox4.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonGroupBox4.ForceNoNerd = False
-        Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox4.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
@@ -516,7 +520,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox5.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonGroupBox5.ForceNoNerd = False
-        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox5.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
@@ -645,11 +649,13 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown2.Multiline = False
         Me.XenonNumericUpDown2.Name = "XenonNumericUpDown2"
         Me.XenonNumericUpDown2.ReadOnly = False
+        Me.XenonNumericUpDown2.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonNumericUpDown2.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown2.TabIndex = 64
         Me.XenonNumericUpDown2.Text = "25"
         Me.XenonNumericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown2.UseSystemPasswordChar = False
+        Me.XenonNumericUpDown2.WordWrap = True
         '
         'PictureBox6
         '
@@ -732,7 +738,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox3.DefaultColor = System.Drawing.Color.White
         Me.XenonGroupBox3.ForceNoNerd = False
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
@@ -758,7 +764,7 @@ Partial Class CursorsStudio
         Me.TaskbarFrontAndFoldersOnStart_picker.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.TaskbarFrontAndFoldersOnStart_picker.DefaultColor = System.Drawing.Color.White
         Me.TaskbarFrontAndFoldersOnStart_picker.ForceNoNerd = False
-        Me.TaskbarFrontAndFoldersOnStart_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.TaskbarFrontAndFoldersOnStart_picker.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.TaskbarFrontAndFoldersOnStart_picker.Location = New System.Drawing.Point(142, 32)
         Me.TaskbarFrontAndFoldersOnStart_picker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TaskbarFrontAndFoldersOnStart_picker.Name = "TaskbarFrontAndFoldersOnStart_picker"
@@ -821,11 +827,13 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown6.Multiline = False
         Me.XenonNumericUpDown6.Name = "XenonNumericUpDown6"
         Me.XenonNumericUpDown6.ReadOnly = False
+        Me.XenonNumericUpDown6.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonNumericUpDown6.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown6.TabIndex = 65
         Me.XenonNumericUpDown6.Text = "25"
         Me.XenonNumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown6.UseSystemPasswordChar = False
+        Me.XenonNumericUpDown6.WordWrap = True
         '
         'PictureBox15
         '
@@ -908,7 +916,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox9.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.XenonGroupBox9.ForceNoNerd = False
-        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox9.Location = New System.Drawing.Point(231, 32)
         Me.XenonGroupBox9.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox9.Name = "XenonGroupBox9"
@@ -934,7 +942,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonGroupBox10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.XenonGroupBox10.ForceNoNerd = False
-        Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.XenonGroupBox10.Location = New System.Drawing.Point(142, 32)
         Me.XenonGroupBox10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
@@ -979,7 +987,7 @@ Partial Class CursorsStudio
         Me.XenonAlertBox1.Size = New System.Drawing.Size(632, 47)
         Me.XenonAlertBox1.TabIndex = 72
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "To apply cursors, you should enable the toggle below, and activate ""Automatic App" &
+        Me.XenonAlertBox1.Text = "To apply cursors, you should enable the toggle above, and activate ""Automatic App" &
     "ly Custom Cursors"" from Settings > Theme applying behavior"
         '
         'XenonButton3

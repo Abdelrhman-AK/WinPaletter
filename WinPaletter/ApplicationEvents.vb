@@ -23,8 +23,10 @@ Namespace My
 
         Public _Settings As XeSettings
         Public Wallpaper As Bitmap
+
         Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
-        Public BackColor_Light As Color = Color.FromArgb(235, 235, 235)
+        Public BackColor_Light As Color = Color.FromArgb(230, 230, 230) 'FromArgb(235, 235, 235)
+
         Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
@@ -388,6 +390,8 @@ Namespace My
         End Function
 
         Public Sub AdjustFonts()
+            Exit Sub
+
             Dim f As String = "Segoe UI"
 
             If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then

@@ -1337,7 +1337,7 @@ Public Class XenonCheckBox
                 RaiseEvent CheckedChanged(Me)
                 Tmr2.Enabled = True
                 Tmr2.Start()
-                Invalidate()
+                Refresh()
             Catch
             End Try
         End Set
@@ -1419,21 +1419,20 @@ Public Class XenonCheckBox
             alpha = If(DesignMode, 255, 0)
             alpha2 = If(Checked, 255, 0)
             ColorPalette = New XenonColorPalette(Me)
+
             If Not DesignMode Then
                 Try
                     AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
                     AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
                     AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
-
-
                 Catch
                 End Try
             End If
         Catch
         End Try
-    End Sub
 
+    End Sub
 
     Sub Showed()
         ColorPalette = New XenonColorPalette(Me)
@@ -1449,7 +1448,7 @@ Public Class XenonCheckBox
 #Region "Animator"
     Dim alpha, alpha2 As Integer
     ReadOnly Factor As Integer = 25
-    Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+    Private WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
 
@@ -1463,7 +1462,7 @@ Public Class XenonCheckBox
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
             End If
 
             If Not State = MouseState.Over Then
@@ -1476,7 +1475,7 @@ Public Class XenonCheckBox
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
             End If
         End If
     End Sub
@@ -1494,7 +1493,7 @@ Public Class XenonCheckBox
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
             End If
 
             If Not Checked Then
@@ -1507,7 +1506,7 @@ Public Class XenonCheckBox
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
 
             End If
         End If
@@ -1571,10 +1570,12 @@ Public Class XenonCheckBox
 
             G.Clear(ParentColor)
 
-            FillRect(G, New SolidBrush(BackRect_Color), OuterCheckRect, Radius)
+            'FillRect(G, New SolidBrush(BackRect_Color), InnerCheckRect, Radius)
 
             If _Checked Then
-                FillRect(G, New SolidBrush(HoverRect_Color), OuterCheckRect, Radius)
+                FillRect(G, New SolidBrush(HoverRect_Color), InnerCheckRect, Radius)
+                FillRect(G, New SolidBrush(Color.FromArgb(alpha, HoverRect_Color)), OuterCheckRect, Radius)
+
                 DrawRect(G, New Pen(Color.FromArgb(255 - alpha, HoverCheckedRect_Color)), InnerCheckRect, Radius)
                 DrawRect(G, New Pen(Color.FromArgb(alpha, HoverCheckedRect_Color)), OuterCheckRect, Radius)
 
@@ -3553,6 +3554,12 @@ Public Class XenonAlertBox
                     textColor = ControlPaint.LightLight(CustomColor)
                 End If
         End Select
+
+        If Not GetDarkMode() Then
+            borderColor = ControlPaint.LightLight(borderColor)
+            innerColor = ControlPaint.LightLight(innerColor)
+            textColor = ControlPaint.Dark(textColor, 0.7)
+        End If
 
         G.Clear(GetParentColor(Me))
 

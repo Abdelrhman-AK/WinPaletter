@@ -496,6 +496,7 @@ Public Class XenonCore
             End Try
         Else
             '####################### For Selected [Form]
+
             Select Case DarkMode
                 Case True
                     If TryCast([Form], Form).BackColor <> My.Application.BackColor_Dark Then
@@ -513,18 +514,24 @@ Public Class XenonCore
             EnumControls(TryCast([Form], Form), DarkMode)
             [Form].Refresh()
             'Adjust_Form(DarkMode, [Form])
+
+            If [Form].Name = ExternalTerminal.Name Then
+                ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, ControlPaint.Dark(Color.Gold, 0.5))
+            End If
+
+            If [Form].Name = MainFrm.Name Then
+                MainFrm.ContextMenuStrip1.BackColor = If(DarkMode, Color.FromArgb(35, 35, 35), Color.FromArgb(250, 250, 250))
+                MainFrm.ContextMenuStrip1.ForeColor = If(DarkMode, Color.White, Color.Black)
+
+                For Each it As ToolStripItem In MainFrm.ContextMenuStrip1.Items
+                    it.ForeColor = If(DarkMode, Color.White, Color.Black)
+                Next
+
+                'MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
+                MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
+            End If
+
         End If
-
-        MainFrm.ContextMenuStrip1.BackColor = If(DarkMode, Color.FromArgb(35, 35, 35), Color.FromArgb(250, 250, 250))
-        MainFrm.ContextMenuStrip1.ForeColor = If(DarkMode, Color.White, Color.Black)
-
-        For Each it As ToolStripItem In MainFrm.ContextMenuStrip1.Items
-            it.ForeColor = If(DarkMode, Color.White, Color.Black)
-        Next
-
-        'MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
-        MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
-
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
 

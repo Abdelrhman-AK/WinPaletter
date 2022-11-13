@@ -16,7 +16,7 @@ Public Class BugReport
         XenonTextBox1.Font = My.Application.ConsoleFontMedium
 
         Try : bk.Close() : Catch : End Try
-        bk.Show()
+        Try : bk.Show() : Catch : End Try
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
 

@@ -75,6 +75,7 @@ Partial Class SettingsX
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.XenonTextBox3 = New WinPaletter.XenonTextBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonAlertBox9 = New WinPaletter.XenonAlertBox()
@@ -152,7 +153,6 @@ Partial Class SettingsX
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonTextBox3 = New WinPaletter.XenonTextBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -881,6 +881,27 @@ Partial Class SettingsX
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Language (Experimental)"
         '
+        'XenonTextBox3
+        '
+        Me.XenonTextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox3.Hint = Nothing
+        Me.XenonTextBox3.LineColor = System.Drawing.Color.DodgerBlue
+        Me.XenonTextBox3.Location = New System.Drawing.Point(121, 87)
+        Me.XenonTextBox3.MaxLength = 32767
+        Me.XenonTextBox3.Multiline = False
+        Me.XenonTextBox3.Name = "XenonTextBox3"
+        Me.XenonTextBox3.ReadOnly = False
+        Me.XenonTextBox3.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox3.Size = New System.Drawing.Size(685, 24)
+        Me.XenonTextBox3.TabIndex = 39
+        Me.XenonTextBox3.Text = "XenonTextBox3"
+        Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox3.UseSystemPasswordChar = False
+        Me.XenonTextBox3.WordWrap = True
+        '
         'XenonButton10
         '
         Me.XenonButton10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1480,11 +1501,13 @@ Partial Class SettingsX
         Me.XenonTextBox2.Multiline = False
         Me.XenonTextBox2.Name = "XenonTextBox2"
         Me.XenonTextBox2.ReadOnly = False
+        Me.XenonTextBox2.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonTextBox2.Size = New System.Drawing.Size(595, 24)
         Me.XenonTextBox2.TabIndex = 39
         Me.XenonTextBox2.Text = "XenonTextBox2"
         Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox2.UseSystemPasswordChar = False
+        Me.XenonTextBox2.WordWrap = True
         '
         'XenonTextBox1
         '
@@ -1499,11 +1522,13 @@ Partial Class SettingsX
         Me.XenonTextBox1.Multiline = False
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = False
+        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.XenonTextBox1.Size = New System.Drawing.Size(595, 24)
         Me.XenonTextBox1.TabIndex = 38
         Me.XenonTextBox1.Text = "XenonTextBox1"
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
+        Me.XenonTextBox1.WordWrap = True
         '
         'Label24
         '
@@ -1928,25 +1953,6 @@ Partial Class SettingsX
         '
         Me.OpenJSONDlg.Filter = "JSON File (*.json)|*.json"
         '
-        'XenonTextBox3
-        '
-        Me.XenonTextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox3.Hint = Nothing
-        Me.XenonTextBox3.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonTextBox3.Location = New System.Drawing.Point(121, 87)
-        Me.XenonTextBox3.MaxLength = 32767
-        Me.XenonTextBox3.Multiline = False
-        Me.XenonTextBox3.Name = "XenonTextBox3"
-        Me.XenonTextBox3.ReadOnly = False
-        Me.XenonTextBox3.Size = New System.Drawing.Size(685, 24)
-        Me.XenonTextBox3.TabIndex = 39
-        Me.XenonTextBox3.Text = "XenonTextBox3"
-        Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.XenonTextBox3.UseSystemPasswordChar = False
-        '
         'SettingsX
         '
         Me.AllowDrop = True
@@ -1974,7 +1980,6 @@ Partial Class SettingsX
         Me.Name = "SettingsX"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Settings"
-        Me.TopMost = True
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()

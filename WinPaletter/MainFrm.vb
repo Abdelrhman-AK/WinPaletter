@@ -1057,6 +1057,7 @@ Public Class MainFrm
     Sub EraseHint()
         status_lbl.Text = ""
     End Sub
+
 #End Region
 
     Sub AutoUpdatesCheck()

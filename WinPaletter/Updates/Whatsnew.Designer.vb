@@ -41,8 +41,6 @@ Partial Class Whatsnew
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -124,7 +122,7 @@ Partial Class Whatsnew
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(6, 48)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(656, 240)
+        Me.Label14.Size = New System.Drawing.Size(656, 281)
         Me.Label14.TabIndex = 25
         Me.Label14.Text = resources.GetString("Label14.Text")
         '
@@ -135,9 +133,9 @@ Partial Class Whatsnew
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTabControl1.Controls.Add(Me.TabPage3)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonTabControl1.ItemSize = New System.Drawing.Size(35, 150)
@@ -291,8 +289,6 @@ Partial Class Whatsnew
         'TabPage10
         '
         Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage10.Controls.Add(Me.XenonButton10)
-        Me.TabPage10.Controls.Add(Me.XenonButton8)
         Me.TabPage10.Controls.Add(Me.Label13)
         Me.TabPage10.Controls.Add(Me.Label14)
         Me.TabPage10.Location = New System.Drawing.Point(154, 4)
@@ -301,36 +297,6 @@ Partial Class Whatsnew
         Me.TabPage10.Size = New System.Drawing.Size(667, 332)
         Me.TabPage10.TabIndex = 4
         Me.TabPage10.Text = "Tweaks & Fixes"
-        '
-        'XenonButton10
-        '
-        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton10.ForeColor = System.Drawing.Color.White
-        Me.XenonButton10.Image = Nothing
-        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(259, 291)
-        Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(175, 30)
-        Me.XenonButton10.TabIndex = 34
-        Me.XenonButton10.Text = "Get uploaded translations"
-        Me.XenonButton10.UseVisualStyleBackColor = False
-        '
-        'XenonButton8
-        '
-        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = Nothing
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(10, 291)
-        Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(243, 30)
-        Me.XenonButton8.TabIndex = 33
-        Me.XenonButton8.Text = "See how to contribute in translation ..."
-        Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'Panel1
         '
@@ -419,8 +385,6 @@ Partial Class Whatsnew
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents Label3 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents Label5 As Label
     Friend WithEvents Label7 As Label
