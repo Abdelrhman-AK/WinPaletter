@@ -51,7 +51,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) You can now modify all terminals in Windows.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) Windows Terminals:.
 
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
@@ -61,7 +61,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) You can colorize the classic apps accents (Like what we did in the 90s and 2000s :))
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Windows Schemes:
 
 - You will see perfect results if you force classic theme for Windows 11\10\8.1 (i.e All Windows elements will be colorized).
 - Windows 7 has a classic theme, so it is can be modified without using external tools to enable classic theme 
@@ -72,7 +72,7 @@
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/X.png?raw=true)
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Cursor.png?raw=true) You can customize your cursors, even the animated circles (Loading Cursors)!
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Cursor.png?raw=true) Colorize your cursors, even the animated loading circles!
 
 - This feature debut is in version 1.0.4.0
 
