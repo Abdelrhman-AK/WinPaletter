@@ -14,6 +14,7 @@ Public Class MainFrm
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
+    Public ShowWhatsNew As Boolean = False
 
 #Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
@@ -1192,6 +1193,8 @@ Public Class MainFrm
         _Shown = True
 
         If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
+
+        If ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
 
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
@@ -2685,6 +2688,10 @@ Public Class MainFrm
 
     Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click
         EditFonts.ShowDialog()
+    End Sub
+
+    Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click
+        popup_color.LoadFromCPControl(XenonCP1)
     End Sub
 
 

@@ -7,6 +7,68 @@ Public Class Localizer
 
     End Sub
 
+    Public Function GetFormFromName(Name As String) As Form
+        If Name.ToLower = "About".ToLower Then Return About
+        If Name.ToLower = "Changelog".ToLower Then Return Changelog
+        If Name.ToLower = "ColorPickerDlg".ToLower Then Return ColorPickerDlg
+        If Name.ToLower = "ComplexSave".ToLower Then Return ComplexSave
+        If Name.ToLower = "dragPreviewer".ToLower Then Return dragPreviewer
+        If Name.ToLower = "EditInfo".ToLower Then Return EditInfo
+        If Name.ToLower = "LogonUI".ToLower Then Return LogonUI
+        If Name.ToLower = "MainFrm".ToLower Then Return MainFrm
+        If Name.ToLower = "Whatsnew".ToLower Then Return Whatsnew
+        If Name.ToLower = "Updates".ToLower Then Return Updates
+        If Name.ToLower = "Win32UI".ToLower Then Return Win32UI
+        If Name.ToLower = "SettingsX".ToLower Then Return SettingsX
+        If Name.ToLower = "CursorsStudio".ToLower Then Return CursorsStudio
+        If Name.ToLower = "ApplyingTheme".ToLower Then Return ApplyingTheme
+        If Name.ToLower = "LogonUI7".ToLower Then Return LogonUI7
+        If Name.ToLower = "LogonUI8Colors".ToLower Then Return LogonUI8Colors
+        If Name.ToLower = "LogonUI8_Pics".ToLower Then Return LogonUI8_Pics
+        If Name.ToLower = "Start8Selector".ToLower Then Return Start8Selector
+        If Name.ToLower = "cmd".ToLower Then Return cmd
+        If Name.ToLower = "ExternalTerminal".ToLower Then Return ExternalTerminal
+        If Name.ToLower = "NewExtTerminal".ToLower Then Return NewExtTerminal
+        If Name.ToLower = "TerminalInfo".ToLower Then Return TerminalInfo
+        If Name.ToLower = "TerminalsDashboard".ToLower Then Return TerminalsDashboard
+        If Name.ToLower = "WindowsTerminal".ToLower Then Return WindowsTerminal
+        If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
+        If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
+        If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
+        If Name.ToLower = "BugReport".ToLower Then Return BugReport
+    End Function
+
+    Public allForms As New List(Of String) From {
+                        "About",
+                        "Changelog",
+                        "ColorPickerDlg",
+                        "ComplexSave",
+                        "dragPreviewer",
+                        "EditInfo",
+                        "LogonUI",
+                        "MainFrm",
+                        "Whatsnew",
+                        "Updates",
+                        "Win32UI",
+                        "SettingsX",
+                        "CursorsStudio",
+                        "ApplyingTheme",
+                        "LogonUI7",
+                        "LogonUI8Colors",
+                        "LogonUI8_Pics",
+                        "Start8Selector",
+                        "cmd",
+                        "ExternalTerminal",
+                        "NewExtTerminal",
+                        "TerminalInfo",
+                        "TerminalsDashboard",
+                        "WindowsTerminal",
+                        "WindowsTerminalDecide",
+                        "WindowsTerminalCopycat",
+                        "LicenseForm",
+                        "BugReport"
+                        }
+
 #Region "Language Info"
     Property Name As String = "Abdelrhman-AK"
     Property TrVer As String = "1.0"
@@ -201,7 +263,7 @@ Public Class Localizer
     Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
         If IO.File.Exists(File) Then
 
-            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, Object))()
+            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, String))()
             PopCtrlList.Clear()
 
             Dim Definer As New Dictionary(Of String, String)
@@ -231,16 +293,19 @@ Public Class Localizer
                             x0 = X.Split("=")(0).Replace("@", "").Trim
                             x1 = X.Split("=")(1).Trim
 
-                            Definer.Add(x0, x1)
+                            Try
+                                If Not Definer.Keys.Contains(x0) Then Definer.Add(x0, x1)
+                            Catch : End Try
+
                         Catch
                         End Try
                     Else
                         Try
                             Dim FormName, ControlName, Prop, Value As String
-                            FormName = Nothing
-                            ControlName = Nothing
-                            Prop = Nothing
-                            Value = Nothing
+                            FormName = String.Empty
+                            ControlName = String.Empty
+                            Prop = String.Empty
+                            Value = String.Empty
 
                             Select Case X.Split("=")(0).Trim.Split(".").Count
                                 Case 3
@@ -249,13 +314,13 @@ Public Class Localizer
                                     Prop = X.Split("=")(0).Trim.Split(".")(2)
                                 Case 2
                                     FormName = X.Split("=")(0).Trim.Split(".")(0)
-                                    ControlName = Nothing
+                                    ControlName = String.Empty
                                     Prop = X.Split("=")(0).Trim.Split(".")(1)
                             End Select
 
                             Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
 
-                            PopCtrlList.Add(New Tuple(Of String, String, String, Object)(FormName, ControlName, Prop, Value))
+                            PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
                         Catch
 
                         End Try
@@ -276,14 +341,13 @@ Public Class Localizer
 
 
             If [_Form] Is Nothing Then
-                For x As Integer = 0 To My.Application.allForms.Count - 1
 
-                    With My.Application.GetFormFromName(My.Application.allForms(x))
+                For x As Integer = 0 To allForms.Count - 1
+
+                    With GetFormFromName(allForms(x))
                         '.SuspendLayout()
-
-                        Populate(PopCtrlList, My.Application.GetFormFromName(My.Application.allForms(x)))
+                        Populate(PopCtrlList, GetFormFromName(allForms(x)))
                         .RightToLeftLayout = RightToLeft
-
                         '.RightToLeft = If(RightToLeft, 1, 0)
                         'RTL(My.Application.GetFormFromName(My.Application.allForms(x)))
                         '.ResumeLayout()
@@ -291,6 +355,7 @@ Public Class Localizer
                     End With
 
                 Next
+
                 LoadInternal()
             Else
                 Populate(PopCtrlList, [_Form])
@@ -311,40 +376,48 @@ Public Class Localizer
         My.Application.AdjustFonts()
     End Sub
 
-    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, Object)), [Form] As Form)
+    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)
         'Item1 = FormName
         'Item2 = ControlName
         'Item3 = Prop
         'Item4 = Value
 
         For Each member In PopCtrlList
+            Try
+                If [Form].Name.ToLower = member.Item1.ToLower Then
 
-            If [Form].Name.ToLower = member.Item1.ToLower Then
-
-                If member.Item2 = Nothing Then
-                    '# Form
-                    Try : If member.Item3.ToLower = "text" Then [Form].Text = member.Item4
-                    Catch : End Try
-
-                    Try : If member.Item3.ToLower = "tag" Then [Form].Tag = member.Item4.ToString.Replace("<br>", vbCrLf)
-                    Catch : End Try
-
-                Else
-                    '# Control
-                    For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
-
-                        Try : If member.Item3.ToLower = "text" Then ctrl.Text = member.Item4.ToString.Replace("<br>", vbCrLf)
+                    If member.Item2 = String.Empty Then
+                        '# Form
+                        Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4, [Form])
                         Catch : End Try
 
-                        Try : If member.Item3.ToLower = "tag" Then ctrl.Tag = member.Item4.ToString.Replace("<br>", vbCrLf)
+                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString.Replace("<br>", vbCrLf), [Form])
                         Catch : End Try
+                    Else
+                        '# Control
 
-                        'ctrl.RightToLeft = If(RightToLeft, 1, 0)
-                        'ctrl.Refresh()
-                    Next
+                        If Not String.IsNullOrEmpty(member.Item2) Then
 
+                            For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
+
+                                Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4.ToString.Replace("<br>", vbCrLf), ctrl)
+                                Catch : End Try
+
+                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString.Replace("<br>", vbCrLf), ctrl)
+                                Catch : End Try
+
+                                'ctrl.RightToLeft = If(RightToLeft, 1, 0)
+                                'ctrl.Refresh()
+                            Next
+
+                        End If
+
+                    End If
                 End If
-            End If
+
+            Catch ex As Exception
+                Throw ex
+            End Try
         Next
 
     End Sub

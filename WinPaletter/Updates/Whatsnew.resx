@@ -120,6 +120,8 @@
   <data name="Label14.Text" xml:space="preserve">
     <value>- Now Previewing Bug Details changed to a better one, there was a bug preventing the app from stating up and also not showing the details of error. Now it is mostly fixed and the details will appear.
 
+- Fixing minor bugs in translation
+
 - Minor UI Design improvements, especially for the Light Mode</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />

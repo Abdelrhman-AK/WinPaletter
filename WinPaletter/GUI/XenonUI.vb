@@ -3735,7 +3735,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _AppUnderline) Then
                 Me._AppUnderline = value
                 NotifyAppUnderlineChanged("AppUnderline")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property
@@ -3755,7 +3755,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _AppBackground) Then
                 Me._AppBackground = value
                 NotifyAppBackgroundChanged("AppBackground")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property
@@ -3775,7 +3775,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _SearchBoxAccent) Then
                 Me._SearchBoxAccent = value
                 NotifySearchBoxAccentChanged("SearchBoxAccent")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property
@@ -3795,7 +3795,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Normal) Then
                 Me._ActionCenterButton_Normal = value
                 NotifyActionCenterButton_NormalChanged("ActionCenterButton_Normal")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property
@@ -3815,7 +3815,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Hover) Then
                 Me._ActionCenterButton_Hover = value
                 NotifyActionCenterButton_HoverChanged("ActionCenterButton_Hover")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property
@@ -3835,7 +3835,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             If Not (value = _ActionCenterButton_Pressed) Then
                 Me._ActionCenterButton_Pressed = value
                 NotifyActionCenterButton_PressedChanged("ActionCenterButton_Pressed")
-                Refresh()
+                Try : Refresh() : Catch : End Try
             End If
         End Set
     End Property

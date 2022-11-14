@@ -40,7 +40,6 @@ Namespace My
         Public AeroKiller As New Process
         Public AeroStarter As New Process
         Public LanguageHelper As New Localizer
-        Public allForms As List(Of String)
         Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
         Public WinRes As WinResources
@@ -433,36 +432,7 @@ Namespace My
 
         End Sub
 
-        Public Function GetFormFromName(Name As String) As Form
-            If Name.ToLower = "About".ToLower Then Return About
-            If Name.ToLower = "Changelog".ToLower Then Return Changelog
-            If Name.ToLower = "ColorPickerDlg".ToLower Then Return ColorPickerDlg
-            If Name.ToLower = "ComplexSave".ToLower Then Return ComplexSave
-            If Name.ToLower = "dragPreviewer".ToLower Then Return dragPreviewer
-            If Name.ToLower = "EditInfo".ToLower Then Return EditInfo
-            If Name.ToLower = "LogonUI".ToLower Then Return LogonUI
-            If Name.ToLower = "MainFrm".ToLower Then Return MainFrm
-            If Name.ToLower = "Whatsnew".ToLower Then Return Whatsnew
-            If Name.ToLower = "Updates".ToLower Then Return Updates
-            If Name.ToLower = "Win32UI".ToLower Then Return Win32UI
-            If Name.ToLower = "SettingsX".ToLower Then Return SettingsX
-            If Name.ToLower = "CursorsStudio".ToLower Then Return CursorsStudio
-            If Name.ToLower = "ApplyingTheme".ToLower Then Return ApplyingTheme
-            If Name.ToLower = "LogonUI7".ToLower Then Return LogonUI7
-            If Name.ToLower = "LogonUI8Colors".ToLower Then Return LogonUI8Colors
-            If Name.ToLower = "LogonUI8_Pics".ToLower Then Return LogonUI8_Pics
-            If Name.ToLower = "Start8Selector".ToLower Then Return Start8Selector
-            If Name.ToLower = "cmd".ToLower Then Return cmd
-            If Name.ToLower = "ExternalTerminal".ToLower Then Return ExternalTerminal
-            If Name.ToLower = "NewExtTerminal".ToLower Then Return NewExtTerminal
-            If Name.ToLower = "TerminalInfo".ToLower Then Return TerminalInfo
-            If Name.ToLower = "TerminalsDashboard".ToLower Then Return TerminalsDashboard
-            If Name.ToLower = "WindowsTerminal".ToLower Then Return WindowsTerminal
-            If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
-            If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
-            If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
-            If Name.ToLower = "BugReport".ToLower Then Return BugReport
-        End Function
+
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
@@ -497,37 +467,6 @@ Namespace My
             Next
             B.Dispose()
             G.Dispose()
-
-            allForms = New List(Of String) From {
-                        "About",
-                        "Changelog",
-                        "ColorPickerDlg",
-                        "ComplexSave",
-                        "dragPreviewer",
-                        "EditInfo",
-                        "LogonUI",
-                        "MainFrm",
-                        "Whatsnew",
-                        "Updates",
-                        "Win32UI",
-                        "SettingsX",
-                        "CursorsStudio",
-                        "ApplyingTheme",
-                        "LogonUI7",
-                        "LogonUI8Colors",
-                        "LogonUI8_Pics",
-                        "Start8Selector",
-                        "cmd",
-                        "ExternalTerminal",
-                        "NewExtTerminal",
-                        "TerminalInfo",
-                        "TerminalsDashboard",
-                        "WindowsTerminal",
-                        "WindowsTerminalDecide",
-                        "WindowsTerminalCopycat",
-                        "LicenseForm",
-                        "BugReport"
-                        }
 
             Try
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
@@ -680,7 +619,8 @@ Namespace My
 #Region "WhatsNew"
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
-                Whatsnew.ShowDialog()
+                MainFrm.ShowWhatsNew = True
+
                 Dim ver As New List(Of String)
                 ver.Clear()
                 ver.Add(My.Application.Info.Version.ToString)
@@ -692,8 +632,11 @@ Namespace My
                 ver = RemoveDuplicate(ver)
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
+            Else
+                MainFrm.ShowWhatsNew = False
             End If
 #End Region
+
         End Sub
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try

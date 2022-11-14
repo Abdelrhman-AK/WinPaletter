@@ -359,6 +359,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
+    <Compile Include="popup_color.Designer.vb">
+      <DependentUpon>popup_color.vb</DependentUpon>
+    </Compile>
+    <Compile Include="popup_color.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -505,6 +511,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="popup_color.resx">
+      <DependentUpon>popup_color.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

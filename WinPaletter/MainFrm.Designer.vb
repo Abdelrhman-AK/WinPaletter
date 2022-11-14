@@ -27,6 +27,7 @@ Partial Class MainFrm
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainFrm))
         Me.PaletteContainer_W1x = New System.Windows.Forms.Panel()
         Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
+        Me.XenonCP1 = New WinPaletter.XenonCP()
         Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.pic9 = New System.Windows.Forms.PictureBox()
@@ -201,6 +202,7 @@ Partial Class MainFrm
         Me.Label39 = New System.Windows.Forms.Label()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
+        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.XenonButton19 = New WinPaletter.XenonButton()
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
@@ -244,7 +246,6 @@ Partial Class MainFrm
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.PaletteContainer_W1x.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
         Me.XenonGroupBox14.SuspendLayout()
@@ -347,6 +348,7 @@ Partial Class MainFrm
         Me.XenonGroupBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox13.Controls.Add(Me.XenonCP1)
         Me.XenonGroupBox13.Controls.Add(Me.XenonGroupBox14)
         Me.XenonGroupBox13.Controls.Add(Me.pnl8)
         Me.XenonGroupBox13.Controls.Add(Me.pnl7)
@@ -365,6 +367,22 @@ Partial Class MainFrm
         Me.XenonGroupBox13.Size = New System.Drawing.Size(530, 313)
         Me.XenonGroupBox13.TabIndex = 6
         Me.XenonGroupBox13.Text = "XenonGroupBox13"
+        '
+        'XenonCP1
+        '
+        Me.XenonCP1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCP1.BackColor = System.Drawing.Color.Maroon
+        Me.XenonCP1.DefaultColor = System.Drawing.Color.Black
+        Me.XenonCP1.ForceNoNerd = False
+        Me.XenonCP1.LineColor = System.Drawing.Color.FromArgb(CType(CType(147, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.XenonCP1.Location = New System.Drawing.Point(130, 11)
+        Me.XenonCP1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonCP1.Name = "XenonCP1"
+        Me.XenonCP1.Size = New System.Drawing.Size(87, 20)
+        Me.XenonCP1.TabIndex = 33
+        Me.XenonCP1.Text = "XenonGroupBox12"
+        Me.XenonCP1.Visible = False
         '
         'XenonGroupBox14
         '
@@ -2706,6 +2724,23 @@ Partial Class MainFrm
         Me.Label41.Text = "Main Colors"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'XenonButton26
+        '
+        Me.XenonButton26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton26.ForeColor = System.Drawing.Color.White
+        Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
+        Me.XenonButton26.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(86, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.XenonButton26.LineSize = 1
+        Me.XenonButton26.Location = New System.Drawing.Point(586, 640)
+        Me.XenonButton26.Name = "XenonButton26"
+        Me.XenonButton26.Size = New System.Drawing.Size(133, 32)
+        Me.XenonButton26.TabIndex = 32
+        Me.XenonButton26.Text = "Announcement"
+        Me.XenonButton26.UseVisualStyleBackColor = False
+        '
         'XenonButton19
         '
         Me.XenonButton19.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -3464,23 +3499,6 @@ Partial Class MainFrm
         Me.XenonButton4.Text = "Win32UI Elements"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
-        'XenonButton26
-        '
-        Me.XenonButton26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
-        Me.XenonButton26.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(86, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(586, 640)
-        Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(133, 32)
-        Me.XenonButton26.TabIndex = 32
-        Me.XenonButton26.Text = "Announcement"
-        Me.XenonButton26.UseVisualStyleBackColor = False
-        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -3812,4 +3830,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton25 As XenonButton
     Friend WithEvents XenonButton26 As XenonButton
     Friend WithEvents XenonButton27 As XenonButton
+    Friend WithEvents XenonCP1 As XenonCP
 End Class

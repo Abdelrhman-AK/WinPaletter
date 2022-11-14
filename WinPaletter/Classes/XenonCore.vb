@@ -23,6 +23,19 @@ Public Class XenonCore
         End Try
     End Sub
     Private Delegate Sub setCtrlTxtInvoker(ByVal text As String, ByVal Ctrl As Control)
+
+    Public Shared Sub SetCtrlTag(ByVal Tag As String, ByVal Ctrl As Control)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New setCtrlTagInvoker(AddressOf SetCtrlTag), Tag, Ctrl)
+            Else
+                Ctrl.Tag = Tag
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub setCtrlTagInvoker(ByVal Tag As String, ByVal Ctrl As Control)
 #End Region
 
 #Region "Misc"
@@ -706,7 +719,6 @@ Public Structure HSL
     End Function
 End Structure
 
-
 Public Class Acrylism
 
     Public Shared Sub EnableBlur(ByVal [Form] As Form, Optional ByVal Border As Boolean = True)
@@ -788,11 +800,8 @@ End Class
 Public Class Visual
     '' FILENAME:        Visual.vb
     '' NAMESPACE:       PI.Common
-    '' APPLICATION:     N/A
     '' CREATED BY:      Luke Berg
     '' CREATED:         10-02-06
-    '' REVISED BY:      _revisedby_
-    '' REVISED:         _revised_
     '' DESCRIPTION:     A common module of visual functions.
 
     Private Shared colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
@@ -812,10 +821,14 @@ Public Class Visual
     ''' <param name="delay">The delay in milliseconds between each step in the fade.</param>
     ''' <param name="callback">A function to be called when the fade completes</param>
     ''' <remarks></remarks>
+    ''' 
     Public Shared Sub FadeColor(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal endColor As Color, ByVal steps As Integer, ByVal delay As Integer, Optional ByVal callback As DoneFading = Nothing)
         Dim colorSteps(0) As ColorStep
         colorSteps(0) = New ColorStep(endColor, steps)
-        FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+        Try
+            FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+        Catch
+        End Try
     End Sub
 
     ''' <summary>
@@ -835,7 +848,10 @@ Public Class Visual
         Dim colorSteps(1) As ColorStep
         colorSteps(0) = New ColorStep(middleColor, middleSteps)
         colorSteps(1) = New ColorStep(endcolor, endSteps)
-        FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+        Try
+            FadeColor(container, colorProperty, startColor, colorSteps, delay, callback)
+        Catch
+        End Try
     End Sub
 
     ''' <summary>
@@ -848,18 +864,16 @@ Public Class Visual
     ''' <param name="delay">The delay between each step in fading the color</param>
     ''' <param name="callBack">A method to call when the fading has completed</param>
     ''' <remarks></remarks>
+
     Public Shared Sub FadeColor(ByVal container As Object, ByVal colorProperty As String, ByVal startColor As Color, ByVal colorSteps As IEnumerable(Of ColorStep), ByVal delay As Integer, Optional ByVal callBack As DoneFading = Nothing)
 
-        Dim colorFader As BackgroundWorker
+        Dim colorFader As New BackgroundWorker
 
         ' Stores all the parameter information into a class that the background worker will access
         Dim colorFaderInfo As New ColorFaderInformation(container, colorProperty, startColor, colorSteps, delay, callBack)
 
         ' Checks if the color is already in the process of fading.
-#Disable Warning BC42030
         If colorsFading.TryGetValue(GenerateHashCode(container, colorProperty), colorFader) Then
-#Enable Warning BC42030
-
             ' Cancels the backgroundWorkers process and sets a flag indicating that it should restart itself with
             ' the new information.
             colorFader.CancelAsync()
@@ -953,9 +967,7 @@ Public Class Visual
     ''' <remarks></remarks>
     Private Shared Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
         Dim info As ColorFaderInformation
-#Disable Warning BC42030
         If backgroundWorkers.TryGetValue(CType(sender, BackgroundWorker), info) Then
-#Enable Warning BC42030
             Dim currentColor As Color = CType(e.UserState, Color)
             Try
                 CallByName(info.Container, info.ColorProperty, CallType.Let, currentColor)
