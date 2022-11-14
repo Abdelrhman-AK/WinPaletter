@@ -5,6 +5,14 @@
 #Added= String
 #Removed= String
 
+[1.0.6.3]
+Channel= Stable
+Date= -8585332300854775808
+Removed= WinPaletter Development Paused to mid-January 2023, visit repos at Github for information
+BugFix= Fixing issue of error details not showing (Changed to a better one)
+BugFix= Fixing minor bugs in translation (Please redownload the russian file if you're using the old one)
+BugFix= Minor UI Design Improvements, especially for the Light Mode
+
 [1.0.6.2]
 Channel= Stable
 Date= -8585333164854775808
