@@ -3,6 +3,7 @@ Imports System.Net
 Imports System.Reflection
 Imports System.Text
 Imports WinPaletter.CP
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
@@ -2687,7 +2688,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click
-        EditFonts.ShowDialog()
+        Metrics_Fonts.ShowDialog()
     End Sub
 
     Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click

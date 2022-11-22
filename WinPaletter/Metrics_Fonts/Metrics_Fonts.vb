@@ -1,61 +1,72 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.NativeMethods
+Imports WinPaletter.XenonCore
 
-Public Class EditFonts
+Public Class Metrics_Fonts
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        pnl_preview.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         ApplyDarkMode(Me)
         ApplyFromCP(MainFrm.CP)
+
+        MainFrm.MakeItDoubleBuffered(Panel1)
+        MainFrm.MakeItDoubleBuffered(Panel2)
+        MainFrm.MakeItDoubleBuffered(Panel3)
+
+        PictureBox1.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON).ToBitmap
+        PictureBox2.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON).ToBitmap
+        PictureBox3.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON).ToBitmap
+
     End Sub
 
 
     Sub ApplyFromCP(CP As CP)
-        'Label1.Font = CP.Fonts_CaptionFont
-        'Label2.Font = CP.Fonts_IconFont
-        'Label3.Font = CP.Fonts_MenuFont
-        'Label4.Font = CP.Fonts_MessageFont
-        'Label5.Font = CP.Fonts_SmCaptionFont
-        'Label6.Font = CP.Fonts_StatusFont
+        Label1.Font = CP.Fonts_CaptionFont
+        Label2.Font = CP.Fonts_IconFont
+        Label3.Font = CP.Fonts_MenuFont
+        Label4.Font = CP.Fonts_MessageFont
+        Label5.Font = CP.Fonts_SmCaptionFont
+        Label6.Font = CP.Fonts_StatusFont
 
-        'XenonTrackbar1.Value = CP.Metrics_BorderWidth
-        'XenonTrackbar2.Value = CP.Metrics_CaptionHeight
-        'XenonTrackbar3.Value = CP.Metrics_CaptionWidth
-        'XenonTrackbar6.Value = CP.Metrics_IconSpacing
-        'XenonTrackbar5.Value = CP.Metrics_IconTitleWrap
-        'XenonTrackbar4.Value = CP.Metrics_IconVerticalSpacing
-        'XenonTrackbar9.Value = CP.Metrics_MenuHeight
-        'XenonTrackbar8.Value = CP.Metrics_MenuWidth
-        'XenonTrackbar7.Value = CP.Metrics_MinAnimate
-        'XenonTrackbar12.Value = CP.Metrics_PaddedBorderWidth
-        'XenonTrackbar11.Value = CP.Metrics_ScrollHeight
-        'XenonTrackbar10.Value = CP.Metrics_ScrollWidth
-        'XenonTrackbar15.Value = CP.Metrics_ShellIconSize
-        'XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
-        'XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
+        XenonTrackbar1.Value = CP.Metrics_BorderWidth
+        XenonTrackbar2.Value = CP.Metrics_CaptionHeight
+        XenonTrackbar3.Value = CP.Metrics_CaptionWidth
+        XenonTrackbar6.Value = CP.Metrics_IconSpacing
+        XenonTrackbar5.Value = CP.Metrics_IconTitleWrap
+        XenonTrackbar4.Value = CP.Metrics_IconVerticalSpacing
+        XenonTrackbar9.Value = CP.Metrics_MenuHeight
+        XenonTrackbar8.Value = CP.Metrics_MenuWidth
+        XenonToggle1.Checked = CP.Metrics_MinAnimate
+        XenonTrackbar12.Value = CP.Metrics_PaddedBorderWidth
+        XenonTrackbar11.Value = CP.Metrics_ScrollHeight
+        XenonTrackbar10.Value = CP.Metrics_ScrollWidth
+        XenonTrackbar15.Value = CP.Metrics_ShellIconSize
+        XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
+        XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
 
     End Sub
 
     Sub ApplyToCP(CP As CP)
-        'CP.Fonts_CaptionFont = Label1.Font
-        'CP.Fonts_IconFont = Label2.Font
-        'CP.Fonts_MenuFont = Label3.Font
-        'CP.Fonts_MessageFont = Label4.Font
-        'CP.Fonts_SmCaptionFont = Label5.Font
-        'CP.Fonts_StatusFont = Label6.Font
+        CP.Fonts_CaptionFont = Label1.Font
+        CP.Fonts_IconFont = Label2.Font
+        CP.Fonts_MenuFont = Label3.Font
+        CP.Fonts_MessageFont = Label4.Font
+        CP.Fonts_SmCaptionFont = Label5.Font
+        CP.Fonts_StatusFont = Label6.Font
 
-        'CP.Metrics_BorderWidth = XenonTrackbar1.Value
-        'CP.Metrics_CaptionHeight = XenonTrackbar2.Value
-        'CP.Metrics_CaptionWidth = XenonTrackbar3.Value
-        'CP.Metrics_IconSpacing = XenonTrackbar6.Value
-        'CP.Metrics_IconTitleWrap = XenonTrackbar5.Value
-        'CP.Metrics_IconVerticalSpacing = XenonTrackbar4.Value
-        'CP.Metrics_MenuHeight = XenonTrackbar9.Value
-        'CP.Metrics_MenuWidth = XenonTrackbar8.Value
-        'CP.Metrics_MinAnimate = XenonTrackbar7.Value
-        'CP.Metrics_PaddedBorderWidth = XenonTrackbar12.Value
-        'CP.Metrics_ScrollHeight = XenonTrackbar11.Value
-        'CP.Metrics_ScrollWidth = XenonTrackbar10.Value
-        'CP.Metrics_ShellIconSize = XenonTrackbar15.Value
-        'CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
-        'CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
+        CP.Metrics_BorderWidth = XenonTrackbar1.Value
+        CP.Metrics_CaptionHeight = XenonTrackbar2.Value
+        CP.Metrics_CaptionWidth = XenonTrackbar3.Value
+        CP.Metrics_IconSpacing = XenonTrackbar6.Value
+        CP.Metrics_IconTitleWrap = XenonTrackbar5.Value
+        CP.Metrics_IconVerticalSpacing = XenonTrackbar4.Value
+        CP.Metrics_MenuHeight = XenonTrackbar9.Value
+        CP.Metrics_MenuWidth = XenonTrackbar8.Value
+        CP.Metrics_MinAnimate = XenonToggle1.Checked
+        CP.Metrics_PaddedBorderWidth = XenonTrackbar12.Value
+        CP.Metrics_ScrollHeight = XenonTrackbar11.Value
+        CP.Metrics_ScrollWidth = XenonTrackbar10.Value
+        CP.Metrics_ShellIconSize = XenonTrackbar15.Value
+        CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
+        CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -105,16 +116,15 @@ Public Class EditFonts
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub Label14_Click(sender As Object, e As EventArgs) Handles Label14.Click
-
-    End Sub
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         Label36.Text = sender.Value
+        XenonWindow1.Metrics_BorderWidth = sender.Value
     End Sub
 
     Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
         Label35.Text = sender.Value
+        XenonWindow1.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
@@ -131,6 +141,7 @@ Public Class EditFonts
 
     Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
         Label31.Text = sender.Value
+        Panel2.Top = Panel1.Bottom + sender.Value - 45
     End Sub
 
     Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
@@ -141,12 +152,9 @@ Public Class EditFonts
         Label29.Text = sender.Value
     End Sub
 
-    Private Sub XenonTrackbar7_Scroll(sender As Object) Handles XenonTrackbar7.Scroll
-        Label28.Text = sender.Value
-    End Sub
-
     Private Sub XenonTrackbar12_Scroll(sender As Object) Handles XenonTrackbar12.Scroll
         Label27.Text = sender.Value
+        XenonWindow1.Metrics_PaddedBorderWidth = sender.Value
     End Sub
 
     Private Sub XenonTrackbar11_Scroll(sender As Object) Handles XenonTrackbar11.Scroll
@@ -167,5 +175,9 @@ Public Class EditFonts
 
     Private Sub XenonTrackbar13_Scroll(sender As Object) Handles XenonTrackbar13.Scroll
         Label15.Text = sender.Value
+    End Sub
+
+    Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
+
     End Sub
 End Class

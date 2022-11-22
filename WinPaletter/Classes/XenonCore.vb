@@ -501,6 +501,9 @@ Public Class XenonCore
                                 TryCast(OFORM, Form).Refresh()
                             End If
                     End Select
+
+                    User32.DarkTitlebar(TryCast(OFORM, Form).Handle, DarkMode)
+
                     EnumControls(TryCast(OFORM, Form), DarkMode)
                     'Adjust_Form(DarkMode, TryCast(OFORM, Form))
                 Next OFORM
@@ -524,7 +527,11 @@ Public Class XenonCore
                         TryCast([Form], Form).Refresh()
                     End If
             End Select
+
+            User32.DarkTitlebar([Form].Handle, DarkMode)
+
             EnumControls(TryCast([Form], Form), DarkMode)
+
             [Form].Refresh()
             'Adjust_Form(DarkMode, [Form])
 
@@ -640,10 +647,6 @@ Public Class XenonCore
             End With
         End If
 
-        If TypeOf ctrl Is TrackBar Then TryCast(ctrl, TrackBar).BackColor = ctrl.Parent.BackColor
-        If TypeOf ctrl Is CheckedListBox Then TryCast(ctrl, CheckedListBox).BackColor = ctrl.Parent.BackColor
-        If TypeOf ctrl Is ListBox Then TryCast(ctrl, ListBox).BackColor = ctrl.Parent.BackColor
-
         If ctrl.HasChildren Then
             For Each c As Control In ctrl.Controls
                 c.Invalidate()
@@ -743,6 +746,9 @@ Public Class Acrylism
 
                     User32.SetWindowCompositionAttribute([Form].Handle, Data)
                     Marshal.FreeHGlobal(accentPtr)
+
+                    'User32.DarkTitlebar([Form].Handle, XenonCore.GetDarkMode())
+                    'Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, &H3, Marshal.SizeOf(GetType(Integer)))
 
                 Else
                     GrayscaleMe([Form])

@@ -11,6 +11,10 @@ Public Class Metrics
     Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As LogFontStr, ByVal fuWinIni As SPIF) As Integer
     End Function
 
+    <DllImport("user32", CharSet:=CharSet.Auto)>
+    Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ANIMATIONINFO, ByVal fuWinIni As SPIF) As Integer
+    End Function
+
     <DllImport("user32.dll", SetLastError:=True)>
     Public Shared Function SystemParametersInfo(ByVal uiAction As SPI, ByVal uiParam As UInteger, ByVal pvParam As IntPtr, ByVal fWinIni As SPIF) As Boolean
     End Function
@@ -32,24 +36,34 @@ Public Class Metrics
     End Enum
 
     Public Structure NONCLIENTMETRICS
-        Public cbSize As Integer
-        Public iBorderWidth As Integer
-        Public iScrollWidth As Integer
-        Public iScrollHeight As Integer
-        Public iCaptionWidth As Integer
-        Public iCaptionHeight As Integer
-        Public lfCaptionFont As LogFont
-        Public iSMCaptionWidth As Integer
-        Public iSMCaptionHeight As Integer
-        Public lfSMCaptionFont As LogFont
-        Public iMenuWidth As Integer
-        Public iMenuHeight As Integer
-        Public lfMenuFont As LogFont
-        Public lfStatusFont As LogFont
-        Public lfMessageFont As LogFont
-        Public iPaddedBorderWidth As Integer
-        'Public lfIconFont As LogFont
+        Dim cbSize As UInteger
+        Dim iBorderWidth As Integer
+        Dim iScrollWidth As Integer
+        Dim iScrollHeight As Integer
+        Dim iCaptionWidth As Integer
+        Dim iCaptionHeight As Integer
+        Dim lfCaptionFont As LogFont
+        Dim iSmCaptionWidth As Integer
+        Dim iSmCaptionHeight As Integer
+        Dim lfSmCaptionFont As LogFont
+        Dim iMenuWidth As Integer
+        Dim iMenuHeight As Integer
+        Dim lfMenuFont As LogFont
+        Dim lfStatusFont As LogFont
+        Dim lfMessageFont As LogFont
+        Dim iPaddedBorderWidth As Integer
+    End Structure
 
+
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure ANIMATIONINFO
+        Public Sub New(ByVal iMinAnimate As Integer)
+            Me.cbSize = CUInt(Marshal.SizeOf(GetType(ANIMATIONINFO)))
+            Me.iMinAnimate = iMinAnimate
+        End Sub
+
+        Public cbSize As UInteger
+        Public iMinAnimate As Integer
     End Structure
 
 

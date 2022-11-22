@@ -1,8 +1,6 @@
 ﻿Imports System.IO
-Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Text
-Imports Microsoft.Win32
 
 Namespace NativeMethods
     Public Class Dwmapi
@@ -15,7 +13,6 @@ Namespace NativeMethods
         Public Shared Sub DwmEnableComposition(ByVal uCompositionAction As CompositionAction)
         End Sub
 
-
         <DllImport("dwmapi.dll")>
         Public Shared Function DwmIsCompositionEnabled(ByRef enabled As Boolean) As Integer
         End Function
@@ -24,6 +21,24 @@ Namespace NativeMethods
         Public Shared Function DwmEnableBlurBehindWindow(ByVal hWnd As IntPtr, ByRef pBlurBehind As DwmBlurbehind) As Integer
         End Function
 
+        <DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
+        End Function
+
+        <DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
+        End Function
+
+        Public Const CS_DROPSHADOW As Integer = &H20000
+        Public Const WM_NCPAINT As Integer = &H85
+
+        <DllImport("dwmapi.dll")>
+        Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As DWMATTRIB, ByRef pvAttribute As Integer, ByVal cbAttribute As Integer) As Integer
+        End Function
+
+        Public Enum DWMATTRIB
+            DWMWA_SYSTEMBACKDROP_TYPE = 38
+            DWMWA_MICA_EFFECT = 1029
+        End Enum
+
         Public Structure DwmBlurbehind
             Public DwFlags As Integer
             Public FEnable As Boolean
@@ -31,14 +46,39 @@ Namespace NativeMethods
             Public FTransitionOnMaximized As Boolean
         End Structure
 
-        <Runtime.InteropServices.DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
-        End Function
+        Public Shared Sub DropMica(ByVal frm As Form, ByVal yes As Boolean)
+            Dim extend As Boolean = XenonCore.GetDarkMode
 
-        <Runtime.InteropServices.DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
-        End Function
+            If Environment.OSVersion.Version.Build >= 22523 Then
+                Dim micaValue As Integer = &H4 '&H2
+                Dim tabbedvalue As Integer = &H4
 
-        Public Const CS_DROPSHADOW As Integer = &H20000
-        Public Const WM_NCPAINT As Integer = &H85
+                If extend Then
+                    DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, micaValue, Marshal.SizeOf(GetType(Integer)))
+                Else
+                    DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, tabbedvalue, Marshal.SizeOf(GetType(Integer)))
+                End If
+
+            Else
+                Dim trueValue As Integer = &H1
+                DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_MICA_EFFECT, trueValue, Marshal.SizeOf(GetType(Integer)))
+            End If
+
+            Dim DarkMode As Boolean = XenonCore.GetDarkMode
+            Dim m As MARGINS = New MARGINS()
+
+            If yes Then
+                DwmExtendFrameIntoClientArea(frm.Handle, m)
+            Else
+                Dim mar As MARGINS = New MARGINS With {
+                    .bottomHeight = 0,
+                    .leftWidth = 0,
+                    .rightWidth = 0,
+                    .topHeight = 0
+                }
+                DwmExtendFrameIntoClientArea(frm.Handle, mar)
+            End If
+        End Sub
 
         Public Enum CompositionAction As Integer
             DWM_EC_DISABLECOMPOSITION = 0
@@ -99,7 +139,6 @@ Namespace NativeMethods
         End Function
 
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByVal lpvParam As Integer, fuWinIni As Integer) As Integer
-
 
         Public Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
             Return (high << 16) Or (low And &HFFFF)
@@ -190,8 +229,9 @@ Namespace NativeMethods
             Public SizeOfData As Integer
         End Structure
 
-        Friend Enum WindowCompositionAttribute
+        Public Enum WindowCompositionAttribute
             WCA_ACCENT_POLICY = 19
+            WCA_USEDARKMODECOLORS = 26
         End Enum
 
         Friend Enum AccentState
@@ -202,6 +242,39 @@ Namespace NativeMethods
             ACCENT_ENABLE_TRANSPARANT = 6
             ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
         End Enum
+
+        <DllImport("user32.dll", SetLastError:=True)>
+        Private Shared Function SetProp(ByVal hWnd As IntPtr, ByVal lpString As String, ByVal hData As IntPtr) As Boolean
+        End Function
+
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure WINDOWCOMPOSITIONATTRIBDATA
+            Public Attrib As WindowCompositionAttribute
+            Public pvData As IntPtr
+            Public cbData As Integer
+        End Structure
+
+        Public Shared Sub DarkTitlebar(ByVal hWnd As IntPtr, DarkMode As Boolean)
+
+            If Dwmapi.DwmSetWindowAttribute(hWnd, 19, If(DarkMode, 1, 0), 4) <> 0 Then Dwmapi.DwmSetWindowAttribute(hWnd, 20, If(DarkMode, 1, 0), 4)
+
+            'Exit Sub
+
+            'If IsWindows10OrGreater(18362) Then
+            'SetProp(hWnd, "UseImmersiveDarkModeColors", New IntPtr(If(DarkMode, 1, 0)))
+            'Else
+            'Dim size As Integer = Marshal.SizeOf(DarkMode)
+            'Dim ptr As IntPtr = Marshal.AllocHGlobal(size)
+            'Marshal.StructureToPtr(DarkMode, ptr, False)
+            'Dim data As WindowCompositionAttributeData = New WindowCompositionAttributeData With {
+            '.Attribute = WindowCompositionAttribute.WCA_USEDARKMODECOLORS,
+            '.Data = ptr,
+            '.SizeOfData = size
+            '}
+            'SetWindowCompositionAttribute(hWnd, data)
+            'End If
+
+        End Sub
 
         Enum SendMessageTimeoutFlags As UInteger
             SMTO_NORMAL = &H0
@@ -354,5 +427,159 @@ Namespace NativeMethods
 
         Public Declare Unicode Function GetCurrentThemeName Lib "uxtheme" (ByVal stringThemeName As StringBuilder, ByVal lengthThemeName As Integer, ByVal stringColorName As StringBuilder, ByVal lengthColorName As Integer, ByVal stringSizeName As StringBuilder, ByVal lengthSizeName As Integer) As Int32
 
+        <DllImport("uxtheme.dll", EntryPoint:="#135")>
+        Friend Shared Function SetPreferredAppMode(ByVal appMode As PreferredAppMode) As Integer
+        End Function
+
+        Friend Enum PreferredAppMode
+            [Default]
+            AllowDark
+            ForceDark
+            ForceLight
+            Max
+        End Enum
+
+        <DllImport("uxtheme.dll", EntryPoint:="#135")>
+        Friend Shared Function AllowDarkModeForApp(ByVal allow As Boolean) As Integer
+        End Function
+
+        <DllImport("uxtheme.dll", EntryPoint:="#133")>
+        Friend Shared Function AllowDarkModeForWindow(ByVal handle As IntPtr, ByVal allow As Boolean) As Integer
+        End Function
+    End Class
+
+    Public Class Shell32
+        Public Const MAX_PATH As Integer = 260
+
+        <Flags>
+        Public Enum SHGSI
+            ICONLOCATION = 0
+            ICON = &H100
+            SYSICONINDEX = &H4000
+            LINKOVERLAY = &H8000
+            SELECTED = &H10000
+            LARGEICON = &H0
+            SMALLICON = &H1
+            SHELLICONSIZE = &H4
+        End Enum
+
+        Public Enum SHSTOCKICONID
+            DOCNOASSOC = 0          'Blank document icon (Document Of a type With no associated application).
+            DOCASSOC = 1            'Application-associated document icon (Document Of a type With an associated application).
+            APPLICATION = 2         'Generic application With no custom icon.
+            FOLDER = 3              'Folder (generic unspecified state).
+            FOLDEROPEN = 4          'Folder (open).
+            DRIVE525 = 5            '5.25-inch disk drive.
+            DRIVE35 = 6             '3.5-inch disk drive.
+            DRIVEREMOVE = 7         'Removable drive.
+            DRIVEFIXED = 8          'Fixed drive (hard disk).
+            DRIVENET = 9            'Network drive (connected).
+            DRIVENETDISABLED = 10   'Network drive (disconnected).
+            DRIVECD = 11            'CD drive.
+            DRIVERAM = 12           'RAM disk drive.
+            WORLD = 13              'The entire network.
+            SERVER = 15             'A computer On the network.
+            PRINTER = 16            'A local printer Or print destination.
+            MYNETWORK = 17          'The Network virtual folder (FOLDERID_NetworkFolder/CSIDL_NETWORK).
+            FIND = 22               'The Search feature.
+            HELP = 23               'The Help And Support feature.
+            SHARE = 28              'Overlay For a Shared item.
+            LINK = 29               'Overlay For a shortcut.
+            SLOWFILE = 30           'Overlay For items that are expected To be slow To access.
+            RECYCLER = 31           'The Recycle Bin (empty).
+            RECYCLERFULL = 32       'The Recycle Bin (Not empty).
+            MEDIACDAUDIO = 40       'Audio CD media.
+            LOCK = 47               'Security lock.
+            AUTOLIST = 49           'A virtual folder that contains the results Of a search.
+            PRINTERNET = 50         'A network printer.
+            SERVERSHARE = 51        'A server Shared On a network.
+            PRINTERFAX = 52         'A local fax printer.
+            PRINTERFAXNET = 53      'A network fax printer.
+            PRINTERFILE = 54        'A file that receives the output Of a Print To file operation.
+            STACK = 55              'A category that results from a Stack by command To organize the contents Of a folder.
+            MEDIASVCD = 56          'Super Video CD (SVCD) media.
+            STUFFEDFOLDER = 57      'A folder that contains only subfolders As child items.
+            DRIVEUNKNOWN = 58       'Unknown drive type.
+            DRIVEDVD = 59           'DVD drive.
+            MEDIADVD = 60           'DVD media.
+            MEDIADVDRAM = 61        'DVD-RAM media.
+            MEDIADVDRW = 62         'DVD-RW media.
+            MEDIADVDR = 63          'DVD-R media.
+            MEDIADVDROM = 64        'DVD-ROM media.
+            MEDIACDAUDIOPLUS = 65   'CD+ (enhanced audio CD) media.
+            MEDIACDRW = 66          'CD-RW media.
+            MEDIACDR = 67           'CD-R media.
+            MEDIACDBURN = 68        'A writeable CD In the process Of being burned.
+            MEDIABLANKCD = 69       'Blank writable CD media.
+            MEDIACDROM = 70         'CD-ROM media.
+            AUDIOFILES = 71         'An audio file.
+            IMAGEFILES = 72         'An image file.
+            VIDEOFILES = 73         'A video file.
+            MIXEDFILES = 74         'A mixed file.
+            FOLDERBACK = 75         'Folder back.
+            FOLDERFRONT = 76        'Folder front.
+            SHIELD = 77             'Security shield. Use For UAC prompts only.
+            WARNING = 78            'Warning.
+            INFO = 79               'Informational.
+            Error_ = 80              'Error.
+            KEY = 81                'Key.
+            SOFTWARE = 82           'Software.
+            RENAME = 83             'A UI item such As a button that issues a rename command.
+            DELETE = 84             'A UI item such As a button that issues a delete command.
+            MEDIAAUDIODVD = 85      'Audio DVD media.
+            MEDIAMOVIEDVD = 86      'Movie DVD media.
+            MEDIAENHANCEDCD = 87    'Enhanced CD media.
+            MEDIAENHANCEDDVD = 88   'Enhanced DVD media.
+            MEDIAHDDVD = 89         'High definition DVD media In the HD DVD format.
+            MEDIABLURAY = 90        'High definition DVD media In the Blu-ray Disc™ format.
+            MEDIAVCD = 91           'Video CD (VCD) media.
+            MEDIADVDPLUSR = 92      'DVD+R media.
+            MEDIADVDPLUSRW = 93     'DVD+RW media.
+            DESKTOPPC = 94          'A desktop computer.
+            MOBILEPC = 95           'A mobile computer (laptop).
+            USERS = 96              'The User Accounts Control Panel item.
+            MEDIASMARTMEDIA = 97    'Smart media.
+            MEDIACOMPACTFLASH = 98  'CompactFlash media.
+            DEVICECELLPHONE = 99    'A cell phone.
+            DEVICECAMERA = 100      'A digital camera.
+            DEVICEVIDEOCAMERA = 101 'A digital video camera.
+            DEVICEAUDIOPLAYER = 102 'An audio player.
+            NETWORKCONNECT = 103    'Connect To network.
+            INTERNET = 104          'The Network And Internet Control Panel item.
+            ZIPFILE = 105           'A compressed file With a .zip file name extension.
+            SETTINGS = 106          'The Additional Options Control Panel item.
+            DRIVEHDDVD = 132        'Windows Vista With Service Pack 1 (SP1) And later. High definition DVD drive (any type - HD DVD-ROM HD DVD-R HD-DVD-RAM) that uses the HD DVD format.
+            DRIVEBD = 133           'Windows Vista With SP1 And later. High definition DVD drive (any type - BD-ROM BD-R BD-RE) that uses the Blu-ray Disc format.
+            MEDIAHDDVDROM = 134     'Windows Vista With SP1 And later. High definition DVD-ROM media In the HD DVD-ROM format.
+            MEDIAHDDVDR = 135       'Windows Vista With SP1 And later. High definition DVD-R media In the HD DVD-R format.
+            MEDIAHDDVDRAM = 136     'Windows Vista With SP1 And later. High definition DVD-RAM media In the HD DVD-RAM format.
+            MEDIABDROM = 137        'Windows Vista With SP1 And later. High definition DVD-ROM media In the Blu-ray Disc BD-ROM format.
+            MEDIABDR = 138          'Windows Vista With SP1 And later. High definition write-once media In the Blu-ray Disc BD-R format.
+            MEDIABDRE = 139         'Windows Vista With SP1 And later. High definition read/write media In the Blu-ray Disc BD-RE format.
+            CLUSTEREDDRIVE = 140    'Windows Vista With SP1 And later. A cluster disk array.
+            MAX_ICONS = 174         'The highest valid value In the enumeration. Values over 160 are Windows 7-only icons.
+        End Enum
+
+        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
+        Public Structure SHSTOCKICONINFO
+            Public cbSize As UInt32
+            Public hIcon As IntPtr
+            Public iSysIconIndex As Int32
+            Public iIcon As Int32
+            <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)>
+            Public szPath As String
+        End Structure
+
+        <DllImport("Shell32.dll", SetLastError:=False)>
+        Public Shared Function SHGetStockIconInfo(ByVal siid As SHSTOCKICONID, ByVal uFlags As SHGSI, ByRef psii As SHSTOCKICONINFO) As Int32
+
+        End Function
+
+        Public Shared Function GetSystemIcon(_Icon As SHSTOCKICONID, _Type As SHGSI) As Icon
+            Dim sii = New SHSTOCKICONINFO()
+            sii.cbSize = Marshal.SizeOf(GetType(SHSTOCKICONINFO))
+            SHGetStockIconInfo(_Icon, _Type, sii)
+            Return Icon.FromHandle(sii.hIcon)
+        End Function
     End Class
 End Namespace

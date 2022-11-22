@@ -1,13 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Drawing
-Imports System.Windows.Forms
-Imports System
-Imports System.Runtime.InteropServices
-Imports WinPaletter.XenonCore
-Imports System.IO
-Imports System.Text
 
 Public Module Helpers
     Private ReadOnly TextGraphics As Graphics

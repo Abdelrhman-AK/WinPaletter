@@ -244,7 +244,6 @@ Partial Class MainFrm
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.PaletteContainer_W1x.SuspendLayout()
         Me.XenonGroupBox13.SuspendLayout()
@@ -382,7 +381,6 @@ Partial Class MainFrm
         Me.XenonCP1.Size = New System.Drawing.Size(87, 20)
         Me.XenonCP1.TabIndex = 33
         Me.XenonCP1.Text = "XenonGroupBox12"
-        Me.XenonCP1.Visible = False
         '
         'XenonGroupBox14
         '
@@ -2922,6 +2920,8 @@ Partial Class MainFrm
         Me.XenonWindow1.DarkMode = True
         Me.XenonWindow1.DropShadow = True
         Me.XenonWindow1.Location = New System.Drawing.Point(148, 50)
+        Me.XenonWindow1.Metrics_BorderWidth = 1
+        Me.XenonWindow1.Metrics_CaptionHeight = 22
         Me.XenonWindow1.Name = "XenonWindow1"
         Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(2)
         Me.XenonWindow1.Radius = 5
@@ -3003,6 +3003,8 @@ Partial Class MainFrm
         Me.XenonWindow2.DarkMode = True
         Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Location = New System.Drawing.Point(148, 204)
+        Me.XenonWindow2.Metrics_BorderWidth = 1
+        Me.XenonWindow2.Metrics_CaptionHeight = 22
         Me.XenonWindow2.Name = "XenonWindow2"
         Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
         Me.XenonWindow2.Radius = 5
@@ -3381,7 +3383,6 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton21)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton16)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox6)
-        Me.XenonGroupBox3.Controls.Add(Me.Label13)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
         Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(33, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 611)
@@ -3399,15 +3400,14 @@ Partial Class MainFrm
         Me.XenonButton27.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton27.ForeColor = System.Drawing.Color.White
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
-        Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(13, Byte), Integer), CType(CType(56, Byte), Integer))
+        Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.XenonButton27.LineSize = 1
-        Me.XenonButton27.Location = New System.Drawing.Point(149, 3)
+        Me.XenonButton27.Location = New System.Drawing.Point(124, 3)
         Me.XenonButton27.Name = "XenonButton27"
-        Me.XenonButton27.Size = New System.Drawing.Size(75, 59)
+        Me.XenonButton27.Size = New System.Drawing.Size(100, 59)
         Me.XenonButton27.TabIndex = 29
-        Me.XenonButton27.Text = "Fonts"
+        Me.XenonButton27.Text = "Metrics & Fonts"
         Me.XenonButton27.UseVisualStyleBackColor = False
-        Me.XenonButton27.Visible = False
         '
         'XenonButton24
         '
@@ -3464,23 +3464,12 @@ Partial Class MainFrm
         '
         Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox6.Location = New System.Drawing.Point(2, 3)
         Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(35, 60)
+        Me.PictureBox6.Size = New System.Drawing.Size(35, 59)
         Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox6.TabIndex = 1
         Me.PictureBox6.TabStop = False
-        '
-        'Label13
-        '
-        Me.Label13.BackColor = System.Drawing.Color.Transparent
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.Label13.Location = New System.Drawing.Point(44, 5)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(70, 55)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Misc"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton4
         '
@@ -3715,7 +3704,6 @@ Partial Class MainFrm
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
     Friend WithEvents XenonButton16 As XenonButton
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents Label13 As Label
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents SaveFileDialog2 As SaveFileDialog

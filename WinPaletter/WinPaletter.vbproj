@@ -140,6 +140,10 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
     <Content Include="Resources\AeroGlass.png" />
@@ -343,15 +347,19 @@
     <Compile Include="MainFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Metrics_Fonts\EditFonts.Designer.vb">
-      <DependentUpon>EditFonts.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Metrics_Fonts\EditFonts.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Metrics_Fonts\LogFont.vb" />
     <Compile Include="Metrics_Fonts\Metrics.vb" />
-    <Compile Include="My Project\Application1.Designer.vb" />
+    <Compile Include="Metrics_Fonts\Metrics_Fonts.Designer.vb">
+      <DependentUpon>Metrics_Fonts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics_Fonts\Metrics_Fonts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -466,6 +474,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BugReport1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -503,8 +513,8 @@
     <EmbeddedResource Include="MainFrm.resx">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Metrics_Fonts\EditFonts.resx">
-      <DependentUpon>EditFonts.vb</DependentUpon>
+    <EmbeddedResource Include="Metrics_Fonts\Metrics_Fonts.resx">
+      <DependentUpon>Metrics_Fonts.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
@@ -514,9 +524,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="popup_color.resx">
       <DependentUpon>popup_color.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>popup_color1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SettingsX1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\cmd.resx">
       <DependentUpon>cmd.vb</DependentUpon>
