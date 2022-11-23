@@ -51,7 +51,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) Windows Terminals:.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) Windows Terminals:
 
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
