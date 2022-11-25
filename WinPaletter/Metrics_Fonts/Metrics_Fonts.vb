@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.NativeMethods
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -24,6 +25,7 @@ Public Class Metrics_Fonts
 
 
     Sub ApplyFromCP(CP As CP)
+
         Label1.Font = CP.Fonts_CaptionFont
         XenonWindow1.Font = CP.Fonts_CaptionFont
         RetroWindow1.Font = CP.Fonts_CaptionFont
@@ -37,12 +39,14 @@ Public Class Metrics_Fonts
         Label14.Font = CP.Fonts_MenuFont
         Label32.Font = CP.Fonts_MenuFont
 
-        Label4.Font = CP.Fonts_MessageFont
-
         Label5.Font = CP.Fonts_SmCaptionFont
         XenonWindow2.Font = CP.Fonts_SmCaptionFont
 
+
+        Label4.Font = CP.Fonts_MessageFont
+
         Label6.Font = CP.Fonts_StatusFont
+
 
         XenonTrackbar1.Value = CP.Metrics_BorderWidth
         XenonTrackbar2.Value = CP.Metrics_CaptionHeight
@@ -58,7 +62,7 @@ Public Class Metrics_Fonts
         XenonTrackbar14.Value = CP.Metrics_SmCaptionHeight
         XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
         XenonTrackbar7.Value = CP.Metrics_DesktopIconSize
-
+        XenonTrackbar5.Value = CP.Metrics_ShellIconSize
     End Sub
 
     Sub ApplyToCP(CP As CP)
@@ -83,7 +87,7 @@ Public Class Metrics_Fonts
         CP.Metrics_SmCaptionHeight = XenonTrackbar14.Value
         CP.Metrics_SmCaptionWidth = XenonTrackbar13.Value
         CP.Metrics_DesktopIconSize = XenonTrackbar7.Value
-
+        CP.Metrics_ShellIconSize = XenonTrackbar5.Value
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -153,7 +157,7 @@ Public Class Metrics_Fonts
 
 
     Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
-        Label35.Text = sender.Value
+        ttl_h.Text = sender.Value
         XenonWindow1.Metrics_CaptionHeight = sender.Value
         RetroWindow1.Metrics_CaptionHeight = sender.Value
 
@@ -161,14 +165,21 @@ Public Class Metrics_Fonts
         RetroButton4.Height = sender.Value - 4
         RetroButton5.Height = sender.Value - 4
 
+        Dim iFx As Integer
+        iFx = Math.Max(RetroButton3.Width, RetroButton3.Height) / 18
+
+        Dim f As New Font("Marlett", 6.8 * iFx)
+        RetroButton3.Font = f
+        RetroButton4.Font = f
+        RetroButton5.Font = f
     End Sub
 
     Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
-        Label34.Text = sender.Value
+        ttl_w.Text = sender.Value
 
-        RetroButton3.Width = sender.Value + 12
-        RetroButton4.Width = sender.Value + 12
-        RetroButton5.Width = sender.Value + 12
+        RetroButton3.Width = sender.Value - 2
+        RetroButton4.Width = sender.Value - 2
+        RetroButton5.Width = sender.Value - 2
 
         RetroButton3.Left = RetroWindow1.Width - RetroButton3.Width - XenonTrackbar1.Value - XenonTrackbar12.Value - 5
         RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
@@ -207,7 +218,7 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
-        Label36.Text = sender.Value
+        ttl_b.Text = sender.Value
         XenonWindow1.Metrics_BorderWidth = sender.Value
         RetroWindow1.Metrics_BorderWidth = sender.Value
 
@@ -222,7 +233,7 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar12_Scroll(sender As Object) Handles XenonTrackbar12.Scroll
-        Label27.Text = sender.Value
+        ttl_p.Text = sender.Value
         XenonWindow1.Metrics_PaddedBorderWidth = sender.Value
         RetroWindow1.Metrics_PaddedBorderWidth = sender.Value
 
@@ -282,5 +293,27 @@ Public Class Metrics_Fonts
 
     Private Sub Label1_FontChanged(sender As Object, e As EventArgs) Handles Label1.FontChanged, Label2.FontChanged, Label3.FontChanged, Label4.FontChanged, Label5.FontChanged, Label6.FontChanged
         DirectCast(sender, Label).Text = DirectCast(sender, Label).Font.FontFamily.Name
+    End Sub
+
+    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
+        Label13.Text = sender.Value
+    End Sub
+
+    Private Sub ttl_h_TextChanged(sender As Object, e As EventArgs) Handles ttl_h.TextChanged
+        XenonTrackbar2.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum)
+    End Sub
+
+    Private Sub ttl_w_TextChanged(sender As Object, e As EventArgs) Handles ttl_w.TextChanged
+        XenonTrackbar3.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum)
+
+    End Sub
+
+    Private Sub ttl_b_TextChanged(sender As Object, e As EventArgs) Handles ttl_b.TextChanged
+        XenonTrackbar1.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum)
+
+    End Sub
+
+    Private Sub ttl_p_TextChanged(sender As Object, e As EventArgs) Handles ttl_p.TextChanged
+        XenonTrackbar12.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum)
     End Sub
 End Class

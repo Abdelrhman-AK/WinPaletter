@@ -3,12 +3,17 @@ Imports System.Text
 
 Public Class Metrics
 
+#Region "Functions"
     <DllImport("user32", CharSet:=CharSet.Auto)>
     Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As NONCLIENTMETRICS, ByVal fuWinIni As SPIF) As Integer
     End Function
 
     <DllImport("user32", CharSet:=CharSet.Auto)>
     Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As LogFontStr, ByVal fuWinIni As SPIF) As Integer
+    End Function
+
+    <DllImport("user32", CharSet:=CharSet.Auto)>
+    Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ICONMETRICS, ByVal fuWinIni As SPIF) As Integer
     End Function
 
     <DllImport("user32", CharSet:=CharSet.Auto)>
@@ -38,7 +43,10 @@ Public Class Metrics
         SPIF_SENDCHANGE = &H2                    ' Broadcasts the WM_SETTINGCHANGE message after updating the user profile.
         SPIF_SENDWININICHANGE = SPIF_SENDCHANGE  ' Same as SPIF_SENDCHANGE.
     End Enum
+#End Region
 
+
+#Region "Structures"
     Public Structure NONCLIENTMETRICS
         Public cbSize As Integer
         Public iBorderWidth As Integer
@@ -58,14 +66,20 @@ Public Class Metrics
         Public iPaddedBorderWidth As Integer
     End Structure
 
-
+    Public Structure ICONMETRICS
+        Dim cbSize As UInteger
+        Dim iHorzSpacing As Integer
+        Dim iVertSpacing As Integer
+        Dim iTitleWrap As Integer
+        Dim lfFont As LogFont
+    End Structure
 
     <StructLayout(LayoutKind.Sequential)>
     Public Structure ANIMATIONINFO
-        Public cbSize As UInt32
-        Public IMinAnimate As Int32
+        Public cbSize As UInteger
+        Public IMinAnimate As Integer
     End Structure
-
+#End Region
 
     ' ## SPI_ System-wide parameter - Used in SystemParametersInfo function
     Public Enum SPI
