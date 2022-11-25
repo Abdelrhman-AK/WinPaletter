@@ -217,9 +217,9 @@ Partial Class MainFrm
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.setting_icon_preview = New System.Windows.Forms.Label()
-        Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.start = New WinPaletter.XenonAcrylic()
         Me.taskbar = New WinPaletter.XenonAcrylic()
+        Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
         Me.themename_lbl = New System.Windows.Forms.Label()
         Me.author_lbl = New System.Windows.Forms.Label()
@@ -381,6 +381,7 @@ Partial Class MainFrm
         Me.XenonCP1.Size = New System.Drawing.Size(87, 20)
         Me.XenonCP1.TabIndex = 33
         Me.XenonCP1.Text = "XenonGroupBox12"
+        Me.XenonCP1.Visible = False
         '
         'XenonGroupBox14
         '
@@ -2864,9 +2865,9 @@ Partial Class MainFrm
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnl_preview.Controls.Add(Me.ActionCenter)
         Me.pnl_preview.Controls.Add(Me.XenonWindow1)
-        Me.pnl_preview.Controls.Add(Me.XenonWindow2)
         Me.pnl_preview.Controls.Add(Me.start)
         Me.pnl_preview.Controls.Add(Me.taskbar)
+        Me.pnl_preview.Controls.Add(Me.XenonWindow2)
         Me.pnl_preview.Location = New System.Drawing.Point(4, 54)
         Me.pnl_preview.Name = "pnl_preview"
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
@@ -2919,14 +2920,17 @@ Partial Class MainFrm
         Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.DarkMode = True
         Me.XenonWindow1.DropShadow = True
-        Me.XenonWindow1.Location = New System.Drawing.Point(148, 50)
+        Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonWindow1.Location = New System.Drawing.Point(172, 13)
         Me.XenonWindow1.Metrics_BorderWidth = 1
         Me.XenonWindow1.Metrics_CaptionHeight = 22
+        Me.XenonWindow1.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow1.Name = "XenonWindow1"
         Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(2)
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.RoundedCorners = True
-        Me.XenonWindow1.Size = New System.Drawing.Size(189, 148)
+        Me.XenonWindow1.Shadow = True
+        Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "App Preview"
         Me.XenonWindow1.Win7 = False
@@ -2947,7 +2951,7 @@ Partial Class MainFrm
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
-        Me.lnk_preview.Location = New System.Drawing.Point(5, 120)
+        Me.lnk_preview.Location = New System.Drawing.Point(5, 119)
         Me.lnk_preview.Name = "lnk_preview"
         Me.lnk_preview.Size = New System.Drawing.Size(178, 25)
         Me.lnk_preview.TabIndex = 16
@@ -2965,7 +2969,7 @@ Partial Class MainFrm
         Me.Panel3.Location = New System.Drawing.Point(5, 27)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Padding = New System.Windows.Forms.Padding(1)
-        Me.Panel3.Size = New System.Drawing.Size(179, 90)
+        Me.Panel3.Size = New System.Drawing.Size(179, 89)
         Me.Panel3.TabIndex = 0
         '
         'Label8
@@ -2975,7 +2979,7 @@ Partial Class MainFrm
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(177, 43)
+        Me.Label8.Size = New System.Drawing.Size(177, 42)
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "This is a setting icon"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -2991,37 +2995,6 @@ Partial Class MainFrm
         Me.setting_icon_preview.TabIndex = 14
         Me.setting_icon_preview.Text = ""
         Me.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'XenonWindow2
-        '
-        Me.XenonWindow2.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(100, Byte), Integer))
-        Me.XenonWindow2.AccentColor_Enabled = True
-        Me.XenonWindow2.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonWindow2.Active = False
-        Me.XenonWindow2.DarkMode = True
-        Me.XenonWindow2.DropShadow = True
-        Me.XenonWindow2.Location = New System.Drawing.Point(148, 204)
-        Me.XenonWindow2.Metrics_BorderWidth = 1
-        Me.XenonWindow2.Metrics_CaptionHeight = 22
-        Me.XenonWindow2.Name = "XenonWindow2"
-        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
-        Me.XenonWindow2.Radius = 5
-        Me.XenonWindow2.RoundedCorners = True
-        Me.XenonWindow2.Size = New System.Drawing.Size(189, 46)
-        Me.XenonWindow2.TabIndex = 3
-        Me.XenonWindow2.Text = "Inactive app"
-        Me.XenonWindow2.Win7 = False
-        Me.XenonWindow2.Win7Aero = False
-        Me.XenonWindow2.Win7AeroOpaque = False
-        Me.XenonWindow2.Win7Alpha = 100
-        Me.XenonWindow2.Win7Basic = False
-        Me.XenonWindow2.Win7ColorBal = 100
-        Me.XenonWindow2.Win7GlowBal = 100
-        Me.XenonWindow2.Win7Noise = 1.0!
-        Me.XenonWindow2.Win8 = False
-        Me.XenonWindow2.Win8Lite = False
         '
         'start
         '
@@ -3092,6 +3065,40 @@ Partial Class MainFrm
         Me.taskbar.Win7AeroOpaque = False
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
+        '
+        'XenonWindow2
+        '
+        Me.XenonWindow2.AccentColor_Active = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.XenonWindow2.AccentColor_Enabled = True
+        Me.XenonWindow2.AccentColor_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonWindow2.Active = False
+        Me.XenonWindow2.DarkMode = True
+        Me.XenonWindow2.DropShadow = True
+        Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonWindow2.Location = New System.Drawing.Point(172, 160)
+        Me.XenonWindow2.Metrics_BorderWidth = 1
+        Me.XenonWindow2.Metrics_CaptionHeight = 22
+        Me.XenonWindow2.Metrics_PaddedBorderWidth = 4
+        Me.XenonWindow2.Name = "XenonWindow2"
+        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
+        Me.XenonWindow2.Radius = 5
+        Me.XenonWindow2.RoundedCorners = True
+        Me.XenonWindow2.Shadow = True
+        Me.XenonWindow2.Size = New System.Drawing.Size(189, 73)
+        Me.XenonWindow2.TabIndex = 3
+        Me.XenonWindow2.Text = "Inactive app"
+        Me.XenonWindow2.Win7 = False
+        Me.XenonWindow2.Win7Aero = False
+        Me.XenonWindow2.Win7AeroOpaque = False
+        Me.XenonWindow2.Win7Alpha = 100
+        Me.XenonWindow2.Win7Basic = False
+        Me.XenonWindow2.Win7ColorBal = 100
+        Me.XenonWindow2.Win7GlowBal = 100
+        Me.XenonWindow2.Win7Noise = 1.0!
+        Me.XenonWindow2.Win8 = False
+        Me.XenonWindow2.Win8Lite = False
         '
         'PictureBox21
         '

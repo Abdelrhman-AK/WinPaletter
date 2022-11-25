@@ -12,6 +12,10 @@ Public Class Metrics
     End Function
 
     <DllImport("user32", CharSet:=CharSet.Auto)>
+    Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As Integer, ByVal fuWinIni As SPIF) As Integer
+    End Function
+
+    <DllImport("user32", CharSet:=CharSet.Auto)>
     Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ANIMATIONINFO, ByVal fuWinIni As SPIF) As Integer
     End Function
 
@@ -36,34 +40,30 @@ Public Class Metrics
     End Enum
 
     Public Structure NONCLIENTMETRICS
-        Dim cbSize As UInteger
-        Dim iBorderWidth As Integer
-        Dim iScrollWidth As Integer
-        Dim iScrollHeight As Integer
-        Dim iCaptionWidth As Integer
-        Dim iCaptionHeight As Integer
-        Dim lfCaptionFont As LogFont
-        Dim iSmCaptionWidth As Integer
-        Dim iSmCaptionHeight As Integer
-        Dim lfSmCaptionFont As LogFont
-        Dim iMenuWidth As Integer
-        Dim iMenuHeight As Integer
-        Dim lfMenuFont As LogFont
-        Dim lfStatusFont As LogFont
-        Dim lfMessageFont As LogFont
-        Dim iPaddedBorderWidth As Integer
+        Public cbSize As Integer
+        Public iBorderWidth As Integer
+        Public iScrollWidth As Integer
+        Public iScrollHeight As Integer
+        Public iCaptionWidth As Integer
+        Public iCaptionHeight As Integer
+        Public lfCaptionFont As LogFont
+        Public iSMCaptionWidth As Integer
+        Public iSMCaptionHeight As Integer
+        Public lfSMCaptionFont As LogFont
+        Public iMenuWidth As Integer
+        Public iMenuHeight As Integer
+        Public lfMenuFont As LogFont
+        Public lfStatusFont As LogFont
+        Public lfMessageFont As LogFont
+        Public iPaddedBorderWidth As Integer
     End Structure
+
 
 
     <StructLayout(LayoutKind.Sequential)>
     Public Structure ANIMATIONINFO
-        Public Sub New(ByVal iMinAnimate As Integer)
-            Me.cbSize = CUInt(Marshal.SizeOf(GetType(ANIMATIONINFO)))
-            Me.iMinAnimate = iMinAnimate
-        End Sub
-
-        Public cbSize As UInteger
-        Public iMinAnimate As Integer
+        Public cbSize As UInt32
+        Public IMinAnimate As Int32
     End Structure
 
 
@@ -121,11 +121,6 @@ Public Class Metrics
         ' ## and the pvParam parameter must point to the LOGFONT structure to fill in.
         SPI_GETICONTITLELOGFONT = &H1F
 
-        ' ## Sets the double-click time for the mouse to the value of the uiParam parameter. The double-click time is the maximum number
-        ' ## of milliseconds that can occur between the first and second clicks of a double-click. You can also call the SetDoubleClickTime
-        ' ## function to set the double-click time. To get the current double-click time, call the GetDoubleClickTime function.
-        SPI_SETDOUBLECLICKTIME = &H20
-
         ' ## Sets the font that is used for icon titles. The uiParam parameter specifies the size of a LOGFONT structure,
         ' ## and the pvParam parameter must point to a LOGFONT structure.
         SPI_SETICONTITLELOGFONT = &H22
@@ -155,18 +150,6 @@ Public Class Metrics
         ' ## Sets the metrics associated with icons. The pvParam parameter must point to an ICONMETRICS structure that contains
         ' ## the new parameters. Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS).
         SPI_SETICONMETRICS = &H2E
-
-        ' ## Sets the size of the work area. The work area is the portion of the screen not obscured by the system taskbar
-        ' ## or by application desktop toolbars. The pvParam parameter is a pointer to a RECT structure that specifies the new work area rectangle,
-        ' ## expressed in virtual screen coordinates. In a system with multiple display monitors, the function sets the work area
-        ' ## of the monitor that contains the specified rectangle.
-        SPI_SETWORKAREA = &H2F
-
-        ' ## Retrieves the size of the work area on the primary display monitor. The work area is the portion of the screen not obscured
-        ' ## by the system taskbar or by application desktop toolbars. The pvParam parameter must point to a RECT structure that receives
-        ' ## the coordinates of the work area, expressed in virtual screen coordinates.
-        ' ## To get the work area of a monitor other than the primary display monitor, call the GetMonitorInfo function.
-        SPI_GETWORKAREA = &H30
 
         ' ## Retrieves the animation effects associated with user actions. The pvParam parameter must point to an ANIMATIONINFO structure
         ' ## that receives the information. Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO).

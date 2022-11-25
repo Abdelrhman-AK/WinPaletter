@@ -255,7 +255,6 @@ Public Class CP
     Public Property Metrics_CaptionHeight As Integer
     Public Property Metrics_CaptionWidth As Integer
     Public Property Metrics_IconSpacing As Integer
-    Public Property Metrics_IconTitleWrap As Integer
     Public Property Metrics_IconVerticalSpacing As Integer
     Public Property Metrics_MenuHeight As Integer
     Public Property Metrics_MenuWidth As Integer
@@ -263,9 +262,9 @@ Public Class CP
     Public Property Metrics_PaddedBorderWidth As Integer
     Public Property Metrics_ScrollHeight As Integer
     Public Property Metrics_ScrollWidth As Integer
-    Public Property Metrics_ShellIconSize As Integer
     Public Property Metrics_SmCaptionHeight As Integer
     Public Property Metrics_SmCaptionWidth As Integer
+    Public Property Metrics_DesktopIconSize As Integer = 32
 #End Region
 
 #Region "Fonts"
@@ -1558,8 +1557,6 @@ Public Class CP
 
                 Metrics_IconSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", -1125) / -15
 
-                Metrics_IconTitleWrap = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconTitleWrap", 1) '/ -15
-
                 Metrics_IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", -1125) / -15
 
                 Metrics_MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", -285) / -15
@@ -1574,11 +1571,11 @@ Public Class CP
 
                 Metrics_ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", -255) / -15
 
-                Metrics_ShellIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", 32) '/ -15
-
                 Metrics_SmCaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", -330) / -15
 
                 Metrics_SmCaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", -330) / -15
+
+                Metrics_DesktopIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", 32)
 #End Region
 
 #Region "Fonts"
@@ -4475,11 +4472,13 @@ Public Class CP
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
 #Region "Metrics With Fonts"
+                Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
                 Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
-                Dim NCM As New NONCLIENTMETRICS() With {.cbSize = Marshal.SizeOf(NCM)}
+                Dim lfIconFontSt As New LogFontStr
 
                 SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
                 SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
+                SystemParametersInfo(SPI.SPI_GETICONTITLELOGFONT, 0, lfIconFontSt, SPIF.None)
 
                 Dim lfCaptionFont As New LogFont : Fonts_CaptionFont.ToLogFont(lfCaptionFont)
                 Dim lfIconFont As New LogFont : Fonts_IconFont.ToLogFont(lfIconFont)
@@ -4499,7 +4498,6 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", Metrics_CaptionHeight * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", Metrics_CaptionWidth * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", Metrics_IconSpacing * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconTitleWrap", Metrics_IconTitleWrap, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", Metrics_IconVerticalSpacing * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", Metrics_MenuHeight * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", Metrics_MenuWidth * -15, False, True)
@@ -4507,9 +4505,9 @@ Public Class CP
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", Metrics_PaddedBorderWidth * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", Metrics_ScrollHeight * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", Metrics_ScrollWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", Metrics_ShellIconSize, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", Metrics_SmCaptionHeight * -15, False, True)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", Metrics_SmCaptionWidth * -15, False, True)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", Metrics_DesktopIconSize, False, True)
 
                 anim.iMinAnimate = If(Metrics_MinAnimate, 1, 0)
 
@@ -4522,15 +4520,13 @@ Public Class CP
                 NCM.iBorderWidth = Metrics_BorderWidth
                 NCM.iScrollWidth = Metrics_ScrollWidth
                 NCM.iScrollHeight = Metrics_ScrollHeight
-                NCM.iCaptionWidth = Metrics_CaptionWidth + 14
+                NCM.iCaptionWidth = Metrics_CaptionWidth '+ 14
                 NCM.iCaptionHeight = Metrics_CaptionHeight
                 NCM.iSMCaptionWidth = Metrics_SmCaptionWidth
                 NCM.iSMCaptionHeight = Metrics_SmCaptionHeight
                 NCM.iMenuWidth = Metrics_MenuWidth
                 NCM.iMenuHeight = Metrics_MenuHeight
                 NCM.iPaddedBorderWidth = Metrics_PaddedBorderWidth
-
-                Dim lfIconFontSt As New LogFontStr
 
                 With lfIconFontSt
                     .lfHeight = lfIconFont.lfHeight
@@ -4549,13 +4545,10 @@ Public Class CP
                     .lfFaceName = lfIconFont.lfFaceName
                 End With
 
-
-
                 SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-
-                SystemParametersInfo(SPI.SPI_SETICONTITLELOGFONT, Marshal.SizeOf(lfIconFontSt), lfIconFontSt, SPIF.SPIF_SENDCHANGE)
-
                 SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
+                SystemParametersInfo(SPI.SPI_SETICONTITLELOGFONT, 0, lfIconFontSt, SPIF.SPIF_SENDCHANGE)
+
 #End Region
 
 #Region "Terminals"

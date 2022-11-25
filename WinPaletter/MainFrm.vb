@@ -826,8 +826,8 @@ Public Class MainFrm
         End Select
 
         If PreviewConfig = WinVer.Ten Or PreviewConfig = WinVer.Eleven Then
-            XenonWindow1.Top = start.Top
-            XenonWindow1.Left = start.Right + 5
+            'XenonWindow1.Top = start.Top
+            'XenonWindow1.Left = start.Right + 5
 
             XenonWindow2.Top = XenonWindow1.Bottom + 5
             XenonWindow2.Left = XenonWindow1.Left

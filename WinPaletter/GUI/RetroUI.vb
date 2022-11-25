@@ -961,6 +961,41 @@ Public Class RetroWindow : Inherits Panel
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Public Property ButtonFace As Color = Color.FromArgb(192, 192, 192)
 
+    Private _Metrics_CaptionHeight As Integer = 22
+    Public Property Metrics_CaptionHeight As Integer
+        Get
+            Return _Metrics_CaptionHeight
+        End Get
+
+        Set(value As Integer)
+            _Metrics_CaptionHeight = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _Metrics_BorderWidth As Integer = 1
+    Public Property Metrics_BorderWidth As Integer
+        Get
+            Return _Metrics_BorderWidth
+        End Get
+
+        Set(value As Integer)
+            _Metrics_BorderWidth = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _Metrics_PaddedBorderWidth As Integer = 4
+    Public Property Metrics_PaddedBorderWidth As Integer
+        Get
+            Return _Metrics_PaddedBorderWidth
+        End Get
+        Set(value As Integer)
+            _Metrics_PaddedBorderWidth = value
+            Refresh()
+        End Set
+    End Property
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
@@ -969,7 +1004,12 @@ Public Class RetroWindow : Inherits Panel
 
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim TRect As New Rectangle(4, 4, Width - 8, 18)
+
+
+        Dim CompinedPadding As Integer = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3
+
+        Dim TRect As New Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight)
+
         Dim ARect As New Rectangle(2, 2, Width - 5, Height - 5)
         '#################################################################################
         G.Clear(BackColor)
@@ -1001,20 +1041,7 @@ Public Class RetroWindow : Inherits Panel
             If G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit Then
                 F = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
             Else
-                Try
-                    Dim b As Byte() = My.Computer.Registry.CurrentUser.OpenSubKey("Control Panel\Desktop\WindowMetrics").GetValue("CaptionFont")
-                    Dim xf As LogFont = LogFontHelper.ByteToLogFont(b)
-                    Dim bold As Boolean = False
-                    If xf.lfWeight >= 0 And xf.lfWeight <= 400 Then
-                        bold = False
-                    ElseIf xf.lfWeight > 400 Then
-                        bold = True
-                    End If
-
-                    F = New Font("Segoe UI", 9, If(bold, FontStyle.Bold, FontStyle.Regular))
-                Catch
-                    F = New Font("Segoe UI", 9, FontStyle.Regular)
-                End Try
+                F = Font
             End If
 
             Dim RTL As Boolean = If(RightToLeft = 1, True, False)

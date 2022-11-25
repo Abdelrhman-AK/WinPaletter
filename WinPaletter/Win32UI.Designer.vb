@@ -662,7 +662,7 @@ Partial Class Win32UI
         Me.btnaltface_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnaltface_pick.DefaultColor = System.Drawing.Color.Black
         Me.btnaltface_pick.ForceNoNerd = False
-        Me.btnaltface_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btnaltface_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btnaltface_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnaltface_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnaltface_pick.Name = "btnaltface_pick"
@@ -718,7 +718,7 @@ Partial Class Win32UI
         Me.btntext_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btntext_pick.DefaultColor = System.Drawing.Color.Black
         Me.btntext_pick.ForceNoNerd = False
-        Me.btntext_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btntext_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btntext_pick.Location = New System.Drawing.Point(251, 4)
         Me.btntext_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btntext_pick.Name = "btntext_pick"
@@ -774,7 +774,7 @@ Partial Class Win32UI
         Me.Frame_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Frame_pick.DefaultColor = System.Drawing.Color.Black
         Me.Frame_pick.ForceNoNerd = False
-        Me.Frame_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.Frame_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.Frame_pick.Location = New System.Drawing.Point(251, 4)
         Me.Frame_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Frame_pick.Name = "Frame_pick"
@@ -830,7 +830,7 @@ Partial Class Win32UI
         Me.btnshadow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnshadow_pick.DefaultColor = System.Drawing.Color.Black
         Me.btnshadow_pick.ForceNoNerd = False
-        Me.btnshadow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btnshadow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btnshadow_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnshadow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnshadow_pick.Name = "btnshadow_pick"
@@ -886,7 +886,7 @@ Partial Class Win32UI
         Me.btndkshadow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btndkshadow_pick.DefaultColor = System.Drawing.Color.Black
         Me.btndkshadow_pick.ForceNoNerd = False
-        Me.btndkshadow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btndkshadow_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btndkshadow_pick.Location = New System.Drawing.Point(251, 4)
         Me.btndkshadow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btndkshadow_pick.Name = "btndkshadow_pick"
@@ -942,7 +942,7 @@ Partial Class Win32UI
         Me.btnlight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnlight_pick.DefaultColor = System.Drawing.Color.Black
         Me.btnlight_pick.ForceNoNerd = False
-        Me.btnlight_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btnlight_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btnlight_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnlight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnlight_pick.Name = "btnlight_pick"
@@ -998,7 +998,7 @@ Partial Class Win32UI
         Me.btnface_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnface_pick.DefaultColor = System.Drawing.Color.Black
         Me.btnface_pick.ForceNoNerd = False
-        Me.btnface_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btnface_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btnface_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnface_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnface_pick.Name = "btnface_pick"
@@ -1054,7 +1054,7 @@ Partial Class Win32UI
         Me.btnhilight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnhilight_pick.DefaultColor = System.Drawing.Color.Black
         Me.btnhilight_pick.ForceNoNerd = False
-        Me.btnhilight_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(68, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.btnhilight_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btnhilight_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnhilight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnhilight_pick.Name = "btnhilight_pick"
@@ -2467,10 +2467,12 @@ Partial Class Win32UI
         '
         'Label41
         '
+        Me.Label41.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.Location = New System.Drawing.Point(44, 3)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(142, 31)
+        Me.Label41.Size = New System.Drawing.Size(309, 31)
         Me.Label41.TabIndex = 0
         Me.Label41.Text = "Preview"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

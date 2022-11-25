@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
+Imports WinPaletter.LogFontHelper
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
 Public Class LogFont
@@ -43,20 +44,19 @@ End Class
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
 Public Structure LogFontStr
-    Public lfHeight As Integer
-    Public lfWidth As Integer
-    Public lfEscapement As Integer
-    Public lfOrientation As Integer
-    Public lfWeight As Integer
-    Public lfItalic As Byte
-    Public lfUnderline As Byte
-    Public lfStrikeOut As Byte
-    Public lfCharSet As Byte
-    Public lfOutPrecision As Byte
-    Public lfClipPrecision As Byte
-    Public lfQuality As Byte
-    Public lfPitchAndFamily As Byte
-
+    Public LfHeight As Integer
+    Public LfWidth As Integer
+    Public LfEscapement As Integer
+    Public LfOrientation As Integer
+    Public LfWeight As Integer
+    Public LfItalic As Byte
+    Public LfUnderline As Byte
+    Public LfStrikeOut As Byte
+    Public LfCharSet As Byte
+    Public LfOutPrecision As Byte
+    Public LfClipPrecision As Byte
+    Public LfQuality As Byte
+    Public LfPitchAndFamily As Byte
     '<see cref="UnmanagedType.ByValTStr"/> means that the string should be marshalled as an array of TCHAR embedded in the structure.
     'This implies that the font names can be no larger than <see cref="LF_FACESIZE"/> including the terminating '\0'. That works out to 31 characters.
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
