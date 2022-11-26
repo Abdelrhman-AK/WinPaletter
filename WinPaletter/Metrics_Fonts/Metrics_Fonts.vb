@@ -1,15 +1,24 @@
-﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+﻿Imports System.Windows.Forms.VisualStyles
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
 
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        pnl_preview.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        pnl_preview2.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        pnl_preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        pnl_preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+
         ApplyDarkMode(Me)
         ApplyFromCP(MainFrm.CP)
 
-        MainFrm.MakeItDoubleBuffered(pnl_preview)
+        MainFrm.MakeItDoubleBuffered(pnl_preview1)
+        MainFrm.MakeItDoubleBuffered(pnl_preview2)
+        MainFrm.MakeItDoubleBuffered(pnl_preview3)
+        MainFrm.MakeItDoubleBuffered(pnl_preview4)
+
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon1)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon2)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon3)
@@ -21,6 +30,8 @@ Public Class Metrics_Fonts
         XenonFakeIcon1.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
         XenonFakeIcon2.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
         XenonFakeIcon3.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+        PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+
     End Sub
 
 
@@ -36,17 +47,16 @@ Public Class Metrics_Fonts
         XenonFakeIcon3.Font = CP.Fonts_IconFont
 
         Label3.Font = CP.Fonts_MenuFont
-        Label14.Font = CP.Fonts_MenuFont
-        Label32.Font = CP.Fonts_MenuFont
+        MenuStrip1.Font = CP.Fonts_MenuFont
 
         Label5.Font = CP.Fonts_SmCaptionFont
         XenonWindow2.Font = CP.Fonts_SmCaptionFont
 
-
         Label4.Font = CP.Fonts_MessageFont
+        msgLbl.Font = CP.Fonts_MessageFont
 
         Label6.Font = CP.Fonts_StatusFont
-
+        statusLbl.Font = CP.Fonts_StatusFont
 
         XenonTrackbar1.Value = CP.Metrics_BorderWidth
         XenonTrackbar2.Value = CP.Metrics_CaptionHeight
@@ -63,6 +73,38 @@ Public Class Metrics_Fonts
         XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
         XenonTrackbar7.Value = CP.Metrics_DesktopIconSize
         XenonTrackbar5.Value = CP.Metrics_ShellIconSize
+
+
+
+        RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
+        RetroWindow1.BackColor = MainFrm.CP.Win32UI_ButtonFace
+        RetroWindow1.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
+        RetroWindow1.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
+        RetroWindow1.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
+        RetroWindow1.ColorBorder = MainFrm.CP.Win32UI_ActiveBorder
+        RetroWindow1.ForeColor = MainFrm.CP.Win32UI_TitleText
+        RetroWindow1.Color1 = MainFrm.CP.Win32UI_ActiveTitle
+        RetroWindow1.Color2 = MainFrm.CP.Win32UI_GradientActiveTitle
+        RetroWindow1.ColorGradient = MainFrm.CP.Win32UI_EnableGradient
+
+        RetroButton3.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
+        RetroButton3.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
+        RetroButton3.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
+        RetroButton3.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
+        RetroButton3.BackColor = MainFrm.CP.Win32UI_ButtonFace
+
+        RetroButton4.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
+        RetroButton4.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
+        RetroButton4.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
+        RetroButton4.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
+        RetroButton4.BackColor = MainFrm.CP.Win32UI_ButtonFace
+
+        RetroButton5.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
+        RetroButton5.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
+        RetroButton5.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
+        RetroButton5.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
+        RetroButton5.BackColor = MainFrm.CP.Win32UI_ButtonFace
+
     End Sub
 
     Sub ApplyToCP(CP As CP)
@@ -96,6 +138,18 @@ Public Class Metrics_Fonts
             Label1.Font = FontDialog1.Font
             XenonWindow1.Font = FontDialog1.Font
             RetroWindow1.Font = FontDialog1.Font
+
+            XenonWindow1.Refresh()
+            RetroWindow1.Refresh()
+
+            RetroButton3.Height = RetroWindow1.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+            RetroButton4.Height = RetroWindow1.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+            RetroButton5.Height = RetroWindow1.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+
+            RetroButton3.Top = XenonTrackbar1.Value + XenonTrackbar12.Value + 5
+            RetroButton4.Top = RetroButton3.Top
+            RetroButton5.Top = RetroButton3.Top
+
         End If
     End Sub
 
@@ -113,14 +167,17 @@ Public Class Metrics_Fonts
         FontDialog1.Font = Label3.Font
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label3.Font = FontDialog1.Font
-            Label14.Font = FontDialog1.Font
-            Label32.Font = FontDialog1.Font
+            MenuStrip1.Font = FontDialog1.Font
         End If
     End Sub
 
+
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         FontDialog1.Font = Label4.Font
-        If FontDialog1.ShowDialog = DialogResult.OK Then Label4.Font = FontDialog1.Font
+        If FontDialog1.ShowDialog = DialogResult.OK Then
+            Label4.Font = FontDialog1.Font
+            msgLbl.Font = FontDialog1.Font
+        End If
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
@@ -133,7 +190,10 @@ Public Class Metrics_Fonts
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
         FontDialog1.Font = Label6.Font
-        If FontDialog1.ShowDialog = DialogResult.OK Then Label6.Font = FontDialog1.Font
+        If FontDialog1.ShowDialog = DialogResult.OK Then
+            Label6.Font = FontDialog1.Font
+            statusLbl.Font = FontDialog1.Font
+        End If
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -153,39 +213,47 @@ Public Class Metrics_Fonts
         Cursor = Cursors.Default
     End Sub
 
-
-
-
     Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
         ttl_h.Text = sender.Value
         XenonWindow1.Metrics_CaptionHeight = sender.Value
         RetroWindow1.Metrics_CaptionHeight = sender.Value
 
-        RetroButton3.Height = sender.Value - 4
-        RetroButton4.Height = sender.Value - 4
-        RetroButton5.Height = sender.Value - 4
+        RetroButton3.Height = sender.Value + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton4.Height = sender.Value + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton5.Height = sender.Value + RetroWindow1.GetTitleTextHeight - 4
 
-        Dim iFx As Integer
-        iFx = Math.Max(RetroButton3.Width, RetroButton3.Height) / 18
-
-        Dim f As New Font("Marlett", 6.8 * iFx)
-        RetroButton3.Font = f
-        RetroButton4.Font = f
-        RetroButton5.Font = f
+        UpdateTitlebarButtonsFontSize()
     End Sub
 
     Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
         ttl_w.Text = sender.Value
+        RetroWindow1.Metrics_CaptionWidth = sender.Value
 
-        RetroButton3.Width = sender.Value - 2
-        RetroButton4.Width = sender.Value - 2
-        RetroButton5.Width = sender.Value - 2
+        RetroButton3.Width = RetroWindow1.Metrics_CaptionWidth - 2
+        RetroButton4.Width = RetroWindow1.Metrics_CaptionWidth - 2
+        RetroButton5.Width = RetroWindow1.Metrics_CaptionWidth - 2
 
         RetroButton3.Left = RetroWindow1.Width - RetroButton3.Width - XenonTrackbar1.Value - XenonTrackbar12.Value - 5
         RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
         RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
 
+        UpdateTitlebarButtonsFontSize()
     End Sub
+
+    Sub UpdateTitlebarButtonsFontSize()
+        Try
+            Dim i0, iFx As Single
+            i0 = Math.Abs(Math.Min(XenonTrackbar2.Value, XenonTrackbar3.Value))
+            iFx = i0 / Math.Abs(Math.Min(XenonTrackbar2.Minimum, XenonTrackbar3.Minimum))
+            Dim f As New Font("Marlett", 6.8 * iFx)
+            RetroButton3.Font = f
+            RetroButton4.Font = f
+            RetroButton5.Font = f
+        Catch
+
+        End Try
+    End Sub
+
 
     Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
         Label33.Text = sender.Value
@@ -210,7 +278,7 @@ Public Class Metrics_Fonts
 
     Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
         Label30.Text = sender.Value
-        Panel1.Height = sender.Value
+        MenuStrip1.Height = Math.Max(sender.Value, GetTitleTextHeight(MenuStrip1.Font))
     End Sub
 
     Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
@@ -248,10 +316,12 @@ Public Class Metrics_Fonts
 
     Private Sub XenonTrackbar11_Scroll(sender As Object) Handles XenonTrackbar11.Scroll
         Label26.Text = sender.Value
+        HScrollBar1.Height = sender.Value
     End Sub
 
     Private Sub XenonTrackbar10_Scroll(sender As Object) Handles XenonTrackbar10.Scroll
         Label25.Text = sender.Value
+        VScrollBar1.Width = sender.Value
     End Sub
 
     Private Sub XenonTrackbar14_Scroll(sender As Object) Handles XenonTrackbar14.Scroll
@@ -316,4 +386,28 @@ Public Class Metrics_Fonts
     Private Sub ttl_p_TextChanged(sender As Object, e As EventArgs) Handles ttl_p.TextChanged
         XenonTrackbar12.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum)
     End Sub
+
+
+    Private Sub XenonWindow1_MetricsChanged() Handles XenonWindow1.MetricsChanged
+        XenonWindow1.SetMetrics(XenonWindow4)
+        XenonWindow1.SetMetrics(XenonWindow6)
+    End Sub
+
+    Private Sub XenonWindow1_FontChanged(sender As Object, e As EventArgs) Handles XenonWindow1.FontChanged
+        XenonWindow4.Font = XenonWindow1.Font
+        XenonWindow6.Font = XenonWindow1.Font
+    End Sub
+
+    Private Sub MenuStrip1_FontChanged(sender As Object, e As EventArgs) Handles MenuStrip1.FontChanged
+        MenuStrip1.Height = Math.Max(XenonTrackbar9.Value, GetTitleTextHeight(MenuStrip1.Font))
+    End Sub
+
+    Public Function GetTitleTextHeight([Font] As Font)
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", [Font]).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
+
+        Return TitleTextH_Sum
+    End Function
 End Class

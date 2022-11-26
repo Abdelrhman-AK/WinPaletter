@@ -4616,6 +4616,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             _Metrics_CaptionHeight = value
             AdjustPadding()
             Refresh()
+            RaiseEvent MetricsChanged()
         End Set
     End Property
 
@@ -4629,6 +4630,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             _Metrics_BorderWidth = value
             AdjustPadding()
             Refresh()
+            RaiseEvent MetricsChanged()
         End Set
     End Property
 
@@ -4641,18 +4643,32 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             _Metrics_PaddedBorderWidth = value
             AdjustPadding()
             Refresh()
+            RaiseEvent MetricsChanged()
         End Set
     End Property
 
+    Public Sub SetMetrics(ByVal [XenonWindow] As XenonWindow)
+        [XenonWindow].Metrics_BorderWidth = Metrics_BorderWidth
+        [XenonWindow].Metrics_CaptionHeight = Metrics_CaptionHeight
+        [XenonWindow].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
+        [XenonWindow].Refresh()
+    End Sub
+
+    Public Event MetricsChanged()
     Sub AdjustPadding()
         Dim i, iTop As Integer
 
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
         If Win7 Or Win8 Then
             i = FreeMargin + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth
-            iTop = i + _Metrics_CaptionHeight
+            iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight
         Else
             i = FreeMargin
-            iTop = i + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight
+            iTop = i + TitleTextH_Sum + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight
         End If
 
         i += 1
@@ -4699,8 +4715,12 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim Rect As New Rectangle(FreeMargin, FreeMargin, Width - (FreeMargin * 2 + 1), Height - (FreeMargin * 2 + 1))
         Dim RectBK As New Rectangle(0, 0, Width, Height)
 
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        Dim TitlebarRect As New Rectangle(Rect.X, Rect.Y, Rect.Width, _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3)
+        Dim TitlebarRect As New Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3)
 
         If TitlebarRect.Height < 25 Then TitlebarRect.Height = 25
 
@@ -4988,6 +5008,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+            Try : AddHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
         End If
 
         ProcessBack()

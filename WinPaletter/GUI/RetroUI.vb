@@ -973,6 +973,9 @@ Public Class RetroWindow : Inherits Panel
         End Set
     End Property
 
+    Public Property Metrics_CaptionWidth As Integer
+
+
     Private _Metrics_BorderWidth As Integer = 1
     Public Property Metrics_BorderWidth As Integer
         Get
@@ -996,6 +999,15 @@ Public Class RetroWindow : Inherits Panel
         End Set
     End Property
 
+    Public Function GetTitleTextHeight()
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
+        Return TitleTextH_Sum
+    End Function
+
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
@@ -1005,10 +1017,14 @@ Public Class RetroWindow : Inherits Panel
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
 
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         Dim CompinedPadding As Integer = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3
 
-        Dim TRect As New Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight)
+        Dim TRect As New Rectangle(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + TitleTextH_Sum)
 
         Dim ARect As New Rectangle(2, 2, Width - 5, Height - 5)
         '#################################################################################

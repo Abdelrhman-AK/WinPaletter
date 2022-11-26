@@ -15,6 +15,7 @@ Public Class Win32UI
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
         LoadCP(MainFrm.CP)
+        SetMetics(MainFrm.CP)
     End Sub
 
 
@@ -758,6 +759,94 @@ Public Class Win32UI
         ApplyRetroPreview()
     End Sub
 
+    Sub SetMetics(CP As CP)
+
+        RetroPanel2.Width = CP.Metrics_ScrollWidth
+        Panel3.Height = CP.Metrics_MenuHeight
+
+        RetroLabel1.Font = CP.Fonts_MenuFont
+        RetroLabel2.Font = CP.Fonts_MenuFont
+        RetroLabel3.Font = CP.Fonts_MenuFont
+        RetroLabel9.Font = CP.Fonts_MenuFont
+        RetroLabel5.Font = CP.Fonts_MenuFont
+        RetroLabel6.Font = CP.Fonts_MenuFont
+        RetroLabel4.Font = CP.Fonts_MessageFont
+
+        Dim iP As Integer = 3 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth
+        Dim iT As Integer = 4 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight
+        Dim _Padding As New Padding(iP, iT, iP, iP)
+
+        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+            If Not RW.UseItAsMenu Then
+                RW.Metrics_BorderWidth = CP.Metrics_BorderWidth
+                RW.Metrics_CaptionHeight = CP.Metrics_CaptionHeight
+                RW.Metrics_CaptionWidth = CP.Metrics_CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
+                RW.Font = CP.Fonts_CaptionFont
+                RW.Padding = _Padding
+            End If
+        Next
+
+        RetroWindow3.Height = 80 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow2.GetTitleTextHeight + CP.Metrics_MenuHeight
+
+        RetroButton3.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton4.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton5.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton6.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton7.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton8.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton9.Height = CP.Metrics_CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
+
+        RetroButton3.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton4.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton5.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton8.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton7.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton6.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton9.Width = CP.Metrics_CaptionWidth - 2
+
+        RetroButton3.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton4.Top = RetroButton3.Top
+        RetroButton5.Top = RetroButton3.Top
+
+        RetroButton8.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton7.Top = RetroButton8.Top
+        RetroButton6.Top = RetroButton8.Top
+
+        RetroButton9.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+
+        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
+        RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
+
+        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton7.Left = RetroButton8.Left - 2 - RetroButton7.Width
+        RetroButton6.Left = RetroButton7.Left - RetroButton6.Width
+
+        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+
+        Try
+            Dim i0, iFx As Single
+            i0 = Math.Abs(Math.Min(CP.Metrics_CaptionWidth, CP.Metrics_CaptionHeight))
+            iFx = i0 / 17
+            Dim f As New Font("Marlett", 6.8 * iFx)
+            RetroButton3.Font = f
+            RetroButton4.Font = f
+            RetroButton5.Font = f
+            RetroButton6.Font = f
+            RetroButton7.Font = f
+            RetroButton8.Font = f
+            RetroButton9.Font = f
+        Catch
+
+        End Try
+
+        Menu.Top = pnl_preview.ClientRectangle.Top + (Panel3.Bounds).Bottom + 2
+        'Menu.Left = RetroPanel1.Left + 3
+    End Sub
+
+
     Sub ApplyRetroPreview()
         RetroWindow1.ColorGradient = XenonToggle2.Checked
         RetroWindow2.ColorGradient = XenonToggle2.Checked
@@ -803,6 +892,7 @@ Public Class Win32UI
                 RB.WindowFrame = c
             Next
         Next
+
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.WindowFrame = c
         Next
@@ -817,6 +907,7 @@ Public Class Win32UI
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.BackColor = c
         Next
+
         RetroPanel2.BackColor = c
         Menu.ButtonFace = c
 
