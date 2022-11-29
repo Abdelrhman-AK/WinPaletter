@@ -117,6 +117,7 @@ Partial Class CursorsStudio
         Me.Person = New WinPaletter.CursorControl()
         Me.IBeam = New WinPaletter.CursorControl()
         Me.Cross = New WinPaletter.CursorControl()
+        Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.XenonGroupBox13.SuspendLayout()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
@@ -999,7 +1000,7 @@ Partial Class CursorsStudio
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(326, 629)
+        Me.XenonButton3.Location = New System.Drawing.Point(196, 629)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(91, 35)
         Me.XenonButton3.TabIndex = 66
@@ -1794,12 +1795,30 @@ Partial Class CursorsStudio
         Me.Cross.TabIndex = 20
         Me.Cross.Text = "CursorControl17"
         '
+        'XenonButton11
+        '
+        Me.XenonButton11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton11.ForeColor = System.Drawing.Color.White
+        Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
+        Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.XenonButton11.LineSize = 1
+        Me.XenonButton11.Location = New System.Drawing.Point(293, 629)
+        Me.XenonButton11.Name = "XenonButton11"
+        Me.XenonButton11.Size = New System.Drawing.Size(124, 35)
+        Me.XenonButton11.TabIndex = 82
+        Me.XenonButton11.Text = "Quick Apply"
+        Me.XenonButton11.UseVisualStyleBackColor = False
+        '
         'CursorsStudio
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(657, 676)
+        Me.Controls.Add(Me.XenonButton11)
         Me.Controls.Add(Me.XenonGroupBox13)
         Me.Controls.Add(Me.XenonGroupBox12)
         Me.Controls.Add(Me.XenonGroupBox11)
@@ -1941,4 +1960,5 @@ Partial Class CursorsStudio
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents XenonButton10 As XenonButton
     Friend WithEvents PictureBox20 As PictureBox
+    Friend WithEvents XenonButton11 As XenonButton
 End Class

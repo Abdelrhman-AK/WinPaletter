@@ -4,7 +4,6 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
-Imports System.Security.Cryptography
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 
@@ -44,16 +43,16 @@ Public Class XenonCore
 
         Try
             If CP.Aero_Theme = AeroTheme.Basic Or CP.Aero_Theme = AeroTheme.Classic Then
-                NativeMethods.Dwmapi.DwmEnableComposition(NativeMethods.Dwmapi.CompositionAction.DWM_EC_DISABLECOMPOSITION)
+                NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_DISABLECOMPOSITION)
             Else
-                NativeMethods.Dwmapi.DwmEnableComposition(NativeMethods.Dwmapi.CompositionAction.DWM_EC_ENABLECOMPOSITION)
+                NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_ENABLECOMPOSITION)
             End If
 
             Dim Com As Boolean
             NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
 
             If Com Then
-                Dim temp As New NativeMethods.Dwmapi.DWM_COLORIZATION_PARAMS
+                Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
                 temp.clrColor = CP.Aero_ColorizationColor.ToArgb
                 temp.clrAfterGlow = CP.Aero_ColorizationAfterglow.ToArgb
                 temp.nIntensity = CP.Aero_ColorizationColorBalance
@@ -61,7 +60,7 @@ Public Class XenonCore
                 temp.clrBlurBalance = CP.Aero_ColorizationBlurBalance
                 temp.clrGlassReflectionIntensity = CP.Aero_ColorizationGlassReflectionIntensity
                 temp.fOpaque = If(CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
-                NativeMethods.Dwmapi.DwmSetColorizationParameters(temp, False)
+                Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
         Catch
         End Try

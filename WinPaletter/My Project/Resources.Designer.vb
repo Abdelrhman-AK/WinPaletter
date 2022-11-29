@@ -1127,6 +1127,26 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property TitlebarTopActive() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TitlebarTopActive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property TitlebarTopInactive() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TitlebarTopInactive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property Win7_Close_Active() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Win7_Close_Active", resourceCulture)

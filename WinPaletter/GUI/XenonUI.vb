@@ -4450,7 +4450,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Catch : End Try
     End Sub
 End Class
-
 Public Class XenonFakeIcon : Inherits Panel
 
     Sub New()
@@ -4501,7 +4500,6 @@ Public Class XenonFakeIcon : Inherits Panel
         If _IconSize > 256 Then _IconSize = 256
 
         Dim IconRectX As New Rectangle(IconRect.X + (IconRect.Width - _IconSize) / 2, IconRect.Y + (IconRect.Height - _IconSize) / 2, _IconSize, _IconSize)
-
 
         If Icon IsNot Nothing Then
             G.DrawIcon(Icon, IconRectX)
@@ -4562,6 +4560,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Sub New()
         AdjustPadding()
         Font = New Font("Segoe UI", 9)
+        DoubleBuffered = True
     End Sub
 
     Private _DropShadow As Boolean = True
@@ -4677,6 +4676,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Padding = New Padding(i, iTop, i, i)
     End Sub
 
+
     Public Property Shadow As Boolean = True
     Public Property Radius As Integer = 5
     Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
@@ -4709,8 +4709,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         '### Adjust Limits
         If _Metrics_CaptionHeight < 17 Then _Metrics_CaptionHeight = 17
-        If _Metrics_BorderWidth < 1 Then _Metrics_BorderWidth = 1
-        If _Metrics_PaddedBorderWidth < 1 Then _Metrics_PaddedBorderWidth = 1
 
         Dim Rect As New Rectangle(FreeMargin, FreeMargin, Width - (FreeMargin * 2 + 1), Height - (FreeMargin * 2 + 1))
         Dim RectBK As New Rectangle(0, 0, Width, Height)
@@ -4729,7 +4727,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         Dim IconRect As New Rectangle(Rect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2, IconSize, IconSize)
 
-
         Dim LabelRect As New Rectangle(IconRect.Right + 4, Rect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height)
 
         If ToolWindow Then LabelRect.X = IconRect.X
@@ -4738,9 +4735,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim XRect As New Rectangle(Rect.Right - 20, Rect.Y, 20, TitlebarRect.Height)
 
         Dim RectClip As Rectangle = Bounds
+
         G.Clear(Color.Transparent)
 
         If Not Win7 And Not Win8 Then
+
             If RoundedCorners Then
                 Try
                     G.DrawImage(AdaptedBack, RectBK)
@@ -4748,7 +4747,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 End Try
 
                 If Shadow And Active And Not DesignMode Then
-                    DrawGlow(G, Rect, Color.Black, 8, 17)
+                    DrawGlow(G, Rect, Color.Black, 5, 10)
                 End If
 
                 If DarkMode Then
@@ -4783,6 +4782,15 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
                 End If
             Else
+                Try
+                    G.DrawImage(AdaptedBack, RectBK)
+                Catch
+                End Try
+
+                If Shadow And Active And Not DesignMode Then
+                    DrawGlow(G, Rect, Color.Black, 5, 10)
+                End If
+
                 If DarkMode Then
                     G.FillRectangle(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect)
                 Else
@@ -4803,7 +4811,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End If
                 End If
 
-
                 If AccentColor_Enabled Then
                     If Active Then
                         G.FillRectangle(New SolidBrush(AccentColor_Active), TitlebarRect)
@@ -4816,17 +4823,37 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             End If
         Else
             If Win7 Then
-                Dim Rect7 As New Rectangle(0, 0, Width, Height)
-                Dim InnerWindow_1 As New Rectangle(6, 22, Width - 12, Height - 22 - 7)
-                Dim InnerWindow_2 As New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
-                Dim RectSide1 As New Rectangle(1, InnerWindow_1.Y, 6, InnerWindow_1.Height)
-                Dim RectSide2 As New Rectangle(InnerWindow_2.Right - 1, RectSide1.Y, 6, InnerWindow_1.Height)
+
+                Dim InnerWindow_1 As New Rectangle
+                Dim InnerWindow_2 As New Rectangle
+                Dim RectSide1 As New Rectangle
+                Dim RectSide2 As New Rectangle
+
+                With Rect
+
+                    Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+                    If Sum < 2 Then Sum = 2
+
+                    Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight
+
+
+                    InnerWindow_1 = New Rectangle(.X + Sum + 1, .Y + Sum_Ttl, .Width - (Sum) * 2 - 2, .Height - (Sum + Sum_Ttl) - 2)
+                    InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+
+                    RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum, InnerWindow_1.Height * 0.5)
+                    RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
+                End With
+
 
                 If Not Win7Basic Then
 
-                    G.DrawImage(AdaptedBack, Rect7)
+                    G.DrawImage(AdaptedBack, RectBK)
 
-                    Dim Radius As Integer = 3
+                    If Shadow And Active And Not DesignMode Then
+                        DrawGlow(G, Rect, Color.Black, 5, 10)
+                    End If
+
+                    Dim Radius As Integer = 5
 
                     If Not Win7AeroOpaque Then
                         Dim bk As Bitmap = AdaptedBackBlurred
@@ -4834,32 +4861,40 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         Dim alpha As Single = 1 - Win7Alpha / 100   'ColorBlurBalance
                         Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
                         Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
+
                         Dim Color1 As Color = If(Active, AccentColor_Active, AccentColor_Inactive)
                         Dim Color2 As Color = If(Active, AccentColor2_Active, AccentColor2_Inactive)
 
-                        DrawAero(G, Rect7, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius)
+                        DrawAero(G, Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius)
 
                     Else
-                        FillRect(G, New SolidBrush(Color.White), Rect7, Radius, True)
-                        FillRect(G, New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect7, Radius, True)
+                        FillRect(G, New SolidBrush(Color.White), Rect, Radius, True)
+                        FillRect(G, New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect, Radius, True)
                     End If
 
                     G.DrawImage(My.Resources.Win7Sides, RectSide1)
                     G.DrawImage(My.Resources.Win7Sides, RectSide2)
 
-                    FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect7, Radius, True)
-
                     Dim closeBtn As Image = If(Active, My.Resources.Win7_Close_Active, My.Resources.Win7_Close_inactive)
-                    G.DrawImage(closeBtn, New Rectangle(Width - closeBtn.Width - 5, 0, closeBtn.Width, closeBtn.Height))
+                    Dim CloseRect As New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y, closeBtn.Width, closeBtn.Height)
+                    G.DrawImage(closeBtn, CloseRect)
 
-                    DrawRect(G, New Drawing.Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, ControlPaint.Dark(BackColor, 0.2))), Rect, 3, True)
+                    G.DrawImage(My.Resources.TitlebarTopActive, New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width * 0.75, Rect.Height * 0.75))
+
+                    FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+
+                    Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
+                    DrawRect(G, New Pen(Color.FromArgb(200, 0, 0, 0)), Rect, Radius, True)
+                    DrawRect(G, New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
+
+                    'DrawRect(G, New Drawing.Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, ControlPaint.Dark(BackColor, 0.2))), Rect, Radius, True)
 
                     DrawRect(G, New Drawing.Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, ControlPaint.Light(BackColor, 0.2))), InnerWindow_1, 1, True)
                     FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
                     DrawRect(G, New Drawing.Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, ControlPaint.Dark(BackColor, 0.2))), InnerWindow_2, 1, True)
 
                 Else
-                    G.DrawImage(AdaptedBack, Rect7)
+                    G.DrawImage(AdaptedBack, Rect)
 
                     If Active Then
                         G.DrawImage(My.Resources.Win7BasicActive, New Point(0, 0))
@@ -4937,23 +4972,22 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Else
             If Win7 Then
                 If Not Win7Basic Then
-                    Font = New Font("Segoe UI", 8, FontStyle.Regular)
                     Dim LabelRectModified As Rectangle = LabelRect
                     LabelRectModified.X -= 2
                     LabelRectModified.Y -= 2
                     GlowString(G, 1, Text, Me, Color.Black, Color.FromArgb(120, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
                 Else
-                    G.DrawString(Text, New Font("Segoe UI", 8, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+                    G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
                 End If
             ElseIf Win8 Then
 
                 If Not Win8Lite Then
-                    G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                    G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                 Else
                     If Active Then
-                        G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(MainFrm.CP.Win32UI_TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32UI_TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                     Else
-                        G.DrawString(Text, New Font("Segoe UI", 10, FontStyle.Regular), New SolidBrush(MainFrm.CP.Win32UI_InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32UI_InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                     End If
                 End If
 

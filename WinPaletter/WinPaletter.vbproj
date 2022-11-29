@@ -146,7 +146,7 @@
     </None>
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
-    <Content Include="Resources\AeroGlass.png" />
+    <None Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
     <Content Include="Resources\CMD_10x18.png" />
@@ -208,14 +208,16 @@
     <Content Include="Resources\StartBtn_10Light.png" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <None Include="Resources\TitlebarTopActive.png" />
+    <None Include="Resources\TitlebarTopInactive.png" />
     <Content Include="Resources\Win7BasicActive.png" />
     <Content Include="Resources\Win7BasicInactive.png" />
     <Content Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win7ORB.png" />
-    <Content Include="Resources\Win7Sides.png" />
+    <None Include="Resources\Win7Sides.png" />
     <Content Include="Resources\Win7TaskbarSides.png" />
-    <Content Include="Resources\Win7_Close_Active.png" />
-    <Content Include="Resources\Win7_Close_inactive.png" />
+    <None Include="Resources\Win7_Close_Active.png" />
+    <None Include="Resources\Win7_Close_inactive.png" />
     <Content Include="Resources\Win8ORB.png" />
   </ItemGroup>
   <ItemGroup>

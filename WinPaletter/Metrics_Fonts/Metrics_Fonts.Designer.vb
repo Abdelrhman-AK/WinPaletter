@@ -1688,13 +1688,14 @@ Partial Class Metrics_Fonts
         'MenuStrip1
         '
         Me.MenuStrip1.AutoSize = False
+        Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MenuStrip1.GripMargin = New System.Windows.Forms.Padding(2, 0, 0, 0)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuParentToolStripMenuItem, Me.MenuParent2ToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(10, 40)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(2, 0, 0, 0)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(0)
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.MenuStrip1.Size = New System.Drawing.Size(421, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(421, 19)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -1702,7 +1703,7 @@ Partial Class Metrics_Fonts
         '
         Me.MenuParentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Item0ToolStripMenuItem, Me.Item1ToolStripMenuItem})
         Me.MenuParentToolStripMenuItem.Name = "MenuParentToolStripMenuItem"
-        Me.MenuParentToolStripMenuItem.Size = New System.Drawing.Size(96, 24)
+        Me.MenuParentToolStripMenuItem.Size = New System.Drawing.Size(96, 19)
         Me.MenuParentToolStripMenuItem.Text = "Menu Parent 1"
         '
         'Item0ToolStripMenuItem
@@ -1721,7 +1722,7 @@ Partial Class Metrics_Fonts
         '
         Me.MenuParent2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ItemXToolStripMenuItem, Me.ItemYToolStripMenuItem, Me.ItemZToolStripMenuItem})
         Me.MenuParent2ToolStripMenuItem.Name = "MenuParent2ToolStripMenuItem"
-        Me.MenuParent2ToolStripMenuItem.Size = New System.Drawing.Size(96, 24)
+        Me.MenuParent2ToolStripMenuItem.Size = New System.Drawing.Size(96, 19)
         Me.MenuParent2ToolStripMenuItem.Text = "Menu Parent 2"
         '
         'ItemXToolStripMenuItem
@@ -2100,6 +2101,7 @@ Partial Class Metrics_Fonts
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.statusLbl})
         Me.StatusStrip1.Location = New System.Drawing.Point(2, 159)
         Me.StatusStrip1.Name = "StatusStrip1"

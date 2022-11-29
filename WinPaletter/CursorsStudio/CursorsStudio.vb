@@ -1167,4 +1167,13 @@ Public Class CursorsStudio
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         MsgBox(My.Application.LanguageHelper.ScalingTip, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        Cursor = Cursors.WaitCursor
+        Dim CPx As New CP(CP.Mode.Registry)
+        SaveToCP(CPx)
+        CPx.Apply_Cursors()
+        CPx.Dispose()
+        Cursor = Cursors.Default
+    End Sub
 End Class

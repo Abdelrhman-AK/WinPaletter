@@ -9,12 +9,21 @@ Public Class dragPreviewer
     Public File As String
 
     Private Sub dragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SuspendLayout()
+
+        MainFrm.MakeItDoubleBuffered(Me)
+        MainFrm.MakeItDoubleBuffered(pnl_preview)
+        MainFrm.MakeItDoubleBuffered(pnlRetroPreview)
+
         Opacity = 0
+        Visible = False
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
 
         If My.W11 Or My.W10 Then
             FormBorderStyle = FormBorderStyle.None
-            BackColor = Color.Fuchsia
-            TransparencyKey = Color.Fuchsia
+            BackColor = Color.Black
+            TransparencyKey = Color.Black
         Else
             FormBorderStyle = FormBorderStyle.FixedToolWindow
             BackColor = Color.Fuchsia
@@ -22,18 +31,23 @@ Public Class dragPreviewer
         End If
 
         CP = New CP(CP.Mode.File, File, True)
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
+
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
         ApplyRetroPreview(CP)
-        pnl_preview.Visible = True : PictureBox1.Image = GetControlImage(pnl_preview) : pnl_preview.Visible = False
-        Me.Invalidate()
+        SetMetics(CP)
+
+        'pnl_preview.Visible = True : PictureBox1.Image = GetControlImage(pnl_preview) : pnl_preview.Visible = False
 
         Acrylism.EnableBlur(Me, True)
+
+        ResumeLayout()
     End Sub
 
     Private Sub dragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Opacity = 1
+        Visible = True
+        Me.Invalidate()
     End Sub
 
     Sub ApplyLivePreviewFromCP([CP] As CP)
@@ -666,6 +680,118 @@ Public Class dragPreviewer
         ReValidateLivePreview(pnl_preview)
     End Sub
 
+    Sub SetMetics(CP As CP)
+        RetroPanel2.Width = CP.Metrics_ScrollWidth
+        menucontainer0.Height = CP.Metrics_MenuHeight
+
+        menucontainer0.Height = Math.Max(CP.Metrics_MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont))
+
+        RetroLabel1.Font = CP.Fonts_MenuFont
+        RetroLabel2.Font = CP.Fonts_MenuFont
+        RetroLabel3.Font = CP.Fonts_MenuFont
+
+        RetroLabel9.Font = CP.Fonts_MenuFont
+        RetroLabel5.Font = CP.Fonts_MenuFont
+        RetroLabel6.Font = CP.Fonts_MenuFont
+
+        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont) + 3
+        highlight.Height = menucontainer1.Height + 1
+        menucontainer3.Height = menucontainer1.Height + 1
+        Menu.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu.Padding.Top + Menu.Padding.Bottom
+
+        RetroLabel4.Font = CP.Fonts_MessageFont
+
+        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.Fonts_MenuFont).Width + 5
+        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.Fonts_MenuFont).Width + 5
+        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.Fonts_MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.Fonts_CaptionFont).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.Fonts_CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
+        Dim iP As Integer = 3 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth
+        Dim iT As Integer = 4 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + CP.Metrics_CaptionHeight + TitleTextH_Sum
+        Dim _Padding As New Padding(iP, iT, iP, iP)
+
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
+            If Not RW.UseItAsMenu Then
+                RW.Metrics_BorderWidth = CP.Metrics_BorderWidth
+                RW.Metrics_CaptionHeight = CP.Metrics_CaptionHeight
+                RW.Metrics_CaptionWidth = CP.Metrics_CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
+                RW.Font = CP.Fonts_CaptionFont
+
+                RW.Padding = _Padding
+            End If
+        Next
+
+        RetroWindow3.Height = 85 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow2.GetTitleTextHeight + CP.Metrics_MenuHeight
+
+        RetroButton3.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton4.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton5.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton6.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton7.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton8.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton9.Height = CP.Metrics_CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
+
+        RetroButton3.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton4.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton5.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton8.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton7.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton6.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton9.Width = CP.Metrics_CaptionWidth - 2
+
+        RetroButton3.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton4.Top = RetroButton3.Top
+        RetroButton5.Top = RetroButton3.Top
+
+        RetroButton8.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton7.Top = RetroButton8.Top
+        RetroButton6.Top = RetroButton8.Top
+
+        RetroButton9.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+
+        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
+        RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
+
+        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton7.Left = RetroButton8.Left - 2 - RetroButton7.Width
+        RetroButton6.Left = RetroButton7.Left - RetroButton6.Width
+
+        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+
+        Try
+            Dim i0, iFx As Single
+            i0 = Math.Abs(Math.Min(CP.Metrics_CaptionWidth, CP.Metrics_CaptionHeight))
+            iFx = i0 / Math.Abs(Math.Min(Metrics_Fonts.XenonTrackbar2.Minimum, Metrics_Fonts.XenonTrackbar3.Minimum))
+            Dim f As New Font("Marlett", 6.8 * iFx)
+            RetroButton3.Font = f
+            RetroButton4.Font = f
+            RetroButton5.Font = f
+            RetroButton6.Font = f
+            RetroButton7.Font = f
+            RetroButton8.Font = f
+            RetroButton9.Font = f
+        Catch
+
+        End Try
+
+        Menu.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
+
+        RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
+        RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
+
+        RetroLabel13.Top = RetroWindow4.Top + RetroButton9.Bottom + 2
+        RetroLabel13.Left = RetroWindow4.Right - RetroButton9.Width - 2
+
+    End Sub
+
     Sub ApplyRetroPreview([CP] As CP)
         RetroWindow1.ColorGradient = [CP].Win32UI_EnableGradient
         RetroWindow2.ColorGradient = [CP].Win32UI_EnableGradient
@@ -706,7 +832,7 @@ Public Class dragPreviewer
         RetroWindow1.ColorBorder = c
 
         c = [CP].Win32UI_WindowFrame
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.WindowFrame = c
             Next
@@ -716,7 +842,7 @@ Public Class dragPreviewer
         Next
 
         c = [CP].Win32UI_ButtonFace
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             If RW IsNot Menu Then RW.BackColor = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.BackColor = c
@@ -729,7 +855,7 @@ Public Class dragPreviewer
         Menu.ButtonFace = c
 
         c = [CP].Win32UI_ButtonDkShadow
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonDkShadow = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ButtonDkShadow = c
@@ -742,7 +868,7 @@ Public Class dragPreviewer
         Menu.ButtonDkShadow = c
 
         c = [CP].Win32UI_ButtonHilight
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonHilight = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ButtonHilight = c
@@ -751,7 +877,7 @@ Public Class dragPreviewer
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonHilight = c
         Next
-        For Each RB As RetroPanelRaised In Panel1.Controls.OfType(Of RetroPanelRaised)
+        For Each RB As RetroPanelRaised In pnlRetroPreview.Controls.OfType(Of RetroPanelRaised)
             RB.ButtonHilight = c
         Next
         RetroTextBox1.ButtonHilight = c
@@ -760,7 +886,7 @@ Public Class dragPreviewer
         Menu.ButtonHilight = c
 
         c = [CP].Win32UI_ButtonLight
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonLight = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ButtonLight = c
@@ -773,7 +899,7 @@ Public Class dragPreviewer
         Menu.ButtonLight = c
 
         c = [CP].Win32UI_ButtonShadow
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonShadow = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ButtonShadow = c
@@ -782,7 +908,7 @@ Public Class dragPreviewer
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
             RB.ButtonShadow = c
         Next
-        For Each RB As RetroPanelRaised In Panel1.Controls.OfType(Of RetroPanelRaised)
+        For Each RB As RetroPanelRaised In pnlRetroPreview.Controls.OfType(Of RetroPanelRaised)
             RB.ButtonShadow = c
         Next
         RetroTextBox1.ButtonShadow = c
@@ -791,7 +917,7 @@ Public Class dragPreviewer
         Menu.ButtonShadow = c
 
         c = [CP].Win32UI_ButtonText
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ForeColor = c
             Next
@@ -801,10 +927,10 @@ Public Class dragPreviewer
         Next
 
         c = [CP].Win32UI_AppWorkspace
-        Panel2.BackColor = c
+        programcontainer.BackColor = c
 
         c = [CP].Win32UI_Background
-        Panel1.BackColor = c
+        pnlRetroPreview.BackColor = c
 
         c = [CP].Win32UI_Menu
         Menu.BackColor = c
@@ -812,7 +938,7 @@ Public Class dragPreviewer
         Menu.Invalidate()
 
         c = [CP].Win32UI_MenuBar
-        Panel3.BackColor = c
+        menucontainer0.BackColor = c
 
         c = [CP].Win32UI_Hilight
         highlight.BackColor = c
@@ -844,7 +970,7 @@ Public Class dragPreviewer
         c = [CP].Win32UI_InfoText
         RetroLabel13.ForeColor = c
 
-        For Each RW As RetroWindow In Panel1.Controls.OfType(Of RetroWindow)
+        For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.Invalidate()
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.Invalidate()
@@ -871,7 +997,7 @@ Public Class dragPreviewer
             RetroPanel1.BackColor = [CP].Win32UI_MenuHilight
             RetroPanel1.ButtonShadow = [CP].Win32UI_Hilight
 
-            Panel3.BackColor = [CP].Win32UI_MenuBar
+            menucontainer0.BackColor = [CP].Win32UI_MenuBar
             RetroLabel3.ForeColor = [CP].Win32UI_HilightText
         Else
             'Theming Disabled (Menus are retro 3d)
@@ -881,7 +1007,7 @@ Public Class dragPreviewer
             highlight.BackColor = [CP].Win32UI_Hilight 'Both will have same color
             RetroPanel1.BackColor = [CP].Win32UI_Menu
             RetroPanel1.ButtonShadow = [CP].Win32UI_ButtonShadow
-            Panel3.BackColor = [CP].Win32UI_Menu
+            menucontainer0.BackColor = [CP].Win32UI_Menu
             RetroLabel3.ForeColor = [CP].Win32UI_MenuText
 
         End If

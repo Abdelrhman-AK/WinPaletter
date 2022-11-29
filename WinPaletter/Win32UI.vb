@@ -439,10 +439,10 @@ Public Class Win32UI
                 Next
 
             Case "AppWorkspace_pick"
-                CList.Add(Panel2)
+                CList.Add(programcontainer)
                 Dim _Conditions As New Conditions With {.RetroAppWorkspace = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                Panel2.BackColor = C
+                programcontainer.BackColor = C
 
             Case "background_pick"
                 CList.Add(pnl_preview)
@@ -454,7 +454,7 @@ Public Class Win32UI
                 CList.Add(Menu)
 
                 If Not XenonToggle1.Checked Then CList.Add(RetroPanel1)
-                If Not XenonToggle1.Checked Then CList.Add(Panel3)
+                If Not XenonToggle1.Checked Then CList.Add(menucontainer0)
 
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -462,14 +462,14 @@ Public Class Win32UI
                 Menu.Invalidate()
 
                 If Not XenonToggle1.Checked Then RetroPanel1.BackColor = C
-                If Not XenonToggle1.Checked Then Panel3.BackColor = C
+                If Not XenonToggle1.Checked Then menucontainer0.BackColor = C
 
             Case "menubar_pick"
                 If XenonToggle1.Checked Then
-                    CList.Add(Panel3)
+                    CList.Add(menucontainer0)
                     Dim _Conditions As New Conditions With {.RetroBackground = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
-                    Panel3.BackColor = C
+                    menucontainer0.BackColor = C
                 Else
                     C = ColorPickerDlg.Pick(CList)
                     sender.BackColor = C
@@ -760,20 +760,37 @@ Public Class Win32UI
     End Sub
 
     Sub SetMetics(CP As CP)
-
         RetroPanel2.Width = CP.Metrics_ScrollWidth
-        Panel3.Height = CP.Metrics_MenuHeight
+        menucontainer0.Height = CP.Metrics_MenuHeight
+
+        menucontainer0.Height = Math.Max(CP.Metrics_MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont))
 
         RetroLabel1.Font = CP.Fonts_MenuFont
         RetroLabel2.Font = CP.Fonts_MenuFont
         RetroLabel3.Font = CP.Fonts_MenuFont
+
         RetroLabel9.Font = CP.Fonts_MenuFont
         RetroLabel5.Font = CP.Fonts_MenuFont
         RetroLabel6.Font = CP.Fonts_MenuFont
+
+        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont) + 3
+        highlight.Height = menucontainer1.Height + 1
+        menucontainer3.Height = menucontainer1.Height + 1
+        Menu.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu.Padding.Top + Menu.Padding.Bottom
+
         RetroLabel4.Font = CP.Fonts_MessageFont
 
+        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.Fonts_MenuFont).Width + 5
+        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.Fonts_MenuFont).Width + 5
+        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.Fonts_MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.Fonts_CaptionFont).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.Fonts_CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
         Dim iP As Integer = 3 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth
-        Dim iT As Integer = 4 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight
+        Dim iT As Integer = 4 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + CP.Metrics_CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Padding(iP, iT, iP, iP)
 
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -783,11 +800,12 @@ Public Class Win32UI
                 RW.Metrics_CaptionWidth = CP.Metrics_CaptionWidth
                 RW.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
                 RW.Font = CP.Fonts_CaptionFont
+
                 RW.Padding = _Padding
             End If
         Next
 
-        RetroWindow3.Height = 80 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow3.Height = 85 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow3.GetTitleTextHeight
         RetroWindow2.Height = 120 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow2.GetTitleTextHeight + CP.Metrics_MenuHeight
 
         RetroButton3.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
@@ -829,7 +847,7 @@ Public Class Win32UI
         Try
             Dim i0, iFx As Single
             i0 = Math.Abs(Math.Min(CP.Metrics_CaptionWidth, CP.Metrics_CaptionHeight))
-            iFx = i0 / 17
+            iFx = i0 / Math.Abs(Math.Min(Metrics_Fonts.XenonTrackbar2.Minimum, Metrics_Fonts.XenonTrackbar3.Minimum))
             Dim f As New Font("Marlett", 6.8 * iFx)
             RetroButton3.Font = f
             RetroButton4.Font = f
@@ -842,10 +860,16 @@ Public Class Win32UI
 
         End Try
 
-        Menu.Top = pnl_preview.ClientRectangle.Top + (Panel3.Bounds).Bottom + 2
-        'Menu.Left = RetroPanel1.Left + 3
-    End Sub
+        Menu.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
 
+        RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
+        RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
+
+        RetroLabel13.Top = RetroWindow4.Top + RetroButton9.Bottom + 2
+        RetroLabel13.Left = RetroWindow4.Right - RetroButton9.Width - 2
+
+    End Sub
 
     Sub ApplyRetroPreview()
         RetroWindow1.ColorGradient = XenonToggle2.Checked
@@ -984,7 +1008,7 @@ Public Class Win32UI
         Next
 
         c = AppWorkspace_pick.BackColor
-        Panel2.BackColor = c
+        programcontainer.BackColor = c
 
         c = background_pick.BackColor
         pnl_preview.BackColor = c
@@ -995,7 +1019,7 @@ Public Class Win32UI
         Menu.Invalidate()
 
         c = menubar_pick.BackColor
-        Panel3.BackColor = c
+        menucontainer0.BackColor = c
 
         c = hilight_pick.BackColor
         highlight.BackColor = c
@@ -1058,7 +1082,7 @@ Public Class Win32UI
             RetroPanel1.BackColor = menuhilight_pick.BackColor
             RetroPanel1.ButtonShadow = hilight_pick.BackColor
 
-            Panel3.BackColor = menubar_pick.BackColor
+            menucontainer0.BackColor = menubar_pick.BackColor
             RetroLabel3.ForeColor = hilighttext_pick.BackColor
         Else
             'Theming Disabled (Menus are retro 3d)
@@ -1068,7 +1092,7 @@ Public Class Win32UI
             highlight.BackColor = hilight_pick.BackColor 'Both will have same color
             RetroPanel1.BackColor = menu_pick.BackColor
             RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
-            Panel3.BackColor = menu_pick.BackColor
+            menucontainer0.BackColor = menu_pick.BackColor
             RetroLabel3.ForeColor = menutext_pick.BackColor
 
         End If
@@ -1134,10 +1158,12 @@ Public Class Win32UI
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.Mode.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
-        CPx.Save(CP.SavingMode.Registry)
+        CPx.Apply_Win32UI()
+        CPx.Dispose()
+        Cursor = Cursors.Default
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click

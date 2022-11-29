@@ -28,9 +28,18 @@ Partial Class Win32UI
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.PictureBox35 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.XenonToggle1 = New WinPaletter.XenonToggle()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.XenonToggle2 = New WinPaletter.XenonToggle()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.XenonComboBox2 = New WinPaletter.XenonComboBox()
         Me.XenonButton9 = New WinPaletter.XenonButton()
@@ -172,22 +181,17 @@ Partial Class Win32UI
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Scrollbar_pick = New WinPaletter.XenonCP()
-        Me.XenonToggle2 = New WinPaletter.XenonToggle()
-        Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.Label30 = New System.Windows.Forms.Label()
-        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
-        Me.Label31 = New System.Windows.Forms.Label()
         Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.Menu = New WinPaletter.RetroWindow()
-        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.menucontainer3 = New System.Windows.Forms.Panel()
         Me.RetroLabel9 = New WinPaletter.RetroLabel()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
         Me.RetroLabel5 = New WinPaletter.RetroLabel()
-        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.menucontainer1 = New System.Windows.Forms.Panel()
         Me.RetroLabel6 = New WinPaletter.RetroLabel()
         Me.RetroWindow3 = New WinPaletter.RetroWindow()
         Me.RetroButton1 = New WinPaletter.RetroButton()
@@ -195,7 +199,7 @@ Partial Class Win32UI
         Me.RetroLabel13 = New WinPaletter.RetroLabel()
         Me.RetroWindow2 = New WinPaletter.RetroWindow()
         Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
-        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.menucontainer0 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
         Me.RetroLabel3 = New WinPaletter.RetroLabel()
         Me.RetroLabel2 = New WinPaletter.RetroLabel()
@@ -208,7 +212,7 @@ Partial Class Win32UI
         Me.RetroButton7 = New WinPaletter.RetroButton()
         Me.RetroButton8 = New WinPaletter.RetroButton()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
-        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.programcontainer = New System.Windows.Forms.Panel()
         Me.RetroPanel2 = New WinPaletter.RetroScrollBar()
         Me.RetroButton12 = New WinPaletter.RetroButton()
         Me.RetroButton11 = New WinPaletter.RetroButton()
@@ -217,10 +221,10 @@ Partial Class Win32UI
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.PictureBox35 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox9.SuspendLayout()
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -290,26 +294,22 @@ Partial Class Win32UI
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox55.SuspendLayout()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox8.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_preview.SuspendLayout()
         Me.Menu.SuspendLayout()
-        Me.Panel8.SuspendLayout()
+        Me.menucontainer3.SuspendLayout()
         Me.highlight.SuspendLayout()
         Me.menuhilight.SuspendLayout()
-        Me.Panel4.SuspendLayout()
+        Me.menucontainer1.SuspendLayout()
         Me.RetroWindow3.SuspendLayout()
         Me.RetroWindow2.SuspendLayout()
-        Me.Panel3.SuspendLayout()
+        Me.menucontainer0.SuspendLayout()
         Me.RetroPanel1.SuspendLayout()
         Me.RetroWindow1.SuspendLayout()
         Me.RetroWindow4.SuspendLayout()
-        Me.Panel2.SuspendLayout()
+        Me.programcontainer.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
-        Me.XenonGroupBox9.SuspendLayout()
-        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenThemeDialog
@@ -336,6 +336,110 @@ Partial Class Win32UI
         Me.SaveFileDialog2.DefaultExt = "wpt"
         Me.SaveFileDialog2.Filter = "Theme File (*.theme)|*.theme|All Files (*.*)|*.*"
         '
+        'XenonGroupBox9
+        '
+        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox9.Controls.Add(Me.Label16)
+        Me.XenonGroupBox9.Controls.Add(Me.PictureBox35)
+        Me.XenonGroupBox9.Controls.Add(Me.PictureBox16)
+        Me.XenonGroupBox9.Controls.Add(Me.PictureBox34)
+        Me.XenonGroupBox9.Controls.Add(Me.XenonToggle1)
+        Me.XenonGroupBox9.Controls.Add(Me.Label30)
+        Me.XenonGroupBox9.Controls.Add(Me.XenonToggle2)
+        Me.XenonGroupBox9.Controls.Add(Me.Label31)
+        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.XenonGroupBox9.Location = New System.Drawing.Point(12, 378)
+        Me.XenonGroupBox9.Name = "XenonGroupBox9"
+        Me.XenonGroupBox9.Size = New System.Drawing.Size(493, 95)
+        Me.XenonGroupBox9.TabIndex = 82
+        '
+        'Label16
+        '
+        Me.Label16.BackColor = System.Drawing.Color.Transparent
+        Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(44, 4)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(146, 31)
+        Me.Label16.TabIndex = 83
+        Me.Label16.Text = "User Preference Mask:"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox35
+        '
+        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
+        Me.PictureBox35.Location = New System.Drawing.Point(3, 4)
+        Me.PictureBox35.Name = "PictureBox35"
+        Me.PictureBox35.Size = New System.Drawing.Size(35, 31)
+        Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox35.TabIndex = 82
+        Me.PictureBox35.TabStop = False
+        '
+        'PictureBox16
+        '
+        Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
+        Me.PictureBox16.Location = New System.Drawing.Point(47, 65)
+        Me.PictureBox16.Name = "PictureBox16"
+        Me.PictureBox16.Size = New System.Drawing.Size(30, 24)
+        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox16.TabIndex = 81
+        Me.PictureBox16.TabStop = False
+        '
+        'PictureBox34
+        '
+        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
+        Me.PictureBox34.Location = New System.Drawing.Point(47, 35)
+        Me.PictureBox34.Name = "PictureBox34"
+        Me.PictureBox34.Size = New System.Drawing.Size(30, 24)
+        Me.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox34.TabIndex = 4
+        Me.PictureBox34.TabStop = False
+        '
+        'XenonToggle1
+        '
+        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
+        Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonToggle1.Checked = True
+        Me.XenonToggle1.DarkLight_Toggler = False
+        Me.XenonToggle1.Location = New System.Drawing.Point(436, 65)
+        Me.XenonToggle1.Name = "XenonToggle1"
+        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle1.TabIndex = 80
+        '
+        'Label30
+        '
+        Me.Label30.BackColor = System.Drawing.Color.Transparent
+        Me.Label30.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label30.Location = New System.Drawing.Point(80, 38)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(241, 16)
+        Me.Label30.TabIndex = 3
+        Me.Label30.Text = "Gradient Titlebar for classic apps"
+        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonToggle2
+        '
+        Me.XenonToggle2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
+        Me.XenonToggle2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonToggle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonToggle2.Checked = True
+        Me.XenonToggle2.DarkLight_Toggler = False
+        Me.XenonToggle2.Location = New System.Drawing.Point(436, 35)
+        Me.XenonToggle2.Name = "XenonToggle2"
+        Me.XenonToggle2.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle2.TabIndex = 81
+        '
+        'Label31
+        '
+        Me.Label31.BackColor = System.Drawing.Color.Transparent
+        Me.Label31.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label31.Location = New System.Drawing.Point(80, 68)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(241, 16)
+        Me.Label31.TabIndex = 3
+        Me.Label31.Text = "Flat Menus"
+        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'XenonButton10
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -352,18 +456,6 @@ Partial Class Win32UI
         Me.XenonButton10.TabIndex = 81
         Me.XenonButton10.Text = "Quick Apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
-        '
-        'XenonToggle1
-        '
-        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonToggle1.Checked = True
-        Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(436, 65)
-        Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
-        Me.XenonToggle1.TabIndex = 80
         '
         'XenonAlertBox1
         '
@@ -383,6 +475,23 @@ Partial Class Win32UI
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "These are applicable only for some Elements (Dialogs Background, Forecolors, ...)" &
     " and classic/unthemed apps (such as VB6, non themed OTVDM)"
+        '
+        'XenonButton8
+        '
+        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton8.ForeColor = System.Drawing.Color.White
+        Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
+        Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.XenonButton8.LineSize = 1
+        Me.XenonButton8.Location = New System.Drawing.Point(235, 536)
+        Me.XenonButton8.Name = "XenonButton8"
+        Me.XenonButton8.Size = New System.Drawing.Size(74, 30)
+        Me.XenonButton8.TabIndex = 70
+        Me.XenonButton8.Text = "Hint"
+        Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonGroupBox2
         '
@@ -2385,60 +2494,6 @@ Partial Class Win32UI
         Me.Scrollbar_pick.TabIndex = 2
         Me.Scrollbar_pick.Text = "XenonGroupBox19"
         '
-        'XenonToggle2
-        '
-        Me.XenonToggle2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.XenonToggle2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonToggle2.Checked = True
-        Me.XenonToggle2.DarkLight_Toggler = False
-        Me.XenonToggle2.Location = New System.Drawing.Point(436, 35)
-        Me.XenonToggle2.Name = "XenonToggle2"
-        Me.XenonToggle2.Size = New System.Drawing.Size(50, 24)
-        Me.XenonToggle2.TabIndex = 81
-        '
-        'PictureBox34
-        '
-        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
-        Me.PictureBox34.Location = New System.Drawing.Point(47, 35)
-        Me.PictureBox34.Name = "PictureBox34"
-        Me.PictureBox34.Size = New System.Drawing.Size(30, 24)
-        Me.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox34.TabIndex = 4
-        Me.PictureBox34.TabStop = False
-        '
-        'Label30
-        '
-        Me.Label30.BackColor = System.Drawing.Color.Transparent
-        Me.Label30.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label30.Location = New System.Drawing.Point(80, 38)
-        Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(241, 16)
-        Me.Label30.TabIndex = 3
-        Me.Label30.Text = "Gradient Titlebar for classic apps"
-        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox16
-        '
-        Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
-        Me.PictureBox16.Location = New System.Drawing.Point(47, 65)
-        Me.PictureBox16.Name = "PictureBox16"
-        Me.PictureBox16.Size = New System.Drawing.Size(30, 24)
-        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox16.TabIndex = 81
-        Me.PictureBox16.TabStop = False
-        '
-        'Label31
-        '
-        Me.Label31.BackColor = System.Drawing.Color.Transparent
-        Me.Label31.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label31.Location = New System.Drawing.Point(80, 68)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(241, 16)
-        Me.Label31.TabIndex = 3
-        Me.Label31.Text = "Flat Menus"
-        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'XenonGroupBox8
         '
         Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -2504,9 +2559,9 @@ Partial Class Win32UI
         Me.Menu.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.Menu.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu.ColorGradient = True
-        Me.Menu.Controls.Add(Me.Panel8)
+        Me.Menu.Controls.Add(Me.menucontainer3)
         Me.Menu.Controls.Add(Me.highlight)
-        Me.Menu.Controls.Add(Me.Panel4)
+        Me.Menu.Controls.Add(Me.menucontainer1)
         Me.Menu.Flat = False
         Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu.ForeColor = System.Drawing.Color.Black
@@ -2522,16 +2577,16 @@ Partial Class Win32UI
         Me.Menu.TitlebarText = "New Window"
         Me.Menu.UseItAsMenu = True
         '
-        'Panel8
+        'menucontainer3
         '
-        Me.Panel8.BackColor = System.Drawing.Color.Transparent
-        Me.Panel8.Controls.Add(Me.RetroLabel9)
-        Me.Panel8.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel8.Location = New System.Drawing.Point(3, 43)
-        Me.Panel8.Name = "Panel8"
-        Me.Panel8.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
-        Me.Panel8.Size = New System.Drawing.Size(109, 20)
-        Me.Panel8.TabIndex = 12
+        Me.menucontainer3.BackColor = System.Drawing.Color.Transparent
+        Me.menucontainer3.Controls.Add(Me.RetroLabel9)
+        Me.menucontainer3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.menucontainer3.Location = New System.Drawing.Point(3, 43)
+        Me.menucontainer3.Name = "menucontainer3"
+        Me.menucontainer3.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.menucontainer3.Size = New System.Drawing.Size(109, 20)
+        Me.menucontainer3.TabIndex = 12
         '
         'RetroLabel9
         '
@@ -2554,7 +2609,6 @@ Partial Class Win32UI
         Me.highlight.Dock = System.Windows.Forms.DockStyle.Top
         Me.highlight.Location = New System.Drawing.Point(3, 23)
         Me.highlight.Name = "highlight"
-        Me.highlight.Padding = New System.Windows.Forms.Padding(1)
         Me.highlight.Size = New System.Drawing.Size(109, 20)
         Me.highlight.TabIndex = 10
         '
@@ -2563,10 +2617,10 @@ Partial Class Win32UI
         Me.menuhilight.BackColor = System.Drawing.Color.Navy
         Me.menuhilight.Controls.Add(Me.RetroLabel5)
         Me.menuhilight.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.menuhilight.Location = New System.Drawing.Point(1, 1)
+        Me.menuhilight.Location = New System.Drawing.Point(0, 0)
         Me.menuhilight.Name = "menuhilight"
         Me.menuhilight.Padding = New System.Windows.Forms.Padding(21, 0, 1, 0)
-        Me.menuhilight.Size = New System.Drawing.Size(107, 18)
+        Me.menuhilight.Size = New System.Drawing.Size(109, 20)
         Me.menuhilight.TabIndex = 11
         '
         'RetroLabel5
@@ -2578,21 +2632,21 @@ Partial Class Win32UI
         Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel5.Name = "RetroLabel5"
         Me.RetroLabel5.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel5.Size = New System.Drawing.Size(85, 18)
+        Me.RetroLabel5.Size = New System.Drawing.Size(87, 20)
         Me.RetroLabel5.TabIndex = 3
         Me.RetroLabel5.Text = "Hovered item"
         Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Panel4
+        'menucontainer1
         '
-        Me.Panel4.BackColor = System.Drawing.Color.Transparent
-        Me.Panel4.Controls.Add(Me.RetroLabel6)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel4.Location = New System.Drawing.Point(3, 3)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
-        Me.Panel4.Size = New System.Drawing.Size(109, 20)
-        Me.Panel4.TabIndex = 6
+        Me.menucontainer1.BackColor = System.Drawing.Color.Transparent
+        Me.menucontainer1.Controls.Add(Me.RetroLabel6)
+        Me.menucontainer1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.menucontainer1.Location = New System.Drawing.Point(3, 3)
+        Me.menucontainer1.Name = "menucontainer1"
+        Me.menucontainer1.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
+        Me.menucontainer1.Size = New System.Drawing.Size(109, 20)
+        Me.menucontainer1.TabIndex = 6
         '
         'RetroLabel6
         '
@@ -2700,7 +2754,7 @@ Partial Class Win32UI
         Me.RetroWindow2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ColorGradient = True
         Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
-        Me.RetroWindow2.Controls.Add(Me.Panel3)
+        Me.RetroWindow2.Controls.Add(Me.menucontainer0)
         Me.RetroWindow2.Controls.Add(Me.RetroButton5)
         Me.RetroWindow2.Controls.Add(Me.RetroButton4)
         Me.RetroWindow2.Controls.Add(Me.RetroButton3)
@@ -2742,17 +2796,17 @@ Partial Class Win32UI
         Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.RetroTextBox1.UseSystemPasswordChar = False
         '
-        'Panel3
+        'menucontainer0
         '
-        Me.Panel3.BackColor = System.Drawing.Color.Silver
-        Me.Panel3.Controls.Add(Me.RetroPanel1)
-        Me.Panel3.Controls.Add(Me.RetroLabel2)
-        Me.Panel3.Controls.Add(Me.RetroLabel1)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel3.Location = New System.Drawing.Point(4, 22)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(188, 18)
-        Me.Panel3.TabIndex = 5
+        Me.menucontainer0.BackColor = System.Drawing.Color.Silver
+        Me.menucontainer0.Controls.Add(Me.RetroPanel1)
+        Me.menucontainer0.Controls.Add(Me.RetroLabel2)
+        Me.menucontainer0.Controls.Add(Me.RetroLabel1)
+        Me.menucontainer0.Dock = System.Windows.Forms.DockStyle.Top
+        Me.menucontainer0.Location = New System.Drawing.Point(4, 22)
+        Me.menucontainer0.Name = "menucontainer0"
+        Me.menucontainer0.Size = New System.Drawing.Size(188, 18)
+        Me.menucontainer0.TabIndex = 5
         '
         'RetroPanel1
         '
@@ -2766,7 +2820,7 @@ Partial Class Win32UI
         Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
         Me.RetroPanel1.Location = New System.Drawing.Point(88, 0)
         Me.RetroPanel1.Name = "RetroPanel1"
-        Me.RetroPanel1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 4)
+        Me.RetroPanel1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 3)
         Me.RetroPanel1.Size = New System.Drawing.Size(53, 18)
         Me.RetroPanel1.TabIndex = 2
         '
@@ -2778,37 +2832,35 @@ Partial Class Win32UI
         Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
         Me.RetroLabel3.Name = "RetroLabel3"
-        Me.RetroLabel3.Size = New System.Drawing.Size(51, 11)
+        Me.RetroLabel3.Size = New System.Drawing.Size(51, 12)
         Me.RetroLabel3.TabIndex = 1
         Me.RetroLabel3.Text = "Selected"
-        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RetroLabel2
         '
-        Me.RetroLabel2.AutoSize = True
         Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel2.Dock = System.Windows.Forms.DockStyle.Left
         Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.RetroLabel2.Location = New System.Drawing.Point(40, 0)
         Me.RetroLabel2.Name = "RetroLabel2"
-        Me.RetroLabel2.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
-        Me.RetroLabel2.Size = New System.Drawing.Size(48, 15)
+        Me.RetroLabel2.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.RetroLabel2.Size = New System.Drawing.Size(48, 18)
         Me.RetroLabel2.TabIndex = 1
         Me.RetroLabel2.Text = "Disabled"
         Me.RetroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroLabel1
         '
-        Me.RetroLabel1.AutoSize = True
         Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
         Me.RetroLabel1.Name = "RetroLabel1"
-        Me.RetroLabel1.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
-        Me.RetroLabel1.Size = New System.Drawing.Size(40, 15)
+        Me.RetroLabel1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.RetroLabel1.Size = New System.Drawing.Size(40, 18)
         Me.RetroLabel1.TabIndex = 0
         Me.RetroLabel1.Text = "Normal"
         Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2976,7 +3028,7 @@ Partial Class Win32UI
         Me.RetroWindow4.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.RetroWindow4.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ColorGradient = True
-        Me.RetroWindow4.Controls.Add(Me.Panel2)
+        Me.RetroWindow4.Controls.Add(Me.programcontainer)
         Me.RetroWindow4.Controls.Add(Me.RetroButton9)
         Me.RetroWindow4.Flat = False
         Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
@@ -2993,16 +3045,16 @@ Partial Class Win32UI
         Me.RetroWindow4.TitlebarText = "Program Container"
         Me.RetroWindow4.UseItAsMenu = False
         '
-        'Panel2
+        'programcontainer
         '
-        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel2.Controls.Add(Me.RetroPanel2)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(4, 22)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Padding = New System.Windows.Forms.Padding(0, 0, 1, 0)
-        Me.Panel2.Size = New System.Drawing.Size(148, 106)
-        Me.Panel2.TabIndex = 4
+        Me.programcontainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.programcontainer.Controls.Add(Me.RetroPanel2)
+        Me.programcontainer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programcontainer.Location = New System.Drawing.Point(4, 22)
+        Me.programcontainer.Name = "programcontainer"
+        Me.programcontainer.Padding = New System.Windows.Forms.Padding(0, 0, 1, 0)
+        Me.programcontainer.Size = New System.Drawing.Size(148, 106)
+        Me.programcontainer.TabIndex = 4
         '
         'RetroPanel2
         '
@@ -3146,61 +3198,6 @@ Partial Class Win32UI
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
         '
-        'XenonGroupBox9
-        '
-        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox9.Controls.Add(Me.Label16)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox35)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox16)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox34)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonToggle1)
-        Me.XenonGroupBox9.Controls.Add(Me.Label30)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonToggle2)
-        Me.XenonGroupBox9.Controls.Add(Me.Label31)
-        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.XenonGroupBox9.Location = New System.Drawing.Point(12, 378)
-        Me.XenonGroupBox9.Name = "XenonGroupBox9"
-        Me.XenonGroupBox9.Size = New System.Drawing.Size(493, 95)
-        Me.XenonGroupBox9.TabIndex = 82
-        '
-        'Label16
-        '
-        Me.Label16.BackColor = System.Drawing.Color.Transparent
-        Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(44, 4)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(146, 31)
-        Me.Label16.TabIndex = 83
-        Me.Label16.Text = "User Preference Mask:"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox35
-        '
-        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
-        Me.PictureBox35.Location = New System.Drawing.Point(3, 4)
-        Me.PictureBox35.Name = "PictureBox35"
-        Me.PictureBox35.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox35.TabIndex = 82
-        Me.PictureBox35.TabStop = False
-        '
-        'XenonButton8
-        '
-        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
-        Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(155, Byte), Integer))
-        Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(235, 536)
-        Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(74, 30)
-        Me.XenonButton8.TabIndex = 70
-        Me.XenonButton8.Text = "Hint"
-        Me.XenonButton8.UseVisualStyleBackColor = False
-        '
         'Win32UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3228,6 +3225,10 @@ Partial Class Win32UI
         Me.Name = "Win32UI"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Win32UI"
+        Me.XenonGroupBox9.ResumeLayout(False)
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3297,29 +3298,24 @@ Partial Class Win32UI
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox55.ResumeLayout(False)
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox8.ResumeLayout(False)
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_preview.ResumeLayout(False)
         Me.pnl_preview.PerformLayout()
         Me.Menu.ResumeLayout(False)
-        Me.Panel8.ResumeLayout(False)
+        Me.menucontainer3.ResumeLayout(False)
         Me.highlight.ResumeLayout(False)
         Me.menuhilight.ResumeLayout(False)
-        Me.Panel4.ResumeLayout(False)
+        Me.menucontainer1.ResumeLayout(False)
         Me.RetroWindow3.ResumeLayout(False)
         Me.RetroWindow3.PerformLayout()
         Me.RetroWindow2.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout()
+        Me.menucontainer0.ResumeLayout(False)
         Me.RetroPanel1.ResumeLayout(False)
         Me.RetroWindow1.ResumeLayout(False)
         Me.RetroWindow4.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
+        Me.programcontainer.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
-        Me.XenonGroupBox9.ResumeLayout(False)
-        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -3469,15 +3465,15 @@ Partial Class Win32UI
     Friend WithEvents RetroButton6 As RetroButton
     Friend WithEvents RetroButton7 As RetroButton
     Friend WithEvents RetroWindow4 As RetroWindow
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents programcontainer As Panel
     Friend WithEvents RetroButton9 As RetroButton
     Friend WithEvents Menu As RetroWindow
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents menucontainer3 As Panel
     Friend WithEvents RetroLabel9 As RetroLabel
     Friend WithEvents highlight As Panel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents menucontainer1 As Panel
     Friend WithEvents RetroLabel6 As RetroLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents menucontainer0 As Panel
     Friend WithEvents RetroLabel13 As RetroLabel
     Friend WithEvents RetroPanel2 As RetroScrollBar
     Friend WithEvents RetroButton11 As RetroButton

@@ -3,7 +3,38 @@ Imports Microsoft.Win32
 Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 
-Public Class CP
+Public Class CP : Implements IDisposable
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean ' To detect redundant calls
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not Me.disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects).
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+            ' TODO: set large fields to null.
+        End If
+        Me.disposedValue = True
+    End Sub
+
+    ' TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
+    'Protected Overrides Sub Finalize()
+    '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+#End Region
 
 #Region "Properties"
 
@@ -251,30 +282,30 @@ Public Class CP
 #End Region
 
 #Region "Metrics"
-    Public Property Metrics_BorderWidth As Integer
-    Public Property Metrics_CaptionHeight As Integer
-    Public Property Metrics_CaptionWidth As Integer
-    Public Property Metrics_IconSpacing As Integer
-    Public Property Metrics_IconVerticalSpacing As Integer
-    Public Property Metrics_MenuHeight As Integer
-    Public Property Metrics_MenuWidth As Integer
-    Public Property Metrics_MinAnimate As Boolean
-    Public Property Metrics_PaddedBorderWidth As Integer
-    Public Property Metrics_ScrollHeight As Integer
-    Public Property Metrics_ScrollWidth As Integer
-    Public Property Metrics_SmCaptionHeight As Integer
-    Public Property Metrics_SmCaptionWidth As Integer
+    Public Property Metrics_BorderWidth As Integer = 1
+    Public Property Metrics_CaptionHeight As Integer = 22
+    Public Property Metrics_CaptionWidth As Integer = 22
+    Public Property Metrics_IconSpacing As Integer = 75
+    Public Property Metrics_IconVerticalSpacing As Integer = 75
+    Public Property Metrics_MenuHeight As Integer = 19
+    Public Property Metrics_MenuWidth As Integer = 19
+    Public Property Metrics_MinAnimate As Boolean = True
+    Public Property Metrics_PaddedBorderWidth As Integer = 4
+    Public Property Metrics_ScrollHeight As Integer = 19
+    Public Property Metrics_ScrollWidth As Integer = 19
+    Public Property Metrics_SmCaptionHeight As Integer = 22
+    Public Property Metrics_SmCaptionWidth As Integer = 22
     Public Property Metrics_DesktopIconSize As Integer = 32
-    Public Property Metrics_ShellIconSize As Integer
+    Public Property Metrics_ShellIconSize As Integer = 32
 #End Region
 
 #Region "Fonts"
-    Public Property Fonts_CaptionFont As New Font("Segoe UI", 12, FontStyle.Regular)
-    Public Property Fonts_IconFont As New Font("Segoe UI", 12, FontStyle.Regular)
-    Public Property Fonts_MenuFont As New Font("Segoe UI", 12, FontStyle.Regular)
-    Public Property Fonts_MessageFont As New Font("Segoe UI", 12, FontStyle.Regular)
-    Public Property Fonts_SmCaptionFont As New Font("Segoe UI", 12, FontStyle.Regular)
-    Public Property Fonts_StatusFont As New Font("Segoe UI", 12, FontStyle.Regular)
+    Public Property Fonts_CaptionFont As New Font("Segoe UI", 9, FontStyle.Regular)
+    Public Property Fonts_IconFont As New Font("Segoe UI", 9, FontStyle.Regular)
+    Public Property Fonts_MenuFont As New Font("Segoe UI", 9, FontStyle.Regular)
+    Public Property Fonts_MessageFont As New Font("Segoe UI", 9, FontStyle.Regular)
+    Public Property Fonts_SmCaptionFont As New Font("Segoe UI", 9, FontStyle.Regular)
+    Public Property Fonts_StatusFont As New Font("Segoe UI", 9, FontStyle.Regular)
 #End Region
 
 #Region "Cursors"
@@ -3817,7 +3848,6 @@ Public Class CP
             Case SavingMode.Registry
 
 #Region "Registry"
-
                 If ShowProgress Then
                     If My.W7 Or My.W8 Then
                         th = New Threading.Thread(AddressOf Task_A)
@@ -3825,1415 +3855,46 @@ Public Class CP
                     End If
                 End If
 
-#Region "Modern Windows"
                 If Not My.W7 And Not My.W8 Then
-
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
-
-                    Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
-                         , (Taskbar_Icon_Underline).R, (Taskbar_Icon_Underline).G, (Taskbar_Icon_Underline).B, (Taskbar_Icon_Underline).A _
-                         , (StartButton_Hover).R, (StartButton_Hover).G, (StartButton_Hover).B, (StartButton_Hover).A _
-                         , (SettingsIconsAndLinks).R, (SettingsIconsAndLinks).G, (SettingsIconsAndLinks).B, (SettingsIconsAndLinks).A _
-                         , (StartMenuBackground_ActiveTaskbarButton).R, (StartMenuBackground_ActiveTaskbarButton).G, (StartMenuBackground_ActiveTaskbarButton).B, (StartMenuBackground_ActiveTaskbarButton).A _
-                         , (StartListFolders_TaskbarFront).R, (StartListFolders_TaskbarFront).G, (StartListFolders_TaskbarFront).B, (StartListFolders_TaskbarFront).A _
-                         , (Taskbar_Background).R, (Taskbar_Background).G, (Taskbar_Background).B, (Taskbar_Background).A _
-                         , (UWP_Undefined).R, (UWP_Undefined).G, (UWP_Undefined).B, (UWP_Undefined).A}
-
-                    Select Case ApplyAccentonTaskbar
-                        Case ApplyAccentonTaskbar_Level.None
-                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
-
-                        Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 1)
-
-                        Case ApplyAccentonTaskbar_Level.Taskbar
-                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 2)
-
-                        Case Else
-                            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
-                    End Select
-
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
-
-
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
-
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
-
-
-
-
+                    Apply_ModernColors()        'Modern Windows
+                    Apply_LogonUI_11_10()       'LogonUI 11/10
                 End If
-#End Region
 
-#Region "Aero"
+
                 If My.W7 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
-
-                    Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
-
-                    Select Case Aero_Theme
-                        Case AeroTheme.Aero
-                            NativeMethods.Uxtheme.EnableTheming(1)
-                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-                        Case AeroTheme.AeroOpaque
-                            NativeMethods.Uxtheme.EnableTheming(1)
-                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-
-                        Case AeroTheme.Basic
-                            NativeMethods.Uxtheme.EnableTheming(1)
-                            NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-
-                        Case AeroTheme.Classic
-                            NativeMethods.Uxtheme.EnableTheming(0)
-
-                    End Select
-
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+                    Apply_Windows7Aero()        'Windows 7 Aero
+                    Apply_LogonUI_7()           'LogonUI 7
                 End If
 
 
-#End Region
-
-#Region "Metro"
                 If My.W8 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
-
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
-
-                    Try
-                        Select Case Metro_Theme
-                            Case AeroTheme.Aero
-                                NativeMethods.Uxtheme.EnableTheming(1)
-                                NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-                            Case AeroTheme.AeroLite
-                                NativeMethods.Uxtheme.EnableTheming(1)
-                                NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
-                        End Select
-                    Catch
-                    End Try
-
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
-
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", BizareColorInvertor(Metro_AccentColor).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
-
-
-                    If My.Application.isElevated Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Metro_Start)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False), False, True)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False), False, True)
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""PersonalColors_Background""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False)))
-                        ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False)))
-                        ls.Add(String.Format("""ForceStartBackground""=dword:{0}", ReturnEightDigitsFromInt(Metro_Start)))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
-                        ls.Add(String.Format("""DefaultColorSet""=dword:{0}", ReturnEightDigitsFromInt(Metro_LogonUI)))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-                End If
-#End Region
-
-#Region "LogonUI"
-                If Not My.W7 And Not My.W8 Then
-
-                    If My.Application.isElevated Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
-                        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
-                        ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0)))
-                        ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
+                    Apply_Windows8Metro()       'Windows 8 Metro
+                    Apply_LogonUI_8()           'LogonUI 8
                 End If
 
-
-#End Region
-
-#Region "LogonUI 7"
-                If My.W7 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
-
-                    If My.Application.isElevated Then
-
-                        My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
-
-                        My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7_Enabled, 1, 0))
-
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
-                        ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
-                        ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                       .FileName = "regedit",
-                       .Verb = "runas",
-                       .Arguments = String.Format("/s ""{0}""", tempreg),
-                       .WindowStyle = ProcessWindowStyle.Hidden,
-                       .CreateNoWindow = True,
-                       .UseShellExecute = True
-                    }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-
-                    Select Case LogonUI7_Mode
-                        Case LogonUI_Modes.Default_
-                            rLog.SetValue("Mode", 0)
-
-                        Case LogonUI_Modes.Wallpaper
-                            rLog.SetValue("Mode", 1)
-
-                        Case LogonUI_Modes.CustomImage
-                            rLog.SetValue("Mode", 2)
-
-                        Case LogonUI_Modes.SolidColor
-                            rLog.SetValue("Mode", 3)
-                    End Select
-
-                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
-                    rLog.SetValue("Color", LogonUI7_Color.ToArgb)
-                    rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
-                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
-                    rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
-                    rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
-
-                    Select Case LogonUI7_Effect_Noise_Mode
-                        Case LogonUI7_NoiseMode.Aero
-                            rLog.SetValue("Noise_Mode", 0)
-
-                        Case LogonUI7_NoiseMode.Acrylic
-                            rLog.SetValue("Noise_Mode", 1)
-                    End Select
-
-                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
-                    rLog.Flush()
-                    rLog.Close()
-
-                    If LogonUI7_Enabled Then
-                        NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
-
-                        Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
-                        Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
-
-                        IO.Directory.CreateDirectory(DirX)
-
-                        For Each fileX As String In My.Computer.FileSystem.GetFiles(DirX)
-                            Try : Kill(fileX) : Catch : End Try
-                        Next
-
-                        Dim bmpList As New List(Of Bitmap)
-                        bmpList.Clear()
-
-                        Select Case LogonUI7_Mode
-                            Case LogonUI_Modes.Default_
-
-                                For i As Integer = 5031 To 5043 Step +1
-                                    bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
-                                Next
-
-                            Case LogonUI_Modes.CustomImage
-
-                                If IO.File.Exists(LogonUI7_ImagePath) Then
-                                    bmpList.Add(Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
-                                Else
-                                    bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
-                                End If
-
-                            Case LogonUI_Modes.SolidColor
-                                bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
-
-                            Case LogonUI_Modes.Wallpaper
-                                bmpList.Add(My.Application.GetCurrentWallpaper)
-                        End Select
-
-
-                        For x = 0 To bmpList.Count - 1
-                            SetCtrlTxt(String.Format(My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
-                            If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
-                            If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
-                            If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
-                        Next
-
-                        If bmpList.Count = 1 Then
-                            bmpList(0).Save(DirX & "\backgroundDefault.jpg", Drawing.Imaging.ImageFormat.Jpeg)
-                        Else
-                            For x = 0 To bmpList.Count - 1
-                                bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Drawing.Imaging.ImageFormat.Jpeg)
-                            Next
-                        End If
-                        NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
-                    End If
-                End If
-#End Region
-
-#Region "LogonUI 8"
-                If My.W8 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
-
-                    Dim lockimg As String = My.Application.appData & "\LockScreen.png"
-
-                    If My.Application.isElevated Then
-                        My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\Personalization")
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Metro_NoLockScreen, 1, 0))
-                        My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg)
-
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(Metro_NoLockScreen, 1, 0)))
-                        ls.Add(String.Format("""LockScreenImage""=""{0}""", lockimg))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-
-                    Select Case Metro_LockScreenType
-                        Case LogonUI_Modes.Default_
-                            rLog.SetValue("Mode", 0)
-
-                        Case LogonUI_Modes.Wallpaper
-                            rLog.SetValue("Mode", 1)
-
-                        Case LogonUI_Modes.CustomImage
-                            rLog.SetValue("Mode", 2)
-
-                        Case LogonUI_Modes.SolidColor
-                            rLog.SetValue("Mode", 3)
-                    End Select
-
-                    rLog.SetValue("Metro_LockScreenSystemID", Metro_LockScreenSystemID)
-                    rLog.SetValue("ImagePath", LogonUI7_ImagePath)
-                    rLog.SetValue("Color", LogonUI7_Color.ToArgb)
-                    rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
-                    rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
-                    rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
-                    rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
-
-                    Select Case LogonUI7_Effect_Noise_Mode
-                        Case LogonUI7_NoiseMode.Aero
-                            rLog.SetValue("Noise_Mode", 0)
-
-                        Case LogonUI7_NoiseMode.Acrylic
-                            rLog.SetValue("Noise_Mode", 1)
-                    End Select
-
-                    rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
-                    rLog.Flush()
-                    rLog.Close()
-
-                    If Not Metro_NoLockScreen Then
-
-                        Try : Kill(lockimg) : Catch : End Try
-                        Dim bmp As Bitmap
-
-                        Select Case Metro_LockScreenType
-
-                            Case LogonUI_Modes.Default_
-                                Dim syslock As String
-                                If Not MainFrm.CP.Metro_LockScreenSystemID = 1 And Not MainFrm.CP.Metro_LockScreenSystemID = 3 Then
-                                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", MainFrm.CP.Metro_LockScreenSystemID)
-                                Else
-                                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", MainFrm.CP.Metro_LockScreenSystemID)
-                                End If
-
-                                If IO.File.Exists(syslock) Then
-                                    bmp = Image.FromStream(New IO.FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
-                                Else
-                                    bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
-                                End If
-
-                            Case LogonUI_Modes.CustomImage
-
-                                If IO.File.Exists(LogonUI7_ImagePath) Then
-                                    bmp = Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
-                                Else
-                                    bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
-                                End If
-
-                            Case LogonUI_Modes.SolidColor
-                                bmp = ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size)
-
-                            Case LogonUI_Modes.Wallpaper
-                                bmp = My.Application.GetCurrentWallpaper
-                        End Select
-
-                        SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCustomLogonUI, f)
-
-                        If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
-                        If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
-                        If LogonUI7_Effect_Noise Then bmp = NoiseBitmap(bmp, LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
-                        bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
-                    End If
-
-                End If
-#End Region
-
-#Region "Win32UI"
-                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingWin32UI, f)
-
-                Dim C1 As New List(Of Integer)
-                Dim C2 As New List(Of UInteger)
-
-                C1.Clear()
-                C2.Clear()
-
-                C1.Add(13)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_Hilight))
-
-                C1.Add(14)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_HilightText))
-
-                C1.Add(9)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_TitleText))
-
-                C1.Add(17)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_GrayText))
-
-                C1.Add(11)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveBorder))
-
-                C1.Add(3)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitle))
-
-                C1.Add(2)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveTitle))
-
-                C1.Add(10)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveBorder))
-
-                C1.Add(12)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_AppWorkspace))
-
-                C1.Add(1)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_Background))
-
-                C1.Add(27)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_GradientActiveTitle))
-
-                C1.Add(28)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_GradientInactiveTitle))
-
-                C1.Add(19)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitleText))
-
-                C1.Add(24)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_InfoWindow))
-
-                C1.Add(23)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_InfoText))
-
-                C1.Add(4)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_Menu))
-
-                C1.Add(7)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuText))
-
-                C1.Add(0)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_Scrollbar))
-
-                C1.Add(5)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_Window))
-
-                C1.Add(6)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_WindowFrame))
-
-                C1.Add(8)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_WindowText))
-
-                C1.Add(26)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_HotTrackingColor))
-
-                C1.Add(29)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuHilight))
-
-                C1.Add(30)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_MenuBar))
-
-                C1.Add(15)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonFace))
-
-                C1.Add(20)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonHilight))
-
-                C1.Add(16)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonShadow))
-
-                C1.Add(18)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonText))
-
-                C1.Add(21)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonDkShadow))
-
-                C1.Add(25)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonAlternateFace))
-
-                C1.Add(22)
-                C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonLight))
-
-                NativeMethods.User32.SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
-
-
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
-
-                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, If(Win32UI_EnableTheming, 1, 0), 0)
-                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, If(Win32UI_EnableGradient, 1, 0), 0)
-
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Win32UI_Background.R, Win32UI_Background.G, Win32UI_Background.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", Win32UI_ButtonAlternateFace.R, Win32UI_ButtonAlternateFace.G, Win32UI_ButtonAlternateFace.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", Win32UI_ButtonDkShadow.R, Win32UI_ButtonDkShadow.G, Win32UI_ButtonDkShadow.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", Win32UI_ButtonFace.R, Win32UI_ButtonFace.G, Win32UI_ButtonFace.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", Win32UI_ButtonHilight.R, Win32UI_ButtonHilight.G, Win32UI_ButtonHilight.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", Win32UI_ButtonLight.R, Win32UI_ButtonLight.G, Win32UI_ButtonLight.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", Win32UI_ButtonShadow.R, Win32UI_ButtonShadow.G, Win32UI_ButtonShadow.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", Win32UI_ButtonText.R, Win32UI_ButtonText.G, Win32UI_ButtonText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientActiveTitle.R, Win32UI_GradientActiveTitle.G, Win32UI_GradientActiveTitle.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientInactiveTitle.R, Win32UI_GradientInactiveTitle.G, Win32UI_GradientInactiveTitle.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", Win32UI_GrayText.R, Win32UI_GrayText.G, Win32UI_GrayText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", Win32UI_HilightText.R, Win32UI_HilightText.G, Win32UI_HilightText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", Win32UI_HotTrackingColor.R, Win32UI_HotTrackingColor.G, Win32UI_HotTrackingColor.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", Win32UI_InactiveBorder.R, Win32UI_InactiveBorder.G, Win32UI_InactiveBorder.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", Win32UI_InactiveTitle.R, Win32UI_InactiveTitle.G, Win32UI_InactiveTitle.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", Win32UI_InactiveTitleText.R, Win32UI_InactiveTitleText.G, Win32UI_InactiveTitleText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", Win32UI_InfoText.R, Win32UI_InfoText.G, Win32UI_InfoText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", Win32UI_InfoWindow.R, Win32UI_InfoWindow.G, Win32UI_InfoWindow.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Win32UI_Menu.R, Win32UI_Menu.G, Win32UI_Menu.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", Win32UI_MenuBar.R, Win32UI_MenuBar.G, Win32UI_MenuBar.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", Win32UI_MenuText.R, Win32UI_MenuText.G, Win32UI_MenuText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Win32UI_Scrollbar.R, Win32UI_Scrollbar.G, Win32UI_Scrollbar.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", Win32UI_TitleText.R, Win32UI_TitleText.G, Win32UI_TitleText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Win32UI_Window.R, Win32UI_Window.G, Win32UI_Window.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", Win32UI_WindowFrame.R, Win32UI_WindowFrame.G, Win32UI_WindowFrame.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", Win32UI_WindowText.R, Win32UI_WindowText.G, Win32UI_WindowText.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Win32UI_Hilight.R, Win32UI_Hilight.G, Win32UI_Hilight.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", Win32UI_MenuHilight.R, Win32UI_MenuHilight.G, Win32UI_MenuHilight.B), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32UI_Desktop.R, Win32UI_Desktop.G, Win32UI_Desktop.B), False, True)
-#End Region
+                Apply_Win32UI()                 'Win32UI (Windows Classic Elements)
 
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
-#Region "Metrics With Fonts"
+
+                Apply_WindowsMetrics_Fonts()    'Windows Metrics & Fonts
 
 
-#Region "Reading from WinAPI"
-                Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
-                Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
-                Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
-
-                SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
-                SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
-                SystemParametersInfo(SPI.SPI_GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
-#End Region
-
-#Region "Getting LogFont from Font"
-                Dim lfCaptionFont As New LogFont : Fonts_CaptionFont.ToLogFont(lfCaptionFont)
-                Dim lfIconFont As New LogFont : Fonts_IconFont.ToLogFont(lfIconFont)
-                Dim lfMenuFont As New LogFont : Fonts_MenuFont.ToLogFont(lfMenuFont)
-                Dim lfMessageFont As New LogFont : Fonts_MessageFont.ToLogFont(lfMessageFont)
-                Dim lfSMCaptionFont As New LogFont : Fonts_SmCaptionFont.ToLogFont(lfSMCaptionFont)
-                Dim lfStatusFont As New LogFont : Fonts_StatusFont.ToLogFont(lfStatusFont)
-#End Region
-
-#Region "Writing to Registry"
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", LogFontHelper.LogFontToByte(lfCaptionFont), True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", LogFontHelper.LogFontToByte(lfIconFont), True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", LogFontHelper.LogFontToByte(lfMenuFont), True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", LogFontHelper.LogFontToByte(lfMessageFont), True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), True)
-
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", Metrics_BorderWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", Metrics_CaptionHeight * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", Metrics_CaptionWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", Metrics_IconSpacing * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", Metrics_IconVerticalSpacing * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", Metrics_MenuHeight * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", Metrics_MenuWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(Metrics_MinAnimate, 1, 0), False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", Metrics_PaddedBorderWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", Metrics_ScrollHeight * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", Metrics_ScrollWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", Metrics_SmCaptionHeight * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", Metrics_SmCaptionWidth * -15, False, True)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", Metrics_ShellIconSize, False, True)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", Metrics_DesktopIconSize, False, True)
-#End Region
-
-#Region "Writing by WinAPI"
-                anim.IMinAnimate = If(Metrics_MinAnimate, 1, 0)
-
-                With NCM
-                    .lfCaptionFont = lfCaptionFont        'Requires LogOff
-                    .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
-                    .lfStatusFont = lfStatusFont          'Requires LogOff
-                    .lfMenuFont = lfMenuFont
-                    .lfMessageFont = lfMessageFont
-
-                    .iBorderWidth = Metrics_BorderWidth
-                    .iScrollWidth = Metrics_ScrollWidth
-                    .iScrollHeight = Metrics_ScrollHeight
-                    .iCaptionWidth = Metrics_CaptionWidth
-                    .iCaptionHeight = Metrics_CaptionHeight
-                    .iSMCaptionWidth = Metrics_SmCaptionWidth
-                    .iSMCaptionHeight = Metrics_SmCaptionHeight
-                    .iMenuWidth = Metrics_MenuWidth
-                    .iMenuHeight = Metrics_MenuHeight
-                    .iPaddedBorderWidth = Metrics_PaddedBorderWidth
-                End With
-
-                With ICO
-                    .iHorzSpacing = Metrics_IconSpacing
-                    .iVertSpacing = Metrics_IconVerticalSpacing
-                    .lfFont = lfIconFont
-                End With
-
-                SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-                SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
-                SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
-#End Region
-
-#End Region
-
-#Region "Terminals"
+                'Windows Terminals/Consoles
                 If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTerminalColors, f)
-
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-
-#Region "Locking"
                 rLogX.SetValue("Terminal_CMD_Enabled", If(Terminal_CMD_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_PS_32_Enabled", If(Terminal_PS_32_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_PS_64_Enabled", If(Terminal_PS_64_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal_Stable_Enabled, 1, 0))
                 rLogX.SetValue("Terminal_Preview_Enabled", If(Terminal_Preview_Enabled, 1, 0))
-#End Region
+                Apply_CommandPrompt()
+                Apply_PowerShell86()
+                Apply_PowerShell64()
+                If My.W10 Or My.W11 Then Apply_WindowsTerminals()
 
-#Region "Command Prompt"
-                If Terminal_CMD_Enabled Then
-                    EditReg("HKEY_CURRENT_USER\Console", "EnableColorSelection", 1)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
-                    EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
-                    EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
 
-                    If CMD_FontRaster Then
-                        EditReg("HKEY_CURRENT_USER\Console", "FaceName", "Terminal", False, True)
-                        EditReg("HKEY_CURRENT_USER\Console", "FontFamily", 48)
-                    Else
-                        EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
-                        EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 1, 54))
-                    End If
-
-                    EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
-                    EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
-
-                    If My.W10_1909 Then
-                        EditReg("HKEY_CURRENT_USER\Console", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console", "CursorType", CMD_1909_CursorType)
-                        EditReg("HKEY_CURRENT_USER\Console", "WindowAlpha", CMD_1909_WindowAlpha)
-                        EditReg("HKEY_CURRENT_USER\Console", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
-                        EditReg("HKEY_CURRENT_USER\Console", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
-                        EditReg("HKEY_CURRENT_USER\Console", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
-                    End If
-
-                    If My.Application._Settings.CMD_OverrideUserPreferences Then
-                        Try
-                            Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_cmd.exe")
-                        Catch
-                        End Try
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "EnableColorSelection", 1)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorSize", CMD_CursorSize)
-
-                        If CMD_FontRaster Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", "Terminal", False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", 48)
-                        Else
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", CMD_FaceName, False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", If(CMD_FontRaster, 1, 54))
-                        End If
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontSize", CMD_FontSize)
-
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontWeight", CMD_FontWeight)
-
-                        If My.W10_1909 Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorType", CMD_1909_CursorType)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "WindowAlpha", CMD_1909_WindowAlpha)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
-                        End If
-                    End If
-
-
-                    If My.Application.isElevated Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
-                        ls.Add(String.Format("""000""=""{0}""", CMD_FaceName))
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-                End If
-#End Region
-
-#Region "PowerShell x86"
-                If Terminal_PS_32_Enabled Then
-                    If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
-                        Try
-                            Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                        Catch
-
-                        End Try
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable00)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable01)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable02)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable03)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable04)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable05)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable06)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable07)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable08)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable09)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable10)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable11)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable12)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable13)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable14)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable15)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_32_PopupBackground.ToString("X") & PS_32_PopupForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_32_ScreenColorsBackground.ToString("X") & PS_32_ScreenColorsForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_32_CursorSize)
-
-                        If PS_32_FontRaster Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
-                        Else
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 1, 54))
-                        End If
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_32_FontSize)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_32_FontWeight)
-
-                        If My.W10_1909 Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_32_1909_CursorColor)).ToArgb)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_32_1909_CursorType)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_32_1909_WindowAlpha)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_32_1909_ForceV2, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_32_1909_LineSelection, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_32_1909_TerminalScrolling, 1, 0))
-                        End If
-
-                        If My.Application.isElevated Then
-                            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_32_FaceName, False, True)
-                        Else
-                            Dim ls As New List(Of String)
-                            ls.Clear()
-                            ls.Add("Windows Registry Editor Version 5.00")
-                            ls.Add(vbCrLf)
-                            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
-                            ls.Add(String.Format("""000""=""{0}""", PS_32_FaceName))
-
-                            Dim result As String = CStr_FromList(ls)
-
-                            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                            IO.File.WriteAllText(tempreg, result)
-
-                            Dim process As Process = Nothing
-
-                            Dim processStartInfo As New ProcessStartInfo With {
-                               .FileName = "regedit",
-                               .Verb = "runas",
-                               .Arguments = String.Format("/s ""{0}""", tempreg),
-                               .WindowStyle = ProcessWindowStyle.Hidden,
-                               .CreateNoWindow = True,
-                               .UseShellExecute = True
-                            }
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            processStartInfo.FileName = "reg"
-                            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            Kill(tempreg)
-                        End If
-
-                    End If
-                End If
-#End Region
-
-#Region "PowerShell x64"
-                If Terminal_PS_64_Enabled Then
-                    If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
-
-                        Try
-                            Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                        Catch
-
-                        End Try
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable00)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable01)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable02)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable03)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable04)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable05)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable06)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable07)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable08)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable09)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable10)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable11)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable12)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable13)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable14)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable15)).ToArgb)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_64_PopupBackground.ToString("X") & PS_64_PopupForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_64_ScreenColorsBackground.ToString("X") & PS_64_ScreenColorsForeground.ToString("X"), 16))
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_64_CursorSize)
-
-                        If PS_64_FontRaster Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
-                        Else
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 1, 54))
-                        End If
-
-
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_64_FontSize)
-                        EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_64_FontWeight)
-
-                        If My.W10_1909 Then
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_64_1909_CursorColor)).ToArgb)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_64_1909_CursorType)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_64_1909_WindowAlpha)
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_64_1909_ForceV2, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_64_1909_LineSelection, 1, 0))
-                            EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_64_1909_TerminalScrolling, 1, 0))
-                        End If
-
-
-                        If My.Application.isElevated Then
-                            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_64_FaceName, False, True)
-                        Else
-                            Dim ls As New List(Of String)
-                            ls.Clear()
-                            ls.Add("Windows Registry Editor Version 5.00")
-                            ls.Add(vbCrLf)
-                            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
-                            ls.Add(String.Format("""000""=""{0}""", PS_64_FaceName))
-
-                            Dim result As String = CStr_FromList(ls)
-
-                            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                            IO.File.WriteAllText(tempreg, result)
-
-                            Dim process As Process = Nothing
-
-                            Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            processStartInfo.FileName = "reg"
-                            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                            process = Process.Start(processStartInfo)
-                            process.WaitForExit()
-                            Kill(tempreg)
-                        End If
-
-                    End If
-                End If
-#End Region
-
-#Region "Windows Terminals"
-                If My.W10 Or My.W11 Then
-                    Try
-                        Dim TerDir As String
-                        Dim TerPreDir As String
-
-                        If Not My.Application._Settings.Terminal_Path_Deflection Then
-                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                        Else
-                            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                                TerDir = My.Application._Settings.Terminal_Stable_Path
-                            Else
-                                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                            End If
-
-                            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                                TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                            Else
-                                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                            End If
-                        End If
-
-                        If Terminal_Stable_Enabled Then
-                            If IO.File.Exists(TerDir) Then
-                                Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-                            End If
-                        End If
-
-                        If Terminal_Preview_Enabled Then
-                            If IO.File.Exists(TerPreDir) Then
-                                TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                            End If
-                        End If
-                    Catch ex As Exception
-                        MsgBox(My.Application.LanguageHelper.CP_TerminalError & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
-                    End Try
-
-                End If
-#End Region
-
-#End Region
-
-#Region "Cursors"
-                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_SavingCursorsColors, f)
-
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-                rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
-
-                Dim r As RegistryKey
-
-                r = rMain.CreateSubKey("Arrow")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Arrow_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Arrow_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Arrow_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Arrow_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Arrow_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Arrow_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Arrow_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Arrow_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Arrow_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Arrow_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Arrow_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Arrow_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Help")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Help_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Help_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Help_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Help_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Help_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Help_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Help_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Help_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Help_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Help_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Help_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Help_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("AppLoading")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_AppLoading_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_AppLoading_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_AppLoading_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_AppLoading_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_AppLoading_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_AppLoading_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_AppLoading_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_AppLoading_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_AppLoading_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_AppLoading_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_AppLoading_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_AppLoading_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBack1", Cursor_AppLoading_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBack2", Cursor_AppLoading_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackGradient", If(Cursor_AppLoading_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackGradientMode", Cursor_AppLoading_LoadingCircleBackGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleBackNoise", If(Cursor_AppLoading_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_AppLoading_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot1", Cursor_AppLoading_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot2", Cursor_AppLoading_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotGradient", If(Cursor_AppLoading_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotGradientMode", Cursor_AppLoading_LoadingCircleHotGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleHotNoise", If(Cursor_AppLoading_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_AppLoading_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Busy")
-                With r
-                    .SetValue("LoadingCircleBack1", Cursor_Busy_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBack2", Cursor_Busy_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackGradient", If(Cursor_Busy_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackGradientMode", Cursor_Busy_LoadingCircleBackGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleBackNoise", If(Cursor_Busy_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", Cursor_Busy_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot1", Cursor_Busy_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot2", Cursor_Busy_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotGradient", If(Cursor_Busy_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotGradientMode", Cursor_Busy_LoadingCircleHotGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleHotNoise", If(Cursor_Busy_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", Cursor_Busy_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Move")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Move_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Move_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Move_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Move_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Move_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Move_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Move_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Move_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Move_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Move_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Move_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Move_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("NS")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_NS_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_NS_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_NS_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_NS_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_NS_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NS_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_NS_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_NS_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_NS_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_NS_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_NS_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NS_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("EW")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_EW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_EW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_EW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_EW_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_EW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_EW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_EW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_EW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_EW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_EW_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_EW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_EW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("NESW")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_NESW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_NESW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_NESW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_NESW_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_NESW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NESW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_NESW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_NESW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_NESW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_NESW_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_NESW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NESW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("NWSE")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_NWSE_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_NWSE_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_NWSE_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_NWSE_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_NWSE_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_NWSE_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_NWSE_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_NWSE_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_NWSE_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_NWSE_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_NWSE_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_NWSE_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Up")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Up_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Up_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Up_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Up_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Up_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Up_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Up_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Up_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Up_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Up_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Up_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Up_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Pen")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Pen_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Pen_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Pen_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Pen_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Pen_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pen_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Pen_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Pen_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Pen_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Pen_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Pen_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pen_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("None")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_None_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_None_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_None_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_None_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_None_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_None_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_None_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_None_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_None_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_None_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_None_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_None_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Link")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Link_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Link_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Link_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Link_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Link_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Link_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Link_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Link_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Link_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Link_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Link_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Link_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Pin")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Pin_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Pin_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Pin_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Pin_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Pin_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Pin_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Pin_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Pin_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Pin_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Pin_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Pin_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Pin_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Person")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Person_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Person_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Person_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Person_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Person_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Person_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Person_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Person_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Person_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Person_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Person_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("IBeam")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_IBeam_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_IBeam_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_IBeam_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_IBeam_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_IBeam_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_IBeam_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_IBeam_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_IBeam_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_IBeam_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_IBeam_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_IBeam_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_IBeam_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r = rMain.CreateSubKey("Cross")
-                With r
-                    .SetValue("PrimaryColor1", Cursor_Cross_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", Cursor_Cross_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", If(Cursor_Cross_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradientMode", Cursor_Cross_PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", If(Cursor_Cross_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", Cursor_Cross_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", Cursor_Cross_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", Cursor_Cross_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", If(Cursor_Cross_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradientMode", Cursor_Cross_SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", If(Cursor_Cross_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", Cursor_Cross_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                End With
-
-                r.Close()
-                rMain.Close()
-
-                If Cursor_Enabled Then
-                    If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCursors, f)
-                    ExportCursors(Me)
-                    If My.Application._Settings.AutoApplyCursors Then
-                        If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCursors, f)
-                        ApplyCursorsToReg()
-                    End If
-                End If
-#End Region
+                Apply_Cursors()                  'Windows Cursors
 
                 If ShowProgress Then
                     If My.W7 Or My.W8 Then f.BeginInvoke(New Action(Sub() f.Close()))
@@ -5792,6 +4453,1385 @@ Public Class CP
 
     End Sub
 
+#Region "   Applying Subs()"
+    Public Sub Apply_ModernColors()
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+
+        Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
+                         , (Taskbar_Icon_Underline).R, (Taskbar_Icon_Underline).G, (Taskbar_Icon_Underline).B, (Taskbar_Icon_Underline).A _
+                         , (StartButton_Hover).R, (StartButton_Hover).G, (StartButton_Hover).B, (StartButton_Hover).A _
+                         , (SettingsIconsAndLinks).R, (SettingsIconsAndLinks).G, (SettingsIconsAndLinks).B, (SettingsIconsAndLinks).A _
+                         , (StartMenuBackground_ActiveTaskbarButton).R, (StartMenuBackground_ActiveTaskbarButton).G, (StartMenuBackground_ActiveTaskbarButton).B, (StartMenuBackground_ActiveTaskbarButton).A _
+                         , (StartListFolders_TaskbarFront).R, (StartListFolders_TaskbarFront).G, (StartListFolders_TaskbarFront).B, (StartListFolders_TaskbarFront).A _
+                         , (Taskbar_Background).R, (Taskbar_Background).G, (Taskbar_Background).B, (Taskbar_Background).A _
+                         , (UWP_Undefined).R, (UWP_Undefined).G, (UWP_Undefined).B, (UWP_Undefined).A}
+
+        Select Case ApplyAccentonTaskbar
+            Case ApplyAccentonTaskbar_Level.None
+                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+
+            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 1)
+
+            Case ApplyAccentonTaskbar_Level.Taskbar
+                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 2)
+
+            Case Else
+                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+        End Select
+
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
+
+
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
+
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
+
+    End Sub
+
+    Public Sub Apply_Windows7Aero()
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
+
+        Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
+
+        Select Case Aero_Theme
+            Case AeroTheme.Aero
+                NativeMethods.Uxtheme.EnableTheming(1)
+                NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+            Case AeroTheme.AeroOpaque
+                NativeMethods.Uxtheme.EnableTheming(1)
+                NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+
+            Case AeroTheme.Basic
+                NativeMethods.Uxtheme.EnableTheming(1)
+                NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+
+            Case AeroTheme.Classic
+                NativeMethods.Uxtheme.EnableTheming(0)
+
+        End Select
+
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
+
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+    End Sub
+
+    Public Sub Apply_Windows8Metro()
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
+
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+
+        Try
+            Select Case Metro_Theme
+                Case AeroTheme.Aero
+                    NativeMethods.Uxtheme.EnableTheming(1)
+                    NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                Case AeroTheme.AeroLite
+                    NativeMethods.Uxtheme.EnableTheming(1)
+                    NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+            End Select
+        Catch
+        End Try
+
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
+
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", BizareColorInvertor(Metro_AccentColor).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
+
+
+        If My.Application.isElevated Then
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Metro_Start)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", Metro_LogonUI)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False), False, True)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False), False, True)
+        Else
+            Dim ls As New List(Of String)
+            ls.Clear()
+            ls.Add("Windows Registry Editor Version 5.00")
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
+            ls.Add(String.Format("""PersonalColors_Background""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Background, False)))
+            ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", "#" & RGB2HEX_oneline(Metro_PersonalColors_Accent, False)))
+            ls.Add(String.Format("""ForceStartBackground""=dword:{0}", ReturnEightDigitsFromInt(Metro_Start)))
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
+            ls.Add(String.Format("""DefaultColorSet""=dword:{0}", ReturnEightDigitsFromInt(Metro_LogonUI)))
+
+            Dim result As String = CStr_FromList(ls)
+
+            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+            IO.File.WriteAllText(tempreg, result)
+
+            Dim process As Process = Nothing
+
+            Dim processStartInfo As New ProcessStartInfo With {
+               .FileName = "regedit",
+               .Verb = "runas",
+               .Arguments = String.Format("/s ""{0}""", tempreg),
+               .WindowStyle = ProcessWindowStyle.Hidden,
+               .CreateNoWindow = True,
+               .UseShellExecute = True
+            }
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            processStartInfo.FileName = "reg"
+            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            Kill(tempreg)
+        End If
+    End Sub
+
+    Public Sub Apply_LogonUI_11_10()
+        If My.Application.isElevated Then
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0))
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(LogonUI_DisableLogonBackgroundImage, 1, 0))
+            EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(LogonUI_NoLockScreen, 1, 0))
+        Else
+            Dim ls As New List(Of String)
+            ls.Clear()
+            ls.Add("Windows Registry Editor Version 5.00")
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
+            ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(LogonUI_NoLockScreen, 1, 0)))
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
+            ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(LogonUI_DisableAcrylicBackgroundOnLogon, 1, 0)))
+            ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(LogonUI_DisableLogonBackgroundImage, 1, 0)))
+
+            Dim result As String = CStr_FromList(ls)
+
+            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+            IO.File.WriteAllText(tempreg, result)
+
+            Dim process As Process = Nothing
+
+            Dim processStartInfo As New ProcessStartInfo With {
+               .FileName = "regedit",
+               .Verb = "runas",
+               .Arguments = String.Format("/s ""{0}""", tempreg),
+               .WindowStyle = ProcessWindowStyle.Hidden,
+               .CreateNoWindow = True,
+               .UseShellExecute = True
+            }
+
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            processStartInfo.FileName = "reg"
+            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            Kill(tempreg)
+        End If
+    End Sub
+
+    Public Sub Apply_LogonUI_7()
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
+
+        If My.Application.isElevated Then
+
+            My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
+            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7_Enabled, 1, 0))
+
+            My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
+            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7_Enabled, 1, 0))
+
+        Else
+            Dim ls As New List(Of String)
+            ls.Clear()
+            ls.Add("Windows Registry Editor Version 5.00")
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
+            ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
+            ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7_Enabled, 1, 0)))
+
+            Dim result As String = CStr_FromList(ls)
+
+            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+            IO.File.WriteAllText(tempreg, result)
+
+            Dim process As Process = Nothing
+
+            Dim processStartInfo As New ProcessStartInfo With {
+           .FileName = "regedit",
+           .Verb = "runas",
+           .Arguments = String.Format("/s ""{0}""", tempreg),
+           .WindowStyle = ProcessWindowStyle.Hidden,
+           .CreateNoWindow = True,
+           .UseShellExecute = True
+        }
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            processStartInfo.FileName = "reg"
+            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            Kill(tempreg)
+        End If
+
+        Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
+
+        Select Case LogonUI7_Mode
+            Case LogonUI_Modes.Default_
+                rLog.SetValue("Mode", 0)
+
+            Case LogonUI_Modes.Wallpaper
+                rLog.SetValue("Mode", 1)
+
+            Case LogonUI_Modes.CustomImage
+                rLog.SetValue("Mode", 2)
+
+            Case LogonUI_Modes.SolidColor
+                rLog.SetValue("Mode", 3)
+        End Select
+
+        rLog.SetValue("ImagePath", LogonUI7_ImagePath)
+        rLog.SetValue("Color", LogonUI7_Color.ToArgb)
+        rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
+        rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
+        rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
+        rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
+
+        Select Case LogonUI7_Effect_Noise_Mode
+            Case LogonUI7_NoiseMode.Aero
+                rLog.SetValue("Noise_Mode", 0)
+
+            Case LogonUI7_NoiseMode.Acrylic
+                rLog.SetValue("Noise_Mode", 1)
+        End Select
+
+        rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
+        rLog.Flush()
+        rLog.Close()
+
+        If LogonUI7_Enabled Then
+            NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+
+            Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
+            Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+
+            IO.Directory.CreateDirectory(DirX)
+
+            For Each fileX As String In My.Computer.FileSystem.GetFiles(DirX)
+                Try : Kill(fileX) : Catch : End Try
+            Next
+
+            Dim bmpList As New List(Of Bitmap)
+            bmpList.Clear()
+
+            Select Case LogonUI7_Mode
+                Case LogonUI_Modes.Default_
+
+                    For i As Integer = 5031 To 5043 Step +1
+                        bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
+                    Next
+
+                Case LogonUI_Modes.CustomImage
+
+                    If IO.File.Exists(LogonUI7_ImagePath) Then
+                        bmpList.Add(Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+                    Else
+                        bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
+                    End If
+
+                Case LogonUI_Modes.SolidColor
+                    bmpList.Add(ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size))
+
+                Case LogonUI_Modes.Wallpaper
+                    bmpList.Add(My.Application.GetCurrentWallpaper)
+            End Select
+
+
+            For x = 0 To bmpList.Count - 1
+                SetCtrlTxt(String.Format(My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
+                If LogonUI7_Effect_Grayscale Then bmpList(x) = Grayscale(bmpList(x))
+                If LogonUI7_Effect_Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7_Effect_Blur_Intensity)
+                If LogonUI7_Effect_Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
+            Next
+
+            If bmpList.Count = 1 Then
+                bmpList(0).Save(DirX & "\backgroundDefault.jpg", Drawing.Imaging.ImageFormat.Jpeg)
+            Else
+                For x = 0 To bmpList.Count - 1
+                    bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Drawing.Imaging.ImageFormat.Jpeg)
+                Next
+            End If
+            NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+        End If
+    End Sub
+
+    Public Sub Apply_LogonUI_8()
+        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
+
+        Dim lockimg As String = My.Application.appData & "\LockScreen.png"
+
+        If My.Application.isElevated Then
+            My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\Personalization")
+            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Metro_NoLockScreen, 1, 0))
+            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg)
+
+        Else
+            Dim ls As New List(Of String)
+            ls.Clear()
+            ls.Add("Windows Registry Editor Version 5.00")
+            ls.Add(vbCrLf)
+            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
+            ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(Metro_NoLockScreen, 1, 0)))
+            ls.Add(String.Format("""LockScreenImage""=""{0}""", lockimg))
+
+            Dim result As String = CStr_FromList(ls)
+
+            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+            IO.File.WriteAllText(tempreg, result)
+
+            Dim process As Process = Nothing
+
+            Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            processStartInfo.FileName = "reg"
+            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+            process = Process.Start(processStartInfo)
+            process.WaitForExit()
+            Kill(tempreg)
+        End If
+
+        Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
+
+        Select Case Metro_LockScreenType
+            Case LogonUI_Modes.Default_
+                rLog.SetValue("Mode", 0)
+
+            Case LogonUI_Modes.Wallpaper
+                rLog.SetValue("Mode", 1)
+
+            Case LogonUI_Modes.CustomImage
+                rLog.SetValue("Mode", 2)
+
+            Case LogonUI_Modes.SolidColor
+                rLog.SetValue("Mode", 3)
+        End Select
+
+        rLog.SetValue("Metro_LockScreenSystemID", Metro_LockScreenSystemID)
+        rLog.SetValue("ImagePath", LogonUI7_ImagePath)
+        rLog.SetValue("Color", LogonUI7_Color.ToArgb)
+        rLog.SetValue("Effect_Blur", If(LogonUI7_Effect_Blur, 1, 0))
+        rLog.SetValue("Effect_Blur_Intensity", LogonUI7_Effect_Blur_Intensity)
+        rLog.SetValue("Effect_Grayscale", If(LogonUI7_Effect_Grayscale, 1, 0))
+        rLog.SetValue("Effect_Noise", If(LogonUI7_Effect_Noise, 1, 0))
+
+        Select Case LogonUI7_Effect_Noise_Mode
+            Case LogonUI7_NoiseMode.Aero
+                rLog.SetValue("Noise_Mode", 0)
+
+            Case LogonUI7_NoiseMode.Acrylic
+                rLog.SetValue("Noise_Mode", 1)
+        End Select
+
+        rLog.SetValue("Effect_Noise_Intensity", LogonUI7_Effect_Noise_Intensity)
+        rLog.Flush()
+        rLog.Close()
+
+        If Not Metro_NoLockScreen Then
+
+            Try : Kill(lockimg) : Catch : End Try
+            Dim bmp As Bitmap
+
+            Select Case Metro_LockScreenType
+
+                Case LogonUI_Modes.Default_
+                    Dim syslock As String
+                    If Not MainFrm.CP.Metro_LockScreenSystemID = 1 And Not MainFrm.CP.Metro_LockScreenSystemID = 3 Then
+                        syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", MainFrm.CP.Metro_LockScreenSystemID)
+                    Else
+                        syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", MainFrm.CP.Metro_LockScreenSystemID)
+                    End If
+
+                    If IO.File.Exists(syslock) Then
+                        bmp = Image.FromStream(New IO.FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
+                    Else
+                        bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+                    End If
+
+                Case LogonUI_Modes.CustomImage
+
+                    If IO.File.Exists(LogonUI7_ImagePath) Then
+                        bmp = Image.FromStream(New IO.FileStream(LogonUI7_ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
+                    Else
+                        bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+                    End If
+
+                Case LogonUI_Modes.SolidColor
+                    bmp = ColorToBitmap(LogonUI7_Color, My.Computer.Screen.Bounds.Size)
+
+                Case LogonUI_Modes.Wallpaper
+                    bmp = My.Application.GetCurrentWallpaper
+            End Select
+
+            SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCustomLogonUI, f)
+
+            If LogonUI7_Effect_Grayscale Then bmp = Grayscale(bmp)
+            If LogonUI7_Effect_Blur Then bmp = BlurBitmap(bmp, LogonUI7_Effect_Blur_Intensity)
+            If LogonUI7_Effect_Noise Then bmp = NoiseBitmap(bmp, LogonUI7_Effect_Noise_Mode, LogonUI7_Effect_Noise_Intensity / 100)
+            bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
+        End If
+
+    End Sub
+
+    Public Sub Apply_Win32UI()
+        If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingWin32UI, f)
+
+        Dim C1 As New List(Of Integer)
+        Dim C2 As New List(Of UInteger)
+
+        C1.Clear()
+        C2.Clear()
+
+        C1.Add(13)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_Hilight))
+
+        C1.Add(14)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_HilightText))
+
+        C1.Add(9)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_TitleText))
+
+        C1.Add(17)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_GrayText))
+
+        C1.Add(11)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveBorder))
+
+        C1.Add(3)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitle))
+
+        C1.Add(2)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveTitle))
+
+        C1.Add(10)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ActiveBorder))
+
+        C1.Add(12)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_AppWorkspace))
+
+        C1.Add(1)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_Background))
+
+        C1.Add(27)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_GradientActiveTitle))
+
+        C1.Add(28)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_GradientInactiveTitle))
+
+        C1.Add(19)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_InactiveTitleText))
+
+        C1.Add(24)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_InfoWindow))
+
+        C1.Add(23)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_InfoText))
+
+        C1.Add(4)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_Menu))
+
+        C1.Add(7)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_MenuText))
+
+        C1.Add(0)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_Scrollbar))
+
+        C1.Add(5)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_Window))
+
+        C1.Add(6)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_WindowFrame))
+
+        C1.Add(8)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_WindowText))
+
+        C1.Add(26)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_HotTrackingColor))
+
+        C1.Add(29)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_MenuHilight))
+
+        C1.Add(30)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_MenuBar))
+
+        C1.Add(15)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonFace))
+
+        C1.Add(20)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonHilight))
+
+        C1.Add(16)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonShadow))
+
+        C1.Add(18)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonText))
+
+        C1.Add(21)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonDkShadow))
+
+        C1.Add(25)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonAlternateFace))
+
+        C1.Add(22)
+        C2.Add(ColorTranslator.ToWin32(Win32UI_ButtonLight))
+
+        NativeMethods.User32.SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
+
+
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, Win32UI_EnableTheming), RegistryValueKind.Binary)
+        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, Win32UI_EnableGradient), RegistryValueKind.Binary)
+
+        NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, If(Win32UI_EnableTheming, 1, 0), 0)
+        NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, If(Win32UI_EnableGradient, 1, 0), 0)
+
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", Win32UI_ActiveBorder.R, Win32UI_ActiveBorder.G, Win32UI_ActiveBorder.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", Win32UI_ActiveTitle.R, Win32UI_ActiveTitle.G, Win32UI_ActiveTitle.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", Win32UI_AppWorkspace.R, Win32UI_AppWorkspace.G, Win32UI_AppWorkspace.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Win32UI_Background.R, Win32UI_Background.G, Win32UI_Background.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", Win32UI_ButtonAlternateFace.R, Win32UI_ButtonAlternateFace.G, Win32UI_ButtonAlternateFace.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", Win32UI_ButtonDkShadow.R, Win32UI_ButtonDkShadow.G, Win32UI_ButtonDkShadow.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", Win32UI_ButtonFace.R, Win32UI_ButtonFace.G, Win32UI_ButtonFace.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", Win32UI_ButtonHilight.R, Win32UI_ButtonHilight.G, Win32UI_ButtonHilight.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", Win32UI_ButtonLight.R, Win32UI_ButtonLight.G, Win32UI_ButtonLight.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", Win32UI_ButtonShadow.R, Win32UI_ButtonShadow.G, Win32UI_ButtonShadow.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", Win32UI_ButtonText.R, Win32UI_ButtonText.G, Win32UI_ButtonText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientActiveTitle.R, Win32UI_GradientActiveTitle.G, Win32UI_GradientActiveTitle.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", Win32UI_GradientInactiveTitle.R, Win32UI_GradientInactiveTitle.G, Win32UI_GradientInactiveTitle.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", Win32UI_GrayText.R, Win32UI_GrayText.G, Win32UI_GrayText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", Win32UI_HilightText.R, Win32UI_HilightText.G, Win32UI_HilightText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", Win32UI_HotTrackingColor.R, Win32UI_HotTrackingColor.G, Win32UI_HotTrackingColor.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", Win32UI_InactiveBorder.R, Win32UI_InactiveBorder.G, Win32UI_InactiveBorder.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", Win32UI_InactiveTitle.R, Win32UI_InactiveTitle.G, Win32UI_InactiveTitle.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", Win32UI_InactiveTitleText.R, Win32UI_InactiveTitleText.G, Win32UI_InactiveTitleText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", Win32UI_InfoText.R, Win32UI_InfoText.G, Win32UI_InfoText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", Win32UI_InfoWindow.R, Win32UI_InfoWindow.G, Win32UI_InfoWindow.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Win32UI_Menu.R, Win32UI_Menu.G, Win32UI_Menu.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", Win32UI_MenuBar.R, Win32UI_MenuBar.G, Win32UI_MenuBar.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", Win32UI_MenuText.R, Win32UI_MenuText.G, Win32UI_MenuText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Win32UI_Scrollbar.R, Win32UI_Scrollbar.G, Win32UI_Scrollbar.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", Win32UI_TitleText.R, Win32UI_TitleText.G, Win32UI_TitleText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Win32UI_Window.R, Win32UI_Window.G, Win32UI_Window.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", Win32UI_WindowFrame.R, Win32UI_WindowFrame.G, Win32UI_WindowFrame.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", Win32UI_WindowText.R, Win32UI_WindowText.G, Win32UI_WindowText.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Win32UI_Hilight.R, Win32UI_Hilight.G, Win32UI_Hilight.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", Win32UI_MenuHilight.R, Win32UI_MenuHilight.G, Win32UI_MenuHilight.B), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32UI_Desktop.R, Win32UI_Desktop.G, Win32UI_Desktop.B), False, True)
+    End Sub
+
+    Public Sub Apply_WindowsMetrics_Fonts()
+#Region "Reading from WinAPI"
+        Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
+        Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
+        Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
+
+        SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
+        SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
+        SystemParametersInfo(SPI.SPI_GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
+#End Region
+
+#Region "Getting LogFont from Font"
+        Dim lfCaptionFont As New LogFont : Fonts_CaptionFont.ToLogFont(lfCaptionFont)
+        Dim lfIconFont As New LogFont : Fonts_IconFont.ToLogFont(lfIconFont)
+        Dim lfMenuFont As New LogFont : Fonts_MenuFont.ToLogFont(lfMenuFont)
+        Dim lfMessageFont As New LogFont : Fonts_MessageFont.ToLogFont(lfMessageFont)
+        Dim lfSMCaptionFont As New LogFont : Fonts_SmCaptionFont.ToLogFont(lfSMCaptionFont)
+        Dim lfStatusFont As New LogFont : Fonts_StatusFont.ToLogFont(lfStatusFont)
+#End Region
+
+#Region "Writing to Registry"
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", LogFontHelper.LogFontToByte(lfCaptionFont), True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", LogFontHelper.LogFontToByte(lfIconFont), True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", LogFontHelper.LogFontToByte(lfMenuFont), True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", LogFontHelper.LogFontToByte(lfMessageFont), True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), True)
+
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", Metrics_BorderWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", Metrics_CaptionHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", Metrics_CaptionWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", Metrics_IconSpacing * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", Metrics_IconVerticalSpacing * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", Metrics_MenuHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", Metrics_MenuWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(Metrics_MinAnimate, 1, 0), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", Metrics_PaddedBorderWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", Metrics_ScrollHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", Metrics_ScrollWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", Metrics_SmCaptionHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", Metrics_SmCaptionWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", Metrics_ShellIconSize, False, True)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", Metrics_DesktopIconSize, False, True)
+#End Region
+
+#Region "Writing by WinAPI"
+        anim.IMinAnimate = If(Metrics_MinAnimate, 1, 0)
+
+        With NCM
+            .lfCaptionFont = lfCaptionFont        'Requires LogOff
+            .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
+            .lfStatusFont = lfStatusFont          'Requires LogOff
+            .lfMenuFont = lfMenuFont
+            .lfMessageFont = lfMessageFont
+
+            .iBorderWidth = Metrics_BorderWidth
+            .iScrollWidth = Metrics_ScrollWidth
+            .iScrollHeight = Metrics_ScrollHeight
+            .iCaptionWidth = Metrics_CaptionWidth
+            .iCaptionHeight = Metrics_CaptionHeight
+            .iSMCaptionWidth = Metrics_SmCaptionWidth
+            .iSMCaptionHeight = Metrics_SmCaptionHeight
+            .iMenuWidth = Metrics_MenuWidth
+            .iMenuHeight = Metrics_MenuHeight
+            .iPaddedBorderWidth = Metrics_PaddedBorderWidth
+        End With
+
+        With ICO
+            .iHorzSpacing = Metrics_IconSpacing
+            .iVertSpacing = Metrics_IconVerticalSpacing
+            .lfFont = lfIconFont
+        End With
+
+        SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
+        SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
+        SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
+
+
+
+        NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
+
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+
+
+#End Region
+    End Sub
+
+    Public Sub Apply_CommandPrompt()
+        If Terminal_CMD_Enabled Then
+            EditReg("HKEY_CURRENT_USER\Console", "EnableColorSelection", 1)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
+            EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
+            EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
+
+            If CMD_FontRaster Then
+                EditReg("HKEY_CURRENT_USER\Console", "FaceName", "Terminal", False, True)
+                EditReg("HKEY_CURRENT_USER\Console", "FontFamily", 48)
+            Else
+                EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
+                EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 1, 54))
+            End If
+
+            EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
+            EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
+
+            If My.W10_1909 Then
+                EditReg("HKEY_CURRENT_USER\Console", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console", "CursorType", CMD_1909_CursorType)
+                EditReg("HKEY_CURRENT_USER\Console", "WindowAlpha", CMD_1909_WindowAlpha)
+                EditReg("HKEY_CURRENT_USER\Console", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
+                EditReg("HKEY_CURRENT_USER\Console", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
+                EditReg("HKEY_CURRENT_USER\Console", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
+            End If
+
+            If My.Application._Settings.CMD_OverrideUserPreferences Then
+                Try
+                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_cmd.exe")
+                Catch
+                End Try
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "EnableColorSelection", 1)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorSize", CMD_CursorSize)
+
+                If CMD_FontRaster Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", "Terminal", False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", 48)
+                Else
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", CMD_FaceName, False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", If(CMD_FontRaster, 1, 54))
+                End If
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontSize", CMD_FontSize)
+
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontWeight", CMD_FontWeight)
+
+                If My.W10_1909 Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorType", CMD_1909_CursorType)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "WindowAlpha", CMD_1909_WindowAlpha)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
+                End If
+            End If
+
+
+            If My.Application.isElevated Then
+                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
+            Else
+                Dim ls As New List(Of String)
+                ls.Clear()
+                ls.Add("Windows Registry Editor Version 5.00")
+                ls.Add(vbCrLf)
+                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
+                ls.Add(String.Format("""000""=""{0}""", CMD_FaceName))
+
+                Dim result As String = CStr_FromList(ls)
+
+                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                IO.File.WriteAllText(tempreg, result)
+
+                Dim process As Process = Nothing
+
+                Dim processStartInfo As New ProcessStartInfo With {
+                   .FileName = "regedit",
+                   .Verb = "runas",
+                   .Arguments = String.Format("/s ""{0}""", tempreg),
+                   .WindowStyle = ProcessWindowStyle.Hidden,
+                   .CreateNoWindow = True,
+                   .UseShellExecute = True
+                }
+                process = Process.Start(processStartInfo)
+                process.WaitForExit()
+                processStartInfo.FileName = "reg"
+                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                process = Process.Start(processStartInfo)
+                process.WaitForExit()
+                Kill(tempreg)
+            End If
+        End If
+    End Sub
+
+    Public Sub Apply_PowerShell86()
+        If Terminal_PS_32_Enabled Then
+            If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
+                Try
+                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", True).Close()
+                Catch
+
+                End Try
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable00)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable01)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable02)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable03)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable04)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable05)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable06)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable07)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable08)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable09)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable10)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable11)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable12)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable13)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable14)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable15)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_32_PopupBackground.ToString("X") & PS_32_PopupForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_32_ScreenColorsBackground.ToString("X") & PS_32_ScreenColorsForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_32_CursorSize)
+
+                If PS_32_FontRaster Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
+                Else
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 1, 54))
+                End If
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_32_FontSize)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_32_FontWeight)
+
+                If My.W10_1909 Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_32_1909_CursorColor)).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_32_1909_CursorType)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_32_1909_WindowAlpha)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_32_1909_ForceV2, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_32_1909_LineSelection, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_32_1909_TerminalScrolling, 1, 0))
+                End If
+
+                If My.Application.isElevated Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_32_FaceName, False, True)
+                Else
+                    Dim ls As New List(Of String)
+                    ls.Clear()
+                    ls.Add("Windows Registry Editor Version 5.00")
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
+                    ls.Add(String.Format("""000""=""{0}""", PS_32_FaceName))
+
+                    Dim result As String = CStr_FromList(ls)
+
+                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                    IO.File.WriteAllText(tempreg, result)
+
+                    Dim process As Process = Nothing
+
+                    Dim processStartInfo As New ProcessStartInfo With {
+                       .FileName = "regedit",
+                       .Verb = "runas",
+                       .Arguments = String.Format("/s ""{0}""", tempreg),
+                       .WindowStyle = ProcessWindowStyle.Hidden,
+                       .CreateNoWindow = True,
+                       .UseShellExecute = True
+                    }
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    processStartInfo.FileName = "reg"
+                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    Kill(tempreg)
+                End If
+
+            End If
+        End If
+    End Sub
+
+    Public Sub Apply_PowerShell64()
+        If Terminal_PS_64_Enabled Then
+            If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
+
+                Try
+                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", True).Close()
+                Catch
+
+                End Try
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable00)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable01)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable02)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable03)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable04)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable05)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable06)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable07)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable08)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable09)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable10)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable11)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable12)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable13)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable14)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable15)).ToArgb)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_64_PopupBackground.ToString("X") & PS_64_PopupForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_64_ScreenColorsBackground.ToString("X") & PS_64_ScreenColorsForeground.ToString("X"), 16))
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_64_CursorSize)
+
+                If PS_64_FontRaster Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
+                Else
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 1, 54))
+                End If
+
+
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_64_FontSize)
+                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_64_FontWeight)
+
+                If My.W10_1909 Then
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_64_1909_CursorColor)).ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_64_1909_CursorType)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_64_1909_WindowAlpha)
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_64_1909_ForceV2, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_64_1909_LineSelection, 1, 0))
+                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_64_1909_TerminalScrolling, 1, 0))
+                End If
+
+
+                If My.Application.isElevated Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_64_FaceName, False, True)
+                Else
+                    Dim ls As New List(Of String)
+                    ls.Clear()
+                    ls.Add("Windows Registry Editor Version 5.00")
+                    ls.Add(vbCrLf)
+                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
+                    ls.Add(String.Format("""000""=""{0}""", PS_64_FaceName))
+
+                    Dim result As String = CStr_FromList(ls)
+
+                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                    IO.File.WriteAllText(tempreg, result)
+
+                    Dim process As Process = Nothing
+
+                    Dim processStartInfo As New ProcessStartInfo With {
+                   .FileName = "regedit",
+                   .Verb = "runas",
+                   .Arguments = String.Format("/s ""{0}""", tempreg),
+                   .WindowStyle = ProcessWindowStyle.Hidden,
+                   .CreateNoWindow = True,
+                   .UseShellExecute = True
+                }
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    processStartInfo.FileName = "reg"
+                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                    process = Process.Start(processStartInfo)
+                    process.WaitForExit()
+                    Kill(tempreg)
+                End If
+
+            End If
+        End If
+    End Sub
+
+    Public Sub Apply_WindowsTerminals()
+        Try
+            Dim TerDir As String
+            Dim TerPreDir As String
+
+            If Not My.Application._Settings.Terminal_Path_Deflection Then
+                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            Else
+                If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                    TerDir = My.Application._Settings.Terminal_Stable_Path
+                Else
+                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                End If
+
+                If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                    TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                Else
+                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                End If
+            End If
+
+            If Terminal_Stable_Enabled Then
+                If IO.File.Exists(TerDir) Then
+                    Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                End If
+            End If
+
+            If Terminal_Preview_Enabled Then
+                If IO.File.Exists(TerPreDir) Then
+                    TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(My.Application.LanguageHelper.CP_TerminalError & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+        End Try
+    End Sub
+
+    Public Sub Apply_Cursors()
+        If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_SavingCursorsColors, f)
+
+        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
+        rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
+
+        Dim r As RegistryKey
+
+        r = rMain.CreateSubKey("Arrow")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Arrow_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Arrow_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Arrow_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Arrow_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Arrow_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Arrow_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Arrow_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Arrow_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Arrow_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Arrow_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Arrow_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Arrow_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Help")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Help_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Help_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Help_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Help_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Help_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Help_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Help_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Help_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Help_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Help_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Help_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Help_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("AppLoading")
+        With r
+            .SetValue("PrimaryColor1", Cursor_AppLoading_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_AppLoading_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_AppLoading_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_AppLoading_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_AppLoading_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_AppLoading_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_AppLoading_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_AppLoading_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_AppLoading_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_AppLoading_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_AppLoading_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_AppLoading_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBack1", Cursor_AppLoading_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBack2", Cursor_AppLoading_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackGradient", If(Cursor_AppLoading_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackGradientMode", Cursor_AppLoading_LoadingCircleBackGradientMode, RegistryValueKind.String)
+            .SetValue("LoadingCircleBackNoise", If(Cursor_AppLoading_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackNoiseOpacity", Cursor_AppLoading_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHot1", Cursor_AppLoading_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHot2", Cursor_AppLoading_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotGradient", If(Cursor_AppLoading_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotGradientMode", Cursor_AppLoading_LoadingCircleHotGradientMode, RegistryValueKind.String)
+            .SetValue("LoadingCircleHotNoise", If(Cursor_AppLoading_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotNoiseOpacity", Cursor_AppLoading_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Busy")
+        With r
+            .SetValue("LoadingCircleBack1", Cursor_Busy_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBack2", Cursor_Busy_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackGradient", If(Cursor_Busy_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackGradientMode", Cursor_Busy_LoadingCircleBackGradientMode, RegistryValueKind.String)
+            .SetValue("LoadingCircleBackNoise", If(Cursor_Busy_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleBackNoiseOpacity", Cursor_Busy_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHot1", Cursor_Busy_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHot2", Cursor_Busy_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotGradient", If(Cursor_Busy_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotGradientMode", Cursor_Busy_LoadingCircleHotGradientMode, RegistryValueKind.String)
+            .SetValue("LoadingCircleHotNoise", If(Cursor_Busy_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("LoadingCircleHotNoiseOpacity", Cursor_Busy_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Move")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Move_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Move_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Move_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Move_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Move_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Move_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Move_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Move_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Move_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Move_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Move_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Move_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("NS")
+        With r
+            .SetValue("PrimaryColor1", Cursor_NS_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_NS_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_NS_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_NS_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_NS_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_NS_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_NS_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_NS_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_NS_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_NS_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_NS_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_NS_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("EW")
+        With r
+            .SetValue("PrimaryColor1", Cursor_EW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_EW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_EW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_EW_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_EW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_EW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_EW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_EW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_EW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_EW_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_EW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_EW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("NESW")
+        With r
+            .SetValue("PrimaryColor1", Cursor_NESW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_NESW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_NESW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_NESW_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_NESW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_NESW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_NESW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_NESW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_NESW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_NESW_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_NESW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_NESW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("NWSE")
+        With r
+            .SetValue("PrimaryColor1", Cursor_NWSE_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_NWSE_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_NWSE_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_NWSE_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_NWSE_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_NWSE_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_NWSE_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_NWSE_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_NWSE_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_NWSE_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_NWSE_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_NWSE_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Up")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Up_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Up_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Up_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Up_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Up_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Up_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Up_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Up_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Up_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Up_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Up_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Up_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Pen")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Pen_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Pen_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Pen_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Pen_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Pen_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Pen_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Pen_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Pen_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Pen_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Pen_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Pen_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Pen_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("None")
+        With r
+            .SetValue("PrimaryColor1", Cursor_None_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_None_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_None_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_None_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_None_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_None_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_None_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_None_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_None_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_None_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_None_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_None_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Link")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Link_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Link_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Link_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Link_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Link_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Link_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Link_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Link_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Link_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Link_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Link_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Link_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Pin")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Pin_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Pin_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Pin_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Pin_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Pin_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Pin_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Pin_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Pin_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Pin_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Pin_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Pin_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Pin_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Person")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Person_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Person_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Person_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Person_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Person_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Person_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Person_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Person_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Person_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Person_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Person_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("IBeam")
+        With r
+            .SetValue("PrimaryColor1", Cursor_IBeam_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_IBeam_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_IBeam_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_IBeam_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_IBeam_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_IBeam_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_IBeam_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_IBeam_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_IBeam_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_IBeam_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_IBeam_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_IBeam_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r = rMain.CreateSubKey("Cross")
+        With r
+            .SetValue("PrimaryColor1", Cursor_Cross_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColor2", Cursor_Cross_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradient", If(Cursor_Cross_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorGradientMode", Cursor_Cross_PrimaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("PrimaryColorNoise", If(Cursor_Cross_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("PrimaryColorNoiseOpacity", Cursor_Cross_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor1", Cursor_Cross_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColor2", Cursor_Cross_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradient", If(Cursor_Cross_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorGradientMode", Cursor_Cross_SecondaryColorGradientMode, RegistryValueKind.String)
+            .SetValue("SecondaryColorNoise", If(Cursor_Cross_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+            .SetValue("SecondaryColorNoiseOpacity", Cursor_Cross_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+        End With
+
+        r.Close()
+        rMain.Close()
+
+        If Cursor_Enabled Then
+            If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCursors, f)
+            ExportCursors(Me)
+            If My.Application._Settings.AutoApplyCursors Then
+                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCursors, f)
+                ApplyCursorsToReg()
+            End If
+        End If
+    End Sub
+#End Region
 
 #Region "Cursors Render"
     Sub ExportCursors([CP] As CP)

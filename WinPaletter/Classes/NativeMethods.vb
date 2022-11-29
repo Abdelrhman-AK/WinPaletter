@@ -283,17 +283,17 @@ Namespace NativeMethods
             SMTO_NOTIMEOUTIFNOTHUNG = &H8
         End Enum
 
-        Shared WM_DWMCOLORIZATIONCOLORCHANGED As Integer = &H320
-        Shared WM_DWMCOMPOSITIONCHANGED As Integer = &H31E
-        Shared WM_THEMECHANGED As Integer = &H31A
-        Shared WM_SYSCOLORCHANGE As Integer = &H15
-        Shared WM_PALETTECHANGED As Integer = &H311
-        Shared WM_WININICHANGE As UInteger = &H1A
-        Shared WM_SETTINGCHANGE As UInteger = WM_WININICHANGE
-        Shared HWND_MESSAGE As Int32 = -&H3
-        Shared HWND_BROADCAST As IntPtr = New IntPtr(&HFFFF)
-        Shared MSG_TIMEOUT As Integer = 5000
-        Shared RESULT As UIntPtr
+        Public Shared WM_DWMCOLORIZATIONCOLORCHANGED As Integer = &H320
+        Public Shared WM_DWMCOMPOSITIONCHANGED As Integer = &H31E
+        Public Shared WM_THEMECHANGED As Integer = &H31A
+        Public Shared WM_SYSCOLORCHANGE As Integer = &H15
+        Public Shared WM_PALETTECHANGED As Integer = &H311
+        Public Shared WM_WININICHANGE As UInteger = &H1A
+        Public Shared WM_SETTINGCHANGE As UInteger = WM_WININICHANGE
+        Public Shared HWND_MESSAGE As Int32 = -&H3
+        Public Shared HWND_BROADCAST As IntPtr = New IntPtr(&HFFFF)
+        Public Shared MSG_TIMEOUT As Integer = 5000
+        Public Shared RESULT As UIntPtr
 
         <Flags>
         Enum AnimateWindowFlags

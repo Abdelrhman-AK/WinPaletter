@@ -32,8 +32,37 @@ Public Class Metrics_Fonts
         XenonFakeIcon3.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
 
+        CopyCatPreview(XenonWindow1, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
+
+        msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
     End Sub
 
+
+    Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
+        [ToXenonWindow].AccentColor_Active = [FromXenonWindow].AccentColor_Active
+        [ToXenonWindow].AccentColor2_Active = [FromXenonWindow].AccentColor2_Active
+        [ToXenonWindow].AccentColor_Inactive = [FromXenonWindow].AccentColor_Inactive
+        [ToXenonWindow].AccentColor2_Inactive = [FromXenonWindow].AccentColor2_Inactive
+        [ToXenonWindow].AccentColor_Enabled = [FromXenonWindow].AccentColor_Enabled
+        [ToXenonWindow].BackColor = [FromXenonWindow].BackColor
+        [ToXenonWindow].DarkMode = [FromXenonWindow].DarkMode
+        [ToXenonWindow].Font = [FromXenonWindow].Font
+        [ToXenonWindow].ForeColor = [FromXenonWindow].ForeColor
+        [ToXenonWindow].RoundedCorners = [FromXenonWindow].RoundedCorners
+        [ToXenonWindow].Win7 = [FromXenonWindow].Win7
+        [ToXenonWindow].Win7Aero = [FromXenonWindow].Win7Aero
+        [ToXenonWindow].Win7AeroOpaque = [FromXenonWindow].Win7AeroOpaque
+        [ToXenonWindow].Win7Alpha = [FromXenonWindow].Win7Alpha
+        [ToXenonWindow].Win7Basic = [FromXenonWindow].Win7Basic
+        [ToXenonWindow].Win7ColorBal = [FromXenonWindow].Win7ColorBal
+        [ToXenonWindow].Win7GlowBal = [FromXenonWindow].Win7GlowBal
+        [ToXenonWindow].Win7Noise = [FromXenonWindow].Win7Noise
+        [ToXenonWindow].Win8 = [FromXenonWindow].Win8
+        [ToXenonWindow].Win8Lite = [FromXenonWindow].Win8Lite
+    End Sub
 
     Sub ApplyFromCP(CP As CP)
 
@@ -209,7 +238,8 @@ Public Class Metrics_Fonts
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.Mode.Registry)
         ApplyToCP(CPx)
-        CPx.Save(CP.SavingMode.Registry)
+        CPx.Apply_WindowsMetrics_Fonts()
+        CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
 
@@ -402,12 +432,21 @@ Public Class Metrics_Fonts
         MenuStrip1.Height = Math.Max(XenonTrackbar9.Value, GetTitleTextHeight(MenuStrip1.Font))
     End Sub
 
-    Public Function GetTitleTextHeight([Font] As Font)
-        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+    Public Function GetTitleTextHeight([Font] As Font) As Integer
+        Dim TitleTextH As Integer ', TitleTextH_9, TitleTextH_Sum As Integer
         TitleTextH = MeasureString("ABCabc0123xYz.#", [Font]).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
-        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
+        'TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
+        'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
 
-        Return TitleTextH_Sum
+        Return [Font].Height 'TitleTextH 'TitleTextH_Sum
+    End Function
+
+    Public Function GetTitleTextWidth([Font] As Font) As Integer
+        Dim TitleTextW As Integer ', TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextW = MeasureString("ABCabc0123xYz.#", [Font]).Width
+        'TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
+        'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
+
+        Return TitleTextW 'TitleTextH_Sum
     End Function
 End Class

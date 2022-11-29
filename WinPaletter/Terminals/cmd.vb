@@ -84,8 +84,24 @@ Public Class cmd
             Cursor = Cursors.WaitCursor
             Dim CPx As New CP(CP.Mode.Registry)
             ApplyToCP(CPx, _Edition)
-            ApplyToCP(MainFrm.CP, _Edition)
-            CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7_Enabled, True, False))
+
+            Select Case _Edition
+                Case Edition.CMD
+                    CPx.Apply_CommandPrompt()
+
+                Case Edition.PowerShellx86
+                    CPx.Apply_PowerShell86()
+
+                Case Edition.PowerShellx64
+                    CPx.Apply_PowerShell64()
+
+                Case Else
+                    CPx.Apply_CommandPrompt()
+
+            End Select
+
+            'CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7_Enabled, True, False))
+            CPx.Dispose()
             Cursor = Cursors.Default
         Else
             MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
