@@ -11,6 +11,11 @@ Public Class Metrics_Fonts
         pnl_preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
 
+        CopyCatPreview(XenonWindow1, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
+
         ApplyDarkMode(Me)
         ApplyFromCP(MainFrm.CP)
 
@@ -31,11 +36,6 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
         XenonFakeIcon3.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
-
-        CopyCatPreview(XenonWindow1, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
 
         msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
     End Sub
@@ -102,8 +102,6 @@ Public Class Metrics_Fonts
         XenonTrackbar13.Value = CP.Metrics_SmCaptionWidth
         XenonTrackbar7.Value = CP.Metrics_DesktopIconSize
         XenonTrackbar5.Value = CP.Metrics_ShellIconSize
-
-
 
         RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
         RetroWindow1.BackColor = MainFrm.CP.Win32UI_ButtonFace

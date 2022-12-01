@@ -2920,7 +2920,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.DarkMode = True
         Me.XenonWindow1.DropShadow = True
-        Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonWindow1.Location = New System.Drawing.Point(172, 13)
         Me.XenonWindow1.Metrics_BorderWidth = 1
         Me.XenonWindow1.Metrics_CaptionHeight = 22
@@ -2933,6 +2933,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "App Preview"
+        Me.XenonWindow1.ToolWindow = False
         Me.XenonWindow1.Win7 = False
         Me.XenonWindow1.Win7Aero = False
         Me.XenonWindow1.Win7AeroOpaque = False
@@ -3089,6 +3090,7 @@ Partial Class MainFrm
         Me.XenonWindow2.Size = New System.Drawing.Size(189, 73)
         Me.XenonWindow2.TabIndex = 3
         Me.XenonWindow2.Text = "Inactive app"
+        Me.XenonWindow2.ToolWindow = False
         Me.XenonWindow2.Win7 = False
         Me.XenonWindow2.Win7Aero = False
         Me.XenonWindow2.Win7AeroOpaque = False
