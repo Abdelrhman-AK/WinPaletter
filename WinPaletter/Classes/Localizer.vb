@@ -49,7 +49,7 @@ Public Class Localizer
                         "MainFrm",
                         "Whatsnew",
                         "Updates",
-                        "Win32UI",
+                        "Win32UI_frm",
                         "SettingsX",
                         "CursorsStudio",
                         "ApplyingTheme",

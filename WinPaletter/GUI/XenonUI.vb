@@ -4526,7 +4526,7 @@ Public Class XenonFakeIcon : Inherits Panel
         Dim IconRectX As New Rectangle(IconRect.X + (IconRect.Width - _IconSize) / 2, IconRect.Y + (IconRect.Height - _IconSize) / 2, _IconSize, _IconSize)
 
         If Icon IsNot Nothing Then
-            G.DrawIcon(Icon, IconRectX)
+            G.DrawIcon(New Icon(Icon, _IconSize, _IconSize), IconRectX)
         End If
 
         G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
@@ -5059,9 +5059,9 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                 Else
                     If Active Then
-                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32UI_TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                     Else
-                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32UI_InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                     End If
                 End If
 

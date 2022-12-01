@@ -685,6 +685,17 @@ Public Class MainFrm
                 ReValidateLivePreview(pnl_preview)
 #End Region
         End Select
+
+        ApplyMetrics([CP], XenonWindow1)
+        ApplyMetrics([CP], XenonWindow2)
+
+    End Sub
+
+    Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
+        XenonWindow.Metrics_BorderWidth = CP.Metrics_BorderWidth
+        XenonWindow.Metrics_CaptionHeight = CP.Metrics_CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
+        XenonWindow.Refresh()
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -826,10 +837,10 @@ Public Class MainFrm
         End Select
 
         If PreviewConfig = WinVer.Ten Or PreviewConfig = WinVer.Eleven Then
-            'XenonWindow1.Top = start.Top
-            'XenonWindow1.Left = start.Right + 5
+            XenonWindow1.Top = start.Top - If(PreviewConfig = WinVer.Eleven, 30, 35)
+            XenonWindow1.Left = start.Right + If(PreviewConfig = WinVer.Eleven, 30, 15)
 
-            XenonWindow2.Top = XenonWindow1.Bottom + 5
+            XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
         Else
             XenonWindow1.Top = 10
@@ -2130,7 +2141,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Win32UI.Show()
+        Win32UI.ShowDialog()
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click

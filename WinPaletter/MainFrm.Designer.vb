@@ -213,10 +213,10 @@ Partial Class MainFrm
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.ActionCenter = New WinPaletter.XenonAcrylic()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
-        Me.lnk_preview = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.setting_icon_preview = New System.Windows.Forms.Label()
+        Me.lnk_preview = New System.Windows.Forms.Label()
         Me.start = New WinPaletter.XenonAcrylic()
         Me.taskbar = New WinPaletter.XenonAcrylic()
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
@@ -2916,8 +2916,8 @@ Partial Class MainFrm
         Me.XenonWindow1.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow1.Active = True
-        Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.Controls.Add(Me.Panel3)
+        Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
         Me.XenonWindow1.DropShadow = True
         Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -2926,7 +2926,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Metrics_CaptionHeight = 22
         Me.XenonWindow1.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow1.Name = "XenonWindow1"
-        Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(2)
+        Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.RoundedCorners = True
         Me.XenonWindow1.Shadow = True
@@ -2945,32 +2945,16 @@ Partial Class MainFrm
         Me.XenonWindow1.Win8 = False
         Me.XenonWindow1.Win8Lite = False
         '
-        'lnk_preview
-        '
-        Me.lnk_preview.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
-        Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
-        Me.lnk_preview.Location = New System.Drawing.Point(5, 119)
-        Me.lnk_preview.Name = "lnk_preview"
-        Me.lnk_preview.Size = New System.Drawing.Size(178, 25)
-        Me.lnk_preview.TabIndex = 16
-        Me.lnk_preview.Text = "Settings Link Preview"
-        Me.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'Panel3
         '
-        Me.Panel3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel3.BackColor = System.Drawing.Color.Transparent
         Me.Panel3.Controls.Add(Me.Label8)
         Me.Panel3.Controls.Add(Me.setting_icon_preview)
-        Me.Panel3.Location = New System.Drawing.Point(5, 27)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel3.Location = New System.Drawing.Point(4, 40)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Padding = New System.Windows.Forms.Padding(1)
-        Me.Panel3.Size = New System.Drawing.Size(179, 89)
+        Me.Panel3.Size = New System.Drawing.Size(181, 78)
         Me.Panel3.TabIndex = 0
         '
         'Label8
@@ -2980,7 +2964,7 @@ Partial Class MainFrm
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(177, 42)
+        Me.Label8.Size = New System.Drawing.Size(179, 31)
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "This is a setting icon"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -2992,10 +2976,23 @@ Partial Class MainFrm
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
-        Me.setting_icon_preview.Size = New System.Drawing.Size(177, 45)
+        Me.setting_icon_preview.Size = New System.Drawing.Size(179, 45)
         Me.setting_icon_preview.TabIndex = 14
         Me.setting_icon_preview.Text = ""
         Me.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lnk_preview
+        '
+        Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
+        Me.lnk_preview.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
+        Me.lnk_preview.Location = New System.Drawing.Point(4, 118)
+        Me.lnk_preview.Name = "lnk_preview"
+        Me.lnk_preview.Size = New System.Drawing.Size(181, 25)
+        Me.lnk_preview.TabIndex = 16
+        Me.lnk_preview.Text = "Settings Link Preview"
+        Me.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'start
         '
@@ -3083,11 +3080,11 @@ Partial Class MainFrm
         Me.XenonWindow2.Metrics_CaptionHeight = 22
         Me.XenonWindow2.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow2.Name = "XenonWindow2"
-        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(2)
+        Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
         Me.XenonWindow2.Radius = 5
         Me.XenonWindow2.RoundedCorners = True
         Me.XenonWindow2.Shadow = True
-        Me.XenonWindow2.Size = New System.Drawing.Size(189, 73)
+        Me.XenonWindow2.Size = New System.Drawing.Size(189, 85)
         Me.XenonWindow2.TabIndex = 3
         Me.XenonWindow2.Text = "Inactive app"
         Me.XenonWindow2.ToolWindow = False

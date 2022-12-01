@@ -661,10 +661,10 @@ Public Class dragPreviewer
         End Select
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.Ten Or MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
-            XenonWindow1.Top = start.Top
-            XenonWindow1.Left = start.Right + 5
+            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, 30, 35)
+            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, 30, 15)
 
-            XenonWindow2.Top = XenonWindow1.Bottom + 5
+            XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
         Else
             XenonWindow1.Top = 10
@@ -674,7 +674,7 @@ Public Class dragPreviewer
             XenonWindow2.Left = XenonWindow1.Left
         End If
 
-        XenonWindow1.Refresh()
+            XenonWindow1.Refresh()
         XenonWindow2.Refresh()
 
         ReValidateLivePreview(pnl_preview)
@@ -793,45 +793,45 @@ Public Class dragPreviewer
     End Sub
 
     Sub ApplyRetroPreview([CP] As CP)
-        RetroWindow1.ColorGradient = [CP].Win32UI_EnableGradient
-        RetroWindow2.ColorGradient = [CP].Win32UI_EnableGradient
-        RetroWindow3.ColorGradient = [CP].Win32UI_EnableGradient
-        RetroWindow4.ColorGradient = [CP].Win32UI_EnableGradient
+        RetroWindow1.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow2.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow3.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow4.ColorGradient = [CP].Win32.EnableGradient
 
         Dim c As Color
-        c = [CP].Win32UI_ActiveTitle
+        c = [CP].Win32.ActiveTitle
         RetroWindow2.Color1 = c
         RetroWindow3.Color1 = c
         RetroWindow4.Color1 = c
 
-        c = [CP].Win32UI_GradientActiveTitle
+        c = [CP].Win32.GradientActiveTitle
         RetroWindow2.Color2 = c
         RetroWindow3.Color2 = c
         RetroWindow4.Color2 = c
 
-        c = [CP].Win32UI_TitleText
+        c = [CP].Win32.TitleText
         RetroWindow2.ForeColor = c
         RetroWindow3.ForeColor = c
         RetroWindow4.ForeColor = c
 
-        c = [CP].Win32UI_InactiveTitle
+        c = [CP].Win32.InactiveTitle
         RetroWindow1.Color1 = c
 
-        c = [CP].Win32UI_GradientInactiveTitle
+        c = [CP].Win32.GradientInactiveTitle
         RetroWindow1.Color2 = c
 
-        c = [CP].Win32UI_InactiveTitleText
+        c = [CP].Win32.InactiveTitleText
         RetroWindow1.ForeColor = c
 
-        c = [CP].Win32UI_ActiveBorder
+        c = [CP].Win32.ActiveBorder
         RetroWindow2.ColorBorder = c
         RetroWindow3.ColorBorder = c
         RetroWindow4.ColorBorder = c
 
-        c = [CP].Win32UI_InactiveBorder
+        c = [CP].Win32.InactiveBorder
         RetroWindow1.ColorBorder = c
 
-        c = [CP].Win32UI_WindowFrame
+        c = [CP].Win32.WindowFrame
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.WindowFrame = c
@@ -841,7 +841,7 @@ Public Class dragPreviewer
             RB.WindowFrame = c
         Next
 
-        c = [CP].Win32UI_ButtonFace
+        c = [CP].Win32.ButtonFace
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             If RW IsNot Menu Then RW.BackColor = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -854,7 +854,7 @@ Public Class dragPreviewer
         RetroPanel2.BackColor = c
         Menu.ButtonFace = c
 
-        c = [CP].Win32UI_ButtonDkShadow
+        c = [CP].Win32.ButtonDkShadow
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonDkShadow = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -867,7 +867,7 @@ Public Class dragPreviewer
         RetroTextBox1.ButtonDkShadow = c
         Menu.ButtonDkShadow = c
 
-        c = [CP].Win32UI_ButtonHilight
+        c = [CP].Win32.ButtonHilight
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonHilight = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -885,7 +885,7 @@ Public Class dragPreviewer
         RetroPanel2.ButtonHilight = c
         Menu.ButtonHilight = c
 
-        c = [CP].Win32UI_ButtonLight
+        c = [CP].Win32.ButtonLight
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonLight = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -898,7 +898,7 @@ Public Class dragPreviewer
         RetroTextBox1.ButtonLight = c
         Menu.ButtonLight = c
 
-        c = [CP].Win32UI_ButtonShadow
+        c = [CP].Win32.ButtonShadow
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             RW.ButtonShadow = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
@@ -916,7 +916,7 @@ Public Class dragPreviewer
         RetroTextBox1.Invalidate()
         Menu.ButtonShadow = c
 
-        c = [CP].Win32UI_ButtonText
+        c = [CP].Win32.ButtonText
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ForeColor = c
@@ -926,48 +926,48 @@ Public Class dragPreviewer
             RB.ForeColor = c
         Next
 
-        c = [CP].Win32UI_AppWorkspace
+        c = [CP].Win32.AppWorkspace
         programcontainer.BackColor = c
 
-        c = [CP].Win32UI_Background
+        c = [CP].Win32.Background
         pnlRetroPreview.BackColor = c
 
-        c = [CP].Win32UI_Menu
+        c = [CP].Win32.Menu
         Menu.BackColor = c
         RetroPanel1.BackColor = c
         Menu.Invalidate()
 
-        c = [CP].Win32UI_MenuBar
+        c = [CP].Win32.MenuBar
         menucontainer0.BackColor = c
 
-        c = [CP].Win32UI_Hilight
+        c = [CP].Win32.Hilight
         highlight.BackColor = c
 
-        c = [CP].Win32UI_MenuHilight
+        c = [CP].Win32.MenuHilight
         menuhilight.BackColor = c
 
-        c = [CP].Win32UI_MenuText
+        c = [CP].Win32.MenuText
         RetroLabel6.ForeColor = c
         RetroLabel1.ForeColor = c
 
-        c = [CP].Win32UI_HilightText
+        c = [CP].Win32.HilightText
         RetroLabel5.ForeColor = c
 
-        c = [CP].Win32UI_GrayText
+        c = [CP].Win32.GrayText
         RetroLabel2.ForeColor = c
         RetroLabel9.ForeColor = c
 
-        c = [CP].Win32UI_Window
+        c = [CP].Win32.Window
         RetroTextBox1.BackColor = c
 
-        c = [CP].Win32UI_WindowText
+        c = [CP].Win32.WindowText
         RetroTextBox1.ForeColor = c
         RetroLabel4.ForeColor = c
 
-        c = [CP].Win32UI_InfoWindow
+        c = [CP].Win32.InfoWindow
         RetroLabel13.BackColor = c
 
-        c = [CP].Win32UI_InfoText
+        c = [CP].Win32.InfoText
         RetroLabel13.ForeColor = c
 
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -987,28 +987,28 @@ Public Class dragPreviewer
 
     Sub Refresh17BitPreference([CP] As CP)
 
-        If [CP].Win32UI_EnableTheming Then
+        If [CP].Win32.EnableTheming Then
             'Theming Enabled (Menus Has colors and borders)
             Menu.Flat = True
             RetroPanel1.Flat = True
-            menuhilight.BackColor = [CP].Win32UI_MenuHilight  'Filling of selected item
-            highlight.BackColor = [CP].Win32UI_Hilight 'Outer Border of selected item
+            menuhilight.BackColor = [CP].Win32.MenuHilight  'Filling of selected item
+            highlight.BackColor = [CP].Win32.Hilight 'Outer Border of selected item
 
-            RetroPanel1.BackColor = [CP].Win32UI_MenuHilight
-            RetroPanel1.ButtonShadow = [CP].Win32UI_Hilight
+            RetroPanel1.BackColor = [CP].Win32.MenuHilight
+            RetroPanel1.ButtonShadow = [CP].Win32.Hilight
 
-            menucontainer0.BackColor = [CP].Win32UI_MenuBar
-            RetroLabel3.ForeColor = [CP].Win32UI_HilightText
+            menucontainer0.BackColor = [CP].Win32.MenuBar
+            RetroLabel3.ForeColor = [CP].Win32.HilightText
         Else
             'Theming Disabled (Menus are retro 3d)
             Menu.Flat = False
             RetroPanel1.Flat = False
-            menuhilight.BackColor = [CP].Win32UI_Hilight 'Both will have same color
-            highlight.BackColor = [CP].Win32UI_Hilight 'Both will have same color
-            RetroPanel1.BackColor = [CP].Win32UI_Menu
-            RetroPanel1.ButtonShadow = [CP].Win32UI_ButtonShadow
-            menucontainer0.BackColor = [CP].Win32UI_Menu
-            RetroLabel3.ForeColor = [CP].Win32UI_MenuText
+            menuhilight.BackColor = [CP].Win32.Hilight 'Both will have same color
+            highlight.BackColor = [CP].Win32.Hilight 'Both will have same color
+            RetroPanel1.BackColor = [CP].Win32.Menu
+            RetroPanel1.ButtonShadow = [CP].Win32.ButtonShadow
+            menucontainer0.BackColor = [CP].Win32.Menu
+            RetroLabel3.ForeColor = [CP].Win32.MenuText
 
         End If
 

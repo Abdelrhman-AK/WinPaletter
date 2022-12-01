@@ -143,6 +143,7 @@ Public Class XenonCore
             End Try
         End With
     End Sub
+
     Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
         Try
 
@@ -162,6 +163,7 @@ Public Class XenonCore
         End Try
 
     End Function
+
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))

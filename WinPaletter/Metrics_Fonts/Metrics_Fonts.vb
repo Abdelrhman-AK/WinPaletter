@@ -1,4 +1,6 @@
-﻿Imports System.Windows.Forms.VisualStyles
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Windows.Forms.VisualStyles
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
@@ -28,18 +30,24 @@ Public Class Metrics_Fonts
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon2)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon3)
 
-        XenonFakeIcon1.Title = "Recycle Bin"
-        XenonFakeIcon2.Title = "New Folder"
-        XenonFakeIcon3.Title = "My App"
+        XenonFakeIcon1.Title = "Icon #1"
+        XenonFakeIcon2.Title = "Icon #2"
+        XenonFakeIcon3.Title = "Icon #3"
 
-        XenonFakeIcon1.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-        XenonFakeIcon2.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-        XenonFakeIcon3.Icon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+        XenonFakeIcon1.Icon = My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+        XenonFakeIcon2.Icon = My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+        XenonFakeIcon3.Icon = My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
 
-        msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
-    End Sub
+        If Not XenonWindow6.Win7 And Not XenonWindow6.Win8 Then
+            msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
+        Else
+            msgLbl.ForeColor = Color.Black
+        End If
 
+
+    End Sub
 
     Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
         [ToXenonWindow].AccentColor_Active = [FromXenonWindow].AccentColor_Active
@@ -103,34 +111,34 @@ Public Class Metrics_Fonts
         XenonTrackbar7.Value = CP.Metrics_DesktopIconSize
         XenonTrackbar5.Value = CP.Metrics_ShellIconSize
 
-        RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
-        RetroWindow1.BackColor = MainFrm.CP.Win32UI_ButtonFace
-        RetroWindow1.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
-        RetroWindow1.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
-        RetroWindow1.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
-        RetroWindow1.ColorBorder = MainFrm.CP.Win32UI_ActiveBorder
-        RetroWindow1.ForeColor = MainFrm.CP.Win32UI_TitleText
-        RetroWindow1.Color1 = MainFrm.CP.Win32UI_ActiveTitle
-        RetroWindow1.Color2 = MainFrm.CP.Win32UI_GradientActiveTitle
-        RetroWindow1.ColorGradient = MainFrm.CP.Win32UI_EnableGradient
+        RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
+        RetroWindow1.BackColor = MainFrm.CP.Win32.ButtonFace
+        RetroWindow1.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroWindow1.ButtonLight = MainFrm.CP.Win32.ButtonLight
+        RetroWindow1.ButtonShadow = MainFrm.CP.Win32.ButtonShadow
+        RetroWindow1.ColorBorder = MainFrm.CP.Win32.ActiveBorder
+        RetroWindow1.ForeColor = MainFrm.CP.Win32.TitleText
+        RetroWindow1.Color1 = MainFrm.CP.Win32.ActiveTitle
+        RetroWindow1.Color2 = MainFrm.CP.Win32.GradientActiveTitle
+        RetroWindow1.ColorGradient = MainFrm.CP.Win32.EnableGradient
 
-        RetroButton3.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
-        RetroButton3.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
-        RetroButton3.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
-        RetroButton3.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
-        RetroButton3.BackColor = MainFrm.CP.Win32UI_ButtonFace
+        RetroButton3.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
+        RetroButton3.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroButton3.ButtonLight = MainFrm.CP.Win32.ButtonLight
+        RetroButton3.ButtonShadow = MainFrm.CP.Win32.ButtonShadow
+        RetroButton3.BackColor = MainFrm.CP.Win32.ButtonFace
 
-        RetroButton4.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
-        RetroButton4.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
-        RetroButton4.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
-        RetroButton4.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
-        RetroButton4.BackColor = MainFrm.CP.Win32UI_ButtonFace
+        RetroButton4.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
+        RetroButton4.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroButton4.ButtonLight = MainFrm.CP.Win32.ButtonLight
+        RetroButton4.ButtonShadow = MainFrm.CP.Win32.ButtonShadow
+        RetroButton4.BackColor = MainFrm.CP.Win32.ButtonFace
 
-        RetroButton5.ButtonDkShadow = MainFrm.CP.Win32UI_ButtonDkShadow
-        RetroButton5.ButtonHilight = MainFrm.CP.Win32UI_ButtonHilight
-        RetroButton5.ButtonLight = MainFrm.CP.Win32UI_ButtonLight
-        RetroButton5.ButtonShadow = MainFrm.CP.Win32UI_ButtonShadow
-        RetroButton5.BackColor = MainFrm.CP.Win32UI_ButtonFace
+        RetroButton5.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
+        RetroButton5.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroButton5.ButtonLight = MainFrm.CP.Win32.ButtonLight
+        RetroButton5.ButtonShadow = MainFrm.CP.Win32.ButtonShadow
+        RetroButton5.BackColor = MainFrm.CP.Win32.ButtonFace
 
     End Sub
 
@@ -226,6 +234,8 @@ Public Class Metrics_Fonts
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
         Me.Close()
+        MainFrm.ApplyMetrics(MainFrm.CP, MainFrm.XenonWindow1)
+        MainFrm.ApplyMetrics(MainFrm.CP, MainFrm.XenonWindow2)
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
