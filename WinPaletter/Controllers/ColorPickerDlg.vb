@@ -513,11 +513,11 @@ Public Class ColorPickerDlg
 
         If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
-                UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Aero_ColorizationAfterglow)
+                UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If
 
             If _Conditions.Win7LivePreview_AfterGlow Then
-                UpdateWin7Preview(MainFrm.CP.Aero_ColorizationColor, ColorEditorManager1.Color)
+                UpdateWin7Preview(MainFrm.CP.Windows7.ColorizationColor, ColorEditorManager1.Color)
             End If
         End If
     End Sub
@@ -527,11 +527,11 @@ Public Class ColorPickerDlg
         Dim temp As New NativeMethods.Dwmapi.DWM_COLORIZATION_PARAMS
         temp.clrColor = Color1.ToArgb
         temp.clrAfterGlow = Color2.ToArgb
-        temp.nIntensity = MainFrm.CP.Aero_ColorizationColorBalance
-        temp.clrAfterGlowBalance = MainFrm.CP.Aero_ColorizationAfterglowBalance
-        temp.clrBlurBalance = MainFrm.CP.Aero_ColorizationBlurBalance
-        temp.clrGlassReflectionIntensity = MainFrm.CP.Aero_ColorizationGlassReflectionIntensity
-        temp.fOpaque = If(MainFrm.CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
+        temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
+        temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
+        temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
+        temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
+        temp.fOpaque = If(MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
         NativeMethods.Dwmapi.DwmSetColorizationParameters(temp, False)
     End Sub
 #End Region
@@ -708,11 +708,11 @@ Public Class ColorPickerDlg
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
-                UpdateWin7Preview(InitColor, MainFrm.CP.Aero_ColorizationAfterglow)
+                UpdateWin7Preview(InitColor, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If
 
             If _Conditions.Win7LivePreview_AfterGlow Then
-                UpdateWin7Preview(MainFrm.CP.Aero_ColorizationColor, InitColor)
+                UpdateWin7Preview(MainFrm.CP.Windows7.ColorizationColor, InitColor)
             End If
         End If
     End Sub

@@ -32,7 +32,7 @@ Partial Class MainFrm
         Me.Label42 = New System.Windows.Forms.Label()
         Me.pic9 = New System.Windows.Forms.PictureBox()
         Me.lbl9 = New System.Windows.Forms.Label()
-        Me.UWP_Undefined_pick = New WinPaletter.XenonCP()
+        Me.Color_Index7_pick = New WinPaletter.XenonCP()
         Me.pnl8 = New WinPaletter.XenonGroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.pic8 = New System.Windows.Forms.PictureBox()
@@ -74,7 +74,7 @@ Partial Class MainFrm
         Me.Label34 = New System.Windows.Forms.Label()
         Me.pic5 = New System.Windows.Forms.PictureBox()
         Me.lbl5 = New System.Windows.Forms.Label()
-        Me.SettingsIconsAndLinks_pick = New WinPaletter.XenonCP()
+        Me.Color_Index3_pick = New WinPaletter.XenonCP()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
         Me.XenonButton25 = New WinPaletter.XenonButton()
@@ -391,7 +391,7 @@ Partial Class MainFrm
         Me.XenonGroupBox14.Controls.Add(Me.Label42)
         Me.XenonGroupBox14.Controls.Add(Me.pic9)
         Me.XenonGroupBox14.Controls.Add(Me.lbl9)
-        Me.XenonGroupBox14.Controls.Add(Me.UWP_Undefined_pick)
+        Me.XenonGroupBox14.Controls.Add(Me.Color_Index7_pick)
         Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonGroupBox14.Location = New System.Drawing.Point(3, 281)
         Me.XenonGroupBox14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -439,20 +439,20 @@ Partial Class MainFrm
         Me.lbl9.Text = "Undefined"
         Me.lbl9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'UWP_Undefined_pick
+        'Color_Index7_pick
         '
-        Me.UWP_Undefined_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Color_Index7_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.UWP_Undefined_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.UWP_Undefined_pick.DefaultColor = System.Drawing.Color.Black
-        Me.UWP_Undefined_pick.ForceNoNerd = False
-        Me.UWP_Undefined_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.UWP_Undefined_pick.Location = New System.Drawing.Point(433, 4)
-        Me.UWP_Undefined_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.UWP_Undefined_pick.Name = "UWP_Undefined_pick"
-        Me.UWP_Undefined_pick.Size = New System.Drawing.Size(87, 20)
-        Me.UWP_Undefined_pick.TabIndex = 2
-        Me.UWP_Undefined_pick.Text = "XenonGroupBox23"
+        Me.Color_Index7_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.Color_Index7_pick.DefaultColor = System.Drawing.Color.Black
+        Me.Color_Index7_pick.ForceNoNerd = False
+        Me.Color_Index7_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.Color_Index7_pick.Location = New System.Drawing.Point(433, 4)
+        Me.Color_Index7_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.Color_Index7_pick.Name = "Color_Index7_pick"
+        Me.Color_Index7_pick.Size = New System.Drawing.Size(87, 20)
+        Me.Color_Index7_pick.TabIndex = 2
+        Me.Color_Index7_pick.Text = "XenonGroupBox23"
         '
         'pnl8
         '
@@ -974,7 +974,7 @@ Partial Class MainFrm
         Me.pnl5.Controls.Add(Me.Label34)
         Me.pnl5.Controls.Add(Me.pic5)
         Me.pnl5.Controls.Add(Me.lbl5)
-        Me.pnl5.Controls.Add(Me.SettingsIconsAndLinks_pick)
+        Me.pnl5.Controls.Add(Me.Color_Index3_pick)
         Me.pnl5.LineColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.pnl5.Location = New System.Drawing.Point(3, 161)
         Me.pnl5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1021,20 +1021,20 @@ Partial Class MainFrm
         Me.lbl5.Text = "Settings Icons, Text Selection, Focus Dots, Some Pressed Buttons"
         Me.lbl5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'SettingsIconsAndLinks_pick
+        'Color_Index3_pick
         '
-        Me.SettingsIconsAndLinks_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Color_Index3_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SettingsIconsAndLinks_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.SettingsIconsAndLinks_pick.DefaultColor = System.Drawing.Color.Black
-        Me.SettingsIconsAndLinks_pick.ForceNoNerd = False
-        Me.SettingsIconsAndLinks_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.SettingsIconsAndLinks_pick.Location = New System.Drawing.Point(433, 4)
-        Me.SettingsIconsAndLinks_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.SettingsIconsAndLinks_pick.Name = "SettingsIconsAndLinks_pick"
-        Me.SettingsIconsAndLinks_pick.Size = New System.Drawing.Size(87, 20)
-        Me.SettingsIconsAndLinks_pick.TabIndex = 2
-        Me.SettingsIconsAndLinks_pick.Text = "XenonGroupBox19"
+        Me.Color_Index3_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.Color_Index3_pick.DefaultColor = System.Drawing.Color.Black
+        Me.Color_Index3_pick.ForceNoNerd = False
+        Me.Color_Index3_pick.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(56, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.Color_Index3_pick.Location = New System.Drawing.Point(433, 4)
+        Me.Color_Index3_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.Color_Index3_pick.Name = "Color_Index3_pick"
+        Me.Color_Index3_pick.Size = New System.Drawing.Size(87, 20)
+        Me.Color_Index3_pick.TabIndex = 2
+        Me.Color_Index3_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox5
         '
@@ -3653,7 +3653,7 @@ Partial Class MainFrm
     Friend WithEvents start As XenonAcrylic
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents XenonWindow1 As XenonWindow
-    Friend WithEvents SettingsIconsAndLinks_pick As XenonCP
+    Friend WithEvents Color_Index3_pick As XenonCP
     Friend WithEvents apply_btn As XenonButton
     Friend WithEvents ActionCenter_pick As XenonCP
     Friend WithEvents TaskbarBackground_pick As XenonCP
@@ -3812,7 +3812,7 @@ Partial Class MainFrm
     Friend WithEvents Label42 As Label
     Friend WithEvents pic9 As PictureBox
     Friend WithEvents lbl9 As Label
-    Friend WithEvents UWP_Undefined_pick As XenonCP
+    Friend WithEvents Color_Index7_pick As XenonCP
     Friend WithEvents Label37 As Label
     Friend WithEvents Label36 As Label
     Friend WithEvents Label18 As Label

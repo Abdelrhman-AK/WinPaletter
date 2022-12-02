@@ -42,7 +42,7 @@ Public Class XenonCore
     Public Shared Sub RefreshDWM(CP As CP)
 
         Try
-            If CP.Aero_Theme = AeroTheme.Basic Or CP.Aero_Theme = AeroTheme.Classic Then
+            If CP.Windows7.Theme = AeroTheme.Basic Or CP.Windows7.Theme = AeroTheme.Classic Then
                 NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_DISABLECOMPOSITION)
             Else
                 NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_ENABLECOMPOSITION)
@@ -53,13 +53,13 @@ Public Class XenonCore
 
             If Com Then
                 Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
-                temp.clrColor = CP.Aero_ColorizationColor.ToArgb
-                temp.clrAfterGlow = CP.Aero_ColorizationAfterglow.ToArgb
-                temp.nIntensity = CP.Aero_ColorizationColorBalance
-                temp.clrAfterGlowBalance = CP.Aero_ColorizationAfterglowBalance
-                temp.clrBlurBalance = CP.Aero_ColorizationBlurBalance
-                temp.clrGlassReflectionIntensity = CP.Aero_ColorizationGlassReflectionIntensity
-                temp.fOpaque = If(CP.Aero_Theme = AeroTheme.AeroOpaque, True, False)
+                temp.clrColor = CP.Windows7.ColorizationColor.ToArgb
+                temp.clrAfterGlow = CP.Windows7.ColorizationAfterglow.ToArgb
+                temp.nIntensity = CP.Windows7.ColorizationColorBalance
+                temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
+                temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
+                temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
+                temp.fOpaque = If(CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
         Catch

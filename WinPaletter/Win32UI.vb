@@ -760,10 +760,10 @@ Public Class Win32UI
     End Sub
 
     Sub SetMetics(CP As CP)
-        RetroPanel2.Width = CP.Metrics_ScrollWidth
-        menucontainer0.Height = CP.Metrics_MenuHeight
+        RetroPanel2.Width = CP.WinMetrics.ScrollWidth
+        menucontainer0.Height = CP.WinMetrics.MenuHeight
 
-        menucontainer0.Height = Math.Max(CP.Metrics_MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont))
+        menucontainer0.Height = Math.Max(CP.WinMetrics.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont))
 
         RetroLabel1.Font = CP.Fonts_MenuFont
         RetroLabel2.Font = CP.Fonts_MenuFont
@@ -789,64 +789,64 @@ Public Class Win32UI
         TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.Fonts_CaptionFont.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        Dim iP As Integer = 3 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth
-        Dim iT As Integer = 4 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + CP.Metrics_CaptionHeight + TitleTextH_Sum
+        Dim iP As Integer = 3 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth
+        Dim iT As Integer = 4 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + CP.WinMetrics.CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Padding(iP, iT, iP, iP)
 
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
             If Not RW.UseItAsMenu Then
-                RW.Metrics_BorderWidth = CP.Metrics_BorderWidth
-                RW.Metrics_CaptionHeight = CP.Metrics_CaptionHeight
-                RW.Metrics_CaptionWidth = CP.Metrics_CaptionWidth
-                RW.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
+                RW.Metrics_BorderWidth = CP.WinMetrics.BorderWidth
+                RW.Metrics_CaptionHeight = CP.WinMetrics.CaptionHeight
+                RW.Metrics_CaptionWidth = CP.WinMetrics.CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.WinMetrics.PaddedBorderWidth
                 RW.Font = CP.Fonts_CaptionFont
 
                 RW.Padding = _Padding
             End If
         Next
 
-        RetroWindow3.Height = 85 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow3.GetTitleTextHeight
-        RetroWindow2.Height = 120 + CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + RetroWindow2.GetTitleTextHeight + CP.Metrics_MenuHeight
+        RetroWindow3.Height = 85 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.WinMetrics.MenuHeight
 
-        RetroButton3.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton4.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton5.Height = CP.Metrics_CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton6.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton7.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton8.Height = CP.Metrics_CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton9.Height = CP.Metrics_CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
+        RetroButton3.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton4.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton5.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton6.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton7.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton8.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton9.Height = CP.WinMetrics.CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
 
-        RetroButton3.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton4.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton5.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton8.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton7.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton6.Width = CP.Metrics_CaptionWidth - 2
-        RetroButton9.Width = CP.Metrics_CaptionWidth - 2
+        RetroButton3.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton4.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton5.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton8.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton7.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton6.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton9.Width = CP.WinMetrics.CaptionWidth - 2
 
-        RetroButton3.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton3.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
         RetroButton4.Top = RetroButton3.Top
         RetroButton5.Top = RetroButton3.Top
 
-        RetroButton8.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton8.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
         RetroButton7.Top = RetroButton8.Top
         RetroButton6.Top = RetroButton8.Top
 
-        RetroButton9.Top = CP.Metrics_PaddedBorderWidth + CP.Metrics_BorderWidth + 5
+        RetroButton9.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
 
-        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
         RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
         RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
 
-        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
         RetroButton7.Left = RetroButton8.Left - 2 - RetroButton7.Width
         RetroButton6.Left = RetroButton7.Left - RetroButton6.Width
 
-        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.Metrics_PaddedBorderWidth - CP.Metrics_BorderWidth - 5
+        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
 
         Try
             Dim i0, iFx As Single
-            i0 = Math.Abs(Math.Min(CP.Metrics_CaptionWidth, CP.Metrics_CaptionHeight))
+            i0 = Math.Abs(Math.Min(CP.WinMetrics.CaptionWidth, CP.WinMetrics.CaptionHeight))
             iFx = i0 / Math.Abs(Math.Min(Metrics_Fonts.XenonTrackbar2.Minimum, Metrics_Fonts.XenonTrackbar3.Minimum))
             Dim f As New Font("Marlett", 6.8 * iFx)
             RetroButton3.Font = f
@@ -1172,10 +1172,10 @@ Public Class Win32UI
             s.Clear()
             s.Add(String.Format("; Copyright © Microsoft Corp. 1995-{0}", Now.Year))
             s.Add(String.Format("; This theme was designed by WinPaletter, programmed by Abdelrhman-AK"))
-            s.Add(String.Format("; Created from application version {0}", MainFrm.CP.AppVersion))
-            s.Add(String.Format("; Created by {0}", MainFrm.CP.Author))
-            s.Add(String.Format("; Palette Name: {0}", MainFrm.CP.PaletteName))
-            s.Add(String.Format("; Palette Version: {0}", MainFrm.CP.PaletteVersion))
+            s.Add(String.Format("; Created from application version {0}", MainFrm.CP.Info.AppVersion))
+            s.Add(String.Format("; Created by {0}", MainFrm.CP.Info.Author))
+            s.Add(String.Format("; Palette Name: {0}", MainFrm.CP.Info.PaletteName))
+            s.Add(String.Format("; Palette Version: {0}", MainFrm.CP.Info.PaletteVersion))
             s.Add("")
 
             s.Add(String.Format("[Control Panel\Colors]"))

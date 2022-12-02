@@ -26,19 +26,19 @@ Public Class MainFrm
             XenonWindow1.Active = True
             XenonWindow2.Active = False
 
-            XenonWindow1.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
-            XenonWindow2.AccentColor_Enabled = [CP].ApplyAccentonTitlebars
+            XenonWindow1.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
+            XenonWindow2.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
 
-            XenonWindow1.AccentColor_Active = [CP].Titlebar_Active
-            XenonWindow2.AccentColor_Active = [CP].Titlebar_Active
+            XenonWindow1.AccentColor_Active = [CP].Windows10x.Titlebar_Active
+            XenonWindow2.AccentColor_Active = [CP].Windows10x.Titlebar_Active
 
-            XenonWindow1.AccentColor_Inactive = [CP].Titlebar_Inactive
-            XenonWindow2.AccentColor_Inactive = [CP].Titlebar_Inactive
+            XenonWindow1.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
+            XenonWindow2.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
 
-            XenonWindow1.DarkMode = Not [CP].AppMode_Light
-            XenonWindow2.DarkMode = Not [CP].AppMode_Light
+            XenonWindow1.DarkMode = Not [CP].Windows10x.AppMode_Light
+            XenonWindow2.DarkMode = Not [CP].Windows10x.AppMode_Light
 
-            Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
+            Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows10x.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
             If PreviewConfig = WinVer.Eleven Then
                 lbl5.Text = My.Application.LanguageHelper.CP_11_Settings
@@ -51,7 +51,7 @@ Public Class MainFrm
                 pic8.Image = My.Resources.Mini_Undefined
                 pic9.Image = My.Resources.Mini_Undefined
 
-                Select Case Not [CP].WinMode_Light
+                Select Case Not [CP].Windows10x.WinMode_Light
                     Case True   ''''''''''Dark
                         lbl1.Text = My.Application.LanguageHelper.CP_11_StartMenu_Taskbar_AC
                         lbl2.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
@@ -77,7 +77,7 @@ Public Class MainFrm
                 End Select
 
             Else
-                Select Case Not [CP].WinMode_Light
+                Select Case Not [CP].Windows10x.WinMode_Light
                     Case True ''''''''''Dark
                         lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
                         lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
@@ -91,7 +91,7 @@ Public Class MainFrm
                         pic6.Image = My.Resources.Native10
                         pic7.Image = My.Resources.Mini_Undefined
 
-                        If [CP].Transparency Then
+                        If [CP].Windows10x.Transparency Then
                             lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
                             lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
                             lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
@@ -100,7 +100,7 @@ Public Class MainFrm
                             pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                             pic8.Image = My.Resources.Mini_Taskbar
 
-                            If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                                 lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_Taskbar_SomeBtns
                             End If
 
@@ -109,7 +109,7 @@ Public Class MainFrm
                             pic1.Image = My.Resources.Mini_Taskbar
                             pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
 
-                            If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                                 lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
                             Else
                                 lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
@@ -121,7 +121,7 @@ Public Class MainFrm
                         End If
 
                     Case False ''''''''''Light
-                        If [CP].Transparency Then
+                        If [CP].Windows10x.Transparency Then
                             lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
                             lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
                             lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
@@ -134,7 +134,7 @@ Public Class MainFrm
                             pic7.Image = My.Resources.Mini_Undefined
                             pic8.Image = My.Resources.Mini_Taskbar
 
-                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 lbl2.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl3.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
@@ -143,7 +143,7 @@ Public Class MainFrm
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_Undefined
 
-                            ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                            ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
                                 lbl2.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
                                 lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
@@ -171,7 +171,7 @@ Public Class MainFrm
                             pic6.Image = My.Resources.Native10
                             pic7.Image = My.Resources.Mini_Undefined
 
-                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 lbl2.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl3.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
@@ -184,7 +184,7 @@ Public Class MainFrm
                                 pic5.Image = My.Resources.Mini_SettingsIcons
                                 pic8.Image = My.Resources.Mini_ACHover_Links
 
-                            ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                            ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
                                 lbl2.Text = My.Application.LanguageHelper.CP_Undefined
                                 lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
                                 lbl4.Text = My.Application.LanguageHelper.CP_10_TaskbarFocusedApp_StartButtonHover
@@ -223,82 +223,82 @@ Public Class MainFrm
         Select Case PreviewConfig
             Case WinVer.Eleven
 #Region "Win11"
-                start.DarkMode = Not [CP].WinMode_Light
-                taskbar.DarkMode = Not [CP].WinMode_Light
-                ActionCenter.DarkMode = Not [CP].WinMode_Light
+                start.DarkMode = Not [CP].Windows10x.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
 
-                taskbar.Transparency = [CP].Transparency
-                start.Transparency = [CP].Transparency
-                ActionCenter.Transparency = [CP].Transparency
+                taskbar.Transparency = [CP].Windows10x.Transparency
+                start.Transparency = [CP].Windows10x.Transparency
+                ActionCenter.Transparency = [CP].Windows10x.Transparency
 
                 start.Top = taskbar.Top - start.Height - 9
 
-                Select Case Not [CP].WinMode_Light
+                Select Case Not [CP].Windows10x.WinMode_Light
                     Case True   ''''''''''Dark
                         taskbar.BackColorAlpha = 130
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        Select Case [CP].ApplyAccentonTaskbar
+                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].StartListFolders_TaskbarFront), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
 
                         End Select
 
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows10x.Color_Index2, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
 
-                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
+                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        Select Case [CP].ApplyAccentonTaskbar
+                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].ActionCenter_AppsLinks), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index0), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index0), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Taskbar_Icon_Underline), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
                         End Select
 
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].StartButton_Hover, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows10x.Color_Index2, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
 
-                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
+                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
                 End Select
 
                 ReValidateLivePreview(pnl_preview)
@@ -306,16 +306,16 @@ Public Class MainFrm
             Case WinVer.Ten
 #Region "Win10"
 
-                start.DarkMode = Not [CP].WinMode_Light
-                taskbar.DarkMode = Not [CP].WinMode_Light
-                ActionCenter.DarkMode = Not [CP].WinMode_Light
-                taskbar.Transparency = [CP].Transparency
-                start.Transparency = [CP].Transparency
-                ActionCenter.Transparency = [CP].Transparency
+                start.DarkMode = Not [CP].Windows10x.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
+                taskbar.Transparency = [CP].Windows10x.Transparency
+                start.Transparency = [CP].Windows10x.Transparency
+                ActionCenter.Transparency = [CP].Windows10x.Transparency
                 start.Top = taskbar.Top - start.Height
 
-                If [CP].Transparency Then
-                    If Not [CP].WinMode_Light Then
+                If [CP].Windows10x.Transparency Then
+                    If Not [CP].Windows10x.WinMode_Light Then
                         taskbar.BackColorAlpha = 150
                         start.BackColorAlpha = 150
                         ActionCenter.BackColorAlpha = 150
@@ -330,11 +330,11 @@ Public Class MainFrm
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                Select Case Not [CP].WinMode_Light
+                Select Case Not [CP].Windows10x.WinMode_Light
                     Case True
 
-                        If [CP].Transparency Then
-                            Select Case [CP].ApplyAccentonTaskbar
+                        If [CP].Windows10x.Transparency Then
+                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(16, 16, 16), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(150, 150, 150, 150), AnimX1, AnimX2)
@@ -342,42 +342,42 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 150, 150, 150), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(0, 0, 0, 0), AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].SettingsIconsAndLinks), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(0, 0, 0, 0), AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].SettingsIconsAndLinks), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
                         Else
-                            Select Case [CP].ApplyAccentonTaskbar
+                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(16, 16, 16), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
@@ -385,36 +385,36 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
                             End Select
 
-                            If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 100, 100, 100), AnimX1, AnimX2)
                             Else
-                                Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
                             End If
 
-                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                            Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                            Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                            Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                            Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                         End If
 
                     Case False
-                        If [CP].Transparency Then
+                        If [CP].Windows10x.Transparency Then
 
-                            Select Case [CP].ApplyAccentonTaskbar
+                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(238, 238, 238), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
@@ -422,43 +422,43 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 238, 238, 238), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].SettingsIconsAndLinks), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Taskbar_Background, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].SettingsIconsAndLinks), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
                         Else
 
-                            Select Case [CP].ApplyAccentonTaskbar
+                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(238, 238, 238), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(241, 241, 241), AnimX1, AnimX2)
@@ -466,38 +466,38 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(252, 252, 252), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Taskbar_Background, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].StartListFolders_TaskbarFront, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
 
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].StartMenuBackground_ActiveTaskbarButton, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].ActionCenter_AppsLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Taskbar_Icon_Underline, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].SettingsIconsAndLinks, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
@@ -530,14 +530,14 @@ Public Class MainFrm
                         taskbar.BackColorAlpha = 255
                 End Select
 
-                XenonWindow1.AccentColor_Active = [CP].Aero_ColorizationColor
-                XenonWindow1.Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                XenonWindow1.AccentColor_Active = [CP].Windows7.ColorizationColor
+                XenonWindow1.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
 
-                XenonWindow2.AccentColor_Active = [CP].Aero_ColorizationColor
-                XenonWindow2.Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                XenonWindow2.AccentColor_Active = [CP].Windows7.ColorizationColor
+                XenonWindow2.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
 
-                taskbar.BackColor = [CP].Aero_ColorizationColor
-                taskbar.Win7ColorBal = [CP].Aero_ColorizationColorBalance
+                taskbar.BackColor = [CP].Windows7.ColorizationColor
+                taskbar.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
@@ -547,7 +547,7 @@ Public Class MainFrm
                     RefreshDWM([CP])
                 End If
 
-                Select Case [CP].Aero_Theme
+                Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
                         start.Transparency = True
                         start.Basic = False
@@ -558,46 +558,46 @@ Public Class MainFrm
                             .Win7Aero = True
                             .Win7AeroOpaque = False
                             .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
+                            .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                            .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
+                            .AccentColor_Active = [CP].Windows7.ColorizationColor
+                            .AccentColor2_Active = [CP].Windows7.ColorizationAfterglow
+                            .AccentColor_Inactive = [CP].Windows7.ColorizationColor
+                            .AccentColor2_Inactive = [CP].Windows7.ColorizationAfterglow
+                            .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
                             .Win7 = True
                             .Win7Aero = True
                             .Win7AeroOpaque = False
                             .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor2_Active = [CP].Aero_ColorizationAfterglow
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .AccentColor2_Inactive = [CP].Aero_ColorizationAfterglow
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
+                            .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                            .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
+                            .AccentColor_Active = [CP].Windows7.ColorizationColor
+                            .AccentColor2_Active = [CP].Windows7.ColorizationAfterglow
+                            .AccentColor_Inactive = [CP].Windows7.ColorizationColor
+                            .AccentColor2_Inactive = [CP].Windows7.ColorizationAfterglow
+                            .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
                             .Win7AeroOpaque = False
-                            .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
+                            .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                            .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
+                            .BackColor = [CP].Windows7.ColorizationColor
+                            .BackColor2 = [CP].Windows7.ColorizationAfterglow
+                            .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
                             .Win7AeroOpaque = False
-                            .BackColorAlpha = [CP].Aero_ColorizationBlurBalance
-                            .Win7ColorBal = [CP].Aero_ColorizationColorBalance
-                            .Win7GlowBal = [CP].Aero_ColorizationAfterglowBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationAfterglow
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
+                            .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                            .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
+                            .BackColor = [CP].Windows7.ColorizationColor
+                            .BackColor2 = [CP].Windows7.ColorizationAfterglow
+                            .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
                     Case CP.AeroTheme.AeroOpaque
@@ -611,34 +611,34 @@ Public Class MainFrm
                             .Win7Aero = False
                             .Win7AeroOpaque = True
                             .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationColorBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .Win7Alpha = [CP].Windows7.ColorizationColorBalance
+                            .AccentColor_Active = [CP].Windows7.ColorizationColor
+                            .AccentColor_Inactive = [CP].Windows7.ColorizationColor
+                            .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
                             .Win7 = True
                             .Win7Aero = False
                             .Win7AeroOpaque = True
                             .Win7Basic = False
-                            .Win7Alpha = [CP].Aero_ColorizationColorBalance
-                            .AccentColor_Active = [CP].Aero_ColorizationColor
-                            .AccentColor_Inactive = [CP].Aero_ColorizationColor
-                            .Win7Noise = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .Win7Alpha = [CP].Windows7.ColorizationColorBalance
+                            .AccentColor_Active = [CP].Windows7.ColorizationColor
+                            .AccentColor_Inactive = [CP].Windows7.ColorizationColor
+                            .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
                             .Win7AeroOpaque = True
-                            .BackColorAlpha = [CP].Aero_ColorizationColorBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
+                            .BackColor = [CP].Windows7.ColorizationColor
+                            .BackColor2 = [CP].Windows7.ColorizationColor
+                            .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
                             .Win7AeroOpaque = True
-                            .BackColorAlpha = [CP].Aero_ColorizationColorBalance
-                            .BackColor = [CP].Aero_ColorizationColor
-                            .BackColor2 = [CP].Aero_ColorizationColor
-                            .NoisePower = [CP].Aero_ColorizationGlassReflectionIntensity
+                            .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
+                            .BackColor = [CP].Windows7.ColorizationColor
+                            .BackColor2 = [CP].Windows7.ColorizationColor
+                            .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
                     Case CP.AeroTheme.Basic
@@ -692,9 +692,9 @@ Public Class MainFrm
     End Sub
 
     Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
-        XenonWindow.Metrics_BorderWidth = CP.Metrics_BorderWidth
-        XenonWindow.Metrics_CaptionHeight = CP.Metrics_CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = CP.Metrics_PaddedBorderWidth
+        XenonWindow.Metrics_BorderWidth = CP.WinMetrics.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = CP.WinMetrics.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = CP.WinMetrics.PaddedBorderWidth
         XenonWindow.Refresh()
     End Sub
 
@@ -804,7 +804,7 @@ Public Class MainFrm
             Case WinVer.Seven
                 XenonButton23.Visible = True
 
-                If CP.Aero_Theme = AeroTheme.Classic Then
+                If CP.Windows7.Theme = AeroTheme.Classic Then
                     start.Visible = False
                     taskbar.Visible = False
                     XenonWindow1.Visible = False
@@ -822,7 +822,7 @@ Public Class MainFrm
                 lnk_preview.Visible = False
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 taskbar.BlurPower = 1
-                taskbar.NoisePower = CP.Aero_ColorizationGlassReflectionIntensity / 100
+                taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
 
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
@@ -832,7 +832,7 @@ Public Class MainFrm
                 start.Left = 0
                 start.Width = 136
                 start.Height = 191
-                start.NoisePower = CP.Aero_ColorizationGlassReflectionIntensity / 100
+                start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 start.Top = taskbar.Top - start.Height
         End Select
 
@@ -859,15 +859,15 @@ Public Class MainFrm
     End Sub
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
-        themename_lbl.Text = String.Format("{0} ({1})", CP.PaletteName, CP.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Author)
+        themename_lbl.Text = String.Format("{0} ({1})", CP.Info.PaletteName, CP.Info.PaletteVersion)
+        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Info.Author)
 
-        WinMode_Toggle.Checked = Not ColorPalette.WinMode_Light
-        AppMode_Toggle.Checked = Not ColorPalette.AppMode_Light
-        Transparency_Toggle.Checked = ColorPalette.Transparency
-        ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.ApplyAccentonTitlebars
+        WinMode_Toggle.Checked = Not ColorPalette.Windows10x.WinMode_Light
+        AppMode_Toggle.Checked = Not ColorPalette.Windows10x.AppMode_Light
+        Transparency_Toggle.Checked = ColorPalette.Windows10x.Transparency
+        ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows10x.ApplyAccentonTitlebars
 
-        Select Case ColorPalette.ApplyAccentonTaskbar
+        Select Case ColorPalette.Windows10x.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
                 Accent_None.Checked = True
 
@@ -881,29 +881,29 @@ Public Class MainFrm
 
 
 
-        ActiveTitlebar_pick.BackColor = ColorPalette.Titlebar_Active
-        InactiveTitlebar_pick.BackColor = ColorPalette.Titlebar_Inactive
-        StartAccent_pick.BackColor = ColorPalette.StartMenu_Accent
-        StartButtonHover_pick.BackColor = ColorPalette.StartButton_Hover
-        TaskbarBackground_pick.BackColor = ColorPalette.Taskbar_Background
-        TaskbarIconUnderline_pick.BackColor = ColorPalette.Taskbar_Icon_Underline
-        StartBackgroundAndTaskbarButton_pick.BackColor = ColorPalette.StartMenuBackground_ActiveTaskbarButton
-        TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.StartListFolders_TaskbarFront
-        ActionCenter_pick.BackColor = ColorPalette.ActionCenter_AppsLinks
-        SettingsIconsAndLinks_pick.BackColor = ColorPalette.SettingsIconsAndLinks
-        UWP_Undefined_pick.BackColor = ColorPalette.UWP_Undefined
+        ActiveTitlebar_pick.BackColor = ColorPalette.Windows10x.Titlebar_Active
+        InactiveTitlebar_pick.BackColor = ColorPalette.Windows10x.Titlebar_Inactive
+        StartAccent_pick.BackColor = ColorPalette.Windows10x.StartMenu_Accent
+        StartButtonHover_pick.BackColor = ColorPalette.Windows10x.Color_Index2
+        TaskbarBackground_pick.BackColor = ColorPalette.Windows10x.Color_Index6
+        TaskbarIconUnderline_pick.BackColor = ColorPalette.Windows10x.Color_Index1
+        StartBackgroundAndTaskbarButton_pick.BackColor = ColorPalette.Windows10x.Color_Index4
+        TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows10x.Color_Index5
+        ActionCenter_pick.BackColor = ColorPalette.Windows10x.Color_Index0
+        Color_Index3_pick.BackColor = ColorPalette.Windows10x.Color_Index3
+        Color_Index7_pick.BackColor = ColorPalette.Windows10x.Color_Index7
 
-        Aero_ColorizationColor_pick.BackColor = ColorPalette.Aero_ColorizationColor
-        Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Aero_ColorizationAfterglow
-        Aero_ColorizationColorBalance_bar.Value = ColorPalette.Aero_ColorizationColorBalance
-        Aero_ColorizationAfterglowBalance_bar.Value = ColorPalette.Aero_ColorizationAfterglowBalance
-        Aero_ColorizationBlurBalance_bar.Value = ColorPalette.Aero_ColorizationBlurBalance
-        Aero_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Aero_ColorizationGlassReflectionIntensity
-        Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Aero_EnableAeroPeek
-        Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Aero_AlwaysHibernateThumbnails
+        Aero_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
+        Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Windows7.ColorizationAfterglow
+        Aero_ColorizationColorBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
+        Aero_ColorizationAfterglowBalance_bar.Value = ColorPalette.Windows7.ColorizationAfterglowBalance
+        Aero_ColorizationBlurBalance_bar.Value = ColorPalette.Windows7.ColorizationBlurBalance
+        Aero_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
+        Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
+        Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
 
         If PreviewConfig = WinVer.Seven Then
-            Select Case ColorPalette.Aero_Theme
+            Select Case ColorPalette.Windows7.Theme
                 Case CP.AeroTheme.Aero
                     theme_aero.Checked = True
 
@@ -927,8 +927,8 @@ Public Class MainFrm
             End Select
         End If
 
-        ColorizationColor8_pick.BackColor = ColorPalette.Aero_ColorizationColor
-        ColorizationBalance8_track.Value = ColorPalette.Aero_ColorizationColorBalance
+        ColorizationColor8_pick.BackColor = ColorPalette.Windows7.ColorizationColor
+        ColorizationBalance8_track.Value = ColorPalette.Windows7.ColorizationColorBalance
 
         start8_pick.BackColor = ColorPalette.Metro_StartColor
         accent8_pick.BackColor = ColorPalette.Metro_AccentColor
@@ -954,21 +954,21 @@ Public Class MainFrm
             DefCP = New CP_Defaults().Default_Windows11
         End If
 
-        ActiveTitlebar_pick.DefaultColor = DefCP.Titlebar_Active
-        InactiveTitlebar_pick.DefaultColor = DefCP.Titlebar_Inactive
-        StartAccent_pick.DefaultColor = DefCP.StartMenu_Accent
-        StartButtonHover_pick.DefaultColor = DefCP.StartButton_Hover
-        TaskbarBackground_pick.DefaultColor = DefCP.Taskbar_Background
-        TaskbarIconUnderline_pick.DefaultColor = DefCP.Taskbar_Icon_Underline
-        StartBackgroundAndTaskbarButton_pick.DefaultColor = DefCP.StartMenuBackground_ActiveTaskbarButton
-        TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.StartListFolders_TaskbarFront
-        ActionCenter_pick.DefaultColor = DefCP.ActionCenter_AppsLinks
-        SettingsIconsAndLinks_pick.DefaultColor = DefCP.SettingsIconsAndLinks
-        UWP_Undefined_pick.DefaultColor = DefCP.UWP_Undefined
+        ActiveTitlebar_pick.DefaultColor = DefCP.Windows10x.Titlebar_Active
+        InactiveTitlebar_pick.DefaultColor = DefCP.Windows10x.Titlebar_Inactive
+        StartAccent_pick.DefaultColor = DefCP.Windows10x.StartMenu_Accent
+        StartButtonHover_pick.DefaultColor = DefCP.Windows10x.Color_Index2
+        TaskbarBackground_pick.DefaultColor = DefCP.Windows10x.Color_Index6
+        TaskbarIconUnderline_pick.DefaultColor = DefCP.Windows10x.Color_Index1
+        StartBackgroundAndTaskbarButton_pick.DefaultColor = DefCP.Windows10x.Color_Index4
+        TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.Windows10x.Color_Index5
+        ActionCenter_pick.DefaultColor = DefCP.Windows10x.Color_Index0
+        Color_Index3_pick.DefaultColor = DefCP.Windows10x.Color_Index3
+        Color_Index7_pick.DefaultColor = DefCP.Windows10x.Color_Index7
 
-        Aero_ColorizationColor_pick.DefaultColor = DefCP.Aero_ColorizationColor
-        Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Aero_ColorizationAfterglow
-        ColorizationColor8_pick.DefaultColor = DefCP.Aero_ColorizationColor
+        Aero_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
+        Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
+        ColorizationColor8_pick.DefaultColor = DefCP.Windows7.ColorizationColor
         start8_pick.DefaultColor = DefCP.Metro_StartColor
         accent8_pick.DefaultColor = DefCP.Metro_AccentColor
         personalcls8_background_pick.DefaultColor = DefCP.Metro_PersonalColors_Background
@@ -1281,7 +1281,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Titlebar_Active = sender.BackColor
+                CP.Windows10x.Titlebar_Active = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1290,7 +1290,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Titlebar_Active = Color.FromArgb(255, C)
+        CP.Windows10x.Titlebar_Active = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1298,7 +1298,7 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.ApplyAccentonTitlebars Then
+        If Not CP.Windows10x.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
@@ -1307,7 +1307,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Titlebar_Inactive = sender.BackColor
+                CP.Windows10x.Titlebar_Inactive = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1318,7 +1318,7 @@ Public Class MainFrm
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Titlebar_Inactive = Color.FromArgb(255, C)
+        CP.Windows10x.Titlebar_Inactive = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1326,56 +1326,56 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.ApplyAccentonTitlebars Then
+        If Not CP.Windows10x.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
     Private Sub WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WinMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.WinMode_Light = Not sender.Checked
+            CP.Windows10x.WinMode_Light = Not sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles AppMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.AppMode_Light = Not sender.Checked
+            CP.Windows10x.AppMode_Light = Not sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Transparency_Toggle.CheckedChanged
         If _Shown Then
-            CP.Transparency = sender.Checked
+            CP.Windows10x.Transparency = sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.ApplyAccentonTitlebars = sender.Checked
+            CP.Windows10x.ApplyAccentonTitlebars = sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Accent_None_CheckedChanged(sender As Object) Handles Accent_None.CheckedChanged
         If _Shown Then
-            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Accent_Taskbar_CheckedChanged(sender As Object) Handles Accent_Taskbar.CheckedChanged
         If _Shown Then
-            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Accent_StartTaskbar_CheckedChanged(sender As Object) Handles Accent_StartTaskbar.CheckedChanged
         If _Shown Then
-            CP.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -1384,7 +1384,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Taskbar_Icon_Underline = sender.BackColor
+                CP.Windows10x.Color_Index1 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1397,7 +1397,7 @@ Public Class MainFrm
         If PreviewConfig = WinVer.Eleven Then
             CList.Add(taskbar)
 
-            If Not CP.WinMode_Light Then
+            If Not CP.Windows10x.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(start)
 
@@ -1415,12 +1415,12 @@ Public Class MainFrm
         Else
             Dim _Conditions As New Conditions
 
-            Select Case Not [CP].WinMode_Light
+            Select Case Not CP.Windows10x.WinMode_Light
                 Case True
                     CList.Add(taskbar)  ''AppUnderline
                     _Conditions.AppUnderlineOnly = True
                 Case False
-                    If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                    If CP.Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                         CList.Add(taskbar)  ''AppUnderline
                         _Conditions.AppUnderlineOnly = True
                     End If
@@ -1432,7 +1432,7 @@ Public Class MainFrm
 
 
 
-        CP.Taskbar_Icon_Underline = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index1 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1445,7 +1445,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.StartListFolders_TaskbarFront = sender.BackColor
+                CP.Windows10x.Color_Index5 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1454,7 +1454,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         If PreviewConfig = WinVer.Eleven Then
-            If Not CP.WinMode_Light Then
+            If Not CP.Windows10x.WinMode_Light Then
                 CList.Add(taskbar)
                 CList.Add(start)
                 CList.Add(ActionCenter)
@@ -1462,7 +1462,7 @@ Public Class MainFrm
                 CList.Add(lnk_preview)
             End If
         Else
-            If [CP].Transparency Then
+            If [CP].Windows10x.Transparency Then
                 'CList.Add(start) ''Hamburger
             Else
                 CList.Add(taskbar)
@@ -1470,7 +1470,7 @@ Public Class MainFrm
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.StartListFolders_TaskbarFront = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index5 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1484,7 +1484,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.ActionCenter_AppsLinks = sender.BackColor
+                CP.Windows10x.Color_Index0 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1496,7 +1496,7 @@ Public Class MainFrm
         CList.Add(sender)
 
         If PreviewConfig = WinVer.Eleven Then
-            If CP.WinMode_Light Then
+            If CP.Windows10x.WinMode_Light Then
                 CList.Add(start)
                 CList.Add(ActionCenter)
                 C = ColorPickerDlg.Pick(CList)
@@ -1508,13 +1508,13 @@ Public Class MainFrm
         Else
             Dim _Conditions As New Conditions
 
-            Select Case Not CP.WinMode_Light
+            Select Case Not CP.Windows10x.WinMode_Light
                 Case True
                     CList.Add(ActionCenter) ''Link
                     _Conditions.ActionCenterLink = True
 
                 Case False
-                    If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                    If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
                         CList.Add(ActionCenter) ''Link
                         _Conditions.ActionCenterLink = True
                     End If
@@ -1523,7 +1523,7 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.ActionCenter_AppsLinks = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index0 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1533,11 +1533,11 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub SettingsIconsAndLinks_pick_Click(sender As Object, e As EventArgs) Handles SettingsIconsAndLinks_pick.Click
+    Private Sub Color_Index3_pick_Click(sender As Object, e As EventArgs) Handles Color_Index3_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.SettingsIconsAndLinks = sender.BackColor
+                CP.Windows10x.Color_Index3 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1554,13 +1554,13 @@ Public Class MainFrm
         Else
             Dim _Conditions As New Conditions
 
-            Select Case Not [CP].WinMode_Light
+            Select Case Not [CP].Windows10x.WinMode_Light
                 Case True
-                    If [CP].Transparency Then
+                    If [CP].Windows10x.Transparency Then
                         CList.Add(setting_icon_preview)
                         CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                         CList.Add(lnk_preview)
-                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                             CList.Add(taskbar)  ''AppBackground
                             _Conditions.AppBackgroundOnly = True
 
@@ -1575,7 +1575,7 @@ Public Class MainFrm
                     CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                     CList.Add(lnk_preview)
 
-                    If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                    If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                         CList.Add(taskbar)  ''AppBackground
                         _Conditions.AppBackgroundOnly = True
                         _Conditions.AppUnderlineOnly = True
@@ -1585,7 +1585,7 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.SettingsIconsAndLinks = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index3 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1628,7 +1628,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Taskbar_Background = sender.BackColor
+                CP.Windows10x.Color_Index6 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1646,25 +1646,25 @@ Public Class MainFrm
         Else
             Dim _Conditions As New Conditions
 
-            Select Case Not [CP].WinMode_Light
+            Select Case Not [CP].Windows10x.WinMode_Light
                 Case True
 
-                    If [CP].Transparency Then
+                    If [CP].Windows10x.Transparency Then
                         CList.Add(taskbar)
                     End If
 
                 Case False
 
-                    If [CP].Transparency Then
+                    If [CP].Windows10x.Transparency Then
                         CList.Add(taskbar)
 
-                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
                             CList.Add(ActionCenter) ''ActionCenterLinks
                             _Conditions.ActionCenterLink = True
                         End If
 
                     Else
-                        If [CP].ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
                             CList.Add(ActionCenter) ''ActionCenterLinks
                             _Conditions.ActionCenterLink = True
 
@@ -1675,7 +1675,7 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.Taskbar_Background = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index6 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1688,7 +1688,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.StartMenu_Accent = sender.BackColor
+                CP.Windows10x.StartMenu_Accent = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1704,7 +1704,7 @@ Public Class MainFrm
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.StartMenu_Accent = Color.FromArgb(255, C)
+        CP.Windows10x.StartMenu_Accent = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1718,7 +1718,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.StartButton_Hover = sender.BackColor
+                CP.Windows10x.Color_Index2 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1732,7 +1732,7 @@ Public Class MainFrm
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.StartButton_Hover = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index2 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1746,7 +1746,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.StartMenuBackground_ActiveTaskbarButton = sender.BackColor
+                CP.Windows10x.Color_Index4 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1765,7 +1765,7 @@ Public Class MainFrm
                 CList.Add(ActionCenter)
             End If
 
-            If CP.WinMode_Light Then
+            If CP.Windows10x.WinMode_Light Then
                 CList.Add(start)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
@@ -1785,10 +1785,10 @@ Public Class MainFrm
         Else
             Dim _Conditions As New Conditions
 
-            Select Case Not [CP].WinMode_Light
+            Select Case Not [CP].Windows10x.WinMode_Light
                 Case True
 
-                    If [CP].Transparency Then
+                    If [CP].Windows10x.Transparency Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
                     Else
@@ -1799,14 +1799,14 @@ Public Class MainFrm
                     End If
 
                 Case False
-                    If [CP].Transparency Then
+                    If [CP].Windows10x.Transparency Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
                     Else
-                        If [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                        If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                             CList.Add(start)
                             CList.Add(ActionCenter)
-                        ElseIf [CP].ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                        ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
                             CList.Add(start)
                             CList.Add(ActionCenter)
                             CList.Add(taskbar)  'Start Button Hover
@@ -1823,7 +1823,7 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index4 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -2345,7 +2345,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Aero_ColorizationColor = sender.BackColor
+                CP.Windows7.ColorizationColor = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2363,7 +2363,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Aero_ColorizationColor = Color.FromArgb(255, C)
+        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2377,7 +2377,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Aero_ColorizationAfterglow = sender.BackColor
+                CP.Windows7.ColorizationAfterglow = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2395,7 +2395,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Aero_ColorizationAfterglow = Color.FromArgb(255, C)
+        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2406,37 +2406,37 @@ Public Class MainFrm
     End Sub
 
     Private Sub Aero_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableAeroPeek_toggle.CheckedChanged
-        If _Shown Then CP.Aero_EnableAeroPeek = Aero_EnableAeroPeek_toggle.Checked
+        If _Shown Then CP.Windows7.EnableAeroPeek = Aero_EnableAeroPeek_toggle.Checked
     End Sub
 
     Private Sub Aero_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_AlwaysHibernateThumbnails_Toggle.CheckedChanged
-        If _Shown Then CP.Aero_AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
+        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
     End Sub
 
     Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationColorBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationColorBalance = Aero_ColorizationColorBalance_bar.Value
+            CP.Windows7.ColorizationColorBalance = Aero_ColorizationColorBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Aero_ColorizationBlurBalance_TextChanged(sender As Object) Handles Aero_ColorizationBlurBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationBlurBalance = Aero_ColorizationBlurBalance_bar.Value
+            CP.Windows7.ColorizationBlurBalance = Aero_ColorizationBlurBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Aero_ColorizationGlassReflectionIntensity_txt_TextChanged(sender As Object) Handles Aero_ColorizationGlassReflectionIntensity_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationGlassReflectionIntensity = Aero_ColorizationGlassReflectionIntensity_bar.Value
+            CP.Windows7.ColorizationGlassReflectionIntensity = Aero_ColorizationGlassReflectionIntensity_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub theme_classic_CheckedChanged(sender As Object) Handles theme_classic.CheckedChanged
         If theme_classic.Checked Then
-            CP.Aero_Theme = CP.AeroTheme.Classic
+            CP.Windows7.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
             Notify(My.Application.LanguageHelper.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
         End If
@@ -2445,28 +2445,28 @@ Public Class MainFrm
 
     Private Sub theme_basic_CheckedChanged(sender As Object) Handles theme_basic.CheckedChanged
         If theme_basic.Checked Then
-            CP.Aero_Theme = CP.AeroTheme.Basic
+            CP.Windows7.Theme = CP.AeroTheme.Basic
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub theme_aeroopaque_CheckedChanged(sender As Object) Handles theme_aeroopaque.CheckedChanged
         If theme_aeroopaque.Checked Then
-            CP.Aero_Theme = CP.AeroTheme.AeroOpaque
+            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub theme_aero_CheckedChanged(sender As Object) Handles theme_aero.CheckedChanged
+    Private Sub theme_Aero_CheckedChanged(sender As Object) Handles theme_aero.CheckedChanged
         If theme_aero.Checked Then
-            CP.Aero_Theme = CP.AeroTheme.Aero
+            CP.Windows7.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationAfterglowBalance_bar.Scroll
         If _Shown Then
-            CP.Aero_ColorizationAfterglowBalance = Aero_ColorizationAfterglowBalance_bar.Value
+            CP.Windows7.ColorizationAfterglowBalance = Aero_ColorizationAfterglowBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -2475,7 +2475,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Aero_ColorizationColor = sender.BackColor
+                CP.Windows7.ColorizationColor = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2493,7 +2493,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Aero_ColorizationColor = Color.FromArgb(255, C)
+        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2505,7 +2505,7 @@ Public Class MainFrm
 
     Private Sub ColorizationBalance8_track_Scroll(sender As Object) Handles ColorizationBalance8_track.Scroll
         If _Shown Then
-            CP.Aero_ColorizationColorBalance = ColorizationBalance8_track.Value
+            CP.Windows7.ColorizationColorBalance = ColorizationBalance8_track.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -2652,9 +2652,9 @@ Public Class MainFrm
         TerminalsDashboard.ShowDialog()
     End Sub
 
-    Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles UWP_Undefined_pick.Click
+    Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles Color_Index7_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            CP.UWP_Undefined = SubMenu.ShowMenu(sender)
+            CP.Windows10x.Color_Index7 = SubMenu.ShowMenu(sender)
             Exit Sub
         End If
 
@@ -2662,7 +2662,7 @@ Public Class MainFrm
         CList.Add(sender)
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.UWP_Undefined = Color.FromArgb(255, C)
+        CP.Windows10x.Color_Index7 = Color.FromArgb(255, C)
 
         sender.backcolor = C
         sender.invalidate

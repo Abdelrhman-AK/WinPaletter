@@ -75,9 +75,9 @@ Public Class WindowsTerminal
             TerTitlebarInactive.BackColor = Nothing
             TerTabActive.BackColor = Nothing
             TerTabInactive.BackColor = Nothing
-            TerMode.Checked = Not MainFrm.CP.AppMode_Light
-            XenonTerminal1.Light = MainFrm.CP.AppMode_Light
-            XenonTerminal2.Light = MainFrm.CP.AppMode_Light
+            TerMode.Checked = Not MainFrm.CP.Windows10x.AppMode_Light
+            XenonTerminal1.Light = MainFrm.CP.Windows10x.AppMode_Light
+            XenonTerminal2.Light = MainFrm.CP.Windows10x.AppMode_Light
 
         ElseIf TerThemes.Items.Contains(_Terminal.theme) Then
 
@@ -737,8 +737,8 @@ Public Class WindowsTerminal
                     XenonTerminal2.Light = True
 
                 ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
-                    XenonTerminal1.Light = MainFrm.CP.AppMode_Light
-                    XenonTerminal2.Light = MainFrm.CP.AppMode_Light
+                    XenonTerminal1.Light = MainFrm.CP.Windows10x.AppMode_Light
+                    XenonTerminal2.Light = MainFrm.CP.Windows10x.AppMode_Light
 
                 Else
                     XenonTerminal1.Light = Not TerMode.Checked
@@ -809,7 +809,7 @@ Public Class WindowsTerminal
 
             If TerThemes.SelectedIndex = 0 Then TerMode.Checked = True
             If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
-            If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.AppMode_Light
+            If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10x.AppMode_Light
 
         End If
 

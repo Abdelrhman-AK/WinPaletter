@@ -36,133 +36,190 @@ Public Class CP : Implements IDisposable
     End Sub
 #End Region
 
-#Region "Properties"
-
-#Region "General Info"
-    Public Property AppVersion As String = My.Application.Info.Version.ToString
-    Public Property PaletteName As String = "Current Mode"
-    Public Property PaletteDescription As String
-    Public Property PaletteVersion As String = "1.0.0.0"
-    Public Property Author As String = Environment.UserName
-    Public Property AuthorSocialMediaLink As String
-#End Region
-
-#Region "ModernWindows"
-    Public Property Titlebar_Active As Color
-    Public Property Titlebar_Inactive As Color
-    Public Property StartMenu_Accent As Color
-    Public Property StartButton_Hover As Color
-    Public Property Taskbar_Background As Color
-    Public Property Taskbar_Icon_Underline As Color
-    Public Property StartMenuBackground_ActiveTaskbarButton As Color
-    Public Property StartListFolders_TaskbarFront As Color
-    Public Property ActionCenter_AppsLinks As Color
-    Public Property SettingsIconsAndLinks As Color
-    Public Property UWP_Undefined As Color = Color.Black
-    Public Property WinMode_Light As Boolean
-    Public Property AppMode_Light As Boolean
-    Public Property Transparency As Boolean = True
-    Public Property ApplyAccentonTitlebars As Boolean = False
-    Public Property ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level = 0
-#End Region
-
+#Region "Enumerations"
     Enum ApplyAccentonTaskbar_Level
         None
         Taskbar_Start_AC
         Taskbar
     End Enum
-
-#Region "Aero"
-    Public Property Aero_ColorizationColor As Color
-    Public Property Aero_ColorizationAfterglow As Color
-    Public Property Aero_EnableAeroPeek As Boolean = True
-    Public Property Aero_AlwaysHibernateThumbnails As Boolean = False
-    Public Property Aero_ColorizationColorBalance As Integer = 8
-    Public Property Aero_ColorizationAfterglowBalance As Integer = 31
-    Public Property Aero_ColorizationBlurBalance As Integer = 31
-    Public Property Aero_ColorizationGlassReflectionIntensity As Integer
-    Public Property Aero_Theme As AeroTheme = AeroTheme.Aero
-
-    Public Enum AeroTheme
+    Enum AeroTheme
         Aero
         AeroLite
         AeroOpaque
         Basic
         Classic
     End Enum
-
 #End Region
 
-#Region "Metro"
-    Public Property Metro_Start As Integer = 0
-    Public Property Metro_StartColor As Color = Color.FromArgb(30, 0, 84)
-    Public Property Metro_AccentColor As Color = Color.FromArgb(72, 29, 178)
-    Public Property Metro_Theme As AeroTheme = AeroTheme.Aero
-    Public Property Metro_LogonUI As Integer = 0
-    Public Property Metro_PersonalColors_Background As Color = Color.FromArgb(30, 0, 84)
-    Public Property Metro_PersonalColors_Accent As Color = Color.FromArgb(72, 29, 178)
-    Public Property Metro_NoLockScreen As Boolean = False
-    Public Property Metro_LockScreenType As LogonUI_Modes = LogonUI_Modes.Default_
-    Public Property Metro_LockScreenSystemID As Integer = 0
-#End Region
+#Region "Structures"
+    Structure Info_Structure
+        Dim AppVersion As String
+        Dim PaletteName As String
+        Dim PaletteDescription As String
+        Dim PaletteVersion As String
+        Dim Author As String
+        Dim AuthorSocialMediaLink As String
 
-#Region "LogonUI_Win10"
-    Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
-    Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
-    Public Property LogonUI_NoLockScreen As Boolean = False
-#End Region
+        Shared Operator =(First As Info_Structure, Second As Info_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
 
-#Region "LogonUI_Win7"
-    Public Property LogonUI7_Enabled As Boolean = False
-    Public Property LogonUI7_Mode As LogonUI_Modes = LogonUI_Modes.Default_
-    Public Property LogonUI7_ImagePath As String = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
-    Public Property LogonUI7_Color As Color = Color.Black
-    Public Property LogonUI7_Effect_Blur As Boolean = False
-    Public Property LogonUI7_Effect_Blur_Intensity As Integer = 0
-    Public Property LogonUI7_Effect_Grayscale As Boolean = False
-    Public Property LogonUI7_Effect_Noise As Boolean = False
-    Public Property LogonUI7_Effect_Noise_Mode As LogonUI7_NoiseMode = LogonUI7_NoiseMode.Acrylic
-    Public Property LogonUI7_Effect_Noise_Intensity As Integer = 0
-#End Region
-
-    Public Structure Win32UI_Structure
-        Public EnableTheming As Boolean
-        Public EnableGradient As Boolean
-        Public ActiveBorder As Color
-        Public ActiveTitle As Color
-        Public AppWorkspace As Color
-        Public Background As Color
-        Public ButtonAlternateFace As Color
-        Public ButtonDkShadow As Color
-        Public ButtonFace As Color
-        Public ButtonHilight As Color
-        Public ButtonLight As Color
-        Public ButtonShadow As Color
-        Public ButtonText As Color
-        Public GradientActiveTitle As Color
-        Public GradientInactiveTitle As Color
-        Public GrayText As Color
-        Public HilightText As Color
-        Public HotTrackingColor As Color
-        Public InactiveBorder As Color
-        Public InactiveTitle As Color
-        Public InactiveTitleText As Color
-        Public InfoText As Color
-        Public InfoWindow As Color
-        Public Menu As Color
-        Public MenuBar As Color
-        Public MenuText As Color
-        Public Scrollbar As Color
-        Public TitleText As Color
-        Public Window As Color
-        Public WindowFrame As Color
-        Public WindowText As Color
-        Public Hilight As Color
-        Public MenuHilight As Color
-        Public Desktop As Color
+        Shared Operator <>(First As Info_Structure, Second As Info_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
     End Structure
 
-#Region "Win32UI"
+    Structure Win32UI_Structure
+        Dim EnableTheming As Boolean
+        Dim EnableGradient As Boolean
+        Dim ActiveBorder As Color
+        Dim ActiveTitle As Color
+        Dim AppWorkspace As Color
+        Dim Background As Color
+        Dim ButtonAlternateFace As Color
+        Dim ButtonDkShadow As Color
+        Dim ButtonFace As Color
+        Dim ButtonHilight As Color
+        Dim ButtonLight As Color
+        Dim ButtonShadow As Color
+        Dim ButtonText As Color
+        Dim GradientActiveTitle As Color
+        Dim GradientInactiveTitle As Color
+        Dim GrayText As Color
+        Dim HilightText As Color
+        Dim HotTrackingColor As Color
+        Dim InactiveBorder As Color
+        Dim InactiveTitle As Color
+        Dim InactiveTitleText As Color
+        Dim InfoText As Color
+        Dim InfoWindow As Color
+        Dim Menu As Color
+        Dim MenuBar As Color
+        Dim MenuText As Color
+        Dim Scrollbar As Color
+        Dim TitleText As Color
+        Dim Window As Color
+        Dim WindowFrame As Color
+        Dim WindowText As Color
+        Dim Hilight As Color
+        Dim MenuHilight As Color
+        Dim Desktop As Color
+
+        Shared Operator =(First As Win32UI_Structure, Second As Win32UI_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As Win32UI_Structure, Second As Win32UI_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+
+    End Structure
+
+    Structure Windows10x_Structure
+        Dim Color_Index0 As Color
+        Dim Color_Index1 As Color
+        Dim Color_Index2 As Color
+        Dim Color_Index3 As Color
+        Dim Color_Index4 As Color
+        Dim Color_Index5 As Color
+        Dim Color_Index6 As Color
+        Dim Color_Index7 As Color
+        Dim WinMode_Light As Boolean
+        Dim AppMode_Light As Boolean
+        Dim Transparency As Boolean
+        Dim Titlebar_Active As Color
+        Dim Titlebar_Inactive As Color
+        Dim StartMenu_Accent As Color
+        Dim ApplyAccentonTitlebars As Boolean
+        Dim ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level
+
+        Shared Operator =(First As Windows10x_Structure, Second As Windows10x_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As Windows10x_Structure, Second As Windows10x_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+
+    End Structure
+
+    Structure Windows7_DWM_Structure
+        Dim ColorizationColor As Color
+        Dim ColorizationAfterglow As Color
+        Dim EnableAeroPeek As Boolean
+        Dim AlwaysHibernateThumbnails As Boolean
+        Dim ColorizationColorBalance As Integer
+        Dim ColorizationAfterglowBalance As Integer
+        Dim ColorizationBlurBalance As Integer
+        Dim ColorizationGlassReflectionIntensity As Integer
+        Dim Theme As AeroTheme
+
+        Shared Operator =(First As Windows7_DWM_Structure, Second As Windows7_DWM_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As Windows7_DWM_Structure, Second As Windows7_DWM_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+
+    End Structure
+
+    Structure WinMetrics_Structure
+        Dim BorderWidth As Integer
+        Dim CaptionHeight As Integer
+        Dim CaptionWidth As Integer
+        Dim IconSpacing As Integer
+        Dim IconVerticalSpacing As Integer
+        Dim MenuHeight As Integer
+        Dim MenuWidth As Integer
+        Dim MinAnimate As Boolean
+        Dim PaddedBorderWidth As Integer
+        Dim ScrollHeight As Integer
+        Dim ScrollWidth As Integer
+        Dim SmCaptionHeight As Integer
+        Dim SmCaptionWidth As Integer
+        Dim DesktopIconSize As Integer
+        Dim ShellIconSize As Integer
+
+        Shared Operator =(First As WinMetrics_Structure, Second As WinMetrics_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As WinMetrics_Structure, Second As WinMetrics_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+
+    End Structure
+#End Region
+
+
+#Region "Properties"
+    Public Info As New Info_Structure With {
+            .AppVersion = My.Application.Info.Version.ToString,
+            .PaletteName = "Current Mode",
+            .PaletteDescription = "",
+            .PaletteVersion = "1.0.0.0",
+            .Author = Environment.UserName,
+            .AuthorSocialMediaLink = ""
+    }
+
+    Public Windows10x As New Windows10x_Structure With {
+            .Color_Index7 = Color.Black,
+            .Transparency = True,
+            .ApplyAccentonTitlebars = False,
+            .ApplyAccentonTaskbar = 0
+            }
+
+    Public Windows7 As New Windows7_DWM_Structure With {
+            .ColorizationColor = Color.FromArgb(116, 184, 252),
+            .ColorizationAfterglow = Color.FromArgb(116, 184, 252),
+            .ColorizationColorBalance = 8,
+            .ColorizationAfterglowBalance = 43,
+            .ColorizationBlurBalance = 49,
+            .ColorizationGlassReflectionIntensity = 0,
+            .EnableAeroPeek = True,
+            .AlwaysHibernateThumbnails = False,
+            .Theme = CP.AeroTheme.Aero}
 
     Public Win32 As New Win32UI_Structure With {
             .EnableTheming = True,
@@ -201,7 +258,54 @@ Public Class CP : Implements IDisposable
             .Desktop = Color.FromArgb(0, 0, 0)
             }
 
+    Public WinMetrics As New WinMetrics_Structure With {
+                .BorderWidth = 1,
+                .CaptionHeight = 22,
+                .CaptionWidth = 22,
+                .IconSpacing = 75,
+                .IconVerticalSpacing = 75,
+                .MenuHeight = 19,
+                .MenuWidth = 19,
+                .MinAnimate = True,
+                .PaddedBorderWidth = 4,
+                .ScrollHeight = 19,
+                .ScrollWidth = 19,
+                .SmCaptionHeight = 22,
+                .SmCaptionWidth = 22,
+                .DesktopIconSize = 32,
+                .ShellIconSize = 32}
+#Region "Metro"
+    Public Property Metro_Start As Integer = 0
+    Public Property Metro_StartColor As Color = Color.FromArgb(30, 0, 84)
+    Public Property Metro_AccentColor As Color = Color.FromArgb(72, 29, 178)
+    Public Property Metro_Theme As AeroTheme = AeroTheme.Aero
+    Public Property Metro_LogonUI As Integer = 0
+    Public Property Metro_PersonalColors_Background As Color = Color.FromArgb(30, 0, 84)
+    Public Property Metro_PersonalColors_Accent As Color = Color.FromArgb(72, 29, 178)
+    Public Property Metro_NoLockScreen As Boolean = False
+    Public Property Metro_LockScreenType As LogonUI_Modes = LogonUI_Modes.Default_
+    Public Property Metro_LockScreenSystemID As Integer = 0
 #End Region
+
+#Region "LogonUI_Win10"
+    Public Property LogonUI_DisableAcrylicBackgroundOnLogon As Boolean = False
+    Public Property LogonUI_DisableLogonBackgroundImage As Boolean = False
+    Public Property LogonUI_NoLockScreen As Boolean = False
+#End Region
+
+#Region "LogonUI_Win7"
+    Public Property LogonUI7_Enabled As Boolean = False
+    Public Property LogonUI7_Mode As LogonUI_Modes = LogonUI_Modes.Default_
+    Public Property LogonUI7_ImagePath As String = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
+    Public Property LogonUI7_Color As Color = Color.Black
+    Public Property LogonUI7_Effect_Blur As Boolean = False
+    Public Property LogonUI7_Effect_Blur_Intensity As Integer = 0
+    Public Property LogonUI7_Effect_Grayscale As Boolean = False
+    Public Property LogonUI7_Effect_Noise As Boolean = False
+    Public Property LogonUI7_Effect_Noise_Mode As LogonUI7_NoiseMode = LogonUI7_NoiseMode.Acrylic
+    Public Property LogonUI7_Effect_Noise_Intensity As Integer = 0
+#End Region
+
 
 #Region "Terminals"
 
@@ -322,23 +426,6 @@ Public Class CP : Implements IDisposable
 #End Region
 #End Region
 
-#Region "Metrics"
-    Public Property Metrics_BorderWidth As Integer = 1
-    Public Property Metrics_CaptionHeight As Integer = 22
-    Public Property Metrics_CaptionWidth As Integer = 22
-    Public Property Metrics_IconSpacing As Integer = 75
-    Public Property Metrics_IconVerticalSpacing As Integer = 75
-    Public Property Metrics_MenuHeight As Integer = 19
-    Public Property Metrics_MenuWidth As Integer = 19
-    Public Property Metrics_MinAnimate As Boolean = True
-    Public Property Metrics_PaddedBorderWidth As Integer = 4
-    Public Property Metrics_ScrollHeight As Integer = 19
-    Public Property Metrics_ScrollWidth As Integer = 19
-    Public Property Metrics_SmCaptionHeight As Integer = 22
-    Public Property Metrics_SmCaptionWidth As Integer = 22
-    Public Property Metrics_DesktopIconSize As Integer = 32
-    Public Property Metrics_ShellIconSize As Integer = 32
-#End Region
 
 #Region "Fonts"
     Public Property Fonts_CaptionFont As New Font("Segoe UI", 9, FontStyle.Regular)
@@ -932,10 +1019,10 @@ Public Class CP : Implements IDisposable
                 Colors.Clear()
 
 #Region "Personal Info"
-                Author = Environment.UserName
-                AppVersion = My.Application.Info.Version.ToString
-                PaletteVersion = "1.0"
-                PaletteName = My.Application.LanguageHelper.CurrentMode
+                Info.Author = Environment.UserName
+                Info.AppVersion = My.Application.Info.Version.ToString
+                Info.PaletteVersion = "1.0"
+                Info.PaletteName = My.Application.LanguageHelper.CurrentMode
 #End Region
 
 #Region "Modern Windows"
@@ -956,14 +1043,16 @@ Public Class CP : Implements IDisposable
                         Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
                         Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                        ActionCenter_AppsLinks = Colors(0)
-                        Taskbar_Icon_Underline = Colors(1)
-                        StartButton_Hover = Colors(2)
-                        SettingsIconsAndLinks = Colors(3)
-                        StartMenuBackground_ActiveTaskbarButton = Colors(4)
-                        StartListFolders_TaskbarFront = Colors(5)
-                        Taskbar_Background = Colors(6)
-                        UWP_Undefined = Colors(7)
+                        With Windows10x
+                            .Color_Index0 = Colors(0)
+                            .Color_Index1 = Colors(1)
+                            .Color_Index2 = Colors(2)
+                            .Color_Index3 = Colors(3)
+                            .Color_Index4 = Colors(4)
+                            .Color_Index5 = Colors(5)
+                            .Color_Index6 = Colors(6)
+                            .Color_Index7 = Colors(7)
+                        End With
 
                     Catch
                         x = If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes)
@@ -977,103 +1066,105 @@ Public Class CP : Implements IDisposable
                         Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
                         Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                        ActionCenter_AppsLinks = Colors(0)
-                        Taskbar_Icon_Underline = Colors(1)
-                        StartButton_Hover = Colors(2)
-                        SettingsIconsAndLinks = Colors(3)
-                        StartMenuBackground_ActiveTaskbarButton = Colors(4)
-                        StartListFolders_TaskbarFront = Colors(5)
-                        Taskbar_Background = Colors(6)
-                        UWP_Undefined = Colors(7)
+                        With Windows10x
+                            .Color_Index0 = Colors(0)
+                            .Color_Index1 = Colors(1)
+                            .Color_Index2 = Colors(2)
+                            .Color_Index3 = Colors(3)
+                            .Color_Index4 = Colors(4)
+                            .Color_Index5 = Colors(5)
+                            .Color_Index6 = Colors(6)
+                            .Color_Index7 = Colors(7)
+                        End With
 
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.StartMenu_Accent).ToArgb)
-                        StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows10x.StartMenu_Accent).ToArgb)
+                        Windows10x.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        StartMenu_Accent = Def.StartMenu_Accent
+                        Windows10x.StartMenu_Accent = Def.Windows10x.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
-                        Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows10x.Titlebar_Active).ToArgb)
+                        Windows10x.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Titlebar_Active = Def.Titlebar_Active
+                        Windows10x.Titlebar_Active = Def.Windows10x.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Titlebar_Active).ToArgb)
-                        Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows10x.Titlebar_Active).ToArgb)
+                        Windows10x.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Titlebar_Active = Def.Titlebar_Active
+                        Windows10x.Titlebar_Active = Def.Windows10x.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Titlebar_Inactive).ToArgb)
-                        Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows10x.Titlebar_Inactive).ToArgb)
+                        Windows10x.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Titlebar_Inactive = Def.Titlebar_Inactive
+                        Windows10x.Titlebar_Inactive = Def.Windows10x.Titlebar_Inactive
                     End Try
 
                     Try
-                        WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.WinMode_Light)
+                        Windows10x.WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.Windows10x.WinMode_Light)
                     Catch
-                        WinMode_Light = Def.WinMode_Light
+                        Windows10x.WinMode_Light = Def.Windows10x.WinMode_Light
                     End Try
 
                     Try
-                        AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.AppMode_Light)
+                        Windows10x.AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.Windows10x.AppMode_Light)
                     Catch
-                        AppMode_Light = Def.AppMode_Light
+                        Windows10x.AppMode_Light = Def.Windows10x.AppMode_Light
                     End Try
 
                     Try
-                        Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Transparency)
+                        Windows10x.Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Windows10x.Transparency)
                     Catch
-                        Transparency = Def.Transparency
+                        Windows10x.Transparency = Def.Windows10x.Transparency
                     End Try
 
                     Try
                         Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
                             Case 0
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                             Case 1
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                             Case 2
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
                             Case Else
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                         End Select
 
                     Catch
-                        ApplyAccentonTaskbar = Def.ApplyAccentonTaskbar
+                        Windows10x.ApplyAccentonTaskbar = Def.Windows10x.ApplyAccentonTaskbar
                     End Try
 
                     Try
-                        ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.ApplyAccentonTitlebars)
+                        Windows10x.ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.Windows10x.ApplyAccentonTitlebars)
                     Catch
-                        ApplyAccentonTitlebars = Def.ApplyAccentonTitlebars
+                        Windows10x.ApplyAccentonTitlebars = Def.Windows10x.ApplyAccentonTitlebars
                     End Try
 
 
                 Else
 
-                    ActionCenter_AppsLinks = _Def.ActionCenter_AppsLinks
-                    Taskbar_Icon_Underline = _Def.Taskbar_Icon_Underline
-                    StartButton_Hover = _Def.StartButton_Hover
-                    SettingsIconsAndLinks = _Def.SettingsIconsAndLinks
-                    StartMenuBackground_ActiveTaskbarButton = _Def.StartMenuBackground_ActiveTaskbarButton
-                    StartListFolders_TaskbarFront = _Def.StartListFolders_TaskbarFront
-                    Taskbar_Background = _Def.Taskbar_Background
-                    StartMenu_Accent = _Def.StartMenu_Accent
-                    Titlebar_Active = _Def.Titlebar_Active
-                    Titlebar_Inactive = _Def.Titlebar_Inactive
-                    WinMode_Light = _Def.WinMode_Light
-                    AppMode_Light = _Def.AppMode_Light
-                    Transparency = _Def.Transparency
-                    ApplyAccentonTaskbar = _Def.ApplyAccentonTaskbar
-                    ApplyAccentonTitlebars = _Def.ApplyAccentonTitlebars
+                    Windows10x.Color_Index0 = _Def.Windows10x.Color_Index0
+                    Windows10x.Color_Index1 = _Def.Windows10x.Color_Index1
+                    Windows10x.Color_Index2 = _Def.Windows10x.Color_Index2
+                    Windows10x.Color_Index3 = _Def.Windows10x.Color_Index3
+                    Windows10x.Color_Index4 = _Def.Windows10x.Color_Index4
+                    Windows10x.Color_Index5 = _Def.Windows10x.Color_Index5
+                    Windows10x.Color_Index6 = _Def.Windows10x.Color_Index6
+                    Windows10x.StartMenu_Accent = _Def.Windows10x.StartMenu_Accent
+                    Windows10x.Titlebar_Active = _Def.Windows10x.Titlebar_Active
+                    Windows10x.Titlebar_Inactive = _Def.Windows10x.Titlebar_Inactive
+                    Windows10x.WinMode_Light = _Def.Windows10x.WinMode_Light
+                    Windows10x.AppMode_Light = _Def.Windows10x.AppMode_Light
+                    Windows10x.Transparency = _Def.Windows10x.Transparency
+                    Windows10x.ApplyAccentonTaskbar = _Def.Windows10x.ApplyAccentonTaskbar
+                    Windows10x.ApplyAccentonTitlebars = _Def.Windows10x.ApplyAccentonTitlebars
                 End If
 
 #End Region
@@ -1084,46 +1175,46 @@ Public Class CP : Implements IDisposable
                     Dim y As Object
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.Aero_ColorizationColor.ToArgb)
-                        Aero_ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.Windows7.ColorizationColor.ToArgb)
+                        Windows7.ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
                     Catch
-                        Aero_ColorizationColor = Def.Aero_ColorizationColor
+                        Windows7.ColorizationColor = Def.Windows7.ColorizationColor
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.Aero_ColorizationColorBalance)
-                        Aero_ColorizationColorBalance = y
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.Windows7.ColorizationColorBalance)
+                        Windows7.ColorizationColorBalance = y
                     Catch
-                        Aero_ColorizationColorBalance = Def.Aero_ColorizationColorBalance
+                        Windows7.ColorizationColorBalance = Def.Windows7.ColorizationColorBalance
                     End Try
 
                     If Not My.W8 Then
                         Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.Aero_ColorizationAfterglow.ToArgb)
-                            Aero_ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.Windows7.ColorizationAfterglow.ToArgb)
+                            Windows7.ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
                         Catch
-                            Aero_ColorizationAfterglow = Def.Aero_ColorizationAfterglow
+                            Windows7.ColorizationAfterglow = Def.Windows7.ColorizationAfterglow
                         End Try
 
                         Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.Aero_ColorizationAfterglowBalance)
-                            Aero_ColorizationAfterglowBalance = y
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.Windows7.ColorizationAfterglowBalance)
+                            Windows7.ColorizationAfterglowBalance = y
                         Catch
-                            Aero_ColorizationAfterglowBalance = Def.Aero_ColorizationAfterglowBalance
+                            Windows7.ColorizationAfterglowBalance = Def.Windows7.ColorizationAfterglowBalance
                         End Try
 
                         Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.Aero_ColorizationBlurBalance)
-                            Aero_ColorizationBlurBalance = y
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.Windows7.ColorizationBlurBalance)
+                            Windows7.ColorizationBlurBalance = y
                         Catch
-                            Aero_ColorizationBlurBalance = Def.Aero_ColorizationBlurBalance
+                            Windows7.ColorizationBlurBalance = Def.Windows7.ColorizationBlurBalance
                         End Try
 
                         Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.Aero_ColorizationGlassReflectionIntensity)
-                            Aero_ColorizationGlassReflectionIntensity = y
+                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.Windows7.ColorizationGlassReflectionIntensity)
+                            Windows7.ColorizationGlassReflectionIntensity = y
                         Catch
-                            Aero_ColorizationGlassReflectionIntensity = Def.Aero_ColorizationGlassReflectionIntensity
+                            Windows7.ColorizationGlassReflectionIntensity = Def.Windows7.ColorizationGlassReflectionIntensity
                         End Try
 
                         Dim Com, Opaque As Boolean
@@ -1146,37 +1237,37 @@ Public Class CP : Implements IDisposable
                         End Try
 
                         If Classic Then
-                            Aero_Theme = AeroTheme.Classic
+                            Windows7.Theme = AeroTheme.Classic
                         ElseIf Com Then
-                            If Not Opaque Then Aero_Theme = AeroTheme.Aero Else Aero_Theme = AeroTheme.AeroOpaque
+                            If Not Opaque Then Windows7.Theme = AeroTheme.Aero Else Windows7.Theme = AeroTheme.AeroOpaque
                         Else
-                            Aero_Theme = AeroTheme.Basic
+                            Windows7.Theme = AeroTheme.Basic
                         End If
 
                     End If
 
                     Try
-                        Aero_EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.Aero_EnableAeroPeek)
+                        Windows7.EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.Windows7.EnableAeroPeek)
                     Catch
-                        Aero_EnableAeroPeek = Def.Aero_EnableAeroPeek
+                        Windows7.EnableAeroPeek = Def.Windows7.EnableAeroPeek
                     End Try
 
                     Try
-                        Aero_AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.Aero_AlwaysHibernateThumbnails)
+                        Windows7.AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.Windows7.AlwaysHibernateThumbnails)
                     Catch
-                        Aero_AlwaysHibernateThumbnails = Def.Aero_AlwaysHibernateThumbnails
+                        Windows7.AlwaysHibernateThumbnails = Def.Windows7.AlwaysHibernateThumbnails
                     End Try
 
                 Else
-                    Aero_ColorizationColor = _Def.Aero_ColorizationColor
-                    Aero_ColorizationColorBalance = _Def.Aero_ColorizationColorBalance
-                    Aero_ColorizationAfterglow = _Def.Aero_ColorizationAfterglow
-                    Aero_ColorizationAfterglowBalance = _Def.Aero_ColorizationAfterglowBalance
-                    Aero_ColorizationBlurBalance = _Def.Aero_ColorizationBlurBalance
-                    Aero_ColorizationGlassReflectionIntensity = _Def.Aero_ColorizationGlassReflectionIntensity
-                    Aero_Theme = _Def.Aero_Theme
-                    Aero_EnableAeroPeek = _Def.Aero_EnableAeroPeek
-                    Aero_AlwaysHibernateThumbnails = _Def.Aero_AlwaysHibernateThumbnails
+                    Windows7.ColorizationColor = _Def.Windows7.ColorizationColor
+                    Windows7.ColorizationColorBalance = _Def.Windows7.ColorizationColorBalance
+                    Windows7.ColorizationAfterglow = _Def.Windows7.ColorizationAfterglow
+                    Windows7.ColorizationAfterglowBalance = _Def.Windows7.ColorizationAfterglowBalance
+                    Windows7.ColorizationBlurBalance = _Def.Windows7.ColorizationBlurBalance
+                    Windows7.ColorizationGlassReflectionIntensity = _Def.Windows7.ColorizationGlassReflectionIntensity
+                    Windows7.Theme = _Def.Windows7.Theme
+                    Windows7.EnableAeroPeek = _Def.Windows7.EnableAeroPeek
+                    Windows7.AlwaysHibernateThumbnails = _Def.Windows7.AlwaysHibernateThumbnails
                 End If
 
 #End Region
@@ -1622,35 +1713,35 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Metrics"
-                Metrics_BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", -15) / -15
+                WinMetrics.BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", -15) / -15
 
-                Metrics_CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", -330) / -15
+                WinMetrics.CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", -330) / -15
 
-                Metrics_CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", -330) / -15
+                WinMetrics.CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", -330) / -15
 
-                Metrics_IconSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", -1125) / -15
+                WinMetrics.IconSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", -1125) / -15
 
-                Metrics_IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", -1125) / -15
+                WinMetrics.IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", -1125) / -15
 
-                Metrics_MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", -285) / -15
+                WinMetrics.MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", -285) / -15
 
-                Metrics_MenuWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", -285) / -15
+                WinMetrics.MenuWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", -285) / -15
 
-                Metrics_MinAnimate = If(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", 1) = 1, True, False)
+                WinMetrics.MinAnimate = If(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", 1) = 1, True, False)
 
-                Metrics_PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", -60) / -15
+                WinMetrics.PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", -60) / -15
 
-                Metrics_ScrollHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", -255) / -15
+                WinMetrics.ScrollHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", -255) / -15
 
-                Metrics_ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", -255) / -15
+                WinMetrics.ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", -255) / -15
 
-                Metrics_SmCaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", -330) / -15
+                WinMetrics.SmCaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", -330) / -15
 
-                Metrics_SmCaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", -330) / -15
+                WinMetrics.SmCaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", -330) / -15
 
-                Metrics_ShellIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", 32)
+                WinMetrics.ShellIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", 32)
 
-                Metrics_DesktopIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", 32)
+                WinMetrics.DesktopIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", 32)
 #End Region
 
 #Region "Fonts"
@@ -2817,71 +2908,71 @@ Public Class CP : Implements IDisposable
 
                 For Each lin As String In txt
 #Region "Personal Info"
-                    If lin.StartsWith("*Created from App Version= ") Then AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
-                    If lin.StartsWith("*Palette Name= ") Then PaletteName = lin.Remove(0, "*Palette Name= ".Count)
-                    If lin.StartsWith("*Palette Description= ") Then PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If lin.StartsWith("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
-                    If lin.StartsWith("*Author= ") Then Author = lin.Remove(0, "*Author= ".Count)
-                    If lin.StartsWith("*AuthorSocialMediaLink= ") Then AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If lin.StartsWith("*Palette File Version= ") Then PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*Created from App Version= ") Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
+                    If lin.StartsWith("*Palette Name= ") Then Info.PaletteName = lin.Remove(0, "*Palette Name= ".Count)
+                    If lin.StartsWith("*Palette Description= ") Then Info.PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+                    If lin.StartsWith("*Palette File Version= ") Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*Author= ") Then Info.Author = lin.Remove(0, "*Author= ".Count)
+                    If lin.StartsWith("*AuthorSocialMediaLink= ") Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
+                    If lin.StartsWith("*Palette File Version= ") Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
 #Region "Modern Windows"
 
-                    If lin.StartsWith("*WinMode_Light= ") Then WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
-                    If lin.StartsWith("*AppMode_Light= ") Then AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
-                    If lin.StartsWith("*Transparency= ") Then Transparency = lin.Remove(0, "*Transparency= ".Count)
-                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
+                    If lin.StartsWith("*WinMode_Light= ") Then Windows10x.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
+                    If lin.StartsWith("*AppMode_Light= ") Then Windows10x.AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
+                    If lin.StartsWith("*Transparency= ") Then Windows10x.Transparency = lin.Remove(0, "*Transparency= ".Count)
+                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then Windows10x.ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                     If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then
                         Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
                             Case "false"
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
                             Case "true"
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
                             Case Else
                                 Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
                                     Case 0
-                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
                                     Case 1
-                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
                                     Case 2
-                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
 
                                     Case Else
-                                        ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                                 End Select
 
 
                         End Select
                     End If
-                    If lin.StartsWith("*Titlebar_Active= ") Then Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Titlebar_Inactive= ") Then Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then ActionCenter_AppsLinks = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
-                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Taskbar_Icon_Underline = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
-                    If lin.StartsWith("*StartButton_Hover= ") Then StartButton_Hover = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
-                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then SettingsIconsAndLinks = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
-                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then StartMenuBackground_ActiveTaskbarButton = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
-                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then StartListFolders_TaskbarFront = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
-                    If lin.StartsWith("*Taskbar_Background= ") Then Taskbar_Background = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
-                    If lin.StartsWith("*StartMenu_Accent= ") Then StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Undefined= ") Then UWP_Undefined = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
+                    If lin.StartsWith("*Titlebar_Active= ") Then Windows10x.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
+                    If lin.StartsWith("*Titlebar_Inactive= ") Then Windows10x.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
+                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then Windows10x.Color_Index0 = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
+                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Windows10x.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
+                    If lin.StartsWith("*StartButton_Hover= ") Then Windows10x.Color_Index2 = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
+                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then Windows10x.Color_Index3 = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
+                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then Windows10x.Color_Index4 = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
+                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then Windows10x.Color_Index5 = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
+                    If lin.StartsWith("*Taskbar_Background= ") Then Windows10x.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
+                    If lin.StartsWith("*StartMenu_Accent= ") Then Windows10x.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                    If lin.StartsWith("*Undefined= ") Then Windows10x.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
 
 #End Region
 
 #Region "Aero"
-                    If lin.StartsWith("*Aero_ColorizationColor= ") Then Aero_ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationAfterglow= ") Then Aero_ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationColorBalance= ") Then Aero_ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationAfterglowBalance= ") Then Aero_ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationBlurBalance= ") Then Aero_ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ") Then Aero_ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
-                    If lin.StartsWith("*Aero_EnableAeroPeek= ") Then Aero_EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
-                    If lin.StartsWith("*Aero_AlwaysHibernateThumbnails= ") Then Aero_AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
-                    If lin.StartsWith("*Aero_Theme= ") Then Aero_Theme = lin.Remove(0, "*Aero_Theme= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationColor= ") Then Windows7.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
+                    If lin.StartsWith("*Aero_ColorizationAfterglow= ") Then Windows7.ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
+                    If lin.StartsWith("*Aero_ColorizationColorBalance= ") Then Windows7.ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationAfterglowBalance= ") Then Windows7.ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationBlurBalance= ") Then Windows7.ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
+                    If lin.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ") Then Windows7.ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
+                    If lin.StartsWith("*Aero_EnableAeroPeek= ") Then Windows7.EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
+                    If lin.StartsWith("*Aero_AlwaysHibernateThumbnails= ") Then Windows7.AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
+                    If lin.StartsWith("*Aero_Theme= ") Then Windows7.Theme = lin.Remove(0, "*Aero_Theme= ".Count)
 #End Region
 
 #Region "Metro"
@@ -3384,41 +3475,41 @@ Public Class CP : Implements IDisposable
             Case Mode.Init
 #Region "Init"
 #Region "Personal Info"
-                Author = Environment.UserName
-                AppVersion = My.Application.Info.Version.ToString
-                PaletteVersion = "1.0"
-                PaletteName = "Init"
+                Info.Author = Environment.UserName
+                Info.AppVersion = My.Application.Info.Version.ToString
+                Info.PaletteVersion = "1.0"
+                Info.PaletteName = "Init"
 #End Region
 
 #Region "Modern Windows"
-                Titlebar_Active = Color.Black
-                Titlebar_Inactive = Color.Black
-                StartMenu_Accent = Color.Black
-                StartButton_Hover = Color.Black
-                Taskbar_Background = Color.Black
-                Taskbar_Icon_Underline = Color.Black
-                StartMenuBackground_ActiveTaskbarButton = Color.Black
-                StartListFolders_TaskbarFront = Color.Black
-                SettingsIconsAndLinks = Color.Black
-                ActionCenter_AppsLinks = Color.Black
-                UWP_Undefined = Color.Black
-                WinMode_Light = False
-                AppMode_Light = False
-                Transparency = True
-                ApplyAccentonTitlebars = False
-                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                Windows10x.Titlebar_Active = Color.Black
+                Windows10x.Titlebar_Inactive = Color.Black
+                Windows10x.StartMenu_Accent = Color.Black
+                Windows10x.Color_Index2 = Color.Black
+                Windows10x.Color_Index6 = Color.Black
+                Windows10x.Color_Index1 = Color.Black
+                Windows10x.Color_Index4 = Color.Black
+                Windows10x.Color_Index5 = Color.Black
+                Windows10x.Color_Index3 = Color.Black
+                Windows10x.Color_Index0 = Color.Black
+                Windows10x.Color_Index7 = Color.Black
+                Windows10x.WinMode_Light = False
+                Windows10x.AppMode_Light = False
+                Windows10x.Transparency = True
+                Windows10x.ApplyAccentonTitlebars = False
+                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 #End Region
 
 #Region "Aero"
-                Aero_ColorizationColor = Color.Black
-                Aero_ColorizationAfterglow = Color.Black
-                Aero_EnableAeroPeek = True
-                Aero_AlwaysHibernateThumbnails = False
-                Aero_ColorizationColorBalance = 8
-                Aero_ColorizationAfterglowBalance = 31
-                Aero_ColorizationBlurBalance = 31
-                Aero_ColorizationGlassReflectionIntensity = 50
-                Aero_Theme = AeroTheme.Aero
+                Windows7.ColorizationColor = Color.Black
+                Windows7.ColorizationAfterglow = Color.Black
+                Windows7.EnableAeroPeek = True
+                Windows7.AlwaysHibernateThumbnails = False
+                Windows7.ColorizationColorBalance = 8
+                Windows7.ColorizationAfterglowBalance = 31
+                Windows7.ColorizationBlurBalance = 31
+                Windows7.ColorizationGlassReflectionIntensity = 50
+                Windows7.Theme = AeroTheme.Aero
 #End Region
 
 #Region "Metro"
@@ -3918,7 +4009,7 @@ Public Class CP : Implements IDisposable
                 If My.W7 Or My.W8 Then RefreshDWM(Me)
 
 
-                Apply_WindowsMetrics_Fonts()    'Windows Metrics & Fonts
+                Apply_WindowsWinMetrics()    'Windows Metrics & Fonts
 
 
                 'Windows Terminals/Consoles
@@ -3948,54 +4039,54 @@ Public Class CP : Implements IDisposable
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add("<WinPaletter - Programmed by Abdelrhman_AK>")
-                tx.Add("*Created from App Version= " & AppVersion & vbCrLf)
+                tx.Add("*Created from App Version= " & Info.AppVersion & vbCrLf)
 
 #Region "General Info"
                 tx.Add("<General>")
-                tx.Add("*Palette Name= " & PaletteName)
-                If String.IsNullOrWhiteSpace(PaletteDescription) Then
+                tx.Add("*Palette Name= " & Info.PaletteName)
+                If String.IsNullOrWhiteSpace(Info.PaletteDescription) Then
                     tx.Add("*Palette Description= ")
                 Else
-                    tx.Add("*Palette Description= " & PaletteDescription.Replace(vbCrLf, "<br>"))
+                    tx.Add("*Palette Description= " & Info.PaletteDescription.Replace(vbCrLf, "<br>"))
                 End If
-                tx.Add("*Palette File Version= " & PaletteVersion)
-                tx.Add("*Author= " & Author)
-                tx.Add("*AuthorSocialMediaLink= " & AuthorSocialMediaLink)
+                tx.Add("*Palette File Version= " & Info.PaletteVersion)
+                tx.Add("*Author= " & Info.Author)
+                tx.Add("*AuthorSocialMediaLink= " & Info.AuthorSocialMediaLink)
                 tx.Add("</General>" & vbCrLf)
 #End Region
 
 #Region "Modern Windows"
                 tx.Add("<ModernWindows>")
-                tx.Add("*WinMode_Light= " & WinMode_Light)
-                tx.Add("*AppMode_Light= " & AppMode_Light)
-                tx.Add("*Transparency= " & Transparency)
-                tx.Add("*AccentColorOnTitlebarAndBorders= " & ApplyAccentonTitlebars)
-                tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " & ApplyAccentonTaskbar)
-                tx.Add("*Titlebar_Active= " & Titlebar_Active.ToArgb)
-                tx.Add("*Titlebar_Inactive= " & Titlebar_Inactive.ToArgb)
-                tx.Add("*ActionCenter_AppsLinks= " & ActionCenter_AppsLinks.ToArgb)
-                tx.Add("*Taskbar_Icon_Underline= " & Taskbar_Icon_Underline.ToArgb)
-                tx.Add("*StartButton_Hover= " & StartButton_Hover.ToArgb)
-                tx.Add("*SettingsIconsAndLinks= " & SettingsIconsAndLinks.ToArgb)
-                tx.Add("*StartMenuBackground_ActiveTaskbarButton= " & StartMenuBackground_ActiveTaskbarButton.ToArgb)
-                tx.Add("*StartListFolders_TaskbarFront= " & StartListFolders_TaskbarFront.ToArgb)
-                tx.Add("*Taskbar_Background= " & Taskbar_Background.ToArgb)
-                tx.Add("*StartMenu_Accent= " & StartMenu_Accent.ToArgb)
-                tx.Add("*Undefined= " & UWP_Undefined.ToArgb)
+                tx.Add("*WinMode_Light= " & Windows10x.WinMode_Light)
+                tx.Add("*AppMode_Light= " & Windows10x.AppMode_Light)
+                tx.Add("*Transparency= " & Windows10x.Transparency)
+                tx.Add("*AccentColorOnTitlebarAndBorders= " & Windows10x.ApplyAccentonTitlebars)
+                tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " & Windows10x.ApplyAccentonTaskbar)
+                tx.Add("*Titlebar_Active= " & Windows10x.Titlebar_Active.ToArgb)
+                tx.Add("*Titlebar_Inactive= " & Windows10x.Titlebar_Inactive.ToArgb)
+                tx.Add("*ActionCenter_AppsLinks= " & Windows10x.Color_Index0.ToArgb)
+                tx.Add("*Taskbar_Icon_Underline= " & Windows10x.Color_Index1.ToArgb)
+                tx.Add("*StartButton_Hover= " & Windows10x.Color_Index2.ToArgb)
+                tx.Add("*SettingsIconsAndLinks= " & Windows10x.Color_Index3.ToArgb)
+                tx.Add("StartMenuBackground_ActiveTaskbarButton= " & Windows10x.Color_Index4.ToArgb)
+                tx.Add("*StartListFolders_TaskbarFront= " & Windows10x.Color_Index5.ToArgb)
+                tx.Add("*Taskbar_Background= " & Windows10x.Color_Index6.ToArgb)
+                tx.Add("*StartMenu_Accent= " & Windows10x.StartMenu_Accent.ToArgb)
+                tx.Add("*Undefined= " & Windows10x.Color_Index7.ToArgb)
                 tx.Add("</ModernWindows>" & vbCrLf)
 #End Region
 
 #Region "Aero"
                 tx.Add("<Aero>")
-                tx.Add("*Aero_ColorizationColor= " & Aero_ColorizationColor.ToArgb)
-                tx.Add("*Aero_ColorizationAfterglow= " & Aero_ColorizationAfterglow.ToArgb)
-                tx.Add("*Aero_ColorizationColorBalance= " & Aero_ColorizationColorBalance)
-                tx.Add("*Aero_ColorizationAfterglowBalance= " & Aero_ColorizationAfterglowBalance)
-                tx.Add("*Aero_ColorizationBlurBalance= " & Aero_ColorizationBlurBalance)
-                tx.Add("*Aero_ColorizationGlassReflectionIntensity= " & Aero_ColorizationGlassReflectionIntensity)
-                tx.Add("*Aero_EnableAeroPeek= " & Aero_EnableAeroPeek)
-                tx.Add("*Aero_AlwaysHibernateThumbnails= " & Aero_AlwaysHibernateThumbnails)
-                tx.Add("*Aero_Theme= " & Aero_Theme)
+                tx.Add("*Windows7.ColorizationColor= " & Windows7.ColorizationColor.ToArgb)
+                tx.Add("*Windows7.ColorizationAfterglow= " & Windows7.ColorizationAfterglow.ToArgb)
+                tx.Add("*Windows7.ColorizationColorBalance= " & Windows7.ColorizationColorBalance)
+                tx.Add("*Windows7.ColorizationAfterglowBalance= " & Windows7.ColorizationAfterglowBalance)
+                tx.Add("*Windows7.ColorizationBlurBalance= " & Windows7.ColorizationBlurBalance)
+                tx.Add("*Windows7.ColorizationGlassReflectionIntensity= " & Windows7.ColorizationGlassReflectionIntensity)
+                tx.Add("*Windows7.EnableAeroPeek= " & Windows7.EnableAeroPeek)
+                tx.Add("*Windows7.AlwaysHibernateThumbnails= " & Windows7.AlwaysHibernateThumbnails)
+                tx.Add("*Windows7.Theme= " & Windows7.Theme)
                 tx.Add("</Aero>" & vbCrLf)
 #End Region
 
@@ -4498,16 +4589,16 @@ Public Class CP : Implements IDisposable
     Public Sub Apply_ModernColors()
         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
-        Dim Colors As Byte() = {(ActionCenter_AppsLinks).R, (ActionCenter_AppsLinks).G, (ActionCenter_AppsLinks).B, (ActionCenter_AppsLinks).A _
-                         , (Taskbar_Icon_Underline).R, (Taskbar_Icon_Underline).G, (Taskbar_Icon_Underline).B, (Taskbar_Icon_Underline).A _
-                         , (StartButton_Hover).R, (StartButton_Hover).G, (StartButton_Hover).B, (StartButton_Hover).A _
-                         , (SettingsIconsAndLinks).R, (SettingsIconsAndLinks).G, (SettingsIconsAndLinks).B, (SettingsIconsAndLinks).A _
-                         , (StartMenuBackground_ActiveTaskbarButton).R, (StartMenuBackground_ActiveTaskbarButton).G, (StartMenuBackground_ActiveTaskbarButton).B, (StartMenuBackground_ActiveTaskbarButton).A _
-                         , (StartListFolders_TaskbarFront).R, (StartListFolders_TaskbarFront).G, (StartListFolders_TaskbarFront).B, (StartListFolders_TaskbarFront).A _
-                         , (Taskbar_Background).R, (Taskbar_Background).G, (Taskbar_Background).B, (Taskbar_Background).A _
-                         , (UWP_Undefined).R, (UWP_Undefined).G, (UWP_Undefined).B, (UWP_Undefined).A}
+        Dim Colors As Byte() = {(Windows10x.Color_Index0).R, (Windows10x.Color_Index0).G, (Windows10x.Color_Index0).B, (Windows10x.Color_Index0).A _
+                         , (Windows10x.Color_Index1).R, (Windows10x.Color_Index1).G, (Windows10x.Color_Index1).B, (Windows10x.Color_Index1).A _
+                         , (Windows10x.Color_Index2).R, (Windows10x.Color_Index2).G, (Windows10x.Color_Index2).B, (Windows10x.Color_Index2).A _
+                         , (Windows10x.Color_Index3).R, (Windows10x.Color_Index3).G, (Windows10x.Color_Index3).B, (Windows10x.Color_Index3).A _
+                         , (Windows10x.Color_Index4).R, (Windows10x.Color_Index4).G, (Windows10x.Color_Index4).B, (Windows10x.Color_Index4).A _
+                         , (Windows10x.Color_Index5).R, (Windows10x.Color_Index5).G, (Windows10x.Color_Index5).B, (Windows10x.Color_Index5).A _
+                         , (Windows10x.Color_Index6).R, (Windows10x.Color_Index6).G, (Windows10x.Color_Index6).B, (Windows10x.Color_Index6).A _
+                         , (Windows10x.Color_Index7).R, (Windows10x.Color_Index7).G, (Windows10x.Color_Index7).B, (Windows10x.Color_Index7).A}
 
-        Select Case ApplyAccentonTaskbar
+        Select Case Windows10x.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
 
@@ -4521,19 +4612,19 @@ Public Class CP : Implements IDisposable
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
         End Select
 
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Windows10x.Titlebar_Active.ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(Windows10x.ApplyAccentonTitlebars, 1, 0))
         EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(StartMenu_Accent).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Windows10x.StartMenu_Accent).ToArgb)
 
 
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Windows10x.Titlebar_Active).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Windows10x.Titlebar_Active).ToArgb)
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Windows10x.Titlebar_Inactive).ToArgb)
 
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
-        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(Windows10x.WinMode_Light, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(Windows10x.AppMode_Light, 1, 0))
+        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Windows10x.Transparency, 1, 0))
 
     End Sub
 
@@ -4542,7 +4633,7 @@ Public Class CP : Implements IDisposable
 
         Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
 
-        Select Case Aero_Theme
+        Select Case Windows7.Theme
             Case AeroTheme.Aero
                 NativeMethods.Uxtheme.EnableTheming(1)
                 NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
@@ -4575,16 +4666,16 @@ Public Class CP : Implements IDisposable
 
         SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
 
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Aero_ColorizationAfterglow.ToArgb)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Aero_ColorizationAfterglowBalance)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Aero_ColorizationBlurBalance)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Aero_ColorizationGlassReflectionIntensity)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Windows7.ColorizationAfterglow.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Windows7.ColorizationAfterglowBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Windows7.ColorizationBlurBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Windows7.ColorizationGlassReflectionIntensity)
 
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Windows7.ColorizationColor.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Windows7.ColorizationColorBalance)
 
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Aero_EnableAeroPeek, 1, 0))
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Aero_AlwaysHibernateThumbnails, 1, 0))
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(Windows7.EnableAeroPeek, 1, 0))
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(Windows7.AlwaysHibernateThumbnails, 1, 0))
         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
     End Sub
 
@@ -4607,8 +4698,8 @@ Public Class CP : Implements IDisposable
 
         SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingColorsAndTweaks, f)
 
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Aero_ColorizationColor.ToArgb)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Aero_ColorizationColorBalance)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Windows7.ColorizationColor.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Windows7.ColorizationColorBalance)
 
         EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
         EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(Metro_StartColor).ToArgb)
@@ -5121,7 +5212,7 @@ Public Class CP : Implements IDisposable
         EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Win32.Desktop.R, Win32.Desktop.G, Win32.Desktop.B), False, True)
     End Sub
 
-    Public Sub Apply_WindowsMetrics_Fonts()
+    Public Sub Apply_WindowsWinMetrics()
 #Region "Reading from WinAPI"
         Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
         Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
@@ -5149,25 +5240,25 @@ Public Class CP : Implements IDisposable
         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), True)
         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), True)
 
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", Metrics_BorderWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", Metrics_CaptionHeight * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", Metrics_CaptionWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", Metrics_IconSpacing * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", Metrics_IconVerticalSpacing * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", Metrics_MenuHeight * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", Metrics_MenuWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(Metrics_MinAnimate, 1, 0), False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", Metrics_PaddedBorderWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", Metrics_ScrollHeight * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", Metrics_ScrollWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", Metrics_SmCaptionHeight * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", Metrics_SmCaptionWidth * -15, False, True)
-        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", Metrics_ShellIconSize, False, True)
-        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", Metrics_DesktopIconSize, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", WinMetrics.BorderWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", WinMetrics.CaptionHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", WinMetrics.CaptionWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", WinMetrics.IconSpacing * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", WinMetrics.IconVerticalSpacing * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", WinMetrics.MenuHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", WinMetrics.MenuWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(WinMetrics.MinAnimate, 1, 0), False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", WinMetrics.PaddedBorderWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", WinMetrics.ScrollHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", WinMetrics.ScrollWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", WinMetrics.SmCaptionHeight * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", WinMetrics.SmCaptionWidth * -15, False, True)
+        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", WinMetrics.ShellIconSize, False, True)
+        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", WinMetrics.DesktopIconSize, False, True)
 #End Region
 
 #Region "Writing by WinAPI"
-        anim.IMinAnimate = If(Metrics_MinAnimate, 1, 0)
+        anim.IMinAnimate = If(WinMetrics.MinAnimate, 1, 0)
 
         With NCM
             .lfCaptionFont = lfCaptionFont        'Requires LogOff
@@ -5176,21 +5267,21 @@ Public Class CP : Implements IDisposable
             .lfMenuFont = lfMenuFont
             .lfMessageFont = lfMessageFont
 
-            .iBorderWidth = Metrics_BorderWidth
-            .iScrollWidth = Metrics_ScrollWidth
-            .iScrollHeight = Metrics_ScrollHeight
-            .iCaptionWidth = Metrics_CaptionWidth
-            .iCaptionHeight = Metrics_CaptionHeight
-            .iSMCaptionWidth = Metrics_SmCaptionWidth
-            .iSMCaptionHeight = Metrics_SmCaptionHeight
-            .iMenuWidth = Metrics_MenuWidth
-            .iMenuHeight = Metrics_MenuHeight
-            .iPaddedBorderWidth = Metrics_PaddedBorderWidth
+            .iBorderWidth = WinMetrics.BorderWidth
+            .iScrollWidth = WinMetrics.ScrollWidth
+            .iScrollHeight = WinMetrics.ScrollHeight
+            .iCaptionWidth = WinMetrics.CaptionWidth
+            .iCaptionHeight = WinMetrics.CaptionHeight
+            .iSMCaptionWidth = WinMetrics.SmCaptionWidth
+            .iSMCaptionHeight = WinMetrics.SmCaptionHeight
+            .iMenuWidth = WinMetrics.MenuWidth
+            .iMenuHeight = WinMetrics.MenuHeight
+            .iPaddedBorderWidth = WinMetrics.PaddedBorderWidth
         End With
 
         With ICO
-            .iHorzSpacing = Metrics_IconSpacing
-            .iVertSpacing = Metrics_IconVerticalSpacing
+            .iHorzSpacing = WinMetrics.IconSpacing
+            .iVertSpacing = WinMetrics.IconVerticalSpacing
             .lfFont = lfIconFont
         End With
 
@@ -6369,7 +6460,11 @@ Public Class CP : Implements IDisposable
     Public Overrides Function Equals(obj As Object) As Boolean
         Dim _Equals As Boolean = True
 
-        'If Marshal.SizeOf(Win32UI) <> Marshal.SizeOf(obj.Win32UI) Then _Equals = False
+        If Info <> DirectCast(obj, CP).Info Then _Equals = False
+        If Windows10x <> DirectCast(obj, CP).Windows10x Then _Equals = False
+        If Windows7 <> DirectCast(obj, CP).Windows7 Then _Equals = False
+        If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
+        If WinMetrics <> DirectCast(obj, CP).WinMetrics Then _Equals = False
 
         Dim type1 As Type = [GetType]() : Dim properties1 As System.Reflection.PropertyInfo() = type1.GetProperties()
         Dim type2 As Type = obj.[GetType]() : Dim properties2 As System.Reflection.PropertyInfo() = type2.GetProperties()
