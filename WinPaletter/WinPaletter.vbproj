@@ -208,8 +208,6 @@
     <Content Include="Resources\StartBtn_10Light.png" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
-    <Content Include="Resources\Win7BasicActive.png" />
-    <Content Include="Resources\Win7BasicInactive.png" />
     <Content Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win7ORB.png" />
     <None Include="Resources\Win7Sides.png" />

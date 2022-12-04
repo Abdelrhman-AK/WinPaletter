@@ -7,15 +7,15 @@ Public Class LogonUI
     End Sub
 
     Sub Load_FromCP(ByVal ColorPalette As CP)
-        LogonUI_Acrylic_Toggle.Checked = Not ColorPalette.LogonUI_DisableAcrylicBackgroundOnLogon
-        LogonUI_Background_Toggle.Checked = Not ColorPalette.LogonUI_DisableLogonBackgroundImage
-        LogonUI_Lockscreen_Toggle.Checked = Not ColorPalette.LogonUI_NoLockScreen
+        LogonUI_Acrylic_Toggle.Checked = Not ColorPalette.LogonUI10x.DisableAcrylicBackgroundOnLogon
+        LogonUI_Background_Toggle.Checked = Not ColorPalette.LogonUI10x.DisableLogonBackgroundImage
+        LogonUI_Lockscreen_Toggle.Checked = Not ColorPalette.LogonUI10x.NoLockScreen
     End Sub
 
     Sub Save(ByVal ColorPalette As CP)
-        ColorPalette.LogonUI_DisableAcrylicBackgroundOnLogon = Not LogonUI_Acrylic_Toggle.Checked
-        ColorPalette.LogonUI_DisableLogonBackgroundImage = Not LogonUI_Background_Toggle.Checked
-        ColorPalette.LogonUI_NoLockScreen = Not LogonUI_Lockscreen_Toggle.Checked
+        ColorPalette.LogonUI10x.DisableAcrylicBackgroundOnLogon = Not LogonUI_Acrylic_Toggle.Checked
+        ColorPalette.LogonUI10x.DisableLogonBackgroundImage = Not LogonUI_Background_Toggle.Checked
+        ColorPalette.LogonUI10x.NoLockScreen = Not LogonUI_Lockscreen_Toggle.Checked
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

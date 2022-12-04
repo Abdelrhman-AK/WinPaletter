@@ -517,7 +517,7 @@ Public Class MainFrm
                 ApplyMetroStartToButton([CP])
                 ApplyBackLogonUI([CP])
 
-                Select Case [CP].Metro_Theme
+                Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Win8Lite = False
                         XenonWindow2.Win8Lite = False
@@ -692,9 +692,9 @@ Public Class MainFrm
     End Sub
 
     Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
-        XenonWindow.Metrics_BorderWidth = CP.WinMetrics.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = CP.WinMetrics.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = CP.WinMetrics.PaddedBorderWidth
+        XenonWindow.Metrics_BorderWidth = CP.WinMetrics_Fonts.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = CP.WinMetrics_Fonts.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = CP.WinMetrics_Fonts.PaddedBorderWidth
         XenonWindow.Refresh()
     End Sub
 
@@ -918,7 +918,7 @@ Public Class MainFrm
             End Select
 
         ElseIf PreviewConfig = WinVer.Eight Then
-            Select Case ColorPalette.Metro_Theme
+            Select Case ColorPalette.Windows8.Theme
                 Case CP.AeroTheme.Aero
                     XenonRadioImage1.Checked = True
 
@@ -930,10 +930,10 @@ Public Class MainFrm
         ColorizationColor8_pick.BackColor = ColorPalette.Windows7.ColorizationColor
         ColorizationBalance8_track.Value = ColorPalette.Windows7.ColorizationColorBalance
 
-        start8_pick.BackColor = ColorPalette.Metro_StartColor
-        accent8_pick.BackColor = ColorPalette.Metro_AccentColor
-        personalcls8_background_pick.BackColor = ColorPalette.Metro_PersonalColors_Background
-        personalcolor8accent_pick.BackColor = ColorPalette.Metro_PersonalColors_Accent
+        start8_pick.BackColor = ColorPalette.Windows8.StartColor
+        accent8_pick.BackColor = ColorPalette.Windows8.AccentColor
+        personalcls8_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
+        personalcolor8accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
 
         ApplyMetroStartToButton(ColorPalette)
         ApplyBackLogonUI(ColorPalette)
@@ -969,14 +969,14 @@ Public Class MainFrm
         Aero_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
         Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
         ColorizationColor8_pick.DefaultColor = DefCP.Windows7.ColorizationColor
-        start8_pick.DefaultColor = DefCP.Metro_StartColor
-        accent8_pick.DefaultColor = DefCP.Metro_AccentColor
-        personalcls8_background_pick.DefaultColor = DefCP.Metro_PersonalColors_Background
-        personalcolor8accent_pick.DefaultColor = DefCP.Metro_PersonalColors_Accent
+        start8_pick.DefaultColor = DefCP.Windows8.StartColor
+        accent8_pick.DefaultColor = DefCP.Windows8.AccentColor
+        personalcls8_background_pick.DefaultColor = DefCP.Windows8.PersonalColors_Background
+        personalcolor8accent_pick.DefaultColor = DefCP.Windows8.PersonalColors_Accent
     End Sub
 
     Sub ApplyMetroStartToButton(ColorPalette As CP)
-        Select Case ColorPalette.Metro_Start
+        Select Case ColorPalette.Windows8.Start
             Case 1
                 XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
             Case 2
@@ -1014,7 +1014,7 @@ Public Class MainFrm
             Case 18
                 XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
             Case 19
-                XenonButton14.Image = ColorToBitmap(ColorPalette.Metro_PersonalColors_Background, New Size(48, 48))
+                XenonButton14.Image = ColorToBitmap(ColorPalette.Windows8.PersonalColors_Background, New Size(48, 48))
             Case 20
                 XenonButton14.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
             Case Else
@@ -1025,7 +1025,7 @@ Public Class MainFrm
     Sub ApplyBackLogonUI(ColorPalette As CP)
 
         For Each ri As XenonRadioImage In LogonUI8Colors.Controls.OfType(Of XenonRadioImage)
-            If ColorPalette.Metro_LogonUI = ri.Name.Replace("color", "") Then
+            If ColorPalette.Windows8.LogonUI = ri.Name.Replace("color", "") Then
                 XenonButton22.Image = ColorToBitmap(ri.AccentColor, New Size(48, 48))
                 Exit For
             End If
@@ -2514,7 +2514,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Metro_StartColor = sender.BackColor
+                CP.Windows8.StartColor = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2524,7 +2524,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Metro_StartColor = Color.FromArgb(255, C)
+        CP.Windows8.StartColor = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2538,7 +2538,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Metro_AccentColor = sender.BackColor
+                CP.Windows8.AccentColor = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2548,7 +2548,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Metro_AccentColor = Color.FromArgb(255, C)
+        CP.Windows8.AccentColor = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2562,7 +2562,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Metro_PersonalColors_Background = sender.BackColor
+                CP.Windows8.PersonalColors_Background = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2572,7 +2572,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Metro_PersonalColors_Background = Color.FromArgb(255, C)
+        CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2586,7 +2586,7 @@ Public Class MainFrm
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Metro_PersonalColors_Accent = sender.BackColor
+                CP.Windows8.PersonalColors_Accent = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -2596,7 +2596,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Metro_PersonalColors_Accent = Color.FromArgb(255, C)
+        CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
 
         ApplyLivePreviewFromCP(CP)
 
@@ -2608,14 +2608,14 @@ Public Class MainFrm
 
     Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
         If XenonRadioImage1.Checked Then
-            CP.Metro_Theme = CP.AeroTheme.Aero
+            CP.Windows8.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub XenonRadioImage2_CheckedChanged(sender As Object) Handles XenonRadioImage2.CheckedChanged
         If XenonRadioImage2.Checked Then
-            CP.Metro_Theme = CP.AeroTheme.AeroLite
+            CP.Windows8.Theme = CP.AeroTheme.AeroLite
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub

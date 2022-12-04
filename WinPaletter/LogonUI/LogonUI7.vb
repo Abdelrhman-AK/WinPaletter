@@ -34,9 +34,9 @@ Public Class LogonUI7
     Sub LoadFromCP(CP As CP)
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-            XenonToggle1.Checked = Not CP.Metro_NoLockScreen
+            XenonToggle1.Checked = Not CP.Windows8.NoLockScreen
 
-            Select Case CP.Metro_LockScreenType
+            Select Case CP.Windows8.LockScreenType
                 Case CP.LogonUI_Modes.Default_
                     XenonRadioButton1.Checked = True
 
@@ -50,11 +50,11 @@ Public Class LogonUI7
                     XenonRadioButton3.Checked = True
             End Select
 
-            ID = CP.Metro_LockScreenSystemID
+            ID = CP.Windows8.LockScreenSystemID
         Else
-            XenonToggle1.Checked = CP.LogonUI7_Enabled
+            XenonToggle1.Checked = CP.LogonUI7.Enabled
 
-            Select Case CP.LogonUI7_Mode
+            Select Case CP.LogonUI7.Mode
                 Case CP.LogonUI_Modes.Default_
                     XenonRadioButton1.Checked = True
 
@@ -69,21 +69,21 @@ Public Class LogonUI7
             End Select
         End If
 
-        XenonTextBox1.Text = CP.LogonUI7_ImagePath
-        color_pick.BackColor = CP.LogonUI7_Color
-        pnl_preview.BackColor = CP.LogonUI7_Color
-        XenonCheckBox8.Checked = CP.LogonUI7_Effect_Grayscale
-        XenonCheckBox7.Checked = CP.LogonUI7_Effect_Blur
-        XenonCheckBox6.Checked = CP.LogonUI7_Effect_Noise
+        XenonTextBox1.Text = CP.LogonUI7.ImagePath
+        color_pick.BackColor = CP.LogonUI7.Color
+        pnl_preview.BackColor = CP.LogonUI7.Color
+        XenonCheckBox8.Checked = CP.LogonUI7.Grayscale
+        XenonCheckBox7.Checked = CP.LogonUI7.Blur
+        XenonCheckBox6.Checked = CP.LogonUI7.Noise
 
-        XenonTrackbar1.Value = CP.LogonUI7_Effect_Blur_Intensity
-        XenonTrackbar2.Value = CP.LogonUI7_Effect_Noise_Intensity
+        XenonTrackbar1.Value = CP.LogonUI7.Blur_Intensity
+        XenonTrackbar2.Value = CP.LogonUI7.Noise_Intensity
 
-        Select Case CP.LogonUI7_Effect_Noise_Mode
-            Case CP.LogonUI7_NoiseMode.Acrylic
+        Select Case CP.LogonUI7.Noise_Mode
+            Case CP.NoiseMode.Acrylic
                 XenonComboBox1.SelectedIndex = 0
 
-            Case CP.LogonUI7_NoiseMode.Aero
+            Case CP.NoiseMode.Aero
                 XenonComboBox1.SelectedIndex = 1
         End Select
 
@@ -92,36 +92,36 @@ Public Class LogonUI7
     Sub LoadToCP(CP As CP)
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-            CP.Metro_NoLockScreen = Not XenonToggle1.Checked
+            CP.Windows8.NoLockScreen = Not XenonToggle1.Checked
 
-            If XenonRadioButton1.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.Default_
-            If XenonRadioButton2.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.Wallpaper
-            If XenonRadioButton3.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.SolidColor
-            If XenonRadioButton4.Checked Then CP.Metro_LockScreenType = CP.LogonUI_Modes.CustomImage
+            If XenonRadioButton1.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.Default_
+            If XenonRadioButton2.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.CustomImage
 
-            CP.Metro_LockScreenSystemID = ID
+            CP.Windows8.LockScreenSystemID = ID
         Else
-            CP.LogonUI7_Enabled = XenonToggle1.Checked
+            CP.LogonUI7.Enabled = XenonToggle1.Checked
 
-            If XenonRadioButton1.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.Default_
-            If XenonRadioButton2.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.Wallpaper
-            If XenonRadioButton3.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.SolidColor
-            If XenonRadioButton4.Checked Then CP.LogonUI7_Mode = CP.LogonUI_Modes.CustomImage
+            If XenonRadioButton1.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.Default_
+            If XenonRadioButton2.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.CustomImage
         End If
 
 
-        CP.LogonUI7_ImagePath = XenonTextBox1.Text
-        CP.LogonUI7_Color = color_pick.BackColor
+        CP.LogonUI7.ImagePath = XenonTextBox1.Text
+        CP.LogonUI7.Color = color_pick.BackColor
 
-        CP.LogonUI7_Effect_Grayscale = XenonCheckBox8.Checked
-        CP.LogonUI7_Effect_Blur = XenonCheckBox7.Checked
-        CP.LogonUI7_Effect_Noise = XenonCheckBox6.Checked
+        CP.LogonUI7.Grayscale = XenonCheckBox8.Checked
+        CP.LogonUI7.Blur = XenonCheckBox7.Checked
+        CP.LogonUI7.Noise = XenonCheckBox6.Checked
 
-        CP.LogonUI7_Effect_Blur_Intensity = XenonTrackbar1.Value
-        CP.LogonUI7_Effect_Noise_Intensity = XenonTrackbar2.Value
+        CP.LogonUI7.Blur_Intensity = XenonTrackbar1.Value
+        CP.LogonUI7.Noise_Intensity = XenonTrackbar2.Value
 
-        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Acrylic
-        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7_Effect_Noise_Mode = CP.LogonUI7_NoiseMode.Aero
+        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = CP.NoiseMode.Acrylic
+        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = CP.NoiseMode.Aero
     End Sub
 
     Function ReturnBK() As Bitmap
@@ -174,9 +174,9 @@ Public Class LogonUI7
         If XenonCheckBox6.Checked Then
             Select Case XenonComboBox1.SelectedIndex
                 Case 0
-                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
+                    _bmp = NoiseBitmap(_bmp, CP.NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
                 Case 1
-                    _bmp = NoiseBitmap(_bmp, CP.LogonUI7_NoiseMode.Aero, XenonTrackbar2.Value / 100)
+                    _bmp = NoiseBitmap(_bmp, CP.NoiseMode.Aero, XenonTrackbar2.Value / 100)
             End Select
         End If
 

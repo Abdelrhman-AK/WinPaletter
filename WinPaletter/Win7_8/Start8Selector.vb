@@ -7,7 +7,7 @@ Public Class Start8Selector
         ApplyDarkMode(Me)
         LoadImagesFromDLL()
 
-        Select Case MainFrm.CP.Metro_Start
+        Select Case MainFrm.CP.Windows8.Start
             Case 1
                 img1.Checked = True
             Case 2
@@ -72,31 +72,31 @@ Public Class Start8Selector
         img16.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 64, 64)
         img17.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 64, 64)
         img18.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 64, 64)
-        img19.Image = ColorToBitmap(MainFrm.CP.Metro_PersonalColors_Background, New Size(64, 64))
+        img19.Image = ColorToBitmap(MainFrm.CP.Windows8.PersonalColors_Background, New Size(64, 64))
         img20.Image = ResizeImage(My.Application.GetCurrentWallpaper, 64, 64)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        If img1.Checked Then MainFrm.CP.Metro_Start = 1
-        If img2.Checked Then MainFrm.CP.Metro_Start = 2
-        If img3.Checked Then MainFrm.CP.Metro_Start = 3
-        If img4.Checked Then MainFrm.CP.Metro_Start = 4
-        If img5.Checked Then MainFrm.CP.Metro_Start = 5
-        If img6.Checked Then MainFrm.CP.Metro_Start = 6
-        If img7.Checked Then MainFrm.CP.Metro_Start = 7
-        If img8.Checked Then MainFrm.CP.Metro_Start = 8
-        If img9.Checked Then MainFrm.CP.Metro_Start = 9
-        If img10.Checked Then MainFrm.CP.Metro_Start = 10
-        If img11.Checked Then MainFrm.CP.Metro_Start = 11
-        If img12.Checked Then MainFrm.CP.Metro_Start = 12
-        If img13.Checked Then MainFrm.CP.Metro_Start = 13
-        If img14.Checked Then MainFrm.CP.Metro_Start = 14
-        If img15.Checked Then MainFrm.CP.Metro_Start = 15
-        If img16.Checked Then MainFrm.CP.Metro_Start = 16
-        If img17.Checked Then MainFrm.CP.Metro_Start = 17
-        If img18.Checked Then MainFrm.CP.Metro_Start = 18
-        If img19.Checked Then MainFrm.CP.Metro_Start = 19
-        If img20.Checked Then MainFrm.CP.Metro_Start = 20
+        If img1.Checked Then MainFrm.CP.Windows8.Start = 1
+        If img2.Checked Then MainFrm.CP.Windows8.Start = 2
+        If img3.Checked Then MainFrm.CP.Windows8.Start = 3
+        If img4.Checked Then MainFrm.CP.Windows8.Start = 4
+        If img5.Checked Then MainFrm.CP.Windows8.Start = 5
+        If img6.Checked Then MainFrm.CP.Windows8.Start = 6
+        If img7.Checked Then MainFrm.CP.Windows8.Start = 7
+        If img8.Checked Then MainFrm.CP.Windows8.Start = 8
+        If img9.Checked Then MainFrm.CP.Windows8.Start = 9
+        If img10.Checked Then MainFrm.CP.Windows8.Start = 10
+        If img11.Checked Then MainFrm.CP.Windows8.Start = 11
+        If img12.Checked Then MainFrm.CP.Windows8.Start = 12
+        If img13.Checked Then MainFrm.CP.Windows8.Start = 13
+        If img14.Checked Then MainFrm.CP.Windows8.Start = 14
+        If img15.Checked Then MainFrm.CP.Windows8.Start = 15
+        If img16.Checked Then MainFrm.CP.Windows8.Start = 16
+        If img17.Checked Then MainFrm.CP.Windows8.Start = 17
+        If img18.Checked Then MainFrm.CP.Windows8.Start = 18
+        If img19.Checked Then MainFrm.CP.Windows8.Start = 19
+        If img20.Checked Then MainFrm.CP.Windows8.Start = 20
         Me.Close()
     End Sub
 

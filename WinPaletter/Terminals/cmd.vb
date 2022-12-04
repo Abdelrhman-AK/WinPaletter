@@ -100,7 +100,7 @@ Public Class cmd
 
             End Select
 
-            'CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7_Enabled, True, False))
+            'CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7.Enabled, True, False))
             CPx.Dispose()
             Cursor = Cursors.Default
         Else

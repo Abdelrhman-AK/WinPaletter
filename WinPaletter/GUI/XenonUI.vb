@@ -5010,13 +5010,122 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End If
 
                 Else
-                    G.DrawImage(AdaptedBack, Rect)
+                    Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+                    'If Sum < 1 Then Sum = 1
+                    TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+                    TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+                    TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+                    Sum_Ttl = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+
+                    With Rect
+                        InnerWindow_1 = New Rectangle(.X + Sum + 2, .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - 4, .Height - (Sum + Sum_Ttl) - 5)
+
+                        InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+
+                        RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum + 1, InnerWindow_1.Height * 0.5)
+                        RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
+                    End With
+
+                    G.DrawImage(AdaptedBack, RectBK)
+
+                    Dim Titlebar_Backcolor1 As Color
+                    Dim Titlebar_Backcolor2 As Color
+                    Dim Titlebar_OuterBorder As Color
+                    Dim Titlebar_InnerBorder As Color
+                    Dim Titlebar_Turquoise As Color
+                    Dim OuterBorder As Color
+
+                    Dim CloseUpperAccent1 As Color
+                    Dim CloseUpperAccent2 As Color
+                    Dim CloseLowerAccent1 As Color
+                    Dim CloseLowerAccent2 As Color
+                    Dim CloseOuterBorder As Color
+                    Dim CloseInnerBorder As Color
+
 
                     If Active Then
-                        G.DrawImage(My.Resources.Win7BasicActive, New Point(0, 0))
+                        Titlebar_Backcolor1 = Color.FromArgb(152, 180, 208)
+                        Titlebar_Backcolor2 = Color.FromArgb(186, 210, 234)
+                        Titlebar_OuterBorder = Color.FromArgb(52, 52, 52)
+                        Titlebar_InnerBorder = Color.FromArgb(255, 255, 255)
+                        Titlebar_Turquoise = Color.FromArgb(40, 207, 228)
+                        OuterBorder = Color.FromArgb(0, 0, 0)
+
+                        CloseUpperAccent1 = Color.FromArgb(233, 169, 156)
+                        CloseUpperAccent2 = Color.FromArgb(223, 149, 135)
+                        CloseLowerAccent1 = Color.FromArgb(184, 67, 44)
+                        CloseLowerAccent2 = Color.FromArgb(210, 127, 110)
+                        CloseOuterBorder = Color.FromArgb(67, 20, 34)
+                        CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
+
                     Else
-                        G.DrawImage(My.Resources.Win7BasicInactive, New Point(0, 0))
+                        Titlebar_Backcolor1 = Color.FromArgb(191, 205, 219)
+                        Titlebar_Backcolor2 = Color.FromArgb(215, 228, 242)
+                        Titlebar_OuterBorder = Color.FromArgb(76, 76, 76)
+                        Titlebar_InnerBorder = Color.FromArgb(226, 230, 239)
+                        Titlebar_Turquoise = Color.FromArgb(226, 230, 239)
+                        OuterBorder = Color.FromArgb(76, 76, 76)
+
+                        CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
+                        CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
+                        CloseOuterBorder = Color.FromArgb(131, 142, 168)
+                        CloseInnerBorder = Color.FromArgb(209, 219, 229)
                     End If
+
+                    Dim UpperPart As New Rectangle(Rect.X, Rect.Y, Rect.Width + 1, Sum_Ttl + 4)
+
+                    G.SetClip(UpperPart)
+                    Dim pth_back As New LinearGradientBrush(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical)
+                    FillRect(G, pth_back, Rect, Radius, True)
+                    DrawRect(G, New Pen(Titlebar_OuterBorder), Rect, Radius, True)
+                    DrawRect(G, New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                    Dim pth_line As New LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical)
+                    G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                    DrawRect(G, New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+
+                    G.ResetClip()
+
+                    G.ExcludeClip(UpperPart)
+                    G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), Rect)
+
+                    G.DrawRectangle(New Pen(Titlebar_Turquoise), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                    G.DrawRectangle(New Pen(OuterBorder), Rect)
+                    G.DrawLine(New Pen(Titlebar_InnerBorder), New Point(Rect.X + 1, Rect.Y), New Point(Rect.X + 1, Rect.Y + Rect.Height - 2))
+
+                    If Active Then
+                        G.DrawImage(My.Resources.Win7Sides, RectSide1)
+                        G.DrawImage(My.Resources.Win7Sides, RectSide2)
+                    End If
+
+                    G.ResetClip()
+
+                    G.FillRectangle(Brushes.White, InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb(186, 210, 234)), InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
+
+                    Dim CloseRect As New Rectangle
+                    CloseRect = New Rectangle(InnerWindow_1.Right - UpperPart.Height - 3, InnerWindow_1.Top - UpperPart.Height / 2 - 4, UpperPart.Height, UpperPart.Height / 2 + 1)
+
+                    If Active Then
+                        Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, CloseRect.Height * 0.5)
+                        Dim CloseUpperPath As New LinearGradientBrush(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical)
+
+                        Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRect.Y + CloseRect.Height * 0.5, CloseRect.Width, CloseRect.Height * 0.5)
+                        Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+
+                        FillRect(G, CloseUpperPath, CloseRectUpperHalf, 1, True)
+                        FillRect(G, CloseLowerPath, CloseRectLowerHalf, 1, True)
+                        G.DrawLine(New Pen(CloseLowerAccent1), New Point(CloseRectLowerHalf.X, CloseRectLowerHalf.Y), New Point(CloseRectLowerHalf.X + CloseRectLowerHalf.Width, CloseRectLowerHalf.Y))
+
+                    Else
+                        Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+                        FillRect(G, ClosePath, CloseRect, 1, True)
+                    End If
+
+                    DrawRect(G, New Pen(CloseOuterBorder), CloseRect, 1, True)
+                    DrawRect(G, New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+
+
                 End If
 #End Region
 

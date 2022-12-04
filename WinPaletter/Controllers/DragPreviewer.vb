@@ -364,7 +364,7 @@ Public Class dragPreviewer
 #End Region
             Case MainFrm.WinVer.Eight
 #Region "Win8.1"
-                Select Case [CP].Metro_Theme
+                Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Win8Lite = False
                         XenonWindow2.Win8Lite = False
@@ -681,93 +681,93 @@ Public Class dragPreviewer
     End Sub
 
     Sub SetMetics(CP As CP)
-        RetroPanel2.Width = CP.WinMetrics.ScrollWidth
-        menucontainer0.Height = CP.WinMetrics.MenuHeight
+        RetroPanel2.Width = CP.WinMetrics_Fonts.ScrollWidth
+        menucontainer0.Height = CP.WinMetrics_Fonts.MenuHeight
 
-        menucontainer0.Height = Math.Max(CP.WinMetrics.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont))
+        menucontainer0.Height = Math.Max(CP.WinMetrics_Fonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont))
 
-        RetroLabel1.Font = CP.Fonts_MenuFont
-        RetroLabel2.Font = CP.Fonts_MenuFont
-        RetroLabel3.Font = CP.Fonts_MenuFont
+        RetroLabel1.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel2.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel3.Font = CP.WinMetrics_Fonts.MenuFont
 
-        RetroLabel9.Font = CP.Fonts_MenuFont
-        RetroLabel5.Font = CP.Fonts_MenuFont
-        RetroLabel6.Font = CP.Fonts_MenuFont
+        RetroLabel9.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel5.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel6.Font = CP.WinMetrics_Fonts.MenuFont
 
-        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.Fonts_MenuFont) + 3
+        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
         Menu.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu.Padding.Top + Menu.Padding.Bottom
 
-        RetroLabel4.Font = CP.Fonts_MessageFont
+        RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
 
-        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.Fonts_MenuFont).Width + 5
-        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.Fonts_MenuFont).Width + 5
-        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.Fonts_MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.Fonts_CaptionFont).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.Fonts_CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.WinMetrics_Fonts.CaptionFont).Height
+        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        Dim iP As Integer = 3 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth
-        Dim iT As Integer = 4 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + CP.WinMetrics.CaptionHeight + TitleTextH_Sum
+        Dim iP As Integer = 3 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth
+        Dim iT As Integer = 4 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + CP.WinMetrics_Fonts.CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Padding(iP, iT, iP, iP)
 
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             If Not RW.UseItAsMenu Then
-                RW.Metrics_BorderWidth = CP.WinMetrics.BorderWidth
-                RW.Metrics_CaptionHeight = CP.WinMetrics.CaptionHeight
-                RW.Metrics_CaptionWidth = CP.WinMetrics.CaptionWidth
-                RW.Metrics_PaddedBorderWidth = CP.WinMetrics.PaddedBorderWidth
-                RW.Font = CP.Fonts_CaptionFont
+                RW.Metrics_BorderWidth = CP.WinMetrics_Fonts.BorderWidth
+                RW.Metrics_CaptionHeight = CP.WinMetrics_Fonts.CaptionHeight
+                RW.Metrics_CaptionWidth = CP.WinMetrics_Fonts.CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.WinMetrics_Fonts.PaddedBorderWidth
+                RW.Font = CP.WinMetrics_Fonts.CaptionFont
 
                 RW.Padding = _Padding
             End If
         Next
 
-        RetroWindow3.Height = 85 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + RetroWindow3.GetTitleTextHeight
-        RetroWindow2.Height = 120 + CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.WinMetrics.MenuHeight
+        RetroWindow3.Height = 85 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.WinMetrics_Fonts.MenuHeight
 
-        RetroButton3.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton4.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton5.Height = CP.WinMetrics.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton6.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton7.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton8.Height = CP.WinMetrics.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton9.Height = CP.WinMetrics.CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
+        RetroButton3.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton4.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton5.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
+        RetroButton6.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton7.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton8.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
+        RetroButton9.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
 
-        RetroButton3.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton4.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton5.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton8.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton7.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton6.Width = CP.WinMetrics.CaptionWidth - 2
-        RetroButton9.Width = CP.WinMetrics.CaptionWidth - 2
+        RetroButton3.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton4.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton5.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton8.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton7.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton6.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
+        RetroButton9.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
 
-        RetroButton3.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
+        RetroButton3.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
         RetroButton4.Top = RetroButton3.Top
         RetroButton5.Top = RetroButton3.Top
 
-        RetroButton8.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
+        RetroButton8.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
         RetroButton7.Top = RetroButton8.Top
         RetroButton6.Top = RetroButton8.Top
 
-        RetroButton9.Top = CP.WinMetrics.PaddedBorderWidth + CP.WinMetrics.BorderWidth + 5
+        RetroButton9.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
 
-        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
+        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
         RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
         RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
 
-        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
+        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
         RetroButton7.Left = RetroButton8.Left - 2 - RetroButton7.Width
         RetroButton6.Left = RetroButton7.Left - RetroButton6.Width
 
-        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.WinMetrics.PaddedBorderWidth - CP.WinMetrics.BorderWidth - 5
+        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
 
         Try
             Dim i0, iFx As Single
-            i0 = Math.Abs(Math.Min(CP.WinMetrics.CaptionWidth, CP.WinMetrics.CaptionHeight))
+            i0 = Math.Abs(Math.Min(CP.WinMetrics_Fonts.CaptionWidth, CP.WinMetrics_Fonts.CaptionHeight))
             iFx = i0 / Math.Abs(Math.Min(Metrics_Fonts.XenonTrackbar2.Minimum, Metrics_Fonts.XenonTrackbar3.Minimum))
             Dim f As New Font("Marlett", 6.8 * iFx)
             RetroButton3.Font = f

@@ -289,15 +289,15 @@ Public Class XenonCore
         bmp.UnlockBits(bmpData)
         Return bmp
     End Function
-    Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As LogonUI7_NoiseMode, opacity As Single) As Bitmap
+    Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As NoiseMode, opacity As Single) As Bitmap
         Try
             Dim g As Graphics = Graphics.FromImage(bmp)
 
-            If NoiseMode = LogonUI7_NoiseMode.Acrylic Then
+            If NoiseMode = NoiseMode.Acrylic Then
                 Dim br As TextureBrush
                 br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
                 g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
-            ElseIf NoiseMode = LogonUI7_NoiseMode.Aero Then
+            ElseIf NoiseMode = NoiseMode.Aero Then
                 g.DrawImage(FadeBitmap(My.Resources.AeroGlass, opacity), New Rectangle(0, 0, bmp.Width, bmp.Height))
             End If
 

@@ -5,7 +5,7 @@ Public Class LogonUI8Colors
 
         For Each ri As XenonRadioImage In Controls.OfType(Of XenonRadioImage)
             ri.Image = ColorToBitmap(ri.AccentColor, New Drawing.Size(32, 32))
-            If MainFrm.CP.Metro_LogonUI = ri.Name.Replace("color", "") Then ri.Checked = True Else ri.Checked = False
+            If MainFrm.CP.Windows8.LogonUI = ri.Name.Replace("color", "") Then ri.Checked = True Else ri.Checked = False
         Next
 
 
@@ -19,7 +19,7 @@ Public Class LogonUI8Colors
 
         For Each ri As XenonRadioImage In Controls.OfType(Of XenonRadioImage)
             If ri.Checked Then
-                MainFrm.CP.Metro_LogonUI = ri.Name.Replace("color", "")
+                MainFrm.CP.Windows8.LogonUI = ri.Name.Replace("color", "")
                 Exit For
             End If
         Next

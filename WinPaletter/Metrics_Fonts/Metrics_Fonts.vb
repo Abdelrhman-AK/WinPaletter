@@ -70,42 +70,42 @@ Public Class Metrics_Fonts
 
     Sub ApplyFromCP(CP As CP)
 
-        Label1.Font = CP.Fonts_CaptionFont
-        XenonWindow1.Font = CP.Fonts_CaptionFont
-        RetroWindow1.Font = CP.Fonts_CaptionFont
+        Label1.Font = CP.WinMetrics_Fonts.CaptionFont
+        XenonWindow1.Font = CP.WinMetrics_Fonts.CaptionFont
+        RetroWindow1.Font = CP.WinMetrics_Fonts.CaptionFont
 
-        Label2.Font = CP.Fonts_IconFont
-        XenonFakeIcon1.Font = CP.Fonts_IconFont
-        XenonFakeIcon2.Font = CP.Fonts_IconFont
-        XenonFakeIcon3.Font = CP.Fonts_IconFont
+        Label2.Font = CP.WinMetrics_Fonts.IconFont
+        XenonFakeIcon1.Font = CP.WinMetrics_Fonts.IconFont
+        XenonFakeIcon2.Font = CP.WinMetrics_Fonts.IconFont
+        XenonFakeIcon3.Font = CP.WinMetrics_Fonts.IconFont
 
-        Label3.Font = CP.Fonts_MenuFont
-        MenuStrip1.Font = CP.Fonts_MenuFont
+        Label3.Font = CP.WinMetrics_Fonts.MenuFont
+        MenuStrip1.Font = CP.WinMetrics_Fonts.MenuFont
 
-        Label5.Font = CP.Fonts_SmCaptionFont
-        XenonWindow2.Font = CP.Fonts_SmCaptionFont
+        Label5.Font = CP.WinMetrics_Fonts.SmCaptionFont
+        XenonWindow2.Font = CP.WinMetrics_Fonts.SmCaptionFont
 
-        Label4.Font = CP.Fonts_MessageFont
-        msgLbl.Font = CP.Fonts_MessageFont
+        Label4.Font = CP.WinMetrics_Fonts.MessageFont
+        msgLbl.Font = CP.WinMetrics_Fonts.MessageFont
 
-        Label6.Font = CP.Fonts_StatusFont
-        statusLbl.Font = CP.Fonts_StatusFont
+        Label6.Font = CP.WinMetrics_Fonts.StatusFont
+        statusLbl.Font = CP.WinMetrics_Fonts.StatusFont
 
-        XenonTrackbar1.Value = CP.WinMetrics.BorderWidth
-        XenonTrackbar2.Value = CP.WinMetrics.CaptionHeight
-        XenonTrackbar3.Value = CP.WinMetrics.CaptionWidth
-        XenonTrackbar6.Value = CP.WinMetrics.IconSpacing
-        XenonTrackbar4.Value = CP.WinMetrics.IconVerticalSpacing
-        XenonTrackbar9.Value = CP.WinMetrics.MenuHeight
-        XenonTrackbar8.Value = CP.WinMetrics.MenuWidth
-        XenonToggle1.Checked = CP.WinMetrics.MinAnimate
-        XenonTrackbar12.Value = CP.WinMetrics.PaddedBorderWidth
-        XenonTrackbar11.Value = CP.WinMetrics.ScrollHeight
-        XenonTrackbar10.Value = CP.WinMetrics.ScrollWidth
-        XenonTrackbar14.Value = CP.WinMetrics.SmCaptionHeight
-        XenonTrackbar13.Value = CP.WinMetrics.SmCaptionWidth
-        XenonTrackbar7.Value = CP.WinMetrics.DesktopIconSize
-        XenonTrackbar5.Value = CP.WinMetrics.ShellIconSize
+        XenonTrackbar1.Value = CP.WinMetrics_Fonts.BorderWidth
+        XenonTrackbar2.Value = CP.WinMetrics_Fonts.CaptionHeight
+        XenonTrackbar3.Value = CP.WinMetrics_Fonts.CaptionWidth
+        XenonTrackbar6.Value = CP.WinMetrics_Fonts.IconSpacing
+        XenonTrackbar4.Value = CP.WinMetrics_Fonts.IconVerticalSpacing
+        XenonTrackbar9.Value = CP.WinMetrics_Fonts.MenuHeight
+        XenonTrackbar8.Value = CP.WinMetrics_Fonts.MenuWidth
+        XenonToggle1.Checked = CP.WinMetrics_Fonts.MinAnimate
+        XenonTrackbar12.Value = CP.WinMetrics_Fonts.PaddedBorderWidth
+        XenonTrackbar11.Value = CP.WinMetrics_Fonts.ScrollHeight
+        XenonTrackbar10.Value = CP.WinMetrics_Fonts.ScrollWidth
+        XenonTrackbar14.Value = CP.WinMetrics_Fonts.SmCaptionHeight
+        XenonTrackbar13.Value = CP.WinMetrics_Fonts.SmCaptionWidth
+        XenonTrackbar7.Value = CP.WinMetrics_Fonts.DesktopIconSize
+        XenonTrackbar5.Value = CP.WinMetrics_Fonts.ShellIconSize
 
         RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
         RetroWindow1.BackColor = MainFrm.CP.Win32.ButtonFace
@@ -139,28 +139,28 @@ Public Class Metrics_Fonts
     End Sub
 
     Sub ApplyToCP(CP As CP)
-        CP.Fonts_CaptionFont = Label1.Font
-        CP.Fonts_IconFont = Label2.Font
-        CP.Fonts_MenuFont = Label3.Font
-        CP.Fonts_MessageFont = Label4.Font
-        CP.Fonts_SmCaptionFont = Label5.Font
-        CP.Fonts_StatusFont = Label6.Font
+        CP.WinMetrics_Fonts.CaptionFont = Label1.Font
+        CP.WinMetrics_Fonts.IconFont = Label2.Font
+        CP.WinMetrics_Fonts.MenuFont = Label3.Font
+        CP.WinMetrics_Fonts.MessageFont = Label4.Font
+        CP.WinMetrics_Fonts.SmCaptionFont = Label5.Font
+        CP.WinMetrics_Fonts.StatusFont = Label6.Font
 
-        CP.WinMetrics.BorderWidth = XenonTrackbar1.Value
-        CP.WinMetrics.CaptionHeight = XenonTrackbar2.Value
-        CP.WinMetrics.CaptionWidth = XenonTrackbar3.Value
-        CP.WinMetrics.IconSpacing = XenonTrackbar6.Value
-        CP.WinMetrics.IconVerticalSpacing = XenonTrackbar4.Value
-        CP.WinMetrics.MenuHeight = XenonTrackbar9.Value
-        CP.WinMetrics.MenuWidth = XenonTrackbar8.Value
-        CP.WinMetrics.MinAnimate = XenonToggle1.Checked
-        CP.WinMetrics.PaddedBorderWidth = XenonTrackbar12.Value
-        CP.WinMetrics.ScrollHeight = XenonTrackbar11.Value
-        CP.WinMetrics.ScrollWidth = XenonTrackbar10.Value
-        CP.WinMetrics.SmCaptionHeight = XenonTrackbar14.Value
-        CP.WinMetrics.SmCaptionWidth = XenonTrackbar13.Value
-        CP.WinMetrics.DesktopIconSize = XenonTrackbar7.Value
-        CP.WinMetrics.ShellIconSize = XenonTrackbar5.Value
+        CP.WinMetrics_Fonts.BorderWidth = XenonTrackbar1.Value
+        CP.WinMetrics_Fonts.CaptionHeight = XenonTrackbar2.Value
+        CP.WinMetrics_Fonts.CaptionWidth = XenonTrackbar3.Value
+        CP.WinMetrics_Fonts.IconSpacing = XenonTrackbar6.Value
+        CP.WinMetrics_Fonts.IconVerticalSpacing = XenonTrackbar4.Value
+        CP.WinMetrics_Fonts.MenuHeight = XenonTrackbar9.Value
+        CP.WinMetrics_Fonts.MenuWidth = XenonTrackbar8.Value
+        CP.WinMetrics_Fonts.MinAnimate = XenonToggle1.Checked
+        CP.WinMetrics_Fonts.PaddedBorderWidth = XenonTrackbar12.Value
+        CP.WinMetrics_Fonts.ScrollHeight = XenonTrackbar11.Value
+        CP.WinMetrics_Fonts.ScrollWidth = XenonTrackbar10.Value
+        CP.WinMetrics_Fonts.SmCaptionHeight = XenonTrackbar14.Value
+        CP.WinMetrics_Fonts.SmCaptionWidth = XenonTrackbar13.Value
+        CP.WinMetrics_Fonts.DesktopIconSize = XenonTrackbar7.Value
+        CP.WinMetrics_Fonts.ShellIconSize = XenonTrackbar5.Value
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -242,7 +242,7 @@ Public Class Metrics_Fonts
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.Mode.Registry)
         ApplyToCP(CPx)
-        CPx.Apply_WindowsWinMetrics()
+        CPx.WinMetrics_Fonts.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub

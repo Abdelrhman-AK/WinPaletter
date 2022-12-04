@@ -534,9 +534,6 @@ Public Class WinTerminal
             Case Mode.JSONFile
                 Dim SettingsFile As String
 
-
-
-
                 Select Case [Version]
                     Case Version.Stable
                         If Not My.Application._Settings.Terminal_Path_Deflection Then
