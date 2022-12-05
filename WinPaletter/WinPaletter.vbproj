@@ -140,6 +140,11 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="Resources\Win8_Close_ToolWindow.png" />
+    <None Include="Resources\Win8_Close_0.png" />
+    <None Include="Resources\Win8_Close_3.png" />
+    <None Include="Resources\Win8_Close_2.png" />
+    <None Include="Resources\Win8_Close_1.png" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -212,11 +217,14 @@
     <Content Include="Resources\Win7ORB.png" />
     <None Include="Resources\Win7Sides.png" />
     <Content Include="Resources\Win7TaskbarSides.png" />
-    <None Include="Resources\Win7_Close_Active.png" />
-    <None Include="Resources\Win7_Close_inactive.png" />
     <None Include="Resources\Win7_TitleTopR.png" />
     <None Include="Resources\Win7_TitleTopL.png" />
-    <None Include="Resources\Win7_CloseToolWindow.png" />
+    <None Include="Resources\Win7_Basic_Close_2.png" />
+    <None Include="Resources\Win7_Basic_Close_0.png" />
+    <None Include="Resources\Win7_Basic_Close_1.png" />
+    <None Include="Resources\Win7_Close_inactive.png" />
+    <None Include="Resources\Win7_Close_Active.png" />
+    <None Include="Resources\Win7_Basic_Close_ToolWindow.png" />
     <Content Include="Resources\Win8ORB.png" />
   </ItemGroup>
   <ItemGroup>

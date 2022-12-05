@@ -315,6 +315,31 @@ Public Class XenonCore
     Public Shared Function IsColorDark(ByVal [Color] As Color) As Boolean
         Return Not ([Color].R * 0.2126 + [Color].G * 0.7152 + [Color].B * 0.0722 > 255 / 2)
     End Function
+    Public Shared Function ColorReplace(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Image
+        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
+        Dim G As Graphics = Graphics.FromImage(outputImage)
+
+
+        For y As Int32 = 0 To inputImage.Height - 1
+
+            For x As Int32 = 0 To inputImage.Width - 1
+                Dim PixelColor As Color = inputImage.GetPixel(x, y)
+
+                If PixelColor = oldColor Then
+                    outputImage.SetPixel(x, y, NewColor)
+                Else
+                    outputImage.SetPixel(x, y, PixelColor)
+                End If
+
+            Next
+        Next
+
+        G.DrawImage(outputImage, 0, 0)
+        G.Dispose()
+        Return outputImage
+        outputImage.Dispose()
+
+    End Function
     Public Shared Function GetDarkMode() As Boolean
         Dim i As Long
 
@@ -384,7 +409,6 @@ Public Class XenonCore
 
         Return s
     End Function
-
     Shared Function RGB2HEX(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
         Dim S As String
         If Alpha Then

@@ -4766,7 +4766,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim IconRect As New Rectangle(Rect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2, IconSize, IconSize)
         Dim LabelRect As New Rectangle(IconRect.Right + 4, Rect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height)
         If ToolWindow Then LabelRect.X = IconRect.X
-        Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
+        Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 3, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
         Dim XRect As New Rectangle(Rect.Right - 20, Rect.Y, 20, TitlebarRect.Height)
         G.Clear(Color.Transparent)
 
@@ -4864,11 +4864,42 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 #End Region
 
             Case 1      '#### Windows 8.1
+
 #Region "Windows 8.1"
-                Dim Rect8 As New Rectangle(0, 0, Width - 1, Height - 1)
-                Dim InnerWindow As New Rectangle(5, 22, Width - 10, Height - 22 - 7)
-                Dim CloseRect As New Rectangle(Width - 35, 0, 30, 15)
-                Dim CloseRectLbl As New Rectangle(Width - 34, 1, 30, 15)
+
+                Dim InnerWindow_1 As New Rectangle
+                Dim InnerWindow_2 As New Rectangle
+                Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+                If Sum < 2 Then Sum = 2
+                TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
+                TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+                TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+                Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+
+                IconRect.X += 2
+
+                With Rect
+                    InnerWindow_1 = New Rectangle(.X + Sum + If(Not Win8Lite, 2, 3), .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - If(Not Win8Lite, 4, 6), .Height - (Sum + Sum_Ttl) - If(Not Win8Lite, 5, 5))
+                    InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+                End With
+
+                Dim CloseRectH As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 2 + If(Win8Lite, 1, 0)
+
+                Dim CloseRectW As Integer = If(Not ToolWindow, CloseRectH * 3 / 2, CloseRectH) + If(Win8Lite, 2, 0)
+
+                Dim CloseRect As New Rectangle
+
+                If Not ToolWindow Then
+
+                    If Not Win8Lite Then
+                        CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
+                    Else
+                        CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 2, Rect.Y, CloseRectW, CloseRectH)
+                    End If
+
+                Else
+                    CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
+                End If
 
                 Dim InC As Color = If(Not Win8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, CCB(AccentColor_Active, 0.8)))
 
@@ -4876,32 +4907,67 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                 Dim bc As Color = Color.FromArgb(217, 217, 217)
 
-                G.FillRectangle(New SolidBrush(bc), Rect8)
-                G.FillRectangle(New SolidBrush(c), Rect8)
+                G.DrawImage(AdaptedBack, RectBK)
 
-                G.FillRectangle(New SolidBrush(Color.White), InnerWindow)
+                G.FillRectangle(New SolidBrush(bc), Rect)
+                G.FillRectangle(New SolidBrush(c), Rect)
+
+                G.FillRectangle(New SolidBrush(Color.White), InnerWindow_1)
+
+                Dim CloseBtn As Image
+
+                If Not ToolWindow Then
+                    If CloseRect.Height >= 27 Then
+                        CloseBtn = My.Resources.Win8_Close_3
+                    ElseIf CloseRect.Height >= 24 Then
+                        CloseBtn = My.Resources.Win8_Close_2
+                    ElseIf CloseRect.Height >= 21 Then
+                        CloseBtn = My.Resources.Win8_Close_1
+                    Else
+                        CloseBtn = My.Resources.Win8_Close_0
+                    End If
+
+                Else
+                    CloseBtn = My.Resources.Win8_Close_ToolWindow
+                End If
+
+                If Win8Lite Then CloseBtn = ColorReplace(CloseBtn, Color.FromArgb(255, 255, 255), Color.Black)
 
                 If Not Win8Lite Then
-                    G.DrawRectangle(New Pen(ControlPaint.Dark(bc, 0.1)), InnerWindow)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.Dark(c, 0.1))), InnerWindow)
+                    G.DrawRectangle(New Pen(Color.FromArgb(170, CCB(bc, -0.2))), InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, CCB(c, -0.2))), InnerWindow_1)
 
+                    G.SmoothingMode = SmoothingMode.HighSpeed
                     G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
-                    G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
+                    G.SmoothingMode = SmoothingMode.AntiAlias
 
-                    G.DrawRectangle(New Pen(ControlPaint.Dark(bc, 0.2)), Rect8)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.Dark(c, 0.2))), Rect8)
+                    G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
+
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, CCB(bc, -0.3))), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, CCB(c, -0.3))), Rect)
+
                 Else
-                    G.DrawRectangle(New Pen(Color.FromArgb(177, 173, 150)), InnerWindow)
+
+                    G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.LightLight(c))), New Point(InnerWindow_1.X, InnerWindow_1.Y), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y))
+
+                    G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, ControlPaint.LightLight(c))), New Point(InnerWindow_1.X, InnerWindow_1.Y + InnerWindow_1.Height), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y + InnerWindow_1.Height))
+
                     G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.Transparent)), CloseRect)
+
+                    G.SmoothingMode = SmoothingMode.HighSpeed
                     G.DrawRectangle(New Pen(If(Active, Color.FromArgb(92, 58, 55), Color.FromArgb(93, 96, 102))), CloseRect)
-                    G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.Black), CloseRectLbl, StringAligner(ContentAlignment.MiddleCenter))
-                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect8)
+                    G.SmoothingMode = SmoothingMode.AntiAlias
+
+                    G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
+
+                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect)
                 End If
 #End Region
 
             Case 2      '#### Windows 7
 
 #Region "Windows 7"
+
                 Dim InnerWindow_1 As New Rectangle
                 Dim InnerWindow_2 As New Rectangle
                 Dim RectSide1 As New Rectangle
@@ -4924,6 +4990,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                 If Not Win7Basic Then
 
+#Region "Aero"
                     G.DrawImage(AdaptedBack, RectBK)
 
                     If Shadow And Active And Not DesignMode Then
@@ -4966,30 +5033,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         G.DrawImage(My.Resources.Win7_TitleTopR, New Rectangle(Rect.X + Rect.Width - TitleTopW, Rect.Y + If(ToolWindow, 1, 0), TitleTopW, TitleTopH))
                     End If
 
-                    Dim closeBtn As Image
-
-                    If Not ToolWindow Then
-                        If Active Then
-                            closeBtn = My.Resources.Win7_Close_Active
-                        Else
-                            closeBtn = My.Resources.Win7_Close_inactive
-                        End If
-                    Else
-                        closeBtn = My.Resources.Win7_CloseToolWindow
-                    End If
-
-
-                    Dim CloseRect As New Rectangle
-
-                    If Not ToolWindow Then
-                        CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y, closeBtn.Width, closeBtn.Height)
-                    Else
-                        CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + (Sum_Ttl - closeBtn.Height) / 2, closeBtn.Width, closeBtn.Height)
-                    End If
-
                     Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
-
-                    G.DrawImage(closeBtn, CloseRect)
 
                     If Not ToolWindow Then
                         FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
@@ -5009,9 +5053,105 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, ControlPaint.Dark(BackColor, 0.2))), InnerWindow_2)
                     End If
 
+
+                    If Not ToolWindow Then
+                        Dim closeBtn As Image
+                        Dim CloseRect As New Rectangle
+
+                        If Active Then
+                            closeBtn = My.Resources.Win7_Close_Active
+                        Else
+                            closeBtn = My.Resources.Win7_Close_inactive
+                        End If
+
+                        CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height)
+
+                        G.DrawImage(closeBtn, CloseRect)
+
+                    Else
+
+                        Dim CloseUpperAccent1 As Color
+                        Dim CloseUpperAccent2 As Color
+                        Dim CloseLowerAccent1 As Color
+                        Dim CloseLowerAccent2 As Color
+                        Dim CloseOuterBorder As Color
+                        Dim CloseInnerBorder As Color
+
+                        If Active Then
+                            CloseUpperAccent1 = Color.FromArgb(233, 169, 156)
+                            CloseUpperAccent2 = Color.FromArgb(223, 149, 135)
+                            CloseLowerAccent1 = Color.FromArgb(184, 67, 44)
+                            CloseLowerAccent2 = Color.FromArgb(210, 127, 110)
+                            CloseOuterBorder = Color.FromArgb(67, 20, 34)
+                            CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
+                        Else
+                            CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
+                            CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
+                            CloseOuterBorder = Color.FromArgb(131, 142, 168)
+                            CloseInnerBorder = Color.FromArgb(209, 219, 229)
+                        End If
+
+                        Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
+                        Dim Btn_Width As Integer = Btn_Height
+
+                        Dim CloseRect As New Rectangle(InnerWindow_1.Right - Btn_Width - 3, Rect.Y + (Sum_Ttl - Btn_Height) / 2, Btn_Width, Btn_Height)
+
+                        If Active Then
+                            Dim Factor As Single = 0.5
+
+                            Dim UH As Single = Factor * CloseRect.Height
+                            Dim LH As Single = CloseRect.Height - UH
+                            Dim Interlapping As Single = (UH / CloseRect.Height) * 10
+
+                            Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, UH + Interlapping)
+                            Dim CloseUpperPath As New LinearGradientBrush(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical)
+
+                            Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
+                            Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+
+                            FillRect(G, CloseUpperPath, CloseRectUpperHalf, 1, True)
+                            FillRect(G, CloseLowerPath, CloseRectLowerHalf, 1, True)
+                        Else
+                            Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+                            G.FillRectangle(ClosePath, CloseRect)
+                        End If
+
+
+                        Dim CloseBtn As Image
+
+                        If Not ToolWindow Then
+                            If CloseRect.Height >= 22 Then
+                                CloseBtn = My.Resources.Win7_Basic_Close_2
+                            ElseIf CloseRect.Height >= 18 Then
+                                CloseBtn = My.Resources.Win7_Basic_Close_1
+                            Else
+                                CloseBtn = My.Resources.Win7_Basic_Close_0
+                            End If
+                        Else
+                            CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow
+                        End If
+
+                        Dim xW As Integer = If(CloseRect.Width Mod 2 = 0, CloseBtn.Width + 1, CloseBtn.Width)
+                        Dim xH As Integer = If(CloseRect.Height Mod 2 = 0, CloseBtn.Height + 1, CloseBtn.Height)
+
+
+                        Dim closerenderrect As New Rectangle(CloseRect.X + (CloseRect.Width - xW) / 2, CloseRect.Y + (CloseRect.Height - xH) / 2, xW, xH)
+
+                        G.DrawImage(CloseBtn, closerenderrect)
+
+                        DrawRect(G, New Pen(CloseOuterBorder), CloseRect, 1, True)
+                        DrawRect(G, New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+
+                    End If
+
+#End Region
+
                 Else
+
+#Region "Basic"
+                    G.DrawImage(AdaptedBack, RectBK)
+
                     Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
-                    'If Sum < 1 Then Sum = 1
                     TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
                     TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
                     TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
@@ -5019,14 +5159,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     With Rect
                         InnerWindow_1 = New Rectangle(.X + Sum + 2, .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - 4, .Height - (Sum + Sum_Ttl) - 5)
-
                         InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
-
                         RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum + 1, InnerWindow_1.Height * 0.5)
                         RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
                     End With
 
-                    G.DrawImage(AdaptedBack, RectBK)
 
                     Dim Titlebar_Backcolor1 As Color
                     Dim Titlebar_Backcolor2 As Color
@@ -5041,7 +5178,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     Dim CloseLowerAccent2 As Color
                     Dim CloseOuterBorder As Color
                     Dim CloseInnerBorder As Color
-
 
                     If Active Then
                         Titlebar_Backcolor1 = Color.FromArgb(152, 180, 208)
@@ -5075,56 +5211,104 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     Dim UpperPart As New Rectangle(Rect.X, Rect.Y, Rect.Width + 1, Sum_Ttl + 4)
 
                     G.SetClip(UpperPart)
+
                     Dim pth_back As New LinearGradientBrush(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical)
-                    FillRect(G, pth_back, Rect, Radius, True)
-                    DrawRect(G, New Pen(Titlebar_OuterBorder), Rect, Radius, True)
-                    DrawRect(G, New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
                     Dim pth_line As New LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical)
-                    G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
-                    DrawRect(G, New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+
+                    '### Render Titlebar
+                    If Not ToolWindow Then
+                        FillRect(G, pth_back, Rect, Radius, True)
+                        DrawRect(G, New Pen(Titlebar_OuterBorder), Rect, Radius, True)
+                        DrawRect(G, New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                        G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                        DrawRect(G, New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                    Else
+                        G.FillRectangle(pth_back, Rect)
+                        G.DrawRectangle(New Pen(Titlebar_OuterBorder), Rect)
+                        G.DrawRectangle(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                        G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                        G.DrawRectangle(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                    End If
 
                     G.ResetClip()
-
                     G.ExcludeClip(UpperPart)
-                    G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), Rect)
 
+                    '### Render Rest of Window
+                    G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), Rect)
                     G.DrawRectangle(New Pen(Titlebar_Turquoise), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
                     G.DrawRectangle(New Pen(OuterBorder), Rect)
                     G.DrawLine(New Pen(Titlebar_InnerBorder), New Point(Rect.X + 1, Rect.Y), New Point(Rect.X + 1, Rect.Y + Rect.Height - 2))
-
                     If Active Then
                         G.DrawImage(My.Resources.Win7Sides, RectSide1)
                         G.DrawImage(My.Resources.Win7Sides, RectSide2)
                     End If
-
                     G.ResetClip()
-
                     G.FillRectangle(Brushes.White, InnerWindow_1)
                     G.DrawRectangle(New Pen(Color.FromArgb(186, 210, 234)), InnerWindow_1)
                     G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
 
+                    '### Render Close Button
                     Dim CloseRect As New Rectangle
-                    CloseRect = New Rectangle(InnerWindow_1.Right - UpperPart.Height - 3, InnerWindow_1.Top - UpperPart.Height / 2 - 4, UpperPart.Height, UpperPart.Height / 2 + 1)
+
+                    Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
+                    Dim Btn_Width As Integer
+
+                    If Not ToolWindow Then
+                        Btn_Width = (31 / 17) * Btn_Height
+                    Else
+                        Btn_Width = Btn_Height
+                    End If
+
+                    CloseRect = New Rectangle(InnerWindow_1.Right - Btn_Width - 3, InnerWindow_1.Top - Btn_Height - 3, Btn_Width, Btn_Height)
 
                     If Active Then
-                        Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, CloseRect.Height * 0.5)
+                        Dim Factor As Single = 0.45
+                        If ToolWindow Then Factor = 0.2
+
+                        Dim UH As Single = Factor * CloseRect.Height
+                        Dim LH As Single = CloseRect.Height - UH
+                        Dim Interlapping As Single = (UH / CloseRect.Height) * 10
+
+                        Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, UH + Interlapping)
                         Dim CloseUpperPath As New LinearGradientBrush(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical)
 
-                        Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRect.Y + CloseRect.Height * 0.5, CloseRect.Width, CloseRect.Height * 0.5)
+                        Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
                         Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
 
                         FillRect(G, CloseUpperPath, CloseRectUpperHalf, 1, True)
                         FillRect(G, CloseLowerPath, CloseRectLowerHalf, 1, True)
-                        G.DrawLine(New Pen(CloseLowerAccent1), New Point(CloseRectLowerHalf.X, CloseRectLowerHalf.Y), New Point(CloseRectLowerHalf.X + CloseRectLowerHalf.Width, CloseRectLowerHalf.Y))
-
                     Else
                         Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
-                        FillRect(G, ClosePath, CloseRect, 1, True)
+                        G.FillRectangle(ClosePath, CloseRect)
                     End If
+
+
+                    Dim CloseBtn As Image
+
+                    If Not ToolWindow Then
+                        If CloseRect.Height >= 22 Then
+                            CloseBtn = My.Resources.Win7_Basic_Close_2
+                        ElseIf CloseRect.Height >= 18 Then
+                            CloseBtn = My.Resources.Win7_Basic_Close_1
+                        Else
+                            CloseBtn = My.Resources.Win7_Basic_Close_0
+                        End If
+                    Else
+                        CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow
+                    End If
+
+
+                    G.DrawImage(CloseBtn, New Point(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2 + 1, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2))
 
                     DrawRect(G, New Pen(CloseOuterBorder), CloseRect, 1, True)
                     DrawRect(G, New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
 
+                    IconRect = New Rectangle(InnerWindow_1.X + 4, CloseRect.Top + (CloseRect.Height - IconSize) / 2, IconSize, IconSize)
+
+                    LabelRect = New Rectangle(IconRect.Right + 3, CloseRect.Y, UpperPart.Width - (IconRect.Right + 4), CloseRect.Height)
+
+                    If ToolWindow Then LabelRect.X = IconRect.X
+#End Region
 
                 End If
 #End Region
@@ -5147,8 +5331,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             End If
         End If
 
-
-
         If Not ToolWindow Then G.DrawImage(If(Active, My.Resources.AppPreview, My.Resources.AppPreviewInActive), IconRect)
 
         Select Case state
@@ -5164,6 +5346,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 End If
 
             Case 1      '#### Windows 8.1
+
                 If Not Win8Lite Then
                     G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
                 Else
@@ -5175,14 +5358,16 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 End If
 
             Case 2      '#### Windows 7
+
                 If Not Win7Basic Then
                     Dim LabelRectModified As Rectangle = LabelRect
                     LabelRectModified.X -= 2
                     LabelRectModified.Y -= 1
                     GlowString(G, 1, Text, Me, Color.Black, Color.FromArgb(120, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
                 Else
-                    G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+                    G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
                 End If
+
 
         End Select
 
@@ -5957,32 +6142,6 @@ Public Class XenonCMD
 
         End If
     End Sub
-
-    Public Shared Function ColorReplace(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Image
-        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
-        Dim G As Graphics = Graphics.FromImage(outputImage)
-
-
-        For y As Int32 = 0 To inputImage.Height - 1
-
-            For x As Int32 = 0 To inputImage.Width - 1
-                Dim PixelColor As Color = inputImage.GetPixel(x, y)
-
-                If PixelColor = oldColor Then
-                    outputImage.SetPixel(x, y, NewColor)
-                Else
-                    outputImage.SetPixel(x, y, PixelColor)
-                End If
-
-            Next
-        Next
-
-        G.DrawImage(outputImage, 0, 0)
-        G.Dispose()
-        Return outputImage
-        outputImage.Dispose()
-
-    End Function
 End Class
 
 <DefaultEvent("Click")>

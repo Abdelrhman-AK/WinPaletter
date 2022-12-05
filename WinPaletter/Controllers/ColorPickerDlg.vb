@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports Cyotek.Windows.Forms
 Imports WinPaletter.CP
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
@@ -524,16 +525,26 @@ Public Class ColorPickerDlg
 
 #Region "DWM Windows 7 Live Preview"
     Public Shared Sub UpdateWin7Preview(Color1 As Color, Color2 As Color)
-        Dim temp As New NativeMethods.Dwmapi.DWM_COLORIZATION_PARAMS
-        temp.clrColor = Color1.ToArgb
-        temp.clrAfterGlow = Color2.ToArgb
-        temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
-        temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
-        temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
-        temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
-        temp.fOpaque = If(MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
-        NativeMethods.Dwmapi.DwmSetColorizationParameters(temp, False)
+        Try
+            Dim Com As Boolean
+            Dwmapi.DwmIsCompositionEnabled(Com)
+
+            If Com Then
+                Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
+                temp.clrColor = Color1.ToArgb
+                temp.clrAfterGlow = Color2.ToArgb
+                temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
+                temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
+                temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
+                temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
+                temp.fOpaque = If(MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
+                Dwmapi.DwmSetColorizationParameters(temp, False)
+            End If
+        Catch
+        End Try
     End Sub
+
+
 #End Region
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

@@ -692,6 +692,7 @@ Public Class MainFrm
     End Sub
 
     Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
+        XenonWindow.Font = CP.WinMetrics_Fonts.CaptionFont
         XenonWindow.Metrics_BorderWidth = CP.WinMetrics_Fonts.BorderWidth
         XenonWindow.Metrics_CaptionHeight = CP.WinMetrics_Fonts.CaptionHeight
         XenonWindow.Metrics_PaddedBorderWidth = CP.WinMetrics_Fonts.PaddedBorderWidth
