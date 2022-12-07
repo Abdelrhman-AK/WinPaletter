@@ -43,6 +43,11 @@ Public Class SettingsX
             If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
             If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
 
+            If .LoadThemeFileAsLegacy <> XenonCheckBox16.Checked Then Changed = True
+            If .SaveThemeFileAsLegacy <> XenonCheckBox4.Checked Then Changed = True
+
+            'XenonCheckBox16
+
             If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
             If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
             If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
@@ -93,6 +98,9 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
+
+            XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
+            XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
 
             XenonCheckBox8.Checked = .Language
             XenonTextBox3.Text = .Language_File
@@ -162,6 +170,10 @@ Public Class SettingsX
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
+
+            .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
+            .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
+
             .Language = XenonCheckBox8.Checked
             .Language_File = XenonTextBox3.Text
             .Nerd_Stats = XenonCheckBox10.Checked
@@ -253,6 +265,10 @@ Public Class SettingsX
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
+
+                .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
+                .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
+
                 .Language = XenonCheckBox8.Checked
                 .Language_File = XenonTextBox3.Text
                 .Nerd_Stats = XenonCheckBox10.Checked
@@ -286,6 +302,9 @@ Public Class SettingsX
                 XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox9.Checked = .Win7LivePreview
+
+                XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
+                XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
                 XenonCheckBox13.Checked = .Terminal_OtherFonts
@@ -343,6 +362,9 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox9.Checked = .Win7LivePreview
+
+            XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
+            XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
 
             XenonCheckBox12.Checked = .Terminal_Bypass
             XenonCheckBox13.Checked = .Terminal_OtherFonts

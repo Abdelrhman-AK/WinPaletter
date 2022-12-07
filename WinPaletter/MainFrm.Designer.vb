@@ -291,7 +291,6 @@ Partial Class MainFrm
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
         Me.Label27 = New System.Windows.Forms.Label()
-        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.XenonButton19 = New WinPaletter.XenonButton()
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
@@ -4077,23 +4076,6 @@ Partial Class MainFrm
         Me.Label27.Text = "Main Colors"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonButton26
-        '
-        Me.XenonButton26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
-        Me.XenonButton26.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(86, Byte), Integer), CType(CType(22, Byte), Integer))
-        Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(574, 653)
-        Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(133, 32)
-        Me.XenonButton26.TabIndex = 32
-        Me.XenonButton26.Text = "Announcement"
-        Me.XenonButton26.UseVisualStyleBackColor = False
-        '
         'XenonButton19
         '
         Me.XenonButton19.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -4909,7 +4891,6 @@ Partial Class MainFrm
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1082, 726)
         Me.Controls.Add(Me.TablessControl1)
-        Me.Controls.Add(Me.XenonButton26)
         Me.Controls.Add(Me.XenonButton19)
         Me.Controls.Add(Me.apply_btn)
         Me.Controls.Add(Me.XenonButton13)
@@ -5275,7 +5256,6 @@ Partial Class MainFrm
     Friend WithEvents Label4 As Label
     Friend WithEvents Label34 As Label
     Friend WithEvents W11_XenonButton25 As XenonButton
-    Friend WithEvents XenonButton26 As XenonButton
     Friend WithEvents XenonButton27 As XenonButton
     Friend WithEvents Panel1 As Panel
     Friend WithEvents XenonGroupBox2 As XenonGroupBox

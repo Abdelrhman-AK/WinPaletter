@@ -36,6 +36,8 @@ Public Class Localizer
         If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
         If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
         If Name.ToLower = "BugReport".ToLower Then Return BugReport
+        If Name.ToLower = "Metrics_Fonts".ToLower Then Return Metrics_Fonts
+
     End Function
 
     Public allForms As New List(Of String) From {
@@ -66,7 +68,8 @@ Public Class Localizer
                         "WindowsTerminalDecide",
                         "WindowsTerminalCopycat",
                         "LicenseForm",
-                        "BugReport"
+                        "BugReport",
+                        "Metrics_Fonts"
                         }
 
 #Region "Language Info"
@@ -96,6 +99,10 @@ Public Class Localizer
     Property Show As String = "Show"
     Property Hide As String = "Hide"
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
+
+    Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
+    Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
+
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"

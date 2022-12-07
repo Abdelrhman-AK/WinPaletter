@@ -120,7 +120,6 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton19, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonButton26, True)
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
@@ -177,7 +176,6 @@ Public Class ColorPickerDlg
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton19, True)
-            My.Application.AnimatorX.Show(MainFrm.XenonButton26, True)
         End If
 
         MainFrm.MinimumSize = PrevoiusMin

@@ -427,7 +427,6 @@ Namespace My
                 With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
                 With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With Whatsnew.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             End If
 
         End Sub

@@ -11,6 +11,10 @@ Public Class XeSettings
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
+
+    Public Property LoadThemeFileAsLegacy As Boolean = False
+    Public Property SaveThemeFileAsLegacy As Boolean = False
+
     Public Property Win7LivePreview As Boolean = True
     Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
@@ -69,6 +73,9 @@ Public Class XeSettings
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", False, RegistryValueKind.DWord)
         If Key.GetValue("ShowLogWhileSaving", Nothing) Is Nothing Then Key.SetValue("ShowLogWhileSaving", False, RegistryValueKind.DWord)
 
+        If Key.GetValue("LoadThemeFileAsLegacy", Nothing) Is Nothing Then Key.SetValue("LoadThemeFileAsLegacy", False, RegistryValueKind.DWord)
+        If Key.GetValue("SaveThemeFileAsLegacy", Nothing) Is Nothing Then Key.SetValue("SaveThemeFileAsLegacy", False, RegistryValueKind.DWord)
+
         If Key.GetValue("MainFormWidth", Nothing) Is Nothing Then Key.SetValue("MainFormWidth", 1110, RegistryValueKind.DWord)
         If Key.GetValue("MainFormHeight", Nothing) Is Nothing Then Key.SetValue("MainFormHeight", 725, RegistryValueKind.DWord)
         If Key.GetValue("MainFormStatus", Nothing) Is Nothing Then Key.SetValue("MainFormStatus", FormWindowState.Normal, RegistryValueKind.DWord)
@@ -121,6 +128,9 @@ Public Class XeSettings
                 Win7LivePreview = Key.GetValue("Win7LivePreview", True)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", True)
 
+                LoadThemeFileAsLegacy = Key.GetValue("LoadThemeFileAsLegacy", False)
+                SaveThemeFileAsLegacy = Key.GetValue("SaveThemeFileAsLegacy", False)
+
                 MainFormWidth = Key.GetValue("MainFormWidth", 1110)
                 MainFormHeight = Key.GetValue("MainFormHeight", 725)
                 MainFormStatus = Key.GetValue("MainFormStatus", FormWindowState.Normal)
@@ -164,6 +174,10 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("OpeningPreviewInApp_or_AppliesIt= ".ToLower) Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
                     If x.ToLower.StartsWith("AutoRestartExplorer= ".ToLower) Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
                     If x.ToLower.StartsWith("AutoUpdatesChecking= ".ToLower) Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
+
+                    If x.ToLower.StartsWith("LoadThemeFileAsLegacy= ".ToLower) Then AutoUpdatesChecking = x.Remove(0, "LoadThemeFileAsLegacy= ".Count)
+                    If x.ToLower.StartsWith("SaveThemeFileAsLegacy= ".ToLower) Then AutoUpdatesChecking = x.Remove(0, "SaveThemeFileAsLegacy= ".Count)
+
                     If x.ToLower.StartsWith("Win7LivePreview= ".ToLower) Then Win7LivePreview = x.Remove(0, "Win7LivePreview= ".Count)
                     If x.ToLower.StartsWith("UpdateChannel= ".ToLower) Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
                     If x.ToLower.StartsWith("Appearance_Dark= ".ToLower) Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
@@ -199,6 +213,10 @@ Public Class XeSettings
                 Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
+
+                Key.SetValue("LoadThemeFileAsLegacy", LoadThemeFileAsLegacy, RegistryValueKind.DWord)
+                Key.SetValue("SaveThemeFileAsLegacy", SaveThemeFileAsLegacy, RegistryValueKind.DWord)
+
                 Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
@@ -243,6 +261,10 @@ Public Class XeSettings
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
+
+                l.Add(String.Format("LoadThemeFileAsLegacy= {0}", LoadThemeFileAsLegacy))
+                l.Add(String.Format("SaveThemeFileAsLegacy= {0}", SaveThemeFileAsLegacy))
+
                 l.Add(String.Format("Win7LivePreview= {0}", Win7LivePreview))
                 l.Add(String.Format("Terminal_Bypass= {0}", Terminal_Bypass))
                 l.Add(String.Format("Terminal_OtherFonts= {0}", Terminal_OtherFonts))
