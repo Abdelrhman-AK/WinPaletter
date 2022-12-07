@@ -75,9 +75,24 @@ Public Class WindowsTerminal
             TerTitlebarInactive.BackColor = Nothing
             TerTabActive.BackColor = Nothing
             TerTabInactive.BackColor = Nothing
-            TerMode.Checked = Not MainFrm.CP.Windows10x.AppMode_Light
-            XenonTerminal1.Light = MainFrm.CP.Windows10x.AppMode_Light
-            XenonTerminal2.Light = MainFrm.CP.Windows10x.AppMode_Light
+
+            Select Case MainFrm.PreviewConfig
+                Case MainFrm.WinVer.Eleven
+                    TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+                    XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
+                    XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+
+                Case MainFrm.WinVer.Ten
+                    TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
+                    XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
+                    XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
+
+                Case Else
+                    TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+                    XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
+                    XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+            End Select
+
 
         ElseIf TerThemes.Items.Contains(_Terminal.theme) Then
 
@@ -737,8 +752,19 @@ Public Class WindowsTerminal
                     XenonTerminal2.Light = True
 
                 ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
-                    XenonTerminal1.Light = MainFrm.CP.Windows10x.AppMode_Light
-                    XenonTerminal2.Light = MainFrm.CP.Windows10x.AppMode_Light
+                    Select Case MainFrm.PreviewConfig
+                        Case MainFrm.WinVer.Eleven
+                            XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
+                            XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+
+                        Case MainFrm.WinVer.Ten
+                            XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
+                            XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
+
+                        Case Else
+                            XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
+                            XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+                    End Select
 
                 Else
                     XenonTerminal1.Light = Not TerMode.Checked
@@ -809,7 +835,19 @@ Public Class WindowsTerminal
 
             If TerThemes.SelectedIndex = 0 Then TerMode.Checked = True
             If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
-            If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10x.AppMode_Light
+
+            Select Case MainFrm.PreviewConfig
+                Case MainFrm.WinVer.Eleven
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+
+                Case MainFrm.WinVer.Ten
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
+
+                Case Else
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+
+            End Select
+
 
         End If
 

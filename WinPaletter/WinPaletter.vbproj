@@ -93,7 +93,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -140,6 +141,7 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <None Include="packages.config" />
     <None Include="Resources\Win8_Close_ToolWindow.png" />
     <None Include="Resources\Win8_Close_0.png" />
     <None Include="Resources\Win8_Close_3.png" />
@@ -195,7 +197,7 @@
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
-    <Content Include="Resources\Newtonsoft.Json.dll" />
+    <None Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />
@@ -232,7 +234,6 @@
     <None Include="My Project\app.manifest" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
-    <None Include="packages.config" />
     <None Include="Resources\CMD_7x12.png" />
     <None Include="Resources\CMD_8x12.png" />
     <None Include="Resources\CMD_12x16.png" />
@@ -290,6 +291,12 @@
       <DependentUpon>SubMenu.vb</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SubMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\toaster.Designer.vb">
+      <DependentUpon>toaster.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\toaster.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
@@ -498,6 +505,9 @@
     <EmbeddedResource Include="Controllers\SubMenu.resx">
       <DependentUpon>SubMenu.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\toaster.resx">
+      <DependentUpon>toaster.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
     </EmbeddedResource>
@@ -538,8 +548,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SettingsX1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\cmd.resx">
       <DependentUpon>cmd.vb</DependentUpon>

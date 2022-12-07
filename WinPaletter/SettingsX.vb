@@ -31,8 +31,6 @@ Public Class SettingsX
             If .AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
             If .AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
-            If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then Changed = True
-            If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
@@ -88,21 +86,7 @@ Public Class SettingsX
             XenonCheckBox2.Checked = .AutoRestartExplorer
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
-            XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonCheckBox9.Checked = .Win7LivePreview
-
-            Select Case .CustomPreviewConfig
-                Case XeSettings.WinVer.Eleven
-                    XenonComboBox1.SelectedIndex = 0
-                Case XeSettings.WinVer.Ten
-                    XenonComboBox1.SelectedIndex = 1
-                Case XeSettings.WinVer.Eight
-                    XenonComboBox1.SelectedIndex = 2
-                Case XeSettings.WinVer.Seven
-                    XenonComboBox1.SelectedIndex = 3
-                Case Else
-                    XenonComboBox1.SelectedIndex = 0
-            End Select
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
@@ -151,15 +135,12 @@ Public Class SettingsX
     Sub SaveSettings()
         Cursor = Cursors.WaitCursor
 
-        Dim ch_preview As Boolean = False  'Ch = Change
+        'Ch = Change
         Dim ch_dark As Boolean = False
         Dim ch_nerd As Boolean = False
         Dim ch_terminal As Boolean = False
 
         With My.Application._Settings
-            If .CustomPreviewConfig_Enabled <> XenonCheckBox4.Checked Then ch_preview = True
-            If .CustomPreviewConfig <> XenonComboBox1.SelectedIndex Then ch_preview = True
-
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_dark = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_dark = True
 
@@ -177,8 +158,6 @@ Public Class SettingsX
             .AutoRestartExplorer = XenonCheckBox2.Checked
             .AutoApplyCursors = XenonCheckBox7.Checked
             .AutoUpdatesChecking = XenonCheckBox5.Checked
-            .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
-            .CustomPreviewConfig = XenonComboBox1.SelectedIndex
             .Win7LivePreview = XenonCheckBox9.Checked
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
@@ -197,57 +176,6 @@ Public Class SettingsX
 
             .Save(XeSettings.Mode.Registry)
         End With
-
-        If ch_preview Then
-            If My.Application._Settings.CustomPreviewConfig_Enabled Then
-                MainFrm.PreviewConfig = My.Application._Settings.CustomPreviewConfig
-            Else
-
-                If My.W11 Then
-                    MainFrm.PreviewConfig = MainFrm.WinVer.Eleven
-                ElseIf My.W10 Then
-                    MainFrm.PreviewConfig = MainFrm.WinVer.Ten
-                ElseIf My.W8 Then
-                    MainFrm.PreviewConfig = MainFrm.WinVer.Eight
-                ElseIf My.W7 Then
-                    MainFrm.PreviewConfig = MainFrm.WinVer.Seven
-                End If
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
-                MainFrm.XenonButton20.Image = My.Resources.Native11
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
-                MainFrm.XenonButton20.Image = My.Resources.Native10
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-                MainFrm.XenonButton20.Image = My.Resources.Native8
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
-                MainFrm.XenonButton20.Image = My.Resources.Native7
-            Else
-                MainFrm.XenonButton20.Image = My.Resources.Native11
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
-                MainFrm.PaletteContainer_W1x.Visible = True
-                MainFrm.PaletteContainer_W8.Visible = False
-                MainFrm.PaletteContainer_W7.Visible = False
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
-                MainFrm.PaletteContainer_W1x.Visible = False
-                MainFrm.PaletteContainer_W8.Visible = False
-                MainFrm.PaletteContainer_W7.Visible = True
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-                MainFrm.PaletteContainer_W1x.Visible = False
-                MainFrm.PaletteContainer_W8.Visible = True
-                MainFrm.PaletteContainer_W7.Visible = False
-            End If
-
-            MainFrm.Adjust_Preview()
-            MainFrm.ApplyDefaultCPValues()
-            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        End If
 
         If ch_dark Then ApplyDarkMode()
 
@@ -321,8 +249,6 @@ Public Class SettingsX
                 .AutoRestartExplorer = XenonCheckBox2.Checked
                 .AutoApplyCursors = XenonCheckBox7.Checked
                 .AutoUpdatesChecking = XenonCheckBox5.Checked
-                .CustomPreviewConfig_Enabled = XenonCheckBox4.Checked
-                .CustomPreviewConfig = XenonComboBox1.SelectedIndex
                 .Win7LivePreview = XenonCheckBox9.Checked
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
@@ -359,7 +285,6 @@ Public Class SettingsX
                 XenonCheckBox2.Checked = .AutoRestartExplorer
                 XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
-                XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
                 XenonCheckBox9.Checked = .Win7LivePreview
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
@@ -368,19 +293,6 @@ Public Class SettingsX
                 XenonTextBox1.Text = .Terminal_Stable_Path
                 XenonTextBox2.Text = .Terminal_Preview_Path
                 XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
-
-                Select Case .CustomPreviewConfig
-                    Case XeSettings.WinVer.Eleven
-                        XenonComboBox1.SelectedIndex = 0
-                    Case XeSettings.WinVer.Ten
-                        XenonComboBox1.SelectedIndex = 1
-                    Case XeSettings.WinVer.Eight
-                        XenonComboBox1.SelectedIndex = 2
-                    Case XeSettings.WinVer.Seven
-                        XenonComboBox1.SelectedIndex = 3
-                    Case Else
-                        XenonComboBox1.SelectedIndex = 0
-                End Select
 
                 XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 
@@ -430,7 +342,6 @@ Public Class SettingsX
             XenonCheckBox2.Checked = .AutoRestartExplorer
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
-            XenonCheckBox4.Checked = .CustomPreviewConfig_Enabled
             XenonCheckBox9.Checked = .Win7LivePreview
 
             XenonCheckBox12.Checked = .Terminal_Bypass
@@ -439,19 +350,6 @@ Public Class SettingsX
             XenonTextBox1.Text = .Terminal_Stable_Path
             XenonTextBox2.Text = .Terminal_Preview_Path
             XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
-
-            Select Case .CustomPreviewConfig
-                Case XeSettings.WinVer.Eleven
-                    XenonComboBox1.SelectedIndex = 0
-                Case XeSettings.WinVer.Ten
-                    XenonComboBox1.SelectedIndex = 1
-                Case XeSettings.WinVer.Eight
-                    XenonComboBox1.SelectedIndex = 2
-                Case XeSettings.WinVer.Seven
-                    XenonComboBox1.SelectedIndex = 3
-                Case Else
-                    XenonComboBox1.SelectedIndex = 0
-            End Select
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
 

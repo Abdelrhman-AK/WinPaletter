@@ -718,7 +718,14 @@ Public Class CP : Implements IDisposable
             .AuthorSocialMediaLink = ""
     }
 
-    Public Windows10x As New Windows10x_Structure With {
+    Public Windows11 As New Windows10x_Structure With {
+            .Color_Index7 = Color.Black,
+            .Transparency = True,
+            .ApplyAccentonTitlebars = False,
+            .ApplyAccentonTaskbar = 0
+            }
+
+    Public Windows10 As New Windows10x_Structure With {
             .Color_Index7 = Color.Black,
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
@@ -1505,7 +1512,7 @@ Public Class CP : Implements IDisposable
         JSON_Overall.RemoveAll()
 
         JSON_Overall.Add("Information", GetMembersToJSON(GetType(Info_Structure), Info))
-        JSON_Overall.Add("Windows 10x", GetMembersToJSON(GetType(Windows10x_Structure), Windows10x))
+        JSON_Overall.Add("Windows 10x", GetMembersToJSON(GetType(Windows10x_Structure), Windows11))
         JSON_Overall.Add("LogonUI Windows 10x", GetMembersToJSON(GetType(LogonUI10x_Structure), LogonUI10x))
         JSON_Overall.Add("Windows 8", GetMembersToJSON(GetType(Windows8_Metro_Structure), Windows8))
         JSON_Overall.Add("Windows 7", GetMembersToJSON(GetType(Windows7_DWM_Structure), Windows7))
@@ -1520,6 +1527,7 @@ Public Class CP : Implements IDisposable
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "", Optional IgnoreWindowsTerminal As Boolean = False)
         Select Case [Mode]
             Case Mode.Registry
+
                 Dim _Def As CP
                 If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
                     _Def = New CP_Defaults().Default_Windows11
@@ -1551,6 +1559,7 @@ Public Class CP : Implements IDisposable
                     Dim x As Byte()
                     Dim y As Object
 
+#Region "Windows 11"
                     Try
                         x = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", If(My.W11, New CP_Defaults().Default_Windows11Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes))
                         Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
@@ -1562,7 +1571,7 @@ Public Class CP : Implements IDisposable
                         Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
                         Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                        With Windows10x
+                        With Windows11
                             .Color_Index0 = Colors(0)
                             .Color_Index1 = Colors(1)
                             .Color_Index2 = Colors(2)
@@ -1585,7 +1594,7 @@ Public Class CP : Implements IDisposable
                         Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
                         Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
 
-                        With Windows10x
+                        With Windows11
                             .Color_Index0 = Colors(0)
                             .Color_Index1 = Colors(1)
                             .Color_Index2 = Colors(2)
@@ -1599,91 +1608,223 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows10x.StartMenu_Accent).ToArgb)
-                        Windows10x.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows11.StartMenu_Accent).ToArgb)
+                        Windows11.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Windows10x.StartMenu_Accent = Def.Windows10x.StartMenu_Accent
+                        Windows11.StartMenu_Accent = Def.Windows11.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows10x.Titlebar_Active).ToArgb)
-                        Windows10x.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Windows10x.Titlebar_Active = Def.Windows10x.Titlebar_Active
+                        Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows10x.Titlebar_Active).ToArgb)
-                        Windows10x.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Windows10x.Titlebar_Active = Def.Windows10x.Titlebar_Active
+                        Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows10x.Titlebar_Inactive).ToArgb)
-                        Windows10x.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows11.Titlebar_Inactive).ToArgb)
+                        Windows11.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
                     Catch
-                        Windows10x.Titlebar_Inactive = Def.Windows10x.Titlebar_Inactive
+                        Windows11.Titlebar_Inactive = Def.Windows11.Titlebar_Inactive
                     End Try
 
                     Try
-                        Windows10x.WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.Windows10x.WinMode_Light)
+                        Windows11.WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.Windows11.WinMode_Light)
                     Catch
-                        Windows10x.WinMode_Light = Def.Windows10x.WinMode_Light
+                        Windows11.WinMode_Light = Def.Windows11.WinMode_Light
                     End Try
 
                     Try
-                        Windows10x.AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.Windows10x.AppMode_Light)
+                        Windows11.AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.Windows11.AppMode_Light)
                     Catch
-                        Windows10x.AppMode_Light = Def.Windows10x.AppMode_Light
+                        Windows11.AppMode_Light = Def.Windows11.AppMode_Light
                     End Try
 
                     Try
-                        Windows10x.Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Windows10x.Transparency)
+                        Windows11.Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Windows11.Transparency)
                     Catch
-                        Windows10x.Transparency = Def.Windows10x.Transparency
+                        Windows11.Transparency = Def.Windows11.Transparency
                     End Try
 
                     Try
                         Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
                             Case 0
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                             Case 1
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                             Case 2
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
                             Case Else
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                         End Select
 
                     Catch
-                        Windows10x.ApplyAccentonTaskbar = Def.Windows10x.ApplyAccentonTaskbar
+                        Windows11.ApplyAccentonTaskbar = Def.Windows11.ApplyAccentonTaskbar
                     End Try
 
                     Try
-                        Windows10x.ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.Windows10x.ApplyAccentonTitlebars)
+                        Windows11.ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.Windows11.ApplyAccentonTitlebars)
                     Catch
-                        Windows10x.ApplyAccentonTitlebars = Def.Windows10x.ApplyAccentonTitlebars
+                        Windows11.ApplyAccentonTitlebars = Def.Windows11.ApplyAccentonTitlebars
+                    End Try
+#End Region
+
+#Region "Windows 10"
+                    Try
+                        x = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", If(My.W11, New CP_Defaults().Default_Windows10Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes))
+                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
+                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
+                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
+                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
+                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
+                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
+                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
+                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+
+                        With Windows10
+                            .Color_Index0 = Colors(0)
+                            .Color_Index1 = Colors(1)
+                            .Color_Index2 = Colors(2)
+                            .Color_Index3 = Colors(3)
+                            .Color_Index4 = Colors(4)
+                            .Color_Index5 = Colors(5)
+                            .Color_Index6 = Colors(6)
+                            .Color_Index7 = Colors(7)
+                        End With
+
+                    Catch
+                        x = If(My.W11, New CP_Defaults().Default_Windows10Accents_Bytes, New CP_Defaults().Default_Windows10Accents_Bytes)
+
+                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
+                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
+                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
+                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
+                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
+                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
+                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
+                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+
+                        With Windows10
+                            .Color_Index0 = Colors(0)
+                            .Color_Index1 = Colors(1)
+                            .Color_Index2 = Colors(2)
+                            .Color_Index3 = Colors(3)
+                            .Color_Index4 = Colors(4)
+                            .Color_Index5 = Colors(5)
+                            .Color_Index6 = Colors(6)
+                            .Color_Index7 = Colors(7)
+                        End With
+
                     End Try
 
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows10.StartMenu_Accent).ToArgb)
+                        Windows10.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Windows10.StartMenu_Accent = Def.Windows10.StartMenu_Accent
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
+                    End Try
+
+                    Try
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows10.Titlebar_Inactive).ToArgb)
+                        Windows10.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                    Catch
+                        Windows10.Titlebar_Inactive = Def.Windows10.Titlebar_Inactive
+                    End Try
+
+                    Try
+                        Windows10.WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", Def.Windows10.WinMode_Light)
+                    Catch
+                        Windows10.WinMode_Light = Def.Windows10.WinMode_Light
+                    End Try
+
+                    Try
+                        Windows10.AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", Def.Windows10.AppMode_Light)
+                    Catch
+                        Windows10.AppMode_Light = Def.Windows10.AppMode_Light
+                    End Try
+
+                    Try
+                        Windows10.Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Def.Windows10.Transparency)
+                    Catch
+                        Windows10.Transparency = Def.Windows10.Transparency
+                    End Try
+
+                    Try
+                        Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+                            Case 0
+                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                            Case 1
+                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                            Case 2
+                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                            Case Else
+                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                        End Select
+
+                    Catch
+                        Windows10.ApplyAccentonTaskbar = Def.Windows10.ApplyAccentonTaskbar
+                    End Try
+
+                    Try
+                        Windows10.ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", Def.Windows10.ApplyAccentonTitlebars)
+                    Catch
+                        Windows10.ApplyAccentonTitlebars = Def.Windows10.ApplyAccentonTitlebars
+                    End Try
+#End Region
 
                 Else
+                    Windows11.Color_Index0 = _Def.Windows11.Color_Index0
+                    Windows11.Color_Index1 = _Def.Windows11.Color_Index1
+                    Windows11.Color_Index2 = _Def.Windows11.Color_Index2
+                    Windows11.Color_Index3 = _Def.Windows11.Color_Index3
+                    Windows11.Color_Index4 = _Def.Windows11.Color_Index4
+                    Windows11.Color_Index5 = _Def.Windows11.Color_Index5
+                    Windows11.Color_Index6 = _Def.Windows11.Color_Index6
+                    Windows11.StartMenu_Accent = _Def.Windows11.StartMenu_Accent
+                    Windows11.Titlebar_Active = _Def.Windows11.Titlebar_Active
+                    Windows11.Titlebar_Inactive = _Def.Windows11.Titlebar_Inactive
+                    Windows11.WinMode_Light = _Def.Windows11.WinMode_Light
+                    Windows11.AppMode_Light = _Def.Windows11.AppMode_Light
+                    Windows11.Transparency = _Def.Windows11.Transparency
+                    Windows11.ApplyAccentonTaskbar = _Def.Windows11.ApplyAccentonTaskbar
+                    Windows11.ApplyAccentonTitlebars = _Def.Windows11.ApplyAccentonTitlebars
 
-                    Windows10x.Color_Index0 = _Def.Windows10x.Color_Index0
-                    Windows10x.Color_Index1 = _Def.Windows10x.Color_Index1
-                    Windows10x.Color_Index2 = _Def.Windows10x.Color_Index2
-                    Windows10x.Color_Index3 = _Def.Windows10x.Color_Index3
-                    Windows10x.Color_Index4 = _Def.Windows10x.Color_Index4
-                    Windows10x.Color_Index5 = _Def.Windows10x.Color_Index5
-                    Windows10x.Color_Index6 = _Def.Windows10x.Color_Index6
-                    Windows10x.StartMenu_Accent = _Def.Windows10x.StartMenu_Accent
-                    Windows10x.Titlebar_Active = _Def.Windows10x.Titlebar_Active
-                    Windows10x.Titlebar_Inactive = _Def.Windows10x.Titlebar_Inactive
-                    Windows10x.WinMode_Light = _Def.Windows10x.WinMode_Light
-                    Windows10x.AppMode_Light = _Def.Windows10x.AppMode_Light
-                    Windows10x.Transparency = _Def.Windows10x.Transparency
-                    Windows10x.ApplyAccentonTaskbar = _Def.Windows10x.ApplyAccentonTaskbar
-                    Windows10x.ApplyAccentonTitlebars = _Def.Windows10x.ApplyAccentonTitlebars
+                    Windows10.Color_Index0 = _Def.Windows10.Color_Index0
+                    Windows10.Color_Index1 = _Def.Windows10.Color_Index1
+                    Windows10.Color_Index2 = _Def.Windows10.Color_Index2
+                    Windows10.Color_Index3 = _Def.Windows10.Color_Index3
+                    Windows10.Color_Index4 = _Def.Windows10.Color_Index4
+                    Windows10.Color_Index5 = _Def.Windows10.Color_Index5
+                    Windows10.Color_Index6 = _Def.Windows10.Color_Index6
+                    Windows10.StartMenu_Accent = _Def.Windows10.StartMenu_Accent
+                    Windows10.Titlebar_Active = _Def.Windows10.Titlebar_Active
+                    Windows10.Titlebar_Inactive = _Def.Windows10.Titlebar_Inactive
+                    Windows10.WinMode_Light = _Def.Windows10.WinMode_Light
+                    Windows10.AppMode_Light = _Def.Windows10.AppMode_Light
+                    Windows10.Transparency = _Def.Windows10.Transparency
+                    Windows10.ApplyAccentonTaskbar = _Def.Windows10.ApplyAccentonTaskbar
+                    Windows10.ApplyAccentonTitlebars = _Def.Windows10.ApplyAccentonTitlebars
                 End If
 
 #End Region
@@ -3430,47 +3571,47 @@ Public Class CP : Implements IDisposable
 
 #Region "Modern Windows"
 
-                    If lin.StartsWith("*WinMode_Light= ") Then Windows10x.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
-                    If lin.StartsWith("*AppMode_Light= ") Then Windows10x.AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
-                    If lin.StartsWith("*Transparency= ") Then Windows10x.Transparency = lin.Remove(0, "*Transparency= ".Count)
-                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then Windows10x.ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
+                    If lin.StartsWith("*WinMode_Light= ") Then Windows11.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
+                    If lin.StartsWith("*AppMode_Light= ") Then Windows11.AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
+                    If lin.StartsWith("*Transparency= ") Then Windows11.Transparency = lin.Remove(0, "*Transparency= ".Count)
+                    If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                     If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then
                         Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
                             Case "false"
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
                             Case "true"
-                                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
                             Case Else
                                 Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
                                     Case 0
-                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
                                     Case 1
-                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
                                     Case 2
-                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
 
                                     Case Else
-                                        Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
                                 End Select
 
 
                         End Select
                     End If
-                    If lin.StartsWith("*Titlebar_Active= ") Then Windows10x.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Titlebar_Inactive= ") Then Windows10x.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then Windows10x.Color_Index0 = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
-                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Windows10x.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
-                    If lin.StartsWith("*StartButton_Hover= ") Then Windows10x.Color_Index2 = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
-                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then Windows10x.Color_Index3 = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
-                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then Windows10x.Color_Index4 = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
-                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then Windows10x.Color_Index5 = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
-                    If lin.StartsWith("*Taskbar_Background= ") Then Windows10x.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
-                    If lin.StartsWith("*StartMenu_Accent= ") Then Windows10x.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Undefined= ") Then Windows10x.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
+                    If lin.StartsWith("*Titlebar_Active= ") Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
+                    If lin.StartsWith("*Titlebar_Inactive= ") Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
+                    If lin.StartsWith("*ActionCenter_AppsLinks= ") Then Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
+                    If lin.StartsWith("*Taskbar_Icon_Underline= ") Then Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
+                    If lin.StartsWith("*StartButton_Hover= ") Then Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
+                    If lin.StartsWith("*SettingsIconsAndLinks= ") Then Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
+                    If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
+                    If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
+                    If lin.StartsWith("*Taskbar_Background= ") Then Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
+                    If lin.StartsWith("*StartMenu_Accent= ") Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                    If lin.StartsWith("*Undefined= ") Then Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
 
 #End Region
 
@@ -3995,22 +4136,22 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Modern Windows"
-                Windows10x.Titlebar_Active = Color.Black
-                Windows10x.Titlebar_Inactive = Color.Black
-                Windows10x.StartMenu_Accent = Color.Black
-                Windows10x.Color_Index2 = Color.Black
-                Windows10x.Color_Index6 = Color.Black
-                Windows10x.Color_Index1 = Color.Black
-                Windows10x.Color_Index4 = Color.Black
-                Windows10x.Color_Index5 = Color.Black
-                Windows10x.Color_Index3 = Color.Black
-                Windows10x.Color_Index0 = Color.Black
-                Windows10x.Color_Index7 = Color.Black
-                Windows10x.WinMode_Light = False
-                Windows10x.AppMode_Light = False
-                Windows10x.Transparency = True
-                Windows10x.ApplyAccentonTitlebars = False
-                Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                Windows11.Titlebar_Active = Color.Black
+                Windows11.Titlebar_Inactive = Color.Black
+                Windows11.StartMenu_Accent = Color.Black
+                Windows11.Color_Index2 = Color.Black
+                Windows11.Color_Index6 = Color.Black
+                Windows11.Color_Index1 = Color.Black
+                Windows11.Color_Index4 = Color.Black
+                Windows11.Color_Index5 = Color.Black
+                Windows11.Color_Index3 = Color.Black
+                Windows11.Color_Index0 = Color.Black
+                Windows11.Color_Index7 = Color.Black
+                Windows11.WinMode_Light = False
+                Windows11.AppMode_Light = False
+                Windows11.Transparency = True
+                Windows11.ApplyAccentonTitlebars = False
+                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 #End Region
 
 #Region "Aero"
@@ -4501,7 +4642,7 @@ Public Class CP : Implements IDisposable
                 End If
 
                 If Not My.W7 And Not My.W8 Then
-                    Windows10x.Apply()          'Modern Windows
+                    Windows11.Apply()          'Modern Windows
                     LogonUI10x.Apply()          'LogonUI 11/10
                 End If
 
@@ -4572,22 +4713,22 @@ Public Class CP : Implements IDisposable
 
 #Region "Modern Windows"
                 tx.Add("<ModernWindows>")
-                tx.Add("*WinMode_Light= " & Windows10x.WinMode_Light)
-                tx.Add("*AppMode_Light= " & Windows10x.AppMode_Light)
-                tx.Add("*Transparency= " & Windows10x.Transparency)
-                tx.Add("*AccentColorOnTitlebarAndBorders= " & Windows10x.ApplyAccentonTitlebars)
-                tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " & Windows10x.ApplyAccentonTaskbar)
-                tx.Add("*Titlebar_Active= " & Windows10x.Titlebar_Active.ToArgb)
-                tx.Add("*Titlebar_Inactive= " & Windows10x.Titlebar_Inactive.ToArgb)
-                tx.Add("*ActionCenter_AppsLinks= " & Windows10x.Color_Index0.ToArgb)
-                tx.Add("*Taskbar_Icon_Underline= " & Windows10x.Color_Index1.ToArgb)
-                tx.Add("*StartButton_Hover= " & Windows10x.Color_Index2.ToArgb)
-                tx.Add("*SettingsIconsAndLinks= " & Windows10x.Color_Index3.ToArgb)
-                tx.Add("StartMenuBackground_ActiveTaskbarButton= " & Windows10x.Color_Index4.ToArgb)
-                tx.Add("*StartListFolders_TaskbarFront= " & Windows10x.Color_Index5.ToArgb)
-                tx.Add("*Taskbar_Background= " & Windows10x.Color_Index6.ToArgb)
-                tx.Add("*StartMenu_Accent= " & Windows10x.StartMenu_Accent.ToArgb)
-                tx.Add("*Undefined= " & Windows10x.Color_Index7.ToArgb)
+                tx.Add("*WinMode_Light= " & Windows11.WinMode_Light)
+                tx.Add("*AppMode_Light= " & Windows11.AppMode_Light)
+                tx.Add("*Transparency= " & Windows11.Transparency)
+                tx.Add("*AccentColorOnTitlebarAndBorders= " & Windows11.ApplyAccentonTitlebars)
+                tx.Add("*AccentColorOnStartTaskbarAndActionCenter= " & Windows11.ApplyAccentonTaskbar)
+                tx.Add("*Titlebar_Active= " & Windows11.Titlebar_Active.ToArgb)
+                tx.Add("*Titlebar_Inactive= " & Windows11.Titlebar_Inactive.ToArgb)
+                tx.Add("*ActionCenter_AppsLinks= " & Windows11.Color_Index0.ToArgb)
+                tx.Add("*Taskbar_Icon_Underline= " & Windows11.Color_Index1.ToArgb)
+                tx.Add("*StartButton_Hover= " & Windows11.Color_Index2.ToArgb)
+                tx.Add("*SettingsIconsAndLinks= " & Windows11.Color_Index3.ToArgb)
+                tx.Add("StartMenuBackground_ActiveTaskbarButton= " & Windows11.Color_Index4.ToArgb)
+                tx.Add("*StartListFolders_TaskbarFront= " & Windows11.Color_Index5.ToArgb)
+                tx.Add("*Taskbar_Background= " & Windows11.Color_Index6.ToArgb)
+                tx.Add("*StartMenu_Accent= " & Windows11.StartMenu_Accent.ToArgb)
+                tx.Add("*Undefined= " & Windows11.Color_Index7.ToArgb)
                 tx.Add("</ModernWindows>" & vbCrLf)
 #End Region
 
@@ -6530,7 +6671,7 @@ Public Class CP : Implements IDisposable
         Dim _Equals As Boolean = True
 
         If Info <> DirectCast(obj, CP).Info Then _Equals = False
-        If Windows10x <> DirectCast(obj, CP).Windows10x Then _Equals = False
+        If Windows11 <> DirectCast(obj, CP).Windows11 Then _Equals = False
         If LogonUI10x <> DirectCast(obj, CP).LogonUI10x Then _Equals = False
         If Windows7 <> DirectCast(obj, CP).Windows7 Then _Equals = False
         If Windows8 <> DirectCast(obj, CP).Windows8 Then _Equals = False

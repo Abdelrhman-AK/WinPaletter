@@ -51,125 +51,132 @@ Public Class dragPreviewer
     End Sub
 
     Sub ApplyLivePreviewFromCP([CP] As CP)
-        If Not MainFrm.PreviewConfig = MainFrm.WinVer.Seven And Not MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-            XenonWindow1.Active = True
-            XenonWindow2.Active = False
-
-            XenonWindow1.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
-            XenonWindow2.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
-
-            XenonWindow1.AccentColor_Active = [CP].Windows10x.Titlebar_Active
-            XenonWindow2.AccentColor_Active = [CP].Windows10x.Titlebar_Active
-
-            XenonWindow1.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
-            XenonWindow2.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
-
-            XenonWindow1.DarkMode = Not [CP].Windows10x.AppMode_Light
-            XenonWindow2.DarkMode = Not [CP].Windows10x.AppMode_Light
-
-            Label8.ForeColor = If([CP].Windows10x.AppMode_Light, Color.Black, Color.White)
-
-        Else
-            XenonWindow1.Active = True
-            XenonWindow2.Active = False
-        End If
+        XenonWindow1.Active = True
+        XenonWindow2.Active = False
 
         Select Case MainFrm.PreviewConfig
             Case MainFrm.WinVer.Eleven
 #Region "Win11"
-                start.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
-                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
+                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
 
-                taskbar.Transparency = [CP].Windows10x.Transparency
-                start.Transparency = [CP].Windows10x.Transparency
-                ActionCenter.Transparency = [CP].Windows10x.Transparency
+                XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
+                XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
+
+                XenonWindow1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+                XenonWindow2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+
+                XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
+                XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
+
+                Label8.ForeColor = If([CP].Windows11.AppMode_Light, Color.Black, Color.White)
+
+                start.DarkMode = Not [CP].Windows11.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows11.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows11.WinMode_Light
+
+                taskbar.Transparency = [CP].Windows11.Transparency
+                start.Transparency = [CP].Windows11.Transparency
+                ActionCenter.Transparency = [CP].Windows11.Transparency
 
                 start.Top = taskbar.Top - start.Height - 9
 
-                Select Case Not [CP].Windows10x.WinMode_Light
+                Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
                         taskbar.BackColorAlpha = 130
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 taskbar.BackColor = Color.FromArgb(55, 55, 55)
                                 start.BackColor = Color.FromArgb(40, 40, 40)
                                 ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5)
-                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index5)
-                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index5)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
+                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5)
+                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
                                 start.BackColor = Color.FromArgb(40, 40, 40)
                                 ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
 
                         End Select
 
 
-                        ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index1
-                        ActionCenter.ActionCenterButton_Hover = [CP].Windows10x.Color_Index0
-                        ActionCenter.ActionCenterButton_Pressed = [CP].Windows10x.Color_Index2
-                        start.SearchBoxAccent = [CP].Windows10x.Color_Index1
-                        taskbar.AppUnderline = [CP].Windows10x.Color_Index1
+                        ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index1
+                        ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index0
+                        ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
+                        start.SearchBoxAccent = [CP].Windows11.Color_Index1
+                        taskbar.AppUnderline = [CP].Windows11.Color_Index1
 
-                        setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                        lnk_preview.ForeColor = [CP].Windows10x.Color_Index0
+                        setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
+                        lnk_preview.ForeColor = [CP].Windows11.Color_Index0
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 taskbar.BackColor = Color.FromArgb(255, 255, 255)
                                 start.BackColor = Color.FromArgb(255, 255, 255)
                                 ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1)
-                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index0)
-                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index0)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1)
+                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0)
+                                ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1)
                                 start.BackColor = Color.FromArgb(255, 255, 255)
                                 ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
 
                         End Select
 
 
-                        ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index4
-                        ActionCenter.ActionCenterButton_Hover = [CP].Windows10x.Color_Index5
-                        ActionCenter.ActionCenterButton_Pressed = [CP].Windows10x.Color_Index2
-                        start.SearchBoxAccent = [CP].Windows10x.Color_Index4
-                        taskbar.AppUnderline = [CP].Windows10x.Color_Index4
+                        ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index4
+                        ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index5
+                        ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
+                        start.SearchBoxAccent = [CP].Windows11.Color_Index4
+                        taskbar.AppUnderline = [CP].Windows11.Color_Index4
 
-                        setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                        lnk_preview.ForeColor = [CP].Windows10x.Color_Index5
+                        setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
+                        lnk_preview.ForeColor = [CP].Windows11.Color_Index5
                 End Select
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
             Case MainFrm.WinVer.Ten
 #Region "Win10"
+                XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
 
-                start.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
-                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.Transparency = [CP].Windows10x.Transparency
-                start.Transparency = [CP].Windows10x.Transparency
-                ActionCenter.Transparency = [CP].Windows10x.Transparency
+                XenonWindow1.AccentColor_Active = [CP].Windows10.Titlebar_Active
+                XenonWindow2.AccentColor_Active = [CP].Windows10.Titlebar_Active
+
+                XenonWindow1.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+                XenonWindow2.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+
+                XenonWindow1.DarkMode = Not [CP].Windows10.AppMode_Light
+                XenonWindow2.DarkMode = Not [CP].Windows10.AppMode_Light
+
+                Label8.ForeColor = If([CP].Windows10.AppMode_Light, Color.Black, Color.White)
+
+                start.DarkMode = Not [CP].Windows10.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows10.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows10.WinMode_Light
+                taskbar.Transparency = [CP].Windows10.Transparency
+                start.Transparency = [CP].Windows10.Transparency
+                ActionCenter.Transparency = [CP].Windows10.Transparency
                 start.Top = taskbar.Top - start.Height
 
-                If [CP].Windows10x.Transparency Then
-                    If Not [CP].Windows10x.WinMode_Light Then
+                If [CP].Windows10.Transparency Then
+                    If Not [CP].Windows10.WinMode_Light Then
                         taskbar.BackColorAlpha = 150
                         start.BackColorAlpha = 150
                         ActionCenter.BackColorAlpha = 150
@@ -184,11 +191,11 @@ Public Class dragPreviewer
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                Select Case Not [CP].Windows10x.WinMode_Light
+                Select Case Not [CP].Windows10.WinMode_Light
                     Case True
 
-                        If [CP].Windows10x.Transparency Then
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        If [CP].Windows10.Transparency Then
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     taskbar.BackColor = Color.FromArgb(16, 16, 16)
                                     taskbar.StartColor = Color.FromArgb(150, 150, 150, 150)
@@ -196,42 +203,42 @@ Public Class dragPreviewer
                                     ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
 
                                     taskbar.AppBackground = Color.FromArgb(150, 150, 150, 150)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index6
+                                    taskbar.BackColor = [CP].Windows10.Color_Index6
                                     taskbar.StartColor = Color.FromArgb(0, 0, 0, 0)
                                     start.BackColor = Color.FromArgb(31, 31, 31)
                                     ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
 
-                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10x.Color_Index3)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10.Color_Index3)
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index6
+                                    taskbar.BackColor = [CP].Windows10.Color_Index6
                                     taskbar.StartColor = Color.FromArgb(0, 0, 0, 0)
-                                    start.BackColor = [CP].Windows10x.Color_Index4
-                                    ActionCenter.BackColor = [CP].Windows10x.Color_Index4
+                                    start.BackColor = [CP].Windows10.Color_Index4
+                                    ActionCenter.BackColor = [CP].Windows10.Color_Index4
 
-                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10x.Color_Index3)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10.Color_Index3)
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                             End Select
 
                         Else
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     taskbar.BackColor = Color.FromArgb(16, 16, 16)
                                     taskbar.StartColor = Color.FromArgb(31, 31, 31)
@@ -239,36 +246,36 @@ Public Class dragPreviewer
                                     ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index5
-                                    taskbar.StartColor = [CP].Windows10x.Color_Index4
+                                    taskbar.BackColor = [CP].Windows10.Color_Index5
+                                    taskbar.StartColor = [CP].Windows10.Color_Index4
                                     start.BackColor = Color.FromArgb(31, 31, 31)
                                     ActionCenter.BackColor = Color.FromArgb(31, 31, 31)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index5
-                                    taskbar.StartColor = [CP].Windows10x.Color_Index4
-                                    start.BackColor = [CP].Windows10x.Color_Index4
-                                    ActionCenter.BackColor = [CP].Windows10x.Color_Index4
+                                    taskbar.BackColor = [CP].Windows10.Color_Index5
+                                    taskbar.StartColor = [CP].Windows10.Color_Index4
+                                    start.BackColor = [CP].Windows10.Color_Index4
+                                    ActionCenter.BackColor = [CP].Windows10.Color_Index4
                             End Select
 
-                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 taskbar.AppBackground = Color.FromArgb(150, 100, 100, 100)
                             Else
-                                taskbar.AppBackground = [CP].Windows10x.Color_Index4
+                                taskbar.AppBackground = [CP].Windows10.Color_Index4
                             End If
 
-                            ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                            taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                            setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                            lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                            ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                            ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                            taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                            setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                            lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                            ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                         End If
 
                     Case False
-                        If [CP].Windows10x.Transparency Then
+                        If [CP].Windows10.Transparency Then
 
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     taskbar.BackColor = Color.FromArgb(238, 238, 238)
                                     taskbar.StartColor = Color.Transparent
@@ -276,43 +283,43 @@ Public Class dragPreviewer
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
                                     taskbar.AppBackground = Color.FromArgb(150, 238, 238, 238)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index6
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index3
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index6
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index3
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index6
+                                    taskbar.BackColor = [CP].Windows10.Color_Index6
                                     taskbar.StartColor = Color.Transparent
                                     start.BackColor = Color.FromArgb(228, 228, 228)
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
-                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10x.Color_Index3)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index6
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10.Color_Index3)
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index6
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index6
+                                    taskbar.BackColor = [CP].Windows10.Color_Index6
                                     taskbar.StartColor = Color.Transparent
-                                    start.BackColor = [CP].Windows10x.Color_Index4
-                                    ActionCenter.BackColor = [CP].Windows10x.Color_Index4
+                                    start.BackColor = [CP].Windows10.Color_Index4
+                                    ActionCenter.BackColor = [CP].Windows10.Color_Index4
 
-                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10x.Color_Index3)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = Color.FromArgb(150, [CP].Windows10.Color_Index3)
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                             End Select
 
                         Else
 
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     taskbar.BackColor = Color.FromArgb(238, 238, 238)
                                     taskbar.StartColor = Color.FromArgb(241, 241, 241)
@@ -320,38 +327,38 @@ Public Class dragPreviewer
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
                                     taskbar.AppBackground = Color.FromArgb(252, 252, 252)
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index6
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index3
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index6
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index3
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index5
-                                    taskbar.StartColor = [CP].Windows10x.Color_Index4
+                                    taskbar.BackColor = [CP].Windows10.Color_Index5
+                                    taskbar.StartColor = [CP].Windows10.Color_Index4
                                     start.BackColor = Color.FromArgb(228, 228, 228)
                                     ActionCenter.BackColor = Color.FromArgb(228, 228, 228)
 
-                                    taskbar.AppBackground = [CP].Windows10x.Color_Index4
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index6
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = [CP].Windows10.Color_Index4
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index6
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    taskbar.BackColor = [CP].Windows10x.Color_Index5
-                                    taskbar.StartColor = [CP].Windows10x.Color_Index4
-                                    start.BackColor = [CP].Windows10x.Color_Index4
-                                    ActionCenter.BackColor = [CP].Windows10x.Color_Index4
+                                    taskbar.BackColor = [CP].Windows10.Color_Index5
+                                    taskbar.StartColor = [CP].Windows10.Color_Index4
+                                    start.BackColor = [CP].Windows10.Color_Index4
+                                    ActionCenter.BackColor = [CP].Windows10.Color_Index4
 
 
-                                    taskbar.AppBackground = [CP].Windows10x.Color_Index4
-                                    ActionCenter.LinkColor = [CP].Windows10x.Color_Index0
-                                    taskbar.AppUnderline = [CP].Windows10x.Color_Index1
-                                    setting_icon_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    lnk_preview.ForeColor = [CP].Windows10x.Color_Index3
-                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10x.Color_Index3
+                                    taskbar.AppBackground = [CP].Windows10.Color_Index4
+                                    ActionCenter.LinkColor = [CP].Windows10.Color_Index0
+                                    taskbar.AppUnderline = [CP].Windows10.Color_Index1
+                                    setting_icon_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    lnk_preview.ForeColor = [CP].Windows10.Color_Index3
+                                    ActionCenter.ActionCenterButton_Normal = [CP].Windows10.Color_Index3
 
                             End Select
 
@@ -674,7 +681,7 @@ Public Class dragPreviewer
             XenonWindow2.Left = XenonWindow1.Left
         End If
 
-            XenonWindow1.Refresh()
+        XenonWindow1.Refresh()
         XenonWindow2.Refresh()
 
         ReValidateLivePreview(pnl_preview)

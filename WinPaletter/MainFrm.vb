@@ -22,300 +22,302 @@ Public Class MainFrm
         Dim AnimX1 As Integer = 25
         Dim AnimX2 As Integer = 1
 
-        If Not PreviewConfig = WinVer.Seven And Not PreviewConfig = WinVer.Eight Then
-            XenonWindow1.Active = True
-            XenonWindow2.Active = False
-
-            XenonWindow1.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
-            XenonWindow2.AccentColor_Enabled = [CP].Windows10x.ApplyAccentonTitlebars
-
-            XenonWindow1.AccentColor_Active = [CP].Windows10x.Titlebar_Active
-            XenonWindow2.AccentColor_Active = [CP].Windows10x.Titlebar_Active
-
-            XenonWindow1.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
-            XenonWindow2.AccentColor_Inactive = [CP].Windows10x.Titlebar_Inactive
-
-            XenonWindow1.DarkMode = Not [CP].Windows10x.AppMode_Light
-            XenonWindow2.DarkMode = Not [CP].Windows10x.AppMode_Light
-
-            Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows10x.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
-
-            If PreviewConfig = WinVer.Eleven Then
-                lbl5.Text = My.Application.LanguageHelper.CP_11_Settings
-                lbl6.Text = My.Application.LanguageHelper.CP_11_SomePressedButtons
-                lbl7.Text = My.Application.LanguageHelper.CP_Undefined
-                lbl8.Text = My.Application.LanguageHelper.CP_Undefined
-                pic5.Image = My.Resources.Mini_SettingsIcons
-                pic6.Image = My.Resources.Mini_PressedButton
-                pic7.Image = My.Resources.Mini_Undefined
-                pic8.Image = My.Resources.Mini_Undefined
-                pic9.Image = My.Resources.Mini_Undefined
-
-                Select Case Not [CP].Windows10x.WinMode_Light
-                    Case True   ''''''''''Dark
-                        lbl1.Text = My.Application.LanguageHelper.CP_11_StartMenu_Taskbar_AC
-                        lbl2.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
-                        lbl3.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
-                        lbl4.Text = My.Application.LanguageHelper.CP_Undefined
-
-                        pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        pic2.Image = My.Resources.Mini_ACHover_Links
-                        pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
-                        pic4.Image = My.Resources.Mini_Undefined
-
-
-                    Case False   ''''''''''Light
-                        lbl1.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
-                        lbl2.Text = My.Application.LanguageHelper.CP_11_StartMenu_AC
-                        lbl3.Text = My.Application.LanguageHelper.CP_11_Taskbar
-                        lbl4.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
-
-                        pic1.Image = My.Resources.Mini_ACHover_Links
-                        pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        pic3.Image = My.Resources.Mini_Taskbar
-                        pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
-                End Select
-
-            Else
-                Select Case Not [CP].Windows10x.WinMode_Light
-                    Case True ''''''''''Dark
-                        lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                        lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                        lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                        lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                        lbl7.Text = My.Application.LanguageHelper.CP_Undefined
-
-                        pic2.Image = My.Resources.Mini_ACHover_Links
-                        pic3.Image = My.Resources.Mini_TaskbarApp
-                        pic5.Image = My.Resources.Mini_SettingsIcons
-                        pic6.Image = My.Resources.Native10
-                        pic7.Image = My.Resources.Mini_Undefined
-
-                        If [CP].Windows10x.Transparency Then
-                            lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
-                            lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                            lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
-
-                            pic1.Image = My.Resources.Mini_Hamburger
-                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                            pic8.Image = My.Resources.Mini_Taskbar
-
-                            If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_Taskbar_SomeBtns
-                            End If
-
-                        Else
-                            lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
-                            pic1.Image = My.Resources.Mini_Taskbar
-                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-
-                            If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
-                            Else
-                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                            End If
-
-                            lbl8.Text = My.Application.LanguageHelper.CP_Undefined
-                            pic8.Image = My.Resources.Mini_Undefined
-
-                        End If
-
-                    Case False ''''''''''Light
-                        If [CP].Windows10x.Transparency Then
-                            lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
-                            lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                            lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                            lbl7.Text = My.Application.LanguageHelper.CP_Undefined
-
-                            pic1.Image = My.Resources.Mini_Hamburger
-                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                            pic5.Image = My.Resources.Mini_SettingsIcons
-                            pic6.Image = My.Resources.Native10
-                            pic7.Image = My.Resources.Mini_Undefined
-                            pic8.Image = My.Resources.Mini_Taskbar
-
-                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl3.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
-
-                                pic2.Image = My.Resources.Mini_Undefined
-                                pic3.Image = My.Resources.Mini_Undefined
-
-                            ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
-
-                                pic2.Image = My.Resources.Mini_Undefined
-                                pic3.Image = My.Resources.Mini_TaskbarApp
-
-                            Else
-                                lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
-
-                                pic2.Image = My.Resources.Mini_ACHover_Links
-                                pic3.Image = My.Resources.Mini_TaskbarApp
-
-                            End If
-                        Else
-                            lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
-                            lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                            lbl7.Text = My.Application.LanguageHelper.CP_Undefined
-
-                            pic1.Image = My.Resources.Mini_Taskbar
-                            pic6.Image = My.Resources.Native10
-                            pic7.Image = My.Resources.Mini_Undefined
-
-                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl3.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
-
-                                pic2.Image = My.Resources.Mini_Undefined
-                                pic3.Image = My.Resources.Mini_Undefined
-                                pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                                pic5.Image = My.Resources.Mini_SettingsIcons
-                                pic8.Image = My.Resources.Mini_ACHover_Links
-
-                            ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                lbl4.Text = My.Application.LanguageHelper.CP_10_TaskbarFocusedApp_StartButtonHover
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
-
-                                pic2.Image = My.Resources.Mini_Undefined
-                                pic3.Image = My.Resources.Mini_TaskbarApp
-                                pic4.Image = My.Resources.Mini_TaskbarActiveIcon
-                                pic5.Image = My.Resources.Mini_SettingsIcons
-                                pic8.Image = My.Resources.Mini_ACHover_Links
-
-                            Else
-                                lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                                lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
-                                lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Application.LanguageHelper.CP_Undefined
-
-                                pic2.Image = My.Resources.Mini_ACHover_Links
-                                pic3.Image = My.Resources.Mini_TaskbarApp
-                                pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                                pic5.Image = My.Resources.Mini_SettingsIcons
-                                pic8.Image = My.Resources.Mini_Undefined
-                            End If
-                        End If
-                End Select
-            End If
-
-
-        Else
-            XenonWindow1.Active = True
-            XenonWindow2.Active = False
-        End If
+        XenonWindow1.Active = True
+        XenonWindow2.Active = False
 
         Select Case PreviewConfig
             Case WinVer.Eleven
 #Region "Win11"
-                start.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
-                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
+                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
 
-                taskbar.Transparency = [CP].Windows10x.Transparency
-                start.Transparency = [CP].Windows10x.Transparency
-                ActionCenter.Transparency = [CP].Windows10x.Transparency
+                XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
+                XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
+
+                XenonWindow1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+                XenonWindow2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+
+                XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
+                XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
+
+                Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows11.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
+
+                W11_lbl5.Text = My.Application.LanguageHelper.CP_11_Settings
+                W11_lbl6.Text = My.Application.LanguageHelper.CP_11_SomePressedButtons
+                W11_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+                W11_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+                W11_pic5.Image = My.Resources.Mini_SettingsIcons
+                W11_pic6.Image = My.Resources.Mini_PressedButton
+                W11_pic7.Image = My.Resources.Mini_Undefined
+                W11_pic8.Image = My.Resources.Mini_Undefined
+                W11_pic9.Image = My.Resources.Mini_Undefined
+
+                Select Case Not [CP].Windows11.WinMode_Light
+                    Case True   ''''''''''Dark
+                        W11_lbl1.Text = My.Application.LanguageHelper.CP_11_StartMenu_Taskbar_AC
+                        W11_lbl2.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
+                        W11_lbl3.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
+                        W11_lbl4.Text = My.Application.LanguageHelper.CP_Undefined
+
+                        W11_pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        W11_pic2.Image = My.Resources.Mini_ACHover_Links
+                        W11_pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
+                        W11_pic4.Image = My.Resources.Mini_Undefined
+
+
+                    Case False   ''''''''''Light
+                        W11_lbl1.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
+                        W11_lbl2.Text = My.Application.LanguageHelper.CP_11_StartMenu_AC
+                        W11_lbl3.Text = My.Application.LanguageHelper.CP_11_Taskbar
+                        W11_lbl4.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
+
+                        W11_pic1.Image = My.Resources.Mini_ACHover_Links
+                        W11_pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                        W11_pic3.Image = My.Resources.Mini_Taskbar
+                        W11_pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
+                End Select
+
+                start.DarkMode = Not [CP].Windows11.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows11.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows11.WinMode_Light
+
+                taskbar.Transparency = [CP].Windows11.Transparency
+                start.Transparency = [CP].Windows11.Transparency
+                ActionCenter.Transparency = [CP].Windows11.Transparency
 
                 start.Top = taskbar.Top - start.Height - 9
 
-                Select Case Not [CP].Windows10x.WinMode_Light
+                Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
                         taskbar.BackColorAlpha = 130
                         start.BackColorAlpha = 130
                         ActionCenter.BackColorAlpha = 130
 
-                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index5), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
 
                         End Select
 
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows10x.Color_Index2, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows11.Color_Index0, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows11.Color_Index2, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
 
-                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
+                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows11.Color_Index0, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
                         taskbar.BackColorAlpha = 180
                         start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
 
-                        Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows10x.Color_Index0), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows10x.Color_Index0), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows10x.Color_Index1), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
                         End Select
 
 
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
-                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows10x.Color_Index2, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
+                        Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows11.Color_Index2, AnimX1, AnimX2)
+                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
+                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
 
-                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
+                        Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
+                        Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
                 End Select
-
-                ReValidateLivePreview(pnl_preview)
 #End Region
             Case WinVer.Ten
 #Region "Win10"
+                XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
 
-                start.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.DarkMode = Not [CP].Windows10x.WinMode_Light
-                ActionCenter.DarkMode = Not [CP].Windows10x.WinMode_Light
-                taskbar.Transparency = [CP].Windows10x.Transparency
-                start.Transparency = [CP].Windows10x.Transparency
-                ActionCenter.Transparency = [CP].Windows10x.Transparency
+                XenonWindow1.AccentColor_Active = [CP].Windows10.Titlebar_Active
+                XenonWindow2.AccentColor_Active = [CP].Windows10.Titlebar_Active
+
+                XenonWindow1.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+                XenonWindow2.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+
+                XenonWindow1.DarkMode = Not [CP].Windows10.AppMode_Light
+                XenonWindow2.DarkMode = Not [CP].Windows10.AppMode_Light
+
+                Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows10.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
+
+
+                Select Case Not [CP].Windows10.WinMode_Light
+                    Case True ''''''''''Dark
+                        W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                        W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                        W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                        W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                        W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                        W10_pic2.Image = My.Resources.Mini_ACHover_Links
+                        W10_pic3.Image = My.Resources.Mini_TaskbarApp
+                        W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                        W10_pic6.Image = My.Resources.Native10
+                        W10_pic7.Image = My.Resources.Mini_Undefined
+
+                        If [CP].Windows10.Transparency Then
+                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
+                            W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                            W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+
+                            W10_pic1.Image = My.Resources.Mini_Hamburger
+                            W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                            W10_pic8.Image = My.Resources.Mini_Taskbar
+
+                            If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_Taskbar_SomeBtns
+                            End If
+
+                        Else
+                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            W10_pic1.Image = My.Resources.Mini_Taskbar
+                            W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+
+                            If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
+                            Else
+                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                            End If
+
+                            W10_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+                            W10_pic8.Image = My.Resources.Mini_Undefined
+
+                        End If
+
+                    Case False ''''''''''Light
+                        If [CP].Windows10.Transparency Then
+                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
+                            W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                            W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                            W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                            W10_pic1.Image = My.Resources.Mini_Hamburger
+                            W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                            W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                            W10_pic6.Image = My.Resources.Native10
+                            W10_pic7.Image = My.Resources.Mini_Undefined
+                            W10_pic8.Image = My.Resources.Mini_Taskbar
+
+                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+
+                                W10_pic2.Image = My.Resources.Mini_Undefined
+                                W10_pic3.Image = My.Resources.Mini_Undefined
+
+                            ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+
+                                W10_pic2.Image = My.Resources.Mini_Undefined
+                                W10_pic3.Image = My.Resources.Mini_TaskbarApp
+
+                            Else
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+
+                                W10_pic2.Image = My.Resources.Mini_ACHover_Links
+                                W10_pic3.Image = My.Resources.Mini_TaskbarApp
+
+                            End If
+                        Else
+                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
+                            W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+
+                            W10_pic1.Image = My.Resources.Mini_Taskbar
+                            W10_pic6.Image = My.Resources.Native10
+                            W10_pic7.Image = My.Resources.Mini_Undefined
+
+                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+
+                                W10_pic2.Image = My.Resources.Mini_Undefined
+                                W10_pic3.Image = My.Resources.Mini_Undefined
+                                W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic8.Image = My.Resources.Mini_ACHover_Links
+
+                            ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_TaskbarFocusedApp_StartButtonHover
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+
+                                W10_pic2.Image = My.Resources.Mini_Undefined
+                                W10_pic3.Image = My.Resources.Mini_TaskbarApp
+                                W10_pic4.Image = My.Resources.Mini_TaskbarActiveIcon
+                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic8.Image = My.Resources.Mini_ACHover_Links
+
+                            Else
+                                W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
+                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
+                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+
+                                W10_pic2.Image = My.Resources.Mini_ACHover_Links
+                                W10_pic3.Image = My.Resources.Mini_TaskbarApp
+                                W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic8.Image = My.Resources.Mini_Undefined
+                            End If
+                        End If
+                End Select
+
+                start.DarkMode = Not [CP].Windows10.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows10.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows10.WinMode_Light
+                taskbar.Transparency = [CP].Windows10.Transparency
+                start.Transparency = [CP].Windows10.Transparency
+                ActionCenter.Transparency = [CP].Windows10.Transparency
                 start.Top = taskbar.Top - start.Height
 
-                If [CP].Windows10x.Transparency Then
-                    If Not [CP].Windows10x.WinMode_Light Then
+                If [CP].Windows10.Transparency Then
+                    If Not [CP].Windows10.WinMode_Light Then
                         taskbar.BackColorAlpha = 150
                         start.BackColorAlpha = 150
                         ActionCenter.BackColorAlpha = 150
@@ -330,11 +332,11 @@ Public Class MainFrm
                     ActionCenter.BackColorAlpha = 255
                 End If
 
-                Select Case Not [CP].Windows10x.WinMode_Light
+                Select Case Not [CP].Windows10.WinMode_Light
                     Case True
 
-                        If [CP].Windows10x.Transparency Then
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                        If [CP].Windows10.Transparency Then
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(16, 16, 16), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(150, 150, 150, 150), AnimX1, AnimX2)
@@ -342,42 +344,42 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 150, 150, 150), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(0, 0, 0, 0), AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(0, 0, 0, 0), AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
                         Else
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(16, 16, 16), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
@@ -385,36 +387,36 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(31, 31, 31), AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
                             End Select
 
-                            If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 100, 100, 100), AnimX1, AnimX2)
                             Else
-                                Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
                             End If
 
-                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                            Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                            Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                            Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                            Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                            Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                         End If
 
                     Case False
-                        If [CP].Windows10x.Transparency Then
+                        If [CP].Windows10.Transparency Then
 
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(238, 238, 238), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
@@ -422,43 +424,43 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, 238, 238, 238), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.Transparent, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10x.Color_Index3), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(150, [CP].Windows10.Color_Index3), AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
                         Else
 
-                            Select Case [CP].Windows10x.ApplyAccentonTaskbar
+                            Select Case [CP].Windows10.ApplyAccentonTaskbar
                                 Case ApplyAccentonTaskbar_Level.None
                                     Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(238, 238, 238), AnimX1, AnimX2)
                                     Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, Color.FromArgb(241, 241, 241), AnimX1, AnimX2)
@@ -466,47 +468,44 @@ Public Class MainFrm
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
                                     Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, Color.FromArgb(252, 252, 252), AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
                                     Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(228, 228, 228), AnimX1, AnimX2)
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index6, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index6, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                                 Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10x.Color_Index5, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, [CP].Windows10.Color_Index5, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "StartColor", taskbar.StartColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
 
 
-                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10x.Color_Index4, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10x.Color_Index0, AnimX1, AnimX2)
-                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10x.Color_Index1, AnimX1, AnimX2)
-                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
-                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10x.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppBackground", taskbar.AppBackground, [CP].Windows10.Color_Index4, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, [CP].Windows10.Color_Index0, AnimX1, AnimX2)
+                                    Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows10.Color_Index1, AnimX1, AnimX2)
+                                    Visual.FadeColor(setting_icon_preview, "Forecolor", setting_icon_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(lnk_preview, "Forecolor", lnk_preview.ForeColor, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
+                                    Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows10.Color_Index3, AnimX1, AnimX2)
 
                             End Select
 
                         End If
                 End Select
 
-
-
-                ReValidateLivePreview(pnl_preview)
 #End Region
             Case WinVer.Eight
 #Region "Win8.1"
@@ -539,7 +538,6 @@ Public Class MainFrm
                 taskbar.BackColor = [CP].Windows7.ColorizationColor
                 taskbar.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
 
-                ReValidateLivePreview(pnl_preview)
 #End Region
             Case WinVer.Seven
 #Region "Win7"
@@ -674,20 +672,19 @@ Public Class MainFrm
                         taskbar.Transparency = False
                         taskbar.Basic = True
                         start.NoisePower = 0
-
-
 #End Region
 
                     Case CP.AeroTheme.Classic
 
                 End Select
 
-                ReValidateLivePreview(pnl_preview)
 #End Region
         End Select
 
         ApplyMetrics([CP], XenonWindow1)
         ApplyMetrics([CP], XenonWindow2)
+
+        ReValidateLivePreview(pnl_preview)
 
     End Sub
 
@@ -714,6 +711,7 @@ Public Class MainFrm
 
     Sub Adjust_Preview()
         If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
+
         Panel3.Visible = True
         lnk_preview.Visible = True
 
@@ -863,78 +861,105 @@ Public Class MainFrm
         themename_lbl.Text = String.Format("{0} ({1})", CP.Info.PaletteName, CP.Info.PaletteVersion)
         author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Info.Author)
 
-        WinMode_Toggle.Checked = Not ColorPalette.Windows10x.WinMode_Light
-        AppMode_Toggle.Checked = Not ColorPalette.Windows10x.AppMode_Light
-        Transparency_Toggle.Checked = ColorPalette.Windows10x.Transparency
-        ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows10x.ApplyAccentonTitlebars
+        W11_WinMode_Toggle.Checked = Not ColorPalette.Windows11.WinMode_Light
+        W11_AppMode_Toggle.Checked = Not ColorPalette.Windows11.AppMode_Light
+        W11_Transparency_Toggle.Checked = ColorPalette.Windows11.Transparency
+        W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows11.ApplyAccentonTitlebars
 
-        Select Case ColorPalette.Windows10x.ApplyAccentonTaskbar
+        Select Case ColorPalette.Windows11.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
-                Accent_None.Checked = True
+                W11_Accent_None.Checked = True
 
             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                Accent_StartTaskbar.Checked = True
+                W11_Accent_StartTaskbar.Checked = True
 
             Case ApplyAccentonTaskbar_Level.Taskbar
-                Accent_Taskbar.Checked = True
+                W11_Accent_Taskbar.Checked = True
 
         End Select
 
+        W11_ActiveTitlebar_pick.BackColor = ColorPalette.Windows11.Titlebar_Active
+        W11_InactiveTitlebar_pick.BackColor = ColorPalette.Windows11.Titlebar_Inactive
+        W11_Color_Index5.BackColor = ColorPalette.Windows11.StartMenu_Accent
+        W11_Color_Index4.BackColor = ColorPalette.Windows11.Color_Index2
+        W11_Color_Index6.BackColor = ColorPalette.Windows11.Color_Index6
+        W11_Color_Index1.BackColor = ColorPalette.Windows11.Color_Index1
+        W11_Color_Index2.BackColor = ColorPalette.Windows11.Color_Index4
+        W11_TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows11.Color_Index5
+        W11_Color_Index0.BackColor = ColorPalette.Windows11.Color_Index0
+        W11_Color_Index3.BackColor = ColorPalette.Windows11.Color_Index3
+        W11_Color_Index7.BackColor = ColorPalette.Windows11.Color_Index7
+
+        W10_WinMode_Toggle.Checked = Not ColorPalette.Windows10.WinMode_Light
+        W10_AppMode_Toggle.Checked = Not ColorPalette.Windows10.AppMode_Light
+        W10_Transparency_Toggle.Checked = ColorPalette.Windows10.Transparency
+        W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows10.ApplyAccentonTitlebars
+
+        Select Case ColorPalette.Windows10.ApplyAccentonTaskbar
+            Case ApplyAccentonTaskbar_Level.None
+                W10_Accent_None.Checked = True
+
+            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                W10_Accent_StartTaskbar.Checked = True
+
+            Case ApplyAccentonTaskbar_Level.Taskbar
+                W10_Accent_Taskbar.Checked = True
+        End Select
+
+        W10_ActiveTitlebar_pick.BackColor = ColorPalette.Windows10.Titlebar_Active
+        W10_InactiveTitlebar_pick.BackColor = ColorPalette.Windows10.Titlebar_Inactive
+        W10_Color_Index5.BackColor = ColorPalette.Windows10.StartMenu_Accent
+        W10_Color_Index4.BackColor = ColorPalette.Windows10.Color_Index2
+        W10_Color_Index6.BackColor = ColorPalette.Windows10.Color_Index6
+        W10_Color_Index1.BackColor = ColorPalette.Windows10.Color_Index1
+        W10_Color_Index2.BackColor = ColorPalette.Windows10.Color_Index4
+        W10_TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows10.Color_Index5
+        W10_Color_Index0.BackColor = ColorPalette.Windows10.Color_Index0
+        W10_Color_Index3.BackColor = ColorPalette.Windows10.Color_Index3
+        W10_Color_Index7.BackColor = ColorPalette.Windows10.Color_Index7
 
 
-        ActiveTitlebar_pick.BackColor = ColorPalette.Windows10x.Titlebar_Active
-        InactiveTitlebar_pick.BackColor = ColorPalette.Windows10x.Titlebar_Inactive
-        StartAccent_pick.BackColor = ColorPalette.Windows10x.StartMenu_Accent
-        StartButtonHover_pick.BackColor = ColorPalette.Windows10x.Color_Index2
-        TaskbarBackground_pick.BackColor = ColorPalette.Windows10x.Color_Index6
-        TaskbarIconUnderline_pick.BackColor = ColorPalette.Windows10x.Color_Index1
-        StartBackgroundAndTaskbarButton_pick.BackColor = ColorPalette.Windows10x.Color_Index4
-        TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows10x.Color_Index5
-        ActionCenter_pick.BackColor = ColorPalette.Windows10x.Color_Index0
-        Color_Index3_pick.BackColor = ColorPalette.Windows10x.Color_Index3
-        Color_Index7_pick.BackColor = ColorPalette.Windows10x.Color_Index7
-
-        Aero_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
-        Aero_ColorizationAfterglow_pick.BackColor = ColorPalette.Windows7.ColorizationAfterglow
-        Aero_ColorizationColorBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
-        Aero_ColorizationAfterglowBalance_bar.Value = ColorPalette.Windows7.ColorizationAfterglowBalance
-        Aero_ColorizationBlurBalance_bar.Value = ColorPalette.Windows7.ColorizationBlurBalance
-        Aero_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
-        Aero_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
-        Aero_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
+        W7_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
+        W7_ColorizationAfterglow_pick.BackColor = ColorPalette.Windows7.ColorizationAfterglow
+        W7_ColorizationColorBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
+        W7_ColorizationAfterglowBalance_bar.Value = ColorPalette.Windows7.ColorizationAfterglowBalance
+        W7_ColorizationBlurBalance_bar.Value = ColorPalette.Windows7.ColorizationBlurBalance
+        W7_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
+        W7_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
+        W7_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
 
         If PreviewConfig = WinVer.Seven Then
             Select Case ColorPalette.Windows7.Theme
                 Case CP.AeroTheme.Aero
-                    theme_aero.Checked = True
+                    W7_theme_aero.Checked = True
 
                 Case CP.AeroTheme.AeroOpaque
-                    theme_aeroopaque.Checked = True
+                    W7_theme_aeroopaque.Checked = True
 
                 Case CP.AeroTheme.Basic
-                    theme_basic.Checked = True
+                    W7_theme_basic.Checked = True
 
                 Case CP.AeroTheme.Classic
-                    theme_classic.Checked = True
+                    W7_theme_classic.Checked = True
             End Select
 
         ElseIf PreviewConfig = WinVer.Eight Then
             Select Case ColorPalette.Windows8.Theme
                 Case CP.AeroTheme.Aero
-                    XenonRadioImage1.Checked = True
+                    W8_theme_aero.Checked = True
 
                 Case CP.AeroTheme.AeroLite
-                    XenonRadioImage2.Checked = True
+                    W8_theme_aerolite.Checked = True
             End Select
         End If
 
-        ColorizationColor8_pick.BackColor = ColorPalette.Windows7.ColorizationColor
-        ColorizationBalance8_track.Value = ColorPalette.Windows7.ColorizationColorBalance
+        W8_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
+        W8_ColorizationBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
 
-        start8_pick.BackColor = ColorPalette.Windows8.StartColor
-        accent8_pick.BackColor = ColorPalette.Windows8.AccentColor
-        personalcls8_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
-        personalcolor8accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
+        W8_start_pick.BackColor = ColorPalette.Windows8.StartColor
+        W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
+        W8_personalcls_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
+        W8_personalcolor_accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
 
         ApplyMetroStartToButton(ColorPalette)
         ApplyBackLogonUI(ColorPalette)
@@ -955,71 +980,85 @@ Public Class MainFrm
             DefCP = New CP_Defaults().Default_Windows11
         End If
 
-        ActiveTitlebar_pick.DefaultColor = DefCP.Windows10x.Titlebar_Active
-        InactiveTitlebar_pick.DefaultColor = DefCP.Windows10x.Titlebar_Inactive
-        StartAccent_pick.DefaultColor = DefCP.Windows10x.StartMenu_Accent
-        StartButtonHover_pick.DefaultColor = DefCP.Windows10x.Color_Index2
-        TaskbarBackground_pick.DefaultColor = DefCP.Windows10x.Color_Index6
-        TaskbarIconUnderline_pick.DefaultColor = DefCP.Windows10x.Color_Index1
-        StartBackgroundAndTaskbarButton_pick.DefaultColor = DefCP.Windows10x.Color_Index4
-        TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.Windows10x.Color_Index5
-        ActionCenter_pick.DefaultColor = DefCP.Windows10x.Color_Index0
-        Color_Index3_pick.DefaultColor = DefCP.Windows10x.Color_Index3
-        Color_Index7_pick.DefaultColor = DefCP.Windows10x.Color_Index7
+        W11_ActiveTitlebar_pick.DefaultColor = DefCP.Windows11.Titlebar_Active
+        W11_InactiveTitlebar_pick.DefaultColor = DefCP.Windows11.Titlebar_Inactive
+        W11_Color_Index5.DefaultColor = DefCP.Windows11.StartMenu_Accent
+        W11_Color_Index4.DefaultColor = DefCP.Windows11.Color_Index2
+        W11_Color_Index6.DefaultColor = DefCP.Windows11.Color_Index6
+        W11_Color_Index1.DefaultColor = DefCP.Windows11.Color_Index1
+        W11_Color_Index2.DefaultColor = DefCP.Windows11.Color_Index4
+        W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.Windows11.Color_Index5
+        W11_Color_Index0.DefaultColor = DefCP.Windows11.Color_Index0
+        W11_Color_Index3.DefaultColor = DefCP.Windows11.Color_Index3
+        W11_Color_Index7.DefaultColor = DefCP.Windows11.Color_Index7
 
-        Aero_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
-        Aero_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
-        ColorizationColor8_pick.DefaultColor = DefCP.Windows7.ColorizationColor
-        start8_pick.DefaultColor = DefCP.Windows8.StartColor
-        accent8_pick.DefaultColor = DefCP.Windows8.AccentColor
-        personalcls8_background_pick.DefaultColor = DefCP.Windows8.PersonalColors_Background
-        personalcolor8accent_pick.DefaultColor = DefCP.Windows8.PersonalColors_Accent
+        W10_ActiveTitlebar_pick.DefaultColor = DefCP.Windows10.Titlebar_Active
+        W10_InactiveTitlebar_pick.DefaultColor = DefCP.Windows10.Titlebar_Inactive
+        W10_Color_Index5.DefaultColor = DefCP.Windows10.StartMenu_Accent
+        W10_Color_Index4.DefaultColor = DefCP.Windows10.Color_Index2
+        W10_Color_Index6.DefaultColor = DefCP.Windows10.Color_Index6
+        W10_Color_Index1.DefaultColor = DefCP.Windows10.Color_Index1
+        W10_Color_Index2.DefaultColor = DefCP.Windows10.Color_Index4
+        W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = DefCP.Windows10.Color_Index5
+        W10_Color_Index0.DefaultColor = DefCP.Windows10.Color_Index0
+        W10_Color_Index3.DefaultColor = DefCP.Windows10.Color_Index3
+        W10_Color_Index7.DefaultColor = DefCP.Windows10.Color_Index7
+
+        W7_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
+        W7_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
+        W8_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
+        W8_start_pick.DefaultColor = DefCP.Windows8.StartColor
+        W8_accent_pick.DefaultColor = DefCP.Windows8.AccentColor
+        W8_personalcls_background_pick.DefaultColor = DefCP.Windows8.PersonalColors_Background
+        W8_personalcolor_accent_pick.DefaultColor = DefCP.Windows8.PersonalColors_Accent
+
+        CP.Dispose()
     End Sub
 
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Windows8.Start
             Case 1
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
             Case 2
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_2, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_2, 48, 48)
             Case 3
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_3, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_3, 48, 48)
             Case 4
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_4, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_4, 48, 48)
             Case 5
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_5, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_5, 48, 48)
             Case 6
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_6, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_6, 48, 48)
             Case 7
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_7, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_7, 48, 48)
             Case 8
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_8, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_8, 48, 48)
             Case 9
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_9, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_9, 48, 48)
             Case 10
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_10, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_10, 48, 48)
             Case 11
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_11, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_11, 48, 48)
             Case 12
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_12, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_12, 48, 48)
             Case 13
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_13, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_13, 48, 48)
             Case 14
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_14, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_14, 48, 48)
             Case 15
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_15, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_15, 48, 48)
             Case 16
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 48, 48)
             Case 17
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 48, 48)
             Case 18
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
             Case 19
-                XenonButton14.Image = ColorToBitmap(ColorPalette.Windows8.PersonalColors_Background, New Size(48, 48))
+                W8_start.Image = ColorToBitmap(ColorPalette.Windows8.PersonalColors_Background, New Size(48, 48))
             Case 20
-                XenonButton14.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
             Case Else
-                XenonButton14.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
+                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
         End Select
     End Sub
 
@@ -1027,7 +1066,7 @@ Public Class MainFrm
 
         For Each ri As XenonRadioImage In LogonUI8Colors.Controls.OfType(Of XenonRadioImage)
             If ColorPalette.Windows8.LogonUI = ri.Name.Replace("color", "") Then
-                XenonButton22.Image = ColorToBitmap(ri.AccentColor, New Size(48, 48))
+                W8_logonui.Image = ColorToBitmap(ri.AccentColor, New Size(48, 48))
                 Exit For
             End If
         Next
@@ -1065,7 +1104,7 @@ Public Class MainFrm
     End Sub
 
     Sub UpdateHint(Sender As Object, e As EventArgs)
-        status_lbl.Text = TryCast(Sender, XenonButton).Tag
+        status_lbl.Text = Sender.Tag
     End Sub
 
     Sub EraseHint()
@@ -1134,6 +1173,13 @@ Public Class MainFrm
                 AddHandler btn.Leave, AddressOf EraseHint
             Next
 
+            For Each btn As XenonRadioImage In MainToolbar.Controls.OfType(Of XenonRadioImage)
+                AddHandler btn.MouseEnter, AddressOf UpdateHint
+                AddHandler btn.Enter, AddressOf UpdateHint
+                AddHandler btn.MouseLeave, AddressOf EraseHint
+                AddHandler btn.Leave, AddressOf EraseHint
+            Next
+
             If Not My.Application.ExternalLink Then
                 CP = New CP(CP.Mode.Registry)
                 CP_Original = New CP(CP.Mode.Registry)
@@ -1148,44 +1194,44 @@ Public Class MainFrm
                 My.Application.ExternalLink_File = ""
             End If
 
-            If My.Application._Settings.CustomPreviewConfig_Enabled Then
-                PreviewConfig = My.Application._Settings.CustomPreviewConfig
-            Else
-                If My.W11 Then PreviewConfig = WinVer.Eleven
-                If My.W10 Then PreviewConfig = WinVer.Ten
-                If My.W8 Then PreviewConfig = WinVer.Eight
-                If My.W7 Then PreviewConfig = WinVer.Seven
-            End If
+
+            Select_W11.Image = My.Resources.Native11
+            Select_W10.Image = My.Resources.Native10
+            Select_W8.Image = My.Resources.Native8
+            Select_W7.Image = My.Resources.Native7
+
+            If My.W11 Then PreviewConfig = WinVer.Eleven
+            If My.W10 Then PreviewConfig = WinVer.Ten
+            If My.W8 Then PreviewConfig = WinVer.Eight
+            If My.W7 Then PreviewConfig = WinVer.Seven
 
             If PreviewConfig = WinVer.Eleven Then
+                TablessControl1.SelectedIndex = 0
                 XenonButton20.Image = My.Resources.Native11
+                Select_W11.Checked = True
+
             ElseIf PreviewConfig = WinVer.Ten Then
+                TablessControl1.SelectedIndex = 1
                 XenonButton20.Image = My.Resources.Native10
+                Select_W10.Checked = True
+
             ElseIf PreviewConfig = WinVer.Eight Then
+                TablessControl1.SelectedIndex = 2
                 XenonButton20.Image = My.Resources.Native8
+                Select_W8.Checked = True
+
             ElseIf PreviewConfig = WinVer.Seven Then
+                TablessControl1.SelectedIndex = 3
                 XenonButton20.Image = My.Resources.Native7
+                Select_W7.Checked = True
+
             Else
+                TablessControl1.SelectedIndex = 0
                 XenonButton20.Image = My.Resources.Native11
+                Select_W11.Checked = True
+
             End If
 
-            If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
-                PaletteContainer_W1x.Visible = True
-                PaletteContainer_W8.Visible = False
-                PaletteContainer_W7.Visible = False
-            End If
-
-            If PreviewConfig = WinVer.Seven Then
-                PaletteContainer_W1x.Visible = False
-                PaletteContainer_W8.Visible = False
-                PaletteContainer_W7.Visible = True
-            End If
-
-            If PreviewConfig = WinVer.Eight Then
-                PaletteContainer_W1x.Visible = False
-                PaletteContainer_W8.Visible = True
-                PaletteContainer_W7.Visible = False
-            End If
 
             pnl_preview.BackgroundImage = My.Application.Wallpaper
             dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
@@ -1278,11 +1324,13 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles ActiveTitlebar_pick.Click
+
+#Region "Windows 11"
+    Private Sub W11_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Titlebar_Active = sender.BackColor
+                CP.Windows11.Titlebar_Active = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1291,7 +1339,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10x.Titlebar_Active = Color.FromArgb(255, C)
+        CP.Windows11.Titlebar_Active = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1299,16 +1347,16 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows10x.ApplyAccentonTitlebars Then
+        If Not CP.Windows11.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
-    Private Sub XenonGroupBox21_Click(sender As Object, e As EventArgs) Handles InactiveTitlebar_pick.Click
+    Private Sub W11_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Titlebar_Inactive = sender.BackColor
+                CP.Windows11.Titlebar_Inactive = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1319,7 +1367,8 @@ Public Class MainFrm
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10x.Titlebar_Inactive = Color.FromArgb(255, C)
+        CP.Windows11.Titlebar_Inactive = Color.FromArgb(255, C)
+
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1327,65 +1376,65 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows10x.ApplyAccentonTitlebars Then
+        If Not CP.Windows11.ApplyAccentonTitlebars Then
             Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
-    Private Sub WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WinMode_Toggle.CheckedChanged
+    Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10x.WinMode_Light = Not sender.Checked
+            CP.Windows11.WinMode_Light = Not sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles AppMode_Toggle.CheckedChanged
+    Private Sub W11_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_AppMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10x.AppMode_Light = Not sender.Checked
+            CP.Windows11.AppMode_Light = Not sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Transparency_Toggle.CheckedChanged
+    Private Sub W11_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_Transparency_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10x.Transparency = sender.Checked
+            CP.Windows11.Transparency = sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
+    Private Sub W11_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10x.ApplyAccentonTitlebars = sender.Checked
+            CP.Windows11.ApplyAccentonTitlebars = sender.Checked
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Accent_None_CheckedChanged(sender As Object) Handles Accent_None.CheckedChanged
+    Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
         If _Shown Then
-            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Accent_Taskbar_CheckedChanged(sender As Object) Handles Accent_Taskbar.CheckedChanged
+    Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
         If _Shown Then
-            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub Accent_StartTaskbar_CheckedChanged(sender As Object) Handles Accent_StartTaskbar.CheckedChanged
+    Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
         If _Shown Then
-            CP.Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
-    Private Sub TaskbarIconUnderline_pick_Click(sender As Object, e As EventArgs) Handles TaskbarIconUnderline_pick.Click
+    Private Sub W11_Color_Index1_Click(sender As Object, e As EventArgs) Handles W11_Color_Index1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index1 = sender.BackColor
+                CP.Windows11.Color_Index1 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1395,10 +1444,10 @@ Public Class MainFrm
         Dim C As Color
         CList.Add(sender)
 
-        If PreviewConfig = WinVer.Eleven Then
-            CList.Add(taskbar)
 
-            If Not CP.Windows10x.WinMode_Light Then
+        CList.Add(taskbar)
+
+            If Not CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(start)
 
@@ -1413,27 +1462,8 @@ Public Class MainFrm
                 C = ColorPickerDlg.Pick(CList)
             End If
 
-        Else
-            Dim _Conditions As New Conditions
 
-            Select Case Not CP.Windows10x.WinMode_Light
-                Case True
-                    CList.Add(taskbar)  ''AppUnderline
-                    _Conditions.AppUnderlineOnly = True
-                Case False
-                    If CP.Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                        CList.Add(taskbar)  ''AppUnderline
-                        _Conditions.AppUnderlineOnly = True
-                    End If
-            End Select
-
-            C = ColorPickerDlg.Pick(CList, _Conditions)
-
-        End If
-
-
-
-        CP.Windows10x.Color_Index1 = Color.FromArgb(255, C)
+        CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1442,11 +1472,11 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_pick.Click
+    Private Sub W11_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W11_TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index5 = sender.BackColor
+                CP.Windows11.Color_Index5 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1454,24 +1484,16 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender}
 
-        If PreviewConfig = WinVer.Eleven Then
-            If Not CP.Windows10x.WinMode_Light Then
-                CList.Add(taskbar)
-                CList.Add(start)
-                CList.Add(ActionCenter)
-            Else
-                CList.Add(lnk_preview)
-            End If
+        If Not CP.Windows11.WinMode_Light Then
+            CList.Add(taskbar)
+            CList.Add(start)
+            CList.Add(ActionCenter)
         Else
-            If [CP].Windows10x.Transparency Then
-                'CList.Add(start) ''Hamburger
-            Else
-                CList.Add(taskbar)
-            End If
+            CList.Add(lnk_preview)
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10x.Color_Index5 = Color.FromArgb(255, C)
+        CP.Windows11.Color_Index5 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1481,11 +1503,11 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub ActionCenter_pick_Click(sender As Object, e As EventArgs) Handles ActionCenter_pick.Click
+    Private Sub W11_Color_Index0_Click(sender As Object, e As EventArgs) Handles W11_Color_Index0.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index0 = sender.BackColor
+                CP.Windows11.Color_Index0 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1496,35 +1518,17 @@ Public Class MainFrm
 
         CList.Add(sender)
 
-        If PreviewConfig = WinVer.Eleven Then
-            If CP.Windows10x.WinMode_Light Then
-                CList.Add(start)
-                CList.Add(ActionCenter)
-                C = ColorPickerDlg.Pick(CList)
-            Else
-                CList.Add(lnk_preview)
-                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
+        If CP.Windows11.WinMode_Light Then
+            CList.Add(start)
+            CList.Add(ActionCenter)
+            C = ColorPickerDlg.Pick(CList)
         Else
-            Dim _Conditions As New Conditions
-
-            Select Case Not CP.Windows10x.WinMode_Light
-                Case True
-                    CList.Add(ActionCenter) ''Link
-                    _Conditions.ActionCenterLink = True
-
-                Case False
-                    If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
-                        CList.Add(ActionCenter) ''Link
-                        _Conditions.ActionCenterLink = True
-                    End If
-            End Select
-
+            CList.Add(lnk_preview)
+            Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.Windows10x.Color_Index0 = Color.FromArgb(255, C)
+        CP.Windows11.Color_Index0 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1534,11 +1538,11 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub Color_Index3_pick_Click(sender As Object, e As EventArgs) Handles Color_Index3_pick.Click
+    Private Sub W11_Color_Index3_Click(sender As Object, e As EventArgs) Handles W11_Color_Index3.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index3 = sender.BackColor
+                CP.Windows11.Color_Index3 = sender.BackColor
                 ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
@@ -1549,44 +1553,433 @@ Public Class MainFrm
 
         CList.Add(sender)
 
-        If PreviewConfig = WinVer.Eleven Then
-            CList.Add(setting_icon_preview)
-            C = ColorPickerDlg.Pick(CList)
+        CList.Add(setting_icon_preview)
+        C = ColorPickerDlg.Pick(CList)
+
+        CP.Windows11.Color_Index3 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W11_Color_Index6_Click(sender As Object, e As EventArgs) Handles W11_Color_Index6.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows11.Color_Index6 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control)
+        Dim C As Color
+
+        CList.Add(sender)
+
+        CList.Add(taskbar)
+        Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows11.Color_Index6 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W11_Color_Index5_Click(sender As Object, e As EventArgs) Handles W11_Color_Index5.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows11.StartMenu_Accent = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+        CList.Add(start)
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+    End Sub
+
+    Private Sub W11_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W11_Color_Index4.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows11.Color_Index2 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows11.Color_Index2 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W11_Color_Index2_Click(sender As Object, e As EventArgs) Handles W11_Color_Index2.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows11.Color_Index4 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color
+
+
+        If Not W11_Transparency_Toggle.Checked Then
+                CList.Add(taskbar)
+                CList.Add(start)
+                CList.Add(ActionCenter)
+            End If
+
+            If CP.Windows11.WinMode_Light Then
+                CList.Add(start)
+                CList.Add(ActionCenter)
+                CList.Add(taskbar)
+
+                Dim _Conditions As New Conditions With {
+                    .AppUnderlineOnly = True,
+                     .StartSearchOnly = True,
+                     .ActionCenterBtn = True
+ }
+
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            Else
+                Dim _Conditions As New Conditions With {.StartColorOnly = True}
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            End If
+
+        CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W11_Color_Index7_Click(sender As Object, e As EventArgs) Handles W11_Color_Index7.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            CP.Windows11.Color_Index7 = SubMenu.ShowMenu(sender)
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+        CList.Add(sender)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows11.Color_Index7 = Color.FromArgb(255, C)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
+        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+    Private Sub W11_XenonButton25_Click(sender As Object, e As EventArgs) Handles W11_XenonButton25.Click
+        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+#End Region
+
+#Region "Windows 10"
+    Private Sub W10_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_ActiveTitlebar_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Titlebar_Active = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender, XenonWindow1}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows10.Titlebar_Active = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+        If Not CP.Windows10.ApplyAccentonTitlebars Then
+            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        End If
+    End Sub
+
+    Private Sub W10_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_InactiveTitlebar_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Titlebar_Inactive = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender, XenonWindow2}
+
+        Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Titlebar_Inactive = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+        If Not CP.Windows10.ApplyAccentonTitlebars Then
+            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        End If
+    End Sub
+
+    Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
+        If _Shown Then
+            CP.Windows10.WinMode_Light = Not sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_AppMode_Toggle.CheckedChanged
+        If _Shown Then
+            CP.Windows10.AppMode_Light = Not sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_Transparency_Toggle.CheckedChanged
+        If _Shown Then
+            CP.Windows10.Transparency = sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
+        If _Shown Then
+            CP.Windows10.ApplyAccentonTitlebars = sender.Checked
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
+        If _Shown Then
+            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
+        If _Shown Then
+            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
+        If _Shown Then
+            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_Color_Index1_Click(sender As Object, e As EventArgs) Handles W10_Color_Index1.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index1 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control)
+        Dim C As Color
+        CList.Add(sender)
+
+        Dim _Conditions As New Conditions
+
+        Select Case Not CP.Windows10.WinMode_Light
+            Case True
+                CList.Add(taskbar)  ''AppUnderline
+                _Conditions.AppUnderlineOnly = True
+            Case False
+                If CP.Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                    CList.Add(taskbar)  ''AppUnderline
+                    _Conditions.AppUnderlineOnly = True
+                End If
+        End Select
+
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Color_Index1 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W10_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W10_TaskbarFrontAndFoldersOnStart_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index5 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+
+        If [CP].Windows10.Transparency Then
+            'CList.Add(start) ''Hamburger
         Else
-            Dim _Conditions As New Conditions
+            CList.Add(taskbar)
+        End If
 
-            Select Case Not [CP].Windows10x.WinMode_Light
-                Case True
-                    If [CP].Windows10x.Transparency Then
-                        CList.Add(setting_icon_preview)
-                        CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
-                        CList.Add(lnk_preview)
-                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                            CList.Add(taskbar)  ''AppBackground
-                            _Conditions.AppBackgroundOnly = True
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows10.Color_Index5 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
 
-                        End If
-                    Else
-                        CList.Add(setting_icon_preview)
-                        CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
-                        CList.Add(lnk_preview)
-                    End If
-                Case False
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+    End Sub
+
+    Private Sub W10_Color_Index0_Click(sender As Object, e As EventArgs) Handles W10_Color_Index0.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index0 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control)
+        Dim C As Color
+
+        CList.Add(sender)
+
+
+        Dim _Conditions As New Conditions
+
+        Select Case Not CP.Windows10.WinMode_Light
+            Case True
+                CList.Add(ActionCenter) ''Link
+                _Conditions.ActionCenterLink = True
+
+            Case False
+                If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                    CList.Add(ActionCenter) ''Link
+                    _Conditions.ActionCenterLink = True
+                End If
+        End Select
+
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Color_Index0 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+    End Sub
+
+    Private Sub W10_Color_Index3_Click(sender As Object, e As EventArgs) Handles W10_Color_Index3.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index3 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control)
+        Dim C As Color
+
+        CList.Add(sender)
+
+        Dim _Conditions As New Conditions
+
+        Select Case Not [CP].Windows10.WinMode_Light
+            Case True
+                If [CP].Windows10.Transparency Then
                     CList.Add(setting_icon_preview)
                     CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                     CList.Add(lnk_preview)
-
-                    If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
                         CList.Add(taskbar)  ''AppBackground
                         _Conditions.AppBackgroundOnly = True
-                        _Conditions.AppUnderlineOnly = True
 
                     End If
-            End Select
-            C = ColorPickerDlg.Pick(CList, _Conditions)
-        End If
+                Else
+                    CList.Add(setting_icon_preview)
+                    CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
+                    CList.Add(lnk_preview)
+                End If
+            Case False
+                CList.Add(setting_icon_preview)
+                CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
+                CList.Add(lnk_preview)
 
-        CP.Windows10x.Color_Index3 = Color.FromArgb(255, C)
+                If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                    CList.Add(taskbar)  ''AppBackground
+                    _Conditions.AppBackgroundOnly = True
+                    _Conditions.AppUnderlineOnly = True
+
+                End If
+        End Select
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Color_Index3 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
@@ -1594,6 +1987,499 @@ Public Class MainFrm
 
         CList.Clear()
     End Sub
+
+    Private Sub W10_Color_Index6_Click(sender As Object, e As EventArgs) Handles W10_Color_Index6.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index6 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control)
+        Dim C As Color
+
+        CList.Add(sender)
+
+        Dim _Conditions As New Conditions
+
+        Select Case Not [CP].Windows10.WinMode_Light
+            Case True
+
+                If [CP].Windows10.Transparency Then
+                    CList.Add(taskbar)
+                End If
+
+            Case False
+
+                If [CP].Windows10.Transparency Then
+                    CList.Add(taskbar)
+
+                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                        CList.Add(ActionCenter) ''ActionCenterLinks
+                        _Conditions.ActionCenterLink = True
+                    End If
+
+                Else
+                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                        CList.Add(ActionCenter) ''ActionCenterLinks
+                        _Conditions.ActionCenterLink = True
+
+                    End If
+                End If
+        End Select
+
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Color_Index6 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W10_Color_Index5_Click(sender As Object, e As EventArgs) Handles W10_Color_Index5.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.StartMenu_Accent = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows10.StartMenu_Accent = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+    End Sub
+
+    Private Sub W10_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W10_Color_Index4.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index2 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+        If PreviewConfig = WinVer.Ten Then
+            'CList.Add(taskbar) 'Start Icon Hover
+        End If
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        CP.Windows10.Color_Index2 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+
+    End Sub
+
+    Private Sub W10_Color_Index2_Click(sender As Object, e As EventArgs) Handles W10_Color_Index2.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows10.Color_Index4 = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color
+
+
+        Dim _Conditions As New Conditions
+
+        Select Case Not [CP].Windows10.WinMode_Light
+            Case True
+
+                If [CP].Windows10.Transparency Then
+                    CList.Add(start)
+                    CList.Add(ActionCenter)
+                Else
+                    CList.Add(start)
+                    CList.Add(ActionCenter)
+                    CList.Add(taskbar)  'AppBackground
+                    _Conditions.AppBackgroundOnly = True
+                End If
+
+            Case False
+                If [CP].Windows10.Transparency Then
+                    CList.Add(start)
+                    CList.Add(ActionCenter)
+                Else
+                    If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                    ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                        CList.Add(taskbar)  'Start Button Hover
+                        _Conditions.StartColorOnly = True
+                    Else
+                        CList.Add(start)
+                        CList.Add(ActionCenter)
+                        CList.Add(taskbar)  'AppBackground
+                        _Conditions.AppBackgroundOnly = True
+                    End If
+                End If
+        End Select
+
+        C = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows10.Color_Index4 = Color.FromArgb(255, C)
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W10_Color_Index7_Click(sender As Object, e As EventArgs) Handles W10_Color_Index7.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            CP.Windows10.Color_Index7 = SubMenu.ShowMenu(sender)
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+        CList.Add(sender)
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows10.Color_Index7 = Color.FromArgb(255, C)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
+        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+    Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
+        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
+    End Sub
+
+#End Region
+
+#Region "Windows 7"
+    Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows7.ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W7_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglow_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows7.ColorizationAfterglow = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W7_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_EnableAeroPeek_toggle.CheckedChanged
+        If _Shown Then CP.Windows7.EnableAeroPeek = W7_EnableAeroPeek_toggle.Checked
+    End Sub
+
+    Private Sub W7_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_AlwaysHibernateThumbnails_Toggle.CheckedChanged
+        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = W7_AlwaysHibernateThumbnails_Toggle.Checked
+    End Sub
+
+    Private Sub W7_ColorizationColorBalance_bar_Scroll(sender As Object) Handles W7_ColorizationColorBalance_bar.Scroll
+        If _Shown Then
+            CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles W7_ColorizationBlurBalance_bar.Scroll
+        If _Shown Then
+            CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles W7_ColorizationGlassReflectionIntensity_bar.Scroll
+        If _Shown Then
+            CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
+        If W7_theme_classic.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Classic
+            ApplyLivePreviewFromCP(CP)
+            Notify(My.Application.LanguageHelper.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
+        End If
+
+    End Sub
+
+    Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
+        If W7_theme_basic.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Basic
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
+        If W7_theme_aeroopaque.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
+        If W7_theme_aero.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles W7_ColorizationAfterglowBalance_bar.Scroll
+        If _Shown Then
+            CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+#End Region
+
+#Region "Windows 8.1"
+    Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W8_ColorizationColor_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows8.ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+           sender,
+           start,
+           taskbar,
+           XenonWindow1,
+           XenonWindow2
+       }
+
+        Dim _Conditions As New Conditions With {.Window_ActiveTitlebar = True, .Window_InactiveTitlebar = True, .Win7LivePreview_Colorization = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows8.ColorizationColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W8_ColorizationBalance_bar_Scroll(sender As Object) Handles W8_ColorizationBalance_bar.Scroll
+        If _Shown Then
+            CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W8_start_pick_Click(sender As Object, e As EventArgs) Handles W8_start_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows8.StartColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows8.StartColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W8_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_accent_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows8.AccentColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows8.AccentColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W8_personalcls_background_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcls_background_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows8.PersonalColors_Background = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W8_personalcolor_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcolor_accent_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows8.PersonalColors_Accent = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+
+        CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
+        If W8_theme_aero.Checked Then
+            CP.Windows8.Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W8_theme_aerolite.CheckedChanged
+        If W8_theme_aerolite.Checked Then
+            CP.Windows8.Theme = CP.AeroTheme.AeroLite
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W8_start_Click(sender As Object, e As EventArgs) Handles W8_start.Click
+        Start8Selector.ShowDialog()
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+
+    Private Sub W8_logonui_Click(sender As Object, e As EventArgs) Handles W8_logonui.Click
+        LogonUI8Colors.ShowDialog()
+        ApplyLivePreviewFromCP(CP)
+    End Sub
+#End Region
+
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
@@ -1625,220 +2511,12 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonGroupBox12_Click(sender As Object, e As EventArgs) Handles TaskbarBackground_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index6 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control)
-        Dim C As Color
-
-        CList.Add(sender)
-
-        If PreviewConfig = WinVer.Eleven Then
-            CList.Add(taskbar)
-            Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
-            C = ColorPickerDlg.Pick(CList, _Conditions)
-        Else
-            Dim _Conditions As New Conditions
-
-            Select Case Not [CP].Windows10x.WinMode_Light
-                Case True
-
-                    If [CP].Windows10x.Transparency Then
-                        CList.Add(taskbar)
-                    End If
-
-                Case False
-
-                    If [CP].Windows10x.Transparency Then
-                        CList.Add(taskbar)
-
-                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
-                            CList.Add(ActionCenter) ''ActionCenterLinks
-                            _Conditions.ActionCenterLink = True
-                        End If
-
-                    Else
-                        If [CP].Windows10x.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
-                            CList.Add(ActionCenter) ''ActionCenterLinks
-                            _Conditions.ActionCenterLink = True
-
-                        End If
-                    End If
-            End Select
-
-            C = ColorPickerDlg.Pick(CList, _Conditions)
-        End If
-
-        CP.Windows10x.Color_Index6 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub StartAccent_pick_Click(sender As Object, e As EventArgs) Handles StartAccent_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.StartMenu_Accent = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-
-        Dim CList As New List(Of Control) From {sender}
-
-        If PreviewConfig = WinVer.Eleven Then
-            CList.Add(start)
-        Else
-
-        End If
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10x.StartMenu_Accent = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-
-    End Sub
-
-    Private Sub StartButtonHover_pick_Click(sender As Object, e As EventArgs) Handles StartButtonHover_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index2 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-
-        Dim CList As New List(Of Control) From {sender}
-
-        If PreviewConfig = WinVer.Ten Then
-            'CList.Add(taskbar) 'Start Icon Hover
-        End If
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10x.Color_Index2 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-
-    End Sub
-
-    Private Sub StartBackgroundAndTaskbarButton_pick_Click(sender As Object, e As EventArgs) Handles StartBackgroundAndTaskbarButton_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10x.Color_Index4 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-
-        Dim CList As New List(Of Control) From {sender}
-
-        Dim C As Color
-
-        If PreviewConfig = WinVer.Eleven Then
-
-            If Not Transparency_Toggle.Checked Then
-                CList.Add(taskbar)
-                CList.Add(start)
-                CList.Add(ActionCenter)
-            End If
-
-            If CP.Windows10x.WinMode_Light Then
-                CList.Add(start)
-                CList.Add(ActionCenter)
-                CList.Add(taskbar)
-
-                Dim _Conditions As New Conditions With {
-                    .AppUnderlineOnly = True,
-                     .StartSearchOnly = True,
-                     .ActionCenterBtn = True
- }
-
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            Else
-                Dim _Conditions As New Conditions With {.StartColorOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
-
-        Else
-            Dim _Conditions As New Conditions
-
-            Select Case Not [CP].Windows10x.WinMode_Light
-                Case True
-
-                    If [CP].Windows10x.Transparency Then
-                        CList.Add(start)
-                        CList.Add(ActionCenter)
-                    Else
-                        CList.Add(start)
-                        CList.Add(ActionCenter)
-                        CList.Add(taskbar)  'AppBackground
-                        _Conditions.AppBackgroundOnly = True
-                    End If
-
-                Case False
-                    If [CP].Windows10x.Transparency Then
-                        CList.Add(start)
-                        CList.Add(ActionCenter)
-                    Else
-                        If [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                            CList.Add(start)
-                            CList.Add(ActionCenter)
-                        ElseIf [CP].Windows10x.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                            CList.Add(start)
-                            CList.Add(ActionCenter)
-                            CList.Add(taskbar)  'Start Button Hover
-                            _Conditions.StartColorOnly = True
-                        Else
-                            CList.Add(start)
-                            CList.Add(ActionCenter)
-                            CList.Add(taskbar)  'AppBackground
-                            _Conditions.AppBackgroundOnly = True
-                        End If
-                    End If
-            End Select
-
-            C = ColorPickerDlg.Pick(CList, _Conditions)
-        End If
-
-        CP.Windows10x.Color_Index4 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-
+#Region "Drag And Drop"
     Dim wpth_or_wpsf As Boolean = True
     Dim DragAccepted As Boolean
 
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, pnl_preview.DragEnter,
-        PaletteContainer_W1x.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, MainToolbar.DragEnter, XenonGroupBox13.DragEnter
+        PaletteContainer_W11.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, MainToolbar.DragEnter, XenonGroupBox13.DragEnter
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
@@ -1874,12 +2552,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, pnl_preview.DragOver,
-        PaletteContainer_W1x.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
+        PaletteContainer_W11.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
         If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
     Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, pnl_preview.DragDrop,
-        PaletteContainer_W1x.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, MainToolbar.DragDrop, XenonGroupBox13.DragDrop
+        PaletteContainer_W11.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, MainToolbar.DragDrop, XenonGroupBox13.DragDrop
 
         If DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
@@ -1945,6 +2623,8 @@ Public Class MainFrm
         End If
 
     End Sub
+#End Region
+
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
@@ -2174,10 +2854,6 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton8_Click_1(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
-    End Sub
-
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
         If Not CP.Equals(CP_Original) Then
             Select Case ComplexSave.ShowDialog
@@ -2342,297 +3018,8 @@ Public Class MainFrm
         CursorsStudio.ShowDialog()
     End Sub
 
-    Private Sub Aero_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationColor_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-            sender,
-            start,
-            taskbar,
-            XenonWindow1,
-            XenonWindow2
-        }
-
-        Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub Aero_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles Aero_ColorizationAfterglow_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationAfterglow = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-            sender,
-            start,
-            taskbar,
-            XenonWindow1,
-            XenonWindow2
-        }
-
-        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub Aero_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_EnableAeroPeek_toggle.CheckedChanged
-        If _Shown Then CP.Windows7.EnableAeroPeek = Aero_EnableAeroPeek_toggle.Checked
-    End Sub
-
-    Private Sub Aero_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles Aero_AlwaysHibernateThumbnails_Toggle.CheckedChanged
-        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = Aero_AlwaysHibernateThumbnails_Toggle.Checked
-    End Sub
-
-    Private Sub Aero_ColorizationColorBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationColorBalance_bar.Scroll
-        If _Shown Then
-            CP.Windows7.ColorizationColorBalance = Aero_ColorizationColorBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub Aero_ColorizationBlurBalance_TextChanged(sender As Object) Handles Aero_ColorizationBlurBalance_bar.Scroll
-        If _Shown Then
-            CP.Windows7.ColorizationBlurBalance = Aero_ColorizationBlurBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub Aero_ColorizationGlassReflectionIntensity_txt_TextChanged(sender As Object) Handles Aero_ColorizationGlassReflectionIntensity_bar.Scroll
-        If _Shown Then
-            CP.Windows7.ColorizationGlassReflectionIntensity = Aero_ColorizationGlassReflectionIntensity_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub theme_classic_CheckedChanged(sender As Object) Handles theme_classic.CheckedChanged
-        If theme_classic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Classic
-            ApplyLivePreviewFromCP(CP)
-            Notify(My.Application.LanguageHelper.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
-        End If
-
-    End Sub
-
-    Private Sub theme_basic_CheckedChanged(sender As Object) Handles theme_basic.CheckedChanged
-        If theme_basic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Basic
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub theme_aeroopaque_CheckedChanged(sender As Object) Handles theme_aeroopaque.CheckedChanged
-        If theme_aeroopaque.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub theme_Aero_CheckedChanged(sender As Object) Handles theme_aero.CheckedChanged
-        If theme_aero.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub Aero_ColorizationAfterglowBalance_txt_TextChanged(sender As Object) Handles Aero_ColorizationAfterglowBalance_bar.Scroll
-        If _Shown Then
-            CP.Windows7.ColorizationAfterglowBalance = Aero_ColorizationAfterglowBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub ColorizationColor8_pick_Click(sender As Object, e As EventArgs) Handles ColorizationColor8_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-           sender,
-           start,
-           taskbar,
-           XenonWindow1,
-           XenonWindow2
-       }
-
-        Dim _Conditions As New Conditions With {.Window_ActiveTitlebar = True, .Window_InactiveTitlebar = True, .Win7LivePreview_Colorization = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub ColorizationBalance8_track_Scroll(sender As Object) Handles ColorizationBalance8_track.Scroll
-        If _Shown Then
-            CP.Windows7.ColorizationColorBalance = ColorizationBalance8_track.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub start8_pick_Click(sender As Object, e As EventArgs) Handles start8_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.StartColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {sender}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-
-        CP.Windows8.StartColor = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub accent8_pick_Click(sender As Object, e As EventArgs) Handles accent8_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.AccentColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {sender}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-
-        CP.Windows8.AccentColor = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub personalcls8_background_pick_Click(sender As Object, e As EventArgs) Handles personalcls8_background_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.PersonalColors_Background = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {sender}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-
-        CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub personalcolor8accent_pick_Click(sender As Object, e As EventArgs) Handles personalcolor8accent_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.PersonalColors_Accent = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {sender}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-
-        CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
-        If XenonRadioImage1.Checked Then
-            CP.Windows8.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub XenonRadioImage2_CheckedChanged(sender As Object) Handles XenonRadioImage2.CheckedChanged
-        If XenonRadioImage2.Checked Then
-            CP.Windows8.Theme = CP.AeroTheme.AeroLite
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
     Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
         RefreshDWM(CP)
-    End Sub
-
-    Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
-        Start8Selector.ShowDialog()
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
-        LogonUI8Colors.ShowDialog()
-        ApplyLivePreviewFromCP(CP)
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
@@ -2653,25 +3040,6 @@ Public Class MainFrm
         TerminalsDashboard.ShowDialog()
     End Sub
 
-    Private Sub XenonGroupBox16_Click(sender As Object, e As EventArgs) Handles Color_Index7_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            CP.Windows10x.Color_Index7 = SubMenu.ShowMenu(sender)
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {sender}
-        CList.Add(sender)
-        Dim C As Color = ColorPickerDlg.Pick(CList)
-
-        CP.Windows10x.Color_Index7 = Color.FromArgb(255, C)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-
     Private Sub MainFrm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         pnl_preview.Visible = False
     End Sub
@@ -2680,11 +3048,12 @@ Public Class MainFrm
         pnl_preview.Visible = True
     End Sub
 
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
-    End Sub
-
     Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+
+        Dim t As New toaster
+        t.ShowDialog()
+        Exit Sub
+
         Dim s As New StringBuilder
         s.Clear()
         s.AppendLine("Announcement (Temporary until mid-January 2023)")
@@ -2703,9 +3072,66 @@ Public Class MainFrm
         Metrics_Fonts.ShowDialog()
     End Sub
 
-    Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click
-        popup_color.LoadFromCPControl(XenonCP1)
+    Sub Select_Preview_Version()
+        Adjust_Preview()
+        ApplyDefaultCPValues()
+        ApplyLivePreviewFromCP(CP)
+
+        If PreviewConfig = WinVer.Eleven Then
+            XenonButton20.Image = My.Resources.Native11
+        ElseIf PreviewConfig = WinVer.Ten Then
+            XenonButton20.Image = My.Resources.Native10
+        ElseIf PreviewConfig = WinVer.Eight Then
+            XenonButton20.Image = My.Resources.Native8
+        ElseIf PreviewConfig = WinVer.Seven Then
+            XenonButton20.Image = My.Resources.Native7
+        Else
+            XenonButton20.Image = My.Resources.Native11
+        End If
+
+        If PreviewConfig = WinVer.Eleven Then
+            TablessControl1.SelectedIndex = 0
+        ElseIf PreviewConfig = WinVer.Ten Then
+            TablessControl1.SelectedIndex = 1
+        ElseIf PreviewConfig = WinVer.Eight Then
+            TablessControl1.SelectedIndex = 2
+        ElseIf PreviewConfig = WinVer.Seven Then
+            TablessControl1.SelectedIndex = 3
+        Else
+            TablessControl1.SelectedIndex = 0
+        End If
+
     End Sub
+
+    Private Sub Select_W11_CheckedChanged(sender As Object) Handles Select_W11.CheckedChanged
+        If _Shown And Select_W11.Checked Then
+            PreviewConfig = WinVer.Eleven
+            Select_Preview_Version()
+        End If
+    End Sub
+
+    Private Sub Select_W10_CheckedChanged(sender As Object) Handles Select_W10.CheckedChanged
+        If _Shown And Select_W10.Checked Then
+            PreviewConfig = WinVer.Ten
+            Select_Preview_Version()
+        End If
+    End Sub
+
+    Private Sub Select_W8_CheckedChanged(sender As Object) Handles Select_W8.CheckedChanged
+        If _Shown And Select_W8.Checked Then
+            PreviewConfig = WinVer.Eight
+            Select_Preview_Version()
+        End If
+    End Sub
+
+    Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
+        If _Shown And Select_W7.Checked Then
+            PreviewConfig = WinVer.Seven
+            Select_Preview_Version()
+        End If
+    End Sub
+
+
 
 
 #Region "Notifications Base"

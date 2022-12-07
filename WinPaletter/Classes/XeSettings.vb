@@ -12,8 +12,6 @@ Public Class XeSettings
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property Win7LivePreview As Boolean = True
-    Public Property CustomPreviewConfig_Enabled As Boolean = False
-    Public Property CustomPreviewConfig As WinVer = WinVer.Eleven
     Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
@@ -36,12 +34,6 @@ Public Class XeSettings
     Public Property MainFormStatus As FormWindowState = FormWindowState.Normal
 #End Region
 
-    Public Enum WinVer
-        Eleven
-        Ten
-        Eight
-        Seven
-    End Enum
 
     Public Enum Nerd_Stats_Type
         HEX
@@ -80,17 +72,6 @@ Public Class XeSettings
         If Key.GetValue("MainFormWidth", Nothing) Is Nothing Then Key.SetValue("MainFormWidth", 1110, RegistryValueKind.DWord)
         If Key.GetValue("MainFormHeight", Nothing) Is Nothing Then Key.SetValue("MainFormHeight", 725, RegistryValueKind.DWord)
         If Key.GetValue("MainFormStatus", Nothing) Is Nothing Then Key.SetValue("MainFormStatus", FormWindowState.Normal, RegistryValueKind.DWord)
-
-        Select Case CustomPreviewConfig
-            Case WinVer.Eleven
-                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 0)
-            Case WinVer.Ten
-                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 1)
-            Case WinVer.Eight
-                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 2)
-            Case WinVer.Seven
-                If Key.GetValue("CustomPreviewConfig", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig", 3)
-        End Select
 
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
         If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", True, RegistryValueKind.DWord)
@@ -139,7 +120,6 @@ Public Class XeSettings
                 AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", True)
                 Win7LivePreview = Key.GetValue("Win7LivePreview", True)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", True)
-                CustomPreviewConfig_Enabled = Key.GetValue("CustomPreviewConfig_Enabled", False)
 
                 MainFormWidth = Key.GetValue("MainFormWidth", 1110)
                 MainFormHeight = Key.GetValue("MainFormHeight", 725)
@@ -150,16 +130,7 @@ Public Class XeSettings
                 Terminal_Path_Deflection = Key.GetValue("Terminal_Path_Deflection", False)
                 Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
                 Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json")
-                Select Case Key.GetValue("CustomPreviewConfig", 0)
-                    Case 0
-                        CustomPreviewConfig = WinVer.Eleven
-                    Case 1
-                        CustomPreviewConfig = WinVer.Ten
-                    Case 2
-                        CustomPreviewConfig = WinVer.Eight
-                    Case 3
-                        CustomPreviewConfig = WinVer.Seven
-                End Select
+
                 CMD_OverrideUserPreferences = Key.GetValue("CMD_OverrideUserPreferences", True)
 
                 UpdateChannel = If(Key.GetValue("UpdateChannel", UpdateChannels.Stable) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
@@ -194,8 +165,6 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("AutoRestartExplorer= ".ToLower) Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
                     If x.ToLower.StartsWith("AutoUpdatesChecking= ".ToLower) Then AutoUpdatesChecking = x.Remove(0, "AutoUpdatesChecking= ".Count)
                     If x.ToLower.StartsWith("Win7LivePreview= ".ToLower) Then Win7LivePreview = x.Remove(0, "Win7LivePreview= ".Count)
-                    If x.ToLower.StartsWith("CustomPreviewConfig_Enabled= ".ToLower) Then CustomPreviewConfig_Enabled = x.Remove(0, "CustomPreviewConfig_Enabled= ".Count)
-                    If x.ToLower.StartsWith("CustomPreviewConfig= ".ToLower) Then CustomPreviewConfig = x.Remove(0, "CustomPreviewConfig= ".Count)
                     If x.ToLower.StartsWith("UpdateChannel= ".ToLower) Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
                     If x.ToLower.StartsWith("Appearance_Dark= ".ToLower) Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
                     If x.ToLower.StartsWith("Appearance_Auto= ".ToLower) Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
@@ -231,24 +200,12 @@ Public Class XeSettings
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
                 Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
-                Key.SetValue("CustomPreviewConfig_Enabled", CustomPreviewConfig_Enabled, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Bypass", Terminal_Bypass, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_OtherFonts", Terminal_OtherFonts, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Path_Deflection", Terminal_Path_Deflection, RegistryValueKind.DWord)
                 Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
                 Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
                 Key.SetValue("CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord)
-
-                Select Case CustomPreviewConfig
-                    Case WinVer.Eleven
-                        Key.SetValue("CustomPreviewConfig", 0)
-                    Case WinVer.Ten
-                        Key.SetValue("CustomPreviewConfig", 1)
-                    Case WinVer.Eight
-                        Key.SetValue("CustomPreviewConfig", 2)
-                    Case WinVer.Seven
-                        Key.SetValue("CustomPreviewConfig", 3)
-                End Select
 
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
@@ -287,24 +244,12 @@ Public Class XeSettings
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
                 l.Add(String.Format("Win7LivePreview= {0}", Win7LivePreview))
-                l.Add(String.Format("CustomPreviewConfig_Enabled= {0}", CustomPreviewConfig_Enabled))
                 l.Add(String.Format("Terminal_Bypass= {0}", Terminal_Bypass))
                 l.Add(String.Format("Terminal_OtherFonts= {0}", Terminal_OtherFonts))
                 l.Add(String.Format("Terminal_Path_Deflection= {0}", Terminal_Path_Deflection))
                 l.Add(String.Format("Terminal_Stable_Path= {0}", Terminal_Stable_Path))
                 l.Add(String.Format("Terminal_Preview_Path= {0}", Terminal_Preview_Path))
                 l.Add(String.Format("CMD_OverrideUserPreferences= {0}", CMD_OverrideUserPreferences))
-
-                Select Case CustomPreviewConfig
-                    Case WinVer.Eleven
-                        l.Add(String.Format("CustomPreviewConfig= {0}", 0))
-                    Case WinVer.Ten
-                        l.Add(String.Format("CustomPreviewConfig= {0}", 1))
-                    Case WinVer.Eight
-                        l.Add(String.Format("CustomPreviewConfig= {0}", 2))
-                    Case WinVer.Seven
-                        l.Add(String.Format("CustomPreviewConfig= {0}", 3))
-                End Select
 
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
