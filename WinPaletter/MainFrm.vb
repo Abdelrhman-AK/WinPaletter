@@ -1176,6 +1176,7 @@ Public Class MainFrm
         Try
             ApplyDarkMode(Me)
             MakeItDoubleBuffered(Me)
+            MakeItDoubleBuffered(TreeView1)
 
             Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
             Me.WindowState = My.Application._Settings.MainFormStatus
@@ -2498,7 +2499,6 @@ Public Class MainFrm
     End Sub
 #End Region
 
-
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
 
@@ -3073,6 +3073,7 @@ Public Class MainFrm
             Select_Preview_Version()
         End If
     End Sub
+
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If PreviewConfig = WinVer.Eleven Then

@@ -199,16 +199,14 @@ Public Class Localizer
     Property Terminal_External_Exists As String = "This terminal already exists. Try again with another one."
 
     Property CP_TerminalError As String = "Error occured while saving Windows Terminal Settings. Anyway, WinPaletter will continue saving without Windows Terminal."
-    Property CP_ApplyingTheme As String = "Applying Theme ..."
-    Property CP_ApplyingColorsAndTweaks As String = "Applying Colors and Tweaks ..."
-    Property CP_ApplyingCustomLogonUI As String = "Applying Custom LogonUI ..."
+    Property CP_ApplyingCustomLogonUI As String = "Applying Custom LogonUI"
     Property CP_RenderingCustomLogonUI_Progress As String = "Rendering Custom LogonUI:"
-    Property CP_RenderingCustomLogonUI As String = "Rendering Custom LogonUI ..."
-    Property CP_ApplyingTerminalColors As String = "Applying Terminals Colors ..."
-    Property CP_SavingCursorsColors As String = "Saving Cursors Colors ..."
-    Property CP_RenderingCursors As String = "Rendering Cursors ..."
-    Property CP_ApplyingCursors As String = "Applying Cursors ..."
-    Property CP_ApplyingWin32UI As String = "Applying Win32UI Colors (Classic Windows Elements) ..."
+    Property CP_RenderingCustomLogonUI As String = "Rendering Custom LogonUI"
+    Property CP_ApplyingTerminalColors As String = "Applying Terminals Colors"
+    Property CP_SavingCursorsColors As String = "Saving Windows Cursors Colors to Registry"
+    Property CP_RenderingCursors As String = "Rendering Windows Cursors"
+    Property CP_ApplyingCursors As String = "Applying Windows Cursors"
+    Property CP_ApplyingWin32UI As String = "Applying Win32UI Colors (Classic Windows Elements)"
 #End Region
 
     Public Sub ExportNativeLang(File As String)

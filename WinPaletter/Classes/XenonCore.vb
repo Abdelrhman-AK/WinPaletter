@@ -36,6 +36,21 @@ Public Class XenonCore
         End Try
     End Sub
     Private Delegate Sub setCtrlTagInvoker(ByVal Tag As String, ByVal Ctrl As Control)
+
+    Public Shared Sub AddTreeNode(Ctrl As TreeView, text As String, imagekey As String)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New AddTreeNodeInvoker(AddressOf AddTreeNode), Ctrl, text, imagekey)
+            Else
+                With Ctrl.Nodes.Add(text)
+                    .ImageKey = imagekey : .SelectedImageKey = imagekey
+                End With
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub AddTreeNodeInvoker(Ctrl As TreeView, text As String, imagekey As String)
 #End Region
 
 #Region "Misc"

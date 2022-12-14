@@ -288,6 +288,8 @@ Partial Class MainFrm
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
@@ -336,8 +338,6 @@ Partial Class MainFrm
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.TreeView1 = New System.Windows.Forms.TreeView()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.PaletteContainer_W11.SuspendLayout()
@@ -4071,6 +4071,38 @@ Partial Class MainFrm
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Log"
         '
+        'XenonButton8
+        '
+        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton8.ForeColor = System.Drawing.Color.White
+        Me.XenonButton8.Image = Nothing
+        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton8.LineSize = 1
+        Me.XenonButton8.Location = New System.Drawing.Point(410, 492)
+        Me.XenonButton8.Name = "XenonButton8"
+        Me.XenonButton8.Size = New System.Drawing.Size(101, 34)
+        Me.XenonButton8.TabIndex = 6
+        Me.XenonButton8.Text = "OK"
+        Me.XenonButton8.UseVisualStyleBackColor = False
+        '
+        'TreeView1
+        '
+        Me.TreeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TreeView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TreeView1.ForeColor = System.Drawing.Color.White
+        Me.TreeView1.FullRowSelect = True
+        Me.TreeView1.ItemHeight = 28
+        Me.TreeView1.Location = New System.Drawing.Point(6, 54)
+        Me.TreeView1.Name = "TreeView1"
+        Me.TreeView1.ShowLines = False
+        Me.TreeView1.Size = New System.Drawing.Size(505, 432)
+        Me.TreeView1.TabIndex = 5
+        '
         'XenonSeparator1
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -4903,38 +4935,6 @@ Partial Class MainFrm
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Text = "Win32UI Elements"
         Me.XenonButton4.UseVisualStyleBackColor = False
-        '
-        'TreeView1
-        '
-        Me.TreeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TreeView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TreeView1.ForeColor = System.Drawing.Color.White
-        Me.TreeView1.FullRowSelect = True
-        Me.TreeView1.ItemHeight = 28
-        Me.TreeView1.Location = New System.Drawing.Point(6, 54)
-        Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.ShowLines = False
-        Me.TreeView1.Size = New System.Drawing.Size(505, 432)
-        Me.TreeView1.TabIndex = 5
-        '
-        'XenonButton8
-        '
-        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = Nothing
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(410, 492)
-        Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(101, 34)
-        Me.XenonButton8.TabIndex = 6
-        Me.XenonButton8.Text = "OK"
-        Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'MainFrm
         '

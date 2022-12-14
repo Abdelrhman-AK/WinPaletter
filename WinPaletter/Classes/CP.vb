@@ -3156,7 +3156,7 @@ Public Class CP : Implements IDisposable
                 End With
 #End Region
 
-#Region "Metrics & Fonts "
+#Region "Metrics & Fonts"
                 WinMetrics_Fonts.BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", -15) / -15
                 WinMetrics_Fonts.CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", -330) / -15
                 WinMetrics_Fonts.CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", -330) / -15
@@ -3714,10 +3714,35 @@ Public Class CP : Implements IDisposable
     End Sub
 
     Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
-        With [TreeView].Nodes.Add([Text])
-            .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
-        End With
+
+        If [TreeView].InvokeRequired Then
+
+            Try
+                [TreeView].Invoke(CType(Sub()
+                                            With [TreeView].Nodes.Add([Text])
+                                                .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                                            End With
+                                            [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                                            [TreeView].Refresh()
+                                        End Sub, MethodInvoker))
+            Catch
+            End Try
+
+        Else
+
+            Try
+                With [TreeView].Nodes.Add([Text])
+                    .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                End With
+                [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                [TreeView].Refresh()
+            Catch
+
+            End Try
+
+        End If
     End Sub
+
 
     Sub Save(ByVal [SaveTo] As Mode, Optional ByVal FileLocation As String = "", Optional ByVal [TreeView] As TreeView = Nothing)
 
@@ -3735,7 +3760,7 @@ Public Class CP : Implements IDisposable
 
                 If ReportProgress Then
                     [TreeView].Nodes.Clear()
-                    AddNode([TreeView], String.Format("{0}: Applying Theme Started", Now.ToLongTimeString), "info")
+                    AddNode([TreeView], String.Format("{0}: Applying Started", Now.ToLongTimeString), "info")
                 End If
 
 #Region "Registry"
@@ -3745,6 +3770,7 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows11.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3753,12 +3779,12 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI", Now.ToLongTimeString), "info")
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3767,7 +3793,6 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 End If
 
                 If My.W10 Then
@@ -3775,6 +3800,7 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows10.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3783,13 +3809,13 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
 
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI", Now.ToLongTimeString), "info")
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3798,7 +3824,6 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 End If
 
                 If My.W7 Then
@@ -3807,6 +3832,7 @@ Public Class CP : Implements IDisposable
                     RefreshDWM(Me)
                     Try
                         Windows7.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3815,13 +3841,13 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
 
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI", Now.ToLongTimeString), "info")
                     sw.Reset() : sw.Start()
                     Try
-                        Apply_LogonUI7()
+                        Apply_LogonUI7([TreeView])
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3830,7 +3856,6 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 End If
 
                 If My.W8 Then
@@ -3838,6 +3863,7 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows8.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3847,12 +3873,13 @@ Public Class CP : Implements IDisposable
                     End Try
                     RefreshDWM(Me)
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen", Now.ToLongTimeString), "info")
                     sw.Reset() : sw.Start()
                     Try
-                        Apply_LogonUI_8()
+                        Apply_LogonUI_8([TreeView])
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
@@ -3861,7 +3888,6 @@ Public Class CP : Implements IDisposable
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 End If
 
@@ -3869,6 +3895,7 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Win32.Apply()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -3877,7 +3904,6 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 If ReportProgress Then
                     If WinMetrics_Fonts.Enabled Then
@@ -3889,6 +3915,7 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     WinMetrics_Fonts.Apply()
+                    If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -3897,7 +3924,6 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 'Windows Terminals/Consoles
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
@@ -3917,6 +3943,8 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_CommandPrompt()
+                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Command Prompt took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -3925,7 +3953,6 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Command Prompt took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 If ReportProgress Then
                     If PowerShellx86.Enabled Then
@@ -3937,6 +3964,7 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell86()
+                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x86 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -3945,7 +3973,6 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x86 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 If ReportProgress Then
                     If PowerShellx64.Enabled Then
@@ -3957,6 +3984,7 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell64()
+                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x64 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -3965,35 +3993,107 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x64 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
+                sw.Reset() : sw.Start()
                 If My.W10 Or My.W11 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminals", Now.ToLongTimeString), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Apply_WindowsTerminals()
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminals. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminals took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
+                    If ReportProgress Then
+                        If Terminal.Enabled And TerminalPreview.Enabled Then
+                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal (Stable & Preview) are installed", Now.ToLongTimeString), "info")
+
+                        ElseIf Terminal.Enabled Then
+                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it is disabled", Now.ToLongTimeString), "skip")
+                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal Stable is installed", Now.ToLongTimeString), "info")
+
+                        ElseIf TerminalPreview.Enabled Then
+                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it is disabled", Now.ToLongTimeString), "skip")
+                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal Preview is installed", Now.ToLongTimeString), "info")
+
+                        Else
+                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal (Stable & Preview) as they are disabled", Now.ToLongTimeString), "skip")
+
+                        End If
+
+                    End If
+
+                    Dim TerDir As String
+                    Dim TerPreDir As String
+
+                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    Else
+                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        Else
+                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+
+                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        Else
+                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        End If
+                    End If
+
+                    If Terminal.Enabled Then
+                        If IO.File.Exists(TerDir) Then
+
+                            Try
+                                AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Stable", Now.ToLongTimeString), "info")
+                                Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
+                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Stable took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                            Catch ex As Exception
+                                sw.Stop() : sw_all.Stop()
+                                _ErrorHappened = True
+                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Stable. {1}", Now.ToLongTimeString, ex.Message), "error")
+                                BugReport.ThrowError(ex)
+                                sw.Start() : sw_all.Start()
+                            End Try
+
+                        Else
+                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it isn't installed.", Now.ToLongTimeString), "skip")
+                        End If
+                    End If
+
+                    If TerminalPreview.Enabled Then
+                        If IO.File.Exists(TerPreDir) Then
+
+                            Try
+                                AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Preview", Now.ToLongTimeString), "info")
+                                TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Preview took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                            Catch ex As Exception
+                                sw.Stop() : sw_all.Stop()
+                                _ErrorHappened = True
+                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Preview. {1}", Now.ToLongTimeString, ex.Message), "error")
+                                BugReport.ThrowError(ex)
+                                sw.Start() : sw_all.Start()
+                            End Try
+
+                        Else
+                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it isn't installed.", Now.ToLongTimeString), "skip")
+                        End If
+                    End If
+
+                Else
+                    AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal (Stable\Preview) as they are not supported for current OS.", Now.ToLongTimeString), "skip")
                 End If
+                sw.Stop()
 
                 If ReportProgress Then
                     If Cursors_Enabled Then
-                        AddNode([TreeView], String.Format("{0}: Applying Windows Cursors", Now.ToLongTimeString), "info")
+                        '### Leave it empty
                     Else
                         AddNode([TreeView], String.Format("{0}: Skipping Windows Cursors as it is disabled", Now.ToLongTimeString), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
-                    Apply_Cursors()
+                    If Cursors_Enabled Then
+                        Apply_Cursors([TreeView])
+                        If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Total Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    End If
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -4002,7 +4102,6 @@ Public Class CP : Implements IDisposable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
-                If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 If ReportProgress Then
                     If Not _ErrorHappened Then
@@ -4551,40 +4650,6 @@ Public Class CP : Implements IDisposable
         End If
     End Sub
 
-    Public Sub Apply_WindowsTerminals()
-        Dim TerDir As String
-        Dim TerPreDir As String
-
-        If Not My.Application._Settings.Terminal_Path_Deflection Then
-            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-        Else
-            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                TerDir = My.Application._Settings.Terminal_Stable_Path
-            Else
-                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-            End If
-
-            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                TerPreDir = My.Application._Settings.Terminal_Preview_Path
-            Else
-                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-            End If
-        End If
-
-        If Terminal.Enabled Then
-            If IO.File.Exists(TerDir) Then
-                Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-            End If
-        End If
-
-        If TerminalPreview.Enabled Then
-            If IO.File.Exists(TerPreDir) Then
-                TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-            End If
-        End If
-    End Sub
-
     Public Sub Apply_Cursors(Optional ByVal [TreeView] As TreeView = Nothing)
 
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
@@ -4592,6 +4657,12 @@ Public Class CP : Implements IDisposable
         Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
         rMain.SetValue("", Cursors_Enabled, RegistryValueKind.DWord)
         rMain.Close()
+
+        Dim sw As New Stopwatch
+        If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
+
+        sw.Reset()
+        sw.Start()
 
         Cursor_Structure.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
         Cursor_Structure.Save_Cursors_To_Registry("Help", Cursor_Help)
@@ -4611,14 +4682,35 @@ Public Class CP : Implements IDisposable
         Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
         Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
 
-        If Cursors_Enabled Then
-            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCursors, Now.ToLongTimeString), "info")
+        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Saving Windows Cursors Colors to Registry took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+        sw.Stop()
 
-            ExportCursors(Me)
-            If My.Application._Settings.AutoApplyCursors Then
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_ApplyingCursors, Now.ToLongTimeString), "info")
-                ApplyCursorsToReg()
-            End If
+        If Cursors_Enabled Then
+            Try
+                sw.Reset()
+                sw.Start()
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCursors, Now.ToLongTimeString), "info")
+                ExportCursors(Me)
+                sw.Stop()
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Rendering Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                If My.Application._Settings.AutoApplyCursors Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_ApplyingCursors, Now.ToLongTimeString), "info")
+                    sw.Reset()
+                    sw.Start()
+                    ApplyCursorsToReg()
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                Else
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Modifying Windows Cursors is restricted from Settings", Now.ToLongTimeString), "error")
+                End If
+
+            Catch ex As Exception
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while Rendering\Applying Windows Cursors. {1}", Now.ToLongTimeString, ex.Message), "error")
+                BugReport.ThrowError(ex)
+            End Try
+
+
         End If
 
     End Sub
