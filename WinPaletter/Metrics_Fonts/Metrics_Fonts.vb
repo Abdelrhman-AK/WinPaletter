@@ -42,6 +42,7 @@ Public Class Metrics_Fonts
             msgLbl.ForeColor = Color.Black
         End If
 
+        XenonButton12.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
 
     End Sub
 
@@ -453,4 +454,6 @@ Public Class Metrics_Fonts
 
         Return TitleTextW 'TitleTextH_Sum
     End Function
+
+
 End Class

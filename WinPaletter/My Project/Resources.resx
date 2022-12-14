@@ -133,6 +133,18 @@
   <data name="AC_11_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\AC_11_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add_win10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_win10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_win11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_win11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_win7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_win7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_win8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_win8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AeroGlass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AeroGlass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -354,6 +366,15 @@
   </data>
   <data name="notify_info" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notify_skip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notify_skip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notify_success" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notify_success.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notify_time" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notify_time.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="notify_update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

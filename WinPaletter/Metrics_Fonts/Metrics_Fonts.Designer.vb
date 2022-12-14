@@ -290,13 +290,13 @@ Partial Class Metrics_Fonts
         Me.XenonButton9.ForeColor = System.Drawing.Color.White
         Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
         Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(82, Byte), Integer))
+        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
         Me.XenonButton9.LineSize = 1
         Me.XenonButton9.Location = New System.Drawing.Point(222, 5)
         Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(146, 29)
+        Me.XenonButton9.Size = New System.Drawing.Size(126, 29)
         Me.XenonButton9.TabIndex = 112
-        Me.XenonButton9.Text = "Current applied one"
+        Me.XenonButton9.Text = "Current applied"
         Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'Label12
@@ -337,11 +337,11 @@ Partial Class Metrics_Fonts
         Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton12.ForeColor = System.Drawing.Color.White
-        Me.XenonButton12.Image = CType(resources.GetObject("XenonButton12.Image"), System.Drawing.Image)
+        Me.XenonButton12.Image = Nothing
         Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(370, 5)
+        Me.XenonButton12.Location = New System.Drawing.Point(351, 5)
         Me.XenonButton12.Name = "XenonButton12"
         Me.XenonButton12.Size = New System.Drawing.Size(130, 29)
         Me.XenonButton12.TabIndex = 108

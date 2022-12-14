@@ -49,6 +49,7 @@ Public Class cmd
 
         End Select
 
+        XenonButton6.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
     End Sub
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
@@ -100,7 +101,7 @@ Public Class cmd
 
             End Select
 
-            'CPx.Save(CP.SavingMode.Registry, "", If(CPx.LogonUI7.Enabled, True, False))
+            'CPx.Save(CP.Mode.Registry, "", If(CPx.LogonUI7.Enabled, True, False))
             CPx.Dispose()
             Cursor = Cursors.Default
         Else
@@ -442,585 +443,228 @@ Public Class cmd
 #Region "   CP Handling"
     Sub ApplyFromCP([CP] As CP, [Edition] As Edition)
 
+        Dim [Console] As CP.Console_Structure
+
         Select Case [Edition]
             Case Edition.CMD
-#Region " Command Prompt"
-                CMDEnabled.Checked = CP.Terminal_CMD_Enabled
+                [Console] = [CP].CommandPrompt
 
-                ColorTable00.BackColor = CP.CMD_ColorTable00
-                ColorTable01.BackColor = CP.CMD_ColorTable01
-                ColorTable02.BackColor = CP.CMD_ColorTable02
-                ColorTable03.BackColor = CP.CMD_ColorTable03
-                ColorTable04.BackColor = CP.CMD_ColorTable04
-                ColorTable05.BackColor = CP.CMD_ColorTable05
-                ColorTable06.BackColor = CP.CMD_ColorTable06
-                ColorTable07.BackColor = CP.CMD_ColorTable07
-                ColorTable08.BackColor = CP.CMD_ColorTable08
-                ColorTable09.BackColor = CP.CMD_ColorTable09
-                ColorTable10.BackColor = CP.CMD_ColorTable10
-                ColorTable11.BackColor = CP.CMD_ColorTable11
-                ColorTable12.BackColor = CP.CMD_ColorTable12
-                ColorTable13.BackColor = CP.CMD_ColorTable13
-                ColorTable14.BackColor = CP.CMD_ColorTable14
-                ColorTable15.BackColor = CP.CMD_ColorTable15
-
-                ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152)
-                ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0)
-
-                CMD_PopupForegroundBar.Value = CP.CMD_PopupForeground
-                CMD_PopupBackgroundBar.Value = CP.CMD_PopupBackground
-                CMD_AccentForegroundBar.Value = CP.CMD_ScreenColorsForeground
-                CMD_AccentBackgroundBar.Value = CP.CMD_ScreenColorsBackground
-                CMD_RasterToggle.Checked = CP.CMD_FontRaster
-                RasterList.Visible = CP.CMD_FontRaster
-
-                Select Case CP.CMD_FontWeight
-                    Case 0
-                        CMD_FontWeightBox.SelectedIndex = 0
-
-                    Case 100
-                        CMD_FontWeightBox.SelectedIndex = 1
-
-                    Case 200
-                        CMD_FontWeightBox.SelectedIndex = 2
-
-                    Case 300
-                        CMD_FontWeightBox.SelectedIndex = 3
-
-                    Case 400
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                    Case 500
-                        CMD_FontWeightBox.SelectedIndex = 5
-
-                    Case 600
-                        CMD_FontWeightBox.SelectedIndex = 6
-
-                    Case 700
-                        CMD_FontWeightBox.SelectedIndex = 7
-
-                    Case 800
-                        CMD_FontWeightBox.SelectedIndex = 8
-
-                    Case 900
-                        CMD_FontWeightBox.SelectedIndex = 9
-
-                    Case Else
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                End Select
-
-                If Not CP.CMD_FontRaster Then
-                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.CMD_FaceName, .lfWeight = CP.CMD_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.CMD_FontSize / 65536), .Style) : End With
-                End If
-
-                CMD_FontsBox.SelectedItem = f_cmd.Name
-                CMD_FontSizeBar.Value = f_cmd.Size
-                CMD_FontSizeLbl.Text = f_cmd.Size
-
-                If CP.CMD_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
-                If CP.CMD_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
-                If CP.CMD_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
-                If CP.CMD_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
-                If CP.CMD_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
-                If CP.CMD_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
-                If CP.CMD_FontSize = 0 Then RasterList.SelectedItem = "8x12"
-                If CP.CMD_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
-                If CP.CMD_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
-                If CP.CMD_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
-                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
-
-
-                CP.CMD_CursorSize = CMD_CursorSizeBar.Value
-                If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
-                If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
-                If My.W10_1909 Then
-                    CMD_CursorStyle.SelectedIndex = CP.CMD_1909_CursorType
-                    CMD_CursorColor.BackColor = CP.CMD_1909_CursorColor
-                    CMD_PreviewCUR2.BackColor = CP.CMD_1909_CursorColor
-                    CMD_EnhancedTerminal.Checked = CP.CMD_1909_ForceV2
-                    CMD_OpacityBar.Value = CP.CMD_1909_WindowAlpha
-                    CMD_OpacityLbl.Text = Fix((CP.CMD_1909_WindowAlpha / 255) * 100)
-                    CMD_LineSelection.Checked = CP.CMD_1909_LineSelection
-                    CMD_TerminalScrolling.Checked = CP.CMD_1909_TerminalScrolling
-                    ApplyCursorShape()
-                End If
-                UpdateCurPreview()
-#End Region
             Case Edition.PowerShellx86
-#Region " PowerShell x86"
-                CMDEnabled.Checked = CP.Terminal_PS_32_Enabled
+                [Console] = [CP].PowerShellx86
 
-                ColorTable00.BackColor = CP.PS_32_ColorTable00
-                ColorTable01.BackColor = CP.PS_32_ColorTable01
-                ColorTable02.BackColor = CP.PS_32_ColorTable02
-                ColorTable03.BackColor = CP.PS_32_ColorTable03
-                ColorTable04.BackColor = CP.PS_32_ColorTable04
-                ColorTable05.BackColor = CP.PS_32_ColorTable05
-                ColorTable06.BackColor = CP.PS_32_ColorTable06
-                ColorTable07.BackColor = CP.PS_32_ColorTable07
-                ColorTable08.BackColor = CP.PS_32_ColorTable08
-                ColorTable09.BackColor = CP.PS_32_ColorTable09
-                ColorTable10.BackColor = CP.PS_32_ColorTable10
-                ColorTable11.BackColor = CP.PS_32_ColorTable11
-                ColorTable12.BackColor = CP.PS_32_ColorTable12
-                ColorTable13.BackColor = CP.PS_32_ColorTable13
-                ColorTable14.BackColor = CP.PS_32_ColorTable14
-                ColorTable15.BackColor = CP.PS_32_ColorTable15
-
-                ColorTable05.DefaultColor = Color.FromArgb(1, 36, 86)
-                ColorTable06.DefaultColor = Color.FromArgb(238, 237, 240)
-
-                CMD_PopupForegroundBar.Value = CP.PS_32_PopupForeground
-                CMD_PopupBackgroundBar.Value = CP.PS_32_PopupBackground
-                CMD_AccentForegroundBar.Value = CP.PS_32_ScreenColorsForeground
-                CMD_AccentBackgroundBar.Value = CP.PS_32_ScreenColorsBackground
-                CMD_RasterToggle.Checked = CP.PS_32_FontRaster
-                RasterList.Visible = CP.PS_32_FontRaster
-
-                Select Case CP.PS_32_FontWeight
-                    Case 0
-                        CMD_FontWeightBox.SelectedIndex = 0
-
-                    Case 100
-                        CMD_FontWeightBox.SelectedIndex = 1
-
-                    Case 200
-                        CMD_FontWeightBox.SelectedIndex = 2
-
-                    Case 300
-                        CMD_FontWeightBox.SelectedIndex = 3
-
-                    Case 400
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                    Case 500
-                        CMD_FontWeightBox.SelectedIndex = 5
-
-                    Case 600
-                        CMD_FontWeightBox.SelectedIndex = 6
-
-                    Case 700
-                        CMD_FontWeightBox.SelectedIndex = 7
-
-                    Case 800
-                        CMD_FontWeightBox.SelectedIndex = 8
-
-                    Case 900
-                        CMD_FontWeightBox.SelectedIndex = 9
-
-                    Case Else
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                End Select
-
-                If Not CP.PS_32_FontRaster Then
-                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_32_FaceName, .lfWeight = CP.PS_32_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_32_FontSize / 65536), .Style) : End With
-                End If
-
-                CMD_FontsBox.SelectedItem = f_cmd.Name
-                CMD_FontSizeBar.Value = f_cmd.Size
-                CMD_FontSizeLbl.Text = f_cmd.Size
-
-                If CP.PS_32_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
-                If CP.PS_32_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
-                If CP.PS_32_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
-                If CP.PS_32_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
-                If CP.PS_32_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
-                If CP.PS_32_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
-                If CP.PS_32_FontSize = 0 Then RasterList.SelectedItem = "8x12"
-                If CP.PS_32_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
-                If CP.PS_32_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
-                If CP.PS_32_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
-                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
-
-                CP.PS_32_CursorSize = CMD_CursorSizeBar.Value
-                If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
-                If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
-                If My.W10_1909 Then
-                    CMD_CursorStyle.SelectedIndex = CP.PS_32_1909_CursorType
-                    CMD_CursorColor.BackColor = CP.PS_32_1909_CursorColor
-                    CMD_PreviewCUR2.BackColor = CP.PS_32_1909_CursorColor
-                    CMD_EnhancedTerminal.Checked = CP.PS_32_1909_ForceV2
-                    CMD_OpacityBar.Value = CP.PS_32_1909_WindowAlpha
-                    CMD_OpacityLbl.Text = Fix((CP.PS_32_1909_WindowAlpha / 255) * 100)
-                    CMD_LineSelection.Checked = CP.PS_32_1909_LineSelection
-                    CMD_TerminalScrolling.Checked = CP.PS_32_1909_TerminalScrolling
-                    ApplyCursorShape()
-                End If
-                UpdateCurPreview()
-#End Region
             Case Edition.PowerShellx64
-#Region " PowerShell x64"
-                CMDEnabled.Checked = CP.Terminal_PS_64_Enabled
+                [Console] = [CP].PowerShellx64
 
-                ColorTable00.BackColor = CP.PS_64_ColorTable00
-                ColorTable01.BackColor = CP.PS_64_ColorTable01
-                ColorTable02.BackColor = CP.PS_64_ColorTable02
-                ColorTable03.BackColor = CP.PS_64_ColorTable03
-                ColorTable04.BackColor = CP.PS_64_ColorTable04
-                ColorTable05.BackColor = CP.PS_64_ColorTable05
-                ColorTable06.BackColor = CP.PS_64_ColorTable06
-                ColorTable07.BackColor = CP.PS_64_ColorTable07
-                ColorTable08.BackColor = CP.PS_64_ColorTable08
-                ColorTable09.BackColor = CP.PS_64_ColorTable09
-                ColorTable10.BackColor = CP.PS_64_ColorTable10
-                ColorTable11.BackColor = CP.PS_64_ColorTable11
-                ColorTable12.BackColor = CP.PS_64_ColorTable12
-                ColorTable13.BackColor = CP.PS_64_ColorTable13
-                ColorTable14.BackColor = CP.PS_64_ColorTable14
-                ColorTable15.BackColor = CP.PS_64_ColorTable15
-
-                ColorTable05.DefaultColor = Color.FromArgb(1, 36, 86)
-                ColorTable06.DefaultColor = Color.FromArgb(238, 237, 240)
-
-                CMD_PopupForegroundBar.Value = CP.PS_64_PopupForeground
-                CMD_PopupBackgroundBar.Value = CP.PS_64_PopupBackground
-                CMD_AccentForegroundBar.Value = CP.PS_64_ScreenColorsForeground
-                CMD_AccentBackgroundBar.Value = CP.PS_64_ScreenColorsBackground
-                CMD_RasterToggle.Checked = CP.PS_64_FontRaster
-                RasterList.Visible = CP.PS_64_FontRaster
-
-                Select Case CP.PS_64_FontWeight
-                    Case 0
-                        CMD_FontWeightBox.SelectedIndex = 0
-
-                    Case 100
-                        CMD_FontWeightBox.SelectedIndex = 1
-
-                    Case 200
-                        CMD_FontWeightBox.SelectedIndex = 2
-
-                    Case 300
-                        CMD_FontWeightBox.SelectedIndex = 3
-
-                    Case 400
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                    Case 500
-                        CMD_FontWeightBox.SelectedIndex = 5
-
-                    Case 600
-                        CMD_FontWeightBox.SelectedIndex = 6
-
-                    Case 700
-                        CMD_FontWeightBox.SelectedIndex = 7
-
-                    Case 800
-                        CMD_FontWeightBox.SelectedIndex = 8
-
-                    Case 900
-                        CMD_FontWeightBox.SelectedIndex = 9
-
-                    Case Else
-                        CMD_FontWeightBox.SelectedIndex = 4
-
-                End Select
-
-                If Not CP.PS_64_FontRaster Then
-                    With Font.FromLogFont(New LOGFONT With {.lfFaceName = CP.PS_64_FaceName, .lfWeight = CP.PS_64_FontWeight}) : f_cmd = New Font(.FontFamily, CInt(CP.PS_64_FontSize / 65536), .Style) : End With
-                End If
-
-                CMD_FontsBox.SelectedItem = f_cmd.Name
-                CMD_FontSizeBar.Value = f_cmd.Size
-                CMD_FontSizeLbl.Text = f_cmd.Size
-
-                If CP.PS_64_FontSize = 393220 Then RasterList.SelectedItem = "4x6"
-                If CP.PS_64_FontSize = 524294 Then RasterList.SelectedItem = "6x8"
-                If CP.PS_64_FontSize = 524296 Then RasterList.SelectedItem = "8x8"
-                If CP.PS_64_FontSize = 524304 Then RasterList.SelectedItem = "16x8"
-                If CP.PS_64_FontSize = 786437 Then RasterList.SelectedItem = "5x12"
-                If CP.PS_64_FontSize = 786439 Then RasterList.SelectedItem = "7x12"
-                If CP.PS_64_FontSize = 0 Then RasterList.SelectedItem = "8x12"
-                If CP.PS_64_FontSize = 786448 Then RasterList.SelectedItem = "16x12"
-                If CP.PS_64_FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
-                If CP.PS_64_FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
-                If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
-
-                CP.PS_64_CursorSize = CMD_CursorSizeBar.Value
-                If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
-                If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
-                If My.W10_1909 Then
-                    CMD_CursorStyle.SelectedIndex = CP.PS_64_1909_CursorType
-                    CMD_CursorColor.BackColor = CP.PS_64_1909_CursorColor
-                    CMD_PreviewCUR2.BackColor = CP.PS_64_1909_CursorColor
-                    CMD_EnhancedTerminal.Checked = CP.PS_64_1909_ForceV2
-                    CMD_OpacityBar.Value = CP.PS_64_1909_WindowAlpha
-                    CMD_OpacityLbl.Text = Fix((CP.PS_64_1909_WindowAlpha / 255) * 100)
-                    CMD_LineSelection.Checked = CP.PS_64_1909_LineSelection
-                    CMD_TerminalScrolling.Checked = CP.PS_64_1909_TerminalScrolling
-                    ApplyCursorShape()
-                End If
-                UpdateCurPreview()
-#End Region
         End Select
+
+        CMDEnabled.Checked = [Console].Enabled
+
+        ColorTable00.BackColor = [Console].ColorTable00
+        ColorTable01.BackColor = [Console].ColorTable01
+        ColorTable02.BackColor = [Console].ColorTable02
+        ColorTable03.BackColor = [Console].ColorTable03
+        ColorTable04.BackColor = [Console].ColorTable04
+        ColorTable05.BackColor = [Console].ColorTable05
+        ColorTable06.BackColor = [Console].ColorTable06
+        ColorTable07.BackColor = [Console].ColorTable07
+        ColorTable08.BackColor = [Console].ColorTable08
+        ColorTable09.BackColor = [Console].ColorTable09
+        ColorTable10.BackColor = [Console].ColorTable10
+        ColorTable11.BackColor = [Console].ColorTable11
+        ColorTable12.BackColor = [Console].ColorTable12
+        ColorTable13.BackColor = [Console].ColorTable13
+        ColorTable14.BackColor = [Console].ColorTable14
+        ColorTable15.BackColor = [Console].ColorTable15
+
+        ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152)
+        ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0)
+
+        CMD_PopupForegroundBar.Value = [Console].PopupForeground
+        CMD_PopupBackgroundBar.Value = [Console].PopupBackground
+        CMD_AccentForegroundBar.Value = [Console].ScreenColorsForeground
+        CMD_AccentBackgroundBar.Value = [Console].ScreenColorsBackground
+        CMD_RasterToggle.Checked = [Console].FontRaster
+        RasterList.Visible = [Console].FontRaster
+
+        Select Case [Console].FontWeight
+            Case 0
+                CMD_FontWeightBox.SelectedIndex = 0
+
+            Case 100
+                CMD_FontWeightBox.SelectedIndex = 1
+
+            Case 200
+                CMD_FontWeightBox.SelectedIndex = 2
+
+            Case 300
+                CMD_FontWeightBox.SelectedIndex = 3
+
+            Case 400
+                CMD_FontWeightBox.SelectedIndex = 4
+
+            Case 500
+                CMD_FontWeightBox.SelectedIndex = 5
+
+            Case 600
+                CMD_FontWeightBox.SelectedIndex = 6
+
+            Case 700
+                CMD_FontWeightBox.SelectedIndex = 7
+
+            Case 800
+                CMD_FontWeightBox.SelectedIndex = 8
+
+            Case 900
+                CMD_FontWeightBox.SelectedIndex = 9
+
+            Case Else
+                CMD_FontWeightBox.SelectedIndex = 4
+
+        End Select
+
+        If Not [Console].FontRaster Then
+            With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight}) : f_cmd = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style) : End With
+        End If
+
+        CMD_FontsBox.SelectedItem = f_cmd.Name
+        CMD_FontSizeBar.Value = f_cmd.Size
+        CMD_FontSizeLbl.Text = f_cmd.Size
+
+        If [Console].FontSize = 393220 Then RasterList.SelectedItem = "4x6"
+        If [Console].FontSize = 524294 Then RasterList.SelectedItem = "6x8"
+        If [Console].FontSize = 524296 Then RasterList.SelectedItem = "8x8"
+        If [Console].FontSize = 524304 Then RasterList.SelectedItem = "16x8"
+        If [Console].FontSize = 786437 Then RasterList.SelectedItem = "5x12"
+        If [Console].FontSize = 786439 Then RasterList.SelectedItem = "7x12"
+        If [Console].FontSize = 0 Then RasterList.SelectedItem = "8x12"
+        If [Console].FontSize = 786448 Then RasterList.SelectedItem = "16x12"
+        If [Console].FontSize = 1048588 Then RasterList.SelectedItem = "12x16"
+        If [Console].FontSize = 1179658 Then RasterList.SelectedItem = "10x18"
+        If RasterList.SelectedItem = Nothing Then RasterList.SelectedItem = "8x12"
+
+
+        [Console].CursorSize = CMD_CursorSizeBar.Value
+        If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
+        If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
+        If My.W10_1909 Then
+            CMD_CursorStyle.SelectedIndex = [Console].W10_1909_CursorType
+            CMD_CursorColor.BackColor = [Console].W10_1909_CursorColor
+            CMD_PreviewCUR2.BackColor = [Console].W10_1909_CursorColor
+            CMD_EnhancedTerminal.Checked = [Console].W10_1909_ForceV2
+            CMD_OpacityBar.Value = [Console].W10_1909_WindowAlpha
+            CMD_OpacityLbl.Text = Fix(([Console].W10_1909_WindowAlpha / 255) * 100)
+            CMD_LineSelection.Checked = [Console].W10_1909_LineSelection
+            CMD_TerminalScrolling.Checked = [Console].W10_1909_TerminalScrolling
+            ApplyCursorShape()
+        End If
+        UpdateCurPreview()
+
 
     End Sub
 
     Sub ApplyToCP([CP] As CP, [Edition] As Edition)
 
+        Dim [Console] As CP.Console_Structure
+
+        [Console].Enabled = CMDEnabled.Checked
+
+        [Console].ColorTable00 = ColorTable00.BackColor
+        [Console].ColorTable01 = ColorTable01.BackColor
+        [Console].ColorTable02 = ColorTable02.BackColor
+        [Console].ColorTable03 = ColorTable03.BackColor
+        [Console].ColorTable04 = ColorTable04.BackColor
+        [Console].ColorTable05 = ColorTable05.BackColor
+        [Console].ColorTable06 = ColorTable06.BackColor
+        [Console].ColorTable07 = ColorTable07.BackColor
+        [Console].ColorTable08 = ColorTable08.BackColor
+        [Console].ColorTable09 = ColorTable09.BackColor
+        [Console].ColorTable10 = ColorTable10.BackColor
+        [Console].ColorTable11 = ColorTable11.BackColor
+        [Console].ColorTable12 = ColorTable12.BackColor
+        [Console].ColorTable13 = ColorTable13.BackColor
+        [Console].ColorTable14 = ColorTable14.BackColor
+        [Console].ColorTable15 = ColorTable15.BackColor
+        [Console].PopupForeground = CMD_PopupForegroundBar.Value
+        [Console].PopupBackground = CMD_PopupBackgroundBar.Value
+        [Console].ScreenColorsForeground = CMD_AccentForegroundBar.Value
+        [Console].ScreenColorsBackground = CMD_AccentBackgroundBar.Value
+        [Console].FaceName = f_cmd.Name
+        [Console].FontRaster = CMD_RasterToggle.Checked
+        [Console].FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+
+        If Not CMD_RasterToggle.Checked Then
+            [Console].FontSize = CMD_FontSizeBar.Value * 65536
+        Else
+            Select Case RasterList.SelectedItem
+                Case "4x6"
+                    [Console].FontSize = 393220
+
+                Case "6x8"
+                    [Console].FontSize = 524294
+
+                Case "8x8"
+                    [Console].FontSize = 524296
+
+                Case "16x8"
+                    [Console].FontSize = 524304
+
+                Case "5x12"
+                    [Console].FontSize = 786437
+
+                Case "7x12"
+                    [Console].FontSize = 786439
+
+                Case "8x12"
+                    [Console].FontSize = 0
+
+                Case "16x12"
+                    [Console].FontSize = 786448
+
+                Case "12x16"
+                    [Console].FontSize = 1048588
+
+                Case "10x18"
+                    [Console].FontSize = 1179658
+
+                Case Else
+                    [Console].FontSize = 0
+
+            End Select
+        End If
+
+        If CMD_CursorSizeBar.Value < 20 Then
+            [Console].CursorSize = 20
+        ElseIf CMD_CursorSizeBar.Value > 100 Then
+            [Console].CursorSize = 100
+        Else
+            [Console].CursorSize = CMD_CursorSizeBar.Value
+        End If
+
+        If My.W10_1909 Then
+            [Console].W10_1909_CursorColor = CMD_CursorColor.BackColor
+            [Console].W10_1909_CursorType = CMD_CursorStyle.SelectedIndex
+            [Console].W10_1909_ForceV2 = CMD_EnhancedTerminal.Checked
+            [Console].W10_1909_WindowAlpha = CMD_OpacityBar.Value
+            [Console].W10_1909_LineSelection = CMD_LineSelection.Checked
+            [Console].W10_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
+        End If
+
         Select Case [Edition]
             Case Edition.CMD
-#Region " Command Prompt"
-                CP.Terminal_CMD_Enabled = CMDEnabled.Checked
+                [CP].CommandPrompt = [Console]
 
-                CP.CMD_ColorTable00 = ColorTable00.BackColor
-                CP.CMD_ColorTable01 = ColorTable01.BackColor
-                CP.CMD_ColorTable02 = ColorTable02.BackColor
-                CP.CMD_ColorTable03 = ColorTable03.BackColor
-                CP.CMD_ColorTable04 = ColorTable04.BackColor
-                CP.CMD_ColorTable05 = ColorTable05.BackColor
-                CP.CMD_ColorTable06 = ColorTable06.BackColor
-                CP.CMD_ColorTable07 = ColorTable07.BackColor
-                CP.CMD_ColorTable08 = ColorTable08.BackColor
-                CP.CMD_ColorTable09 = ColorTable09.BackColor
-                CP.CMD_ColorTable10 = ColorTable10.BackColor
-                CP.CMD_ColorTable11 = ColorTable11.BackColor
-                CP.CMD_ColorTable12 = ColorTable12.BackColor
-                CP.CMD_ColorTable13 = ColorTable13.BackColor
-                CP.CMD_ColorTable14 = ColorTable14.BackColor
-                CP.CMD_ColorTable15 = ColorTable15.BackColor
-                CP.CMD_PopupForeground = CMD_PopupForegroundBar.Value
-                CP.CMD_PopupBackground = CMD_PopupBackgroundBar.Value
-                CP.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value
-                CP.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-                CP.CMD_FaceName = f_cmd.Name
-                CP.CMD_FontRaster = CMD_RasterToggle.Checked
-                CP.CMD_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
-
-                If Not CMD_RasterToggle.Checked Then
-                    CP.CMD_FontSize = CMD_FontSizeBar.Value * 65536
-                Else
-                    Select Case RasterList.SelectedItem
-                        Case "4x6"
-                            CP.CMD_FontSize = 393220
-
-                        Case "6x8"
-                            CP.CMD_FontSize = 524294
-
-                        Case "8x8"
-                            CP.CMD_FontSize = 524296
-
-                        Case "16x8"
-                            CP.CMD_FontSize = 524304
-
-                        Case "5x12"
-                            CP.CMD_FontSize = 786437
-
-                        Case "7x12"
-                            CP.CMD_FontSize = 786439
-
-                        Case "8x12"
-                            CP.CMD_FontSize = 0
-
-                        Case "16x12"
-                            CP.CMD_FontSize = 786448
-
-                        Case "12x16"
-                            CP.CMD_FontSize = 1048588
-
-                        Case "10x18"
-                            CP.CMD_FontSize = 1179658
-
-                        Case Else
-                            CP.CMD_FontSize = 0
-
-                    End Select
-                End If
-
-                If CMD_CursorSizeBar.Value < 20 Then
-                    CP.CMD_CursorSize = 20
-                ElseIf CMD_CursorSizeBar.Value > 100 Then
-                    CP.CMD_CursorSize = 100
-                Else
-                    CP.CMD_CursorSize = CMD_CursorSizeBar.Value
-                End If
-
-                If My.W10_1909 Then
-                    CP.CMD_1909_CursorColor = CMD_CursorColor.BackColor
-                    CP.CMD_1909_CursorType = CMD_CursorStyle.SelectedIndex
-                    CP.CMD_1909_ForceV2 = CMD_EnhancedTerminal.Checked
-                    CP.CMD_1909_WindowAlpha = CMD_OpacityBar.Value
-                    CP.CMD_1909_LineSelection = CMD_LineSelection.Checked
-                    CP.CMD_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
-                End If
-#End Region
             Case Edition.PowerShellx86
-#Region " PowerShell x86"
-                CP.Terminal_PS_32_Enabled = CMDEnabled.Checked
+                [CP].PowerShellx86 = [Console]
 
-                CP.PS_32_ColorTable00 = ColorTable00.BackColor
-                CP.PS_32_ColorTable01 = ColorTable01.BackColor
-                CP.PS_32_ColorTable02 = ColorTable02.BackColor
-                CP.PS_32_ColorTable03 = ColorTable03.BackColor
-                CP.PS_32_ColorTable04 = ColorTable04.BackColor
-                CP.PS_32_ColorTable05 = ColorTable05.BackColor
-                CP.PS_32_ColorTable06 = ColorTable06.BackColor
-                CP.PS_32_ColorTable07 = ColorTable07.BackColor
-                CP.PS_32_ColorTable08 = ColorTable08.BackColor
-                CP.PS_32_ColorTable09 = ColorTable09.BackColor
-                CP.PS_32_ColorTable10 = ColorTable10.BackColor
-                CP.PS_32_ColorTable11 = ColorTable11.BackColor
-                CP.PS_32_ColorTable12 = ColorTable12.BackColor
-                CP.PS_32_ColorTable13 = ColorTable13.BackColor
-                CP.PS_32_ColorTable14 = ColorTable14.BackColor
-                CP.PS_32_ColorTable15 = ColorTable15.BackColor
-                CP.PS_32_PopupForeground = CMD_PopupForegroundBar.Value
-                CP.PS_32_PopupBackground = CMD_PopupBackgroundBar.Value
-                CP.PS_32_ScreenColorsForeground = CMD_AccentForegroundBar.Value
-                CP.PS_32_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-                CP.PS_32_FaceName = f_cmd.Name
-                CP.PS_32_FontRaster = CMD_RasterToggle.Checked
-                CP.PS_32_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
-
-                If Not CMD_RasterToggle.Checked Then
-                    CP.PS_32_FontSize = CMD_FontSizeBar.Value * 65536
-                Else
-                    Select Case RasterList.SelectedItem
-                        Case "4x6"
-                            CP.PS_32_FontSize = 393220
-
-                        Case "6x8"
-                            CP.PS_32_FontSize = 524294
-
-                        Case "8x8"
-                            CP.PS_32_FontSize = 524296
-
-                        Case "16x8"
-                            CP.PS_32_FontSize = 524304
-
-                        Case "5x12"
-                            CP.PS_32_FontSize = 786437
-
-                        Case "7x12"
-                            CP.PS_32_FontSize = 786439
-
-                        Case "8x12"
-                            CP.PS_32_FontSize = 0
-
-                        Case "16x12"
-                            CP.PS_32_FontSize = 786448
-
-                        Case "12x16"
-                            CP.PS_32_FontSize = 1048588
-
-                        Case "10x18"
-                            CP.PS_32_FontSize = 1179658
-
-                        Case Else
-                            CP.PS_32_FontSize = 0
-
-                    End Select
-                End If
-
-                If CMD_CursorSizeBar.Value < 20 Then
-                    CP.PS_32_CursorSize = 20
-                ElseIf CMD_CursorSizeBar.Value > 100 Then
-                    CP.PS_32_CursorSize = 100
-                Else
-                    CP.PS_32_CursorSize = CMD_CursorSizeBar.Value
-                End If
-
-                If My.W10_1909 Then
-                    CP.PS_32_1909_CursorColor = CMD_CursorColor.BackColor
-                    CP.PS_32_1909_CursorType = CMD_CursorStyle.SelectedIndex
-                    CP.PS_32_1909_ForceV2 = CMD_EnhancedTerminal.Checked
-                    CP.PS_32_1909_WindowAlpha = CMD_OpacityBar.Value
-                    CP.PS_32_1909_LineSelection = CMD_LineSelection.Checked
-                    CP.PS_32_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
-                End If
-#End Region
             Case Edition.PowerShellx64
-#Region " PowerShell x64"
-                CP.Terminal_PS_64_Enabled = CMDEnabled.Checked
+                [CP].PowerShellx64 = [Console]
 
-                CP.PS_64_ColorTable00 = ColorTable00.BackColor
-                CP.PS_64_ColorTable01 = ColorTable01.BackColor
-                CP.PS_64_ColorTable02 = ColorTable02.BackColor
-                CP.PS_64_ColorTable03 = ColorTable03.BackColor
-                CP.PS_64_ColorTable04 = ColorTable04.BackColor
-                CP.PS_64_ColorTable05 = ColorTable05.BackColor
-                CP.PS_64_ColorTable06 = ColorTable06.BackColor
-                CP.PS_64_ColorTable07 = ColorTable07.BackColor
-                CP.PS_64_ColorTable08 = ColorTable08.BackColor
-                CP.PS_64_ColorTable09 = ColorTable09.BackColor
-                CP.PS_64_ColorTable10 = ColorTable10.BackColor
-                CP.PS_64_ColorTable11 = ColorTable11.BackColor
-                CP.PS_64_ColorTable12 = ColorTable12.BackColor
-                CP.PS_64_ColorTable13 = ColorTable13.BackColor
-                CP.PS_64_ColorTable14 = ColorTable14.BackColor
-                CP.PS_64_ColorTable15 = ColorTable15.BackColor
-                CP.PS_64_PopupForeground = CMD_PopupForegroundBar.Value
-                CP.PS_64_PopupBackground = CMD_PopupBackgroundBar.Value
-                CP.PS_64_ScreenColorsForeground = CMD_AccentForegroundBar.Value
-                CP.PS_64_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-                CP.PS_64_FaceName = f_cmd.Name
-                CP.PS_64_FontRaster = CMD_RasterToggle.Checked
-                CP.PS_64_FontWeight = CMD_FontWeightBox.SelectedIndex * 100
-
-                If Not CMD_RasterToggle.Checked Then
-                    CP.PS_64_FontSize = CMD_FontSizeBar.Value * 65536
-                Else
-                    Select Case RasterList.SelectedItem
-                        Case "4x6"
-                            CP.PS_64_FontSize = 393220
-
-                        Case "6x8"
-                            CP.PS_64_FontSize = 524294
-
-                        Case "8x8"
-                            CP.PS_64_FontSize = 524296
-
-                        Case "16x8"
-                            CP.PS_64_FontSize = 524304
-
-                        Case "5x12"
-                            CP.PS_64_FontSize = 786437
-
-                        Case "7x12"
-                            CP.PS_64_FontSize = 786439
-
-                        Case "8x12"
-                            CP.PS_64_FontSize = 0
-
-                        Case "16x12"
-                            CP.PS_64_FontSize = 786448
-
-                        Case "12x16"
-                            CP.PS_64_FontSize = 1048588
-
-                        Case "10x18"
-                            CP.PS_64_FontSize = 1179658
-
-                        Case Else
-                            CP.PS_64_FontSize = 0
-
-                    End Select
-                End If
-
-                If CMD_CursorSizeBar.Value < 20 Then
-                    CP.PS_64_CursorSize = 20
-                ElseIf CMD_CursorSizeBar.Value > 100 Then
-                    CP.PS_64_CursorSize = 100
-                Else
-                    CP.PS_64_CursorSize = CMD_CursorSizeBar.Value
-                End If
-
-                If My.W10_1909 Then
-                    CP.PS_64_1909_CursorColor = CMD_CursorColor.BackColor
-                    CP.PS_64_1909_CursorType = CMD_CursorStyle.SelectedIndex
-                    CP.PS_64_1909_ForceV2 = CMD_EnhancedTerminal.Checked
-                    CP.PS_64_1909_WindowAlpha = CMD_OpacityBar.Value
-                    CP.PS_64_1909_LineSelection = CMD_LineSelection.Checked
-                    CP.PS_64_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
-                End If
-#End Region
         End Select
 
     End Sub
 #End Region
 
-    Private Sub CMD_PopupForegroundBar_Scroll(sender As Object) Handles CMD_PopupForegroundBar.Scroll
+    Private Sub CommandPrompt_PopupForegroundBar_Scroll(sender As Object) Handles CMD_PopupForegroundBar.Scroll
         With CMD_PopupForegroundBar
             CMD_PopupForegroundLbl.Text = .Value
             If .Value = 10 Then CMD_PopupForegroundLbl.Text &= " (A)"
@@ -1123,7 +767,7 @@ Public Class cmd
 
     Private Sub CMD_FontWeightBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CMD_FontWeightBox.SelectedIndexChanged
         If Not _Shown Then Exit Sub
-        Dim fx As New LOGFONT
+        Dim fx As New LogFont
         f_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, f_cmd.Size, f_cmd.Style)
         f_cmd.ToLogFont(fx)
         fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100
@@ -1249,7 +893,7 @@ Public Class cmd
         ApplyFromCP(_Def, _Edition)
         ApplyPreview()
         CMDEnabled.Checked = ee
-
+        _Def.Dispose()
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -1259,6 +903,7 @@ Public Class cmd
             ApplyFromCP(CPx, _Edition)
             ApplyPreview()
             CMDEnabled.Checked = ee
+            CPx.Dispose()
         End If
     End Sub
 
@@ -1272,5 +917,8 @@ Public Class cmd
         ApplyFromCP(CPx, _Edition)
         ApplyPreview()
         CMDEnabled.Checked = ee
+        CPx.Dispose()
     End Sub
+
+
 End Class

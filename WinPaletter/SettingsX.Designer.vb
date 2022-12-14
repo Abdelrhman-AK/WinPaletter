@@ -156,6 +156,8 @@ Partial Class SettingsX
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.PictureBox37 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox17 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -201,6 +203,7 @@ Partial Class SettingsX
         Me.TabPage6.SuspendLayout()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label17
@@ -1377,6 +1380,8 @@ Partial Class SettingsX
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.PictureBox37)
+        Me.TabPage5.Controls.Add(Me.XenonCheckBox17)
         Me.TabPage5.Controls.Add(Me.XenonAlertBox6)
         Me.TabPage5.Controls.Add(Me.PictureBox14)
         Me.TabPage5.Controls.Add(Me.XenonCheckBox7)
@@ -1435,7 +1440,8 @@ Partial Class SettingsX
         Me.XenonCheckBox7.Name = "XenonCheckBox7"
         Me.XenonCheckBox7.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox7.TabIndex = 21
-        Me.XenonCheckBox7.Text = "Automatic Apply Custom Cursors (Overrides Aero Scheme)"
+        Me.XenonCheckBox7.Text = "Automatic Apply Custom Cursors (Creates new scheme called WinPaletter in Control " &
+    "Panel > Mouse)"
         '
         'XenonSeparator6
         '
@@ -1979,6 +1985,31 @@ Partial Class SettingsX
         '
         Me.OpenJSONDlg.Filter = "JSON File (*.json)|*.json"
         '
+        'PictureBox37
+        '
+        Me.PictureBox37.Image = CType(resources.GetObject("PictureBox37.Image"), System.Drawing.Image)
+        Me.PictureBox37.Location = New System.Drawing.Point(41, 195)
+        Me.PictureBox37.Name = "PictureBox37"
+        Me.PictureBox37.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox37.TabIndex = 23
+        Me.PictureBox37.TabStop = False
+        '
+        'XenonCheckBox17
+        '
+        Me.XenonCheckBox17.AccentColor = System.Drawing.Color.DodgerBlue
+        Me.XenonCheckBox17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox17.Checked = True
+        Me.XenonCheckBox17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox17.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox17.Location = New System.Drawing.Point(77, 195)
+        Me.XenonCheckBox17.Name = "XenonCheckBox17"
+        Me.XenonCheckBox17.Size = New System.Drawing.Size(729, 26)
+        Me.XenonCheckBox17.TabIndex = 24
+        Me.XenonCheckBox17.Text = "Always show confirmation Message on closing WinPaletter (If changes happened)"
+        '
         'SettingsX
         '
         Me.AllowDrop = True
@@ -2051,6 +2082,7 @@ Partial Class SettingsX
         Me.TabPage6.ResumeLayout(False)
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2186,4 +2218,6 @@ Partial Class SettingsX
     Friend WithEvents PictureBox35 As PictureBox
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents XenonCheckBox16 As XenonCheckBox
+    Friend WithEvents PictureBox37 As PictureBox
+    Friend WithEvents XenonCheckBox17 As XenonCheckBox
 End Class

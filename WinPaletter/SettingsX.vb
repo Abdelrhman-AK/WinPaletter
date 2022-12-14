@@ -33,6 +33,7 @@ Public Class SettingsX
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
+            If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
             If .Language <> XenonCheckBox8.Checked Then Changed = True
@@ -42,12 +43,8 @@ Public Class SettingsX
             If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
             If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
             If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
-
             If .LoadThemeFileAsLegacy <> XenonCheckBox16.Checked Then Changed = True
             If .SaveThemeFileAsLegacy <> XenonCheckBox4.Checked Then Changed = True
-
-            'XenonCheckBox16
-
             If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
             If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
             If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
@@ -94,6 +91,7 @@ Public Class SettingsX
             XenonCheckBox9.Checked = .Win7LivePreview
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+            XenonCheckBox17.Checked = .ShowSaveConfirmation
 
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -170,6 +168,7 @@ Public Class SettingsX
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
+            .ShowSaveConfirmation = XenonCheckBox17.Checked
 
             .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
             .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
@@ -265,6 +264,7 @@ Public Class SettingsX
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
+                .ShowSaveConfirmation = XenonCheckBox17.Checked
 
                 .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
                 .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
@@ -305,6 +305,7 @@ Public Class SettingsX
 
                 XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
                 XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
+                XenonCheckBox17.Checked = .ShowSaveConfirmation
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
                 XenonCheckBox13.Checked = .Terminal_OtherFonts
@@ -365,6 +366,7 @@ Public Class SettingsX
 
             XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
             XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
+            XenonCheckBox17.Checked = .ShowSaveConfirmation
 
             XenonCheckBox12.Checked = .Terminal_Bypass
             XenonCheckBox13.Checked = .Terminal_OtherFonts

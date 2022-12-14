@@ -27,12 +27,11 @@ Namespace NativeMethods
         <DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer
         End Function
 
+        <DllImport("dwmapi.dll")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As DWMATTRIB, ByRef pvAttribute As Integer, ByVal cbAttribute As Integer) As Integer
+        End Function
+
         Public Const CS_DROPSHADOW As Integer = &H20000
         Public Const WM_NCPAINT As Integer = &H85
-
-        <DllImport("dwmapi.dll")>
-        Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As DWMATTRIB, ByRef pvAttribute As Integer, ByVal cbAttribute As Integer) As Integer
-        End Function
 
         Public Enum DWMATTRIB
             DWMWA_SYSTEMBACKDROP_TYPE = 38
@@ -429,6 +428,10 @@ Namespace NativeMethods
 
         <DllImport("uxtheme.dll", EntryPoint:="#135")>
         Friend Shared Function SetPreferredAppMode(ByVal appMode As PreferredAppMode) As Integer
+        End Function
+
+        <DllImport("uxtheme.dll", ExactSpelling:=True, CharSet:=CharSet.Unicode)>
+        Public Shared Function SetWindowTheme(ByVal hwnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As String) As Integer
         End Function
 
         Friend Enum PreferredAppMode

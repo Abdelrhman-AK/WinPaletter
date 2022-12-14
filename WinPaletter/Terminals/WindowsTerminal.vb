@@ -21,14 +21,14 @@ Public Class WindowsTerminal
                 _Terminal = MainFrm.CP.Terminal
                 _TerminalDefault = MainFrm.CP.Terminal
                 Text = "Windows Terminal Stable"
-                TerEnabled.Checked = MainFrm.CP.Terminal_Stable_Enabled
+                TerEnabled.Checked = MainFrm.CP.Terminal.Enabled
 
             Case WinTerminal.Version.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
                 _TerminalDefault = MainFrm.CP.TerminalPreview
 
                 Text = "Windows Terminal Preview"
-                TerEnabled.Checked = MainFrm.CP.Terminal_Preview_Enabled
+                TerEnabled.Checked = MainFrm.CP.TerminalPreview.Enabled
 
         End Select
 
@@ -1027,11 +1027,11 @@ Public Class WindowsTerminal
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         Select Case _Mode
             Case WinTerminal.Version.Stable
-                MainFrm.CP.Terminal_Stable_Enabled = TerEnabled.Checked
+                MainFrm.CP.Terminal.Enabled = TerEnabled.Checked
                 MainFrm.CP.Terminal = _Terminal
 
             Case WinTerminal.Version.Preview
-                MainFrm.CP.Terminal_Preview_Enabled = TerEnabled.Checked
+                MainFrm.CP.TerminalPreview.Enabled = TerEnabled.Checked
                 MainFrm.CP.TerminalPreview = _Terminal
 
         End Select
@@ -1518,14 +1518,15 @@ Public Class WindowsTerminal
         Select Case _Mode
             Case WinTerminal.Version.Stable
                 _Terminal = CPx.Terminal
-                TerEnabled.Checked = CPx.Terminal_Stable_Enabled
+                TerEnabled.Checked = CPx.Terminal.Enabled
 
             Case WinTerminal.Version.Preview
                 _Terminal = CPx.TerminalPreview
-                TerEnabled.Checked = CPx.Terminal_Preview_Enabled
+                TerEnabled.Checked = CPx.TerminalPreview.Enabled
         End Select
 
         Load_FromTerminal()
 
+        CPx.Dispose()
     End Sub
 End Class

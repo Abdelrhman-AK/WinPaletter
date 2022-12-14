@@ -21,7 +21,6 @@ Public Class Localizer
         If Name.ToLower = "Win32UI".ToLower Then Return Win32UI
         If Name.ToLower = "SettingsX".ToLower Then Return SettingsX
         If Name.ToLower = "CursorsStudio".ToLower Then Return CursorsStudio
-        If Name.ToLower = "ApplyingTheme".ToLower Then Return ApplyingTheme
         If Name.ToLower = "LogonUI7".ToLower Then Return LogonUI7
         If Name.ToLower = "LogonUI8Colors".ToLower Then Return LogonUI8Colors
         If Name.ToLower = "LogonUI8_Pics".ToLower Then Return LogonUI8_Pics
@@ -54,7 +53,6 @@ Public Class Localizer
                         "Win32UI_frm",
                         "SettingsX",
                         "CursorsStudio",
-                        "ApplyingTheme",
                         "LogonUI7",
                         "LogonUI8Colors",
                         "LogonUI8_Pics",
@@ -377,9 +375,6 @@ Public Class Localizer
     End Sub
 
     Sub LoadInternal()
-        MainFrm.ToolStripMenuItem2.Text = MenuInit
-        MainFrm.FromCurrentPaletteToolStripMenuItem.Text = MenuAppliedReg
-
         My.Application.AdjustFonts()
     End Sub
 

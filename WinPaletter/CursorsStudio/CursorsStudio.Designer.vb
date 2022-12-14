@@ -204,11 +204,11 @@ Partial Class CursorsStudio
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(81, 5)
+        Me.XenonButton7.Location = New System.Drawing.Point(82, 5)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(185, 29)
+        Me.XenonButton7.Size = New System.Drawing.Size(146, 29)
         Me.XenonButton7.TabIndex = 69
-        Me.XenonButton7.Text = "Exported WinPaletter Theme"
+        Me.XenonButton7.Text = "WinPaletter Theme"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'XenonButton8
@@ -218,13 +218,13 @@ Partial Class CursorsStudio
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
+        Me.XenonButton8.Image = Nothing
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(410, 5)
+        Me.XenonButton8.Location = New System.Drawing.Point(366, 5)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(120, 29)
+        Me.XenonButton8.Size = New System.Drawing.Size(134, 29)
         Me.XenonButton8.TabIndex = 68
         Me.XenonButton8.Text = "Default Windows" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -238,13 +238,13 @@ Partial Class CursorsStudio
         Me.XenonButton9.ForeColor = System.Drawing.Color.White
         Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
         Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(82, Byte), Integer))
+        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
         Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(268, 5)
+        Me.XenonButton9.Location = New System.Drawing.Point(230, 5)
         Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(140, 29)
+        Me.XenonButton9.Size = New System.Drawing.Size(134, 29)
         Me.XenonButton9.TabIndex = 67
-        Me.XenonButton9.Text = "Current applied one"
+        Me.XenonButton9.Text = "Current applied"
         Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'Label12
@@ -253,7 +253,7 @@ Partial Class CursorsStudio
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label12.BackColor = System.Drawing.Color.Transparent
         Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(4, 5)
+        Me.Label12.Location = New System.Drawing.Point(5, 5)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(71, 28)
         Me.Label12.TabIndex = 4

@@ -112,9 +112,7 @@ Public Class ColorPickerDlg
         Dim PrevoiusMin As Size = fr.MinimumSize
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W11, True)
-            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
-            My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
+            My.Application.AnimatorX.Hide(MainFrm.TablessControl1, True)
             My.Application.AnimatorX.Hide(MainFrm.MainToolbar, True)
             My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
@@ -152,25 +150,7 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             MainFrm.Width = PreviousWidth
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Or MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
-                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W11, True)
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W11, True)
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W8, True)
-                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W7, True)
-            End If
-
-            If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W11, True)
-                My.Application.AnimatorX.Show(MainFrm.PaletteContainer_W8, True)
-                My.Application.AnimatorX.Hide(MainFrm.PaletteContainer_W7, True)
-            End If
-
+            My.Application.AnimatorX.Show(MainFrm.TablessControl1, True)
             My.Application.AnimatorX.Show(MainFrm.MainToolbar, True)
             My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
             My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)

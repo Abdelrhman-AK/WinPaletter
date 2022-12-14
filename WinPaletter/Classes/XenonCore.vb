@@ -16,6 +16,7 @@ Public Class XenonCore
                 Ctrl.Invoke(New setCtrlTxtInvoker(AddressOf SetCtrlTxt), text, Ctrl)
             Else
                 Ctrl.Text = text
+                Ctrl.Refresh()
             End If
         Catch
 
@@ -42,26 +43,29 @@ Public Class XenonCore
     Public Shared Sub RefreshDWM(CP As CP)
 
         Try
-            If CP.Windows7.Theme = AeroTheme.Basic Or CP.Windows7.Theme = AeroTheme.Classic Then
-                NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_DISABLECOMPOSITION)
-            Else
-                NativeMethods.Dwmapi.DwmEnableComposition(Dwmapi.CompositionAction.DWM_EC_ENABLECOMPOSITION)
-            End If
-
             Dim Com As Boolean
-            NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
+            Dwmapi.DwmIsCompositionEnabled(Com)
 
             If Com Then
                 Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
-                temp.clrColor = CP.Windows7.ColorizationColor.ToArgb
+
+                If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                    temp.clrColor = CP.Windows8.ColorizationColor.ToArgb
+                    temp.nIntensity = CP.Windows8.ColorizationColorBalance
+
+                Else
+                    temp.clrColor = CP.Windows7.ColorizationColor.ToArgb
+                    temp.nIntensity = CP.Windows7.ColorizationColorBalance
+                End If
+
                 temp.clrAfterGlow = CP.Windows7.ColorizationAfterglow.ToArgb
-                temp.nIntensity = CP.Windows7.ColorizationColorBalance
                 temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
                 temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
                 temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
                 temp.fOpaque = If(CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
+
         Catch
         End Try
     End Sub
@@ -565,13 +569,6 @@ Public Class XenonCore
             End If
 
             If [Form].Name = MainFrm.Name Then
-                MainFrm.ContextMenuStrip1.BackColor = If(DarkMode, Color.FromArgb(35, 35, 35), Color.FromArgb(250, 250, 250))
-                MainFrm.ContextMenuStrip1.ForeColor = If(DarkMode, Color.White, Color.Black)
-
-                For Each it As ToolStripItem In MainFrm.ContextMenuStrip1.Items
-                    it.ForeColor = If(DarkMode, Color.White, Color.Black)
-                Next
-
                 'MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
                 MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
             End If
@@ -579,7 +576,6 @@ Public Class XenonCore
         End If
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
-
         Dim b As Boolean = False
         If TypeOf ctrl Is RetroButton Then b = True
         If TypeOf ctrl Is RetroCheckBox Then b = True
@@ -604,17 +600,17 @@ Public Class XenonCore
 
 
         If TypeOf ctrl Is XenonGroupBox Then
-            TryCast(ctrl, XenonGroupBox).BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.05, -0.05))
-            TryCast(ctrl, XenonGroupBox).LineColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.1, -0.1))
+            DirectCast(ctrl, XenonGroupBox).BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.05, -0.05))
+            DirectCast(ctrl, XenonGroupBox).LineColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonCP Then
-            TryCast(ctrl, XenonCP).LineColor = CCB(ctrl.BackColor, If(IsColorDark(ctrl.BackColor), 0.1, -0.1))
+            DirectCast(ctrl, XenonCP).LineColor = CCB(ctrl.BackColor, If(IsColorDark(ctrl.BackColor), 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonButton Then
-            ctrl.BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.04, -0.04))
-            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
+            DirectCast(ctrl, XenonButton).BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.04, -0.04))
+            DirectCast(ctrl, XenonButton).ForeColor = If(DarkMode, Color.White, Color.Black)
         End If
 
         If TypeOf ctrl Is RichTextBox Then
@@ -625,6 +621,8 @@ Public Class XenonCore
         If TypeOf ctrl Is LinkLabel Then
             DirectCast(ctrl, LinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
         End If
+
+
 
         If TypeOf ctrl Is DataGridView Then
             Dim ColumnBack As Color
@@ -674,13 +672,32 @@ Public Class XenonCore
 
         If ctrl.HasChildren Then
             For Each c As Control In ctrl.Controls
+
+                If TypeOf ctrl Is TablessControl Then
+                    With TryCast(ctrl, TablessControl)
+                        For x = 0 To .TabPages.Count - 1
+                            .TabPages.Item(x).BackColor = ctrl.Parent.BackColor
+                            .TabPages.Item(x).Refresh()
+                            .Refresh()
+                        Next
+                    End With
+                End If
+
+                If TypeOf ctrl Is XenonTabControl Then
+                    With TryCast(ctrl, XenonTabControl)
+                        For x = 0 To .TabPages.Count - 1
+                            .TabPages.Item(x).Refresh()
+                            .Invalidate()
+                        Next
+                    End With
+                End If
+
                 c.Invalidate()
                 c.Refresh()
                 EnumControls(c, DarkMode)
             Next
         End If
 
-        ctrl.Invalidate()
         ctrl.Refresh()
     End Sub
 #End Region

@@ -72,9 +72,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -103,6 +101,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -140,20 +139,22 @@
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
-    <Content Include="My Project\Application.myapp" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
     <None Include="Resources\Win8_Close_ToolWindow.png" />
     <None Include="Resources\Win8_Close_0.png" />
     <None Include="Resources\Win8_Close_3.png" />
     <None Include="Resources\Win8_Close_2.png" />
     <None Include="Resources\Win8_Close_1.png" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
+    <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
     <None Include="Resources\AeroGlass.png" />
+    <None Include="Resources\add_win11.png" />
+    <None Include="Resources\add_win7.png" />
+    <None Include="Resources\add_win8.png" />
+    <None Include="Resources\add_win10.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
     <Content Include="Resources\CMD_10x18.png" />
@@ -198,6 +199,9 @@
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
     <None Include="Resources\Newtonsoft.Json.dll" />
+    <None Include="Resources\notify_time.png" />
+    <None Include="Resources\notify_success.png" />
+    <None Include="Resources\notify_skip.png" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />
@@ -231,9 +235,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="My Project\app.manifest" />
-    <None Include="My Project\app.manifest" />
-    <None Include="My Project\Settings.settings" />
     <None Include="Resources\CMD_7x12.png" />
     <None Include="Resources\CMD_8x12.png" />
     <None Include="Resources\CMD_12x16.png" />
@@ -371,13 +372,9 @@
     <Compile Include="Metrics_Fonts\Metrics_Fonts.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -468,12 +465,6 @@
     <Compile Include="Win32UI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win7_8\ApplyingTheme.Designer.vb">
-      <DependentUpon>ApplyingTheme.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Win7_8\ApplyingTheme.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Win7_8\Start8Selector.Designer.vb">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </Compile>
@@ -516,6 +507,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseForm1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
@@ -537,9 +530,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="popup_color.resx">
       <DependentUpon>popup_color.vb</DependentUpon>
@@ -584,9 +576,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Win7_8\ApplyingTheme.resx">
-      <DependentUpon>ApplyingTheme.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Win7_8\Start8Selector.resx">
       <DependentUpon>Start8Selector.vb</DependentUpon>

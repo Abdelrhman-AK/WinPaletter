@@ -94,22 +94,27 @@ Module XenonModule
         Catch
         End Try
     End Sub
-    Friend Function GetParentColor(ByVal [Control] As Control, Optional ByVal Accept_Transparent As Boolean = False) As Color
+    Friend Function GetParentColor(ByVal ctrl As Control, Optional ByVal Accept_Transparent As Boolean = False) As Color
+
         If Accept_Transparent Then
-            Return [Control].Parent.BackColor
+            Return ctrl.Parent.BackColor
         Else
             Try
-                If Control.Parent Is Nothing Then Exit Function
-                If Control.Parent.BackColor.A = 255 Then
-                    Return Color.FromArgb(255, [Control].Parent.BackColor)
+
+                If ctrl.Parent Is Nothing Then
+                    Exit Function
+                End If
+
+                If ctrl.Parent.BackColor.A = 255 Then
+                    Return Color.FromArgb(255, ctrl.Parent.BackColor)
                 Else
                     Try
-                        Dim c1 As Color = [Control].Parent.BackColor
+                        Dim c1 As Color = ctrl.Parent.BackColor
                         Dim c2 As Color
-                        If TypeOf [Control].Parent.Parent IsNot Form Then
-                            c2 = [Control].Parent.Parent.BackColor
+                        If TypeOf ctrl.Parent.Parent IsNot Form Then
+                            c2 = ctrl.Parent.Parent.BackColor
                         Else
-                            c2 = [Control].Parent.FindForm.BackColor
+                            c2 = ctrl.Parent.FindForm.BackColor
                         End If
                         Dim amount As Double = c1.A / 255
                         Dim r As Byte = CByte(((c1.R * amount) + c2.R * (1 - amount)))
@@ -117,12 +122,13 @@ Module XenonModule
                         Dim b As Byte = CByte(((c1.B * amount) + c2.B * (1 - amount)))
                         Return Color.FromArgb(r, g, b)
                     Catch
-                        Return [Control].Parent.BackColor
+                        Return ctrl.Parent.BackColor
                     End Try
                 End If
             Catch
             End Try
         End If
+
     End Function
 
     Friend Function GetRoundedCorners() As Boolean
@@ -397,7 +403,7 @@ Public Class XenonColorPalette
 
     Dim Dark As Boolean = True
 
-    Function BizareColorInvertor([Color] As Color) As Color
+    Function InvertColor([Color] As Color) As Color
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
 
@@ -414,7 +420,10 @@ Public Class XenonColorPalette
         'Catch
         'End Try
 
-        Color_Parent = GetParentColor([Control])
+        Try
+            Color_Parent = GetParentColor([Control])
+        Catch
+        End Try
 
         Dark = GetDarkMode()
 
@@ -1660,18 +1669,12 @@ Public Class XenonCheckBox
 End Class
 
 <DefaultEvent("Click")>
-Public Class XenonGroupBox
-    Inherits Panel
+Public Class XenonGroupBox : Inherits Panel
+
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
 
         DoubleBuffered = True
-
-        Try
-            BackColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.05, -0.05))
-            LineColor = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.1, -0.1))
-        Catch
-        End Try
     End Sub
 
 #Region "Properties"
@@ -2286,11 +2289,12 @@ Public Class XenonButton : Inherits Button
     End Sub
 
     Sub Rfrsh()
-        If _Shown Then
+        Try
             BC = CCB(GetParentColor(Me), If(IsColorDark(GetParentColor(Me)), 0.04, -0.04))
             BackColor = BC
             Invalidate()
-        End If
+        Catch
+        End Try
     End Sub
 
 End Class
@@ -3320,10 +3324,13 @@ Public Class XenonComboBox : Inherits ComboBox
     End Sub
 
     Public Sub RefreshColorPalette()
-        If _Shown Then
+
+        Try
             ColorPalette = New XenonColorPalette(Me)
             Invalidate()
-        End If
+        Catch
+        End Try
+
     End Sub
 
     Private Sub XenonComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
@@ -4537,7 +4544,6 @@ Public Class XenonFakeIcon : Inherits Panel
     End Sub
 
 End Class
-
 Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropertyChanged
 
     Private _DarkMode As Boolean = True

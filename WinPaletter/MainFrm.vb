@@ -1,21 +1,24 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
-Imports System.Text
 Imports WinPaletter.CP
-Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
     Private _Shown As Boolean = False
-    Public CP, CP_Original, CP_FirstTime As CP
-    Dim CP_BeforeDragAndDrop As CP
+    Public CP, CP_Original, CP_FirstTime, CP_BeforeDragAndDrop As CP
     Public PreviewConfig As WinVer = WinVer.Eleven
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
     Public ShowWhatsNew As Boolean = False
+
+    Private imgLs As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
+
+    Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
+        NativeMethods.Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
+    End Sub
 
 #Region "CP Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
@@ -529,16 +532,16 @@ Public Class MainFrm
                         taskbar.BackColorAlpha = 255
                 End Select
 
-                XenonWindow1.AccentColor_Active = [CP].Windows7.ColorizationColor
-                XenonWindow1.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                XenonWindow1.AccentColor_Active = [CP].Windows8.ColorizationColor
+                XenonWindow1.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 
-                XenonWindow2.AccentColor_Active = [CP].Windows7.ColorizationColor
-                XenonWindow2.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                XenonWindow2.AccentColor_Active = [CP].Windows8.ColorizationColor
+                XenonWindow2.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 
-                taskbar.BackColor = [CP].Windows7.ColorizationColor
-                taskbar.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
-
+                taskbar.BackColor = [CP].Windows8.ColorizationColor
+                taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 #End Region
+
             Case WinVer.Seven
 #Region "Win7"
                 If My.W7 And My.Application._Settings.Win7LivePreview And _Shown Then
@@ -1159,6 +1162,17 @@ Public Class MainFrm
         _Shown = False
         Visible = False
 
+        imgLs.Images.Add("info", My.Resources.notify_info)
+        imgLs.Images.Add("error", My.Resources.notify_error)
+        imgLs.Images.Add("warning", My.Resources.notify_warning)
+        imgLs.Images.Add("time", My.Resources.notify_time)
+        imgLs.Images.Add("success", My.Resources.notify_success)
+        imgLs.Images.Add("skip", My.Resources.notify_skip)
+
+        TreeView1.ImageList = imgLs
+
+        SetTreeViewTheme(TreeView1.Handle)
+
         Try
             ApplyDarkMode(Me)
             MakeItDoubleBuffered(Me)
@@ -1173,7 +1187,7 @@ Public Class MainFrm
                 AddHandler btn.Leave, AddressOf EraseHint
             Next
 
-            For Each btn As XenonRadioImage In MainToolbar.Controls.OfType(Of XenonRadioImage)
+            For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
                 AddHandler btn.MouseEnter, AddressOf UpdateHint
                 AddHandler btn.Enter, AddressOf UpdateHint
                 AddHandler btn.MouseLeave, AddressOf EraseHint
@@ -1207,27 +1221,27 @@ Public Class MainFrm
 
             If PreviewConfig = WinVer.Eleven Then
                 TablessControl1.SelectedIndex = 0
-                XenonButton20.Image = My.Resources.Native11
+                XenonButton20.Image = My.Resources.add_win11
                 Select_W11.Checked = True
 
             ElseIf PreviewConfig = WinVer.Ten Then
                 TablessControl1.SelectedIndex = 1
-                XenonButton20.Image = My.Resources.Native10
+                XenonButton20.Image = My.Resources.add_win10
                 Select_W10.Checked = True
 
             ElseIf PreviewConfig = WinVer.Eight Then
                 TablessControl1.SelectedIndex = 2
-                XenonButton20.Image = My.Resources.Native8
+                XenonButton20.Image = My.Resources.add_win8
                 Select_W8.Checked = True
 
             ElseIf PreviewConfig = WinVer.Seven Then
                 TablessControl1.SelectedIndex = 3
-                XenonButton20.Image = My.Resources.Native7
+                XenonButton20.Image = My.Resources.add_win7
                 Select_W7.Checked = True
 
             Else
                 TablessControl1.SelectedIndex = 0
-                XenonButton20.Image = My.Resources.Native11
+                XenonButton20.Image = My.Resources.add_win11
                 Select_W11.Checked = True
 
             End If
@@ -1274,50 +1288,54 @@ Public Class MainFrm
         Dim Changed As Boolean = Not CP.Equals(CP_Original)
 
         If Changed Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    Else
+                                        e.Cancel = True
+                                    End If
+                                End If
+                            Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     e.Cancel = True
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                e.Cancel = True
-                            End If
-                    End Select
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
-                    e.Cancel = False
-                    If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then RefreshDWM(CP_Original)
-                    MyBase.OnFormClosing(e)
+                    Case DialogResult.No
+                        e.Cancel = False
+                        If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then RefreshDWM(CP_Original)
+                        MyBase.OnFormClosing(e)
 
-                Case DialogResult.Cancel
-                    e.Cancel = True
-            End Select
-
+                    Case DialogResult.Cancel
+                        e.Cancel = True
+                End Select
+            Else
+                e.Cancel = False
+                MyBase.OnFormClosing(e)
+            End If
         Else
             e.Cancel = False
             MyBase.OnFormClosing(e)
@@ -1447,20 +1465,20 @@ Public Class MainFrm
 
         CList.Add(taskbar)
 
-            If Not CP.Windows11.WinMode_Light Then
-                CList.Add(ActionCenter)
-                CList.Add(start)
+        If Not CP.Windows11.WinMode_Light Then
+            CList.Add(ActionCenter)
+            CList.Add(start)
 
-                Dim _Conditions As New Conditions With {
+            Dim _Conditions As New Conditions With {
                     .AppUnderlineOnly = True,
                      .StartSearchOnly = True,
                      .ActionCenterBtn = True
  }
 
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            Else
-                C = ColorPickerDlg.Pick(CList)
-            End If
+            C = ColorPickerDlg.Pick(CList, _Conditions)
+        Else
+            C = ColorPickerDlg.Pick(CList)
+        End If
 
 
         CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
@@ -1659,27 +1677,27 @@ Public Class MainFrm
 
 
         If Not W11_Transparency_Toggle.Checked Then
-                CList.Add(taskbar)
-                CList.Add(start)
-                CList.Add(ActionCenter)
-            End If
+            CList.Add(taskbar)
+            CList.Add(start)
+            CList.Add(ActionCenter)
+        End If
 
-            If CP.Windows11.WinMode_Light Then
-                CList.Add(start)
-                CList.Add(ActionCenter)
-                CList.Add(taskbar)
+        If CP.Windows11.WinMode_Light Then
+            CList.Add(start)
+            CList.Add(ActionCenter)
+            CList.Add(taskbar)
 
-                Dim _Conditions As New Conditions With {
+            Dim _Conditions As New Conditions With {
                     .AppUnderlineOnly = True,
                      .StartSearchOnly = True,
                      .ActionCenterBtn = True
  }
 
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            Else
-                Dim _Conditions As New Conditions With {.StartColorOnly = True}
-                C = ColorPickerDlg.Pick(CList, _Conditions)
-            End If
+            C = ColorPickerDlg.Pick(CList, _Conditions)
+        Else
+            Dim _Conditions As New Conditions With {.StartColorOnly = True}
+            C = ColorPickerDlg.Pick(CList, _Conditions)
+        End If
 
         CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
         ApplyLivePreviewFromCP(CP)
@@ -2484,7 +2502,10 @@ Public Class MainFrm
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
 
-        CP.Save(CP.SavingMode.Registry)
+        TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+
+        CP.Save(CP.Mode.Registry, "", TreeView1)
+
         CP_Original = New CP(Mode.Registry)
 
         Cursor = Cursors.Default
@@ -2566,50 +2587,50 @@ Public Class MainFrm
                 If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
 
                 If Not CP.Equals(CP_Original) Then
+                    If My.Application._Settings.ShowSaveConfirmation Then
+                        Select Case ComplexSave.ShowDialog
+                            Case DialogResult.Yes
 
-                    Select Case ComplexSave.ShowDialog
-                        Case DialogResult.Yes
+                                Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                                Dim r1 As String = r(0)
+                                Dim r2 As String = r(1)
 
-                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                            Dim r1 As String = r(0)
-                            Dim r2 As String = r(1)
-
-                            Select Case r1
-                                Case 0              '' Save
-                                    If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                    Else
+                                Select Case r1
+                                    Case 0              '' Save
+                                        If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                            CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                            CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                        Else
+                                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                            Else
+                                                '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                                                Exit Sub
+                                            End If
+                                        End If
+                                    Case 1              '' Save As
                                         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                            CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                             CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                         Else
                                             '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                             Exit Sub
                                         End If
-                                    End If
-                                Case 1              '' Save As
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                    Else
-                                        '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
-                                        Exit Sub
-                                    End If
-                            End Select
+                                End Select
 
-                            Select Case r2
-                                Case 1      '' Apply   ' Case 0= Don't Apply
-                                    CP.Save(CP.SavingMode.Registry)
-                                    If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                            End Select
+                                Select Case r2
+                                    Case 1      '' Apply   ' Case 0= Don't Apply
+                                        CP.Save(CP.Mode.Registry)
+                                        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                End Select
 
-                        Case DialogResult.No
+                            Case DialogResult.No
 
-                        Case DialogResult.Cancel
-                            Exit Sub
-                    End Select
-
+                            Case DialogResult.Cancel
+                                Exit Sub
+                        End Select
+                    End If
                 End If
 
                 CP = New CP(CP.Mode.File, files(0))
@@ -2629,56 +2650,57 @@ Public Class MainFrm
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileNames(0))
+                CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
             End If
         Else
-            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileNames(0))
+            CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
-
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    Else
+                                        Exit Sub
+                                    End If
+                                End If
+                            Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                Exit Sub
-                            End If
-                    End Select
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
+                    Case DialogResult.No
 
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
+                    Case DialogResult.Cancel
+                        Exit Sub
+                End Select
+            End If
 
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
             CP = New CP(CP.Mode.File, OpenFileDialog1.FileName)
@@ -2689,115 +2711,58 @@ Public Class MainFrm
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-            CP.Save(CP.SavingMode.File, SaveFileDialog1.FileNames(0))
+            CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        ContextMenuStrip1.Show(sender, New Point(2, sender.height))
-    End Sub
-
-    Private Sub FromCurrentPaletteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromCurrentPaletteToolStripMenuItem.Click
-
         If Not CP.Equals(CP_Original) Then
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
-
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    Else
+                                        Exit Sub
+                                    End If
+                                End If
+                            Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                Exit Sub
-                            End If
-                    End Select
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
+                    Case DialogResult.No
 
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
-
+                    Case DialogResult.Cancel
+                        Exit Sub
+                End Select
+            End If
         End If
 
         CP = New CP(CP.Mode.Registry)
         CP_Original = New CP(CP.Mode.Registry)
-        OpenFileDialog1.FileName = Nothing
-        SaveFileDialog1.FileName = Nothing
-        ApplyCPValues(CP)
-        ApplyLivePreviewFromCP(CP)
-    End Sub
-
-    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        If Not CP.Equals(CP_Original) Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
-
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
-
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                Else
-                                    Exit Sub
-                                End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                Exit Sub
-                            End If
-                    End Select
-
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
-
-                Case DialogResult.No
-
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
-        End If
-
-        CP = New CP(CP.Mode.Init)
-        CP_Original = New CP(CP.Mode.Init)
         OpenFileDialog1.FileName = Nothing
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)
@@ -2856,43 +2821,45 @@ Public Class MainFrm
 
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
         If Not CP.Equals(CP_Original) Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    End If
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                            Case 1              '' Save As
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
 
-                            End If
-                    End Select
+                                End If
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
+                    Case DialogResult.No
 
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
+                    Case DialogResult.Cancel
+                        Exit Sub
+                End Select
+            End If
         End If
 
         CP = CP_Original
@@ -2902,43 +2869,45 @@ Public Class MainFrm
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
         If Not CP.Equals(CP_Original) Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    End If
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                            Case 1              '' Save As
+                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
 
-                            End If
-                    End Select
+                                End If
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
+                    Case DialogResult.No
 
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
+                    Case DialogResult.Cancel
+                        Exit Sub
+                End Select
+            End If
         End If
 
         CP = CP_FirstTime
@@ -2952,46 +2921,48 @@ Public Class MainFrm
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
         If Not CP.Equals(CP_Original) Then
-            Select Case ComplexSave.ShowDialog
-                Case DialogResult.Yes
+            If My.Application._Settings.ShowSaveConfirmation Then
+                Select Case ComplexSave.ShowDialog
+                    Case DialogResult.Yes
 
-                    Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                    Dim r1 As String = r(0)
-                    Dim r2 As String = r(1)
+                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r1 As String = r(0)
+                        Dim r2 As String = r(1)
 
-                    Select Case r1
-                        Case 0              '' Save
-                            If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
+                        Select Case r1
+                            Case 0              '' Save
+                                If IO.File.Exists(SaveFileDialog1.FileName) Then
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                Else
+                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    Else
+                                        Exit Sub
+                                    End If
+                                End If
+                            Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                     CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
                                 Else
                                     Exit Sub
                                 End If
-                            End If
-                        Case 1              '' Save As
-                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                CP.Save(CP.SavingMode.File, SaveFileDialog1.FileName)
-                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                            Else
-                                Exit Sub
-                            End If
-                    End Select
+                        End Select
 
-                    Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
-                            CP.Save(CP.SavingMode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                    End Select
+                        Select Case r2
+                            Case 1      '' Apply   ' Case 0= Don't Apply
+                                CP.Save(CP.Mode.Registry)
+                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                        End Select
 
-                Case DialogResult.No
+                    Case DialogResult.No
 
-                Case DialogResult.Cancel
-                    Exit Sub
-            End Select
+                    Case DialogResult.Cancel
+                        Exit Sub
+                End Select
+            End If
         End If
 
         Dim Def As New CP_Defaults
@@ -3018,10 +2989,6 @@ Public Class MainFrm
         CursorsStudio.ShowDialog()
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs)
-        RefreshDWM(CP)
-    End Sub
-
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
         If XenonButton23.Text.ToLower = My.Application.LanguageHelper.Hide.ToLower Then
             pnl_preview.Visible = False
@@ -3030,10 +2997,6 @@ Public Class MainFrm
             pnl_preview.Visible = True
             XenonButton23.Text = My.Application.LanguageHelper.Hide
         End If
-    End Sub
-
-    Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs)
-        ApplyingTheme.Show()
     End Sub
 
     Private Sub XenonButton24_Click(sender As Object, e As EventArgs) Handles XenonButton24.Click
@@ -3058,15 +3021,15 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
 
         If PreviewConfig = WinVer.Eleven Then
-            XenonButton20.Image = My.Resources.Native11
+            XenonButton20.Image = My.Resources.add_win11
         ElseIf PreviewConfig = WinVer.Ten Then
-            XenonButton20.Image = My.Resources.Native10
+            XenonButton20.Image = My.Resources.add_win10
         ElseIf PreviewConfig = WinVer.Eight Then
-            XenonButton20.Image = My.Resources.Native8
+            XenonButton20.Image = My.Resources.add_win8
         ElseIf PreviewConfig = WinVer.Seven Then
-            XenonButton20.Image = My.Resources.Native7
+            XenonButton20.Image = My.Resources.add_win7
         Else
-            XenonButton20.Image = My.Resources.Native11
+            XenonButton20.Image = My.Resources.add_win11
         End If
 
         If PreviewConfig = WinVer.Eleven Then
@@ -3111,7 +3074,19 @@ Public Class MainFrm
         End If
     End Sub
 
-
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        If PreviewConfig = WinVer.Eleven Then
+            TablessControl1.SelectedIndex = 0
+        ElseIf PreviewConfig = WinVer.Ten Then
+            TablessControl1.SelectedIndex = 1
+        ElseIf PreviewConfig = WinVer.Eight Then
+            TablessControl1.SelectedIndex = 2
+        ElseIf PreviewConfig = WinVer.Seven Then
+            TablessControl1.SelectedIndex = 3
+        Else
+            TablessControl1.SelectedIndex = 0
+        End If
+    End Sub
 
 
 #Region "Notifications Base"

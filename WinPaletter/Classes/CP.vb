@@ -63,13 +63,10 @@ Public Class CP : Implements IDisposable
     End Enum
     Enum Mode
         Registry
-        Init
         File
+        Empty
     End Enum
-    Enum SavingMode
-        Registry
-        File
-    End Enum
+
 #End Region
 
 #Region "Structures"
@@ -326,12 +323,12 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", CP.BizareColorInvertor(StartMenu_Accent).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", CP.InvertColor(StartMenu_Accent).ToArgb)
 
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Titlebar_Inactive).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Titlebar_Active).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Titlebar_Active).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Titlebar_Inactive).ToArgb)
 
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
@@ -396,7 +393,6 @@ Public Class CP : Implements IDisposable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
-
                 Case AeroTheme.Classic
                     NativeMethods.Uxtheme.EnableTheming(0)
 
@@ -457,9 +453,9 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", BizareColorInvertor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", BizareColorInvertor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", BizareColorInvertor(AccentColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", InvertColor(StartColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", InvertColor(StartColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", InvertColor(AccentColor).ToArgb)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
 
 
@@ -512,6 +508,7 @@ Public Class CP : Implements IDisposable
     End Structure
 
     Structure WinMetrics_Fonts_Structure
+        Public Enabled As Boolean
         Public BorderWidth As Integer
         Public CaptionHeight As Integer
         Public CaptionWidth As Integer
@@ -706,6 +703,624 @@ Public Class CP : Implements IDisposable
         End Operator
     End Structure
 
+    Structure Console_Structure
+        Public Enabled As Boolean
+        Public ColorTable00 As Color
+        Public ColorTable01 As Color
+        Public ColorTable02 As Color
+        Public ColorTable03 As Color
+        Public ColorTable04 As Color
+        Public ColorTable05 As Color
+        Public ColorTable06 As Color
+        Public ColorTable07 As Color
+        Public ColorTable08 As Color
+        Public ColorTable09 As Color
+        Public ColorTable10 As Color
+        Public ColorTable11 As Color
+        Public ColorTable12 As Color
+        Public ColorTable13 As Color
+        Public ColorTable14 As Color
+        Public ColorTable15 As Color
+        Public PopupForeground As Integer
+        Public PopupBackground As Integer
+        Public ScreenColorsForeground As Integer
+        Public ScreenColorsBackground As Integer
+        Public CursorSize As Integer
+        Public FaceName As String
+        Public FontRaster As Boolean
+        Public FontSize As Integer
+        Public FontWeight As Integer
+        Public W10_1909_CursorType As Integer
+        Public W10_1909_CursorColor As Color
+        Public W10_1909_ForceV2 As Boolean
+        Public W10_1909_LineSelection As Boolean
+        Public W10_1909_TerminalScrolling As Boolean
+        Public W10_1909_WindowAlpha As Integer
+
+        Shared Function Load_Console_From_Registry([RegKey] As String, [Defaults] As Console_Structure) As Console_Structure
+
+            Dim [Console] As New Console_Structure
+
+            Dim y_cmd As Object
+
+            Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", InvertColor([Defaults].ColorTable00).ToArgb)
+                [Console].ColorTable00 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable00 = [Defaults].ColorTable00
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", InvertColor([Defaults].ColorTable01).ToArgb)
+                [Console].ColorTable01 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable01 = [Defaults].ColorTable01
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", InvertColor([Defaults].ColorTable02).ToArgb)
+                [Console].ColorTable02 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable02 = [Defaults].ColorTable02
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", InvertColor([Defaults].ColorTable03).ToArgb)
+                [Console].ColorTable03 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable03 = [Defaults].ColorTable03
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", InvertColor([Defaults].ColorTable04).ToArgb)
+                [Console].ColorTable04 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable04 = [Defaults].ColorTable04
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", InvertColor([Defaults].ColorTable05).ToArgb)
+                [Console].ColorTable05 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable05 = [Defaults].ColorTable05
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", InvertColor([Defaults].ColorTable06).ToArgb)
+                [Console].ColorTable06 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable06 = [Defaults].ColorTable06
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", InvertColor([Defaults].ColorTable07).ToArgb)
+                [Console].ColorTable07 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable07 = [Defaults].ColorTable07
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", InvertColor([Defaults].ColorTable08).ToArgb)
+                [Console].ColorTable08 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable08 = [Defaults].ColorTable08
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", InvertColor([Defaults].ColorTable09).ToArgb)
+                [Console].ColorTable09 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable09 = [Defaults].ColorTable09
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", InvertColor([Defaults].ColorTable10).ToArgb)
+                [Console].ColorTable10 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable10 = [Defaults].ColorTable10
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", InvertColor([Defaults].ColorTable11).ToArgb)
+                [Console].ColorTable11 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable11 = [Defaults].ColorTable11
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", InvertColor([Defaults].ColorTable12).ToArgb)
+                [Console].ColorTable12 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable12 = [Defaults].ColorTable12
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", InvertColor([Defaults].ColorTable13).ToArgb)
+                [Console].ColorTable13 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable13 = [Defaults].ColorTable13
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", InvertColor([Defaults].ColorTable14).ToArgb)
+                [Console].ColorTable14 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable14 = [Defaults].ColorTable14
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", InvertColor([Defaults].ColorTable15).ToArgb)
+                [Console].ColorTable15 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            Catch
+                [Console].ColorTable15 = [Defaults].ColorTable15
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "PopupColors", Convert.ToInt32([Defaults].PopupBackground.ToString("X") & [Defaults].PopupForeground.ToString("X"), 16))
+                Dim d As String = CInt(y_cmd).ToString("X")
+
+                If d.Count = 1 Then d = 0 & d
+                [Console].PopupBackground = Convert.ToInt32(d.Chars(0), 16)
+                [Console].PopupForeground = Convert.ToInt32(d.Chars(1), 16)
+            Catch
+                [Console].PopupBackground = [Defaults].PopupBackground
+                [Console].PopupForeground = [Defaults].PopupForeground
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ScreenColors", Convert.ToInt32([Defaults].ScreenColorsBackground.ToString("X") & [Defaults].ScreenColorsForeground.ToString("X"), 16))
+                Dim d As String = CInt(y_cmd).ToString("X")
+
+                If d.Count = 1 Then d = 0 & d
+                [Console].ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
+                [Console].ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
+            Catch
+                [Console].ScreenColorsBackground = [Defaults].ScreenColorsBackground
+                [Console].ScreenColorsForeground = [Defaults].ScreenColorsForeground
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorSize", 25)
+                [Console].CursorSize = y_cmd
+            Catch
+                [Console].CursorSize = 25
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "FaceName", [Defaults].FaceName)
+
+                If IsFontInstalled(y_cmd) Then
+                    [Console].FaceName = y_cmd
+                Else
+                    [Console].FaceName = [Defaults].FaceName
+                End If
+
+            Catch
+                [Console].FaceName = [Defaults].FaceName
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontFamily", If(Not [Defaults].FontRaster, 54, 1))
+                [Console].FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                If [Console].FaceName.ToLower = "terminal" Then [Console].FontRaster = True
+            Catch
+                [Console].FontRaster = [Defaults].FontRaster
+            End Try
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontSize", [Defaults].FontSize)
+                If y_cmd = 0 And Not [Console].FontRaster Then [Console].FontSize = [Defaults].FontSize Else [Console].FontSize = y_cmd
+            Catch
+                [Console].FontSize = [Defaults].FontSize
+            End Try
+
+
+            Try
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontWeight", 400)
+                [Console].FontWeight = y_cmd
+            Catch
+                [Console].FontWeight = 400
+            End Try
+
+            If My.W10_1909 Then
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", InvertColor(Color.White).ToArgb)
+                    [Console].W10_1909_CursorColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                Catch
+                    [Console].W10_1909_CursorColor = Color.White
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorType", 1)
+                    [Console].W10_1909_CursorType = y_cmd
+                Catch
+                    [Console].W10_1909_CursorType = 1
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ForceV2", True)
+                    [Console].W10_1909_ForceV2 = y_cmd
+                Catch
+                    [Console].W10_1909_ForceV2 = True
+                End Try
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "LineSelection", False)
+                    [Console].W10_1909_LineSelection = y_cmd
+                Catch
+                    [Console].W10_1909_LineSelection = False
+                End Try
+
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "TerminalScrolling", False)
+                    [Console].W10_1909_TerminalScrolling = y_cmd
+                Catch
+                    [Console].W10_1909_TerminalScrolling = False
+                End Try
+
+
+                Try
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "WindowAlpha", 255)
+                    [Console].W10_1909_WindowAlpha = y_cmd
+                Catch
+                    [Console].W10_1909_WindowAlpha = 255
+                End Try
+            End If
+
+            Return [Console]
+        End Function
+        Shared Sub Save_Console_To_Registry([RegKey] As String, [Console] As Console_Structure)
+
+            Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
+
+            Try
+                If Not String.IsNullOrEmpty([RegKey]) Then Registry.CurrentUser.CreateSubKey("Console\" & [RegKey], True).Close()
+            Catch
+
+            End Try
+
+            EditReg(RegAddress, "EnableColorSelection", 1)
+            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, InvertColor([Console].ColorTable00)).ToArgb)
+            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, InvertColor([Console].ColorTable01)).ToArgb)
+            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, InvertColor([Console].ColorTable02)).ToArgb)
+            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, InvertColor([Console].ColorTable03)).ToArgb)
+            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, InvertColor([Console].ColorTable04)).ToArgb)
+            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, InvertColor([Console].ColorTable05)).ToArgb)
+            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, InvertColor([Console].ColorTable06)).ToArgb)
+            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, InvertColor([Console].ColorTable07)).ToArgb)
+            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, InvertColor([Console].ColorTable08)).ToArgb)
+            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, InvertColor([Console].ColorTable09)).ToArgb)
+            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, InvertColor([Console].ColorTable10)).ToArgb)
+            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, InvertColor([Console].ColorTable11)).ToArgb)
+            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, InvertColor([Console].ColorTable12)).ToArgb)
+            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, InvertColor([Console].ColorTable13)).ToArgb)
+            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, InvertColor([Console].ColorTable14)).ToArgb)
+            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, InvertColor([Console].ColorTable15)).ToArgb)
+            EditReg(RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
+            EditReg(RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
+            EditReg(RegAddress, "CursorSize", [Console].CursorSize)
+
+            If [Console].FontRaster Then
+                EditReg(RegAddress, "FaceName", "Terminal", False, True)
+                EditReg(RegAddress, "FontFamily", 48)
+            Else
+                EditReg(RegAddress, "FaceName", [Console].FaceName, False, True)
+                EditReg(RegAddress, "FontFamily", If([Console].FontRaster, 1, 54))
+            End If
+
+            EditReg(RegAddress, "FontSize", [Console].FontSize)
+            EditReg(RegAddress, "FontWeight", [Console].FontWeight)
+
+            If My.W10_1909 Then
+                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, InvertColor([Console].W10_1909_CursorColor)).ToArgb)
+                EditReg(RegAddress, "CursorType", [Console].W10_1909_CursorType)
+                EditReg(RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
+                EditReg(RegAddress, "ForceV2", If([Console].W10_1909_ForceV2, 1, 0))
+                EditReg(RegAddress, "LineSelection", If([Console].W10_1909_LineSelection, 1, 0))
+                EditReg(RegAddress, "TerminalScrolling", If([Console].W10_1909_TerminalScrolling, 1, 0))
+            End If
+
+
+            If My.Application.isElevated Then
+                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, False, True)
+            Else
+                Dim ls As New List(Of String)
+                ls.Clear()
+                ls.Add("Windows Registry Editor Version 5.00")
+                ls.Add(vbCrLf)
+                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
+                ls.Add(String.Format("""000""=""{0}""", [Console].FaceName))
+
+                Dim result As String = CStr_FromList(ls)
+
+                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+
+                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
+
+                IO.File.WriteAllText(tempreg, result)
+
+                Dim process As Process = Nothing
+
+                Dim processStartInfo As New ProcessStartInfo With {
+                           .FileName = "regedit",
+                           .Verb = "runas",
+                           .Arguments = String.Format("/s ""{0}""", tempreg),
+                           .WindowStyle = ProcessWindowStyle.Hidden,
+                           .CreateNoWindow = True,
+                           .UseShellExecute = True
+                        }
+                process = Process.Start(processStartInfo)
+                process.WaitForExit()
+                processStartInfo.FileName = "reg"
+                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
+                process = Process.Start(processStartInfo)
+                process.WaitForExit()
+                Kill(tempreg)
+            End If
+        End Sub
+        Shared Sub Write_Console_To_ListOfString(Signature As String, [Console] As Console_Structure, tx As List(Of String))
+            tx.Add(String.Format("<{0}>", Signature))
+            tx.Add(String.Format("*Terminal_{0}_Enabled= {1}", Signature, [Console].Enabled))
+            tx.Add(String.Format("*{0}_ColorTable00= {1}", Signature, [Console].ColorTable00.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable01= {1}", Signature, [Console].ColorTable01.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable02= {1}", Signature, [Console].ColorTable02.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable03= {1}", Signature, [Console].ColorTable03.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable04= {1}", Signature, [Console].ColorTable04.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable05= {1}", Signature, [Console].ColorTable05.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable06= {1}", Signature, [Console].ColorTable06.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable07= {1}", Signature, [Console].ColorTable07.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable08= {1}", Signature, [Console].ColorTable08.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable09= {1}", Signature, [Console].ColorTable09.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable10= {1}", Signature, [Console].ColorTable10.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable11= {1}", Signature, [Console].ColorTable11.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable12= {1}", Signature, [Console].ColorTable12.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable13= {1}", Signature, [Console].ColorTable13.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable14= {1}", Signature, [Console].ColorTable14.ToArgb))
+            tx.Add(String.Format("*{0}_ColorTable15= {1}", Signature, [Console].ColorTable15.ToArgb))
+            tx.Add(String.Format("*{0}_PopupForeground= {1}", Signature, [Console].PopupForeground))
+            tx.Add(String.Format("*{0}_PopupBackground= {1}", Signature, [Console].PopupBackground))
+            tx.Add(String.Format("*{0}_ScreenColorsForeground= {1}", Signature, [Console].ScreenColorsForeground))
+            tx.Add(String.Format("*{0}_ScreenColorsBackground= {1}", Signature, [Console].ScreenColorsBackground))
+            tx.Add(String.Format("*{0}_CursorSize= {1}", Signature, [Console].CursorSize))
+            tx.Add(String.Format("*{0}_FaceName= {1}", Signature, [Console].FaceName))
+            tx.Add(String.Format("*{0}_FontRaster= {1}", Signature, [Console].FontRaster))
+            tx.Add(String.Format("*{0}_FontSize= {1}", Signature, [Console].FontSize))
+            tx.Add(String.Format("*{0}_FontWeight= {1}", Signature, [Console].FontWeight))
+            tx.Add(String.Format("*{0}_1909_CursorType= {1}", Signature, [Console].W10_1909_CursorType))
+            tx.Add(String.Format("*{0}_1909_CursorColor= {1}", Signature, [Console].W10_1909_CursorColor.ToArgb))
+            tx.Add(String.Format("*{0}_1909_ForceV2= {1}", Signature, [Console].W10_1909_ForceV2))
+            tx.Add(String.Format("*{0}_1909_LineSelection= {1}", Signature, [Console].W10_1909_LineSelection))
+            tx.Add(String.Format("*{0}_1909_TerminalScrolling= {1}", Signature, [Console].W10_1909_TerminalScrolling))
+            tx.Add(String.Format("*{0}_1909_WindowAlpha= {1}", Signature, [Console].W10_1909_WindowAlpha))
+            tx.Add(String.Format("</{0}>", Signature) & vbCrLf)
+        End Sub
+        Shared Function Load_Console_From_ListOfString(tx As List(Of String)) As Console_Structure
+            Dim [Console] As New Console_Structure
+
+            For Each lin As String In tx
+                If lin.ToLower.StartsWith("ColorTable00= ".ToLower) Then [Console].ColorTable00 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable00= ".Count))
+                If lin.ToLower.StartsWith("ColorTable01= ".ToLower) Then [Console].ColorTable01 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable01= ".Count))
+                If lin.ToLower.StartsWith("ColorTable02= ".ToLower) Then [Console].ColorTable02 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable02= ".Count))
+                If lin.ToLower.StartsWith("ColorTable03= ".ToLower) Then [Console].ColorTable03 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable03= ".Count))
+                If lin.ToLower.StartsWith("ColorTable04= ".ToLower) Then [Console].ColorTable04 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable04= ".Count))
+                If lin.ToLower.StartsWith("ColorTable05= ".ToLower) Then [Console].ColorTable05 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable05= ".Count))
+                If lin.ToLower.StartsWith("ColorTable06= ".ToLower) Then [Console].ColorTable06 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable06= ".Count))
+                If lin.ToLower.StartsWith("ColorTable07= ".ToLower) Then [Console].ColorTable07 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable07= ".Count))
+                If lin.ToLower.StartsWith("ColorTable08= ".ToLower) Then [Console].ColorTable08 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable08= ".Count))
+                If lin.ToLower.StartsWith("ColorTable09= ".ToLower) Then [Console].ColorTable09 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable09= ".Count))
+                If lin.ToLower.StartsWith("ColorTable10= ".ToLower) Then [Console].ColorTable10 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable10= ".Count))
+                If lin.ToLower.StartsWith("ColorTable11= ".ToLower) Then [Console].ColorTable11 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable11= ".Count))
+                If lin.ToLower.StartsWith("ColorTable12= ".ToLower) Then [Console].ColorTable12 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable12= ".Count))
+                If lin.ToLower.StartsWith("ColorTable13= ".ToLower) Then [Console].ColorTable13 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable13= ".Count))
+                If lin.ToLower.StartsWith("ColorTable14= ".ToLower) Then [Console].ColorTable14 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable14= ".Count))
+                If lin.ToLower.StartsWith("ColorTable15= ".ToLower) Then [Console].ColorTable15 = Color.FromArgb(lin.ToLower.Remove(0, "ColorTable15= ".Count))
+                If lin.ToLower.StartsWith("PopupForeground= ".ToLower) Then [Console].PopupForeground = lin.ToLower.Remove(0, "PopupForeground= ".Count)
+                If lin.ToLower.StartsWith("PopupBackground= ".ToLower) Then [Console].PopupBackground = lin.ToLower.Remove(0, "PopupBackground= ".Count)
+                If lin.ToLower.StartsWith("ScreenColorsForeground= ".ToLower) Then [Console].ScreenColorsForeground = lin.ToLower.Remove(0, "ScreenColorsForeground= ".Count)
+                If lin.ToLower.StartsWith("ScreenColorsBackground= ".ToLower) Then [Console].ScreenColorsBackground = lin.ToLower.Remove(0, "ScreenColorsBackground= ".Count)
+                If lin.ToLower.StartsWith("CursorSize= ".ToLower) Then [Console].CursorSize = lin.ToLower.Remove(0, "CursorSize= ".Count)
+                If lin.ToLower.StartsWith("FaceName= ".ToLower) Then [Console].FaceName = lin.ToLower.Remove(0, "FaceName= ".Count)
+                If lin.ToLower.StartsWith("FontRaster= ".ToLower) Then [Console].FontRaster = lin.ToLower.Remove(0, "FontRaster= ".Count)
+                If lin.ToLower.StartsWith("FontSize= ".ToLower) Then [Console].FontSize = lin.ToLower.Remove(0, "FontSize= ".Count)
+                If lin.ToLower.StartsWith("FontWeight= ".ToLower) Then [Console].FontWeight = lin.ToLower.Remove(0, "FontWeight= ".Count)
+                If lin.ToLower.StartsWith("1909_CursorType= ".ToLower) Then [Console].W10_1909_CursorType = lin.ToLower.Remove(0, "1909_CursorType= ".Count)
+                If lin.ToLower.StartsWith("1909_CursorColor= ".ToLower) Then [Console].W10_1909_CursorColor = Color.FromArgb(lin.ToLower.Remove(0, "1909_CursorColor= ".Count))
+                If lin.ToLower.StartsWith("1909_ForceV2= ".ToLower) Then [Console].W10_1909_ForceV2 = lin.ToLower.Remove(0, "1909_ForceV2= ".Count)
+                If lin.ToLower.StartsWith("1909_lin.ToLowereSelection= ".ToLower) Then [Console].W10_1909_LineSelection = lin.ToLower.Remove(0, "1909_lin.ToLowereSelection= ".Count)
+                If lin.ToLower.StartsWith("1909_TerminalScrollin.ToLowerg= ".ToLower) Then [Console].W10_1909_TerminalScrolling = lin.ToLower.Remove(0, "1909_TerminalScrollin.ToLowerg= ".Count)
+                If lin.ToLower.StartsWith("1909_WindowAlpha= ".ToLower) Then [Console].W10_1909_WindowAlpha = lin.ToLower.Remove(0, "1909_WindowAlpha= ".Count)
+            Next
+
+            Return [Console]
+        End Function
+
+        Shared Operator =(First As Console_Structure, Second As Console_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As Console_Structure, Second As Console_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+    End Structure
+
+    Structure Cursor_Structure
+        Public PrimaryColor1 As Color
+        Public PrimaryColor2 As Color
+        Public PrimaryColorGradient As Boolean
+        Public PrimaryColorGradientMode As GradientMode
+        Public PrimaryColorNoise As Boolean
+        Public PrimaryColorNoiseOpacity As Single
+        Public SecondaryColor1 As Color
+        Public SecondaryColor2 As Color
+        Public SecondaryColorGradient As Boolean
+        Public SecondaryColorGradientMode As GradientMode
+        Public SecondaryColorNoise As Boolean
+        Public SecondaryColorNoiseOpacity As Single
+        Public LoadingCircleBack1 As Color
+        Public LoadingCircleBack2 As Color
+        Public LoadingCircleBackGradient As Boolean
+        Public LoadingCircleBackGradientMode As GradientMode
+        Public LoadingCircleBackNoise As Boolean
+        Public LoadingCircleBackNoiseOpacity As Single
+        Public LoadingCircleHot1 As Color
+        Public LoadingCircleHot2 As Color
+        Public LoadingCircleHotGradient As Boolean
+        Public LoadingCircleHotGradientMode As GradientMode
+        Public LoadingCircleHotNoise As Boolean
+        Public LoadingCircleHotNoiseOpacity As Single
+
+        Shared Function Load_Cursor_From_Registry([subKey] As String) As Cursor_Structure
+            Dim [Cursor] As New Cursor_Structure
+            Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
+
+            Dim r As RegistryKey = rMain
+            r.CreateSubKey([subKey])
+            r = r.OpenSubKey([subKey])
+
+            [Cursor].PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
+            [Cursor].PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
+            [Cursor].SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", If([subKey].ToLower <> "none", Color.Black, Color.Red).ToArgb))
+            [Cursor].SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", If([subKey].ToLower <> "none", Color.FromArgb(64, 65, 75), Color.Red).ToArgb))
+            [Cursor].LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
+            [Cursor].LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
+            [Cursor].LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
+            [Cursor].LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
+
+            [Cursor].PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
+            [Cursor].SecondaryColorGradient = r.GetValue("SecondaryColorGradient", True)
+            [Cursor].LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
+            [Cursor].LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
+
+            [Cursor].PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
+            [Cursor].SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
+            [Cursor].LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
+            [Cursor].LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
+
+            [Cursor].PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
+            [Cursor].SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
+            [Cursor].LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
+            [Cursor].LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
+
+            [Cursor].PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
+            [Cursor].SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
+            [Cursor].LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
+            [Cursor].LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
+
+            Return [Cursor]
+        End Function
+
+        Shared Sub Save_Cursors_To_Registry(subKey As String, [Cursor] As Cursor_Structure)
+
+            Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
+            Dim r As RegistryKey
+
+            r = rMain.CreateSubKey(subKey)
+            With r
+                .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.QWord)
+                .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.QWord)
+                .SetValue("PrimaryColorGradient", If([Cursor].PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("PrimaryColorGradientMode", [Cursor].PrimaryColorGradientMode, RegistryValueKind.String)
+                .SetValue("PrimaryColorNoise", If([Cursor].PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+                .SetValue("SecondaryColor1", [Cursor].SecondaryColor1.ToArgb, RegistryValueKind.QWord)
+                .SetValue("SecondaryColor2", [Cursor].SecondaryColor2.ToArgb, RegistryValueKind.QWord)
+                .SetValue("SecondaryColorGradient", If([Cursor].SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("SecondaryColorGradientMode", [Cursor].SecondaryColorGradientMode, RegistryValueKind.String)
+                .SetValue("SecondaryColorNoise", If([Cursor].SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBackGradient", If([Cursor].LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBackGradientMode", [Cursor].LoadingCircleBackGradientMode, RegistryValueKind.String)
+                .SetValue("LoadingCircleBackNoise", If([Cursor].LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHotGradient", If([Cursor].LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHotGradientMode", [Cursor].LoadingCircleHotGradientMode, RegistryValueKind.String)
+                .SetValue("LoadingCircleHotNoise", If([Cursor].LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
+            End With
+
+            r.Close()
+            rMain.Close()
+
+        End Sub
+
+        Shared Function Load_Cursor_From_ListOfString(tx As List(Of String)) As Cursor_Structure
+            Dim [Cursor] As New Cursor_Structure
+
+            For Each lin As String In tx
+                If lin.ToLower.StartsWith("PrimaryColor1= ".ToLower) Then [Cursor].PrimaryColor1 = Color.FromArgb(lin.Remove(0, "PrimaryColor1= ".Count))
+                If lin.ToLower.StartsWith("PrimaryColor2= ".ToLower) Then [Cursor].PrimaryColor2 = Color.FromArgb(lin.Remove(0, "PrimaryColor2= ".Count))
+                If lin.ToLower.StartsWith("PrimaryColorGradient= ".ToLower) Then [Cursor].PrimaryColorGradient = lin.Remove(0, "PrimaryColorGradient= ".Count)
+                If lin.ToLower.StartsWith("PrimaryColorGradientMode= ".ToLower) Then [Cursor].PrimaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "PrimaryColorGradientMode= ".Count))
+                If lin.ToLower.StartsWith("PrimaryColorNoise= ".ToLower) Then [Cursor].PrimaryColorNoise = lin.Remove(0, "PrimaryColorNoise= ".Count)
+                If lin.ToLower.StartsWith("PrimaryColorNoiseOpacity= ".ToLower) Then [Cursor].PrimaryColorNoiseOpacity = lin.Remove(0, "PrimaryColorNoiseOpacity= ".Count)
+                If lin.ToLower.StartsWith("SecondaryColor1= ".ToLower) Then [Cursor].SecondaryColor1 = Color.FromArgb(lin.Remove(0, "SecondaryColor1= ".Count))
+                If lin.ToLower.StartsWith("SecondaryColor2= ".ToLower) Then [Cursor].SecondaryColor2 = Color.FromArgb(lin.Remove(0, "SecondaryColor2= ".Count))
+                If lin.ToLower.StartsWith("SecondaryColorGradient= ".ToLower) Then [Cursor].SecondaryColorGradient = lin.Remove(0, "SecondaryColorGradient= ".Count)
+                If lin.ToLower.StartsWith("SecondaryColorGradientMode= ".ToLower) Then [Cursor].SecondaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "SecondaryColorGradientMode= ".Count))
+                If lin.ToLower.StartsWith("SecondaryColorNoise= ".ToLower) Then [Cursor].SecondaryColorNoise = lin.Remove(0, "SecondaryColorNoise= ".Count)
+                If lin.ToLower.StartsWith("SecondaryColorNoiseOpacity= ".ToLower) Then [Cursor].SecondaryColorNoiseOpacity = lin.Remove(0, "SecondaryColorNoiseOpacity= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleBack1= ".ToLower) Then [Cursor].LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack1= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleBack2= ".ToLower) Then [Cursor].LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack2= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleBackGradient= ".ToLower) Then [Cursor].LoadingCircleBackGradient = lin.Remove(0, "LoadingCircleBackGradient= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleBackGradientMode= ".ToLower) Then [Cursor].LoadingCircleBackGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleBackGradientMode= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleBackNoise= ".ToLower) Then [Cursor].LoadingCircleBackNoise = lin.Remove(0, "LoadingCircleBackNoise= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleBackNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleBackNoiseOpacity = lin.Remove(0, "LoadingCircleBackNoiseOpacity= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleHot1= ".ToLower) Then [Cursor].LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot1= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleHot2= ".ToLower) Then [Cursor].LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot2= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleHotGradient= ".ToLower) Then [Cursor].LoadingCircleHotGradient = lin.Remove(0, "LoadingCircleHotGradient= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleHotGradientMode= ".ToLower) Then [Cursor].LoadingCircleHotGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleHotGradientMode= ".Count))
+                If lin.ToLower.StartsWith("LoadingCircleHotNoise= ".ToLower) Then [Cursor].LoadingCircleHotNoise = lin.Remove(0, "LoadingCircleHotNoise= ".Count)
+                If lin.ToLower.StartsWith("LoadingCircleHotNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleHotNoiseOpacity = lin.Remove(0, "LoadingCircleHotNoiseOpacity= ".Count)
+            Next
+
+            Return [Cursor]
+        End Function
+
+        Shared Sub Write_Cursors_To_ListOfString(Signature As String, [Cursor] As Cursor_Structure, tx As List(Of String))
+            tx.Add(String.Format("<{0}>", Signature))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColor1= {1}", Signature, [Cursor].PrimaryColor1.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColor2= {1}", Signature, [Cursor].PrimaryColor2.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColorGradient= {1}", Signature, [Cursor].PrimaryColorGradient))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColorGradientMode= {1}", Signature, ReturnStringFromGradientMode([Cursor].PrimaryColorGradientMode)))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColorNoise= {1}", Signature, [Cursor].PrimaryColorNoise))
+            tx.Add(String.Format("*Cursor_{0}_PrimaryColorNoiseOpacity= {1}", Signature, [Cursor].PrimaryColorNoiseOpacity))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColor1= {1}", Signature, [Cursor].SecondaryColor1.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColor2= {1}", Signature, [Cursor].SecondaryColor2.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColorGradient= {1}", Signature, [Cursor].SecondaryColorGradient))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColorGradientMode= {1}", Signature, ReturnStringFromGradientMode([Cursor].SecondaryColorGradientMode)))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColorNoise= {1}", Signature, [Cursor].SecondaryColorNoise))
+            tx.Add(String.Format("*Cursor_{0}_SecondaryColorNoiseOpacity= {1}", Signature, [Cursor].SecondaryColorNoiseOpacity))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBack1= {1}", Signature, [Cursor].LoadingCircleBack1.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBack2= {1}", Signature, [Cursor].LoadingCircleBack2.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBackGradient= {1}", Signature, [Cursor].LoadingCircleBackGradient))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBackGradientMode= {1}", Signature, ReturnStringFromGradientMode([Cursor].LoadingCircleBackGradientMode)))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBackNoise= {1}", Signature, [Cursor].LoadingCircleBackNoise))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleBackNoiseOpacity= {1}", Signature, [Cursor].LoadingCircleBackNoiseOpacity))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHot1= {1}", Signature, [Cursor].LoadingCircleHot1.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHot2= {1}", Signature, [Cursor].LoadingCircleHot2.ToArgb))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotGradient= {1}", Signature, [Cursor].LoadingCircleHotGradient))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotGradientMode= {1}", Signature, ReturnStringFromGradientMode([Cursor].LoadingCircleHotGradientMode)))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotNoise= {1}", Signature, [Cursor].LoadingCircleHotNoise))
+            tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotNoiseOpacity= {1}", Signature, [Cursor].LoadingCircleHotNoiseOpacity))
+            tx.Add(String.Format("</{0}>", Signature) & vbCrLf)
+        End Sub
+
+        Shared Operator =(First As Cursor_Structure, Second As Cursor_Structure) As Boolean
+            Return First.Equals(Second)
+        End Operator
+
+        Shared Operator <>(First As Cursor_Structure, Second As Cursor_Structure) As Boolean
+            Return Not First.Equals(Second)
+        End Operator
+    End Structure
+
 #End Region
 
 #Region "Properties"
@@ -810,6 +1425,7 @@ Public Class CP : Implements IDisposable
             }
 
     Public WinMetrics_Fonts As New WinMetrics_Fonts_Structure With {
+                .Enabled = False,
                 .BorderWidth = 1,
                 .CaptionHeight = 22,
                 .CaptionWidth = 22,
@@ -831,396 +1447,556 @@ Public Class CP : Implements IDisposable
                 .MessageFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .SmCaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .StatusFont = New Font("Segoe UI", 9, FontStyle.Regular)}
-#Region "Terminals"
 
-#Region "Locking"
-    Public Property Terminal_CMD_Enabled As Boolean = False
-    Public Property Terminal_PS_32_Enabled As Boolean = False
-    Public Property Terminal_PS_64_Enabled As Boolean = False
-    Public Property Terminal_Stable_Enabled As Boolean = False
-    Public Property Terminal_Preview_Enabled As Boolean = False
-#End Region
+    Public CommandPrompt As New Console_Structure With {
+                    .Enabled = False,
+                    .ColorTable00 = Color.FromArgb(12, 12, 12),
+                    .ColorTable01 = Color.FromArgb(0, 55, 218),
+                    .ColorTable02 = Color.FromArgb(19, 161, 14),
+                    .ColorTable03 = Color.FromArgb(58, 150, 221),
+                    .ColorTable04 = Color.FromArgb(197, 15, 31),
+                    .ColorTable05 = Color.FromArgb(136, 23, 152),
+                    .ColorTable06 = Color.FromArgb(193, 156, 0),
+                    .ColorTable07 = Color.FromArgb(204, 204, 204),
+                    .ColorTable08 = Color.FromArgb(118, 118, 118),
+                    .ColorTable09 = Color.FromArgb(59, 120, 255),
+                    .ColorTable10 = Color.FromArgb(22, 198, 12),
+                    .ColorTable11 = Color.FromArgb(97, 214, 214),
+                    .ColorTable12 = Color.FromArgb(231, 72, 86),
+                    .ColorTable13 = Color.FromArgb(180, 0, 158),
+                    .ColorTable14 = Color.FromArgb(249, 241, 165),
+                    .ColorTable15 = Color.FromArgb(242, 242, 242),
+                    .PopupForeground = 5,
+                    .PopupBackground = 15,
+                    .ScreenColorsForeground = 7,
+                    .ScreenColorsBackground = 0,
+                    .CursorSize = 19,
+                    .FaceName = "Consolas",
+                    .FontRaster = False,
+                    .FontSize = 18 * 65536,
+                    .FontWeight = 400,
+                    .W10_1909_CursorType = 0,
+                    .W10_1909_CursorColor = Color.White,
+                    .W10_1909_ForceV2 = True,
+                    .W10_1909_LineSelection = False,
+                    .W10_1909_TerminalScrolling = False,
+                    .W10_1909_WindowAlpha = 255}
 
-#Region "Command Prompt"
-    Public Property CMD_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
-    Public Property CMD_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
-    Public Property CMD_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
-    Public Property CMD_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
-    Public Property CMD_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
-    Public Property CMD_ColorTable05 As Color = Color.FromArgb(136, 23, 152)
-    Public Property CMD_ColorTable06 As Color = Color.FromArgb(193, 156, 0)
-    Public Property CMD_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
-    Public Property CMD_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
-    Public Property CMD_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
-    Public Property CMD_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
-    Public Property CMD_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
-    Public Property CMD_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
-    Public Property CMD_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
-    Public Property CMD_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
-    Public Property CMD_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
-    Public Property CMD_PopupForeground As Integer = 15
-    Public Property CMD_PopupBackground As Integer = 5
-    Public Property CMD_ScreenColorsForeground As Integer = 7
-    Public Property CMD_ScreenColorsBackground As Integer = 0
-    Public Property CMD_CursorSize As Integer = 19
-    Public Property CMD_FaceName As String = "Consolas"
-    Public Property CMD_FontRaster As Boolean = False
-    Public Property CMD_FontSize As Integer = 18 * 65536
-    Public Property CMD_FontWeight As Integer = 400
-    Public Property CMD_1909_CursorType As Integer = 0
-    Public Property CMD_1909_CursorColor As Color = Color.White
-    Public Property CMD_1909_ForceV2 As Boolean = True
-    Public Property CMD_1909_LineSelection As Boolean = False
-    Public Property CMD_1909_TerminalScrolling As Boolean = False
-    Public Property CMD_1909_WindowAlpha As Integer = 255
-#End Region
+    Public PowerShellx86 As New Console_Structure With {
+                        .Enabled = False,
+                        .ColorTable00 = Color.FromArgb(12, 12, 12),
+                        .ColorTable01 = Color.FromArgb(0, 55, 218),
+                        .ColorTable02 = Color.FromArgb(19, 161, 14),
+                        .ColorTable03 = Color.FromArgb(58, 150, 221),
+                        .ColorTable04 = Color.FromArgb(197, 15, 31),
+                        .ColorTable05 = Color.FromArgb(1, 36, 86),
+                        .ColorTable06 = Color.FromArgb(238, 237, 240),
+                        .ColorTable07 = Color.FromArgb(204, 204, 204),
+                        .ColorTable08 = Color.FromArgb(118, 118, 118),
+                        .ColorTable09 = Color.FromArgb(59, 120, 255),
+                        .ColorTable10 = Color.FromArgb(22, 198, 12),
+                        .ColorTable11 = Color.FromArgb(97, 214, 214),
+                        .ColorTable12 = Color.FromArgb(231, 72, 86),
+                        .ColorTable13 = Color.FromArgb(180, 0, 158),
+                        .ColorTable14 = Color.FromArgb(249, 241, 165),
+                        .ColorTable15 = Color.FromArgb(242, 242, 242),
+                        .PopupForeground = 15,
+                        .PopupBackground = 3,
+                        .ScreenColorsForeground = 6,
+                        .ScreenColorsBackground = 5,
+                        .CursorSize = 19,
+                        .FaceName = "Consolas",
+                        .FontRaster = False,
+                        .FontSize = 16 * 65536,
+                        .FontWeight = 400,
+                        .W10_1909_CursorType = 0,
+                        .W10_1909_CursorColor = Color.White,
+                        .W10_1909_ForceV2 = True,
+                        .W10_1909_LineSelection = False,
+                        .W10_1909_TerminalScrolling = False,
+                        .W10_1909_WindowAlpha = 255}
 
-#Region "PowerShell 32-bit"
-    Public Property PS_32_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
-    Public Property PS_32_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
-    Public Property PS_32_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
-    Public Property PS_32_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
-    Public Property PS_32_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
-    Public Property PS_32_ColorTable05 As Color = Color.FromArgb(1, 36, 86)
-    Public Property PS_32_ColorTable06 As Color = Color.FromArgb(238, 237, 240)
-    Public Property PS_32_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
-    Public Property PS_32_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
-    Public Property PS_32_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
-    Public Property PS_32_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
-    Public Property PS_32_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
-    Public Property PS_32_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
-    Public Property PS_32_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
-    Public Property PS_32_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
-    Public Property PS_32_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
-    Public Property PS_32_PopupForeground As Integer = 15
-    Public Property PS_32_PopupBackground As Integer = 3
-    Public Property PS_32_ScreenColorsForeground As Integer = 6
-    Public Property PS_32_ScreenColorsBackground As Integer = 5
-    Public Property PS_32_CursorSize As Integer = 19
-    Public Property PS_32_FaceName As String = "Consolas"
-    Public Property PS_32_FontRaster As Boolean = False
-    Public Property PS_32_FontSize As Integer = 16 * 65536
-    Public Property PS_32_FontWeight As Integer = 400
-    Public Property PS_32_1909_CursorType As Integer = 0
-    Public Property PS_32_1909_CursorColor As Color = Color.White
-    Public Property PS_32_1909_ForceV2 As Boolean = True
-    Public Property PS_32_1909_LineSelection As Boolean = False
-    Public Property PS_32_1909_TerminalScrolling As Boolean = False
-    Public Property PS_32_1909_WindowAlpha As Integer = 255
-#End Region
+    Public PowerShellx64 As New Console_Structure With {
+                        .Enabled = False,
+                        .ColorTable00 = Color.FromArgb(12, 12, 12),
+                        .ColorTable01 = Color.FromArgb(0, 55, 218),
+                        .ColorTable02 = Color.FromArgb(19, 161, 14),
+                        .ColorTable03 = Color.FromArgb(58, 150, 221),
+                        .ColorTable04 = Color.FromArgb(197, 15, 31),
+                        .ColorTable05 = Color.FromArgb(1, 36, 86),
+                        .ColorTable06 = Color.FromArgb(238, 237, 240),
+                        .ColorTable07 = Color.FromArgb(204, 204, 204),
+                        .ColorTable08 = Color.FromArgb(118, 118, 118),
+                        .ColorTable09 = Color.FromArgb(59, 120, 255),
+                        .ColorTable10 = Color.FromArgb(22, 198, 12),
+                        .ColorTable11 = Color.FromArgb(97, 214, 214),
+                        .ColorTable12 = Color.FromArgb(231, 72, 86),
+                        .ColorTable13 = Color.FromArgb(180, 0, 158),
+                        .ColorTable14 = Color.FromArgb(249, 241, 165),
+                        .ColorTable15 = Color.FromArgb(242, 242, 242),
+                        .PopupForeground = 15,
+                        .PopupBackground = 3,
+                        .ScreenColorsForeground = 6,
+                        .ScreenColorsBackground = 5,
+                        .CursorSize = 19,
+                        .FaceName = "Consolas",
+                        .FontRaster = False,
+                        .FontSize = 16 * 65536,
+                        .FontWeight = 400,
+                        .W10_1909_CursorType = 0,
+                        .W10_1909_CursorColor = Color.White,
+                        .W10_1909_ForceV2 = True,
+                        .W10_1909_LineSelection = False,
+                        .W10_1909_TerminalScrolling = False,
+                        .W10_1909_WindowAlpha = 255}
 
-#Region "PowerShell 64-bit"
-    Public Property PS_64_ColorTable00 As Color = Color.FromArgb(12, 12, 12)
-    Public Property PS_64_ColorTable01 As Color = Color.FromArgb(0, 55, 218)
-    Public Property PS_64_ColorTable02 As Color = Color.FromArgb(19, 161, 14)
-    Public Property PS_64_ColorTable03 As Color = Color.FromArgb(58, 150, 221)
-    Public Property PS_64_ColorTable04 As Color = Color.FromArgb(197, 15, 31)
-    Public Property PS_64_ColorTable05 As Color = Color.FromArgb(1, 36, 86)
-    Public Property PS_64_ColorTable06 As Color = Color.FromArgb(238, 237, 240)
-    Public Property PS_64_ColorTable07 As Color = Color.FromArgb(204, 204, 204)
-    Public Property PS_64_ColorTable08 As Color = Color.FromArgb(118, 118, 118)
-    Public Property PS_64_ColorTable09 As Color = Color.FromArgb(59, 120, 255)
-    Public Property PS_64_ColorTable10 As Color = Color.FromArgb(22, 198, 12)
-    Public Property PS_64_ColorTable11 As Color = Color.FromArgb(97, 214, 214)
-    Public Property PS_64_ColorTable12 As Color = Color.FromArgb(231, 72, 86)
-    Public Property PS_64_ColorTable13 As Color = Color.FromArgb(180, 0, 158)
-    Public Property PS_64_ColorTable14 As Color = Color.FromArgb(249, 241, 165)
-    Public Property PS_64_ColorTable15 As Color = Color.FromArgb(242, 242, 242)
-    Public Property PS_64_PopupForeground As Integer = 15
-    Public Property PS_64_PopupBackground As Integer = 3
-    Public Property PS_64_ScreenColorsForeground As Integer = 6
-    Public Property PS_64_ScreenColorsBackground As Integer = 5
-    Public Property PS_64_CursorSize As Integer = 19
-    Public Property PS_64_FaceName As String = "Consolas"
-    Public Property PS_64_FontRaster As Boolean = False
-    Public Property PS_64_FontSize As Integer = 16 * 65536
-    Public Property PS_64_FontWeight As Integer = 400
-    Public Property PS_64_1909_CursorType As Integer = 0
-    Public Property PS_64_1909_CursorColor As Color = Color.White
-    Public Property PS_64_1909_ForceV2 As Boolean = True
-    Public Property PS_64_1909_LineSelection As Boolean = False
-    Public Property PS_64_1909_TerminalScrolling As Boolean = False
-    Public Property PS_64_1909_WindowAlpha As Integer = 255
-#End Region
+    Public Terminal As New WinTerminal("", WinTerminal.Mode.Empty)
 
-#Region "Windows Terminal"
-    Public Terminal As WinTerminal
-    Public TerminalPreview As WinTerminal
-    'Public TerminalDeveloper As WinTerminal
-#End Region
-#End Region
+    Public TerminalPreview As New WinTerminal("", WinTerminal.Mode.Empty)
 
-#Region "Cursors"
-    Public Property Cursor_Enabled As Boolean = False
+    Public Property Cursors_Enabled As Boolean = False
 
-#Region "Arrow"
-    Public Property Cursor_Arrow_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Arrow_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Arrow_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Arrow_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Arrow_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Arrow_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Arrow_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Arrow_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Arrow_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Arrow_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Arrow_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Arrow_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Arrow As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Help"
-    Public Property Cursor_Help_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Help_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Help_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Help_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Help_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Help_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Help_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Help_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Help_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Help_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Help_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Help_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_AppLoading As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Circle,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "AppLoading"
-    Public Property Cursor_AppLoading_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_AppLoading_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_AppLoading_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_AppLoading_PrimaryColorGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_AppLoading_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_AppLoading_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_AppLoading_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_AppLoading_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_AppLoading_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_AppLoading_SecondaryColorGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_AppLoading_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_AppLoading_SecondaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_AppLoading_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
-    Public Property Cursor_AppLoading_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
-    Public Property Cursor_AppLoading_LoadingCircleBackGradient As Boolean = False
-    Public Property Cursor_AppLoading_LoadingCircleBackGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_AppLoading_LoadingCircleBackNoise As Boolean = False
-    Public Property Cursor_AppLoading_LoadingCircleBackNoiseOpacity As Single = 0.25
-    Public Property Cursor_AppLoading_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
-    Public Property Cursor_AppLoading_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
-    Public Property Cursor_AppLoading_LoadingCircleHotGradient As Boolean = False
-    Public Property Cursor_AppLoading_LoadingCircleHotGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_AppLoading_LoadingCircleHotNoise As Boolean = False
-    Public Property Cursor_AppLoading_LoadingCircleHotNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Busy As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Circle,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Circle,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Busy"
-    Public Property Cursor_Busy_LoadingCircleBack1 As Color = Color.FromArgb(42, 151, 243)
-    Public Property Cursor_Busy_LoadingCircleBack2 As Color = Color.FromArgb(42, 151, 243)
-    Public Property Cursor_Busy_LoadingCircleBackGradient As Boolean = False
-    Public Property Cursor_Busy_LoadingCircleBackGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_Busy_LoadingCircleBackNoise As Boolean = False
-    Public Property Cursor_Busy_LoadingCircleBackNoiseOpacity As Single = 0.25
-    Public Property Cursor_Busy_LoadingCircleHot1 As Color = Color.FromArgb(37, 204, 255)
-    Public Property Cursor_Busy_LoadingCircleHot2 As Color = Color.FromArgb(37, 204, 255)
-    Public Property Cursor_Busy_LoadingCircleHotGradient As Boolean = False
-    Public Property Cursor_Busy_LoadingCircleHotGradientMode As GradientMode = GradientMode.Circle
-    Public Property Cursor_Busy_LoadingCircleHotNoise As Boolean = False
-    Public Property Cursor_Busy_LoadingCircleHotNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Help As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Move"
-    Public Property Cursor_Move_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Move_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Move_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Move_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Move_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Move_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Move_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Move_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Move_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Move_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Move_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Move_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Move As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "NS"
-    Public Property Cursor_NS_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_NS_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_NS_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_NS_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NS_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_NS_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_NS_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NS_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NS_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_NS_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NS_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_NS_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_NS As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "EW"
-    Public Property Cursor_EW_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_EW_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_EW_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_EW_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_EW_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_EW_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_EW_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_EW_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_EW_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_EW_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_EW_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_EW_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_EW As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "NESW"
-    Public Property Cursor_NESW_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_NESW_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_NESW_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_NESW_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NESW_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_NESW_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_NESW_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NESW_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NESW_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_NESW_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NESW_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_NESW_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_NESW As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "NWSE"
-    Public Property Cursor_NWSE_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_NWSE_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_NWSE_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_NWSE_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NWSE_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_NWSE_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_NWSE_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NWSE_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_NWSE_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_NWSE_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_NWSE_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_NWSE_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_NWSE As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Up"
-    Public Property Cursor_Up_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Up_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Up_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Up_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Up_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Up_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Up_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Up_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Up_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Up_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Up_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Up_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Up As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Pen"
-    Public Property Cursor_Pen_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Pen_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Pen_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Pen_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Pen_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Pen_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Pen_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Pen_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Pen_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Pen_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Pen_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Pen_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Pen As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "None"
-    Public Property Cursor_None_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_None_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_None_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_None_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_None_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_None_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_None_SecondaryColor1 As Color = Color.Red
-    Public Property Cursor_None_SecondaryColor2 As Color = Color.Red
-    Public Property Cursor_None_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_None_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_None_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_None_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_None As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.FromArgb(255, 0, 0),
+                    .SecondaryColor2 = Color.FromArgb(255, 0, 0),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Link"
-    Public Property Cursor_Link_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Link_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Link_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Link_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Link_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Link_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Link_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Link_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Link_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Link_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Link_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Link_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Link As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Pin"
-    Public Property Cursor_Pin_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Pin_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Pin_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Pin_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Pin_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Pin_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Pin_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Pin_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Pin_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Pin_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Pin_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Pin_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Pin As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Person"
-    Public Property Cursor_Person_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Person_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Person_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Person_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Person_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Person_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Person_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Person_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Person_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Person_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Person_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Person_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_Person As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "IBeam"
-    Public Property Cursor_IBeam_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_IBeam_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_IBeam_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_IBeam_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_IBeam_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_IBeam_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_IBeam_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_IBeam_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_IBeam_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_IBeam_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_IBeam_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_IBeam_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
+    Public Cursor_IBeam As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 
-#Region "Cross"
-    Public Property Cursor_Cross_PrimaryColor1 As Color = Color.White
-    Public Property Cursor_Cross_PrimaryColor2 As Color = Color.White
-    Public Property Cursor_Cross_PrimaryColorGradient As Boolean = False
-    Public Property Cursor_Cross_PrimaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Cross_PrimaryColorNoise As Boolean = False
-    Public Property Cursor_Cross_PrimaryColorNoiseOpacity As Single = 0.25
-    Public Property Cursor_Cross_SecondaryColor1 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Cross_SecondaryColor2 As Color = Color.FromArgb(64, 65, 75)
-    Public Property Cursor_Cross_SecondaryColorGradient As Boolean = False
-    Public Property Cursor_Cross_SecondaryColorGradientMode As GradientMode = GradientMode.Vertical
-    Public Property Cursor_Cross_SecondaryColorNoise As Boolean = False
-    Public Property Cursor_Cross_SecondaryColorNoiseOpacity As Single = 0.25
-#End Region
-#End Region
-
+    Public Cursor_Cross As New Cursor_Structure With {
+                    .PrimaryColor1 = Color.White,
+                    .PrimaryColor2 = Color.White,
+                    .PrimaryColorGradient = False,
+                    .PrimaryColorGradientMode = GradientMode.Vertical,
+                    .PrimaryColorNoise = False,
+                    .PrimaryColorNoiseOpacity = 0.25,
+                    .SecondaryColor1 = Color.Black,
+                    .SecondaryColor2 = Color.FromArgb(64, 65, 75),
+                    .SecondaryColorGradient = True,
+                    .SecondaryColorGradientMode = GradientMode.Vertical,
+                    .SecondaryColorNoise = False,
+                    .SecondaryColorNoiseOpacity = 0.25,
+                    .LoadingCircleBack1 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBack2 = Color.FromArgb(42, 151, 243),
+                    .LoadingCircleBackGradient = False,
+                    .LoadingCircleBackGradientMode = GradientMode.Circle,
+                    .LoadingCircleBackNoise = False,
+                    .LoadingCircleBackNoiseOpacity = 0.25,
+                    .LoadingCircleHot1 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHot2 = Color.FromArgb(37, 204, 255),
+                    .LoadingCircleHotGradient = False,
+                    .LoadingCircleHotGradientMode = GradientMode.Circle,
+                    .LoadingCircleHotNoise = False,
+                    .LoadingCircleHotNoiseOpacity = 0.25}
 #End Region
 
 #Region "Functions"
@@ -1283,8 +2059,7 @@ Public Class CP : Implements IDisposable
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
             End If
         Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
-
+            BugReport.ThrowError(ex)
         Finally
             If R IsNot Nothing Then
                 R.Flush()
@@ -1309,7 +2084,7 @@ Public Class CP : Implements IDisposable
         End If
         Return S
     End Function
-    Shared Function BizareColorInvertor([Color] As Color) As Color
+    Shared Function InvertColor([Color] As Color) As Color
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
     Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
@@ -1483,13 +2258,6 @@ Public Class CP : Implements IDisposable
 
         Return installed
     End Function
-
-    Public Shared f As Form
-    Dim th As Threading.Thread
-    Public Sub Task_A()
-        f = New ApplyingTheme()
-        Application.Run(f)
-    End Sub
 #End Region
 
 #Region "EXPERIMENTAL  -  JSON"
@@ -1523,6 +2291,8 @@ Public Class CP : Implements IDisposable
         'IO.File.WriteAllText("wpth.json", JSON_Overall.ToString)
     End Sub
 #End Region
+
+#Region "CP Handling (Loading/Applying)"
 
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "", Optional IgnoreWindowsTerminal As Boolean = False)
         Select Case [Mode]
@@ -1609,29 +2379,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows11.StartMenu_Accent).ToArgb)
-                        Windows11.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", InvertColor(Def.Windows11.StartMenu_Accent).ToArgb)
+                        Windows11.StartMenu_Accent = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows11.StartMenu_Accent = Def.Windows11.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows11.Titlebar_Inactive).ToArgb)
-                        Windows11.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Def.Windows11.Titlebar_Inactive).ToArgb)
+                        Windows11.Titlebar_Inactive = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Inactive = Def.Windows11.Titlebar_Inactive
                     End Try
@@ -1726,29 +2496,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", BizareColorInvertor(Def.Windows10.StartMenu_Accent).ToArgb)
-                        Windows10.StartMenu_Accent = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", InvertColor(Def.Windows10.StartMenu_Accent).ToArgb)
+                        Windows10.StartMenu_Accent = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows10.StartMenu_Accent = Def.Windows10.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", BizareColorInvertor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", BizareColorInvertor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", BizareColorInvertor(Def.Windows10.Titlebar_Inactive).ToArgb)
-                        Windows10.Titlebar_Inactive = BizareColorInvertor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Def.Windows10.Titlebar_Inactive).ToArgb)
+                        Windows10.Titlebar_Inactive = InvertColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Inactive = Def.Windows10.Titlebar_Inactive
                     End Try
@@ -2004,14 +2774,14 @@ Public Class CP : Implements IDisposable
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
-                        Windows8.StartColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                        Windows8.StartColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y)))
                     Catch
                         Windows8.StartColor = Color.FromArgb(84, 0, 30)
                     End Try
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
-                        Windows8.AccentColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y)))
+                        Windows8.AccentColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y)))
                     Catch
                         Windows8.AccentColor = Color.FromArgb(178, 29, 72)
                     End Try
@@ -2174,7 +2944,7 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        Windows8.LockScreenSystemID = rLog.GetValue("Windows8.LockScreenSystemID", 0)
+                        Windows8.LockScreenSystemID = rLog.GetValue("Metro_LockScreenSystemID", 0)
                     Catch
                         Windows8.LockScreenSystemID = 0
                     End Try
@@ -2412,735 +3182,64 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Terminals"
-                Dim y_cmd As Object
 
 #Region "Locking"
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
 
                 Try
-                    Terminal_CMD_Enabled = rLogX.GetValue("Terminal_CMD_Enabled", False)
+                    CommandPrompt.Enabled = rLogX.GetValue("Terminal_CMD_Enabled", False)
                 Catch
-                    Terminal_CMD_Enabled = False
+                    CommandPrompt.Enabled = False
                 End Try
 
                 Try
-                    Terminal_PS_32_Enabled = rLogX.GetValue("Terminal_PS_32_Enabled", False)
+                    PowerShellx86.Enabled = rLogX.GetValue("Terminal_PS_32_Enabled", False)
                 Catch
-                    Terminal_PS_32_Enabled = False
+                    PowerShellx86.Enabled = False
                 End Try
 
                 Try
-                    Terminal_PS_64_Enabled = rLogX.GetValue("Terminal_PS_64_Enabled", False)
+                    PowerShellx64.Enabled = rLogX.GetValue("Terminal_PS_64_Enabled", False)
                 Catch
-                    Terminal_PS_64_Enabled = False
+                    PowerShellx64.Enabled = False
                 End Try
 
                 Try
-                    Terminal_Stable_Enabled = rLogX.GetValue("Terminal_Stable_Enabled", False)
+                    Terminal.Enabled = rLogX.GetValue("Terminal_Stable_Enabled", False)
                 Catch
-                    Terminal_Stable_Enabled = False
+                    Terminal.Enabled = False
                 End Try
 
                 Try
-                    Terminal_Preview_Enabled = rLogX.GetValue("Terminal_Preview_Enabled", False)
+                    TerminalPreview.Enabled = rLogX.GetValue("Terminal_Preview_Enabled", False)
                 Catch
-                    Terminal_Preview_Enabled = False
+                    TerminalPreview.Enabled = False
                 End Try
 
+                rLogX.Close()
 #End Region
 
-#Region "Command Prompt"
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable00", BizareColorInvertor(_Def.CMD_ColorTable00).ToArgb)
-                    CMD_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable00 = _Def.CMD_ColorTable01
-                End Try
+                CommandPrompt = Console_Structure.Load_Console_From_Registry("", _Def.CommandPrompt)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable01", BizareColorInvertor(_Def.CMD_ColorTable01).ToArgb)
-                    CMD_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable01 = _Def.CMD_ColorTable02
-                End Try
+                Dim regPath_PS86, AppPath_PS86 As String
+                Dim regPath_PS64, AppPath_PS64 As String
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable02", BizareColorInvertor(_Def.CMD_ColorTable02).ToArgb)
-                    CMD_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable02 = _Def.CMD_ColorTable03
-                End Try
+                regPath_PS86 = "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
+                AppPath_PS86 = Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0"
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable03", BizareColorInvertor(_Def.CMD_ColorTable03).ToArgb)
-                    CMD_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable03 = _Def.CMD_ColorTable04
-                End Try
+                regPath_PS64 = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
+                AppPath_PS64 = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0"
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable04", BizareColorInvertor(_Def.CMD_ColorTable04).ToArgb)
-                    CMD_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable04 = _Def.CMD_ColorTable05
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable05", BizareColorInvertor(_Def.CMD_ColorTable05).ToArgb)
-                    CMD_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable05 = _Def.CMD_ColorTable06
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable06", BizareColorInvertor(_Def.CMD_ColorTable06).ToArgb)
-                    CMD_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable06 = _Def.CMD_ColorTable07
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable07", BizareColorInvertor(_Def.CMD_ColorTable07).ToArgb)
-                    CMD_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable07 = _Def.CMD_ColorTable08
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable08", BizareColorInvertor(_Def.CMD_ColorTable08).ToArgb)
-                    CMD_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable08 = _Def.CMD_ColorTable09
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable09", BizareColorInvertor(_Def.CMD_ColorTable09).ToArgb)
-                    CMD_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable09 = _Def.CMD_ColorTable10
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable10", BizareColorInvertor(_Def.CMD_ColorTable10).ToArgb)
-                    CMD_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable10 = _Def.CMD_ColorTable00
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable11", BizareColorInvertor(_Def.CMD_ColorTable11).ToArgb)
-                    CMD_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable11 = _Def.CMD_ColorTable11
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable12", BizareColorInvertor(_Def.CMD_ColorTable12).ToArgb)
-                    CMD_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable12 = _Def.CMD_ColorTable12
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable13", BizareColorInvertor(_Def.CMD_ColorTable13).ToArgb)
-                    CMD_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable13 = _Def.CMD_ColorTable13
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable14", BizareColorInvertor(_Def.CMD_ColorTable14).ToArgb)
-                    CMD_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable14 = _Def.CMD_ColorTable14
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ColorTable15", BizareColorInvertor(_Def.CMD_ColorTable15).ToArgb)
-                    CMD_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                Catch
-                    CMD_ColorTable15 = _Def.CMD_ColorTable15
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(_Def.CMD_PopupBackground.ToString("X") & _Def.CMD_PopupForeground.ToString("X"), 16))
-                    Dim d As String = CInt(y_cmd).ToString("X")
-
-                    If d.Count = 1 Then d = 0 & d
-                    CMD_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
-                    CMD_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
-                Catch
-                    CMD_PopupBackground = _Def.CMD_PopupBackground
-                    CMD_PopupForeground = _Def.CMD_PopupForeground
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(_Def.CMD_ScreenColorsBackground.ToString("X") & _Def.CMD_ScreenColorsForeground.ToString("X"), 16))
-                    Dim d As String = CInt(y_cmd).ToString("X")
-
-                    If d.Count = 1 Then d = 0 & d
-                    CMD_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
-                    CMD_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
-                Catch
-                    CMD_ScreenColorsBackground = _Def.CMD_ScreenColorsBackground
-                    CMD_ScreenColorsForeground = _Def.CMD_ScreenColorsForeground
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorSize", 25)
-                    CMD_CursorSize = y_cmd
-                Catch
-                    CMD_CursorSize = 25
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FaceName", _Def.CMD_FaceName)
-
-                    If IsFontInstalled(y_cmd) Then
-                        CMD_FaceName = y_cmd
-                    Else
-                        CMD_FaceName = _Def.CMD_FaceName
-                    End If
-
-                Catch
-                    CMD_FaceName = _Def.CMD_FaceName
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontFamily", If(Not _Def.CMD_FontRaster, 54, 1))
-                    CMD_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
-                    If CMD_FaceName.ToLower = "terminal" Then CMD_FontRaster = True
-                Catch
-                    CMD_FontRaster = _Def.CMD_FontRaster
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontSize", _Def.CMD_FontSize)
-                    If y_cmd = 0 And Not CMD_FontRaster Then CMD_FontSize = _Def.CMD_FontSize Else CMD_FontSize = y_cmd
-                Catch
-                    CMD_FontSize = _Def.CMD_FontSize
-                End Try
-
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "FontWeight", 400)
-                    CMD_FontWeight = y_cmd
-                Catch
-                    CMD_FontWeight = 400
-                End Try
-
-                If My.W10_1909 Then
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
-                        CMD_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        CMD_1909_CursorColor = Color.White
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "CursorType", 1)
-                        CMD_1909_CursorType = y_cmd
-                    Catch
-                        CMD_1909_CursorType = 1
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "ForceV2", True)
-                        CMD_1909_ForceV2 = y_cmd
-                    Catch
-                        CMD_1909_ForceV2 = True
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "LineSelection", False)
-                        CMD_1909_LineSelection = y_cmd
-                    Catch
-                        CMD_1909_LineSelection = False
-                    End Try
-
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "TerminalScrolling", False)
-                        CMD_1909_TerminalScrolling = y_cmd
-                    Catch
-                        CMD_1909_TerminalScrolling = False
-                    End Try
-
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console", "WindowAlpha", 255)
-                        CMD_1909_WindowAlpha = y_cmd
-                    Catch
-                        CMD_1909_WindowAlpha = 255
-                    End Try
+                If IO.Directory.Exists(AppPath_PS86) Then
+                    Try : Registry.CurrentUser.CreateSubKey("Console\" & regPath_PS86, True).Close() : Catch : End Try
+                    PowerShellx86 = Console_Structure.Load_Console_From_Registry(regPath_PS86, _Def.PowerShellx86)
                 End If
-#End Region
 
-#Region "PowerShell x86"
-                If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
-                    Try
-                        Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                    Catch
-
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
-                        PS_32_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable00 = CMD_ColorTable00
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", BizareColorInvertor(CMD_ColorTable01).ToArgb)
-                        PS_32_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable01 = CMD_ColorTable01
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", BizareColorInvertor(CMD_ColorTable02).ToArgb)
-                        PS_32_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable02 = CMD_ColorTable02
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", BizareColorInvertor(CMD_ColorTable03).ToArgb)
-                        PS_32_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable03 = CMD_ColorTable03
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", BizareColorInvertor(CMD_ColorTable04).ToArgb)
-                        PS_32_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable04 = CMD_ColorTable04
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(_Def.PS_32_ColorTable05).ToArgb)
-                        PS_32_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable05 = _Def.PS_32_ColorTable05
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(_Def.PS_32_ColorTable06).ToArgb)
-                        PS_32_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable06 = _Def.PS_32_ColorTable06
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", BizareColorInvertor(CMD_ColorTable07).ToArgb)
-                        PS_32_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable07 = CMD_ColorTable07
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", BizareColorInvertor(CMD_ColorTable08).ToArgb)
-                        PS_32_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable08 = CMD_ColorTable08
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", BizareColorInvertor(CMD_ColorTable09).ToArgb)
-                        PS_32_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable09 = CMD_ColorTable09
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", BizareColorInvertor(CMD_ColorTable10).ToArgb)
-                        PS_32_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable10 = CMD_ColorTable10
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", BizareColorInvertor(CMD_ColorTable11).ToArgb)
-                        PS_32_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable11 = CMD_ColorTable11
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", BizareColorInvertor(CMD_ColorTable12).ToArgb)
-                        PS_32_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable12 = CMD_ColorTable12
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", BizareColorInvertor(CMD_ColorTable13).ToArgb)
-                        PS_32_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable13 = CMD_ColorTable13
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", BizareColorInvertor(CMD_ColorTable14).ToArgb)
-                        PS_32_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable14 = CMD_ColorTable14
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", BizareColorInvertor(CMD_ColorTable15).ToArgb)
-                        PS_32_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_32_ColorTable15 = CMD_ColorTable15
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_32_PopupBackground.ToString("X") & _Def.PS_32_PopupForeground.ToString("X"), 16))
-                        Dim d As String = CInt(y_cmd).ToString("X")
-
-                        If d.Count = 1 Then d = 0 & d
-                        PS_32_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
-                        PS_32_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
-                    Catch
-                        PS_32_PopupBackground = _Def.PS_32_PopupBackground
-                        PS_32_PopupForeground = _Def.PS_32_PopupForeground
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_32_ScreenColorsBackground.ToString("X") & _Def.PS_32_ScreenColorsForeground.ToString("X"), 16))
-                        Dim d As String = CInt(y_cmd).ToString("X")
-
-                        If d.Count = 1 Then d = 0 & d
-                        PS_32_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
-                        PS_32_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
-                    Catch
-                        PS_32_ScreenColorsBackground = _Def.PS_32_ScreenColorsBackground
-                        PS_32_ScreenColorsForeground = _Def.PS_32_ScreenColorsForeground
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", 25)
-                        PS_32_CursorSize = y_cmd
-                    Catch
-                        PS_32_CursorSize = 25
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", _Def.PS_32_FaceName)
-                        If IsFontInstalled(y_cmd) Then
-                            PS_32_FaceName = y_cmd
-                        Else
-                            PS_32_FaceName = _Def.PS_32_FaceName
-                        End If
-                    Catch
-                        PS_32_FaceName = _Def.PS_32_FaceName
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_32_FontRaster, 54, 1))
-                        PS_32_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
-                        If PS_32_FaceName.ToLower = "terminal" Then PS_32_FontRaster = True
-                    Catch
-                        PS_32_FontRaster = _Def.PS_32_FontRaster
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", _Def.PS_32_FontSize)
-                        If y_cmd = 0 And Not PS_32_FontRaster Then PS_32_FontSize = _Def.PS_32_FontSize Else PS_32_FontSize = y_cmd
-                    Catch
-                        PS_32_FontSize = _Def.PS_32_FontSize
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", 400)
-                        PS_32_FontWeight = y_cmd
-                    Catch
-                        PS_32_FontWeight = 400
-                    End Try
-
-                    If My.W10_1909 Then
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
-                            PS_32_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                        Catch
-                            PS_32_1909_CursorColor = Color.White
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", 1)
-                            PS_32_1909_CursorType = y_cmd
-                        Catch
-                            PS_32_1909_CursorType = 1
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", True)
-                            PS_32_1909_ForceV2 = y_cmd
-                        Catch
-                            PS_32_1909_ForceV2 = True
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", False)
-                            PS_32_1909_LineSelection = y_cmd
-                        Catch
-                            PS_32_1909_LineSelection = False
-                        End Try
-
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", False)
-                            PS_32_1909_TerminalScrolling = y_cmd
-                        Catch
-                            PS_32_1909_TerminalScrolling = False
-                        End Try
-
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 255)
-                            PS_32_1909_WindowAlpha = y_cmd
-                        Catch
-                            PS_32_1909_WindowAlpha = 255
-                        End Try
-                    End If
+                If IO.Directory.Exists(AppPath_PS64) Then
+                    Try : Registry.CurrentUser.CreateSubKey("Console\" & regPath_PS64, True).Close() : Catch : End Try
+                    PowerShellx64 = Console_Structure.Load_Console_From_Registry(regPath_PS64, _Def.PowerShellx64)
                 End If
-#End Region
 
-#Region "PowerShell x64"
-                If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
-                    Try
-                        Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                    Catch
-
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", BizareColorInvertor(CMD_ColorTable00).ToArgb)
-                        PS_64_ColorTable00 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable00 = CMD_ColorTable00
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", BizareColorInvertor(CMD_ColorTable01).ToArgb)
-                        PS_64_ColorTable01 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable01 = CMD_ColorTable01
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", BizareColorInvertor(CMD_ColorTable02).ToArgb)
-                        PS_64_ColorTable02 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable02 = CMD_ColorTable02
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", BizareColorInvertor(CMD_ColorTable03).ToArgb)
-                        PS_64_ColorTable03 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable03 = CMD_ColorTable03
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", BizareColorInvertor(CMD_ColorTable04).ToArgb)
-                        PS_64_ColorTable04 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable04 = CMD_ColorTable04
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", BizareColorInvertor(_Def.PS_64_ColorTable05).ToArgb)
-                        PS_64_ColorTable05 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable05 = _Def.PS_64_ColorTable05
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", BizareColorInvertor(_Def.PS_64_ColorTable06).ToArgb)
-                        PS_64_ColorTable06 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable06 = _Def.PS_64_ColorTable06
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", BizareColorInvertor(CMD_ColorTable07).ToArgb)
-                        PS_64_ColorTable07 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable07 = CMD_ColorTable07
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", BizareColorInvertor(CMD_ColorTable08).ToArgb)
-                        PS_64_ColorTable08 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable08 = CMD_ColorTable08
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", BizareColorInvertor(CMD_ColorTable09).ToArgb)
-                        PS_64_ColorTable09 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable09 = CMD_ColorTable09
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", BizareColorInvertor(CMD_ColorTable10).ToArgb)
-                        PS_64_ColorTable10 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable10 = CMD_ColorTable10
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", BizareColorInvertor(CMD_ColorTable11).ToArgb)
-                        PS_64_ColorTable11 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable11 = CMD_ColorTable11
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", BizareColorInvertor(CMD_ColorTable12).ToArgb)
-                        PS_64_ColorTable12 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable12 = CMD_ColorTable12
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", BizareColorInvertor(CMD_ColorTable13).ToArgb)
-                        PS_64_ColorTable13 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable13 = CMD_ColorTable13
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", BizareColorInvertor(CMD_ColorTable14).ToArgb)
-                        PS_64_ColorTable14 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable14 = CMD_ColorTable14
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", BizareColorInvertor(CMD_ColorTable15).ToArgb)
-                        PS_64_ColorTable15 = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                    Catch
-                        PS_64_ColorTable15 = CMD_ColorTable15
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(_Def.PS_64_PopupBackground.ToString("X") & _Def.PS_64_PopupForeground.ToString("X"), 16))
-                        Dim d As String = CInt(y_cmd).ToString("X")
-
-                        If d.Count = 1 Then d = 0 & d
-                        PS_64_PopupBackground = Convert.ToInt32(d.Chars(0), 16)
-                        PS_64_PopupForeground = Convert.ToInt32(d.Chars(1), 16)
-                    Catch
-                        PS_64_PopupBackground = _Def.PS_64_PopupBackground
-                        PS_64_PopupForeground = _Def.PS_64_PopupForeground
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(_Def.PS_64_ScreenColorsBackground.ToString("X") & _Def.PS_64_ScreenColorsForeground.ToString("X"), 16))
-                        Dim d As String = CInt(y_cmd).ToString("X")
-
-                        If d.Count = 1 Then d = 0 & d
-                        PS_64_ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
-                        PS_64_ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
-                    Catch
-                        PS_64_ScreenColorsBackground = _Def.PS_64_ScreenColorsBackground
-                        PS_64_ScreenColorsForeground = _Def.PS_64_ScreenColorsForeground
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", 25)
-                        PS_64_CursorSize = y_cmd
-                    Catch
-                        PS_64_CursorSize = 25
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", _Def.PS_64_FaceName)
-
-                        If IsFontInstalled(y_cmd) Then
-                            PS_64_FaceName = y_cmd
-                        Else
-                            PS_64_FaceName = _Def.PS_64_FaceName
-                        End If
-
-                    Catch
-                        PS_64_FaceName = _Def.PS_64_FaceName
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(Not _Def.PS_64_FontRaster, 54, 1))
-                        PS_64_FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
-                        If PS_64_FaceName.ToLower = "terminal" Then PS_64_FontRaster = True
-                    Catch
-                        PS_64_FontRaster = _Def.PS_64_FontRaster
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", CMD_FontSize)
-                        If y_cmd = 0 And Not PS_64_FontRaster Then PS_64_FontSize = _Def.PS_64_FontSize Else PS_64_FontSize = y_cmd
-                    Catch
-                        PS_64_FontSize = CMD_FontSize
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", 400)
-                        PS_64_FontWeight = y_cmd
-                    Catch
-                        PS_64_FontWeight = 400
-                    End Try
-
-                    If My.W10_1909 Then
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", BizareColorInvertor(Color.White).ToArgb)
-                            PS_64_1909_CursorColor = Color.FromArgb(255, BizareColorInvertor(Color.FromArgb(y_cmd)))
-                        Catch
-                            PS_64_1909_CursorColor = Color.White
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", 1)
-                            PS_64_1909_CursorType = y_cmd
-                        Catch
-                            PS_64_1909_CursorType = 1
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", True)
-                            PS_64_1909_ForceV2 = y_cmd
-                        Catch
-                            PS_64_1909_ForceV2 = True
-                        End Try
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", False)
-                            PS_64_1909_LineSelection = y_cmd
-                        Catch
-                            PS_64_1909_LineSelection = False
-                        End Try
-
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", False)
-                            PS_64_1909_TerminalScrolling = y_cmd
-                        Catch
-                            PS_64_1909_TerminalScrolling = False
-                        End Try
-
-
-                        Try
-                            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", 255)
-                            PS_64_1909_WindowAlpha = y_cmd
-                        Catch
-                            PS_64_1909_WindowAlpha = 255
-                        End Try
-                    End If
-                End If
-#End Region
 
 #Region "Windows Terminal"
                 If My.W10 Or My.W11 Then
@@ -3186,367 +3285,31 @@ Public Class CP : Implements IDisposable
 
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-                Cursor_Enabled = rMain.GetValue("", False)
-                Dim r As RegistryKey = rMain
-
-                r = rMain.CreateSubKey("Arrow")
-                r = rMain.CreateSubKey("Help")
-                r = rMain.CreateSubKey("AppLoading")
-                r = rMain.CreateSubKey("Busy")
-                r = rMain.CreateSubKey("Move")
-                r = rMain.CreateSubKey("NS")
-                r = rMain.CreateSubKey("EW")
-                r = rMain.CreateSubKey("NESW")
-                r = rMain.CreateSubKey("NWSE")
-                r = rMain.CreateSubKey("Up")
-                r = rMain.CreateSubKey("Pen")
-                r = rMain.CreateSubKey("None")
-                r = rMain.CreateSubKey("Link")
-                r = rMain.CreateSubKey("Pin")
-                r = rMain.CreateSubKey("Person")
-                r = rMain.CreateSubKey("IBeam")
-                r = rMain.CreateSubKey("Cross")
-
-#Region "Arrow"
-                r = rMain.OpenSubKey("Arrow")
-                Cursor_Arrow_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Arrow_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Arrow_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Arrow_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Arrow_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Arrow_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Arrow_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Arrow_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Arrow_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Arrow_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Help"
-                r = rMain.OpenSubKey("Help")
-                Cursor_Help_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Help_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Help_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Help_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Help_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Help_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Help_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Help_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Help_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Help_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Help_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Help_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "AppLoading"
-                r = rMain.OpenSubKey("AppLoading")
-                Cursor_AppLoading_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_AppLoading_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
-                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
-                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
-                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
-
-                Cursor_AppLoading_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_AppLoading_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_AppLoading_LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
-                Cursor_AppLoading_LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
-                Cursor_AppLoading_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_AppLoading_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-                Cursor_AppLoading_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
-                Cursor_AppLoading_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
-
-                Cursor_AppLoading_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
-                Cursor_AppLoading_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Circle"))
-                Cursor_AppLoading_LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
-                Cursor_AppLoading_LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
-
-                Cursor_AppLoading_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_AppLoading_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
-                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Busy"
-                r = rMain.OpenSubKey("Busy")
-                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
-                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
-                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
-                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
-
-                Cursor_Busy_LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
-                Cursor_Busy_LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
-                Cursor_Busy_LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
-                Cursor_Busy_LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
-
-                Cursor_Busy_LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
-                Cursor_Busy_LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
-
-                Cursor_Busy_LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
-                Cursor_Busy_LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Move"
-                r = rMain.OpenSubKey("Move")
-                Cursor_Move_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Move_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Move_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Move_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Move_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Move_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Move_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Move_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Move_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Move_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Move_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Move_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "NS"
-                r = rMain.OpenSubKey("NS")
-                Cursor_NS_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_NS_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_NS_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_NS_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_NS_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_NS_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_NS_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_NS_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_NS_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NS_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_NS_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_NS_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "EW"
-                r = rMain.OpenSubKey("EW")
-                Cursor_EW_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_EW_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_EW_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_EW_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_EW_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_EW_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_EW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_EW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_EW_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_EW_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_EW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_EW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "NESW"
-                r = rMain.OpenSubKey("NESW")
-                Cursor_NESW_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_NESW_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_NESW_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_NESW_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_NESW_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_NESW_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_NESW_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_NESW_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_NESW_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NESW_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_NESW_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_NESW_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "NWSE"
-                r = rMain.OpenSubKey("NWSE")
-                Cursor_NWSE_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_NWSE_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_NWSE_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_NWSE_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_NWSE_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_NWSE_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_NWSE_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_NWSE_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_NWSE_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_NWSE_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Up"
-                r = rMain.OpenSubKey("Up")
-                Cursor_Up_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Up_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Up_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Up_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Up_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Up_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Up_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Up_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Up_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Up_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Up_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Up_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Pen"
-                r = rMain.OpenSubKey("Pen")
-                Cursor_Pen_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Pen_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Pen_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Pen_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Pen_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Pen_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Pen_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Pen_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Pen_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Pen_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Pen_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Pen_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-
-#End Region
-
-#Region "None"
-                r = rMain.OpenSubKey("None")
-                Cursor_None_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_None_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_None_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.Red.ToArgb))
-                Cursor_None_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.Red.ToArgb))
-
-                Cursor_None_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_None_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_None_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_None_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_None_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_None_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_None_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_None_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Link"
-                r = rMain.OpenSubKey("Link")
-                Cursor_Link_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Link_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Link_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Link_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Link_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Link_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Link_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Link_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Link_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Link_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Link_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Link_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Pin"
-                r = rMain.OpenSubKey("Pin")
-                Cursor_Pin_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Pin_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Pin_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Pin_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Pin_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Pin_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Pin_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Pin_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Pin_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Pin_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Pin_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Pin_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Person"
-                r = rMain.OpenSubKey("Person")
-                Cursor_Person_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Person_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Person_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Person_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Person_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Person_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Person_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Person_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Person_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Person_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Person_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Person_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "IBeam"
-                r = rMain.OpenSubKey("IBeam")
-                Cursor_IBeam_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_IBeam_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_IBeam_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_IBeam_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_IBeam_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_IBeam_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_IBeam_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_IBeam_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_IBeam_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_IBeam_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_IBeam_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_IBeam_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
-#Region "Cross"
-                r = rMain.OpenSubKey("Cross")
-                Cursor_Cross_PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                Cursor_Cross_PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                Cursor_Cross_SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", Color.FromArgb(64, 65, 75).ToArgb))
-                Cursor_Cross_SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", Color.FromArgb(64, 65, 75).ToArgb))
-
-                Cursor_Cross_PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                Cursor_Cross_SecondaryColorGradient = r.GetValue("SecondaryColorGradient", False)
-                Cursor_Cross_PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                Cursor_Cross_SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-
-                Cursor_Cross_PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Vertical"))
-                Cursor_Cross_SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-
-                Cursor_Cross_PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                Cursor_Cross_SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-#End Region
-
+                Cursors_Enabled = rMain.GetValue("", False)
                 rMain.Close()
-                r.Close()
+
+                Cursor_Arrow = Cursor_Structure.Load_Cursor_From_Registry("Arrow")
+                Cursor_Help = Cursor_Structure.Load_Cursor_From_Registry("Help")
+                Cursor_AppLoading = Cursor_Structure.Load_Cursor_From_Registry("AppLoading")
+                Cursor_Busy = Cursor_Structure.Load_Cursor_From_Registry("Busy")
+                Cursor_Move = Cursor_Structure.Load_Cursor_From_Registry("Move")
+                Cursor_NS = Cursor_Structure.Load_Cursor_From_Registry("NS")
+                Cursor_EW = Cursor_Structure.Load_Cursor_From_Registry("EW")
+                Cursor_NESW = Cursor_Structure.Load_Cursor_From_Registry("NESW")
+                Cursor_NWSE = Cursor_Structure.Load_Cursor_From_Registry("NWSE")
+                Cursor_Up = Cursor_Structure.Load_Cursor_From_Registry("Up")
+                Cursor_Pen = Cursor_Structure.Load_Cursor_From_Registry("Pen")
+                Cursor_None = Cursor_Structure.Load_Cursor_From_Registry("None")
+                Cursor_Link = Cursor_Structure.Load_Cursor_From_Registry("Link")
+                Cursor_Pin = Cursor_Structure.Load_Cursor_From_Registry("Pin")
+                Cursor_Person = Cursor_Structure.Load_Cursor_From_Registry("Person")
+                Cursor_IBeam = Cursor_Structure.Load_Cursor_From_Registry("IBeam")
+                Cursor_Cross = Cursor_Structure.Load_Cursor_From_Registry("Cross")
+
 #End Region
 #End Region
+
+                _Def.Dispose()
 
             Case Mode.File
 #Region "File"
@@ -3554,39 +3317,49 @@ Public Class CP : Implements IDisposable
                 txt.Clear()
                 CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
 
+                Dim CUR_Arrow_List, CUR_AppLoading_List, CUR_Busy_List, CUR_Help_List, CUR_Move_List, CUR_NS_List, CUR_EW_List, CUR_NESW_List, CUR_NWSE_List,
+                    CUR_Up_List, CUR_Pen_List, CUR_None_List, CUR_Link_List, CUR_Pin_List, CUR_Person_List, CUR_IBeam_List, CUR_Cross_List As New List(Of String)
+                CUR_Arrow_List.Clear() : CUR_AppLoading_List.Clear() : CUR_Busy_List.Clear() : CUR_Help_List.Clear() : CUR_Move_List.Clear() : CUR_NS_List.Clear() : CUR_EW_List.Clear() : CUR_NESW_List.Clear() : CUR_NWSE_List.Clear()
+                CUR_Up_List.Clear() : CUR_Pen_List.Clear() : CUR_None_List.Clear() : CUR_Link_List.Clear() : CUR_Pin_List.Clear() : CUR_Person_List.Clear() : CUR_IBeam_List.Clear() : CUR_Cross_List.Clear()
+
+                Dim cmdList, PS86List, PS64List As New List(Of String)
+                cmdList.Clear()
+                PS86List.Clear()
+                PS64List.Clear()
+
                 Dim ls_stable, ls_preview As New List(Of String)
                 ls_stable.Clear()
                 ls_preview.Clear()
 
                 For Each lin As String In txt
 #Region "Personal Info"
-                    If lin.StartsWith("*Created from App Version= ") Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
-                    If lin.StartsWith("*Palette Name= ") Then Info.PaletteName = lin.Remove(0, "*Palette Name= ".Count)
-                    If lin.StartsWith("*Palette Description= ") Then Info.PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If lin.StartsWith("*Palette File Version= ") Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
-                    If lin.StartsWith("*Author= ") Then Info.Author = lin.Remove(0, "*Author= ".Count)
-                    If lin.StartsWith("*AuthorSocialMediaLink= ") Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If lin.StartsWith("*Palette File Version= ") Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.ToLower.StartsWith("*Created from App Version= ".ToLower) Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
+                    If lin.ToLower.StartsWith("*Palette Name= ".ToLower) Then Info.PaletteName = lin.Remove(0, "*Palette Name= ".Count)
+                    If lin.ToLower.StartsWith("*Palette Description= ".ToLower) Then Info.PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+                    If lin.ToLower.StartsWith("*Palette File Version= ".ToLower) Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.ToLower.StartsWith("*Author= ".ToLower) Then Info.Author = lin.Remove(0, "*Author= ".Count)
+                    If lin.ToLower.StartsWith("*AuthorSocialMediaLink= ".ToLower) Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
+                    If lin.ToLower.StartsWith("*Palette File Version= ".ToLower) Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
 #Region "Windows 11"
-                    If lin.StartsWith("*Win_11_Color_Index0= ") Then Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index0= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index1= ") Then Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index1= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index2= ") Then Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index2= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index3= ") Then Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index3= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index4= ") Then Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index4= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index5= ") Then Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index5= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index6= ") Then Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index6= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index7= ") Then Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index7= ".Count))
-                    If lin.StartsWith("*Win_11_WinMode_Light= ") Then Windows11.WinMode_Light = lin.Remove(0, "*Win_11_WinMode_Light= ".Count)
-                    If lin.StartsWith("*Win_11_AppMode_Light= ") Then Windows11.AppMode_Light = lin.Remove(0, "*Win_11_AppMode_Light= ".Count)
-                    If lin.StartsWith("*Win_11_Transparency= ") Then Windows11.Transparency = lin.Remove(0, "*Win_11_Transparency= ".Count)
-                    If lin.StartsWith("*Win_11_Titlebar_Active= ") Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Win_11_Titlebar_Inactive= ") Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*Win_11_StartMenu_Accent= ") Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Win_11_ApplyAccentonTitlebars= ") Then Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*Win_11_ApplyAccentonTitlebars= ".Count)
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index0= ".ToLower) Then Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index0= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index1= ".ToLower) Then Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index1= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index2= ".ToLower) Then Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index2= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index3= ".ToLower) Then Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index3= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index4= ".ToLower) Then Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index4= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index5= ".ToLower) Then Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index5= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index6= ".ToLower) Then Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index6= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Color_Index7= ".ToLower) Then Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index7= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_WinMode_Light= ".ToLower) Then Windows11.WinMode_Light = lin.Remove(0, "*Win_11_WinMode_Light= ".Count)
+                    If lin.ToLower.StartsWith("*Win_11_AppMode_Light= ".ToLower) Then Windows11.AppMode_Light = lin.Remove(0, "*Win_11_AppMode_Light= ".Count)
+                    If lin.ToLower.StartsWith("*Win_11_Transparency= ".ToLower) Then Windows11.Transparency = lin.Remove(0, "*Win_11_Transparency= ".Count)
+                    If lin.ToLower.StartsWith("*Win_11_Titlebar_Active= ".ToLower) Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Active= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_Titlebar_Inactive= ".ToLower) Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_StartMenu_Accent= ".ToLower) Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
+                    If lin.ToLower.StartsWith("*Win_11_ApplyAccentonTitlebars= ".ToLower) Then Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*Win_11_ApplyAccentonTitlebars= ".Count)
 
-                    If lin.StartsWith("*Win_11_AccentOnStartTBAC= ") Then
+                    If lin.ToLower.StartsWith("*Win_11_AccentOnStartTBAC= ".ToLower) Then
                         Select Case lin.Remove(0, "*Win_11_AccentOnStartTBAC= ".Count).ToLower
                             Case "false"
                                 Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
@@ -3613,23 +3386,23 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Windows 10"
-                    If lin.StartsWith("*Win_10_Color_Index0= ") Then Windows10.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index0= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index1= ") Then Windows10.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index1= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index2= ") Then Windows10.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index2= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index3= ") Then Windows10.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index3= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index4= ") Then Windows10.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index4= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index5= ") Then Windows10.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index5= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index6= ") Then Windows10.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index6= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index7= ") Then Windows10.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index7= ".Count))
-                    If lin.StartsWith("*Win_10_WinMode_Light= ") Then Windows10.WinMode_Light = lin.Remove(0, "*Win_10_WinMode_Light= ".Count)
-                    If lin.StartsWith("*Win_10_AppMode_Light= ") Then Windows10.AppMode_Light = lin.Remove(0, "*Win_10_AppMode_Light= ".Count)
-                    If lin.StartsWith("*Win_10_Transparency= ") Then Windows10.Transparency = lin.Remove(0, "*Win_10_Transparency= ".Count)
-                    If lin.StartsWith("*Win_10_Titlebar_Active= ") Then Windows10.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Win_10_Titlebar_Inactive= ") Then Windows10.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*Win_10_StartMenu_Accent= ") Then Windows10.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Win_10_ApplyAccentonTitlebars= ") Then Windows10.ApplyAccentonTitlebars = lin.Remove(0, "*Win_10_ApplyAccentonTitlebars= ".Count)
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index0= ".ToLower) Then Windows10.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index0= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index1= ".ToLower) Then Windows10.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index1= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index2= ".ToLower) Then Windows10.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index2= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index3= ".ToLower) Then Windows10.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index3= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index4= ".ToLower) Then Windows10.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index4= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index5= ".ToLower) Then Windows10.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index5= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index6= ".ToLower) Then Windows10.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index6= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Color_Index7= ".ToLower) Then Windows10.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index7= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_WinMode_Light= ".ToLower) Then Windows10.WinMode_Light = lin.Remove(0, "*Win_10_WinMode_Light= ".Count)
+                    If lin.ToLower.StartsWith("*Win_10_AppMode_Light= ".ToLower) Then Windows10.AppMode_Light = lin.Remove(0, "*Win_10_AppMode_Light= ".Count)
+                    If lin.ToLower.StartsWith("*Win_10_Transparency= ".ToLower) Then Windows10.Transparency = lin.Remove(0, "*Win_10_Transparency= ".Count)
+                    If lin.ToLower.StartsWith("*Win_10_Titlebar_Active= ".ToLower) Then Windows10.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Active= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_Titlebar_Inactive= ".ToLower) Then Windows10.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_StartMenu_Accent= ".ToLower) Then Windows10.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
+                    If lin.ToLower.StartsWith("*Win_10_ApplyAccentonTitlebars= ".ToLower) Then Windows10.ApplyAccentonTitlebars = lin.Remove(0, "*Win_10_ApplyAccentonTitlebars= ".Count)
 
-                    If lin.StartsWith("*Win_10_AccentOnStartTBAC= ") Then
+                    If lin.ToLower.StartsWith("*Win_10_AccentOnStartTBAC= ".ToLower) Then
                         Select Case lin.Remove(0, "*Win_10_AccentOnStartTBAC= ".Count).ToLower
                             Case "false"
                                 Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
@@ -3659,83 +3432,83 @@ Public Class CP : Implements IDisposable
 
                     Try
                         If My.Application._Settings.LoadThemeFileAsLegacy Then
-                            If lin.StartsWith("*WinMode_Light= ") Then
+                            If lin.ToLower.StartsWith("*WinMode_Light= ".ToLower) Then
                                 Windows11.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
                                 Windows10.WinMode_Light = Windows11.WinMode_Light
                             End If
 
-                            If lin.StartsWith("*AppMode_Light= ") Then
+                            If lin.ToLower.StartsWith("*AppMode_Light= ".ToLower) Then
                                 Windows11.AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
                                 Windows10.AppMode_Light = Windows11.AppMode_Light
                             End If
 
 
-                            If lin.StartsWith("*Transparency= ") Then
+                            If lin.ToLower.StartsWith("*Transparency= ".ToLower) Then
                                 Windows11.Transparency = lin.Remove(0, "*Transparency= ".Count)
                                 Windows10.Transparency = Windows11.Transparency
                             End If
 
-                            If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ") Then
+                            If lin.ToLower.StartsWith("*AccentColorOnTitlebarAndBorders= ".ToLower) Then
                                 Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                                 Windows10.ApplyAccentonTitlebars = Windows11.ApplyAccentonTitlebars
                             End If
 
-                            If lin.StartsWith("*Titlebar_Active= ") Then
+                            If lin.ToLower.StartsWith("*Titlebar_Active= ".ToLower) Then
                                 Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
                                 Windows10.Titlebar_Active = Windows11.Titlebar_Active
                             End If
 
-                            If lin.StartsWith("*Titlebar_Inactive= ") Then
+                            If lin.ToLower.StartsWith("*Titlebar_Inactive= ".ToLower) Then
                                 Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
                                 Windows10.Titlebar_Inactive = Windows11.Titlebar_Inactive
                             End If
 
-                            If lin.StartsWith("*ActionCenter_AppsLinks= ") Then
+                            If lin.ToLower.StartsWith("*ActionCenter_AppsLinks= ".ToLower) Then
                                 Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
                                 Windows10.Color_Index0 = Windows11.Color_Index0
                             End If
 
-                            If lin.StartsWith("*Taskbar_Icon_Underline= ") Then
+                            If lin.ToLower.StartsWith("*Taskbar_Icon_Underline= ".ToLower) Then
                                 Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
                                 Windows10.Color_Index1 = Windows11.Color_Index1
                             End If
 
-                            If lin.StartsWith("*StartButton_Hover= ") Then
+                            If lin.ToLower.StartsWith("*StartButton_Hover= ".ToLower) Then
                                 Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
                                 Windows10.Color_Index2 = Windows11.Color_Index2
                             End If
 
-                            If lin.StartsWith("*SettingsIconsAndLinks= ") Then
+                            If lin.ToLower.StartsWith("*SettingsIconsAndLinks= ".ToLower) Then
                                 Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
                                 Windows10.Color_Index3 = Windows11.Color_Index3
                             End If
 
-                            If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ") Then
+                            If lin.ToLower.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ".ToLower) Then
                                 Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
                                 Windows10.Color_Index4 = Windows11.Color_Index4
                             End If
 
-                            If lin.StartsWith("*StartListFolders_TaskbarFront= ") Then
+                            If lin.ToLower.StartsWith("*StartListFolders_TaskbarFront= ".ToLower) Then
                                 Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
                                 Windows10.Color_Index5 = Windows11.Color_Index5
                             End If
 
-                            If lin.StartsWith("*Taskbar_Background= ") Then
+                            If lin.ToLower.StartsWith("*Taskbar_Background= ".ToLower) Then
                                 Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
                                 Windows10.Color_Index6 = Windows11.Color_Index6
                             End If
 
-                            If lin.StartsWith("*StartMenu_Accent= ") Then
+                            If lin.ToLower.StartsWith("*StartMenu_Accent= ".ToLower) Then
                                 Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
                                 Windows10.StartMenu_Accent = Windows11.StartMenu_Accent
                             End If
 
-                            If lin.StartsWith("*Undefined= ") Then
+                            If lin.ToLower.StartsWith("*Undefined= ".ToLower) Then
                                 Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
                                 Windows10.Color_Index7 = Windows11.Color_Index7
                             End If
 
-                            If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ") Then
+                            If lin.ToLower.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ".ToLower) Then
                                 Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
                                     Case "false"
                                         Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
@@ -3770,1102 +3543,483 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Aero"
-                    If lin.StartsWith("*Aero_ColorizationColor= ") Then Windows7.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationAfterglow= ") Then Windows7.ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationColorBalance= ") Then Windows7.ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationAfterglowBalance= ") Then Windows7.ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationBlurBalance= ") Then Windows7.ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ") Then Windows7.ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
-                    If lin.StartsWith("*Aero_EnableAeroPeek= ") Then Windows7.EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
-                    If lin.StartsWith("*Aero_AlwaysHibernateThumbnails= ") Then Windows7.AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
-                    If lin.StartsWith("*Aero_Theme= ") Then Windows7.Theme = lin.Remove(0, "*Aero_Theme= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_ColorizationColor= ".ToLower) Then Windows7.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
+                    If lin.ToLower.StartsWith("*Aero_ColorizationAfterglow= ".ToLower) Then Windows7.ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
+                    If lin.ToLower.StartsWith("*Aero_ColorizationColorBalance= ".ToLower) Then Windows7.ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_ColorizationAfterglowBalance= ".ToLower) Then Windows7.ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_ColorizationBlurBalance= ".ToLower) Then Windows7.ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ".ToLower) Then Windows7.ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_EnableAeroPeek= ".ToLower) Then Windows7.EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_AlwaysHibernateThumbnails= ".ToLower) Then Windows7.AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
+                    If lin.ToLower.StartsWith("*Aero_Theme= ".ToLower) Then Windows7.Theme = lin.Remove(0, "*Aero_Theme= ".Count)
 #End Region
 
 #Region "Metro"
-                    If lin.StartsWith("*Metro_ColorizationColor= ") Then Windows8.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Metro_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Metro_ColorizationColorBalance= ") Then Windows8.ColorizationColorBalance = lin.Remove(0, "*Metro_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Metro_PersonalColors_Background= ") Then Windows8.PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Background= ".Count))
-                    If lin.StartsWith("*Metro_PersonalColors_Accent= ") Then Windows8.PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Accent= ".Count))
-                    If lin.StartsWith("*Metro_StartColor= ") Then Windows8.StartColor = Color.FromArgb(lin.Remove(0, "*Metro_StartColor= ".Count))
-                    If lin.StartsWith("*Metro_AccentColor= ") Then Windows8.AccentColor = Color.FromArgb(lin.Remove(0, "*Metro_AccentColor= ".Count))
-                    If lin.StartsWith("*Metro_Start= ") Then Windows8.Start = lin.Remove(0, "*Metro_Start= ".Count)
-                    If lin.StartsWith("*Metro_Theme= ") Then Windows8.Theme = lin.Remove(0, "*Metro_Theme= ".Count)
-                    If lin.StartsWith("*Metro_LogonUI= ") Then Windows8.LogonUI = lin.Remove(0, "*Metro_LogonUI= ".Count)
-                    If lin.StartsWith("*Metro_NoLockScreen= ") Then Windows8.NoLockScreen = lin.Remove(0, "*Metro_NoLockScreen= ".Count)
-                    If lin.StartsWith("*Metro_LockScreenType= ") Then Windows8.LockScreenType = lin.Remove(0, "*Metro_LockScreenType= ".Count)
-                    If lin.StartsWith("*Metro_LockScreenSystemID= ") Then Windows8.LockScreenSystemID = lin.Remove(0, "*Metro_LockScreenSystemID= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_ColorizationColor= ".ToLower) Then Windows8.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Metro_ColorizationColor= ".Count))
+                    If lin.ToLower.StartsWith("*Metro_ColorizationColorBalance= ".ToLower) Then Windows8.ColorizationColorBalance = lin.Remove(0, "*Metro_ColorizationColorBalance= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_PersonalColors_Background= ".ToLower) Then Windows8.PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Background= ".Count))
+                    If lin.ToLower.StartsWith("*Metro_PersonalColors_Accent= ".ToLower) Then Windows8.PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Accent= ".Count))
+                    If lin.ToLower.StartsWith("*Metro_StartColor= ".ToLower) Then Windows8.StartColor = Color.FromArgb(lin.Remove(0, "*Metro_StartColor= ".Count))
+                    If lin.ToLower.StartsWith("*Metro_AccentColor= ".ToLower) Then Windows8.AccentColor = Color.FromArgb(lin.Remove(0, "*Metro_AccentColor= ".Count))
+                    If lin.ToLower.StartsWith("*Metro_Start= ".ToLower) Then Windows8.Start = lin.Remove(0, "*Metro_Start= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_Theme= ".ToLower) Then Windows8.Theme = lin.Remove(0, "*Metro_Theme= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_LogonUI= ".ToLower) Then Windows8.LogonUI = lin.Remove(0, "*Metro_LogonUI= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_NoLockScreen= ".ToLower) Then Windows8.NoLockScreen = lin.Remove(0, "*Metro_NoLockScreen= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_LockScreenType= ".ToLower) Then Windows8.LockScreenType = lin.Remove(0, "*Metro_LockScreenType= ".Count)
+                    If lin.ToLower.StartsWith("*Metro_LockScreenSystemID= ".ToLower) Then Windows8.LockScreenSystemID = lin.Remove(0, "*Metro_LockScreenSystemID= ".Count)
 #End Region
 
 #Region "LogonUI"
-                    If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ") Then LogonUI10x.DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
-                    If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ") Then LogonUI10x.DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
-                    If lin.StartsWith("*LogonUI_NoLockScreen= ") Then LogonUI10x.NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ".ToLower) Then LogonUI10x.DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI_DisableLogonBackgroundImage= ".ToLower) Then LogonUI10x.DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI_NoLockScreen= ".ToLower) Then LogonUI10x.NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
 #End Region
 
 #Region "LogonUI_7_8"
-                    If lin.StartsWith("*LogonUI7_Color= ") Then LogonUI7.Color = Color.FromArgb(lin.Remove(0, "*LogonUI7_Color= ".Count))
-                    If lin.StartsWith("*LogonUI7_Enabled= ") Then LogonUI7.Enabled = lin.Remove(0, "*LogonUI7_Enabled= ".Count)
-                    If lin.StartsWith("*LogonUI7_Mode= ") Then LogonUI7.Mode = lin.Remove(0, "*LogonUI7_Mode= ".Count)
-                    If lin.StartsWith("*LogonUI7_ImagePath= ") Then LogonUI7.ImagePath = lin.Remove(0, "*LogonUI7_ImagePath= ".Count)
-                    If lin.StartsWith("*LogonUI7_Blur= ") Then LogonUI7.Blur = lin.Remove(0, "*LogonUI7_Blur= ".Count)
-                    If lin.StartsWith("*LogonUI7_Blur_Intensity= ") Then LogonUI7.Blur_Intensity = lin.Remove(0, "*LogonUI7_Blur_Intensity= ".Count)
-                    If lin.StartsWith("*LogonUI7_Grayscale= ") Then LogonUI7.Grayscale = lin.Remove(0, "*LogonUI7_Grayscale= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise= ") Then LogonUI7.Noise = lin.Remove(0, "*LogonUI7_Noise= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise_Mode= ") Then LogonUI7.Noise_Mode = lin.Remove(0, "*LogonUI7_Noise_Mode= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise_Intensity= ") Then LogonUI7.Noise_Intensity = lin.Remove(0, "*LogonUI7_Noise_Intensity= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Color= ".ToLower) Then LogonUI7.Color = Color.FromArgb(lin.Remove(0, "*LogonUI7_Color= ".Count))
+                    If lin.ToLower.StartsWith("*LogonUI7_Enabled= ".ToLower) Then LogonUI7.Enabled = lin.Remove(0, "*LogonUI7_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Mode= ".ToLower) Then LogonUI7.Mode = lin.Remove(0, "*LogonUI7_Mode= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_ImagePath= ".ToLower) Then LogonUI7.ImagePath = lin.Remove(0, "*LogonUI7_ImagePath= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Blur= ".ToLower) Then LogonUI7.Blur = lin.Remove(0, "*LogonUI7_Blur= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Blur_Intensity= ".ToLower) Then LogonUI7.Blur_Intensity = lin.Remove(0, "*LogonUI7_Blur_Intensity= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Grayscale= ".ToLower) Then LogonUI7.Grayscale = lin.Remove(0, "*LogonUI7_Grayscale= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Noise= ".ToLower) Then LogonUI7.Noise = lin.Remove(0, "*LogonUI7_Noise= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Noise_Mode= ".ToLower) Then LogonUI7.Noise_Mode = lin.Remove(0, "*LogonUI7_Noise_Mode= ".Count)
+                    If lin.ToLower.StartsWith("*LogonUI7_Noise_Intensity= ".ToLower) Then LogonUI7.Noise_Intensity = lin.Remove(0, "*LogonUI7_Noise_Intensity= ".Count)
 #End Region
 
 #Region "Win32UI"
-                    If lin.StartsWith("*Win32UI_EnableTheming= ") Then Win32.EnableTheming = lin.Remove(0, "*Win32UI_EnableTheming= ".Count)
-                    If lin.StartsWith("*Win32UI_EnableGradient= ") Then Win32.EnableGradient = lin.Remove(0, "*Win32UI_EnableGradient= ".Count)
-                    If lin.StartsWith("*Win32UI_ActiveBorder= ") Then Win32.ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
-                    If lin.StartsWith("*Win32UI_ActiveTitle= ") Then Win32.ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_AppWorkspace= ") Then Win32.AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
-                    If lin.StartsWith("*Win32UI_Background= ") Then Win32.Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonAlternateFace= ") Then Win32.ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonDkShadow= ") Then Win32.ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonFace= ") Then Win32.ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonHilight= ") Then Win32.ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonLight= ") Then Win32.ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonShadow= ") Then Win32.ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonText= ") Then Win32.ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
-                    If lin.StartsWith("*Win32UI_GradientActiveTitle= ") Then Win32.GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_GradientInactiveTitle= ") Then Win32.GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_GrayText= ") Then Win32.GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
-                    If lin.StartsWith("*Win32UI_HilightText= ") Then Win32.HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
-                    If lin.StartsWith("*Win32UI_HotTrackingColor= ") Then Win32.HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveBorder= ") Then Win32.InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveTitle= ") Then Win32.InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveTitleText= ") Then Win32.InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
-                    If lin.StartsWith("*Win32UI_InfoText= ") Then Win32.InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
-                    If lin.StartsWith("*Win32UI_InfoWindow= ") Then Win32.InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
-                    If lin.StartsWith("*Win32UI_Menu= ") Then Win32.Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuBar= ") Then Win32.MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuText= ") Then Win32.MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
-                    If lin.StartsWith("*Win32UI_Scrollbar= ") Then Win32.Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
-                    If lin.StartsWith("*Win32UI_TitleText= ") Then Win32.TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
-                    If lin.StartsWith("*Win32UI_Window= ") Then Win32.Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
-                    If lin.StartsWith("*Win32UI_WindowFrame= ") Then Win32.WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
-                    If lin.StartsWith("*Win32UI_WindowText= ") Then Win32.WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
-                    If lin.StartsWith("*Win32UI_Hilight= ") Then Win32.Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuHilight= ") Then Win32.MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
-                    If lin.StartsWith("*Win32UI_Desktop= ") Then Win32.Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_EnableTheming= ".ToLower) Then Win32.EnableTheming = lin.Remove(0, "*Win32UI_EnableTheming= ".Count)
+                    If lin.ToLower.StartsWith("*Win32UI_EnableGradient= ".ToLower) Then Win32.EnableGradient = lin.Remove(0, "*Win32UI_EnableGradient= ".Count)
+                    If lin.ToLower.StartsWith("*Win32UI_ActiveBorder= ".ToLower) Then Win32.ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ActiveTitle= ".ToLower) Then Win32.ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_AppWorkspace= ".ToLower) Then Win32.AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Background= ".ToLower) Then Win32.Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonAlternateFace= ".ToLower) Then Win32.ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonDkShadow= ".ToLower) Then Win32.ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonFace= ".ToLower) Then Win32.ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonHilight= ".ToLower) Then Win32.ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonLight= ".ToLower) Then Win32.ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonShadow= ".ToLower) Then Win32.ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_ButtonText= ".ToLower) Then Win32.ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_GradientActiveTitle= ".ToLower) Then Win32.GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_GradientInactiveTitle= ".ToLower) Then Win32.GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_GrayText= ".ToLower) Then Win32.GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_HilightText= ".ToLower) Then Win32.HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_HotTrackingColor= ".ToLower) Then Win32.HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_InactiveBorder= ".ToLower) Then Win32.InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_InactiveTitle= ".ToLower) Then Win32.InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_InactiveTitleText= ".ToLower) Then Win32.InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_InfoText= ".ToLower) Then Win32.InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_InfoWindow= ".ToLower) Then Win32.InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Menu= ".ToLower) Then Win32.Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_MenuBar= ".ToLower) Then Win32.MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_MenuText= ".ToLower) Then Win32.MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Scrollbar= ".ToLower) Then Win32.Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_TitleText= ".ToLower) Then Win32.TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Window= ".ToLower) Then Win32.Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_WindowFrame= ".ToLower) Then Win32.WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_WindowText= ".ToLower) Then Win32.WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Hilight= ".ToLower) Then Win32.Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_MenuHilight= ".ToLower) Then Win32.MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
+                    If lin.ToLower.StartsWith("*Win32UI_Desktop= ".ToLower) Then Win32.Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
 
 #Region "Terminals"
-#Region "Locking"
-                    If lin.StartsWith("*Terminal_CMD_Enabled= ") Then Terminal_CMD_Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_PS_32_Enabled= ") Then Terminal_PS_32_Enabled = lin.Remove(0, "*Terminal_PS_32_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_PS_64_Enabled= ") Then Terminal_PS_64_Enabled = lin.Remove(0, "*Terminal_PS_64_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_Stable_Enabled= ") Then Terminal_Stable_Enabled = lin.Remove(0, "*Terminal_Stable_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_Preview_Enabled= ") Then Terminal_Preview_Enabled = lin.Remove(0, "*Terminal_Preview_Enabled= ".Count)
-#End Region
 
-#Region "Command Prompt"
-                    If lin.StartsWith("*CMD_ColorTable00= ") Then CMD_ColorTable00 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable00= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable01= ") Then CMD_ColorTable01 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable01= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable02= ") Then CMD_ColorTable02 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable02= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable03= ") Then CMD_ColorTable03 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable03= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable04= ") Then CMD_ColorTable04 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable04= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable05= ") Then CMD_ColorTable05 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable05= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable06= ") Then CMD_ColorTable06 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable06= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable07= ") Then CMD_ColorTable07 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable07= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable08= ") Then CMD_ColorTable08 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable08= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable09= ") Then CMD_ColorTable09 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable09= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable10= ") Then CMD_ColorTable10 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable10= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable11= ") Then CMD_ColorTable11 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable11= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable12= ") Then CMD_ColorTable12 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable12= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable13= ") Then CMD_ColorTable13 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable13= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable14= ") Then CMD_ColorTable14 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable14= ".Count))
-                    If lin.StartsWith("*CMD_ColorTable15= ") Then CMD_ColorTable15 = Color.FromArgb(lin.Remove(0, "*CMD_ColorTable15= ".Count))
-                    If lin.StartsWith("*CMD_PopupForeground= ") Then CMD_PopupForeground = lin.Remove(0, "*CMD_PopupForeground= ".Count)
-                    If lin.StartsWith("*CMD_PopupBackground= ") Then CMD_PopupBackground = lin.Remove(0, "*CMD_PopupBackground= ".Count)
-                    If lin.StartsWith("*CMD_ScreenColorsForeground= ") Then CMD_ScreenColorsForeground = lin.Remove(0, "*CMD_ScreenColorsForeground= ".Count)
-                    If lin.StartsWith("*CMD_ScreenColorsBackground= ") Then CMD_ScreenColorsBackground = lin.Remove(0, "*CMD_ScreenColorsBackground= ".Count)
-                    If lin.StartsWith("*CMD_CursorSize= ") Then CMD_CursorSize = lin.Remove(0, "*CMD_CursorSize= ".Count)
-                    If lin.StartsWith("*CMD_FaceName= ") Then CMD_FaceName = lin.Remove(0, "*CMD_FaceName= ".Count)
-                    If lin.StartsWith("*CMD_FontRaster= ") Then CMD_FontRaster = lin.Remove(0, "*CMD_FontRaster= ".Count)
-                    If lin.StartsWith("*CMD_FontSize= ") Then CMD_FontSize = lin.Remove(0, "*CMD_FontSize= ".Count)
-                    If lin.StartsWith("*CMD_FontWeight= ") Then CMD_FontWeight = lin.Remove(0, "*CMD_FontWeight= ".Count)
-                    If lin.StartsWith("*CMD_1909_CursorType= ") Then CMD_1909_CursorType = lin.Remove(0, "*CMD_1909_CursorType= ".Count)
-                    If lin.StartsWith("*CMD_1909_CursorColor= ") Then CMD_1909_CursorColor = Color.FromArgb(lin.Remove(0, "*CMD_1909_CursorColor= ".Count))
-                    If lin.StartsWith("*CMD_1909_ForceV2= ") Then CMD_1909_ForceV2 = lin.Remove(0, "*CMD_1909_ForceV2= ".Count)
-                    If lin.StartsWith("*CMD_1909_LineSelection= ") Then CMD_1909_LineSelection = lin.Remove(0, "*CMD_1909_LineSelection= ".Count)
-                    If lin.StartsWith("*CMD_1909_TerminalScrolling= ") Then CMD_1909_TerminalScrolling = lin.Remove(0, "*CMD_1909_TerminalScrolling= ".Count)
-                    If lin.StartsWith("*CMD_1909_WindowAlpha= ") Then CMD_1909_WindowAlpha = lin.Remove(0, "*CMD_1909_WindowAlpha= ".Count)
-#End Region
+                    If lin.ToLower.StartsWith("*Terminal_CMD_Enabled= ".ToLower) Then CommandPrompt.Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Terminal_PS_32_Enabled= ".ToLower) Then PowerShellx86.Enabled = lin.Remove(0, "*Terminal_PS_32_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Terminal_PS_64_Enabled= ".ToLower) Then PowerShellx64.Enabled = lin.Remove(0, "*Terminal_PS_64_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Terminal_Stable_Enabled= ".ToLower) Then Terminal.Enabled = lin.Remove(0, "*Terminal_Stable_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Terminal_Preview_Enabled= ".ToLower) Then TerminalPreview.Enabled = lin.Remove(0, "*Terminal_Preview_Enabled= ".Count)
 
-#Region "PowerShell x86"
-                    If lin.StartsWith("*PS_32_ColorTable00= ") Then PS_32_ColorTable00 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable00= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable01= ") Then PS_32_ColorTable01 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable01= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable02= ") Then PS_32_ColorTable02 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable02= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable03= ") Then PS_32_ColorTable03 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable03= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable04= ") Then PS_32_ColorTable04 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable04= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable05= ") Then PS_32_ColorTable05 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable05= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable06= ") Then PS_32_ColorTable06 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable06= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable07= ") Then PS_32_ColorTable07 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable07= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable08= ") Then PS_32_ColorTable08 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable08= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable09= ") Then PS_32_ColorTable09 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable09= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable10= ") Then PS_32_ColorTable10 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable10= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable11= ") Then PS_32_ColorTable11 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable11= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable12= ") Then PS_32_ColorTable12 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable12= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable13= ") Then PS_32_ColorTable13 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable13= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable14= ") Then PS_32_ColorTable14 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable14= ".Count))
-                    If lin.StartsWith("*PS_32_ColorTable15= ") Then PS_32_ColorTable15 = Color.FromArgb(lin.Remove(0, "*PS_32_ColorTable15= ".Count))
-                    If lin.StartsWith("*PS_32_PopupForeground= ") Then PS_32_PopupForeground = lin.Remove(0, "*PS_32_PopupForeground= ".Count)
-                    If lin.StartsWith("*PS_32_PopupBackground= ") Then PS_32_PopupBackground = lin.Remove(0, "*PS_32_PopupBackground= ".Count)
-                    If lin.StartsWith("*PS_32_ScreenColorsForeground= ") Then PS_32_ScreenColorsForeground = lin.Remove(0, "*PS_32_ScreenColorsForeground= ".Count)
-                    If lin.StartsWith("*PS_32_ScreenColorsBackground= ") Then PS_32_ScreenColorsBackground = lin.Remove(0, "*PS_32_ScreenColorsBackground= ".Count)
-                    If lin.StartsWith("*PS_32_CursorSize= ") Then PS_32_CursorSize = lin.Remove(0, "*PS_32_CursorSize= ".Count)
-                    If lin.StartsWith("*PS_32_FaceName= ") Then PS_32_FaceName = lin.Remove(0, "*PS_32_FaceName= ".Count)
-                    If lin.StartsWith("*PS_32_FontRaster= ") Then PS_32_FontRaster = lin.Remove(0, "*PS_32_FontRaster= ".Count)
-                    If lin.StartsWith("*PS_32_FontSize= ") Then PS_32_FontSize = lin.Remove(0, "*PS_32_FontSize= ".Count)
-                    If lin.StartsWith("*PS_32_FontWeight= ") Then PS_32_FontWeight = lin.Remove(0, "*PS_32_FontWeight= ".Count)
-                    If lin.StartsWith("*PS_32_1909_CursorType= ") Then PS_32_1909_CursorType = lin.Remove(0, "*PS_32_1909_CursorType= ".Count)
-                    If lin.StartsWith("*PS_32_1909_CursorColor= ") Then PS_32_1909_CursorColor = Color.FromArgb(lin.Remove(0, "*PS_32_1909_CursorColor= ".Count))
-                    If lin.StartsWith("*PS_32_1909_ForceV2= ") Then PS_32_1909_ForceV2 = lin.Remove(0, "*PS_32_1909_ForceV2= ".Count)
-                    If lin.StartsWith("*PS_32_1909_LineSelection= ") Then PS_32_1909_LineSelection = lin.Remove(0, "*PS_32_1909_LineSelection= ".Count)
-                    If lin.StartsWith("*PS_32_1909_TerminalScrolling= ") Then PS_32_1909_TerminalScrolling = lin.Remove(0, "*PS_32_1909_TerminalScrolling= ".Count)
-                    If lin.StartsWith("*PS_32_1909_WindowAlpha= ") Then PS_32_1909_WindowAlpha = lin.Remove(0, "*PS_32_1909_WindowAlpha= ".Count)
-#End Region
+                    If lin.ToLower.StartsWith("*CMD_".ToLower) Then cmdList.Add(lin.Remove(0, "*CMD_".Count))
+                    If lin.ToLower.StartsWith("*PS_32_".ToLower) Then PS86List.Add(lin.Remove(0, "*PS_32_".Count))
+                    If lin.ToLower.StartsWith("*PS_64_".ToLower) Then PS64List.Add(lin.Remove(0, "*PS_64_".Count))
 
-#Region "PowerShell x64"
-                    If lin.StartsWith("*PS_64_ColorTable00= ") Then PS_64_ColorTable00 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable00= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable01= ") Then PS_64_ColorTable01 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable01= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable02= ") Then PS_64_ColorTable02 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable02= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable03= ") Then PS_64_ColorTable03 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable03= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable04= ") Then PS_64_ColorTable04 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable04= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable05= ") Then PS_64_ColorTable05 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable05= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable06= ") Then PS_64_ColorTable06 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable06= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable07= ") Then PS_64_ColorTable07 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable07= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable08= ") Then PS_64_ColorTable08 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable08= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable09= ") Then PS_64_ColorTable09 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable09= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable10= ") Then PS_64_ColorTable10 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable10= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable11= ") Then PS_64_ColorTable11 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable11= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable12= ") Then PS_64_ColorTable12 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable12= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable13= ") Then PS_64_ColorTable13 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable13= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable14= ") Then PS_64_ColorTable14 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable14= ".Count))
-                    If lin.StartsWith("*PS_64_ColorTable15= ") Then PS_64_ColorTable15 = Color.FromArgb(lin.Remove(0, "*PS_64_ColorTable15= ".Count))
-                    If lin.StartsWith("*PS_64_PopupForeground= ") Then PS_64_PopupForeground = lin.Remove(0, "*PS_64_PopupForeground= ".Count)
-                    If lin.StartsWith("*PS_64_PopupBackground= ") Then PS_64_PopupBackground = lin.Remove(0, "*PS_64_PopupBackground= ".Count)
-                    If lin.StartsWith("*PS_64_ScreenColorsForeground= ") Then PS_64_ScreenColorsForeground = lin.Remove(0, "*PS_64_ScreenColorsForeground= ".Count)
-                    If lin.StartsWith("*PS_64_ScreenColorsBackground= ") Then PS_64_ScreenColorsBackground = lin.Remove(0, "*PS_64_ScreenColorsBackground= ".Count)
-                    If lin.StartsWith("*PS_64_CursorSize= ") Then PS_64_CursorSize = lin.Remove(0, "*PS_64_CursorSize= ".Count)
-                    If lin.StartsWith("*PS_64_FaceName= ") Then PS_64_FaceName = lin.Remove(0, "*PS_64_FaceName= ".Count)
-                    If lin.StartsWith("*PS_64_FontRaster= ") Then PS_64_FontRaster = lin.Remove(0, "*PS_64_FontRaster= ".Count)
-                    If lin.StartsWith("*PS_64_FontSize= ") Then PS_64_FontSize = lin.Remove(0, "*PS_64_FontSize= ".Count)
-                    If lin.StartsWith("*PS_64_FontWeight= ") Then PS_64_FontWeight = lin.Remove(0, "*PS_64_FontWeight= ".Count)
-                    If lin.StartsWith("*PS_64_1909_CursorType= ") Then PS_64_1909_CursorType = lin.Remove(0, "*PS_64_1909_CursorType= ".Count)
-                    If lin.StartsWith("*PS_64_1909_CursorColor= ") Then PS_64_1909_CursorColor = Color.FromArgb(lin.Remove(0, "*PS_64_1909_CursorColor= ".Count))
-                    If lin.StartsWith("*PS_64_1909_ForceV2= ") Then PS_64_1909_ForceV2 = lin.Remove(0, "*PS_64_1909_ForceV2= ".Count)
-                    If lin.StartsWith("*PS_64_1909_LineSelection= ") Then PS_64_1909_LineSelection = lin.Remove(0, "*PS_64_1909_LineSelection= ".Count)
-                    If lin.StartsWith("*PS_64_1909_TerminalScrolling= ") Then PS_64_1909_TerminalScrolling = lin.Remove(0, "*PS_64_1909_TerminalScrolling= ".Count)
-                    If lin.StartsWith("*PS_64_1909_WindowAlpha= ") Then PS_64_1909_WindowAlpha = lin.Remove(0, "*PS_64_1909_WindowAlpha= ".Count)
-#End Region
-
-#Region "Windows Terminal"
                     If Not IgnoreWindowsTerminal Then
                         If My.W10 Or My.W11 Then
-                            If lin.ToLower.StartsWith("terminal.") Then ls_stable.Add(lin)
-                            If lin.ToLower.StartsWith("terminalpreview.") Then ls_preview.Add(lin)
+                            If lin.ToLower.StartsWith("terminal.".ToLower) Then ls_stable.Add(lin)
+                            If lin.ToLower.StartsWith("terminalpreview.".ToLower) Then ls_preview.Add(lin)
                         End If
                     End If
 #End Region
-#End Region
 
 #Region "Cursors"
-                    If lin.StartsWith("*Cursor_Enabled= ") Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Cursor_Enabled= ".ToLower) Then Cursors_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
 
-#Region "Arrow"
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColor1= ") Then Cursor_Arrow_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColor2= ") Then Cursor_Arrow_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorGradient= ") Then Cursor_Arrow_PrimaryColorGradient = lin.Remove(0, "*Cursor_Arrow_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorGradientMode= ") Then Cursor_Arrow_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Arrow_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorNoise= ") Then Cursor_Arrow_PrimaryColorNoise = lin.Remove(0, "*Cursor_Arrow_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_PrimaryColorNoiseOpacity= ") Then Cursor_Arrow_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Arrow_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColor1= ") Then Cursor_Arrow_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColor2= ") Then Cursor_Arrow_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Arrow_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorGradient= ") Then Cursor_Arrow_SecondaryColorGradient = lin.Remove(0, "*Cursor_Arrow_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorGradientMode= ") Then Cursor_Arrow_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Arrow_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoise= ") Then Cursor_Arrow_SecondaryColorNoise = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Arrow_SecondaryColorNoiseOpacity= ") Then Cursor_Arrow_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Arrow_SecondaryColorNoiseOpacity= ".Count)
+                    If lin.ToLower.StartsWith("*Cursor_Arrow_".ToLower) Then CUR_Arrow_List.Add(lin.Remove(0, "*Cursor_Arrow_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Help_".ToLower) Then CUR_Help_List.Add(lin.Remove(0, "*Cursor_Help_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_AppLoading_".ToLower) Then CUR_AppLoading_List.Add(lin.Remove(0, "*Cursor_AppLoading_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Busy_".ToLower) Then CUR_Busy_List.Add(lin.Remove(0, "*Cursor_Busy_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Move_".ToLower) Then CUR_Move_List.Add(lin.Remove(0, "*Cursor_Move_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_NS_".ToLower) Then CUR_NS_List.Add(lin.Remove(0, "*Cursor_NS_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_EW_".ToLower) Then CUR_EW_List.Add(lin.Remove(0, "*Cursor_EW_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_NESW_".ToLower) Then CUR_NESW_List.Add(lin.Remove(0, "*Cursor_NESW_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_NWSE_".ToLower) Then CUR_NWSE_List.Add(lin.Remove(0, "*Cursor_NWSE_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Up_".ToLower) Then CUR_Up_List.Add(lin.Remove(0, "*Cursor_Up_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Pen_".ToLower) Then CUR_Pen_List.Add(lin.Remove(0, "*Cursor_Pen_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_None_".ToLower) Then CUR_None_List.Add(lin.Remove(0, "*Cursor_None_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Link_".ToLower) Then CUR_Link_List.Add(lin.Remove(0, "*Cursor_Link_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Pin_".ToLower) Then CUR_Pin_List.Add(lin.Remove(0, "*Cursor_Pin_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Person_".ToLower) Then CUR_Person_List.Add(lin.Remove(0, "*Cursor_Person_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_IBeam_".ToLower) Then CUR_IBeam_List.Add(lin.Remove(0, "*Cursor_IBeam_".Count))
+                    If lin.ToLower.StartsWith("*Cursor_Cross_".ToLower) Then CUR_Cross_List.Add(lin.Remove(0, "*Cursor_Cross_".Count))
 
-#End Region
-
-#Region "Help"
-                    If lin.StartsWith("*Cursor_Help_PrimaryColor1= ") Then Cursor_Help_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Help_PrimaryColor2= ") Then Cursor_Help_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Help_PrimaryColorGradient= ") Then Cursor_Help_PrimaryColorGradient = lin.Remove(0, "*Cursor_Help_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Help_PrimaryColorGradientMode= ") Then Cursor_Help_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Help_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Help_PrimaryColorNoise= ") Then Cursor_Help_PrimaryColorNoise = lin.Remove(0, "*Cursor_Help_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Help_PrimaryColorNoiseOpacity= ") Then Cursor_Help_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Help_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Help_SecondaryColor1= ") Then Cursor_Help_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Help_SecondaryColor2= ") Then Cursor_Help_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Help_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Help_SecondaryColorGradient= ") Then Cursor_Help_SecondaryColorGradient = lin.Remove(0, "*Cursor_Help_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Help_SecondaryColorGradientMode= ") Then Cursor_Help_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Help_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Help_SecondaryColorNoise= ") Then Cursor_Help_SecondaryColorNoise = lin.Remove(0, "*Cursor_Help_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Help_SecondaryColorNoiseOpacity= ") Then Cursor_Help_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Help_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "AppLoading"
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColor1= ") Then Cursor_AppLoading_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColor2= ") Then Cursor_AppLoading_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorGradient= ") Then Cursor_AppLoading_PrimaryColorGradient = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorGradientMode= ") Then Cursor_AppLoading_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorNoise= ") Then Cursor_AppLoading_PrimaryColorNoise = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_PrimaryColorNoiseOpacity= ") Then Cursor_AppLoading_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColor1= ") Then Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColor2= ") Then Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorGradient= ") Then Cursor_AppLoading_SecondaryColorGradient = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorGradientMode= ") Then Cursor_AppLoading_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorNoise= ") Then Cursor_AppLoading_SecondaryColorNoise = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_SecondaryColorNoiseOpacity= ") Then Cursor_AppLoading_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_SecondaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBack1= ") Then Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBack1= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBack2= ") Then Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBack2= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackGradient= ") Then Cursor_AppLoading_LoadingCircleBackGradient = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackGradient= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackGradientMode= ") Then Cursor_AppLoading_LoadingCircleBackGradientMode = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackNoise= ") Then Cursor_AppLoading_LoadingCircleBackNoise = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackNoise= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= ") Then Cursor_AppLoading_LoadingCircleBackNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHot1= ") Then Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHot1= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHot2= ") Then Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHot2= ".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotGradient= ") Then Cursor_AppLoading_LoadingCircleHotGradient = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotGradient= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotGradientMode= ") Then Cursor_AppLoading_LoadingCircleHotGradientMode = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotNoise= ") Then Cursor_AppLoading_LoadingCircleHotNoise = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotNoise= ".Count)
-                    If lin.StartsWith("*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= ") Then Cursor_AppLoading_LoadingCircleHotNoiseOpacity = lin.Remove(0, "*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Busy"
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBack1= ") Then Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleBack1= ".Count))
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBack2= ") Then Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleBack2= ".Count))
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackGradient= ") Then Cursor_Busy_LoadingCircleBackGradient = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackGradientMode= ") Then Cursor_Busy_LoadingCircleBackGradientMode = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackNoise= ") Then Cursor_Busy_LoadingCircleBackNoise = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleBackNoiseOpacity= ") Then Cursor_Busy_LoadingCircleBackNoiseOpacity = lin.Remove(0, "*Cursor_Busy_LoadingCircleBackNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHot1= ") Then Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleHot1= ".Count))
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHot2= ") Then Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "*Cursor_Busy_LoadingCircleHot2= ".Count))
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotGradient= ") Then Cursor_Busy_LoadingCircleHotGradient = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotGradientMode= ") Then Cursor_Busy_LoadingCircleHotGradientMode = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotNoise= ") Then Cursor_Busy_LoadingCircleHotNoise = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Busy_LoadingCircleHotNoiseOpacity= ") Then Cursor_Busy_LoadingCircleHotNoiseOpacity = lin.Remove(0, "*Cursor_Busy_LoadingCircleHotNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Move"
-                    If lin.StartsWith("*Cursor_Move_PrimaryColor1= ") Then Cursor_Move_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Move_PrimaryColor2= ") Then Cursor_Move_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Move_PrimaryColorGradient= ") Then Cursor_Move_PrimaryColorGradient = lin.Remove(0, "*Cursor_Move_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Move_PrimaryColorGradientMode= ") Then Cursor_Move_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Move_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Move_PrimaryColorNoise= ") Then Cursor_Move_PrimaryColorNoise = lin.Remove(0, "*Cursor_Move_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Move_PrimaryColorNoiseOpacity= ") Then Cursor_Move_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Move_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Move_SecondaryColor1= ") Then Cursor_Move_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Move_SecondaryColor2= ") Then Cursor_Move_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Move_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Move_SecondaryColorGradient= ") Then Cursor_Move_SecondaryColorGradient = lin.Remove(0, "*Cursor_Move_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Move_SecondaryColorGradientMode= ") Then Cursor_Move_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Move_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Move_SecondaryColorNoise= ") Then Cursor_Move_SecondaryColorNoise = lin.Remove(0, "*Cursor_Move_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Move_SecondaryColorNoiseOpacity= ") Then Cursor_Move_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Move_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "NS"
-                    If lin.StartsWith("*Cursor_NS_PrimaryColor1= ") Then Cursor_NS_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NS_PrimaryColor2= ") Then Cursor_NS_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NS_PrimaryColorGradient= ") Then Cursor_NS_PrimaryColorGradient = lin.Remove(0, "*Cursor_NS_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NS_PrimaryColorGradientMode= ") Then Cursor_NS_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NS_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NS_PrimaryColorNoise= ") Then Cursor_NS_PrimaryColorNoise = lin.Remove(0, "*Cursor_NS_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NS_PrimaryColorNoiseOpacity= ") Then Cursor_NS_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NS_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_NS_SecondaryColor1= ") Then Cursor_NS_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NS_SecondaryColor2= ") Then Cursor_NS_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NS_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NS_SecondaryColorGradient= ") Then Cursor_NS_SecondaryColorGradient = lin.Remove(0, "*Cursor_NS_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NS_SecondaryColorGradientMode= ") Then Cursor_NS_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NS_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NS_SecondaryColorNoise= ") Then Cursor_NS_SecondaryColorNoise = lin.Remove(0, "*Cursor_NS_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NS_SecondaryColorNoiseOpacity= ") Then Cursor_NS_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NS_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "EW"
-                    If lin.StartsWith("*Cursor_EW_PrimaryColor1= ") Then Cursor_EW_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_EW_PrimaryColor2= ") Then Cursor_EW_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_EW_PrimaryColorGradient= ") Then Cursor_EW_PrimaryColorGradient = lin.Remove(0, "*Cursor_EW_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_EW_PrimaryColorGradientMode= ") Then Cursor_EW_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_EW_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_EW_PrimaryColorNoise= ") Then Cursor_EW_PrimaryColorNoise = lin.Remove(0, "*Cursor_EW_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_EW_PrimaryColorNoiseOpacity= ") Then Cursor_EW_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_EW_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_EW_SecondaryColor1= ") Then Cursor_EW_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_EW_SecondaryColor2= ") Then Cursor_EW_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_EW_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_EW_SecondaryColorGradient= ") Then Cursor_EW_SecondaryColorGradient = lin.Remove(0, "*Cursor_EW_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_EW_SecondaryColorGradientMode= ") Then Cursor_EW_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_EW_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_EW_SecondaryColorNoise= ") Then Cursor_EW_SecondaryColorNoise = lin.Remove(0, "*Cursor_EW_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_EW_SecondaryColorNoiseOpacity= ") Then Cursor_EW_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_EW_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "NESW"
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColor1= ") Then Cursor_NESW_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColor2= ") Then Cursor_NESW_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColorGradient= ") Then Cursor_NESW_PrimaryColorGradient = lin.Remove(0, "*Cursor_NESW_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColorGradientMode= ") Then Cursor_NESW_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NESW_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColorNoise= ") Then Cursor_NESW_PrimaryColorNoise = lin.Remove(0, "*Cursor_NESW_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_PrimaryColorNoiseOpacity= ") Then Cursor_NESW_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NESW_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColor1= ") Then Cursor_NESW_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColor2= ") Then Cursor_NESW_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NESW_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColorGradient= ") Then Cursor_NESW_SecondaryColorGradient = lin.Remove(0, "*Cursor_NESW_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColorGradientMode= ") Then Cursor_NESW_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NESW_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColorNoise= ") Then Cursor_NESW_SecondaryColorNoise = lin.Remove(0, "*Cursor_NESW_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NESW_SecondaryColorNoiseOpacity= ") Then Cursor_NESW_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NESW_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "NWSE"
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColor1= ") Then Cursor_NWSE_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColor2= ") Then Cursor_NWSE_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorGradient= ") Then Cursor_NWSE_PrimaryColorGradient = lin.Remove(0, "*Cursor_NWSE_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorGradientMode= ") Then Cursor_NWSE_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_NWSE_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorNoise= ") Then Cursor_NWSE_PrimaryColorNoise = lin.Remove(0, "*Cursor_NWSE_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_PrimaryColorNoiseOpacity= ") Then Cursor_NWSE_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NWSE_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColor1= ") Then Cursor_NWSE_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColor2= ") Then Cursor_NWSE_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_NWSE_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorGradient= ") Then Cursor_NWSE_SecondaryColorGradient = lin.Remove(0, "*Cursor_NWSE_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorGradientMode= ") Then Cursor_NWSE_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_NWSE_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorNoise= ") Then Cursor_NWSE_SecondaryColorNoise = lin.Remove(0, "*Cursor_NWSE_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_NWSE_SecondaryColorNoiseOpacity= ") Then Cursor_NWSE_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_NWSE_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Up"
-                    If lin.StartsWith("*Cursor_Up_PrimaryColor1= ") Then Cursor_Up_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Up_PrimaryColor2= ") Then Cursor_Up_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Up_PrimaryColorGradient= ") Then Cursor_Up_PrimaryColorGradient = lin.Remove(0, "*Cursor_Up_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Up_PrimaryColorGradientMode= ") Then Cursor_Up_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Up_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Up_PrimaryColorNoise= ") Then Cursor_Up_PrimaryColorNoise = lin.Remove(0, "*Cursor_Up_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Up_PrimaryColorNoiseOpacity= ") Then Cursor_Up_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Up_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Up_SecondaryColor1= ") Then Cursor_Up_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Up_SecondaryColor2= ") Then Cursor_Up_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Up_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Up_SecondaryColorGradient= ") Then Cursor_Up_SecondaryColorGradient = lin.Remove(0, "*Cursor_Up_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Up_SecondaryColorGradientMode= ") Then Cursor_Up_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Up_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Up_SecondaryColorNoise= ") Then Cursor_Up_SecondaryColorNoise = lin.Remove(0, "*Cursor_Up_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Up_SecondaryColorNoiseOpacity= ") Then Cursor_Up_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Up_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Pen"
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColor1= ") Then Cursor_Pen_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColor2= ") Then Cursor_Pen_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColorGradient= ") Then Cursor_Pen_PrimaryColorGradient = lin.Remove(0, "*Cursor_Pen_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColorGradientMode= ") Then Cursor_Pen_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Pen_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColorNoise= ") Then Cursor_Pen_PrimaryColorNoise = lin.Remove(0, "*Cursor_Pen_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_PrimaryColorNoiseOpacity= ") Then Cursor_Pen_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pen_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColor1= ") Then Cursor_Pen_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColor2= ") Then Cursor_Pen_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pen_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColorGradient= ") Then Cursor_Pen_SecondaryColorGradient = lin.Remove(0, "*Cursor_Pen_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColorGradientMode= ") Then Cursor_Pen_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Pen_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColorNoise= ") Then Cursor_Pen_SecondaryColorNoise = lin.Remove(0, "*Cursor_Pen_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Pen_SecondaryColorNoiseOpacity= ") Then Cursor_Pen_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pen_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "None"
-                    If lin.StartsWith("*Cursor_None_PrimaryColor1= ") Then Cursor_None_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_None_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_None_PrimaryColor2= ") Then Cursor_None_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_None_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_None_PrimaryColorGradient= ") Then Cursor_None_PrimaryColorGradient = lin.Remove(0, "*Cursor_None_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_None_PrimaryColorGradientMode= ") Then Cursor_None_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_None_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_None_PrimaryColorNoise= ") Then Cursor_None_PrimaryColorNoise = lin.Remove(0, "*Cursor_None_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_None_PrimaryColorNoiseOpacity= ") Then Cursor_None_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_None_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_None_SecondaryColor1= ") Then Cursor_None_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_None_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_None_SecondaryColor2= ") Then Cursor_None_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_None_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_None_SecondaryColorGradient= ") Then Cursor_None_SecondaryColorGradient = lin.Remove(0, "*Cursor_None_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_None_SecondaryColorGradientMode= ") Then Cursor_None_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_None_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_None_SecondaryColorNoise= ") Then Cursor_None_SecondaryColorNoise = lin.Remove(0, "*Cursor_None_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_None_SecondaryColorNoiseOpacity= ") Then Cursor_None_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_None_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Link"
-                    If lin.StartsWith("*Cursor_Link_PrimaryColor1= ") Then Cursor_Link_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Link_PrimaryColor2= ") Then Cursor_Link_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Link_PrimaryColorGradient= ") Then Cursor_Link_PrimaryColorGradient = lin.Remove(0, "*Cursor_Link_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Link_PrimaryColorGradientMode= ") Then Cursor_Link_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Link_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Link_PrimaryColorNoise= ") Then Cursor_Link_PrimaryColorNoise = lin.Remove(0, "*Cursor_Link_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Link_PrimaryColorNoiseOpacity= ") Then Cursor_Link_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Link_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Link_SecondaryColor1= ") Then Cursor_Link_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Link_SecondaryColor2= ") Then Cursor_Link_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Link_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Link_SecondaryColorGradient= ") Then Cursor_Link_SecondaryColorGradient = lin.Remove(0, "*Cursor_Link_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Link_SecondaryColorGradientMode= ") Then Cursor_Link_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Link_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Link_SecondaryColorNoise= ") Then Cursor_Link_SecondaryColorNoise = lin.Remove(0, "*Cursor_Link_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Link_SecondaryColorNoiseOpacity= ") Then Cursor_Link_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Link_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Pin"
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColor1= ") Then Cursor_Pin_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColor2= ") Then Cursor_Pin_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColorGradient= ") Then Cursor_Pin_PrimaryColorGradient = lin.Remove(0, "*Cursor_Pin_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColorGradientMode= ") Then Cursor_Pin_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Pin_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColorNoise= ") Then Cursor_Pin_PrimaryColorNoise = lin.Remove(0, "*Cursor_Pin_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_PrimaryColorNoiseOpacity= ") Then Cursor_Pin_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pin_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColor1= ") Then Cursor_Pin_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColor2= ") Then Cursor_Pin_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Pin_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColorGradient= ") Then Cursor_Pin_SecondaryColorGradient = lin.Remove(0, "*Cursor_Pin_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColorGradientMode= ") Then Cursor_Pin_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Pin_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColorNoise= ") Then Cursor_Pin_SecondaryColorNoise = lin.Remove(0, "*Cursor_Pin_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Pin_SecondaryColorNoiseOpacity= ") Then Cursor_Pin_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Pin_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "Person"
-                    If lin.StartsWith("*Cursor_Person_PrimaryColor1= ") Then Cursor_Person_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Person_PrimaryColor2= ") Then Cursor_Person_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Person_PrimaryColorGradient= ") Then Cursor_Person_PrimaryColorGradient = lin.Remove(0, "*Cursor_Person_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Person_PrimaryColorGradientMode= ") Then Cursor_Person_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Person_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Person_PrimaryColorNoise= ") Then Cursor_Person_PrimaryColorNoise = lin.Remove(0, "*Cursor_Person_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Person_PrimaryColorNoiseOpacity= ") Then Cursor_Person_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Person_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Person_SecondaryColor1= ") Then Cursor_Person_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Person_SecondaryColor2= ") Then Cursor_Person_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Person_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Person_SecondaryColorGradient= ") Then Cursor_Person_SecondaryColorGradient = lin.Remove(0, "*Cursor_Person_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Person_SecondaryColorGradientMode= ") Then Cursor_Person_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Person_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Person_SecondaryColorNoise= ") Then Cursor_Person_SecondaryColorNoise = lin.Remove(0, "*Cursor_Person_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Person_SecondaryColorNoiseOpacity= ") Then Cursor_Person_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Person_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
-
-#Region "IBeam"
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColor1= ") Then Cursor_IBeam_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColor2= ") Then Cursor_IBeam_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorGradient= ") Then Cursor_IBeam_PrimaryColorGradient = lin.Remove(0, "*Cursor_IBeam_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorGradientMode= ") Then Cursor_IBeam_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_IBeam_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorNoise= ") Then Cursor_IBeam_PrimaryColorNoise = lin.Remove(0, "*Cursor_IBeam_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_PrimaryColorNoiseOpacity= ") Then Cursor_IBeam_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_IBeam_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColor1= ") Then Cursor_IBeam_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColor2= ") Then Cursor_IBeam_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_IBeam_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorGradient= ") Then Cursor_IBeam_SecondaryColorGradient = lin.Remove(0, "*Cursor_IBeam_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorGradientMode= ") Then Cursor_IBeam_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_IBeam_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorNoise= ") Then Cursor_IBeam_SecondaryColorNoise = lin.Remove(0, "*Cursor_IBeam_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_IBeam_SecondaryColorNoiseOpacity= ") Then Cursor_IBeam_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_IBeam_SecondaryColorNoiseOpacity= ".Count)
-#End Region
-
-#Region "Cross"
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColor1= ") Then Cursor_Cross_PrimaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColor2= ") Then Cursor_Cross_PrimaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_PrimaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColorGradient= ") Then Cursor_Cross_PrimaryColorGradient = lin.Remove(0, "*Cursor_Cross_PrimaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColorGradientMode= ") Then Cursor_Cross_PrimaryColorGradientMode = lin.Remove(0, "*Cursor_Cross_PrimaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColorNoise= ") Then Cursor_Cross_PrimaryColorNoise = lin.Remove(0, "*Cursor_Cross_PrimaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_PrimaryColorNoiseOpacity= ") Then Cursor_Cross_PrimaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Cross_PrimaryColorNoiseOpacity= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColor1= ") Then Cursor_Cross_SecondaryColor1 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_SecondaryColor1= ".Count))
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColor2= ") Then Cursor_Cross_SecondaryColor2 = Color.FromArgb(lin.Remove(0, "*Cursor_Cross_SecondaryColor2= ".Count))
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColorGradient= ") Then Cursor_Cross_SecondaryColorGradient = lin.Remove(0, "*Cursor_Cross_SecondaryColorGradient= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColorGradientMode= ") Then Cursor_Cross_SecondaryColorGradientMode = lin.Remove(0, "*Cursor_Cross_SecondaryColorGradientMode= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColorNoise= ") Then Cursor_Cross_SecondaryColorNoise = lin.Remove(0, "*Cursor_Cross_SecondaryColorNoise= ".Count)
-                    If lin.StartsWith("*Cursor_Cross_SecondaryColorNoiseOpacity= ") Then Cursor_Cross_SecondaryColorNoiseOpacity = lin.Remove(0, "*Cursor_Cross_SecondaryColorNoiseOpacity= ".Count)
-
-#End Region
 #End Region
 
                 Next
 
+#Region "Cursors"
+                Cursor_Arrow = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Arrow_List)
+                Cursor_Help = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Help_List)
+                Cursor_AppLoading = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_AppLoading_List)
+                Cursor_Busy = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Busy_List)
+                Cursor_Move = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Move_List)
+                Cursor_NS = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_NS_List)
+                Cursor_EW = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_EW_List)
+                Cursor_NESW = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_NESW_List)
+                Cursor_NWSE = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_NWSE_List)
+                Cursor_Up = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Up_List)
+                Cursor_Pen = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Pen_List)
+                Cursor_None = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_None_List)
+                Cursor_Link = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Link_List)
+                Cursor_Pin = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Pin_List)
+                Cursor_Person = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Person_List)
+                Cursor_IBeam = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_IBeam_List)
+                Cursor_Cross = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Cross_List)
+#End Region
+
 #Region "Windows Terminal"
+                CommandPrompt = Console_Structure.Load_Console_From_ListOfString(cmdList)
+                PowerShellx86 = Console_Structure.Load_Console_From_ListOfString(PS86List)
+                PowerShellx64 = Console_Structure.Load_Console_From_ListOfString(PS64List)
+
                 If Not IgnoreWindowsTerminal Then
-                    If My.W10 Or My.W11 Then
+                    Dim str_stable, str_preview As String
+                    str_stable = CStr_FromList(ls_stable)
+                    str_preview = CStr_FromList(ls_preview)
 
-                        Dim str_stable, str_preview As String
-                        str_stable = CStr_FromList(ls_stable)
-                        str_preview = CStr_FromList(ls_preview)
-
-                        Terminal = New WinTerminal(str_stable, WinTerminal.Mode.WinPaletterFile)
-                        TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
-                    Else
-                        Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                        TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-                    End If
+                    Terminal = New WinTerminal(str_stable, WinTerminal.Mode.WinPaletterFile)
+                    TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
                 End If
 #End Region
-#End Region
 
-            Case Mode.Init
-#Region "Init"
-#Region "Personal Info"
-                Info.Author = Environment.UserName
-                Info.AppVersion = My.Application.Info.Version.ToString
-                Info.PaletteVersion = "1.0"
-                Info.PaletteName = "Init"
-#End Region
-
-#Region "Windows 11"
-                Windows11.Titlebar_Active = Color.Black
-                Windows11.Titlebar_Inactive = Color.Black
-                Windows11.StartMenu_Accent = Color.Black
-                Windows11.Color_Index2 = Color.Black
-                Windows11.Color_Index6 = Color.Black
-                Windows11.Color_Index1 = Color.Black
-                Windows11.Color_Index4 = Color.Black
-                Windows11.Color_Index5 = Color.Black
-                Windows11.Color_Index3 = Color.Black
-                Windows11.Color_Index0 = Color.Black
-                Windows11.Color_Index7 = Color.Black
-                Windows11.WinMode_Light = False
-                Windows11.AppMode_Light = False
-                Windows11.Transparency = True
-                Windows11.ApplyAccentonTitlebars = False
-                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-#End Region
-
-#Region "Windows 10"
-                Windows10.Titlebar_Active = Color.Black
-                Windows10.Titlebar_Inactive = Color.Black
-                Windows10.StartMenu_Accent = Color.Black
-                Windows10.Color_Index2 = Color.Black
-                Windows10.Color_Index6 = Color.Black
-                Windows10.Color_Index1 = Color.Black
-                Windows10.Color_Index4 = Color.Black
-                Windows10.Color_Index5 = Color.Black
-                Windows10.Color_Index3 = Color.Black
-                Windows10.Color_Index0 = Color.Black
-                Windows10.Color_Index7 = Color.Black
-                Windows10.WinMode_Light = False
-                Windows10.AppMode_Light = False
-                Windows10.Transparency = True
-                Windows10.ApplyAccentonTitlebars = False
-                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-#End Region
-
-#Region "Windows 7"
-                Windows7.ColorizationColor = Color.Black
-                Windows7.ColorizationAfterglow = Color.Black
-                Windows7.EnableAeroPeek = True
-                Windows7.AlwaysHibernateThumbnails = False
-                Windows7.ColorizationColorBalance = 8
-                Windows7.ColorizationAfterglowBalance = 31
-                Windows7.ColorizationBlurBalance = 31
-                Windows7.ColorizationGlassReflectionIntensity = 50
-                Windows7.Theme = AeroTheme.Aero
-#End Region
-
-#Region "Windows 8.1"
-                Windows8.ColorizationColor = Color.Black
-                Windows8.ColorizationColorBalance = 8
-                Windows8.Start = 0
-                Windows8.StartColor = Color.Black
-                Windows8.AccentColor = Color.Black
-                Windows8.Theme = AeroTheme.Aero
-                Windows8.LogonUI = 0
-                Windows8.PersonalColors_Background = Color.Black
-                Windows8.PersonalColors_Accent = Color.Black
-                Windows8.NoLockScreen = False
-                Windows8.LockScreenType = LogonUI_Modes.Default_
-                Windows8.LockScreenSystemID = 0
-#End Region
-
-#Region "LogonUI"
-                LogonUI10x.DisableAcrylicBackgroundOnLogon = False
-                LogonUI10x.DisableLogonBackgroundImage = False
-                LogonUI10x.NoLockScreen = False
-#End Region
-
-#Region "LogonUI 7"
-                LogonUI7.Enabled = False
-                LogonUI7.Mode = LogonUI_Modes.Default_
-                LogonUI7.ImagePath = "C:\Windows\Web\Wallpaper\Windows\img0.jpg"
-                LogonUI7.Color = Color.Black
-                LogonUI7.Blur = False
-                LogonUI7.Blur_Intensity = 0
-                LogonUI7.Grayscale = False
-                LogonUI7.Noise = False
-                LogonUI7.Noise_Mode = NoiseMode.Acrylic
-                LogonUI7.Noise_Intensity = 0
-#End Region
-
-#Region "Win32UI"
-                Win32.EnableTheming = True
-                Win32.EnableGradient = True
-                Win32.ActiveBorder = Color.FromArgb(180, 180, 180)
-                Win32.ActiveTitle = Color.FromArgb(153, 180, 209)
-                Win32.AppWorkspace = Color.FromArgb(171, 171, 171)
-                Win32.Background = Color.FromArgb(0, 0, 0)
-                Win32.ButtonAlternateFace = Color.FromArgb(0, 0, 0)
-                Win32.ButtonDkShadow = Color.FromArgb(105, 105, 105)
-                Win32.ButtonFace = Color.FromArgb(240, 240, 240)
-                Win32.ButtonHilight = Color.FromArgb(255, 255, 255)
-                Win32.ButtonLight = Color.FromArgb(227, 227, 227)
-                Win32.ButtonShadow = Color.FromArgb(160, 160, 160)
-                Win32.ButtonText = Color.FromArgb(0, 0, 0)
-                Win32.GradientActiveTitle = Color.FromArgb(185, 209, 234)
-                Win32.GradientInactiveTitle = Color.FromArgb(215, 228, 242)
-                Win32.GrayText = Color.FromArgb(109, 109, 109)
-                Win32.HilightText = Color.FromArgb(255, 255, 255)
-                Win32.HotTrackingColor = Color.FromArgb(0, 102, 204)
-                Win32.InactiveBorder = Color.FromArgb(244, 247, 252)
-                Win32.InactiveTitle = Color.FromArgb(191, 205, 219)
-                Win32.InactiveTitleText = Color.FromArgb(0, 0, 0)
-                Win32.InfoText = Color.FromArgb(0, 0, 0)
-                Win32.InfoWindow = Color.FromArgb(255, 255, 225)
-                Win32.Menu = Color.FromArgb(240, 240, 240)
-                Win32.MenuBar = Color.FromArgb(240, 240, 240)
-                Win32.MenuText = Color.FromArgb(0, 0, 0)
-                Win32.Scrollbar = Color.FromArgb(200, 200, 200)
-                Win32.TitleText = Color.FromArgb(0, 0, 0)
-                Win32.Window = Color.FromArgb(255, 255, 255)
-                Win32.WindowFrame = Color.FromArgb(100, 100, 100)
-                Win32.WindowText = Color.FromArgb(0, 0, 0)
-                Win32.Hilight = Color.FromArgb(0, 120, 215)
-                Win32.MenuHilight = Color.FromArgb(0, 120, 215)
-                Win32.Desktop = Color.FromArgb(0, 0, 0)
-#End Region
-
-#Region "Terminals"
-
-#Region "Locking"
-                Terminal_CMD_Enabled = False
-                Terminal_PS_32_Enabled = False
-                Terminal_PS_64_Enabled = False
-                Terminal_Stable_Enabled = False
-                Terminal_Preview_Enabled = False
-#End Region
-
-#Region "Command Prompt"
-                CMD_ColorTable00 = Color.FromArgb(12, 12, 12)
-                CMD_ColorTable01 = Color.FromArgb(0, 55, 218)
-                CMD_ColorTable02 = Color.FromArgb(19, 161, 14)
-                CMD_ColorTable03 = Color.FromArgb(58, 150, 221)
-                CMD_ColorTable04 = Color.FromArgb(197, 15, 31)
-                CMD_ColorTable05 = Color.FromArgb(136, 23, 152)
-                CMD_ColorTable06 = Color.FromArgb(193, 156, 0)
-                CMD_ColorTable07 = Color.FromArgb(204, 204, 204)
-                CMD_ColorTable08 = Color.FromArgb(118, 118, 118)
-                CMD_ColorTable09 = Color.FromArgb(59, 120, 255)
-                CMD_ColorTable10 = Color.FromArgb(22, 198, 12)
-                CMD_ColorTable11 = Color.FromArgb(97, 214, 214)
-                CMD_ColorTable12 = Color.FromArgb(231, 72, 86)
-                CMD_ColorTable13 = Color.FromArgb(180, 0, 158)
-                CMD_ColorTable14 = Color.FromArgb(249, 241, 165)
-                CMD_ColorTable15 = Color.FromArgb(242, 242, 242)
-                CMD_PopupForeground = 15
-                CMD_PopupBackground = 5
-                CMD_ScreenColorsForeground = 7
-                CMD_ScreenColorsBackground = 0
-                CMD_CursorSize = 19
-                CMD_FaceName = "Consolas"
-                CMD_FontRaster = False
-                CMD_FontSize = 12 * 65536
-                CMD_FontWeight = 400
-                CMD_1909_CursorType = 0
-                CMD_1909_CursorColor = Color.White
-                CMD_1909_ForceV2 = True
-                CMD_1909_LineSelection = False
-                CMD_1909_TerminalScrolling = False
-                CMD_1909_WindowAlpha = 100
-#End Region
-
-#Region "PowerShell x86"
-                PS_32_ColorTable00 = Color.FromArgb(12, 12, 12)
-                PS_32_ColorTable01 = Color.FromArgb(0, 55, 218)
-                PS_32_ColorTable02 = Color.FromArgb(19, 161, 14)
-                PS_32_ColorTable03 = Color.FromArgb(58, 150, 221)
-                PS_32_ColorTable04 = Color.FromArgb(197, 15, 31)
-                PS_32_ColorTable05 = Color.FromArgb(1, 36, 86)
-                PS_32_ColorTable06 = Color.FromArgb(238, 237, 240)
-                PS_32_ColorTable07 = Color.FromArgb(204, 204, 204)
-                PS_32_ColorTable08 = Color.FromArgb(118, 118, 118)
-                PS_32_ColorTable09 = Color.FromArgb(59, 120, 255)
-                PS_32_ColorTable10 = Color.FromArgb(22, 198, 12)
-                PS_32_ColorTable11 = Color.FromArgb(97, 214, 214)
-                PS_32_ColorTable12 = Color.FromArgb(231, 72, 86)
-                PS_32_ColorTable13 = Color.FromArgb(180, 0, 158)
-                PS_32_ColorTable14 = Color.FromArgb(249, 241, 165)
-                PS_32_ColorTable15 = Color.FromArgb(242, 242, 242)
-                PS_32_PopupForeground = 15
-                PS_32_PopupBackground = 3
-                PS_32_ScreenColorsForeground = 6
-                PS_32_ScreenColorsBackground = 8
-                PS_32_CursorSize = 19
-                PS_32_FaceName = "Consolas"
-                PS_32_FontRaster = False
-                PS_32_FontSize = 12 * 65536
-                PS_32_FontWeight = 400
-                PS_32_1909_CursorType = 0
-                PS_32_1909_CursorColor = Color.White
-                PS_32_1909_ForceV2 = True
-                PS_32_1909_LineSelection = False
-                PS_32_1909_TerminalScrolling = False
-                PS_32_1909_WindowAlpha = 100
-#End Region
-
-#Region "PowerShell x64"
-                PS_64_ColorTable00 = Color.FromArgb(12, 12, 12)
-                PS_64_ColorTable01 = Color.FromArgb(0, 55, 218)
-                PS_64_ColorTable02 = Color.FromArgb(19, 161, 14)
-                PS_64_ColorTable03 = Color.FromArgb(58, 150, 221)
-                PS_64_ColorTable04 = Color.FromArgb(197, 15, 31)
-                PS_64_ColorTable05 = Color.FromArgb(1, 36, 86)
-                PS_64_ColorTable06 = Color.FromArgb(238, 237, 240)
-                PS_64_ColorTable07 = Color.FromArgb(204, 204, 204)
-                PS_64_ColorTable08 = Color.FromArgb(118, 118, 118)
-                PS_64_ColorTable09 = Color.FromArgb(59, 120, 255)
-                PS_64_ColorTable10 = Color.FromArgb(22, 198, 12)
-                PS_64_ColorTable11 = Color.FromArgb(97, 214, 214)
-                PS_64_ColorTable12 = Color.FromArgb(231, 72, 86)
-                PS_64_ColorTable13 = Color.FromArgb(180, 0, 158)
-                PS_64_ColorTable14 = Color.FromArgb(249, 241, 165)
-                PS_64_ColorTable15 = Color.FromArgb(242, 242, 242)
-                PS_64_PopupForeground = 15
-                PS_64_PopupBackground = 3
-                PS_64_ScreenColorsForeground = 6
-                PS_64_ScreenColorsBackground = 8
-                PS_64_CursorSize = 19
-                PS_64_FaceName = "Consolas"
-                PS_64_FontRaster = False
-                PS_64_FontSize = 12 * 65536
-                PS_64_FontWeight = 400
-                PS_64_1909_CursorType = 0
-                PS_64_1909_CursorColor = Color.White
-                PS_64_1909_ForceV2 = True
-                PS_64_1909_LineSelection = False
-                PS_64_1909_TerminalScrolling = False
-                PS_64_1909_WindowAlpha = 100
-#End Region
-
-#Region "Windows Terminal"
-                Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-#End Region
 
 #End Region
 
-#Region "Cursors"
-                Cursor_Enabled = False
-
-#Region "Arrow"
-                Cursor_Arrow_PrimaryColor1 = Color.White
-                Cursor_Arrow_PrimaryColor2 = Color.White
-                Cursor_Arrow_PrimaryColorGradient = False
-                Cursor_Arrow_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Arrow_PrimaryColorNoise = False
-                Cursor_Arrow_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Arrow_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Arrow_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Arrow_SecondaryColorGradient = False
-                Cursor_Arrow_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Arrow_SecondaryColorNoise = False
-                Cursor_Arrow_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Help"
-                Cursor_Help_PrimaryColor1 = Color.White
-                Cursor_Help_PrimaryColor2 = Color.White
-                Cursor_Help_PrimaryColorGradient = False
-                Cursor_Help_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Help_PrimaryColorNoise = False
-                Cursor_Help_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Help_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Help_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Help_SecondaryColorGradient = False
-                Cursor_Help_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Help_SecondaryColorNoise = False
-                Cursor_Help_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "AppLoading"
-                Cursor_AppLoading_PrimaryColor1 = Color.White
-                Cursor_AppLoading_PrimaryColor2 = Color.White
-                Cursor_AppLoading_PrimaryColorGradient = False
-                Cursor_AppLoading_PrimaryColorGradientMode = GradientMode.Circle
-                Cursor_AppLoading_PrimaryColorNoise = False
-                Cursor_AppLoading_PrimaryColorNoiseOpacity = 0.25
-                Cursor_AppLoading_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_AppLoading_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_AppLoading_SecondaryColorGradient = False
-                Cursor_AppLoading_SecondaryColorGradientMode = GradientMode.Circle
-                Cursor_AppLoading_SecondaryColorNoise = False
-                Cursor_AppLoading_SecondaryColorNoiseOpacity = 0.25
-                Cursor_AppLoading_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
-                Cursor_AppLoading_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
-                Cursor_AppLoading_LoadingCircleBackGradient = False
-                Cursor_AppLoading_LoadingCircleBackGradientMode = GradientMode.Circle
-                Cursor_AppLoading_LoadingCircleBackNoise = False
-                Cursor_AppLoading_LoadingCircleBackNoiseOpacity = 0.25
-                Cursor_AppLoading_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
-                Cursor_AppLoading_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
-                Cursor_AppLoading_LoadingCircleHotGradient = False
-                Cursor_AppLoading_LoadingCircleHotGradientMode = GradientMode.Circle
-                Cursor_AppLoading_LoadingCircleHotNoise = False
-                Cursor_AppLoading_LoadingCircleHotNoiseOpacity = 0.25
-#End Region
-
-#Region "Busy"
-                Cursor_Busy_LoadingCircleBack1 = Color.FromArgb(42, 151, 243)
-                Cursor_Busy_LoadingCircleBack2 = Color.FromArgb(42, 151, 243)
-                Cursor_Busy_LoadingCircleBackGradient = False
-                Cursor_Busy_LoadingCircleBackGradientMode = GradientMode.Circle
-                Cursor_Busy_LoadingCircleBackNoise = False
-                Cursor_Busy_LoadingCircleBackNoiseOpacity = 0.25
-                Cursor_Busy_LoadingCircleHot1 = Color.FromArgb(37, 204, 255)
-                Cursor_Busy_LoadingCircleHot2 = Color.FromArgb(37, 204, 255)
-                Cursor_Busy_LoadingCircleHotGradient = False
-                Cursor_Busy_LoadingCircleHotGradientMode = GradientMode.Circle
-                Cursor_Busy_LoadingCircleHotNoise = False
-                Cursor_Busy_LoadingCircleHotNoiseOpacity = 0.25
-#End Region
-
-#Region "Move"
-                Cursor_Move_PrimaryColor1 = Color.White
-                Cursor_Move_PrimaryColor2 = Color.White
-                Cursor_Move_PrimaryColorGradient = False
-                Cursor_Move_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Move_PrimaryColorNoise = False
-                Cursor_Move_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Move_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Move_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Move_SecondaryColorGradient = False
-                Cursor_Move_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Move_SecondaryColorNoise = False
-                Cursor_Move_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "NS"
-                Cursor_NS_PrimaryColor1 = Color.White
-                Cursor_NS_PrimaryColor2 = Color.White
-                Cursor_NS_PrimaryColorGradient = False
-                Cursor_NS_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NS_PrimaryColorNoise = False
-                Cursor_NS_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NS_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NS_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NS_SecondaryColorGradient = False
-                Cursor_NS_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NS_SecondaryColorNoise = False
-                Cursor_NS_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "EW"
-                Cursor_EW_PrimaryColor1 = Color.White
-                Cursor_EW_PrimaryColor2 = Color.White
-                Cursor_EW_PrimaryColorGradient = False
-                Cursor_EW_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_EW_PrimaryColorNoise = False
-                Cursor_EW_PrimaryColorNoiseOpacity = 0.25
-                Cursor_EW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_EW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_EW_SecondaryColorGradient = False
-                Cursor_EW_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_EW_SecondaryColorNoise = False
-                Cursor_EW_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "NESW"
-                Cursor_NESW_PrimaryColor1 = Color.White
-                Cursor_NESW_PrimaryColor2 = Color.White
-                Cursor_NESW_PrimaryColorGradient = False
-                Cursor_NESW_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NESW_PrimaryColorNoise = False
-                Cursor_NESW_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NESW_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NESW_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NESW_SecondaryColorGradient = False
-                Cursor_NESW_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NESW_SecondaryColorNoise = False
-                Cursor_NESW_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "NWSE"
-                Cursor_NWSE_PrimaryColor1 = Color.White
-                Cursor_NWSE_PrimaryColor2 = Color.White
-                Cursor_NWSE_PrimaryColorGradient = False
-                Cursor_NWSE_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_NWSE_PrimaryColorNoise = False
-                Cursor_NWSE_PrimaryColorNoiseOpacity = 0.25
-                Cursor_NWSE_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_NWSE_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_NWSE_SecondaryColorGradient = False
-                Cursor_NWSE_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_NWSE_SecondaryColorNoise = False
-                Cursor_NWSE_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Up"
-                Cursor_Up_PrimaryColor1 = Color.White
-                Cursor_Up_PrimaryColor2 = Color.White
-                Cursor_Up_PrimaryColorGradient = False
-                Cursor_Up_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Up_PrimaryColorNoise = False
-                Cursor_Up_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Up_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Up_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Up_SecondaryColorGradient = False
-                Cursor_Up_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Up_SecondaryColorNoise = False
-                Cursor_Up_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Pen"
-                Cursor_Pen_PrimaryColor1 = Color.White
-                Cursor_Pen_PrimaryColor2 = Color.White
-                Cursor_Pen_PrimaryColorGradient = False
-                Cursor_Pen_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pen_PrimaryColorNoise = False
-                Cursor_Pen_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Pen_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Pen_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Pen_SecondaryColorGradient = False
-                Cursor_Pen_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pen_SecondaryColorNoise = False
-                Cursor_Pen_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "None"
-                Cursor_None_PrimaryColor1 = Color.White
-                Cursor_None_PrimaryColor2 = Color.White
-                Cursor_None_PrimaryColorGradient = False
-                Cursor_None_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_None_PrimaryColorNoise = False
-                Cursor_None_PrimaryColorNoiseOpacity = 0.25
-                Cursor_None_SecondaryColor1 = Color.Red
-                Cursor_None_SecondaryColor2 = Color.Red
-                Cursor_None_SecondaryColorGradient = False
-                Cursor_None_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_None_SecondaryColorNoise = False
-                Cursor_None_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Link"
-                Cursor_Link_PrimaryColor1 = Color.White
-                Cursor_Link_PrimaryColor2 = Color.White
-                Cursor_Link_PrimaryColorGradient = False
-                Cursor_Link_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Link_PrimaryColorNoise = False
-                Cursor_Link_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Link_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Link_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Link_SecondaryColorGradient = False
-                Cursor_Link_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Link_SecondaryColorNoise = False
-                Cursor_Link_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Pin"
-                Cursor_Pin_PrimaryColor1 = Color.White
-                Cursor_Pin_PrimaryColor2 = Color.White
-                Cursor_Pin_PrimaryColorGradient = False
-                Cursor_Pin_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pin_PrimaryColorNoise = False
-                Cursor_Pin_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Pin_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Pin_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Pin_SecondaryColorGradient = False
-                Cursor_Pin_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Pin_SecondaryColorNoise = False
-                Cursor_Pin_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Person"
-                Cursor_Person_PrimaryColor1 = Color.White
-                Cursor_Person_PrimaryColor2 = Color.White
-                Cursor_Person_PrimaryColorGradient = False
-                Cursor_Person_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Person_PrimaryColorNoise = False
-                Cursor_Person_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Person_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Person_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Person_SecondaryColorGradient = False
-                Cursor_Person_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Person_SecondaryColorNoise = False
-                Cursor_Person_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "IBeam"
-                Cursor_IBeam_PrimaryColor1 = Color.White
-                Cursor_IBeam_PrimaryColor2 = Color.White
-                Cursor_IBeam_PrimaryColorGradient = False
-                Cursor_IBeam_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_IBeam_PrimaryColorNoise = False
-                Cursor_IBeam_PrimaryColorNoiseOpacity = 0.25
-                Cursor_IBeam_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_IBeam_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_IBeam_SecondaryColorGradient = False
-                Cursor_IBeam_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_IBeam_SecondaryColorNoise = False
-                Cursor_IBeam_SecondaryColorNoiseOpacity = 0.25
-#End Region
-
-#Region "Cross"
-                Cursor_Cross_PrimaryColor1 = Color.Transparent
-                Cursor_Cross_PrimaryColor2 = Color.Transparent
-                Cursor_Cross_PrimaryColorGradient = False
-                Cursor_Cross_PrimaryColorGradientMode = GradientMode.Vertical
-                Cursor_Cross_PrimaryColorNoise = False
-                Cursor_Cross_PrimaryColorNoiseOpacity = 0.25
-                Cursor_Cross_SecondaryColor1 = Color.FromArgb(64, 65, 75)
-                Cursor_Cross_SecondaryColor2 = Color.FromArgb(64, 65, 75)
-                Cursor_Cross_SecondaryColorGradient = False
-                Cursor_Cross_SecondaryColorGradientMode = GradientMode.Vertical
-                Cursor_Cross_SecondaryColorNoise = False
-                Cursor_Cross_SecondaryColorNoiseOpacity = 0.25
-#End Region
-#End Region
-#End Region
+            Case Else
 
         End Select
     End Sub
 
-    Sub Save(ByVal [SaveTo] As SavingMode, Optional ByVal FileLocation As String = "", Optional ByVal ShowProgress As Boolean = True)
-        Select Case [SaveTo]
-            Case SavingMode.Registry
+    Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
+        With [TreeView].Nodes.Add([Text])
+            .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+        End With
+    End Sub
 
-#Region "Registry"
-                If ShowProgress Then
-                    If My.W7 Or My.W8 Then
-                        th = New Threading.Thread(AddressOf Task_A)
-                        th.Start()
-                    End If
+    Sub Save(ByVal [SaveTo] As Mode, Optional ByVal FileLocation As String = "", Optional ByVal [TreeView] As TreeView = Nothing)
+
+        Select Case [SaveTo]
+            Case Mode.Registry
+
+                Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
+                Dim _ErrorHappened As Boolean = False
+
+                Dim sw, sw_all As New Stopwatch
+                sw_all.Reset()
+                sw_all.Start()
+                sw.Reset()
+                sw.Stop()
+
+                If ReportProgress Then
+                    [TreeView].Nodes.Clear()
+                    AddNode([TreeView], String.Format("{0}: Applying Theme Started", Now.ToLongTimeString), "info")
                 End If
 
-                If Not My.W7 And Not My.W8 Then
-                    Windows11.Apply()          'Modern Windows
-                    LogonUI10x.Apply()          'LogonUI 11/10
+#Region "Registry"
+
+                If My.W11 Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Windows11.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 Scheme. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        LogonUI10x.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                End If
+
+                If My.W10 Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Windows10.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 Scheme. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        LogonUI10x.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 End If
 
                 If My.W7 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
-                    Windows7.Apply()            'Windows 7 Aero
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    RefreshDWM(Me)
+                    Try
+                        Windows7.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 Colors. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
-                    Apply_LogonUI7()            'LogonUI 7
+
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Apply_LogonUI7()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 End If
 
                 If My.W8 Then
-                    SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTheme, f)
-                    Windows8.Apply()            'Windows 8 Metro
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Windows8.Apply()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Colors. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    RefreshDWM(Me)
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
-                    Apply_LogonUI_8()           'LogonUI 8
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Apply_LogonUI_8()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Lock Screen. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
                 End If
 
-                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingWin32UI, f)
-                Win32.Apply()                   'Win32UI (Windows Classic Elements)
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI (Classic Windows Elements)", Now.ToLongTimeString), "info")
+                sw.Reset() : sw.Start()
+                Try
+                    Win32.Apply()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Win32UI. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
-                If My.W7 Or My.W8 Then RefreshDWM(Me)
-
-                WinMetrics_Fonts.Apply()    'Windows Metrics & Fonts
+                If ReportProgress Then
+                    If WinMetrics_Fonts.Enabled Then
+                        AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts", Now.ToLongTimeString), "info")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Skipping Windows Metrics and Fonts as they are disabled", Now.ToLongTimeString), "skip")
+                    End If
+                End If
+                sw.Reset() : sw.Start()
+                Try
+                    WinMetrics_Fonts.Apply()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Metrics and Fonts. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
 
                 'Windows Terminals/Consoles
-                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingTerminalColors, f)
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-                rLogX.SetValue("Terminal_CMD_Enabled", If(Terminal_CMD_Enabled, 1, 0))
-                rLogX.SetValue("Terminal_PS_32_Enabled", If(Terminal_PS_32_Enabled, 1, 0))
-                rLogX.SetValue("Terminal_PS_64_Enabled", If(Terminal_PS_64_Enabled, 1, 0))
-                rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal_Stable_Enabled, 1, 0))
-                rLogX.SetValue("Terminal_Preview_Enabled", If(Terminal_Preview_Enabled, 1, 0))
-                Apply_CommandPrompt()
-                Apply_PowerShell86()
-                Apply_PowerShell64()
-                If My.W10 Or My.W11 Then Apply_WindowsTerminals()
+                rLogX.SetValue("Terminal_CMD_Enabled", If(CommandPrompt.Enabled, 1, 0))
+                rLogX.SetValue("Terminal_PS_32_Enabled", If(PowerShellx86.Enabled, 1, 0))
+                rLogX.SetValue("Terminal_PS_64_Enabled", If(PowerShellx64.Enabled, 1, 0))
+                rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal.Enabled, 1, 0))
+                rLogX.SetValue("Terminal_Preview_Enabled", If(TerminalPreview.Enabled, 1, 0))
 
-
-                Apply_Cursors()                  'Windows Cursors
-
-                If ShowProgress Then
-                    If My.W7 Or My.W8 Then f.BeginInvoke(New Action(Sub() f.Close()))
+                If ReportProgress Then
+                    If CommandPrompt.Enabled Then
+                        AddNode([TreeView], String.Format("{0}: Applying Command Prompt", Now.ToLongTimeString), "info")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Skipping Command Prompt as it is disabled", Now.ToLongTimeString), "skip")
+                    End If
                 End If
+                sw.Reset() : sw.Start()
+                Try
+                    Apply_CommandPrompt()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Command Prompt. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Command Prompt took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                If ReportProgress Then
+                    If PowerShellx86.Enabled Then
+                        AddNode([TreeView], String.Format("{0}: Applying PowerShell x86", Now.ToLongTimeString), "info")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Skipping PowerShell x86 as it is disabled", Now.ToLongTimeString), "skip")
+                    End If
+                End If
+                sw.Reset() : sw.Start()
+                Try
+                    Apply_PowerShell86()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x86. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x86 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                If ReportProgress Then
+                    If PowerShellx64.Enabled Then
+                        AddNode([TreeView], String.Format("{0}: Applying PowerShell x64", Now.ToLongTimeString), "info")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Skipping PowerShell x64 as it is disabled", Now.ToLongTimeString), "skip")
+                    End If
+                End If
+                sw.Reset() : sw.Start()
+                Try
+                    Apply_PowerShell64()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x64. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x64 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                If My.W10 Or My.W11 Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminals", Now.ToLongTimeString), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        Apply_WindowsTerminals()
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminals. {1}", Now.ToLongTimeString, ex.Message), "error")
+                        BugReport.ThrowError(ex)
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminals took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                End If
+
+                If ReportProgress Then
+                    If Cursors_Enabled Then
+                        AddNode([TreeView], String.Format("{0}: Applying Windows Cursors", Now.ToLongTimeString), "info")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Skipping Windows Cursors as it is disabled", Now.ToLongTimeString), "skip")
+                    End If
+                End If
+                sw.Reset() : sw.Start()
+                Try
+                    Apply_Cursors()
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Cursors. {1}", Now.ToLongTimeString, ex.Message), "error")
+                    BugReport.ThrowError(ex)
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+                If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+
+                If ReportProgress Then
+                    If Not _ErrorHappened Then
+                        AddNode([TreeView], String.Format("{0}: Applying Theme Done. It took {1} seconds", Now.ToLongTimeString, sw_all.ElapsedMilliseconds / 1000), "success")
+                    Else
+                        AddNode([TreeView], String.Format("{0}: Applying Theme Done but with error/s. It took {1} seconds", Now.ToLongTimeString, sw_all.ElapsedMilliseconds / 1000), "warning")
+                    End If
+                End If
+
+                sw_all.Reset()
+                sw_all.Stop()
+                sw.Reset()
+                sw.Stop()
 
 #End Region
 
-            Case SavingMode.File
+            Case Mode.File
 #Region "File"
                 Dim tx As New List(Of String)
                 tx.Clear()
@@ -5055,113 +4209,10 @@ Public Class CP : Implements IDisposable
 
 #Region "Terminals"
                 tx.Add(vbCrLf & "<Terminals>")
-                tx.Add("*Terminal_CMD_Enabled= " & Terminal_CMD_Enabled)
-                tx.Add("*Terminal_PS_32_Enabled= " & Terminal_PS_32_Enabled)
-                tx.Add("*Terminal_PS_64_Enabled= " & Terminal_PS_64_Enabled)
-                tx.Add("*Terminal_Stable_Enabled= " & Terminal_Stable_Enabled)
-                tx.Add("*Terminal_Preview_Enabled= " & Terminal_Preview_Enabled)
 
-                tx.Add(vbCrLf & "<CMD>")
-                tx.Add("*CMD_ColorTable00= " & CMD_ColorTable00.ToArgb)
-                tx.Add("*CMD_ColorTable01= " & CMD_ColorTable01.ToArgb)
-                tx.Add("*CMD_ColorTable02= " & CMD_ColorTable02.ToArgb)
-                tx.Add("*CMD_ColorTable03= " & CMD_ColorTable03.ToArgb)
-                tx.Add("*CMD_ColorTable04= " & CMD_ColorTable04.ToArgb)
-                tx.Add("*CMD_ColorTable05= " & CMD_ColorTable05.ToArgb)
-                tx.Add("*CMD_ColorTable06= " & CMD_ColorTable06.ToArgb)
-                tx.Add("*CMD_ColorTable07= " & CMD_ColorTable07.ToArgb)
-                tx.Add("*CMD_ColorTable08= " & CMD_ColorTable08.ToArgb)
-                tx.Add("*CMD_ColorTable09= " & CMD_ColorTable09.ToArgb)
-                tx.Add("*CMD_ColorTable10= " & CMD_ColorTable10.ToArgb)
-                tx.Add("*CMD_ColorTable11= " & CMD_ColorTable11.ToArgb)
-                tx.Add("*CMD_ColorTable12= " & CMD_ColorTable12.ToArgb)
-                tx.Add("*CMD_ColorTable13= " & CMD_ColorTable13.ToArgb)
-                tx.Add("*CMD_ColorTable14= " & CMD_ColorTable14.ToArgb)
-                tx.Add("*CMD_ColorTable15= " & CMD_ColorTable15.ToArgb)
-                tx.Add("*CMD_PopupForeground= " & CMD_PopupForeground)
-                tx.Add("*CMD_PopupBackground= " & CMD_PopupBackground)
-                tx.Add("*CMD_ScreenColorsForeground= " & CMD_ScreenColorsForeground)
-                tx.Add("*CMD_ScreenColorsBackground= " & CMD_ScreenColorsBackground)
-                tx.Add("*CMD_CursorSize= " & CMD_CursorSize)
-                tx.Add("*CMD_FaceName= " & CMD_FaceName)
-                tx.Add("*CMD_FontRaster= " & CMD_FontRaster)
-                tx.Add("*CMD_FontSize= " & CMD_FontSize)
-                tx.Add("*CMD_FontWeight= " & CMD_FontWeight)
-                tx.Add("*CMD_1909_CursorType= " & CMD_1909_CursorType)
-                tx.Add("*CMD_1909_CursorColor= " & CMD_1909_CursorColor.ToArgb)
-                tx.Add("*CMD_1909_ForceV2= " & CMD_1909_ForceV2)
-                tx.Add("*CMD_1909_LineSelection= " & CMD_1909_LineSelection)
-                tx.Add("*CMD_1909_TerminalScrolling= " & CMD_1909_TerminalScrolling)
-                tx.Add("*CMD_1909_WindowAlpha= " & CMD_1909_WindowAlpha)
-                tx.Add("</CMD>" & vbCrLf)
-
-                tx.Add("<PowerShellx86>")
-                tx.Add("*PS_32_ColorTable00= " & PS_32_ColorTable00.ToArgb)
-                tx.Add("*PS_32_ColorTable01= " & PS_32_ColorTable01.ToArgb)
-                tx.Add("*PS_32_ColorTable02= " & PS_32_ColorTable02.ToArgb)
-                tx.Add("*PS_32_ColorTable03= " & PS_32_ColorTable03.ToArgb)
-                tx.Add("*PS_32_ColorTable04= " & PS_32_ColorTable04.ToArgb)
-                tx.Add("*PS_32_ColorTable05= " & PS_32_ColorTable05.ToArgb)
-                tx.Add("*PS_32_ColorTable06= " & PS_32_ColorTable06.ToArgb)
-                tx.Add("*PS_32_ColorTable07= " & PS_32_ColorTable07.ToArgb)
-                tx.Add("*PS_32_ColorTable08= " & PS_32_ColorTable08.ToArgb)
-                tx.Add("*PS_32_ColorTable09= " & PS_32_ColorTable09.ToArgb)
-                tx.Add("*PS_32_ColorTable10= " & PS_32_ColorTable10.ToArgb)
-                tx.Add("*PS_32_ColorTable11= " & PS_32_ColorTable11.ToArgb)
-                tx.Add("*PS_32_ColorTable12= " & PS_32_ColorTable12.ToArgb)
-                tx.Add("*PS_32_ColorTable13= " & PS_32_ColorTable13.ToArgb)
-                tx.Add("*PS_32_ColorTable14= " & PS_32_ColorTable14.ToArgb)
-                tx.Add("*PS_32_ColorTable15= " & PS_32_ColorTable15.ToArgb)
-                tx.Add("*PS_32_PopupForeground= " & PS_32_PopupForeground)
-                tx.Add("*PS_32_PopupBackground= " & PS_32_PopupBackground)
-                tx.Add("*PS_32_ScreenColorsForeground= " & PS_32_ScreenColorsForeground)
-                tx.Add("*PS_32_ScreenColorsBackground= " & PS_32_ScreenColorsBackground)
-                tx.Add("*PS_32_CursorSize= " & PS_32_CursorSize)
-                tx.Add("*PS_32_FaceName= " & PS_32_FaceName)
-                tx.Add("*PS_32_FontRaster= " & PS_32_FontRaster)
-                tx.Add("*PS_32_FontSize= " & PS_32_FontSize)
-                tx.Add("*PS_32_FontWeight= " & PS_32_FontWeight)
-                tx.Add("*PS_32_1909_CursorType= " & PS_32_1909_CursorType)
-                tx.Add("*PS_32_1909_CursorColor= " & PS_32_1909_CursorColor.ToArgb)
-                tx.Add("*PS_32_1909_ForceV2= " & PS_32_1909_ForceV2)
-                tx.Add("*PS_32_1909_LineSelection= " & PS_32_1909_LineSelection)
-                tx.Add("*PS_32_1909_TerminalScrolling= " & PS_32_1909_TerminalScrolling)
-                tx.Add("*PS_32_1909_WindowAlpha= " & PS_32_1909_WindowAlpha)
-                tx.Add("</PowerShellx86>" & vbCrLf)
-
-                tx.Add("<PowerShellx64>")
-                tx.Add("*PS_64_ColorTable00= " & PS_64_ColorTable00.ToArgb)
-                tx.Add("*PS_64_ColorTable01= " & PS_64_ColorTable01.ToArgb)
-                tx.Add("*PS_64_ColorTable02= " & PS_64_ColorTable02.ToArgb)
-                tx.Add("*PS_64_ColorTable03= " & PS_64_ColorTable03.ToArgb)
-                tx.Add("*PS_64_ColorTable04= " & PS_64_ColorTable04.ToArgb)
-                tx.Add("*PS_64_ColorTable05= " & PS_64_ColorTable05.ToArgb)
-                tx.Add("*PS_64_ColorTable06= " & PS_64_ColorTable06.ToArgb)
-                tx.Add("*PS_64_ColorTable07= " & PS_64_ColorTable07.ToArgb)
-                tx.Add("*PS_64_ColorTable08= " & PS_64_ColorTable08.ToArgb)
-                tx.Add("*PS_64_ColorTable09= " & PS_64_ColorTable09.ToArgb)
-                tx.Add("*PS_64_ColorTable10= " & PS_64_ColorTable10.ToArgb)
-                tx.Add("*PS_64_ColorTable11= " & PS_64_ColorTable11.ToArgb)
-                tx.Add("*PS_64_ColorTable12= " & PS_64_ColorTable12.ToArgb)
-                tx.Add("*PS_64_ColorTable13= " & PS_64_ColorTable13.ToArgb)
-                tx.Add("*PS_64_ColorTable14= " & PS_64_ColorTable14.ToArgb)
-                tx.Add("*PS_64_ColorTable15= " & PS_64_ColorTable15.ToArgb)
-                tx.Add("*PS_64_PopupForeground= " & PS_64_PopupForeground)
-                tx.Add("*PS_64_PopupBackground= " & PS_64_PopupBackground)
-                tx.Add("*PS_64_ScreenColorsForeground= " & PS_64_ScreenColorsForeground)
-                tx.Add("*PS_64_ScreenColorsBackground= " & PS_64_ScreenColorsBackground)
-                tx.Add("*PS_64_CursorSize= " & PS_64_CursorSize)
-                tx.Add("*PS_64_FaceName= " & PS_64_FaceName)
-                tx.Add("*PS_64_FontRaster= " & PS_64_FontRaster)
-                tx.Add("*PS_64_FontSize= " & PS_64_FontSize)
-                tx.Add("*PS_64_FontWeight= " & PS_64_FontWeight)
-                tx.Add("*PS_64_1909_CursorType= " & PS_64_1909_CursorType)
-                tx.Add("*PS_64_1909_CursorColor= " & PS_64_1909_CursorColor.ToArgb)
-                tx.Add("*PS_64_1909_ForceV2= " & PS_64_1909_ForceV2)
-                tx.Add("*PS_64_1909_LineSelection= " & PS_64_1909_LineSelection)
-                tx.Add("*PS_64_1909_TerminalScrolling= " & PS_64_1909_TerminalScrolling)
-                tx.Add("*PS_64_1909_WindowAlpha= " & PS_64_1909_WindowAlpha)
-                tx.Add("</PowerShellx64>" & vbCrLf)
+                Console_Structure.Write_Console_To_ListOfString("CMD", CommandPrompt, tx)
+                Console_Structure.Write_Console_To_ListOfString("PS_32", PowerShellx86, tx)
+                Console_Structure.Write_Console_To_ListOfString("PS_64", PowerShellx64, tx)
 
                 tx.Add("<WindowsTerminal_Stable>")
                 tx.Add(Terminal.Save("", WinTerminal.Mode.WinPaletterFile))
@@ -5176,289 +4227,24 @@ Public Class CP : Implements IDisposable
 
 #Region "Cursors"
                 tx.Add(vbCrLf & "<Cursors>")
-                tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
-
-#Region "Arrow"
-                tx.Add("*Cursor_Arrow_PrimaryColor1= " & Cursor_Arrow_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Arrow_PrimaryColor2= " & Cursor_Arrow_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Arrow_PrimaryColorGradient= " & Cursor_Arrow_PrimaryColorGradient)
-                tx.Add("*Cursor_Arrow_PrimaryColorGradientMode= " & Cursor_Arrow_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Arrow_PrimaryColorNoise= " & Cursor_Arrow_PrimaryColorNoise)
-                tx.Add("*Cursor_Arrow_PrimaryColorNoiseOpacity= " & Cursor_Arrow_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Arrow_SecondaryColor1= " & Cursor_Arrow_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Arrow_SecondaryColor2= " & Cursor_Arrow_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Arrow_SecondaryColorGradient= " & Cursor_Arrow_SecondaryColorGradient)
-                tx.Add("*Cursor_Arrow_SecondaryColorGradientMode= " & Cursor_Arrow_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Arrow_SecondaryColorNoise= " & Cursor_Arrow_SecondaryColorNoise)
-                tx.Add("*Cursor_Arrow_SecondaryColorNoiseOpacity= " & Cursor_Arrow_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Help"
-                tx.Add("*Cursor_Help_PrimaryColor1= " & Cursor_Help_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Help_PrimaryColor2= " & Cursor_Help_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Help_PrimaryColorGradient= " & Cursor_Help_PrimaryColorGradient)
-                tx.Add("*Cursor_Help_PrimaryColorGradientMode= " & Cursor_Help_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Help_PrimaryColorNoise= " & Cursor_Help_PrimaryColorNoise)
-                tx.Add("*Cursor_Help_PrimaryColorNoiseOpacity= " & Cursor_Help_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Help_SecondaryColor1= " & Cursor_Help_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Help_SecondaryColor2= " & Cursor_Help_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Help_SecondaryColorGradient= " & Cursor_Help_SecondaryColorGradient)
-                tx.Add("*Cursor_Help_SecondaryColorGradientMode= " & Cursor_Help_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Help_SecondaryColorNoise= " & Cursor_Help_SecondaryColorNoise)
-                tx.Add("*Cursor_Help_SecondaryColorNoiseOpacity= " & Cursor_Help_SecondaryColorNoiseOpacity)
-#End Region
-
-#Region "AppLoading"
-                tx.Add("*Cursor_AppLoading_PrimaryColor1= " & Cursor_AppLoading_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_AppLoading_PrimaryColor2= " & Cursor_AppLoading_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_AppLoading_PrimaryColorGradient= " & Cursor_AppLoading_PrimaryColorGradient)
-                tx.Add("*Cursor_AppLoading_PrimaryColorGradientMode= " & Cursor_AppLoading_PrimaryColorGradientMode)
-                tx.Add("*Cursor_AppLoading_PrimaryColorNoise= " & Cursor_AppLoading_PrimaryColorNoise)
-                tx.Add("*Cursor_AppLoading_PrimaryColorNoiseOpacity= " & Cursor_AppLoading_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_AppLoading_SecondaryColor1= " & Cursor_AppLoading_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_AppLoading_SecondaryColor2= " & Cursor_AppLoading_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_AppLoading_SecondaryColorGradient= " & Cursor_AppLoading_SecondaryColorGradient)
-                tx.Add("*Cursor_AppLoading_SecondaryColorGradientMode= " & Cursor_AppLoading_SecondaryColorGradientMode)
-                tx.Add("*Cursor_AppLoading_SecondaryColorNoise= " & Cursor_AppLoading_SecondaryColorNoise)
-                tx.Add("*Cursor_AppLoading_SecondaryColorNoiseOpacity= " & Cursor_AppLoading_SecondaryColorNoiseOpacity)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBack1= " & Cursor_AppLoading_LoadingCircleBack1.ToArgb)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBack2= " & Cursor_AppLoading_LoadingCircleBack2.ToArgb)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBackGradient= " & Cursor_AppLoading_LoadingCircleBackGradient)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBackGradientMode= " & Cursor_AppLoading_LoadingCircleBackGradientMode)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBackNoise= " & Cursor_AppLoading_LoadingCircleBackNoise)
-                tx.Add("*Cursor_AppLoading_LoadingCircleBackNoiseOpacity= " & Cursor_AppLoading_LoadingCircleBackNoiseOpacity)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHot1= " & Cursor_AppLoading_LoadingCircleHot1.ToArgb)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHot2= " & Cursor_AppLoading_LoadingCircleHot2.ToArgb)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHotGradient= " & Cursor_AppLoading_LoadingCircleHotGradient)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHotGradientMode= " & Cursor_AppLoading_LoadingCircleHotGradientMode)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHotNoise= " & Cursor_AppLoading_LoadingCircleHotNoise)
-                tx.Add("*Cursor_AppLoading_LoadingCircleHotNoiseOpacity= " & Cursor_AppLoading_LoadingCircleHotNoiseOpacity)
-
-#End Region
-
-#Region "Busy"
-                tx.Add("*Cursor_Busy_LoadingCircleBack1= " & Cursor_Busy_LoadingCircleBack1.ToArgb)
-                tx.Add("*Cursor_Busy_LoadingCircleBack2= " & Cursor_Busy_LoadingCircleBack2.ToArgb)
-                tx.Add("*Cursor_Busy_LoadingCircleBackGradient= " & Cursor_Busy_LoadingCircleBackGradient)
-                tx.Add("*Cursor_Busy_LoadingCircleBackGradientMode= " & Cursor_Busy_LoadingCircleBackGradientMode)
-                tx.Add("*Cursor_Busy_LoadingCircleBackNoise= " & Cursor_Busy_LoadingCircleBackNoise)
-                tx.Add("*Cursor_Busy_LoadingCircleBackNoiseOpacity= " & Cursor_Busy_LoadingCircleBackNoiseOpacity)
-                tx.Add("*Cursor_Busy_LoadingCircleHot1= " & Cursor_Busy_LoadingCircleHot1.ToArgb)
-                tx.Add("*Cursor_Busy_LoadingCircleHot2= " & Cursor_Busy_LoadingCircleHot2.ToArgb)
-                tx.Add("*Cursor_Busy_LoadingCircleHotGradient= " & Cursor_Busy_LoadingCircleHotGradient)
-                tx.Add("*Cursor_Busy_LoadingCircleHotGradientMode= " & Cursor_Busy_LoadingCircleHotGradientMode)
-                tx.Add("*Cursor_Busy_LoadingCircleHotNoise= " & Cursor_Busy_LoadingCircleHotNoise)
-                tx.Add("*Cursor_Busy_LoadingCircleHotNoiseOpacity= " & Cursor_Busy_LoadingCircleHotNoiseOpacity)
-
-#End Region
-
-#Region "Move"
-                tx.Add("*Cursor_Move_PrimaryColor1= " & Cursor_Move_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Move_PrimaryColor2= " & Cursor_Move_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Move_PrimaryColorGradient= " & Cursor_Move_PrimaryColorGradient)
-                tx.Add("*Cursor_Move_PrimaryColorGradientMode= " & Cursor_Move_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Move_PrimaryColorNoise= " & Cursor_Move_PrimaryColorNoise)
-                tx.Add("*Cursor_Move_PrimaryColorNoiseOpacity= " & Cursor_Move_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Move_SecondaryColor1= " & Cursor_Move_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Move_SecondaryColor2= " & Cursor_Move_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Move_SecondaryColorGradient= " & Cursor_Move_SecondaryColorGradient)
-                tx.Add("*Cursor_Move_SecondaryColorGradientMode= " & Cursor_Move_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Move_SecondaryColorNoise= " & Cursor_Move_SecondaryColorNoise)
-                tx.Add("*Cursor_Move_SecondaryColorNoiseOpacity= " & Cursor_Move_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "NS"
-                tx.Add("*Cursor_NS_PrimaryColor1= " & Cursor_NS_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_NS_PrimaryColor2= " & Cursor_NS_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_NS_PrimaryColorGradient= " & Cursor_NS_PrimaryColorGradient)
-                tx.Add("*Cursor_NS_PrimaryColorGradientMode= " & Cursor_NS_PrimaryColorGradientMode)
-                tx.Add("*Cursor_NS_PrimaryColorNoise= " & Cursor_NS_PrimaryColorNoise)
-                tx.Add("*Cursor_NS_PrimaryColorNoiseOpacity= " & Cursor_NS_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_NS_SecondaryColor1= " & Cursor_NS_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_NS_SecondaryColor2= " & Cursor_NS_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_NS_SecondaryColorGradient= " & Cursor_NS_SecondaryColorGradient)
-                tx.Add("*Cursor_NS_SecondaryColorGradientMode= " & Cursor_NS_SecondaryColorGradientMode)
-                tx.Add("*Cursor_NS_SecondaryColorNoise= " & Cursor_NS_SecondaryColorNoise)
-                tx.Add("*Cursor_NS_SecondaryColorNoiseOpacity= " & Cursor_NS_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "EW"
-                tx.Add("*Cursor_EW_PrimaryColor1= " & Cursor_EW_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_EW_PrimaryColor2= " & Cursor_EW_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_EW_PrimaryColorGradient= " & Cursor_EW_PrimaryColorGradient)
-                tx.Add("*Cursor_EW_PrimaryColorGradientMode= " & Cursor_EW_PrimaryColorGradientMode)
-                tx.Add("*Cursor_EW_PrimaryColorNoise= " & Cursor_EW_PrimaryColorNoise)
-                tx.Add("*Cursor_EW_PrimaryColorNoiseOpacity= " & Cursor_EW_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_EW_SecondaryColor1= " & Cursor_EW_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_EW_SecondaryColor2= " & Cursor_EW_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_EW_SecondaryColorGradient= " & Cursor_EW_SecondaryColorGradient)
-                tx.Add("*Cursor_EW_SecondaryColorGradientMode= " & Cursor_EW_SecondaryColorGradientMode)
-                tx.Add("*Cursor_EW_SecondaryColorNoise= " & Cursor_EW_SecondaryColorNoise)
-                tx.Add("*Cursor_EW_SecondaryColorNoiseOpacity= " & Cursor_EW_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "NESW"
-                tx.Add("*Cursor_NESW_PrimaryColor1= " & Cursor_NESW_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_NESW_PrimaryColor2= " & Cursor_NESW_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_NESW_PrimaryColorGradient= " & Cursor_NESW_PrimaryColorGradient)
-                tx.Add("*Cursor_NESW_PrimaryColorGradientMode= " & Cursor_NESW_PrimaryColorGradientMode)
-                tx.Add("*Cursor_NESW_PrimaryColorNoise= " & Cursor_NESW_PrimaryColorNoise)
-                tx.Add("*Cursor_NESW_PrimaryColorNoiseOpacity= " & Cursor_NESW_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_NESW_SecondaryColor1= " & Cursor_NESW_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_NESW_SecondaryColor2= " & Cursor_NESW_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_NESW_SecondaryColorGradient= " & Cursor_NESW_SecondaryColorGradient)
-                tx.Add("*Cursor_NESW_SecondaryColorGradientMode= " & Cursor_NESW_SecondaryColorGradientMode)
-                tx.Add("*Cursor_NESW_SecondaryColorNoise= " & Cursor_NESW_SecondaryColorNoise)
-                tx.Add("*Cursor_NESW_SecondaryColorNoiseOpacity= " & Cursor_NESW_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "NWSE"
-                tx.Add("*Cursor_NWSE_PrimaryColor1= " & Cursor_NWSE_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_NWSE_PrimaryColor2= " & Cursor_NWSE_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_NWSE_PrimaryColorGradient= " & Cursor_NWSE_PrimaryColorGradient)
-                tx.Add("*Cursor_NWSE_PrimaryColorGradientMode= " & Cursor_NWSE_PrimaryColorGradientMode)
-                tx.Add("*Cursor_NWSE_PrimaryColorNoise= " & Cursor_NWSE_PrimaryColorNoise)
-                tx.Add("*Cursor_NWSE_PrimaryColorNoiseOpacity= " & Cursor_NWSE_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_NWSE_SecondaryColor1= " & Cursor_NWSE_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_NWSE_SecondaryColor2= " & Cursor_NWSE_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_NWSE_SecondaryColorGradient= " & Cursor_NWSE_SecondaryColorGradient)
-                tx.Add("*Cursor_NWSE_SecondaryColorGradientMode= " & Cursor_NWSE_SecondaryColorGradientMode)
-                tx.Add("*Cursor_NWSE_SecondaryColorNoise= " & Cursor_NWSE_SecondaryColorNoise)
-                tx.Add("*Cursor_NWSE_SecondaryColorNoiseOpacity= " & Cursor_NWSE_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Up"
-                tx.Add("*Cursor_Up_PrimaryColor1= " & Cursor_Up_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Up_PrimaryColor2= " & Cursor_Up_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Up_PrimaryColorGradient= " & Cursor_Up_PrimaryColorGradient)
-                tx.Add("*Cursor_Up_PrimaryColorGradientMode= " & Cursor_Up_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Up_PrimaryColorNoise= " & Cursor_Up_PrimaryColorNoise)
-                tx.Add("*Cursor_Up_PrimaryColorNoiseOpacity= " & Cursor_Up_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Up_SecondaryColor1= " & Cursor_Up_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Up_SecondaryColor2= " & Cursor_Up_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Up_SecondaryColorGradient= " & Cursor_Up_SecondaryColorGradient)
-                tx.Add("*Cursor_Up_SecondaryColorGradientMode= " & Cursor_Up_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Up_SecondaryColorNoise= " & Cursor_Up_SecondaryColorNoise)
-                tx.Add("*Cursor_Up_SecondaryColorNoiseOpacity= " & Cursor_Up_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Pen"
-                tx.Add("*Cursor_Pen_PrimaryColor1= " & Cursor_Pen_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Pen_PrimaryColor2= " & Cursor_Pen_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Pen_PrimaryColorGradient= " & Cursor_Pen_PrimaryColorGradient)
-                tx.Add("*Cursor_Pen_PrimaryColorGradientMode= " & Cursor_Pen_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Pen_PrimaryColorNoise= " & Cursor_Pen_PrimaryColorNoise)
-                tx.Add("*Cursor_Pen_PrimaryColorNoiseOpacity= " & Cursor_Pen_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Pen_SecondaryColor1= " & Cursor_Pen_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Pen_SecondaryColor2= " & Cursor_Pen_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Pen_SecondaryColorGradient= " & Cursor_Pen_SecondaryColorGradient)
-                tx.Add("*Cursor_Pen_SecondaryColorGradientMode= " & Cursor_Pen_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Pen_SecondaryColorNoise= " & Cursor_Pen_SecondaryColorNoise)
-                tx.Add("*Cursor_Pen_SecondaryColorNoiseOpacity= " & Cursor_Pen_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "None"
-                tx.Add("*Cursor_None_PrimaryColor1= " & Cursor_None_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_None_PrimaryColor2= " & Cursor_None_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_None_PrimaryColorGradient= " & Cursor_None_PrimaryColorGradient)
-                tx.Add("*Cursor_None_PrimaryColorGradientMode= " & Cursor_None_PrimaryColorGradientMode)
-                tx.Add("*Cursor_None_PrimaryColorNoise= " & Cursor_None_PrimaryColorNoise)
-                tx.Add("*Cursor_None_PrimaryColorNoiseOpacity= " & Cursor_None_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_None_SecondaryColor1= " & Cursor_None_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_None_SecondaryColor2= " & Cursor_None_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_None_SecondaryColorGradient= " & Cursor_None_SecondaryColorGradient)
-                tx.Add("*Cursor_None_SecondaryColorGradientMode= " & Cursor_None_SecondaryColorGradientMode)
-                tx.Add("*Cursor_None_SecondaryColorNoise= " & Cursor_None_SecondaryColorNoise)
-                tx.Add("*Cursor_None_SecondaryColorNoiseOpacity= " & Cursor_None_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Link"
-                tx.Add("*Cursor_Link_PrimaryColor1= " & Cursor_Link_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Link_PrimaryColor2= " & Cursor_Link_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Link_PrimaryColorGradient= " & Cursor_Link_PrimaryColorGradient)
-                tx.Add("*Cursor_Link_PrimaryColorGradientMode= " & Cursor_Link_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Link_PrimaryColorNoise= " & Cursor_Link_PrimaryColorNoise)
-                tx.Add("*Cursor_Link_PrimaryColorNoiseOpacity= " & Cursor_Link_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Link_SecondaryColor1= " & Cursor_Link_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Link_SecondaryColor2= " & Cursor_Link_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Link_SecondaryColorGradient= " & Cursor_Link_SecondaryColorGradient)
-                tx.Add("*Cursor_Link_SecondaryColorGradientMode= " & Cursor_Link_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Link_SecondaryColorNoise= " & Cursor_Link_SecondaryColorNoise)
-                tx.Add("*Cursor_Link_SecondaryColorNoiseOpacity= " & Cursor_Link_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Pin"
-                tx.Add("*Cursor_Pin_PrimaryColor1= " & Cursor_Pin_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Pin_PrimaryColor2= " & Cursor_Pin_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Pin_PrimaryColorGradient= " & Cursor_Pin_PrimaryColorGradient)
-                tx.Add("*Cursor_Pin_PrimaryColorGradientMode= " & Cursor_Pin_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Pin_PrimaryColorNoise= " & Cursor_Pin_PrimaryColorNoise)
-                tx.Add("*Cursor_Pin_PrimaryColorNoiseOpacity= " & Cursor_Pin_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Pin_SecondaryColor1= " & Cursor_Pin_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Pin_SecondaryColor2= " & Cursor_Pin_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Pin_SecondaryColorGradient= " & Cursor_Pin_SecondaryColorGradient)
-                tx.Add("*Cursor_Pin_SecondaryColorGradientMode= " & Cursor_Pin_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Pin_SecondaryColorNoise= " & Cursor_Pin_SecondaryColorNoise)
-                tx.Add("*Cursor_Pin_SecondaryColorNoiseOpacity= " & Cursor_Pin_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "Person"
-                tx.Add("*Cursor_Person_PrimaryColor1= " & Cursor_Person_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Person_PrimaryColor2= " & Cursor_Person_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Person_PrimaryColorGradient= " & Cursor_Person_PrimaryColorGradient)
-                tx.Add("*Cursor_Person_PrimaryColorGradientMode= " & Cursor_Person_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Person_PrimaryColorNoise= " & Cursor_Person_PrimaryColorNoise)
-                tx.Add("*Cursor_Person_PrimaryColorNoiseOpacity= " & Cursor_Person_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Person_SecondaryColor1= " & Cursor_Person_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Person_SecondaryColor2= " & Cursor_Person_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Person_SecondaryColorGradient= " & Cursor_Person_SecondaryColorGradient)
-                tx.Add("*Cursor_Person_SecondaryColorGradientMode= " & Cursor_Person_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Person_SecondaryColorNoise= " & Cursor_Person_SecondaryColorNoise)
-                tx.Add("*Cursor_Person_SecondaryColorNoiseOpacity= " & Cursor_Person_SecondaryColorNoiseOpacity)
-
-#End Region
-
-#Region "IBeam"
-                tx.Add("*Cursor_IBeam_PrimaryColor1= " & Cursor_IBeam_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_IBeam_PrimaryColor2= " & Cursor_IBeam_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_IBeam_PrimaryColorGradient= " & Cursor_IBeam_PrimaryColorGradient)
-                tx.Add("*Cursor_IBeam_PrimaryColorGradientMode= " & Cursor_IBeam_PrimaryColorGradientMode)
-                tx.Add("*Cursor_IBeam_PrimaryColorNoise= " & Cursor_IBeam_PrimaryColorNoise)
-                tx.Add("*Cursor_IBeam_PrimaryColorNoiseOpacity= " & Cursor_IBeam_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_IBeam_SecondaryColor1= " & Cursor_IBeam_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_IBeam_SecondaryColor2= " & Cursor_IBeam_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_IBeam_SecondaryColorGradient= " & Cursor_IBeam_SecondaryColorGradient)
-                tx.Add("*Cursor_IBeam_SecondaryColorGradientMode= " & Cursor_IBeam_SecondaryColorGradientMode)
-                tx.Add("*Cursor_IBeam_SecondaryColorNoise= " & Cursor_IBeam_SecondaryColorNoise)
-                tx.Add("*Cursor_IBeam_SecondaryColorNoiseOpacity= " & Cursor_IBeam_SecondaryColorNoiseOpacity)
-#End Region
-
-#Region "Cross"
-                tx.Add("*Cursor_Cross_PrimaryColor1= " & Cursor_Cross_PrimaryColor1.ToArgb)
-                tx.Add("*Cursor_Cross_PrimaryColor2= " & Cursor_Cross_PrimaryColor2.ToArgb)
-                tx.Add("*Cursor_Cross_PrimaryColorGradient= " & Cursor_Cross_PrimaryColorGradient)
-                tx.Add("*Cursor_Cross_PrimaryColorGradientMode= " & Cursor_Cross_PrimaryColorGradientMode)
-                tx.Add("*Cursor_Cross_PrimaryColorNoise= " & Cursor_Cross_PrimaryColorNoise)
-                tx.Add("*Cursor_Cross_PrimaryColorNoiseOpacity= " & Cursor_Cross_PrimaryColorNoiseOpacity)
-                tx.Add("*Cursor_Cross_SecondaryColor1= " & Cursor_Cross_SecondaryColor1.ToArgb)
-                tx.Add("*Cursor_Cross_SecondaryColor2= " & Cursor_Cross_SecondaryColor2.ToArgb)
-                tx.Add("*Cursor_Cross_SecondaryColorGradient= " & Cursor_Cross_SecondaryColorGradient)
-                tx.Add("*Cursor_Cross_SecondaryColorGradientMode= " & Cursor_Cross_SecondaryColorGradientMode)
-                tx.Add("*Cursor_Cross_SecondaryColorNoise= " & Cursor_Cross_SecondaryColorNoise)
-                tx.Add("*Cursor_Cross_SecondaryColorNoiseOpacity= " & Cursor_Cross_SecondaryColorNoiseOpacity)
-
-#End Region
+                tx.Add("*Cursor_Enabled= " & Cursors_Enabled)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Arrow", Cursor_Arrow, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Help", Cursor_Help, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("AppLoading", Cursor_AppLoading, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Busy", Cursor_Busy, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Move", Cursor_Move, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("NS", Cursor_NS, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("EW", Cursor_EW, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("NESW", Cursor_NESW, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("NWSE", Cursor_NWSE, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Up", Cursor_Up, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Pen", Cursor_Pen, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("None", Cursor_None, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Link", Cursor_Link, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Pin", Cursor_Pin, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Person", Cursor_Person, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("IBeam", Cursor_IBeam, tx)
+                Cursor_Structure.Write_Cursors_To_ListOfString("Cross", Cursor_Cross, tx)
                 tx.Add("</Cursors>")
 #End Region
 
@@ -5471,9 +4257,12 @@ Public Class CP : Implements IDisposable
 
     End Sub
 
-#Region "   Applying Subs()"
-    Public Sub Apply_LogonUI7()
-        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
+#End Region
+
+#Region "Applying Subs"
+    Public Sub Apply_LogonUI7(Optional ByVal [TreeView] As TreeView = Nothing)
+
+        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         If My.Application.isElevated Then
 
@@ -5539,10 +4328,10 @@ Public Class CP : Implements IDisposable
 
         rLog.SetValue("ImagePath", LogonUI7.ImagePath)
         rLog.SetValue("Color", LogonUI7.Color.ToArgb)
-        rLog.SetValue("Effect_Blur", If(LogonUI7.Blur, 1, 0))
-        rLog.SetValue("Effect_Blur_Intensity", LogonUI7.Blur_Intensity)
-        rLog.SetValue("Effect_Grayscale", If(LogonUI7.Grayscale, 1, 0))
-        rLog.SetValue("Effect_Noise", If(LogonUI7.Noise, 1, 0))
+        rLog.SetValue("Blur", If(LogonUI7.Blur, 1, 0))
+        rLog.SetValue("Blur_Intensity", LogonUI7.Blur_Intensity)
+        rLog.SetValue("Grayscale", If(LogonUI7.Grayscale, 1, 0))
+        rLog.SetValue("Noise", If(LogonUI7.Noise, 1, 0))
 
         Select Case LogonUI7.Noise_Mode
             Case NoiseMode.Aero
@@ -5552,7 +4341,7 @@ Public Class CP : Implements IDisposable
                 rLog.SetValue("Noise_Mode", 1)
         End Select
 
-        rLog.SetValue("Effect_Noise_Intensity", LogonUI7.Noise_Intensity)
+        rLog.SetValue("Noise_Intensity", LogonUI7.Noise_Intensity)
         rLog.Flush()
         rLog.Close()
 
@@ -5595,7 +4384,8 @@ Public Class CP : Implements IDisposable
 
 
             For x = 0 To bmpList.Count - 1
-                SetCtrlTxt(String.Format(My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height), f)
+                If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
+
                 If LogonUI7.Grayscale Then bmpList(x) = Grayscale(bmpList(x))
                 If LogonUI7.Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7.Blur_Intensity)
                 If LogonUI7.Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
@@ -5608,12 +4398,14 @@ Public Class CP : Implements IDisposable
                     bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Drawing.Imaging.ImageFormat.Jpeg)
                 Next
             End If
+
             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
         End If
     End Sub
 
-    Public Sub Apply_LogonUI_8()
-        SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCustomLogonUI, f)
+    Public Sub Apply_LogonUI_8(Optional ByVal [TreeView] As TreeView = Nothing)
+
+        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
@@ -5674,7 +4466,7 @@ Public Class CP : Implements IDisposable
                 rLog.SetValue("Mode", 3)
         End Select
 
-        rLog.SetValue("Windows8.LockScreenSystemID", Windows8.LockScreenSystemID)
+        rLog.SetValue("Metro_LockScreenSystemID", Windows8.LockScreenSystemID)
         rLog.SetValue("ImagePath", LogonUI7.ImagePath)
         rLog.SetValue("Color", LogonUI7.Color.ToArgb)
         rLog.SetValue("Blur", If(LogonUI7.Blur, 1, 0))
@@ -5730,7 +4522,7 @@ Public Class CP : Implements IDisposable
                     bmp = My.Application.GetCurrentWallpaper
             End Select
 
-            SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCustomLogonUI, f)
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
             If LogonUI7.Grayscale Then bmp = Grayscale(bmp)
             If LogonUI7.Blur Then bmp = BlurBitmap(bmp, LogonUI7.Blur_Intensity)
@@ -5740,666 +4532,95 @@ Public Class CP : Implements IDisposable
 
     End Sub
 
-
     Public Sub Apply_CommandPrompt()
-        If Terminal_CMD_Enabled Then
-            EditReg("HKEY_CURRENT_USER\Console", "EnableColorSelection", 1)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
-            EditReg("HKEY_CURRENT_USER\Console", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
-            EditReg("HKEY_CURRENT_USER\Console", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
-            EditReg("HKEY_CURRENT_USER\Console", "CursorSize", CMD_CursorSize)
-
-            If CMD_FontRaster Then
-                EditReg("HKEY_CURRENT_USER\Console", "FaceName", "Terminal", False, True)
-                EditReg("HKEY_CURRENT_USER\Console", "FontFamily", 48)
-            Else
-                EditReg("HKEY_CURRENT_USER\Console", "FaceName", CMD_FaceName, False, True)
-                EditReg("HKEY_CURRENT_USER\Console", "FontFamily", If(CMD_FontRaster, 1, 54))
-            End If
-
-            EditReg("HKEY_CURRENT_USER\Console", "FontSize", CMD_FontSize)
-            EditReg("HKEY_CURRENT_USER\Console", "FontWeight", CMD_FontWeight)
-
-            If My.W10_1909 Then
-                EditReg("HKEY_CURRENT_USER\Console", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console", "CursorType", CMD_1909_CursorType)
-                EditReg("HKEY_CURRENT_USER\Console", "WindowAlpha", CMD_1909_WindowAlpha)
-                EditReg("HKEY_CURRENT_USER\Console", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
-                EditReg("HKEY_CURRENT_USER\Console", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
-                EditReg("HKEY_CURRENT_USER\Console", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
-            End If
-
-            If My.Application._Settings.CMD_OverrideUserPreferences Then
-                Try
-                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_cmd.exe")
-                Catch
-                End Try
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "EnableColorSelection", 1)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable00)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable01)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable02)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable03)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable04)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable05)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable06)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable07)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable08)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable09)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable10)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable11)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable12)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable13)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable14)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(CMD_ColorTable15)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "PopupColors", Convert.ToInt32(CMD_PopupBackground.ToString("X") & CMD_PopupForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ScreenColors", Convert.ToInt32(CMD_ScreenColorsBackground.ToString("X") & CMD_ScreenColorsForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorSize", CMD_CursorSize)
-
-                If CMD_FontRaster Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", "Terminal", False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", 48)
-                Else
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FaceName", CMD_FaceName, False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontFamily", If(CMD_FontRaster, 1, 54))
-                End If
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontSize", CMD_FontSize)
-
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "FontWeight", CMD_FontWeight)
-
-                If My.W10_1909 Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(CMD_1909_CursorColor)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "CursorType", CMD_1909_CursorType)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "WindowAlpha", CMD_1909_WindowAlpha)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "ForceV2", If(CMD_1909_ForceV2, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "LineSelection", If(CMD_1909_LineSelection, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_cmd.exe", "TerminalScrolling", If(CMD_1909_TerminalScrolling, 1, 0))
-                End If
-            End If
-
-
-            If My.Application.isElevated Then
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", CMD_FaceName, False, True)
-            Else
-                Dim ls As New List(Of String)
-                ls.Clear()
-                ls.Add("Windows Registry Editor Version 5.00")
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
-                ls.Add(String.Format("""000""=""{0}""", CMD_FaceName))
-
-                Dim result As String = CStr_FromList(ls)
-
-                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                IO.File.WriteAllText(tempreg, result)
-
-                Dim process As Process = Nothing
-
-                Dim processStartInfo As New ProcessStartInfo With {
-                   .FileName = "regedit",
-                   .Verb = "runas",
-                   .Arguments = String.Format("/s ""{0}""", tempreg),
-                   .WindowStyle = ProcessWindowStyle.Hidden,
-                   .CreateNoWindow = True,
-                   .UseShellExecute = True
-                }
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                processStartInfo.FileName = "reg"
-                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                Kill(tempreg)
-            End If
+        If CommandPrompt.Enabled Then
+            Console_Structure.Save_Console_To_Registry("", CommandPrompt)
+            If My.Application._Settings.CMD_OverrideUserPreferences Then Console_Structure.Save_Console_To_Registry("%SystemRoot%_System32_cmd.exe", CommandPrompt)
         End If
     End Sub
 
     Public Sub Apply_PowerShell86()
-        If Terminal_PS_32_Enabled Then
-            If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
-                Try
-                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                Catch
-
-                End Try
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable00)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable01)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable02)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable03)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable04)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable05)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable06)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable07)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable08)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable09)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable10)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable11)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable12)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable13)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable14)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_32_ColorTable15)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_32_PopupBackground.ToString("X") & PS_32_PopupForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_32_ScreenColorsBackground.ToString("X") & PS_32_ScreenColorsForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_32_CursorSize)
-
-                If PS_32_FontRaster Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
-                Else
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_32_FaceName, False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_32_FontRaster, 1, 54))
-                End If
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_32_FontSize)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_32_FontWeight)
-
-                If My.W10_1909 Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_32_1909_CursorColor)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_32_1909_CursorType)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_32_1909_WindowAlpha)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_32_1909_ForceV2, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_32_1909_LineSelection, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_32_1909_TerminalScrolling, 1, 0))
-                End If
-
-                If My.Application.isElevated Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_32_FaceName, False, True)
-                Else
-                    Dim ls As New List(Of String)
-                    ls.Clear()
-                    ls.Add("Windows Registry Editor Version 5.00")
-                    ls.Add(vbCrLf)
-                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
-                    ls.Add(String.Format("""000""=""{0}""", PS_32_FaceName))
-
-                    Dim result As String = CStr_FromList(ls)
-
-                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                    IO.File.WriteAllText(tempreg, result)
-
-                    Dim process As Process = Nothing
-
-                    Dim processStartInfo As New ProcessStartInfo With {
-                       .FileName = "regedit",
-                       .Verb = "runas",
-                       .Arguments = String.Format("/s ""{0}""", tempreg),
-                       .WindowStyle = ProcessWindowStyle.Hidden,
-                       .CreateNoWindow = True,
-                       .UseShellExecute = True
-                    }
-                    process = Process.Start(processStartInfo)
-                    process.WaitForExit()
-                    processStartInfo.FileName = "reg"
-                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                    process = Process.Start(processStartInfo)
-                    process.WaitForExit()
-                    Kill(tempreg)
-                End If
-
-            End If
+        If PowerShellx86.Enabled And IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
+            Console_Structure.Save_Console_To_Registry("%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86)
         End If
     End Sub
 
     Public Sub Apply_PowerShell64()
-        If Terminal_PS_64_Enabled Then
-            If IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
-
-                Try
-                    Registry.CurrentUser.CreateSubKey("Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", True).Close()
-                Catch
-
-                End Try
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "EnableColorSelection", 1)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable00", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable00)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable01", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable01)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable02", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable02)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable03", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable03)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable04", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable04)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable05", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable05)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable06", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable06)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable07", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable07)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable08", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable08)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable09", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable09)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable10", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable10)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable11", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable11)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable12", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable12)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable13", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable13)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable14", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable14)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ColorTable15", Color.FromArgb(0, BizareColorInvertor(PS_64_ColorTable15)).ToArgb)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "PopupColors", Convert.ToInt32(PS_64_PopupBackground.ToString("X") & PS_64_PopupForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ScreenColors", Convert.ToInt32(PS_64_ScreenColorsBackground.ToString("X") & PS_64_ScreenColorsForeground.ToString("X"), 16))
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorSize", PS_64_CursorSize)
-
-                If PS_64_FontRaster Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", "Terminal", False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", 48)
-                Else
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FaceName", PS_64_FaceName, False, True)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontFamily", If(PS_64_FontRaster, 1, 54))
-                End If
-
-
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontSize", PS_64_FontSize)
-                EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "FontWeight", PS_64_FontWeight)
-
-                If My.W10_1909 Then
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorColor", Color.FromArgb(0, BizareColorInvertor(PS_64_1909_CursorColor)).ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "CursorType", PS_64_1909_CursorType)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "WindowAlpha", PS_64_1909_WindowAlpha)
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "ForceV2", If(PS_64_1909_ForceV2, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "LineSelection", If(PS_64_1909_LineSelection, 1, 0))
-                    EditReg("HKEY_CURRENT_USER\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "TerminalScrolling", If(PS_64_1909_TerminalScrolling, 1, 0))
-                End If
-
-
-                If My.Application.isElevated Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont", "000", PS_64_FaceName, False, True)
-                Else
-                    Dim ls As New List(Of String)
-                    ls.Clear()
-                    ls.Add("Windows Registry Editor Version 5.00")
-                    ls.Add(vbCrLf)
-                    ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe\TrueTypeFont]")
-                    ls.Add(String.Format("""000""=""{0}""", PS_64_FaceName))
-
-                    Dim result As String = CStr_FromList(ls)
-
-                    If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                    Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                    IO.File.WriteAllText(tempreg, result)
-
-                    Dim process As Process = Nothing
-
-                    Dim processStartInfo As New ProcessStartInfo With {
-                   .FileName = "regedit",
-                   .Verb = "runas",
-                   .Arguments = String.Format("/s ""{0}""", tempreg),
-                   .WindowStyle = ProcessWindowStyle.Hidden,
-                   .CreateNoWindow = True,
-                   .UseShellExecute = True
-                }
-                    process = Process.Start(processStartInfo)
-                    process.WaitForExit()
-                    processStartInfo.FileName = "reg"
-                    processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                    process = Process.Start(processStartInfo)
-                    process.WaitForExit()
-                    Kill(tempreg)
-                End If
-
-            End If
+        If PowerShellx64.Enabled And IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
+            Console_Structure.Save_Console_To_Registry("%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64)
         End If
     End Sub
 
     Public Sub Apply_WindowsTerminals()
-        Try
-            Dim TerDir As String
-            Dim TerPreDir As String
+        Dim TerDir As String
+        Dim TerPreDir As String
 
-            If Not My.Application._Settings.Terminal_Path_Deflection Then
-                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        If Not My.Application._Settings.Terminal_Path_Deflection Then
+            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        Else
+            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
+                TerDir = My.Application._Settings.Terminal_Stable_Path
             Else
-                If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                    TerDir = My.Application._Settings.Terminal_Stable_Path
-                Else
-                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                End If
-
-                If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                    TerPreDir = My.Application._Settings.Terminal_Preview_Path
-                Else
-                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-                End If
+                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             End If
 
-            If Terminal_Stable_Enabled Then
-                If IO.File.Exists(TerDir) Then
-                    Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-                End If
+            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
+                TerPreDir = My.Application._Settings.Terminal_Preview_Path
+            Else
+                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
             End If
+        End If
 
-            If Terminal_Preview_Enabled Then
-                If IO.File.Exists(TerPreDir) Then
-                    TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                End If
+        If Terminal.Enabled Then
+            If IO.File.Exists(TerDir) Then
+                Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
             End If
-        Catch ex As Exception
-            MsgBox(My.Application.LanguageHelper.CP_TerminalError & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
-        End Try
+        End If
+
+        If TerminalPreview.Enabled Then
+            If IO.File.Exists(TerPreDir) Then
+                TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+            End If
+        End If
     End Sub
 
-    Public Sub Apply_Cursors()
-        If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_SavingCursorsColors, f)
+    Public Sub Apply_Cursors(Optional ByVal [TreeView] As TreeView = Nothing)
+
+        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-        rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
-
-        Dim r As RegistryKey
-
-        r = rMain.CreateSubKey("Arrow")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Arrow_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Arrow_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Arrow_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Arrow_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Arrow_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Arrow_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Arrow_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Arrow_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Arrow_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Arrow_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Arrow_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Arrow_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Help")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Help_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Help_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Help_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Help_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Help_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Help_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Help_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Help_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Help_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Help_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Help_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Help_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("AppLoading")
-        With r
-            .SetValue("PrimaryColor1", Cursor_AppLoading_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_AppLoading_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_AppLoading_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_AppLoading_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_AppLoading_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_AppLoading_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_AppLoading_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_AppLoading_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_AppLoading_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_AppLoading_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_AppLoading_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_AppLoading_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBack1", Cursor_AppLoading_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBack2", Cursor_AppLoading_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackGradient", If(Cursor_AppLoading_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackGradientMode", Cursor_AppLoading_LoadingCircleBackGradientMode, RegistryValueKind.String)
-            .SetValue("LoadingCircleBackNoise", If(Cursor_AppLoading_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackNoiseOpacity", Cursor_AppLoading_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHot1", Cursor_AppLoading_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHot2", Cursor_AppLoading_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotGradient", If(Cursor_AppLoading_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotGradientMode", Cursor_AppLoading_LoadingCircleHotGradientMode, RegistryValueKind.String)
-            .SetValue("LoadingCircleHotNoise", If(Cursor_AppLoading_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotNoiseOpacity", Cursor_AppLoading_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Busy")
-        With r
-            .SetValue("LoadingCircleBack1", Cursor_Busy_LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBack2", Cursor_Busy_LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackGradient", If(Cursor_Busy_LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackGradientMode", Cursor_Busy_LoadingCircleBackGradientMode, RegistryValueKind.String)
-            .SetValue("LoadingCircleBackNoise", If(Cursor_Busy_LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleBackNoiseOpacity", Cursor_Busy_LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHot1", Cursor_Busy_LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHot2", Cursor_Busy_LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotGradient", If(Cursor_Busy_LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotGradientMode", Cursor_Busy_LoadingCircleHotGradientMode, RegistryValueKind.String)
-            .SetValue("LoadingCircleHotNoise", If(Cursor_Busy_LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("LoadingCircleHotNoiseOpacity", Cursor_Busy_LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Move")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Move_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Move_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Move_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Move_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Move_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Move_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Move_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Move_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Move_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Move_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Move_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Move_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("NS")
-        With r
-            .SetValue("PrimaryColor1", Cursor_NS_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_NS_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_NS_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_NS_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_NS_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_NS_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_NS_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_NS_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_NS_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_NS_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_NS_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_NS_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("EW")
-        With r
-            .SetValue("PrimaryColor1", Cursor_EW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_EW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_EW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_EW_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_EW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_EW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_EW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_EW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_EW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_EW_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_EW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_EW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("NESW")
-        With r
-            .SetValue("PrimaryColor1", Cursor_NESW_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_NESW_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_NESW_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_NESW_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_NESW_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_NESW_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_NESW_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_NESW_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_NESW_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_NESW_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_NESW_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_NESW_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("NWSE")
-        With r
-            .SetValue("PrimaryColor1", Cursor_NWSE_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_NWSE_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_NWSE_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_NWSE_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_NWSE_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_NWSE_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_NWSE_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_NWSE_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_NWSE_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_NWSE_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_NWSE_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_NWSE_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Up")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Up_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Up_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Up_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Up_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Up_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Up_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Up_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Up_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Up_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Up_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Up_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Up_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Pen")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Pen_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Pen_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Pen_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Pen_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Pen_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Pen_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Pen_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Pen_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Pen_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Pen_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Pen_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Pen_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("None")
-        With r
-            .SetValue("PrimaryColor1", Cursor_None_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_None_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_None_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_None_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_None_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_None_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_None_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_None_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_None_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_None_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_None_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_None_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Link")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Link_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Link_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Link_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Link_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Link_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Link_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Link_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Link_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Link_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Link_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Link_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Link_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Pin")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Pin_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Pin_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Pin_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Pin_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Pin_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Pin_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Pin_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Pin_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Pin_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Pin_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Pin_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Pin_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Person")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Person_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Person_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Person_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Person_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Person_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Person_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Person_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Person_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Person_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Person_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Person_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Person_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("IBeam")
-        With r
-            .SetValue("PrimaryColor1", Cursor_IBeam_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_IBeam_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_IBeam_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_IBeam_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_IBeam_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_IBeam_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_IBeam_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_IBeam_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_IBeam_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_IBeam_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_IBeam_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_IBeam_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r = rMain.CreateSubKey("Cross")
-        With r
-            .SetValue("PrimaryColor1", Cursor_Cross_PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColor2", Cursor_Cross_PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradient", If(Cursor_Cross_PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorGradientMode", Cursor_Cross_PrimaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("PrimaryColorNoise", If(Cursor_Cross_PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("PrimaryColorNoiseOpacity", Cursor_Cross_PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor1", Cursor_Cross_SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColor2", Cursor_Cross_SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradient", If(Cursor_Cross_SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorGradientMode", Cursor_Cross_SecondaryColorGradientMode, RegistryValueKind.String)
-            .SetValue("SecondaryColorNoise", If(Cursor_Cross_SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
-            .SetValue("SecondaryColorNoiseOpacity", Cursor_Cross_SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-        End With
-
-        r.Close()
+        rMain.SetValue("", Cursors_Enabled, RegistryValueKind.DWord)
         rMain.Close()
 
-        If Cursor_Enabled Then
-            If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_RenderingCursors, f)
+        Cursor_Structure.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
+        Cursor_Structure.Save_Cursors_To_Registry("Help", Cursor_Help)
+        Cursor_Structure.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading)
+        Cursor_Structure.Save_Cursors_To_Registry("Busy", Cursor_Busy)
+        Cursor_Structure.Save_Cursors_To_Registry("Move", Cursor_Move)
+        Cursor_Structure.Save_Cursors_To_Registry("NS", Cursor_NS)
+        Cursor_Structure.Save_Cursors_To_Registry("EW", Cursor_EW)
+        Cursor_Structure.Save_Cursors_To_Registry("NESW", Cursor_NESW)
+        Cursor_Structure.Save_Cursors_To_Registry("NWSE", Cursor_NWSE)
+        Cursor_Structure.Save_Cursors_To_Registry("Up", Cursor_Up)
+        Cursor_Structure.Save_Cursors_To_Registry("Pen", Cursor_Pen)
+        Cursor_Structure.Save_Cursors_To_Registry("None", Cursor_None)
+        Cursor_Structure.Save_Cursors_To_Registry("Link", Cursor_Link)
+        Cursor_Structure.Save_Cursors_To_Registry("Pin", Cursor_Pin)
+        Cursor_Structure.Save_Cursors_To_Registry("Person", Cursor_Person)
+        Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
+        Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
+
+        If Cursors_Enabled Then
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCursors, Now.ToLongTimeString), "info")
+
             ExportCursors(Me)
             If My.Application._Settings.AutoApplyCursors Then
-                If My.W7 Or My.W8 Then SetCtrlTxt(My.Application.LanguageHelper.CP_ApplyingCursors, f)
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_ApplyingCursors, Now.ToLongTimeString), "info")
                 ApplyCursorsToReg()
             End If
         End If
+
     End Sub
 #End Region
 
@@ -6499,10 +4720,10 @@ Public Class CP : Implements IDisposable
 #Region "Arrow"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Arrow_PrimaryColor1, .Cursor_Arrow_PrimaryColor2, .Cursor_Arrow_PrimaryColorGradient, .Cursor_Arrow_PrimaryColorGradientMode,
-                               .Cursor_Arrow_SecondaryColor1, .Cursor_Arrow_SecondaryColor2, .Cursor_Arrow_SecondaryColorGradient, .Cursor_Arrow_SecondaryColorGradientMode,
+                               .Cursor_Arrow.PrimaryColor1, .Cursor_Arrow.PrimaryColor2, .Cursor_Arrow.PrimaryColorGradient, .Cursor_Arrow.PrimaryColorGradientMode,
+                               .Cursor_Arrow.SecondaryColor1, .Cursor_Arrow.SecondaryColor2, .Cursor_Arrow.SecondaryColorGradient, .Cursor_Arrow.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Arrow_PrimaryColorNoise, .Cursor_Arrow_PrimaryColorNoiseOpacity, .Cursor_Arrow_SecondaryColorNoise, .Cursor_Arrow_SecondaryColorNoiseOpacity,
+                               .Cursor_Arrow.PrimaryColorNoise, .Cursor_Arrow.PrimaryColorNoiseOpacity, .Cursor_Arrow.SecondaryColorNoise, .Cursor_Arrow.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6512,10 +4733,10 @@ Public Class CP : Implements IDisposable
 #Region "Help"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Help_PrimaryColor1, .Cursor_Help_PrimaryColor2, .Cursor_Help_PrimaryColorGradient, .Cursor_Help_PrimaryColorGradientMode,
-                               .Cursor_Help_SecondaryColor1, .Cursor_Help_SecondaryColor2, .Cursor_Help_SecondaryColorGradient, .Cursor_Help_SecondaryColorGradientMode,
+                               .Cursor_Help.PrimaryColor1, .Cursor_Help.PrimaryColor2, .Cursor_Help.PrimaryColorGradient, .Cursor_Help.PrimaryColorGradientMode,
+                               .Cursor_Help.SecondaryColor1, .Cursor_Help.SecondaryColor2, .Cursor_Help.SecondaryColorGradient, .Cursor_Help.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Help_PrimaryColorNoise, .Cursor_Help_PrimaryColorNoiseOpacity, .Cursor_Help_SecondaryColorNoise, .Cursor_Help_SecondaryColorNoiseOpacity,
+                               .Cursor_Help.PrimaryColorNoise, .Cursor_Help.PrimaryColorNoiseOpacity, .Cursor_Help.SecondaryColorNoise, .Cursor_Help.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6525,10 +4746,10 @@ Public Class CP : Implements IDisposable
 #Region "None"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_None_PrimaryColor1, .Cursor_None_PrimaryColor2, .Cursor_None_PrimaryColorGradient, .Cursor_None_PrimaryColorGradientMode,
-                               .Cursor_None_SecondaryColor1, .Cursor_None_SecondaryColor2, .Cursor_None_SecondaryColorGradient, .Cursor_None_SecondaryColorGradientMode,
+                               .Cursor_None.PrimaryColor1, .Cursor_None.PrimaryColor2, .Cursor_None.PrimaryColorGradient, .Cursor_None.PrimaryColorGradientMode,
+                               .Cursor_None.SecondaryColor1, .Cursor_None.SecondaryColor2, .Cursor_None.SecondaryColorGradient, .Cursor_None.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_None_PrimaryColorNoise, .Cursor_None_PrimaryColorNoiseOpacity, .Cursor_None_SecondaryColorNoise, .Cursor_None_SecondaryColorNoiseOpacity,
+                               .Cursor_None.PrimaryColorNoise, .Cursor_None.PrimaryColorNoiseOpacity, .Cursor_None.SecondaryColorNoise, .Cursor_None.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6538,10 +4759,10 @@ Public Class CP : Implements IDisposable
 #Region "Move"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Move_PrimaryColor1, .Cursor_Move_PrimaryColor2, .Cursor_Move_PrimaryColorGradient, .Cursor_Move_PrimaryColorGradientMode,
-                               .Cursor_Move_SecondaryColor1, .Cursor_Move_SecondaryColor2, .Cursor_Move_SecondaryColorGradient, .Cursor_Move_SecondaryColorGradientMode,
+                               .Cursor_Move.PrimaryColor1, .Cursor_Move.PrimaryColor2, .Cursor_Move.PrimaryColorGradient, .Cursor_Move.PrimaryColorGradientMode,
+                               .Cursor_Move.SecondaryColor1, .Cursor_Move.SecondaryColor2, .Cursor_Move.SecondaryColorGradient, .Cursor_Move.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Move_PrimaryColorNoise, .Cursor_Move_PrimaryColorNoiseOpacity, .Cursor_Move_SecondaryColorNoise, .Cursor_Move_SecondaryColorNoiseOpacity,
+                               .Cursor_Move.PrimaryColorNoise, .Cursor_Move.PrimaryColorNoiseOpacity, .Cursor_Move.SecondaryColorNoise, .Cursor_Move.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6551,10 +4772,10 @@ Public Class CP : Implements IDisposable
 #Region "Up"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Up_PrimaryColor1, .Cursor_Up_PrimaryColor2, .Cursor_Up_PrimaryColorGradient, .Cursor_Up_PrimaryColorGradientMode,
-                               .Cursor_Up_SecondaryColor1, .Cursor_Up_SecondaryColor2, .Cursor_Up_SecondaryColorGradient, .Cursor_Up_SecondaryColorGradientMode,
+                               .Cursor_Up.PrimaryColor1, .Cursor_Up.PrimaryColor2, .Cursor_Up.PrimaryColorGradient, .Cursor_Up.PrimaryColorGradientMode,
+                               .Cursor_Up.SecondaryColor1, .Cursor_Up.SecondaryColor2, .Cursor_Up.SecondaryColorGradient, .Cursor_Up.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Up_PrimaryColorNoise, .Cursor_Up_PrimaryColorNoiseOpacity, .Cursor_Up_SecondaryColorNoise, .Cursor_Up_SecondaryColorNoiseOpacity,
+                               .Cursor_Up.PrimaryColorNoise, .Cursor_Up.PrimaryColorNoiseOpacity, .Cursor_Up.SecondaryColorNoise, .Cursor_Up.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6564,10 +4785,10 @@ Public Class CP : Implements IDisposable
 #Region "NS"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_NS_PrimaryColor1, .Cursor_NS_PrimaryColor2, .Cursor_NS_PrimaryColorGradient, .Cursor_NS_PrimaryColorGradientMode,
-                               .Cursor_NS_SecondaryColor1, .Cursor_NS_SecondaryColor2, .Cursor_NS_SecondaryColorGradient, .Cursor_NS_SecondaryColorGradientMode,
+                               .Cursor_NS.PrimaryColor1, .Cursor_NS.PrimaryColor2, .Cursor_NS.PrimaryColorGradient, .Cursor_NS.PrimaryColorGradientMode,
+                               .Cursor_NS.SecondaryColor1, .Cursor_NS.SecondaryColor2, .Cursor_NS.SecondaryColorGradient, .Cursor_NS.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NS_PrimaryColorNoise, .Cursor_NS_PrimaryColorNoiseOpacity, .Cursor_NS_SecondaryColorNoise, .Cursor_NS_SecondaryColorNoiseOpacity,
+                               .Cursor_NS.PrimaryColorNoise, .Cursor_NS.PrimaryColorNoiseOpacity, .Cursor_NS.SecondaryColorNoise, .Cursor_NS.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6577,10 +4798,10 @@ Public Class CP : Implements IDisposable
 #Region "EW"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_EW_PrimaryColor1, .Cursor_EW_PrimaryColor2, .Cursor_EW_PrimaryColorGradient, .Cursor_EW_PrimaryColorGradientMode,
-                               .Cursor_EW_SecondaryColor1, .Cursor_EW_SecondaryColor2, .Cursor_EW_SecondaryColorGradient, .Cursor_EW_SecondaryColorGradientMode,
+                               .Cursor_EW.PrimaryColor1, .Cursor_EW.PrimaryColor2, .Cursor_EW.PrimaryColorGradient, .Cursor_EW.PrimaryColorGradientMode,
+                               .Cursor_EW.SecondaryColor1, .Cursor_EW.SecondaryColor2, .Cursor_EW.SecondaryColorGradient, .Cursor_EW.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_EW_PrimaryColorNoise, .Cursor_EW_PrimaryColorNoiseOpacity, .Cursor_EW_SecondaryColorNoise, .Cursor_EW_SecondaryColorNoiseOpacity,
+                               .Cursor_EW.PrimaryColorNoise, .Cursor_EW.PrimaryColorNoiseOpacity, .Cursor_EW.SecondaryColorNoise, .Cursor_EW.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6590,10 +4811,10 @@ Public Class CP : Implements IDisposable
 #Region "NESW"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_NESW_PrimaryColor1, .Cursor_NESW_PrimaryColor2, .Cursor_NESW_PrimaryColorGradient, .Cursor_NESW_PrimaryColorGradientMode,
-                               .Cursor_NESW_SecondaryColor1, .Cursor_NESW_SecondaryColor2, .Cursor_NESW_SecondaryColorGradient, .Cursor_NESW_SecondaryColorGradientMode,
+                               .Cursor_NESW.PrimaryColor1, .Cursor_NESW.PrimaryColor2, .Cursor_NESW.PrimaryColorGradient, .Cursor_NESW.PrimaryColorGradientMode,
+                               .Cursor_NESW.SecondaryColor1, .Cursor_NESW.SecondaryColor2, .Cursor_NESW.SecondaryColorGradient, .Cursor_NESW.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NESW_PrimaryColorNoise, .Cursor_NESW_PrimaryColorNoiseOpacity, .Cursor_NESW_SecondaryColorNoise, .Cursor_NESW_SecondaryColorNoiseOpacity,
+                               .Cursor_NESW.PrimaryColorNoise, .Cursor_NESW.PrimaryColorNoiseOpacity, .Cursor_NESW.SecondaryColorNoise, .Cursor_NESW.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6603,10 +4824,10 @@ Public Class CP : Implements IDisposable
 #Region "NWSE"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_NWSE_PrimaryColor1, .Cursor_NWSE_PrimaryColor2, .Cursor_NWSE_PrimaryColorGradient, .Cursor_NWSE_PrimaryColorGradientMode,
-                               .Cursor_NWSE_SecondaryColor1, .Cursor_NWSE_SecondaryColor2, .Cursor_NWSE_SecondaryColorGradient, .Cursor_NWSE_SecondaryColorGradientMode,
+                               .Cursor_NWSE.PrimaryColor1, .Cursor_NWSE.PrimaryColor2, .Cursor_NWSE.PrimaryColorGradient, .Cursor_NWSE.PrimaryColorGradientMode,
+                               .Cursor_NWSE.SecondaryColor1, .Cursor_NWSE.SecondaryColor2, .Cursor_NWSE.SecondaryColorGradient, .Cursor_NWSE.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NWSE_PrimaryColorNoise, .Cursor_NWSE_PrimaryColorNoiseOpacity, .Cursor_NWSE_SecondaryColorNoise, .Cursor_NWSE_SecondaryColorNoiseOpacity,
+                               .Cursor_NWSE.PrimaryColorNoise, .Cursor_NWSE.PrimaryColorNoiseOpacity, .Cursor_NWSE.SecondaryColorNoise, .Cursor_NWSE.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6616,10 +4837,10 @@ Public Class CP : Implements IDisposable
 #Region "Pen"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Pen_PrimaryColor1, .Cursor_Pen_PrimaryColor2, .Cursor_Pen_PrimaryColorGradient, .Cursor_Pen_PrimaryColorGradientMode,
-                               .Cursor_Pen_SecondaryColor1, .Cursor_Pen_SecondaryColor2, .Cursor_Pen_SecondaryColorGradient, .Cursor_Pen_SecondaryColorGradientMode,
+                               .Cursor_Pen.PrimaryColor1, .Cursor_Pen.PrimaryColor2, .Cursor_Pen.PrimaryColorGradient, .Cursor_Pen.PrimaryColorGradientMode,
+                               .Cursor_Pen.SecondaryColor1, .Cursor_Pen.SecondaryColor2, .Cursor_Pen.SecondaryColorGradient, .Cursor_Pen.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pen_PrimaryColorNoise, .Cursor_Pen_PrimaryColorNoiseOpacity, .Cursor_Pen_SecondaryColorNoise, .Cursor_Pen_SecondaryColorNoiseOpacity,
+                               .Cursor_Pen.PrimaryColorNoise, .Cursor_Pen.PrimaryColorNoiseOpacity, .Cursor_Pen.SecondaryColorNoise, .Cursor_Pen.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6629,10 +4850,10 @@ Public Class CP : Implements IDisposable
 #Region "Link"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Link_PrimaryColor1, .Cursor_Link_PrimaryColor2, .Cursor_Link_PrimaryColorGradient, .Cursor_Link_PrimaryColorGradientMode,
-                               .Cursor_Link_SecondaryColor1, .Cursor_Link_SecondaryColor2, .Cursor_Link_SecondaryColorGradient, .Cursor_Link_SecondaryColorGradientMode,
+                               .Cursor_Link.PrimaryColor1, .Cursor_Link.PrimaryColor2, .Cursor_Link.PrimaryColorGradient, .Cursor_Link.PrimaryColorGradientMode,
+                               .Cursor_Link.SecondaryColor1, .Cursor_Link.SecondaryColor2, .Cursor_Link.SecondaryColorGradient, .Cursor_Link.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Link_PrimaryColorNoise, .Cursor_Link_PrimaryColorNoiseOpacity, .Cursor_Link_SecondaryColorNoise, .Cursor_Link_SecondaryColorNoiseOpacity,
+                               .Cursor_Link.PrimaryColorNoise, .Cursor_Link.PrimaryColorNoiseOpacity, .Cursor_Link.SecondaryColorNoise, .Cursor_Link.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6642,10 +4863,10 @@ Public Class CP : Implements IDisposable
 #Region "Pin"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Pin_PrimaryColor1, .Cursor_Pin_PrimaryColor2, .Cursor_Pin_PrimaryColorGradient, .Cursor_Pin_PrimaryColorGradientMode,
-                               .Cursor_Pin_SecondaryColor1, .Cursor_Pin_SecondaryColor2, .Cursor_Pin_SecondaryColorGradient, .Cursor_Pin_SecondaryColorGradientMode,
+                               .Cursor_Pin.PrimaryColor1, .Cursor_Pin.PrimaryColor2, .Cursor_Pin.PrimaryColorGradient, .Cursor_Pin.PrimaryColorGradientMode,
+                               .Cursor_Pin.SecondaryColor1, .Cursor_Pin.SecondaryColor2, .Cursor_Pin.SecondaryColorGradient, .Cursor_Pin.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pin_PrimaryColorNoise, .Cursor_Pin_PrimaryColorNoiseOpacity, .Cursor_Pin_SecondaryColorNoise, .Cursor_Pin_SecondaryColorNoiseOpacity,
+                               .Cursor_Pin.PrimaryColorNoise, .Cursor_Pin.PrimaryColorNoiseOpacity, .Cursor_Pin.SecondaryColorNoise, .Cursor_Pin.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6655,10 +4876,10 @@ Public Class CP : Implements IDisposable
 #Region "Person"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Person_PrimaryColor1, .Cursor_Person_PrimaryColor2, .Cursor_Person_PrimaryColorGradient, .Cursor_Person_PrimaryColorGradientMode,
-                               .Cursor_Person_SecondaryColor1, .Cursor_Person_SecondaryColor2, .Cursor_Person_SecondaryColorGradient, .Cursor_Person_SecondaryColorGradientMode,
+                               .Cursor_Person.PrimaryColor1, .Cursor_Person.PrimaryColor2, .Cursor_Person.PrimaryColorGradient, .Cursor_Person.PrimaryColorGradientMode,
+                               .Cursor_Person.SecondaryColor1, .Cursor_Person.SecondaryColor2, .Cursor_Person.SecondaryColorGradient, .Cursor_Person.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Person_PrimaryColorNoise, .Cursor_Person_PrimaryColorNoiseOpacity, .Cursor_Person_SecondaryColorNoise, .Cursor_Person_SecondaryColorNoiseOpacity,
+                               .Cursor_Person.PrimaryColorNoise, .Cursor_Person.PrimaryColorNoiseOpacity, .Cursor_Person.SecondaryColorNoise, .Cursor_Person.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6668,10 +4889,10 @@ Public Class CP : Implements IDisposable
 #Region "IBeam"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_IBeam_PrimaryColor1, .Cursor_IBeam_PrimaryColor2, .Cursor_IBeam_PrimaryColorGradient, .Cursor_IBeam_PrimaryColorGradientMode,
-                               .Cursor_IBeam_SecondaryColor1, .Cursor_IBeam_SecondaryColor2, .Cursor_IBeam_SecondaryColorGradient, .Cursor_IBeam_SecondaryColorGradientMode,
+                               .Cursor_IBeam.PrimaryColor1, .Cursor_IBeam.PrimaryColor2, .Cursor_IBeam.PrimaryColorGradient, .Cursor_IBeam.PrimaryColorGradientMode,
+                               .Cursor_IBeam.SecondaryColor1, .Cursor_IBeam.SecondaryColor2, .Cursor_IBeam.SecondaryColorGradient, .Cursor_IBeam.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_IBeam_PrimaryColorNoise, .Cursor_IBeam_PrimaryColorNoiseOpacity, .Cursor_IBeam_SecondaryColorNoise, .Cursor_IBeam_SecondaryColorNoiseOpacity,
+                               .Cursor_IBeam.PrimaryColorNoise, .Cursor_IBeam.PrimaryColorNoiseOpacity, .Cursor_IBeam.SecondaryColorNoise, .Cursor_IBeam.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6681,10 +4902,10 @@ Public Class CP : Implements IDisposable
 #Region "Cross"
                         With [CP]
                             bmp = Draw([Type],
-                               .Cursor_Cross_PrimaryColor1, .Cursor_Cross_PrimaryColor2, .Cursor_Cross_PrimaryColorGradient, .Cursor_Cross_PrimaryColorGradientMode,
-                               .Cursor_Cross_SecondaryColor1, .Cursor_Cross_SecondaryColor2, .Cursor_Cross_SecondaryColorGradient, .Cursor_Cross_SecondaryColorGradientMode,
+                               .Cursor_Cross.PrimaryColor1, .Cursor_Cross.PrimaryColor2, .Cursor_Cross.PrimaryColorGradient, .Cursor_Cross.PrimaryColorGradientMode,
+                               .Cursor_Cross.SecondaryColor1, .Cursor_Cross.SecondaryColor2, .Cursor_Cross.SecondaryColorGradient, .Cursor_Cross.SecondaryColorGradientMode,
                                Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Cross_PrimaryColorNoise, .Cursor_Cross_PrimaryColorNoiseOpacity, .Cursor_Cross_SecondaryColorNoise, .Cursor_Cross_SecondaryColorNoiseOpacity,
+                               .Cursor_Cross.PrimaryColorNoise, .Cursor_Cross.PrimaryColorNoiseOpacity, .Cursor_Cross.SecondaryColorNoise, .Cursor_Cross.SecondaryColorNoiseOpacity,
                                Nothing, Nothing, Nothing, Nothing,
                                1, i, 0)
                         End With
@@ -6712,22 +4933,22 @@ Public Class CP : Implements IDisposable
 
                         If [Type] = CursorType.AppLoading Then
                             bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
-                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                            .Cursor_AppLoading.PrimaryColor1, .Cursor_AppLoading.PrimaryColor2, .Cursor_AppLoading.PrimaryColorGradient, .Cursor_AppLoading.PrimaryColorGradientMode,
+                                            .Cursor_AppLoading.SecondaryColor1, .Cursor_AppLoading.SecondaryColor2, .Cursor_AppLoading.SecondaryColorGradient, .Cursor_AppLoading.SecondaryColorGradientMode,
+                                            .Cursor_AppLoading.LoadingCircleBack1, .Cursor_AppLoading.LoadingCircleBack2, .Cursor_AppLoading.LoadingCircleBackGradient, .Cursor_AppLoading.LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading.LoadingCircleHot1, .Cursor_AppLoading.LoadingCircleHot2, .Cursor_AppLoading.LoadingCircleHotGradient, .Cursor_AppLoading.LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading.PrimaryColorNoise, .Cursor_AppLoading.PrimaryColorNoiseOpacity, .Cursor_AppLoading.SecondaryColorNoise, .Cursor_AppLoading.SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading.LoadingCircleBackNoise, .Cursor_AppLoading.LoadingCircleBackNoiseOpacity, .Cursor_AppLoading.LoadingCircleHotNoise, .Cursor_AppLoading.LoadingCircleHotNoiseOpacity,
                                              1, i, ang))
 
                             HotPoint = New Point(1, 1 + CInt(8 * i))
                         Else
                             bm = New Bitmap(Draw([Type],
                                             Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
-                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            .Cursor_Busy.LoadingCircleBack1, .Cursor_Busy.LoadingCircleBack2, .Cursor_Busy.LoadingCircleBackGradient, .Cursor_Busy.LoadingCircleBackGradientMode,
+                                            .Cursor_Busy.LoadingCircleHot1, .Cursor_Busy.LoadingCircleHot2, .Cursor_Busy.LoadingCircleHotGradient, .Cursor_Busy.LoadingCircleHotGradientMode,
                                             Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            .Cursor_Busy.LoadingCircleBackNoise, .Cursor_Busy.LoadingCircleBackNoiseOpacity, .Cursor_Busy.LoadingCircleHotNoise, .Cursor_Busy.LoadingCircleHotNoiseOpacity,
                                             1, i, ang))
 
                             HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
@@ -6741,22 +4962,22 @@ Public Class CP : Implements IDisposable
 
                         If [Type] = CursorType.AppLoading Then
                             bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading_PrimaryColor1, .Cursor_AppLoading_PrimaryColor2, .Cursor_AppLoading_PrimaryColorGradient, .Cursor_AppLoading_PrimaryColorGradientMode,
-                                            .Cursor_AppLoading_SecondaryColor1, .Cursor_AppLoading_SecondaryColor2, .Cursor_AppLoading_SecondaryColorGradient, .Cursor_AppLoading_SecondaryColorGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleBack1, .Cursor_AppLoading_LoadingCircleBack2, .Cursor_AppLoading_LoadingCircleBackGradient, .Cursor_AppLoading_LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading_LoadingCircleHot1, .Cursor_AppLoading_LoadingCircleHot2, .Cursor_AppLoading_LoadingCircleHotGradient, .Cursor_AppLoading_LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading_PrimaryColorNoise, .Cursor_AppLoading_PrimaryColorNoiseOpacity, .Cursor_AppLoading_SecondaryColorNoise, .Cursor_AppLoading_SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading_LoadingCircleBackNoise, .Cursor_AppLoading_LoadingCircleBackNoiseOpacity, .Cursor_AppLoading_LoadingCircleHotNoise, .Cursor_AppLoading_LoadingCircleHotNoiseOpacity,
+                                            .Cursor_AppLoading.PrimaryColor1, .Cursor_AppLoading.PrimaryColor2, .Cursor_AppLoading.PrimaryColorGradient, .Cursor_AppLoading.PrimaryColorGradientMode,
+                                            .Cursor_AppLoading.SecondaryColor1, .Cursor_AppLoading.SecondaryColor2, .Cursor_AppLoading.SecondaryColorGradient, .Cursor_AppLoading.SecondaryColorGradientMode,
+                                            .Cursor_AppLoading.LoadingCircleBack1, .Cursor_AppLoading.LoadingCircleBack2, .Cursor_AppLoading.LoadingCircleBackGradient, .Cursor_AppLoading.LoadingCircleBackGradientMode,
+                                            .Cursor_AppLoading.LoadingCircleHot1, .Cursor_AppLoading.LoadingCircleHot2, .Cursor_AppLoading.LoadingCircleHotGradient, .Cursor_AppLoading.LoadingCircleHotGradientMode,
+                                            .Cursor_AppLoading.PrimaryColorNoise, .Cursor_AppLoading.PrimaryColorNoiseOpacity, .Cursor_AppLoading.SecondaryColorNoise, .Cursor_AppLoading.SecondaryColorNoiseOpacity,
+                                            .Cursor_AppLoading.LoadingCircleBackNoise, .Cursor_AppLoading.LoadingCircleBackNoiseOpacity, .Cursor_AppLoading.LoadingCircleHotNoise, .Cursor_AppLoading.LoadingCircleHotNoiseOpacity,
                                              1, i, ang))
 
                             HotPoint = New Point(1, 1 + CInt(8 * i))
                         Else
                             bm = New Bitmap(Draw([Type],
                                             Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBack1, .Cursor_Busy_LoadingCircleBack2, .Cursor_Busy_LoadingCircleBackGradient, .Cursor_Busy_LoadingCircleBackGradientMode,
-                                            .Cursor_Busy_LoadingCircleHot1, .Cursor_Busy_LoadingCircleHot2, .Cursor_Busy_LoadingCircleHotGradient, .Cursor_Busy_LoadingCircleHotGradientMode,
+                                            .Cursor_Busy.LoadingCircleBack1, .Cursor_Busy.LoadingCircleBack2, .Cursor_Busy.LoadingCircleBackGradient, .Cursor_Busy.LoadingCircleBackGradientMode,
+                                            .Cursor_Busy.LoadingCircleHot1, .Cursor_Busy.LoadingCircleHot2, .Cursor_Busy.LoadingCircleHotGradient, .Cursor_Busy.LoadingCircleHotGradientMode,
                                             Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy_LoadingCircleBackNoise, .Cursor_Busy_LoadingCircleBackNoiseOpacity, .Cursor_Busy_LoadingCircleHotNoise, .Cursor_Busy_LoadingCircleHotNoiseOpacity,
+                                            .Cursor_Busy.LoadingCircleBackNoise, .Cursor_Busy.LoadingCircleBackNoiseOpacity, .Cursor_Busy.LoadingCircleHotNoise, .Cursor_Busy.LoadingCircleHotNoiseOpacity,
                                             1, i, ang))
 
                             HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
@@ -6907,23 +5128,39 @@ Public Class CP : Implements IDisposable
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If WinMetrics_Fonts <> DirectCast(obj, CP).WinMetrics_Fonts Then _Equals = False
 
-        Dim type1 As Type = [GetType]() : Dim properties1 As System.Reflection.PropertyInfo() = type1.GetProperties()
-        Dim type2 As Type = obj.[GetType]() : Dim properties2 As System.Reflection.PropertyInfo() = type2.GetProperties()
+        If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False
+        If Cursor_Help <> DirectCast(obj, CP).Cursor_Help Then _Equals = False
+        If Cursor_AppLoading <> DirectCast(obj, CP).Cursor_AppLoading Then _Equals = False
+        If Cursor_Busy <> DirectCast(obj, CP).Cursor_Busy Then _Equals = False
+        If Cursor_Move <> DirectCast(obj, CP).Cursor_Move Then _Equals = False
+        If Cursor_NS <> DirectCast(obj, CP).Cursor_NS Then _Equals = False
+        If Cursor_EW <> DirectCast(obj, CP).Cursor_EW Then _Equals = False
+        If Cursor_NESW <> DirectCast(obj, CP).Cursor_NESW Then _Equals = False
+        If Cursor_NWSE <> DirectCast(obj, CP).Cursor_NWSE Then _Equals = False
+        If Cursor_Up <> DirectCast(obj, CP).Cursor_Up Then _Equals = False
+        If Cursor_Pen <> DirectCast(obj, CP).Cursor_Pen Then _Equals = False
+        If Cursor_None <> DirectCast(obj, CP).Cursor_None Then _Equals = False
+        If Cursor_Link <> DirectCast(obj, CP).Cursor_Link Then _Equals = False
+        If Cursor_Pin <> DirectCast(obj, CP).Cursor_Pin Then _Equals = False
+        If Cursor_Person <> DirectCast(obj, CP).Cursor_Person Then _Equals = False
+        If Cursor_IBeam <> DirectCast(obj, CP).Cursor_IBeam Then _Equals = False
+        If Cursor_Cross <> DirectCast(obj, CP).Cursor_Cross Then _Equals = False
 
-        For Each [property] As System.Reflection.PropertyInfo In properties1
-
-            If [property].PropertyType.Name.ToLower <> "winterminal" Then
-                Try
-                    If [property].GetValue(Me, Nothing) <> [property].GetValue(obj, Nothing) Then
-                        _Equals = False
-                        Exit For
-                    End If
-                Catch
-                End Try
-            End If
-        Next
+        If CommandPrompt <> DirectCast(obj, CP).CommandPrompt Then _Equals = False
+        If PowerShellx86 <> DirectCast(obj, CP).PowerShellx86 Then _Equals = False
+        If PowerShellx64 <> DirectCast(obj, CP).PowerShellx64 Then _Equals = False
+        'If Terminal <> DirectCast(obj, CP).Terminal Then _Equals = False
+        'If TerminalPreview <> DirectCast(obj, CP).TerminalPreview Then _Equals = False
 
         Return _Equals
     End Function
-End Class
 
+    Public Shared Operator =(First As CP, Second As CP)
+        Return First.Equals(Second)
+    End Operator
+
+    Public Shared Operator <>(First As CP, Second As CP)
+        Return Not First = Second
+    End Operator
+
+End Class

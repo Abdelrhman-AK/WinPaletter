@@ -1,5 +1,4 @@
 ﻿Imports System.Net
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports WinPaletter.XenonCore
 
@@ -8,11 +7,8 @@ Public Class Changelog
     Dim WithEvents W As WebClient
     Dim changelog_str As String
 
-    <DllImport("uxtheme.dll", ExactSpelling:=True, CharSet:=CharSet.Unicode)>
-    Private Shared Function SetWindowTheme(ByVal hwnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As String) As Integer
-    End Function
     Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
-        SetWindowTheme(treeHandle, "explorer", Nothing)
+        NativeMethods.Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
     End Sub
 
     Private Sub Changelog_Load(sender As Object, e As EventArgs) Handles MyBase.Load

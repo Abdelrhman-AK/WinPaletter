@@ -52,6 +52,7 @@ Public Class LogonUI7
 
             ID = CP.Windows8.LockScreenSystemID
         Else
+
             XenonToggle1.Checked = CP.LogonUI7.Enabled
 
             Select Case CP.LogonUI7.Mode

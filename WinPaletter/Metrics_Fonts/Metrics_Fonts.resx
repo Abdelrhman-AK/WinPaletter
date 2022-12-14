@@ -123,12 +123,17 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="XenonButton9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAQxJREFUOE9j
-        GNzA4vhFI5vDlwShXAbzYxe+AfF/EA0Vwg2Amv3Mjl34AVR83fjQGUmQGFQzGIMVIQOgYh+zY+dDzY6e
-        99a7eJEbqOgjTLHFsYtLoWpABv4H0WBNyACmGIRBfMtjFz2AbJCTL1kdvSgGVoQPoBsAAqZHL9mZnroq
-        AWKbnzivanb0Yov5sYvXQK4FK0AGOlv2HoNhsFeg3oFKA8PkfDWSJXOhwgggNXvhfxhGUgh3jeWxC4ZI
-        4jegwghAyACG//8Zgfx286MXg62P3OCFiiKA7MIVx2HY5MCpYzCMzTtYAbKtBF2DDSArJM+A4xcWAxPM
-        KhCWnL1wNQzDxIAGLIIqHVSAgQEAeWkCSh1amksAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vQAADr0BR/uQrQAAAhJJREFUOE9joAp4//691YcPH0LR8Z07dwyhSvADoOJfQPwfHe/du/fngQMHMqDK
+        cANsmkF49+7d/xcvXvz/8OHDxVCl2AE2zSC8Z8+e/wsXLvy/dOnSf0ePHi2AKscE2DSD8LNnz/7fvn0b
+        jO/evfsNqhwToGu8/ur1/ydv3/5/CMRx5679b7l+5/+15/f+Ky5Nlmf4z8AI1YYAIE0gxTeAGm8CscfJ
+        y2CN11+/+W+wb/1/zfWF/2WXxf+XXhTzX3J+5C2JOaHeUK0QADIg7eKN/+bHLoA15V26+b//5v3/q28e
+        /C+/KhGs2WRlzn+jZZn/xWeH/RedEfxPeIp/IFQ7xICK81f/hx8983/r42f/jz578f/9h/f/DTcibK44
+        OPt/+f6ZIM3/haYE/BeY4Hsbqh1igP+GLf+lZi/87wV0PtglQD/DbG4+uvj/ttsnwLjhwLz/WjPj//P1
+        ev3n7PSUgRuQe+DIf+9N2/8nn7r0Pw6IF9y+CrbZYGnG/+K90/6vvXbw/5qr+//nb5/0X31q9H+eTndU
+        A1IvQMLAcMlKsEvMjp3/r7AE7uf/Jbun/S/eORVsM0gzd6vrLbBmEAAa8Gvl/cf/e27d+9987MT/6oNH
+        wOySk9vhflafHvtfbWoUWDNXq+s/9kZHREwAM5MJELtgw6nbu2skp4Q8RbYZRTNRAJh4OHq85DlanNAS
+        EgMDAEY46oa+K/cyAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="XenonButton11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -141,14 +146,6 @@
         Qv2gH+POKBlwvX2gn+WhPn+FLpCCc+8K0ws+GC0eMO4iAP0tj3ImCflqHE3WMMzaZWiaB8CUlME1YiUD
         M5E3yNdYVJsv0DJ5gl7LGRrUHiyUKrEys00G6OAjqmYvUDcaQOuQ/wsIiUCfUgfT4iEZSLzwYC6fsBNK
         Yf/8AaexZ+wEU2Jjd2kyUEzzAqTP9LM0necl/i0y2SdKmvsVFxg1LwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="XenonButton12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAH5JREFUOE9j
-        GESg/Oo3hvIr/9HwQobyy/MwxYFqMQCGIjBexVB2ZRkW8f9QXUgAm6IhZkDF1UVAiVWo+HImUDwBaMhM
-        FFxxZSpUFxIov7oOqGE3Gs4HaijAFL+yFqoLCWBzJsI1mHIYAJuiIWfADwxF5VcXQzC6OFDtIAEMDACN
-        KjnlYu7VxAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="PictureBox30.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

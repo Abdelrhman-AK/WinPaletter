@@ -62,11 +62,12 @@ Partial Class TerminalInfo
         Me.TerTabTitle.Multiline = False
         Me.TerTabTitle.Name = "TerTabTitle"
         Me.TerTabTitle.ReadOnly = False
+        Me.TerTabTitle.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.TerTabTitle.Size = New System.Drawing.Size(328, 24)
         Me.TerTabTitle.TabIndex = 195
-        Me.TerTabTitle.Text = "XenonTextBox4"
         Me.TerTabTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.TerTabTitle.UseSystemPasswordChar = False
+        Me.TerTabTitle.WordWrap = True
         '
         'PictureBox47
         '
@@ -102,11 +103,12 @@ Partial Class TerminalInfo
         Me.TerName.Multiline = False
         Me.TerName.Name = "TerName"
         Me.TerName.ReadOnly = False
+        Me.TerName.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.TerName.Size = New System.Drawing.Size(328, 24)
         Me.TerName.TabIndex = 192
-        Me.TerName.Text = "XenonTextBox1"
         Me.TerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.TerName.UseSystemPasswordChar = False
+        Me.TerName.WordWrap = True
         '
         'PictureBox38
         '
@@ -178,11 +180,12 @@ Partial Class TerminalInfo
         Me.TerTabIcon.Multiline = False
         Me.TerTabIcon.Name = "TerTabIcon"
         Me.TerTabIcon.ReadOnly = False
+        Me.TerTabIcon.Scrollbars = System.Windows.Forms.ScrollBars.None
         Me.TerTabIcon.Size = New System.Drawing.Size(290, 24)
         Me.TerTabIcon.TabIndex = 188
-        Me.TerTabIcon.Text = "XenonTextBox3"
         Me.TerTabIcon.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.TerTabIcon.UseSystemPasswordChar = False
+        Me.TerTabIcon.WordWrap = True
         '
         'Label166
         '
@@ -210,7 +213,7 @@ Partial Class TerminalInfo
         Me.TerTabColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabColor.ForceNoNerd = False
-        Me.TerTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
+        Me.TerTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTabColor.Location = New System.Drawing.Point(120, 101)
         Me.TerTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabColor.Name = "TerTabColor"
@@ -331,7 +334,6 @@ Partial Class TerminalInfo
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

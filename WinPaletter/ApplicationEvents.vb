@@ -1,7 +1,5 @@
 ﻿Imports System.Management
 Imports System.Reflection
-Imports System
-Imports System.Windows.Forms
 Imports System.Security.Principal
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -31,7 +29,6 @@ Namespace My
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
         Public ChangeLogImgLst As New ImageList
-        Public ComplexSaveResult As String = "2.0"
         Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         Public ShowChangelog As Boolean = False
         Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
@@ -480,7 +477,11 @@ Namespace My
             End Try
 
             If My.Application._Settings.Language Then
-                My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+                Try
+                    My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+                Catch ex As Exception
+                    MsgBox("There is an error occured during loading language." & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
+                End Try
             Else
                 My.Application.LanguageHelper.LoadInternal()
             End If
@@ -512,7 +513,6 @@ Namespace My
 
             ExternalLink = False
             ExternalLink_File = ""
-            ComplexSaveResult = "2.0"  '' 2 = Don't save,  0 = Don't Apply
 
             If Not _Settings.LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
@@ -528,7 +528,7 @@ Namespace My
                             File = File.Replace("""", "")
                             If IO.File.Exists(File) Then
                                 Dim CPx As New CP(CP.Mode.File, File)
-                                CPx.Save(CP.SavingMode.Registry)
+                                CPx.Save(CP.Mode.Registry)
                                 If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                             End If
                             Process.GetCurrentProcess.Kill()
@@ -553,7 +553,7 @@ Namespace My
                                 ExternalLink_File = arg
                             Else
                                 Dim CPx As New CP(CP.Mode.File, arg)
-                                CPx.Save(CP.SavingMode.Registry, arg)
+                                CPx.Save(CP.Mode.Registry, arg)
                                 If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                                 Process.GetCurrentProcess.Kill()
                             End If
@@ -654,7 +654,7 @@ Namespace My
                                 File = File.Replace("""", "")
                                 If IO.File.Exists(File) Then
                                     Dim CPx As New CP(CP.Mode.File, File)
-                                    CPx.Save(CP.SavingMode.Registry)
+                                    CPx.Save(CP.Mode.Registry)
                                     If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
@@ -667,47 +667,49 @@ Namespace My
                                 File = File.Replace("""", "")
 
                                 If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
-                                    Select Case ComplexSave.ShowDialog()
-                                        Case DialogResult.Yes
-                                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                                            Dim r1 As String = r(0)
-                                            Dim r2 As String = r(1)
-                                            Select Case r1
-                                                Case 0              '' Save
-                                                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                        MainFrm.CP_Original = MainFrm.CP
-                                                    Else
+
+                                    If _Settings.ShowSaveConfirmation Then
+                                        Select Case ComplexSave.ShowDialog()
+                                            Case DialogResult.Yes
+                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
+                                                Dim r1 As String = r(0)
+                                                Dim r2 As String = r(1)
+                                                Select Case r1
+                                                    Case 0              '' Save
+                                                        If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP
+                                                        Else
+                                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                                MainFrm.CP_Original = MainFrm.CP
+                                                            Else
+                                                                Exit Sub
+                                                            End If
+                                                        End If
+
+                                                    Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP
                                                         Else
                                                             Exit Sub
                                                         End If
-                                                    End If
+                                                End Select
 
-                                                Case 1              '' Save As
-                                                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                        MainFrm.CP_Original = MainFrm.CP
-                                                    Else
-                                                        Exit Sub
-                                                    End If
-                                            End Select
+                                                Select Case r2
+                                                    Case 1      '' Apply   ' Case 0= Don't Apply
+                                                        MainFrm.CP.Save(CP.Mode.Registry)
+                                                        RestartExplorer()
+                                                End Select
 
-                                            Select Case r2
-                                                Case 1      '' Apply   ' Case 0= Don't Apply
-                                                    MainFrm.CP.Save(CP.SavingMode.Registry)
-                                                    RestartExplorer()
-                                            End Select
-
-                                        Case DialogResult.No
+                                            Case DialogResult.No
 
 
-                                        Case DialogResult.Cancel
-                                            Exit Sub
-                                    End Select
-
+                                            Case DialogResult.Cancel
+                                                Exit Sub
+                                        End Select
+                                    End If
 
                                 End If
 
@@ -725,47 +727,48 @@ Namespace My
                         If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                             If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
                                 If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
-                                    Select Case ComplexSave.ShowDialog()
-                                        Case DialogResult.Yes
-                                            Dim r As String() = My.Application.ComplexSaveResult.Split(".")
-                                            Dim r1 As String = r(0)
-                                            Dim r2 As String = r(1)
-                                            Select Case r1
-                                                Case 0              '' Save
-                                                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                        MainFrm.CP_Original = MainFrm.CP
-                                                    Else
+                                    If _Settings.ShowSaveConfirmation Then
+                                        Select Case ComplexSave.ShowDialog()
+                                            Case DialogResult.Yes
+                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
+                                                Dim r1 As String = r(0)
+                                                Dim r2 As String = r(1)
+                                                Select Case r1
+                                                    Case 0              '' Save
+                                                        If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP
+                                                        Else
+                                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                                MainFrm.CP_Original = MainFrm.CP
+                                                            Else
+                                                                Exit Sub
+                                                            End If
+                                                        End If
+
+                                                    Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP
                                                         Else
                                                             Exit Sub
                                                         End If
-                                                    End If
+                                                End Select
 
-                                                Case 1              '' Save As
-                                                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                        MainFrm.CP.Save(CP.SavingMode.File, MainFrm.SaveFileDialog1.FileName)
-                                                        MainFrm.CP_Original = MainFrm.CP
-                                                    Else
-                                                        Exit Sub
-                                                    End If
-                                            End Select
+                                                Select Case r2
+                                                    Case 1      '' Apply   ' Case 0= Don't Apply
+                                                        MainFrm.CP.Save(CP.Mode.Registry)
+                                                        RestartExplorer()
+                                                End Select
 
-                                            Select Case r2
-                                                Case 1      '' Apply   ' Case 0= Don't Apply
-                                                    MainFrm.CP.Save(CP.SavingMode.Registry)
-                                                    RestartExplorer()
-                                            End Select
-
-                                        Case DialogResult.No
+                                            Case DialogResult.No
 
 
-                                        Case DialogResult.Cancel
-                                            Exit Sub
-                                    End Select
-
+                                            Case DialogResult.Cancel
+                                                Exit Sub
+                                        End Select
+                                    End If
 
                                 End If
 
@@ -783,7 +786,7 @@ Namespace My
                                 MainFrm.SaveFileDialog1.FileName = arg
                                 MainFrm.ApplyCPValues(MainFrm.CP)
                                 MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-                                MainFrm.CP.Save(CP.SavingMode.Registry, arg)
+                                MainFrm.CP.Save(CP.Mode.Registry, arg)
                                 RestartExplorer()
                                 '''''''
                             End If

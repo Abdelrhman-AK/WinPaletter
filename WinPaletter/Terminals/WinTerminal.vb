@@ -3,7 +3,9 @@ Imports System.IO
 Imports System.Reflection
 Imports WinPaletter.ProfilesList
 Imports WinPaletter.XenonCore
+
 Public Class WinTerminal
+    Public Property Enabled As Boolean = False
     Public Property Colors As List(Of TColor)
     Public Property Profiles As List(Of ProfilesList)
     Public Property DefaultProf As ProfilesList
@@ -222,6 +224,7 @@ Public Class WinTerminal
                 For Each lin As String In Collected
                     If lin.ToLower.StartsWith("theme= ".ToLower) Then theme = lin.Remove(0, "theme= ".Count)
                     If lin.ToLower.StartsWith("useacrylicintabrow= ".ToLower) Then useAcrylicInTabRow = lin.Remove(0, "useAcrylicInTabRow= ".Count)
+                    If lin.ToLower.StartsWith("enabled= ".ToLower) Then Enabled = lin.Remove(0, "enabled= ".Count)
 
                     If lin.ToLower.StartsWith("default.".ToLower) Then Defs.Add(lin.Remove(0, "default.".Count))
                     If lin.ToLower.StartsWith("schemes.".ToLower) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
@@ -791,6 +794,7 @@ Public Class WinTerminal
                 S.Clear()
 
                 S.Add(String.Format("{0}{1}= {2}", First, "theme", theme))
+                S.Add(String.Format("{0}{1}= {2}", First, "Enabled", Enabled))
                 S.Add(String.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", useAcrylicInTabRow))
 
                 Dim type1 As Type = DefaultProf.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
@@ -897,9 +901,24 @@ Public Class WinTerminal
     Public Function RGB2HEX([Color] As Color) As String
         Return String.Format("#{0:X2}{1:X2}{2:X2}", [Color].R, [Color].G, [Color].B)
     End Function
+
+    Shared Operator =(First As WinTerminal, Second As WinTerminal) As Boolean
+        Dim _equal As Boolean = True
+        'MsgBox(Enumerable.SequenceEqual(First.Colors, Second.Colors))
+        If Not First.DefaultProf = Second.DefaultProf Then _equal = False
+        If Not First.theme = Second.theme Then _equal = False
+        If Not First.useAcrylicInTabRow = Second.useAcrylicInTabRow Then _equal = False
+        If Not First.Enabled = Second.Enabled Then _equal = False
+        Return _equal
+    End Operator
+
+    Shared Operator <>(First As WinTerminal, Second As WinTerminal) As Boolean
+        Return Not First = Second
+    End Operator
 End Class
 
-Public Class TColor
+Public Class TColor : Implements IComparable
+
     Public Property Name As String
     Public Property Background As Color = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
     Public Property Foreground As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
@@ -921,23 +940,53 @@ Public Class TColor
     Public Property Red As Color = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
     Public Property White As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
     Public Property Yellow As Color = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
-End Class
 
-Public Class ThemesList
+    Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+        If Me = DirectCast(obj, TColor) Then Return 1 Else Return 0
+    End Function
+
+    Shared Operator =(First As TColor, Second As TColor) As Boolean
+        Return First.Equals(Second)
+    End Operator
+
+    Shared Operator <>(First As TColor, Second As TColor) As Boolean
+        Return Not First.Equals(Second)
+    End Operator
+End Class
+Public Class ThemesList : Implements IComparable
     Public Property Name As String
     Public Property Titlebar_Active As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Titlebar_Inactive As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Tab_Active As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Tab_Inactive As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property applicationTheme_light As String = "dark"
+
+    Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+        If Me.Equals(DirectCast(obj, ThemesList)) Then Return 1 Else Return 0
+    End Function
+
+    Shared Operator =(First As ThemesList, Second As ThemesList) As Boolean
+        Return First.Equals(Second)
+    End Operator
+
+    Shared Operator <>(First As ThemesList, Second As ThemesList) As Boolean
+        Return Not First.Equals(Second)
+    End Operator
 End Class
 Public Class FontsBase
     Public Property Face As String = If(My.W11, "Cascadia Mono", "Consolas")
     Public Property Weight As FontWeight_Enum = FontWeight_Enum.normal
     Public Property Size As Integer = 12
-End Class
 
-Public Class ProfilesList
+    Shared Operator =(First As FontsBase, Second As FontsBase) As Boolean
+        Return First.Equals(Second)
+    End Operator
+
+    Shared Operator <>(First As FontsBase, Second As FontsBase) As Boolean
+        Return Not First.Equals(Second)
+    End Operator
+End Class
+Public Class ProfilesList : Implements IComparable
     Public Property Name As String
     Public Property TabTitle As String = ""
     Public Property Icon As String = ""
@@ -955,6 +1004,18 @@ Public Class ProfilesList
     Public Property ColorScheme As String = "Campbell"
     Public Property CursorShape As CursorShape_Enum = CursorShape_Enum.bar
     Public Property CursorHeight As Integer = 25
+
+    Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+        If Me.Equals(DirectCast(obj, ProfilesList)) Then Return 1 Else Return 0
+    End Function
+
+    Shared Operator =(First As ProfilesList, Second As ProfilesList) As Boolean
+        Return First.Equals(Second)
+    End Operator
+
+    Shared Operator <>(First As ProfilesList, Second As ProfilesList) As Boolean
+        Return Not First.Equals(Second)
+    End Operator
 
 #Region "Helpers"
 

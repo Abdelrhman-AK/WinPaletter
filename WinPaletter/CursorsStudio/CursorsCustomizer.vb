@@ -755,23 +755,23 @@ Public Module Paths
 
         '#### Left Border
         Dim LLine1 As New Point(R.X, R.Y)
-        Dim LLine2 As New Point(R.X, R.Y + R.Height - 3)
+        Dim LLine2 As New Point(R.X, R.Y + R.Height - 2)
         path.AddLine(LLine1, LLine2)
 
         '#### Left Down Border
-        Dim DLLine1 As Point = LLine2 + New Point(0, 2)
-        Dim DLLine2 As New Point(DLLine1.X + 4, DLLine1.Y - 4)
+        Dim DLLine1 As Point = LLine2 + New Point(1, 0)
+        Dim DLLine2 As New Point(DLLine1.X + 3, DLLine1.Y - 3)
         path.AddLine(DLLine1, DLLine2)
 
         '#### Left Down Handle Border
         Dim DLHLine1 As Point = DLLine2
-        Dim DLHLine2 As New Point(DLHLine1.X + 3, R.Y + R.Height)
+        Dim DLHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y + 5) 'R.Height)
         path.AddLine(DLHLine1, DLHLine2)
 
         '#### Down Handle Border
         Dim DHLine1 As Point = DLHLine2
         Dim DHLine2 As New Point(DHLine1.X + 2, DHLine1.Y - 1)
-        If Scale > 1 Then path.AddLine(DHLine1, DHLine2) Else path.AddArc(DHLine1.X, DHLine2.Y, DHLine2.X - DHLine1.X, DHLine1.Y - DHLine2.Y, 0, 90)
+        'path.AddArc(DHLine1.X, DHLine1.Y, 4, 2, 180, -90)
 
         '#### Right Down Handle Border
         Dim DRHLine1 As Point = DHLine2
@@ -780,22 +780,22 @@ Public Module Paths
 
         '#### Right Down Border
         Dim DRLine1 As Point = DRHLine2
-        Dim DRLine2 As New Point(R.X + R.Width, DLHLine1.Y - 1)
+        Dim DRLine2 As New Point(R.X + R.Width - 1, DLHLine1.Y - 1)
         path.AddLine(DRLine1, DRLine2)
 
         '#### Right Border
-        Dim RLine1 As Point = DRLine2
+        Dim RLine1 As Point = DRLine2 + New Point(0, -1)
         Dim RLine2 As Point = LLine1
         path.AddLine(RLine1, RLine2)
 
-        path.CloseFigure()
+        'path.CloseFigure()
 
         Dim m As Matrix = New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
-
         Return path
+
     End Function
 
     Public Function Busy([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
