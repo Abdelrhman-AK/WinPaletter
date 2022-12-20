@@ -17,7 +17,10 @@ Namespace My
     Partial Friend Class MyApplication
 
 #Region "Variables"
-        Public WithEvents Domain As AppDomain = AppDomain.CurrentDomain
+        Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
+        Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
+
+        Public WithEvents AnimatorX As AnimatorNS.Animator
 
         Public _Settings As XeSettings
         Public Wallpaper As Bitmap
@@ -25,11 +28,8 @@ Namespace My
         Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
         Public BackColor_Light As Color = Color.FromArgb(230, 230, 230) 'FromArgb(235, 235, 235)
 
-        Public WithEvents AnimatorX As AnimatorNS.Animator
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
-        Public ChangeLogImgLst As New ImageList
-        Dim WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         Public ShowChangelog As Boolean = False
         Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
         Public processKiller As New Process
@@ -37,7 +37,7 @@ Namespace My
         Public AeroKiller As New Process
         Public AeroStarter As New Process
         Public LanguageHelper As New Localizer
-        Public appData As String = IO.Directory.GetParent(System.Windows.Forms.Application.LocalUserAppDataPath).FullName
+        Public appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
         Public WinRes As WinResources
 
@@ -55,6 +55,12 @@ Namespace My
         Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
         Public ExitAfterException As Boolean = False
+
+        Public Saving_Exceptions As New List(Of Tuple(Of String, Exception))
+
+        Public ChangeLogImgLst As New ImageList With {.ImageSize = New Size(24, 24), .ColorDepth = ColorDepth.Depth32Bit}
+        Public imgLs As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
+
         Enum MenuEvent
             None
             Copy
@@ -429,11 +435,10 @@ Namespace My
         End Sub
 
 
-
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
 
-            AddHandler System.Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+            AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             DetectOS()
 
@@ -443,7 +448,6 @@ Namespace My
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
                 ConsoleFontLarge = MemoryFonts.GetFont(0, 10)
                 ConsoleFontMedium = MemoryFonts.GetFont(0, 9)
-
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
@@ -601,8 +605,6 @@ Namespace My
             CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
             CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
 
-            ChangeLogImgLst.ColorDepth = ColorDepth.Depth32Bit
-            ChangeLogImgLst.ImageSize = New Size(24, 24)
             ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
             ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
             ChangeLogImgLst.Images.Add("Add", My.Resources.CL_add)
@@ -613,7 +615,16 @@ Namespace My
             ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
             ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
 
+            imgLs.Images.Add("info", My.Resources.notify_info)
+            imgLs.Images.Add("error", My.Resources.notify_error)
+            imgLs.Images.Add("warning", My.Resources.notify_warning)
+            imgLs.Images.Add("time", My.Resources.notify_time)
+            imgLs.Images.Add("success", My.Resources.notify_success)
+            imgLs.Images.Add("skip", My.Resources.notify_skip)
+
             Try : WinRes = New WinResources : Catch : End Try
+
+            Saving_Exceptions.Clear()
 
 #Region "WhatsNew"
             If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then

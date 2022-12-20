@@ -152,13 +152,24 @@ Public Class XenonCore
             Return Bitmap
         End Try
     End Function
-    Public Shared Sub RestartExplorer()
+    Public Shared Sub RestartExplorer(Optional [TreeView] As TreeView = Nothing)
         With My.Application
             Try
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Killing Explorer (To be restarted)", Now.ToLongTimeString), "info")
+                Dim sw As New Stopwatch
+                sw.Reset()
+                sw.Start()
                 .processKiller.Start()
                 .processKiller.WaitForExit()
                 .processExplorer.Start()
-            Catch
+                sw.Stop()
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Explorer Restarted, took about {1} seconds to kill explorer", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                sw.Reset()
+            Catch ex As Exception
+                If [TreeView] IsNot Nothing Then
+                    CP.AddNode([TreeView], String.Format("{0}: Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", Now.ToLongTimeString), "error")
+                    My.Application.Saving_Exceptions.Add(New Tuple(Of String, Exception)("Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", ex))
+                End If
             End Try
         End With
     End Sub

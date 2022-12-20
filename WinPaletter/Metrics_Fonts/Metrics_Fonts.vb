@@ -70,6 +70,7 @@ Public Class Metrics_Fonts
     End Sub
 
     Sub ApplyFromCP(CP As CP)
+        MetricsEnabled.Checked = CP.WinMetrics_Fonts.Enabled
 
         Label1.Font = CP.WinMetrics_Fonts.CaptionFont
         XenonWindow1.Font = CP.WinMetrics_Fonts.CaptionFont
@@ -140,6 +141,8 @@ Public Class Metrics_Fonts
     End Sub
 
     Sub ApplyToCP(CP As CP)
+        CP.WinMetrics_Fonts.Enabled = MetricsEnabled.Checked
+
         CP.WinMetrics_Fonts.CaptionFont = Label1.Font
         CP.WinMetrics_Fonts.IconFont = Label2.Font
         CP.WinMetrics_Fonts.MenuFont = Label3.Font

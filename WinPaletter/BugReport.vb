@@ -53,6 +53,7 @@ Public Class BugReport
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         DialogResult = DialogResult.Abort
         Me.Close()
+        Process.GetCurrentProcess.Kill()
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

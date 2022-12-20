@@ -391,44 +391,7 @@ Public Class ExternalTerminal
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
             End If
 
-
-            If New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator) Then
-                CP.EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, False, True)
-            Else
-                Dim ls As New List(Of String)
-                ls.Clear()
-                ls.Add("Windows Registry Editor Version 5.00")
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
-                ls.Add(String.Format("""000""=""{0}""", ExtTerminal_FontsBox.SelectedItem))
-
-                Dim result As String = CStr_FromList(ls)
-
-                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                IO.File.WriteAllText(tempreg, result)
-
-                Dim process As Process = Nothing
-
-                Dim processStartInfo As New ProcessStartInfo With {
-                   .FileName = "regedit",
-                   .Verb = "runas",
-                   .Arguments = String.Format("/s ""{0}""", tempreg),
-                   .WindowStyle = ProcessWindowStyle.Hidden,
-                   .CreateNoWindow = True,
-                   .UseShellExecute = True
-                }
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                processStartInfo.FileName = "reg"
-                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                Kill(tempreg)
-            End If
-
+            CP.EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
 
             If Not ExtTerminal_RasterToggle.Checked Then
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
@@ -472,10 +435,10 @@ Public Class ExternalTerminal
 
             If ExtTerminal_RasterToggle.Checked Then
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", 48)
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", False, True)
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", RegistryValueKind.String)
             Else
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, False, True)
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
             End If
 
 

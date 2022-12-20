@@ -14,8 +14,6 @@ Public Class MainFrm
     Dim ChannelFixer As Integer
     Public ShowWhatsNew As Boolean = False
 
-    Private imgLs As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
-
     Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
         NativeMethods.Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
     End Sub
@@ -1162,14 +1160,7 @@ Public Class MainFrm
         _Shown = False
         Visible = False
 
-        imgLs.Images.Add("info", My.Resources.notify_info)
-        imgLs.Images.Add("error", My.Resources.notify_error)
-        imgLs.Images.Add("warning", My.Resources.notify_warning)
-        imgLs.Images.Add("time", My.Resources.notify_time)
-        imgLs.Images.Add("success", My.Resources.notify_success)
-        imgLs.Images.Add("skip", My.Resources.notify_skip)
-
-        TreeView1.ImageList = imgLs
+        TreeView1.ImageList = My.Application.imgLs
 
         SetTreeViewTheme(TreeView1.Handle)
 
@@ -1321,8 +1312,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -2502,6 +2502,10 @@ Public Class MainFrm
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Cursor = Cursors.WaitCursor
 
+        log_lbl.Visible = False
+        log_lbl.Text = ""
+        XenonButton14.Visible = False
+
         TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
 
         CP.Save(CP.Mode.Registry, "", TreeView1)
@@ -2511,9 +2515,17 @@ Public Class MainFrm
         Cursor = Cursors.Default
 
         If My.Application._Settings.AutoRestartExplorer Then
-            RestartExplorer()
+            RestartExplorer(TreeView1)
         Else
-            If Not My.W7 Then Notify(My.Application.LanguageHelper.NoDefResExplorer.Replace("<br>", vbCrLf), My.Resources.notify_warning, 3500)
+            CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+        End If
+
+        CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+
+        If Not My.Application.Saving_Exceptions.Count = 0 Then
+            log_lbl.Visible = True
+            log_lbl.Text = "Error\s happened. Press on Show Errors for details"
+            XenonButton14.Visible = True
         End If
 
     End Sub
@@ -2621,8 +2633,17 @@ Public Class MainFrm
 
                                 Select Case r2
                                     Case 1      '' Apply   ' Case 0= Don't Apply
-                                        CP.Save(CP.Mode.Registry)
-                                        If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                        log_lbl.Visible = False
+                                        log_lbl.Text = ""
+                                        XenonButton14.Visible = False
+                                        TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                        CP.Save(CP.Mode.Registry, "", TreeView1)
+                                        If My.Application._Settings.AutoRestartExplorer Then
+                                            RestartExplorer(TreeView1)
+                                        Else
+                                            CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                        End If
+                                        CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                                 End Select
 
                             Case DialogResult.No
@@ -2691,8 +2712,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -2749,8 +2779,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -2850,8 +2889,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -2898,8 +2946,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -2953,8 +3010,17 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                CP.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                log_lbl.Visible = False
+                                log_lbl.Text = ""
+                                XenonButton14.Visible = False
+                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+                                CP.Save(CP.Mode.Registry, "", TreeView1)
+                                If My.Application._Settings.AutoRestartExplorer Then
+                                    RestartExplorer(TreeView1)
+                                Else
+                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+                                End If
+                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
                         End Select
 
                     Case DialogResult.No
@@ -3074,6 +3140,9 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Saving_ex_list.ShowDialog()
+    End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If PreviewConfig = WinVer.Eleven Then

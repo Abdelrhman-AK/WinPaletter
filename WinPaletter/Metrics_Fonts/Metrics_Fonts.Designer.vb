@@ -29,7 +29,7 @@ Partial Class Metrics_Fonts
         Me.Label12 = New System.Windows.Forms.Label()
         Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.CMDEnabled = New WinPaletter.XenonToggle()
+        Me.MetricsEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -273,7 +273,7 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox12.Controls.Add(Me.Label12)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
-        Me.XenonGroupBox12.Controls.Add(Me.CMDEnabled)
+        Me.XenonGroupBox12.Controls.Add(Me.MetricsEnabled)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox30)
         Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
@@ -348,17 +348,17 @@ Partial Class Metrics_Fonts
         Me.XenonButton12.Text = "Default Windows"
         Me.XenonButton12.UseVisualStyleBackColor = False
         '
-        'CMDEnabled
+        'MetricsEnabled
         '
-        Me.CMDEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.CMDEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMDEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.CMDEnabled.Checked = False
-        Me.CMDEnabled.DarkLight_Toggler = False
-        Me.CMDEnabled.Location = New System.Drawing.Point(1023, 7)
-        Me.CMDEnabled.Name = "CMDEnabled"
-        Me.CMDEnabled.Size = New System.Drawing.Size(50, 24)
-        Me.CMDEnabled.TabIndex = 85
+        Me.MetricsEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
+        Me.MetricsEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.MetricsEnabled.Checked = False
+        Me.MetricsEnabled.DarkLight_Toggler = False
+        Me.MetricsEnabled.Location = New System.Drawing.Point(1023, 7)
+        Me.MetricsEnabled.Name = "MetricsEnabled"
+        Me.MetricsEnabled.Size = New System.Drawing.Size(50, 24)
+        Me.MetricsEnabled.TabIndex = 85
         '
         'PictureBox30
         '
@@ -2718,7 +2718,7 @@ Partial Class Metrics_Fonts
     Friend WithEvents Label12 As Label
     Friend WithEvents XenonButton11 As XenonButton
     Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents CMDEnabled As XenonToggle
+    Friend WithEvents MetricsEnabled As XenonToggle
     Friend WithEvents PictureBox30 As PictureBox
     Friend WithEvents PictureBox41 As PictureBox
     Friend WithEvents Label19 As Label

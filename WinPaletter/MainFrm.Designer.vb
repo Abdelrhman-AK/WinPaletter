@@ -288,6 +288,8 @@ Partial Class MainFrm
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.log_lbl = New System.Windows.Forms.Label()
+        Me.XenonButton14 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
@@ -4059,6 +4061,8 @@ Partial Class MainFrm
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.log_lbl)
+        Me.TabPage5.Controls.Add(Me.XenonButton14)
         Me.TabPage5.Controls.Add(Me.XenonButton8)
         Me.TabPage5.Controls.Add(Me.TreeView1)
         Me.TabPage5.Controls.Add(Me.XenonSeparator1)
@@ -4071,6 +4075,36 @@ Partial Class MainFrm
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Log"
         '
+        'log_lbl
+        '
+        Me.log_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.log_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.log_lbl.Location = New System.Drawing.Point(7, 492)
+        Me.log_lbl.Name = "log_lbl"
+        Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.log_lbl.Size = New System.Drawing.Size(335, 34)
+        Me.log_lbl.TabIndex = 20
+        Me.log_lbl.Text = "Error\s happened. Press on Show Errors for details"
+        Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.log_lbl.Visible = False
+        '
+        'XenonButton14
+        '
+        Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton14.ForeColor = System.Drawing.Color.White
+        Me.XenonButton14.Image = Nothing
+        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton14.LineSize = 1
+        Me.XenonButton14.Location = New System.Drawing.Point(348, 492)
+        Me.XenonButton14.Name = "XenonButton14"
+        Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
+        Me.XenonButton14.TabIndex = 7
+        Me.XenonButton14.Text = "Show Errors"
+        Me.XenonButton14.UseVisualStyleBackColor = False
+        Me.XenonButton14.Visible = False
+        '
         'XenonButton8
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -4080,9 +4114,9 @@ Partial Class MainFrm
         Me.XenonButton8.Image = Nothing
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(410, 492)
+        Me.XenonButton8.Location = New System.Drawing.Point(431, 492)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(101, 34)
+        Me.XenonButton8.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton8.TabIndex = 6
         Me.XenonButton8.Text = "OK"
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -5401,4 +5435,6 @@ Partial Class MainFrm
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents XenonButton14 As XenonButton
+    Friend WithEvents log_lbl As Label
 End Class

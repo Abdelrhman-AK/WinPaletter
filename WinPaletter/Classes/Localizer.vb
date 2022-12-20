@@ -128,7 +128,7 @@ Public Class Localizer
 
     Property X22 As String = "This will restart the explorer, don't worry this won't close other applications."
     Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
-    Property NoDefResExplorer As String = "Restarting Explorer is diabled from settings. If the palette is not applied correctly, <br> restart explorer."
+    Property NoDefResExplorer As String = "Restarting Explorer is diabled. If theme is not applied correctly, restart it."
 
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save Settings?"

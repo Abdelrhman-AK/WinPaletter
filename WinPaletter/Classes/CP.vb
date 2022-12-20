@@ -240,38 +240,38 @@ Public Class CP : Implements IDisposable
             NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, If(EnableTheming, 1, 0), 0)
             NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, If(EnableGradient, 1, 0), 0)
 
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", ActiveBorder.R, ActiveBorder.G, ActiveBorder.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", ActiveTitle.R, ActiveTitle.G, ActiveTitle.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", AppWorkspace.R, AppWorkspace.G, AppWorkspace.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Background.R, Background.G, Background.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", ButtonAlternateFace.R, ButtonAlternateFace.G, ButtonAlternateFace.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", ButtonDkShadow.R, ButtonDkShadow.G, ButtonDkShadow.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", ButtonFace.R, ButtonFace.G, ButtonFace.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", ButtonHilight.R, ButtonHilight.G, ButtonHilight.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", ButtonLight.R, ButtonLight.G, ButtonLight.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", ButtonShadow.R, ButtonShadow.G, ButtonShadow.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", ButtonText.R, ButtonText.G, ButtonText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", GradientActiveTitle.R, GradientActiveTitle.G, GradientActiveTitle.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", GradientInactiveTitle.R, GradientInactiveTitle.G, GradientInactiveTitle.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", GrayText.R, GrayText.G, GrayText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", HilightText.R, HilightText.G, HilightText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", HotTrackingColor.R, HotTrackingColor.G, HotTrackingColor.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", InactiveBorder.R, InactiveBorder.G, InactiveBorder.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", InactiveTitle.R, InactiveTitle.G, InactiveTitle.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", InactiveTitleText.R, InactiveTitleText.G, InactiveTitleText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", InfoText.R, InfoText.G, InfoText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", InfoWindow.R, InfoWindow.G, InfoWindow.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Menu.R, Menu.G, Menu.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", MenuBar.R, MenuBar.G, MenuBar.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", MenuText.R, MenuText.G, MenuText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Scrollbar.R, Scrollbar.G, Scrollbar.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", TitleText.R, TitleText.G, TitleText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Window.R, Window.G, Window.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", WindowFrame.R, WindowFrame.G, WindowFrame.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", WindowText.R, WindowText.G, WindowText.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Hilight.R, Hilight.G, Hilight.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", MenuHilight.R, MenuHilight.G, MenuHilight.B), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Desktop.R, Desktop.G, Desktop.B), False, True)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", ActiveBorder.R, ActiveBorder.G, ActiveBorder.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", ActiveTitle.R, ActiveTitle.G, ActiveTitle.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", AppWorkspace.R, AppWorkspace.G, AppWorkspace.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Background.R, Background.G, Background.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", ButtonAlternateFace.R, ButtonAlternateFace.G, ButtonAlternateFace.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", ButtonDkShadow.R, ButtonDkShadow.G, ButtonDkShadow.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", ButtonFace.R, ButtonFace.G, ButtonFace.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", ButtonHilight.R, ButtonHilight.G, ButtonHilight.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", ButtonLight.R, ButtonLight.G, ButtonLight.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", ButtonShadow.R, ButtonShadow.G, ButtonShadow.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", ButtonText.R, ButtonText.G, ButtonText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", GradientActiveTitle.R, GradientActiveTitle.G, GradientActiveTitle.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", GradientInactiveTitle.R, GradientInactiveTitle.G, GradientInactiveTitle.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", GrayText.R, GrayText.G, GrayText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", HilightText.R, HilightText.G, HilightText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", HotTrackingColor.R, HotTrackingColor.G, HotTrackingColor.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", InactiveBorder.R, InactiveBorder.G, InactiveBorder.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", InactiveTitle.R, InactiveTitle.G, InactiveTitle.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", InactiveTitleText.R, InactiveTitleText.G, InactiveTitleText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", InfoText.R, InfoText.G, InfoText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", InfoWindow.R, InfoWindow.G, InfoWindow.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Menu.R, Menu.G, Menu.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", MenuBar.R, MenuBar.G, MenuBar.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", MenuText.R, MenuText.G, MenuText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Scrollbar.R, Scrollbar.G, Scrollbar.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", TitleText.R, TitleText.G, TitleText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Window.R, Window.G, Window.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", WindowFrame.R, WindowFrame.G, WindowFrame.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", WindowText.R, WindowText.G, WindowText.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Hilight.R, Hilight.G, Hilight.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", MenuHilight.R, MenuHilight.G, MenuHilight.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Desktop.R, Desktop.G, Desktop.B), RegistryValueKind.String)
         End Sub
 
     End Structure
@@ -322,13 +322,13 @@ Public Class CP : Implements IDisposable
 
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, True)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", CP.InvertColor(StartMenu_Accent).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", CP.ReverseColor(StartMenu_Accent).ToArgb)
 
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Titlebar_Inactive).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Titlebar_Active).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Titlebar_Active).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Titlebar_Inactive).ToArgb)
 
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
@@ -453,56 +453,15 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", InvertColor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", InvertColor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", InvertColor(AccentColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", ReverseColor(StartColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", ReverseColor(StartColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", ReverseColor(AccentColor).ToArgb)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
 
-
-            If My.Application.isElevated Then
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(PersonalColors_Background, False), False, True)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(PersonalColors_Accent, False), False, True)
-            Else
-                Dim ls As New List(Of String)
-                ls.Clear()
-                ls.Add("Windows Registry Editor Version 5.00")
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
-                ls.Add(String.Format("""PersonalColors_Background""=""#{0}""", "#" & RGB2HEX_oneline(PersonalColors_Background, False)))
-                ls.Add(String.Format("""PersonalColors_Accent""=""#{0}""", "#" & RGB2HEX_oneline(PersonalColors_Accent, False)))
-                ls.Add(String.Format("""ForceStartBackground""=dword:{0}", ReturnEightDigitsFromInt(Start)))
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
-                ls.Add(String.Format("""DefaultColorSet""=dword:{0}", ReturnEightDigitsFromInt(LogonUI)))
-
-                Dim result As String = CStr_FromList(ls)
-
-                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                IO.File.WriteAllText(tempreg, result)
-
-                Dim process As Process = Nothing
-
-                Dim processStartInfo As New ProcessStartInfo With {
-                   .FileName = "regedit",
-                   .Verb = "runas",
-                   .Arguments = String.Format("/s ""{0}""", tempreg),
-                   .WindowStyle = ProcessWindowStyle.Hidden,
-                   .CreateNoWindow = True,
-                   .UseShellExecute = True
-                }
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                processStartInfo.FileName = "reg"
-                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                Kill(tempreg)
-            End If
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(PersonalColors_Background, False), RegistryValueKind.String)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(PersonalColors_Accent, False), RegistryValueKind.String)
         End Sub
 
     End Structure
@@ -540,83 +499,90 @@ Public Class CP : Implements IDisposable
         End Operator
 
         Public Sub Apply()
-            Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
-            Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
-            Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
+            Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
+            rMain.SetValue("", Enabled, RegistryValueKind.DWord)
+            rMain.Close()
 
-            SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
-            SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
-            SystemParametersInfo(SPI.SPI_GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
+            If Enabled Then
+                Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
+                Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
+                Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
 
-            Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
-            Dim lfIconFont As New LogFont : IconFont.ToLogFont(lfIconFont)
-            Dim lfMenuFont As New LogFont : MenuFont.ToLogFont(lfMenuFont)
-            Dim lfMessageFont As New LogFont : MessageFont.ToLogFont(lfMessageFont)
-            Dim lfSMCaptionFont As New LogFont : SmCaptionFont.ToLogFont(lfSMCaptionFont)
-            Dim lfStatusFont As New LogFont : StatusFont.ToLogFont(lfStatusFont)
+                SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
+                SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
+                SystemParametersInfo(SPI.SPI_GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", LogFontHelper.LogFontToByte(lfCaptionFont), True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", LogFontHelper.LogFontToByte(lfIconFont), True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", LogFontHelper.LogFontToByte(lfMenuFont), True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", LogFontHelper.LogFontToByte(lfMessageFont), True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), True)
+                Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
+                Dim lfIconFont As New LogFont : IconFont.ToLogFont(lfIconFont)
+                Dim lfMenuFont As New LogFont : MenuFont.ToLogFont(lfMenuFont)
+                Dim lfMessageFont As New LogFont : MessageFont.ToLogFont(lfMessageFont)
+                Dim lfSMCaptionFont As New LogFont : SmCaptionFont.ToLogFont(lfSMCaptionFont)
+                Dim lfStatusFont As New LogFont : StatusFont.ToLogFont(lfStatusFont)
 
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(MinAnimate, 1, 0), False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, False, True)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, False, True)
-            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, False, True)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", LogFontHelper.LogFontToByte(lfCaptionFont), RegistryValueKind.Binary)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", LogFontHelper.LogFontToByte(lfIconFont), RegistryValueKind.Binary)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", LogFontHelper.LogFontToByte(lfMenuFont), RegistryValueKind.Binary)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", LogFontHelper.LogFontToByte(lfMessageFont), RegistryValueKind.Binary)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", LogFontHelper.LogFontToByte(lfSMCaptionFont), RegistryValueKind.Binary)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", LogFontHelper.LogFontToByte(lfStatusFont), RegistryValueKind.Binary)
 
-            anim.IMinAnimate = If(MinAnimate, 1, 0)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(MinAnimate, 1, 0), RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
-            With NCM
-                .lfCaptionFont = lfCaptionFont        'Requires LogOff
-                .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
-                .lfStatusFont = lfStatusFont          'Requires LogOff
-                .lfMenuFont = lfMenuFont
-                .lfMessageFont = lfMessageFont
+                anim.IMinAnimate = If(MinAnimate, 1, 0)
 
-                .iBorderWidth = BorderWidth
-                .iScrollWidth = ScrollWidth
-                .iScrollHeight = ScrollHeight
-                .iCaptionWidth = CaptionWidth
-                .iCaptionHeight = CaptionHeight
-                .iSMCaptionWidth = SmCaptionWidth
-                .iSMCaptionHeight = SmCaptionHeight
-                .iMenuWidth = MenuWidth
-                .iMenuHeight = MenuHeight
-                .iPaddedBorderWidth = PaddedBorderWidth
-            End With
+                With NCM
+                    .lfCaptionFont = lfCaptionFont        'Requires LogOff
+                    .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
+                    .lfStatusFont = lfStatusFont          'Requires LogOff
+                    .lfMenuFont = lfMenuFont
+                    .lfMessageFont = lfMessageFont
 
-            With ICO
-                .iHorzSpacing = IconSpacing
-                .iVertSpacing = IconVerticalSpacing
-                .lfFont = lfIconFont
-            End With
+                    .iBorderWidth = BorderWidth
+                    .iScrollWidth = ScrollWidth
+                    .iScrollHeight = ScrollHeight
+                    .iCaptionWidth = CaptionWidth
+                    .iCaptionHeight = CaptionHeight
+                    .iSMCaptionWidth = SmCaptionWidth
+                    .iSMCaptionHeight = SmCaptionHeight
+                    .iMenuWidth = MenuWidth
+                    .iMenuHeight = MenuHeight
+                    .iPaddedBorderWidth = PaddedBorderWidth
+                End With
 
-            SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-            SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
-            SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
+                With ICO
+                    .iHorzSpacing = IconSpacing
+                    .iVertSpacing = IconVerticalSpacing
+                    .lfFont = lfIconFont
+                End With
+
+                SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
+                SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
+                SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
 
 
-            NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
+                NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
-            'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-            'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-            'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-            'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-            'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+            End If
+
         End Sub
 
     End Structure
@@ -635,49 +601,9 @@ Public Class CP : Implements IDisposable
         End Operator
 
         Public Sub Apply()
-            If My.Application.isElevated Then
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(DisableAcrylicBackgroundOnLogon, 1, 0))
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(DisableLogonBackgroundImage, 1, 0))
-                EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(NoLockScreen, 1, 0))
-            Else
-                Dim ls As New List(Of String)
-                ls.Clear()
-                ls.Add("Windows Registry Editor Version 5.00")
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-                ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(NoLockScreen, 1, 0)))
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]")
-                ls.Add(String.Format("""DisableAcrylicBackgroundOnLogon""=dword:0000000{0}", If(DisableAcrylicBackgroundOnLogon, 1, 0)))
-                ls.Add(String.Format("""DisableLogonBackgroundImage""=dword:0000000{0}", If(DisableLogonBackgroundImage, 1, 0)))
-
-                Dim result As String = CStr_FromList(ls)
-
-                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                IO.File.WriteAllText(tempreg, result)
-
-                Dim process As Process = Nothing
-
-                Dim processStartInfo As New ProcessStartInfo With {
-                   .FileName = "regedit",
-                   .Verb = "runas",
-                   .Arguments = String.Format("/s ""{0}""", tempreg),
-                   .WindowStyle = ProcessWindowStyle.Hidden,
-                   .CreateNoWindow = True,
-                   .UseShellExecute = True
-                }
-
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                processStartInfo.FileName = "reg"
-                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                Kill(tempreg)
-            End If
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(DisableAcrylicBackgroundOnLogon, 1, 0))
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(DisableLogonBackgroundImage, 1, 0))
+            EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(NoLockScreen, 1, 0))
         End Sub
 
     End Structure
@@ -746,113 +672,113 @@ Public Class CP : Implements IDisposable
             Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", InvertColor([Defaults].ColorTable00).ToArgb)
-                [Console].ColorTable00 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", ReverseColor([Defaults].ColorTable00).ToArgb)
+                [Console].ColorTable00 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable00 = [Defaults].ColorTable00
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", InvertColor([Defaults].ColorTable01).ToArgb)
-                [Console].ColorTable01 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", ReverseColor([Defaults].ColorTable01).ToArgb)
+                [Console].ColorTable01 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable01 = [Defaults].ColorTable01
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", InvertColor([Defaults].ColorTable02).ToArgb)
-                [Console].ColorTable02 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", ReverseColor([Defaults].ColorTable02).ToArgb)
+                [Console].ColorTable02 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable02 = [Defaults].ColorTable02
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", InvertColor([Defaults].ColorTable03).ToArgb)
-                [Console].ColorTable03 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", ReverseColor([Defaults].ColorTable03).ToArgb)
+                [Console].ColorTable03 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable03 = [Defaults].ColorTable03
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", InvertColor([Defaults].ColorTable04).ToArgb)
-                [Console].ColorTable04 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", ReverseColor([Defaults].ColorTable04).ToArgb)
+                [Console].ColorTable04 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable04 = [Defaults].ColorTable04
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", InvertColor([Defaults].ColorTable05).ToArgb)
-                [Console].ColorTable05 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", ReverseColor([Defaults].ColorTable05).ToArgb)
+                [Console].ColorTable05 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable05 = [Defaults].ColorTable05
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", InvertColor([Defaults].ColorTable06).ToArgb)
-                [Console].ColorTable06 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", ReverseColor([Defaults].ColorTable06).ToArgb)
+                [Console].ColorTable06 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable06 = [Defaults].ColorTable06
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", InvertColor([Defaults].ColorTable07).ToArgb)
-                [Console].ColorTable07 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", ReverseColor([Defaults].ColorTable07).ToArgb)
+                [Console].ColorTable07 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable07 = [Defaults].ColorTable07
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", InvertColor([Defaults].ColorTable08).ToArgb)
-                [Console].ColorTable08 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", ReverseColor([Defaults].ColorTable08).ToArgb)
+                [Console].ColorTable08 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable08 = [Defaults].ColorTable08
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", InvertColor([Defaults].ColorTable09).ToArgb)
-                [Console].ColorTable09 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", ReverseColor([Defaults].ColorTable09).ToArgb)
+                [Console].ColorTable09 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable09 = [Defaults].ColorTable09
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", InvertColor([Defaults].ColorTable10).ToArgb)
-                [Console].ColorTable10 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", ReverseColor([Defaults].ColorTable10).ToArgb)
+                [Console].ColorTable10 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable10 = [Defaults].ColorTable10
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", InvertColor([Defaults].ColorTable11).ToArgb)
-                [Console].ColorTable11 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", ReverseColor([Defaults].ColorTable11).ToArgb)
+                [Console].ColorTable11 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable11 = [Defaults].ColorTable11
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", InvertColor([Defaults].ColorTable12).ToArgb)
-                [Console].ColorTable12 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", ReverseColor([Defaults].ColorTable12).ToArgb)
+                [Console].ColorTable12 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable12 = [Defaults].ColorTable12
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", InvertColor([Defaults].ColorTable13).ToArgb)
-                [Console].ColorTable13 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", ReverseColor([Defaults].ColorTable13).ToArgb)
+                [Console].ColorTable13 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable13 = [Defaults].ColorTable13
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", InvertColor([Defaults].ColorTable14).ToArgb)
-                [Console].ColorTable14 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", ReverseColor([Defaults].ColorTable14).ToArgb)
+                [Console].ColorTable14 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable14 = [Defaults].ColorTable14
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", InvertColor([Defaults].ColorTable15).ToArgb)
-                [Console].ColorTable15 = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", ReverseColor([Defaults].ColorTable15).ToArgb)
+                [Console].ColorTable15 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
             Catch
                 [Console].ColorTable15 = [Defaults].ColorTable15
             End Try
@@ -926,8 +852,8 @@ Public Class CP : Implements IDisposable
 
             If My.W10_1909 Then
                 Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", InvertColor(Color.White).ToArgb)
-                    [Console].W10_1909_CursorColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", ReverseColor(Color.White).ToArgb)
+                    [Console].W10_1909_CursorColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
                 Catch
                     [Console].W10_1909_CursorColor = Color.White
                 End Try
@@ -983,31 +909,31 @@ Public Class CP : Implements IDisposable
             End Try
 
             EditReg(RegAddress, "EnableColorSelection", 1)
-            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, InvertColor([Console].ColorTable00)).ToArgb)
-            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, InvertColor([Console].ColorTable01)).ToArgb)
-            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, InvertColor([Console].ColorTable02)).ToArgb)
-            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, InvertColor([Console].ColorTable03)).ToArgb)
-            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, InvertColor([Console].ColorTable04)).ToArgb)
-            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, InvertColor([Console].ColorTable05)).ToArgb)
-            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, InvertColor([Console].ColorTable06)).ToArgb)
-            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, InvertColor([Console].ColorTable07)).ToArgb)
-            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, InvertColor([Console].ColorTable08)).ToArgb)
-            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, InvertColor([Console].ColorTable09)).ToArgb)
-            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, InvertColor([Console].ColorTable10)).ToArgb)
-            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, InvertColor([Console].ColorTable11)).ToArgb)
-            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, InvertColor([Console].ColorTable12)).ToArgb)
-            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, InvertColor([Console].ColorTable13)).ToArgb)
-            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, InvertColor([Console].ColorTable14)).ToArgb)
-            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, InvertColor([Console].ColorTable15)).ToArgb)
+            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, ReverseColor([Console].ColorTable00)).ToArgb)
+            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, ReverseColor([Console].ColorTable01)).ToArgb)
+            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, ReverseColor([Console].ColorTable02)).ToArgb)
+            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, ReverseColor([Console].ColorTable03)).ToArgb)
+            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, ReverseColor([Console].ColorTable04)).ToArgb)
+            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, ReverseColor([Console].ColorTable05)).ToArgb)
+            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, ReverseColor([Console].ColorTable06)).ToArgb)
+            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, ReverseColor([Console].ColorTable07)).ToArgb)
+            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, ReverseColor([Console].ColorTable08)).ToArgb)
+            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, ReverseColor([Console].ColorTable09)).ToArgb)
+            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, ReverseColor([Console].ColorTable10)).ToArgb)
+            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, ReverseColor([Console].ColorTable11)).ToArgb)
+            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, ReverseColor([Console].ColorTable12)).ToArgb)
+            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, ReverseColor([Console].ColorTable13)).ToArgb)
+            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, ReverseColor([Console].ColorTable14)).ToArgb)
+            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, ReverseColor([Console].ColorTable15)).ToArgb)
             EditReg(RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
             EditReg(RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
             EditReg(RegAddress, "CursorSize", [Console].CursorSize)
 
             If [Console].FontRaster Then
-                EditReg(RegAddress, "FaceName", "Terminal", False, True)
+                EditReg(RegAddress, "FaceName", "Terminal", RegistryValueKind.String)
                 EditReg(RegAddress, "FontFamily", 48)
             Else
-                EditReg(RegAddress, "FaceName", [Console].FaceName, False, True)
+                EditReg(RegAddress, "FaceName", [Console].FaceName, RegistryValueKind.String)
                 EditReg(RegAddress, "FontFamily", If([Console].FontRaster, 1, 54))
             End If
 
@@ -1015,7 +941,7 @@ Public Class CP : Implements IDisposable
             EditReg(RegAddress, "FontWeight", [Console].FontWeight)
 
             If My.W10_1909 Then
-                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, InvertColor([Console].W10_1909_CursorColor)).ToArgb)
+                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, ReverseColor([Console].W10_1909_CursorColor)).ToArgb)
                 EditReg(RegAddress, "CursorType", [Console].W10_1909_CursorType)
                 EditReg(RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
                 EditReg(RegAddress, "ForceV2", If([Console].W10_1909_ForceV2, 1, 0))
@@ -1023,43 +949,8 @@ Public Class CP : Implements IDisposable
                 EditReg(RegAddress, "TerminalScrolling", If([Console].W10_1909_TerminalScrolling, 1, 0))
             End If
 
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, RegistryValueKind.String)
 
-            If My.Application.isElevated Then
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, False, True)
-            Else
-                Dim ls As New List(Of String)
-                ls.Clear()
-                ls.Add("Windows Registry Editor Version 5.00")
-                ls.Add(vbCrLf)
-                ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont]")
-                ls.Add(String.Format("""000""=""{0}""", [Console].FaceName))
-
-                Dim result As String = CStr_FromList(ls)
-
-                If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                IO.File.WriteAllText(tempreg, result)
-
-                Dim process As Process = Nothing
-
-                Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                processStartInfo.FileName = "reg"
-                processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                process = Process.Start(processStartInfo)
-                process.WaitForExit()
-                Kill(tempreg)
-            End If
         End Sub
         Shared Sub Write_Console_To_ListOfString(Signature As String, [Console] As Console_Structure, tx As List(Of String))
             tx.Add(String.Format("<{0}>", Signature))
@@ -2039,37 +1930,111 @@ Public Class CP : Implements IDisposable
         s &= int
         Return s
     End Function
-    Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional ByVal Binary As Boolean = False, Optional ByVal [String] As Boolean = False)
+    Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
         Dim R As RegistryKey = Nothing
 
-        If KeyName.Contains("HKEY_CURRENT_USER") Then
+        Dim LM As Boolean = False
+
+        If KeyName.ToUpper.Contains("HKEY_CURRENT_USER".ToUpper) Then
             R = Registry.CurrentUser
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
-        ElseIf KeyName.Contains("HKEY_LOCAL_MACHINE") Then
+
+            'If Registry.CurrentUser.OpenSubKey(KeyName, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(KeyName, True)
+
+        ElseIf KeyName.ToUpper.Contains("HKEY_LOCAL_MACHINE".ToUpper) Then
+
+            LM = True
             R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
+
+            If My.Application.isElevated Then
+                'If Registry.LocalMachine.OpenSubKey(KeyName, True) Is Nothing Then Registry.LocalMachine.CreateSubKey(KeyName, True)
+            End If
+
         End If
 
-        Try
-            If Binary Then
+        If Not LM Or (LM And My.Application.isElevated) Then
+
+            If RegType = RegistryValueKind.Binary Then
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.Binary)
-            ElseIf [String] Then
+            ElseIf RegType = RegistryValueKind.String Then
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.String)
             Else
                 R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
             End If
-        Catch ex As Exception
-            BugReport.ThrowError(ex)
-        Finally
-            If R IsNot Nothing Then
-                R.Flush()
-                R.Close()
-            End If
-        End Try
+
+            Try
+                If R IsNot Nothing Then
+                    R.Flush()
+                    R.Close()
+                End If
+            Catch
+            End Try
+
+        Else
+            EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
+        End If
+
+    End Sub
+    Shared Sub EditReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
+        Dim regTemplate As String
+
+        Dim _Value As String
+
+        If Value IsNot Nothing Then
+
+            Select Case RegType
+                Case RegistryValueKind.String
+                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=""{2}"""
+                    _Value = Value.ToString
+
+                Case RegistryValueKind.DWord
+                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=dword:{2}"
+                    _Value = ReturnEightDigitsFromInt(Value)
+
+                Case RegistryValueKind.Binary
+                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=hex:{2}"
+                    _Value = BitConverter.ToString(Value).Replace("-", ",")
+
+                Case Else
+                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=""{2}"""
+                    _Value = Value.ToString
+
+            End Select
+
+        Else
+            regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}"
+            _Value = ""
+        End If
+
+        Dim regFileContent As String = String.Format(regTemplate, RegistryKeyPath, ValueName, _Value, vbCrLf)
+
+        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
+        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
 
         Try
-            R.Flush()
-            R.Close()
+            If IO.File.Exists(tempreg) Then Kill(tempreg)
+        Catch
+        End Try
+
+        IO.File.WriteAllText(tempreg, regFileContent)
+
+        Dim process As Process = Nothing
+
+        Dim processStartInfo As New ProcessStartInfo With {
+           .FileName = "reg",
+           .Verb = "runas",
+           .Arguments = String.Format("import ""{0}""", tempreg),
+           .WindowStyle = ProcessWindowStyle.Hidden,
+           .CreateNoWindow = True,
+           .UseShellExecute = True
+        }
+
+        process = Process.Start(processStartInfo)
+        process.WaitForExit()
+
+        Try
+            If IO.File.Exists(tempreg) Then Kill(tempreg)
         Catch
         End Try
 
@@ -2084,7 +2049,7 @@ Public Class CP : Implements IDisposable
         End If
         Return S
     End Function
-    Shared Function InvertColor([Color] As Color) As Color
+    Shared Function ReverseColor([Color] As Color) As Color
         Return Color.FromArgb([Color].B, [Color].G, [Color].R)
     End Function
     Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
@@ -2258,6 +2223,39 @@ Public Class CP : Implements IDisposable
 
         Return installed
     End Function
+    Public Shared Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
+
+        If [TreeView].InvokeRequired Then
+
+            Try
+                [TreeView].Invoke(CType(Sub()
+                                            With [TreeView].Nodes.Add([Text])
+                                                .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                                            End With
+                                            [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                                            [TreeView].Refresh()
+                                        End Sub, MethodInvoker))
+            Catch
+            End Try
+
+        Else
+
+            Try
+                With [TreeView].Nodes.Add([Text])
+                    .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                End With
+                [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                [TreeView].Refresh()
+            Catch
+
+            End Try
+
+        End If
+    End Sub
+    Private Sub AddException([Label] As String, [Exception] As Exception)
+        My.Application.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
+
+    End Sub
 #End Region
 
 #Region "EXPERIMENTAL  -  JSON"
@@ -2293,7 +2291,6 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "CP Handling (Loading/Applying)"
-
     Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "", Optional IgnoreWindowsTerminal As Boolean = False)
         Select Case [Mode]
             Case Mode.Registry
@@ -2379,29 +2376,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", InvertColor(Def.Windows11.StartMenu_Accent).ToArgb)
-                        Windows11.StartMenu_Accent = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", ReverseColor(Def.Windows11.StartMenu_Accent).ToArgb)
+                        Windows11.StartMenu_Accent = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows11.StartMenu_Accent = Def.Windows11.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Def.Windows11.Titlebar_Active).ToArgb)
+                        Windows11.Titlebar_Active = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Def.Windows11.Titlebar_Inactive).ToArgb)
-                        Windows11.Titlebar_Inactive = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Def.Windows11.Titlebar_Inactive).ToArgb)
+                        Windows11.Titlebar_Inactive = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows11.Titlebar_Inactive = Def.Windows11.Titlebar_Inactive
                     End Try
@@ -2496,29 +2493,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", InvertColor(Def.Windows10.StartMenu_Accent).ToArgb)
-                        Windows10.StartMenu_Accent = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", ReverseColor(Def.Windows10.StartMenu_Accent).ToArgb)
+                        Windows10.StartMenu_Accent = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows10.StartMenu_Accent = Def.Windows10.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", InvertColor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", InvertColor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Def.Windows10.Titlebar_Active).ToArgb)
+                        Windows10.Titlebar_Active = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", InvertColor(Def.Windows10.Titlebar_Inactive).ToArgb)
-                        Windows10.Titlebar_Inactive = InvertColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Def.Windows10.Titlebar_Inactive).ToArgb)
+                        Windows10.Titlebar_Inactive = ReverseColor(Color.FromArgb(y))
                     Catch
                         Windows10.Titlebar_Inactive = Def.Windows10.Titlebar_Inactive
                     End Try
@@ -2730,58 +2727,16 @@ Public Class CP : Implements IDisposable
                         Windows8.ColorizationColorBalance = Def.Windows8.ColorizationColorBalance
                     End Try
 
-                    Registry.CurrentUser.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
-
-                    If My.Application.isElevated Then
-                        Registry.LocalMachine.CreateSubKey("SOFTWARE\Policies\Microsoft\Windows\Personalization")
-                        Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent")
-                    Else
-                        Dim ls As New List(Of String)
-                        ls.Clear()
-                        ls.Add("Windows Registry Editor Version 5.00")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]")
-                        ls.Add(vbCrLf)
-                        ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent]")
-                        ls.Add(vbCrLf)
-
-                        Dim result As String = CStr_FromList(ls)
-
-                        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-                        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-                        IO.File.WriteAllText(tempreg, result)
-
-                        Dim process As Process = Nothing
-
-                        Dim processStartInfo As New ProcessStartInfo With {
-                               .FileName = "regedit",
-                               .Verb = "runas",
-                               .Arguments = String.Format("/s ""{0}""", tempreg),
-                               .WindowStyle = ProcessWindowStyle.Hidden,
-                               .CreateNoWindow = True,
-                               .UseShellExecute = True
-                            }
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        processStartInfo.FileName = "reg"
-                        processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-                        process = Process.Start(processStartInfo)
-                        process.WaitForExit()
-                        Kill(tempreg)
-                    End If
-
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
-                        Windows8.StartColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y)))
+                        Windows8.StartColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y)))
                     Catch
                         Windows8.StartColor = Color.FromArgb(84, 0, 30)
                     End Try
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
-                        Windows8.AccentColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y)))
+                        Windows8.AccentColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y)))
                     Catch
                         Windows8.AccentColor = Color.FromArgb(178, 29, 72)
                     End Try
@@ -2856,9 +2811,9 @@ Public Class CP : Implements IDisposable
 
 #Region "LogonUI 7"
                 If My.W7 Then
-                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
+                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
                     Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
-                    LogonUI7.Enabled = b1 And b2
+                    LogonUI7.Enabled = b1 Or b2
 
                     Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
@@ -3157,6 +3112,10 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Metrics & Fonts"
+                Dim rMain_M As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
+                WinMetrics_Fonts.Enabled = rMain_M.GetValue("", False)
+                rMain_M.Close()
+
                 WinMetrics_Fonts.BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", -15) / -15
                 WinMetrics_Fonts.CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", -330) / -15
                 WinMetrics_Fonts.CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", -330) / -15
@@ -3713,37 +3672,6 @@ Public Class CP : Implements IDisposable
         End Select
     End Sub
 
-    Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
-
-        If [TreeView].InvokeRequired Then
-
-            Try
-                [TreeView].Invoke(CType(Sub()
-                                            With [TreeView].Nodes.Add([Text])
-                                                .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
-                                            End With
-                                            [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                            [TreeView].Refresh()
-                                        End Sub, MethodInvoker))
-            Catch
-            End Try
-
-        Else
-
-            Try
-                With [TreeView].Nodes.Add([Text])
-                    .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
-                End With
-                [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                [TreeView].Refresh()
-            Catch
-
-            End Try
-
-        End If
-    End Sub
-
-
     Sub Save(ByVal [SaveTo] As Mode, Optional ByVal FileLocation As String = "", Optional ByVal [TreeView] As TreeView = Nothing)
 
         Select Case [SaveTo]
@@ -3758,7 +3686,9 @@ Public Class CP : Implements IDisposable
                 sw.Reset()
                 sw.Stop()
 
+
                 If ReportProgress Then
+                    My.Application.Saving_Exceptions.Clear()
                     [TreeView].Nodes.Clear()
                     AddNode([TreeView], String.Format("{0}: Applying Started", Now.ToLongTimeString), "info")
                 End If
@@ -3770,12 +3700,18 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows11.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 Scheme. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 Scheme", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 11 Scheme", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3784,12 +3720,17 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 LogonUI", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 11 LogonUI", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3800,12 +3741,17 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows10.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 Scheme. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 Scheme", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 10 Scheme", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3815,12 +3761,17 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 LogonUI", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 10 LogonUI", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3832,12 +3783,17 @@ Public Class CP : Implements IDisposable
                     RefreshDWM(Me)
                     Try
                         Windows7.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 Colors. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 Colors", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 7 Colors", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3847,12 +3803,17 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Apply_LogonUI7([TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 LogonUI. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 LogonUI", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 7 LogonUI", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3863,12 +3824,17 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Windows8.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Colors. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Colors", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 8.1 Colors", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     RefreshDWM(Me)
@@ -3878,13 +3844,18 @@ Public Class CP : Implements IDisposable
                     sw.Reset() : sw.Start()
                     Try
                         Apply_LogonUI_8([TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
 
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
-                        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Lock Screen. {1}", Now.ToLongTimeString, ex.Message), "error")
-                        BugReport.ThrowError(ex)
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Lock Screen", Now.ToLongTimeString), "error")
+                            AddException("Error occured while applying Windows 8.1 Lock Screen", ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
                         sw.Start() : sw_all.Start()
                     End Try
                     sw.Stop()
@@ -3895,12 +3866,17 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Win32.Apply()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Win32UI. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying Win32UI", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying Win32UI", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -3915,12 +3891,17 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     WinMetrics_Fonts.Apply()
-                    If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("They took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Metrics and Fonts. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Metrics and Fonts", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying Windows Metrics and Fonts", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -3943,13 +3924,17 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_CommandPrompt()
-                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("{0}: Applying Command Prompt took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
-
+                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Command Prompt. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying Command Prompt", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying Command Prompt", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -3964,12 +3949,17 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell86()
-                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x86 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x86. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x86", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying PowerShell x86", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -3984,12 +3974,17 @@ Public Class CP : Implements IDisposable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell64()
-                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("{0}: Applying PowerShell x64 took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x64. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x64", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying PowerShell x64", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -4042,17 +4037,28 @@ Public Class CP : Implements IDisposable
                             Try
                                 AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Stable", Now.ToLongTimeString), "info")
                                 Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Stable took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                             Catch ex As Exception
                                 sw.Stop() : sw_all.Stop()
                                 _ErrorHappened = True
-                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Stable. {1}", Now.ToLongTimeString, ex.Message), "error")
-                                BugReport.ThrowError(ex)
+                                If ReportProgress Then
+                                    AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Stable", Now.ToLongTimeString), "error")
+                                    AddException("Error occured while applying Windows Terminal Stable", ex)
+                                Else
+                                    BugReport.ThrowError(ex)
+                                End If
+
                                 sw.Start() : sw_all.Start()
                             End Try
 
                         Else
-                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it isn't installed.", Now.ToLongTimeString), "skip")
+
+                            If Not My.Application._Settings.Terminal_Path_Deflection Then
+                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it isn't installed.", Now.ToLongTimeString), "skip")
+                            Else
+                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as deflected file isn't found.", Now.ToLongTimeString), "skip")
+                            End If
+
                         End If
                     End If
 
@@ -4062,17 +4068,26 @@ Public Class CP : Implements IDisposable
                             Try
                                 AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Preview", Now.ToLongTimeString), "info")
                                 TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Preview took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                             Catch ex As Exception
                                 sw.Stop() : sw_all.Stop()
                                 _ErrorHappened = True
-                                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Preview. {1}", Now.ToLongTimeString, ex.Message), "error")
-                                BugReport.ThrowError(ex)
+                                If ReportProgress Then
+                                    AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Preview", Now.ToLongTimeString), "error")
+                                    AddException("Error occured while applying Windows Terminal Preview", ex)
+                                Else
+                                    BugReport.ThrowError(ex)
+                                End If
+
                                 sw.Start() : sw_all.Start()
                             End Try
 
                         Else
-                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it isn't installed.", Now.ToLongTimeString), "skip")
+                            If Not My.Application._Settings.Terminal_Path_Deflection Then
+                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it isn't installed.", Now.ToLongTimeString), "skip")
+                            Else
+                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as deflected file isn't found.", Now.ToLongTimeString), "skip")
+                            End If
                         End If
                     End If
 
@@ -4097,8 +4112,13 @@ Public Class CP : Implements IDisposable
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Cursors. {1}", Now.ToLongTimeString, ex.Message), "error")
-                    BugReport.ThrowError(ex)
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Cursors", Now.ToLongTimeString), "error")
+                        AddException("Error occured while applying Windows Cursors", ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
@@ -4355,7 +4375,6 @@ Public Class CP : Implements IDisposable
         End Select
 
     End Sub
-
 #End Region
 
 #Region "Applying Subs"
@@ -4363,51 +4382,8 @@ Public Class CP : Implements IDisposable
 
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
-        If My.Application.isElevated Then
-
-            My.Computer.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background")
-            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7.Enabled, 1, 0))
-
-            My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\System")
-            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7.Enabled, 1, 0))
-
-        Else
-            Dim ls As New List(Of String)
-            ls.Clear()
-            ls.Add("Windows Registry Editor Version 5.00")
-            ls.Add(vbCrLf)
-            ls.Add("[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]")
-            ls.Add(String.Format("""OEMBackground""=dword:0000000{0}", If(LogonUI7.Enabled, 1, 0)))
-            ls.Add(vbCrLf)
-            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System]")
-            ls.Add(String.Format("""UseOEMBackground""=dword:0000000{0}", If(LogonUI7.Enabled, 1, 0)))
-
-            Dim result As String = CStr_FromList(ls)
-
-            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-            IO.File.WriteAllText(tempreg, result)
-
-            Dim process As Process = Nothing
-
-            Dim processStartInfo As New ProcessStartInfo With {
-           .FileName = "regedit",
-           .Verb = "runas",
-           .Arguments = String.Format("/s ""{0}""", tempreg),
-           .WindowStyle = ProcessWindowStyle.Hidden,
-           .CreateNoWindow = True,
-           .UseShellExecute = True
-        }
-            process = Process.Start(processStartInfo)
-            process.WaitForExit()
-            processStartInfo.FileName = "reg"
-            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-            process = Process.Start(processStartInfo)
-            process.WaitForExit()
-            Kill(tempreg)
-        End If
+        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7.Enabled, 1, 0))
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7.Enabled, 1, 0))
 
         Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
@@ -4483,7 +4459,7 @@ Public Class CP : Implements IDisposable
 
 
             For x = 0 To bmpList.Count - 1
-                If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} " & vbCrLf & "({0}/{1}) ...", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
+                If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
 
                 If LogonUI7.Grayscale Then bmpList(x) = Grayscale(bmpList(x))
                 If LogonUI7.Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7.Blur_Intensity)
@@ -4508,46 +4484,8 @@ Public Class CP : Implements IDisposable
 
         Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
-        If My.Application.isElevated Then
-            My.Computer.Registry.LocalMachine.CreateSubKey("Software\Policies\Microsoft\Windows\Personalization")
-            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Windows8.NoLockScreen, 1, 0))
-            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg)
-
-        Else
-            Dim ls As New List(Of String)
-            ls.Clear()
-            ls.Add("Windows Registry Editor Version 5.00")
-            ls.Add(vbCrLf)
-            ls.Add("[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization]")
-            ls.Add(String.Format("""NoLockScreen""=dword:0000000{0}", If(Windows8.NoLockScreen, 1, 0)))
-            ls.Add(String.Format("""LockScreenImage""=""{0}""", lockimg))
-
-            Dim result As String = CStr_FromList(ls)
-
-            If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-
-            Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-            IO.File.WriteAllText(tempreg, result)
-
-            Dim process As Process = Nothing
-
-            Dim processStartInfo As New ProcessStartInfo With {
-                           .FileName = "regedit",
-                           .Verb = "runas",
-                           .Arguments = String.Format("/s ""{0}""", tempreg),
-                           .WindowStyle = ProcessWindowStyle.Hidden,
-                           .CreateNoWindow = True,
-                           .UseShellExecute = True
-                        }
-            process = Process.Start(processStartInfo)
-            process.WaitForExit()
-            processStartInfo.FileName = "reg"
-            processStartInfo.Arguments = String.Format("import ""{0}""", tempreg)
-            process = Process.Start(processStartInfo)
-            process.WaitForExit()
-            Kill(tempreg)
-        End If
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Windows8.NoLockScreen, 1, 0))
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String)
 
         Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
@@ -4682,7 +4620,7 @@ Public Class CP : Implements IDisposable
         Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
         Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
 
-        If ReportProgress Then AddNode([TreeView], String.Format("{0}: Saving Windows Cursors Colors to Registry took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
         sw.Stop()
 
         If Cursors_Enabled Then
@@ -4692,7 +4630,7 @@ Public Class CP : Implements IDisposable
                 If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCursors, Now.ToLongTimeString), "info")
                 ExportCursors(Me)
                 sw.Stop()
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Rendering Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
 
                 If My.Application._Settings.AutoApplyCursors Then
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_ApplyingCursors, Now.ToLongTimeString), "info")
@@ -4700,14 +4638,17 @@ Public Class CP : Implements IDisposable
                     sw.Start()
                     ApplyCursorsToReg()
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
                 Else
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: Modifying Windows Cursors is restricted from Settings", Now.ToLongTimeString), "error")
                 End If
 
             Catch ex As Exception
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Error occured while Rendering\Applying Windows Cursors. {1}", Now.ToLongTimeString, ex.Message), "error")
-                BugReport.ThrowError(ex)
+                If ReportProgress Then
+                    AddNode([TreeView], String.Format("{0}: Error occured while Rendering\Applying Windows Cursors", Now.ToLongTimeString), "error")
+                    AddException("Error occured while Rendering\Applying Windows Cursors", ex)
+                End If
+
             End Try
 
 

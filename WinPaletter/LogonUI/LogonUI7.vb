@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports WinPaletter.XenonCore
 Public Class LogonUI7
     Private _Shown As Boolean = False
