@@ -1055,7 +1055,7 @@ Public Class MainFrm
             Case 18
                 W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
             Case 19
-                W8_start.Image = ColorToBitmap(ColorPalette.Windows8.PersonalColors_Background, New Size(48, 48))
+                W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
                 W8_start.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
             Case Else
@@ -1067,7 +1067,7 @@ Public Class MainFrm
 
         For Each ri As XenonRadioImage In LogonUI8Colors.Controls.OfType(Of XenonRadioImage)
             If ColorPalette.Windows8.LogonUI = ri.Name.Replace("color", "") Then
-                W8_logonui.Image = ColorToBitmap(ri.AccentColor, New Size(48, 48))
+                W8_logonui.Image = ri.AccentColor.ToBitmap(New Size(48, 48))
                 Exit For
             End If
         Next

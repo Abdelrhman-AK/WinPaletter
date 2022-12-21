@@ -72,7 +72,7 @@ Public Class Start8Selector
         img16.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 64, 64)
         img17.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 64, 64)
         img18.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 64, 64)
-        img19.Image = ColorToBitmap(MainFrm.CP.Windows8.PersonalColors_Background, New Size(64, 64))
+        img19.Image = MainFrm.CP.Windows8.PersonalColors_Background.ToBitmap(New Size(64, 64))
         img20.Image = ResizeImage(My.Application.GetCurrentWallpaper, 64, 64)
     End Sub
 

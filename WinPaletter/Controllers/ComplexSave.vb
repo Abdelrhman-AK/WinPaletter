@@ -22,7 +22,7 @@ Public Class ComplexSave
     Private Sub ComplexSave_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
-        Dim c As Color = GetAverageColor(PictureBox1.Image)
+        Dim c As Color = PictureBox1.Image.AverageColor
         Dim c1 As Color = CCB(c, If(GetDarkMode(), -0.35, 0.35))
         Dim c2 As Color = CCB(c, If(GetDarkMode(), -0.75, 0.75))
         Panel1.BackColor = c1

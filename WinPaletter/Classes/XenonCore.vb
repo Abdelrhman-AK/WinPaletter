@@ -173,7 +173,6 @@ Public Class XenonCore
             End Try
         End With
     End Sub
-
     Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
         Try
 
@@ -186,63 +185,20 @@ Public Class XenonCore
                 Marshal.Copy(pt, bPtr, 0, CInt(size))
                 Return Image.FromStream(New MemoryStream(bPtr))
             Else
-                Return ColorToBitmap(Color.Black, New Size(UnfoundW, UnfoundH))
+                Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
             End If
         Catch
-            Return ColorToBitmap(Color.Black, New Size(UnfoundW, UnfoundH))
+            Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
         End Try
 
     End Function
-
     Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
         Dim bm As New Bitmap(ctl.Width, ctl.Height)
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
         Return bm
     End Function
-    Public Shared Function ColorToBitmap([Color] As Color, [Size] As Size)
-        Dim b As New Bitmap([Size].Width, [Size].Height)
-        Dim g As Graphics = Graphics.FromImage(b)
-        g.Clear([Color])
-        g.Save()
-        Return b
-        g.Dispose()
-        b.Dispose()
-    End Function
-    Public Shared Function GetAverageColor(ByVal [Image] As Bitmap) As Color
-        Try
-            Dim bmp As Bitmap = [Image]
-            Dim totalR As Integer = 0
-            Dim totalG As Integer = 0
-            Dim totalB As Integer = 0
 
-            Try
-                If bmp IsNot Nothing Then
-                    For x As Integer = 0 To bmp.Width - 1
-                        For y As Integer = 0 To bmp.Height - 1
-                            Dim pixel As Color = bmp.GetPixel(x, y)
-                            totalR += pixel.R
-                            totalG += pixel.G
-                            totalB += pixel.B
-                        Next
-                    Next
-                End If
-            Catch
 
-            End Try
-
-            If bmp IsNot Nothing Then
-                Dim totalPixels As Integer = bmp.Height * bmp.Width
-                Dim averageR As Integer = totalR \ totalPixels
-                Dim averageg As Integer = totalG \ totalPixels
-                Dim averageb As Integer = totalB \ totalPixels
-                Return Color.FromArgb(averageR, averageg, averageb)
-            Else
-                Return Color.FromArgb(80, 80, 80)
-            End If
-        Catch
-
-        End Try
-    End Function
     Public Shared Function CCB(ByVal color As Color, ByVal correctionFactor As Single) As Color
         Dim red As Single = CSng(color.R)
         Dim green As Single = CSng(color.G)
@@ -262,29 +218,6 @@ Public Class XenonCore
             Return Color.FromArgb(color.A, CInt(red), CInt(green), CInt(blue))
         Catch
         End Try
-    End Function
-    Public Shared Function BlurBitmap(ByRef image As Image, Optional ByVal BlurForce As Integer = 2) As Bitmap
-        Dim g As Graphics = Graphics.FromImage(image)
-
-        g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-
-        Dim att As New ImageAttributes
-        Dim m As New ColorMatrix With {.Matrix33 = 0.4F}
-        att.SetColorMatrix(m)
-
-        BlurForce += 1
-
-        For x = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(image, New Rectangle(x, 0, image.Width - 1, image.Height - 1), 0, 0, image.Width - 1, image.Height - 1, GraphicsUnit.Pixel, att)
-        Next
-
-        For y = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(image, New Rectangle(0, y, image.Width - 1, image.Height - 1), 0, 0, image.Width - 1, image.Height - 1, GraphicsUnit.Pixel, att)
-        Next
-
-        Return image
-        att.Dispose()
-        g.Dispose()
     End Function
     Public Shared Function FadeBitmap(ByVal originalImage As Image, ByVal opacity As Double) As Bitmap
         Const bytesPerPixel As Integer = 4
@@ -319,32 +252,8 @@ Public Class XenonCore
         bmp.UnlockBits(bmpData)
         Return bmp
     End Function
-    Public Shared Function NoiseBitmap(bmp As Bitmap, NoiseMode As NoiseMode, opacity As Single) As Bitmap
-        Try
-            Dim g As Graphics = Graphics.FromImage(bmp)
 
-            If NoiseMode = NoiseMode.Acrylic Then
-                Dim br As TextureBrush
-                br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
-                g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
-            ElseIf NoiseMode = NoiseMode.Aero Then
-                g.DrawImage(FadeBitmap(My.Resources.AeroGlass, opacity), New Rectangle(0, 0, bmp.Width, bmp.Height))
-            End If
 
-            g.Save()
-            Return bmp
-            g.Dispose()
-            bmp.Dispose()
-        Catch
-            Return Nothing
-        End Try
-    End Function
-    Public Shared Function InvertColor(ByVal [Color] As Color) As Color
-        Return Color.FromArgb([Color].A, 255 - [Color].R, 255 - [Color].G, 255 - [Color].B)
-    End Function
-    Public Shared Function IsColorDark(ByVal [Color] As Color) As Boolean
-        Return Not ([Color].R * 0.2126 + [Color].G * 0.7152 + [Color].B * 0.0722 > 255 / 2)
-    End Function
     Public Shared Function ColorReplace(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Image
         Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
         Dim G As Graphics = Graphics.FromImage(outputImage)
@@ -411,85 +320,7 @@ Public Class XenonCore
             Return False
         End If
     End Function
-    Public Shared Function ReturnColorFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
-        Dim s As String = "Empty"
 
-        If Color <> Color.FromArgb(0, 0, 0, 0) Then
-            Select Case Format
-                Case ColorFormat.HEX
-                    s = If(HexHash, "#", "") & RGB2HEX(Color, Alpha)
-
-                Case ColorFormat.RGB
-                    If Not Alpha Then
-                        s = String.Format("{0} {1} {2}", Color.R, Color.G, Color.B)
-                    Else
-                        s = String.Format("{0} {1} {2} {3}", Color.A, Color.R, Color.G, Color.B)
-                    End If
-
-                Case ColorFormat.HSL
-                    s = String.Format("{0} {1}% {2}%", RGBToHSL(Color).H, Math.Round(RGBToHSL(Color).S * 100), Math.Round(RGBToHSL(Color).L * 100))
-
-                Case ColorFormat.Dec
-                    s = Color.ToArgb
-
-            End Select
-        Else
-            s = "Empty"
-        End If
-
-        Return s
-    End Function
-    Shared Function RGB2HEX(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
-        Dim S As String
-        If Alpha Then
-            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
-            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
-        Else
-            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
-        End If
-        Return S
-    End Function
-    Public Shared Function RGBToHSL(rgb As Color) As HSL
-        Dim hsl As New HSL()
-
-        Dim r As Single = (rgb.R / 255.0F)
-        Dim g As Single = (rgb.G / 255.0F)
-        Dim b As Single = (rgb.B / 255.0F)
-
-        Dim min As Single = Math.Min(Math.Min(r, g), b)
-        Dim max As Single = Math.Max(Math.Max(r, g), b)
-        Dim delta As Single = max - min
-
-        hsl.L = (max + min) / 2
-
-        If delta = 0 Then
-            hsl.H = 0
-            hsl.S = 0.0F
-        Else
-            hsl.S = If((hsl.L <= 0.5), (delta / (max + min)), (delta / (2 - max - min)))
-
-            Dim hue As Single
-
-            If r = max Then
-                hue = ((g - b) / 6) / delta
-            ElseIf g = max Then
-                hue = (1.0F / 3) + ((b - r) / 6) / delta
-            Else
-                hue = (2.0F / 3) + ((r - g) / 6) / delta
-            End If
-
-            If hue < 0 Then
-                hue += 1
-            End If
-            If hue > 1 Then
-                hue -= 1
-            End If
-
-            hsl.H = CInt(Math.Truncate(hue * 360))
-        End If
-
-        Return hsl
-    End Function
     Enum ColorFormat
         HEX
         RGB
@@ -591,7 +422,7 @@ Public Class XenonCore
             'Adjust_Form(DarkMode, [Form])
 
             If [Form].Name = ExternalTerminal.Name Then
-                ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, ControlPaint.Dark(Color.Gold, 0.5))
+                ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.5))
             End If
 
             If [Form].Name = MainFrm.Name Then
@@ -626,16 +457,16 @@ Public Class XenonCore
 
 
         If TypeOf ctrl Is XenonGroupBox Then
-            DirectCast(ctrl, XenonGroupBox).BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.05, -0.05))
-            DirectCast(ctrl, XenonGroupBox).LineColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.1, -0.1))
+            DirectCast(ctrl, XenonGroupBox).BackColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
+            DirectCast(ctrl, XenonGroupBox).LineColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonCP Then
-            DirectCast(ctrl, XenonCP).LineColor = CCB(ctrl.BackColor, If(IsColorDark(ctrl.BackColor), 0.1, -0.1))
+            DirectCast(ctrl, XenonCP).LineColor = CCB(ctrl.BackColor, If(ctrl.BackColor.IsDark, 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonButton Then
-            DirectCast(ctrl, XenonButton).BackColor = CCB(GetParentColor(ctrl), If(IsColorDark(GetParentColor(ctrl)), 0.04, -0.04))
+            DirectCast(ctrl, XenonButton).BackColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.04, -0.04))
             DirectCast(ctrl, XenonButton).ForeColor = If(DarkMode, Color.White, Color.Black)
         End If
 
@@ -746,49 +577,6 @@ Public Class XenonCore
 
 
 End Class
-
-Public Structure HSL
-    Private _h As Integer
-    Private _s As Single
-    Private _l As Single
-
-    Public Sub New(h As Integer, s As Single, l As Single)
-        Me._h = h
-        Me._s = s
-        Me._l = l
-    End Sub
-
-    Public Property H() As Integer
-        Get
-            Return Me._h
-        End Get
-        Set(value As Integer)
-            Me._h = value
-        End Set
-    End Property
-
-    Public Property S() As Single
-        Get
-            Return Me._s
-        End Get
-        Set(value As Single)
-            Me._s = value
-        End Set
-    End Property
-
-    Public Property L() As Single
-        Get
-            Return Me._l
-        End Get
-        Set(value As Single)
-            Me._l = value
-        End Set
-    End Property
-
-    Public Overloads Function Equals(hsl As HSL) As Boolean
-        Return (Me.H = hsl.H) AndAlso (Me.S = hsl.S) AndAlso (Me.L = hsl.L)
-    End Function
-End Structure
 
 Public Class Acrylism
 

@@ -57,10 +57,6 @@ Public Class CP : Implements IDisposable
         CustomImage
         SolidColor
     End Enum
-    Enum NoiseMode
-        Aero
-        Acrylic
-    End Enum
     Enum Mode
         Registry
         File
@@ -233,45 +229,44 @@ Public Class CP : Implements IDisposable
 
             NativeMethods.User32.SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
-
             My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, EnableTheming), RegistryValueKind.Binary)
             My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, EnableGradient), RegistryValueKind.Binary)
 
-            NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, If(EnableTheming, 1, 0), 0)
-            NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, If(EnableGradient, 1, 0), 0)
+            NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, EnableTheming.ToInteger, 0)
+            NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient.ToInteger, 0)
 
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", String.Format("{0} {1} {2}", ActiveBorder.R, ActiveBorder.G, ActiveBorder.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", String.Format("{0} {1} {2}", ActiveTitle.R, ActiveTitle.G, ActiveTitle.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", String.Format("{0} {1} {2}", AppWorkspace.R, AppWorkspace.G, AppWorkspace.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", String.Format("{0} {1} {2}", Background.R, Background.G, Background.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", String.Format("{0} {1} {2}", ButtonAlternateFace.R, ButtonAlternateFace.G, ButtonAlternateFace.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", String.Format("{0} {1} {2}", ButtonDkShadow.R, ButtonDkShadow.G, ButtonDkShadow.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", String.Format("{0} {1} {2}", ButtonFace.R, ButtonFace.G, ButtonFace.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", String.Format("{0} {1} {2}", ButtonHilight.R, ButtonHilight.G, ButtonHilight.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", String.Format("{0} {1} {2}", ButtonLight.R, ButtonLight.G, ButtonLight.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", String.Format("{0} {1} {2}", ButtonShadow.R, ButtonShadow.G, ButtonShadow.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", String.Format("{0} {1} {2}", ButtonText.R, ButtonText.G, ButtonText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", String.Format("{0} {1} {2}", GradientActiveTitle.R, GradientActiveTitle.G, GradientActiveTitle.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", String.Format("{0} {1} {2}", GradientInactiveTitle.R, GradientInactiveTitle.G, GradientInactiveTitle.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", String.Format("{0} {1} {2}", GrayText.R, GrayText.G, GrayText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", String.Format("{0} {1} {2}", HilightText.R, HilightText.G, HilightText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", String.Format("{0} {1} {2}", HotTrackingColor.R, HotTrackingColor.G, HotTrackingColor.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", String.Format("{0} {1} {2}", InactiveBorder.R, InactiveBorder.G, InactiveBorder.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", String.Format("{0} {1} {2}", InactiveTitle.R, InactiveTitle.G, InactiveTitle.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", String.Format("{0} {1} {2}", InactiveTitleText.R, InactiveTitleText.G, InactiveTitleText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", String.Format("{0} {1} {2}", InfoText.R, InfoText.G, InfoText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", String.Format("{0} {1} {2}", InfoWindow.R, InfoWindow.G, InfoWindow.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", String.Format("{0} {1} {2}", Menu.R, Menu.G, Menu.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", String.Format("{0} {1} {2}", MenuBar.R, MenuBar.G, MenuBar.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", String.Format("{0} {1} {2}", MenuText.R, MenuText.G, MenuText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", String.Format("{0} {1} {2}", Scrollbar.R, Scrollbar.G, Scrollbar.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", String.Format("{0} {1} {2}", TitleText.R, TitleText.G, TitleText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", String.Format("{0} {1} {2}", Window.R, Window.G, Window.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", String.Format("{0} {1} {2}", WindowFrame.R, WindowFrame.G, WindowFrame.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", String.Format("{0} {1} {2}", WindowText.R, WindowText.G, WindowText.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", String.Format("{0} {1} {2}", Hilight.R, Hilight.G, Hilight.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", String.Format("{0} {1} {2}", MenuHilight.R, MenuHilight.G, MenuHilight.B), RegistryValueKind.String)
-            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", String.Format("{0} {1} {2}", Desktop.R, Desktop.G, Desktop.B), RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
+            EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
         End Sub
 
     End Structure
@@ -321,18 +316,18 @@ Public Class CP : Implements IDisposable
             End Select
 
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", If(ApplyAccentonTitlebars, 1, 0))
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentonTitlebars.ToInteger)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", CP.ReverseColor(StartMenu_Accent).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse.ToArgb)
 
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Titlebar_Active).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Titlebar_Inactive).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse.ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse.ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse.ToArgb)
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", If(WinMode_Light, 1, 0))
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", If(AppMode_Light, 1, 0))
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", If(Transparency, 1, 0))
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light.ToInteger)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger)
 
         End Sub
 
@@ -406,8 +401,8 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", If(EnableAeroPeek, 1, 0))
-            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", If(AlwaysHibernateThumbnails, 1, 0))
+            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek.ToInteger)
+            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails.ToInteger)
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
         End Sub
 
@@ -453,15 +448,15 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", ReverseColor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", ReverseColor(StartColor).ToArgb)
-            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", ReverseColor(AccentColor).ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse.ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse.ToArgb)
+            EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse.ToArgb)
             EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
 
             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start)
             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
-            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & RGB2HEX_oneline(PersonalColors_Background, False), RegistryValueKind.String)
-            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & RGB2HEX_oneline(PersonalColors_Accent, False), RegistryValueKind.String)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & PersonalColors_Background.HEX(False), RegistryValueKind.String)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & PersonalColors_Accent.HEX(False), RegistryValueKind.String)
         End Sub
 
     End Structure
@@ -533,7 +528,7 @@ Public Class CP : Implements IDisposable
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", If(MinAnimate, 1, 0), RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", MinAnimate.ToInteger, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
@@ -542,7 +537,7 @@ Public Class CP : Implements IDisposable
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
-                anim.IMinAnimate = If(MinAnimate, 1, 0)
+                anim.IMinAnimate = MinAnimate.ToInteger
 
                 With NCM
                     .lfCaptionFont = lfCaptionFont        'Requires LogOff
@@ -601,9 +596,9 @@ Public Class CP : Implements IDisposable
         End Operator
 
         Public Sub Apply()
-            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", If(DisableAcrylicBackgroundOnLogon, 1, 0))
-            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", If(DisableLogonBackgroundImage, 1, 0))
-            EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(NoLockScreen, 1, 0))
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon.ToInteger)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage.ToInteger)
+            EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen.ToInteger)
         End Sub
 
     End Structure
@@ -672,113 +667,113 @@ Public Class CP : Implements IDisposable
             Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", ReverseColor([Defaults].ColorTable00).ToArgb)
-                [Console].ColorTable00 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", [Defaults].ColorTable00.Reverse.ToArgb)
+                [Console].ColorTable00 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable00 = [Defaults].ColorTable00
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", ReverseColor([Defaults].ColorTable01).ToArgb)
-                [Console].ColorTable01 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", [Defaults].ColorTable01.Reverse.ToArgb)
+                [Console].ColorTable01 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable01 = [Defaults].ColorTable01
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", ReverseColor([Defaults].ColorTable02).ToArgb)
-                [Console].ColorTable02 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", [Defaults].ColorTable02.Reverse.ToArgb)
+                [Console].ColorTable02 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable02 = [Defaults].ColorTable02
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", ReverseColor([Defaults].ColorTable03).ToArgb)
-                [Console].ColorTable03 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", [Defaults].ColorTable03.Reverse.ToArgb)
+                [Console].ColorTable03 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable03 = [Defaults].ColorTable03
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", ReverseColor([Defaults].ColorTable04).ToArgb)
-                [Console].ColorTable04 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", [Defaults].ColorTable04.Reverse.ToArgb)
+                [Console].ColorTable04 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable04 = [Defaults].ColorTable04
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", ReverseColor([Defaults].ColorTable05).ToArgb)
-                [Console].ColorTable05 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", [Defaults].ColorTable05.Reverse.ToArgb)
+                [Console].ColorTable05 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable05 = [Defaults].ColorTable05
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", ReverseColor([Defaults].ColorTable06).ToArgb)
-                [Console].ColorTable06 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", [Defaults].ColorTable06.Reverse.ToArgb)
+                [Console].ColorTable06 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable06 = [Defaults].ColorTable06
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", ReverseColor([Defaults].ColorTable07).ToArgb)
-                [Console].ColorTable07 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", [Defaults].ColorTable07.Reverse.ToArgb)
+                [Console].ColorTable07 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable07 = [Defaults].ColorTable07
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", ReverseColor([Defaults].ColorTable08).ToArgb)
-                [Console].ColorTable08 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", [Defaults].ColorTable08.Reverse.ToArgb)
+                [Console].ColorTable08 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable08 = [Defaults].ColorTable08
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", ReverseColor([Defaults].ColorTable09).ToArgb)
-                [Console].ColorTable09 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", [Defaults].ColorTable09.Reverse.ToArgb)
+                [Console].ColorTable09 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable09 = [Defaults].ColorTable09
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", ReverseColor([Defaults].ColorTable10).ToArgb)
-                [Console].ColorTable10 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", [Defaults].ColorTable10.Reverse.ToArgb)
+                [Console].ColorTable10 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable10 = [Defaults].ColorTable10
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", ReverseColor([Defaults].ColorTable11).ToArgb)
-                [Console].ColorTable11 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", [Defaults].ColorTable11.Reverse.ToArgb)
+                [Console].ColorTable11 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable11 = [Defaults].ColorTable11
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", ReverseColor([Defaults].ColorTable12).ToArgb)
-                [Console].ColorTable12 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", [Defaults].ColorTable12.Reverse.ToArgb)
+                [Console].ColorTable12 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable12 = [Defaults].ColorTable12
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", ReverseColor([Defaults].ColorTable13).ToArgb)
-                [Console].ColorTable13 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", [Defaults].ColorTable13.Reverse.ToArgb)
+                [Console].ColorTable13 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable13 = [Defaults].ColorTable13
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", ReverseColor([Defaults].ColorTable14).ToArgb)
-                [Console].ColorTable14 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", [Defaults].ColorTable14.Reverse.ToArgb)
+                [Console].ColorTable14 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable14 = [Defaults].ColorTable14
             End Try
 
             Try
-                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", ReverseColor([Defaults].ColorTable15).ToArgb)
-                [Console].ColorTable15 = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", [Defaults].ColorTable15.Reverse.ToArgb)
+                [Console].ColorTable15 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 [Console].ColorTable15 = [Defaults].ColorTable15
             End Try
@@ -852,8 +847,8 @@ Public Class CP : Implements IDisposable
 
             If My.W10_1909 Then
                 Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", ReverseColor(Color.White).ToArgb)
-                    [Console].W10_1909_CursorColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y_cmd)))
+                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", Color.White.Reverse.ToArgb)
+                    [Console].W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
                 Catch
                     [Console].W10_1909_CursorColor = Color.White
                 End Try
@@ -909,22 +904,22 @@ Public Class CP : Implements IDisposable
             End Try
 
             EditReg(RegAddress, "EnableColorSelection", 1)
-            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, ReverseColor([Console].ColorTable00)).ToArgb)
-            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, ReverseColor([Console].ColorTable01)).ToArgb)
-            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, ReverseColor([Console].ColorTable02)).ToArgb)
-            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, ReverseColor([Console].ColorTable03)).ToArgb)
-            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, ReverseColor([Console].ColorTable04)).ToArgb)
-            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, ReverseColor([Console].ColorTable05)).ToArgb)
-            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, ReverseColor([Console].ColorTable06)).ToArgb)
-            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, ReverseColor([Console].ColorTable07)).ToArgb)
-            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, ReverseColor([Console].ColorTable08)).ToArgb)
-            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, ReverseColor([Console].ColorTable09)).ToArgb)
-            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, ReverseColor([Console].ColorTable10)).ToArgb)
-            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, ReverseColor([Console].ColorTable11)).ToArgb)
-            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, ReverseColor([Console].ColorTable12)).ToArgb)
-            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, ReverseColor([Console].ColorTable13)).ToArgb)
-            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, ReverseColor([Console].ColorTable14)).ToArgb)
-            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, ReverseColor([Console].ColorTable15)).ToArgb)
+            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, [Console].ColorTable00).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, [Console].ColorTable01).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, [Console].ColorTable02).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, [Console].ColorTable03).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, [Console].ColorTable04).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, [Console].ColorTable05).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, [Console].ColorTable06).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, [Console].ColorTable07).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, [Console].ColorTable08).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, [Console].ColorTable09).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, [Console].ColorTable10).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, [Console].ColorTable11).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, [Console].ColorTable12).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, [Console].ColorTable13).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, [Console].ColorTable14).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, [Console].ColorTable15).Reverse.ToArgb)
             EditReg(RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
             EditReg(RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
             EditReg(RegAddress, "CursorSize", [Console].CursorSize)
@@ -941,12 +936,12 @@ Public Class CP : Implements IDisposable
             EditReg(RegAddress, "FontWeight", [Console].FontWeight)
 
             If My.W10_1909 Then
-                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, ReverseColor([Console].W10_1909_CursorColor)).ToArgb)
+                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, [Console].W10_1909_CursorColor).Reverse.ToArgb)
                 EditReg(RegAddress, "CursorType", [Console].W10_1909_CursorType)
                 EditReg(RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
-                EditReg(RegAddress, "ForceV2", If([Console].W10_1909_ForceV2, 1, 0))
-                EditReg(RegAddress, "LineSelection", If([Console].W10_1909_LineSelection, 1, 0))
-                EditReg(RegAddress, "TerminalScrolling", If([Console].W10_1909_TerminalScrolling, 1, 0))
+                EditReg(RegAddress, "ForceV2", [Console].W10_1909_ForceV2.ToInteger)
+                EditReg(RegAddress, "LineSelection", [Console].W10_1909_LineSelection.ToInteger)
+                EditReg(RegAddress, "TerminalScrolling", [Console].W10_1909_TerminalScrolling.ToInteger)
             End If
 
             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, RegistryValueKind.String)
@@ -1112,27 +1107,27 @@ Public Class CP : Implements IDisposable
             With r
                 .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.QWord)
                 .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                .SetValue("PrimaryColorGradient", If([Cursor].PrimaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger, RegistryValueKind.QWord)
                 .SetValue("PrimaryColorGradientMode", [Cursor].PrimaryColorGradientMode, RegistryValueKind.String)
-                .SetValue("PrimaryColorNoise", If([Cursor].PrimaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("PrimaryColorNoise", [Cursor].PrimaryColorNoise.ToInteger, RegistryValueKind.QWord)
                 .SetValue("PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 .SetValue("SecondaryColor1", [Cursor].SecondaryColor1.ToArgb, RegistryValueKind.QWord)
                 .SetValue("SecondaryColor2", [Cursor].SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                .SetValue("SecondaryColorGradient", If([Cursor].SecondaryColorGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("SecondaryColorGradient", [Cursor].SecondaryColorGradient.ToInteger, RegistryValueKind.QWord)
                 .SetValue("SecondaryColorGradientMode", [Cursor].SecondaryColorGradientMode, RegistryValueKind.String)
-                .SetValue("SecondaryColorNoise", If([Cursor].SecondaryColorNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("SecondaryColorNoise", [Cursor].SecondaryColorNoise.ToInteger, RegistryValueKind.QWord)
                 .SetValue("SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-                .SetValue("LoadingCircleBackGradient", If([Cursor].LoadingCircleBackGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBackGradient", [Cursor].LoadingCircleBackGradient.ToInteger, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleBackGradientMode", [Cursor].LoadingCircleBackGradientMode, RegistryValueKind.String)
-                .SetValue("LoadingCircleBackNoise", If([Cursor].LoadingCircleBackNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleBackNoise", [Cursor].LoadingCircleBackNoise.ToInteger, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-                .SetValue("LoadingCircleHotGradient", If([Cursor].LoadingCircleHotGradient, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHotGradient", [Cursor].LoadingCircleHotGradient.ToInteger, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleHotGradientMode", [Cursor].LoadingCircleHotGradientMode, RegistryValueKind.String)
-                .SetValue("LoadingCircleHotNoise", If([Cursor].LoadingCircleHotNoise, 1, 0), RegistryValueKind.QWord)
+                .SetValue("LoadingCircleHotNoise", [Cursor].LoadingCircleHotNoise.ToInteger, RegistryValueKind.QWord)
                 .SetValue("LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
             End With
 
@@ -1445,7 +1440,7 @@ Public Class CP : Implements IDisposable
 
     Public TerminalPreview As New WinTerminal("", WinTerminal.Mode.Empty)
 
-    Public Property Cursors_Enabled As Boolean = False
+    Public Cursors_Enabled As Boolean = False
 
     Public Cursor_Arrow As New Cursor_Structure With {
                     .PrimaryColor1 = Color.White,
@@ -1908,7 +1903,7 @@ Public Class CP : Implements IDisposable
         Dim hexstring As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
         Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
         Dim EnableThemeIndex As Integer = binarystring.Count - 1 - Bit
-        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, If(Value, 1, 0))
+        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, Value.ToInteger)
         Dim binaryStr As String = binarystring
         Dim ar As Byte()
         ar = StringToBytesArray(binaryStr)
@@ -2039,19 +2034,6 @@ Public Class CP : Implements IDisposable
         End Try
 
     End Sub
-    Public Shared Function RGB2HEX_oneline(ByVal [Color] As Color, Optional ByVal Alpha As Boolean = True) As String
-        Dim S As String
-        If Alpha Then
-            S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
-            String.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)
-        Else
-            S = String.Format("{0:X2}{1:X2}{2:X2}", Color.R, Color.G, Color.B)
-        End If
-        Return S
-    End Function
-    Shared Function ReverseColor([Color] As Color) As Color
-        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
-    End Function
     Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
         Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
         bArray.CopyTo(newArray, 1)
@@ -2181,11 +2163,11 @@ Public Class CP : Implements IDisposable
 
     End Sub
     Public Function ListColors() As List(Of Color)
-        Dim type1 As Type = [GetType]() : Dim properties1 As System.Reflection.PropertyInfo() = type1.GetProperties()
+        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
         Dim CL As New List(Of Color)
         CL.Clear()
 
-        For Each [property] As System.Reflection.PropertyInfo In properties1
+        For Each [property] As PropertyInfo In properties1
             If [property].PropertyType.Name.ToLower = "color" Then
                 CL.Add([property].GetValue(Me, Nothing))
             End If
@@ -2254,7 +2236,6 @@ Public Class CP : Implements IDisposable
     End Sub
     Private Sub AddException([Label] As String, [Exception] As Exception)
         My.Application.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
-
     End Sub
 #End Region
 
@@ -2376,29 +2357,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", ReverseColor(Def.Windows11.StartMenu_Accent).ToArgb)
-                        Windows11.StartMenu_Accent = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", Def.Windows11.StartMenu_Accent.Reverse.ToArgb)
+                        Windows11.StartMenu_Accent = Color.FromArgb(y).Reverse
                     Catch
                         Windows11.StartMenu_Accent = Def.Windows11.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Def.Windows11.Titlebar_Active.Reverse.ToArgb)
+                        Windows11.Titlebar_Active = Color.FromArgb(y).Reverse
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Def.Windows11.Titlebar_Active).ToArgb)
-                        Windows11.Titlebar_Active = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Def.Windows11.Titlebar_Active.Reverse.ToArgb)
+                        Windows11.Titlebar_Active = Color.FromArgb(y).Reverse
                     Catch
                         Windows11.Titlebar_Active = Def.Windows11.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Def.Windows11.Titlebar_Inactive).ToArgb)
-                        Windows11.Titlebar_Inactive = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Def.Windows11.Titlebar_Inactive.Reverse.ToArgb)
+                        Windows11.Titlebar_Inactive = Color.FromArgb(y).Reverse
                     Catch
                         Windows11.Titlebar_Inactive = Def.Windows11.Titlebar_Inactive
                     End Try
@@ -2493,29 +2474,29 @@ Public Class CP : Implements IDisposable
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", ReverseColor(Def.Windows10.StartMenu_Accent).ToArgb)
-                        Windows10.StartMenu_Accent = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", Def.Windows10.StartMenu_Accent.Reverse.ToArgb)
+                        Windows10.StartMenu_Accent = Color.FromArgb(y).Reverse
                     Catch
                         Windows10.StartMenu_Accent = Def.Windows10.StartMenu_Accent
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", ReverseColor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Def.Windows10.Titlebar_Active.Reverse.ToArgb)
+                        Windows10.Titlebar_Active = Color.FromArgb(y).Reverse
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", ReverseColor(Def.Windows10.Titlebar_Active).ToArgb)
-                        Windows10.Titlebar_Active = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Def.Windows10.Titlebar_Active.Reverse.ToArgb)
+                        Windows10.Titlebar_Active = Color.FromArgb(y).Reverse
                     Catch
                         Windows10.Titlebar_Active = Def.Windows10.Titlebar_Active
                     End Try
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", ReverseColor(Def.Windows10.Titlebar_Inactive).ToArgb)
-                        Windows10.Titlebar_Inactive = ReverseColor(Color.FromArgb(y))
+                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Def.Windows10.Titlebar_Inactive.Reverse.ToArgb)
+                        Windows10.Titlebar_Inactive = Color.FromArgb(y).Reverse
                     Catch
                         Windows10.Titlebar_Inactive = Def.Windows10.Titlebar_Inactive
                     End Try
@@ -2729,14 +2710,14 @@ Public Class CP : Implements IDisposable
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
-                        Windows8.StartColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y)))
+                        Windows8.StartColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
                     Catch
                         Windows8.StartColor = Color.FromArgb(84, 0, 30)
                     End Try
 
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
-                        Windows8.AccentColor = Color.FromArgb(255, ReverseColor(Color.FromArgb(y)))
+                        Windows8.AccentColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
                     Catch
                         Windows8.AccentColor = Color.FromArgb(178, 29, 72)
                     End Try
@@ -2745,14 +2726,14 @@ Public Class CP : Implements IDisposable
 
                     Try
                         S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#1e0054")
-                        Windows8.PersonalColors_Background = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+                        Windows8.PersonalColors_Background = S.FromHEXToColor
                     Catch
                         Windows8.PersonalColors_Background = Def.Windows8.PersonalColors_Background
                     End Try
 
                     Try
                         S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#481db2")
-                        Windows8.PersonalColors_Accent = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(S.Replace("#", ""), 16)))
+                        Windows8.PersonalColors_Accent = S.FromHEXToColor
                     Catch
                         Windows8.PersonalColors_Accent = Def.Windows8.PersonalColors_Accent
                     End Try
@@ -3123,7 +3104,7 @@ Public Class CP : Implements IDisposable
                 WinMetrics_Fonts.IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", -1125) / -15
                 WinMetrics_Fonts.MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", -285) / -15
                 WinMetrics_Fonts.MenuWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", -285) / -15
-                WinMetrics_Fonts.MinAnimate = If(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", 1) = 1, True, False)
+                WinMetrics_Fonts.MinAnimate = CInt(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", 1)).ToBoolean
                 WinMetrics_Fonts.PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", -60) / -15
                 WinMetrics_Fonts.ScrollHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", -255) / -15
                 WinMetrics_Fonts.ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", -255) / -15
@@ -3908,11 +3889,11 @@ Public Class CP : Implements IDisposable
 
                 'Windows Terminals/Consoles
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-                rLogX.SetValue("Terminal_CMD_Enabled", If(CommandPrompt.Enabled, 1, 0))
-                rLogX.SetValue("Terminal_PS_32_Enabled", If(PowerShellx86.Enabled, 1, 0))
-                rLogX.SetValue("Terminal_PS_64_Enabled", If(PowerShellx64.Enabled, 1, 0))
-                rLogX.SetValue("Terminal_Stable_Enabled", If(Terminal.Enabled, 1, 0))
-                rLogX.SetValue("Terminal_Preview_Enabled", If(TerminalPreview.Enabled, 1, 0))
+                rLogX.SetValue("Terminal_CMD_Enabled", CommandPrompt.Enabled.ToInteger)
+                rLogX.SetValue("Terminal_PS_32_Enabled", PowerShellx86.Enabled.ToInteger)
+                rLogX.SetValue("Terminal_PS_64_Enabled", PowerShellx64.Enabled.ToInteger)
+                rLogX.SetValue("Terminal_Stable_Enabled", Terminal.Enabled.ToInteger)
+                rLogX.SetValue("Terminal_Preview_Enabled", TerminalPreview.Enabled.ToInteger)
 
                 If ReportProgress Then
                     If CommandPrompt.Enabled Then
@@ -4382,8 +4363,8 @@ Public Class CP : Implements IDisposable
 
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
-        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", If(LogonUI7.Enabled, 1, 0))
-        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", If(LogonUI7.Enabled, 1, 0))
+        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", LogonUI7.Enabled.ToInteger)
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", LogonUI7.Enabled.ToInteger)
 
         Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
@@ -4403,10 +4384,10 @@ Public Class CP : Implements IDisposable
 
         rLog.SetValue("ImagePath", LogonUI7.ImagePath)
         rLog.SetValue("Color", LogonUI7.Color.ToArgb)
-        rLog.SetValue("Blur", If(LogonUI7.Blur, 1, 0))
+        rLog.SetValue("Blur", LogonUI7.Blur.ToInteger)
         rLog.SetValue("Blur_Intensity", LogonUI7.Blur_Intensity)
-        rLog.SetValue("Grayscale", If(LogonUI7.Grayscale, 1, 0))
-        rLog.SetValue("Noise", If(LogonUI7.Noise, 1, 0))
+        rLog.SetValue("Grayscale", LogonUI7.Grayscale.ToInteger)
+        rLog.SetValue("Noise", LogonUI7.Noise.ToInteger)
 
         Select Case LogonUI7.Noise_Mode
             Case NoiseMode.Aero
@@ -4447,11 +4428,11 @@ Public Class CP : Implements IDisposable
                     If IO.File.Exists(LogonUI7.ImagePath) Then
                         bmpList.Add(Image.FromStream(New IO.FileStream(LogonUI7.ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
                     Else
-                        bmpList.Add(ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size))
+                        bmpList.Add(Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size))
                     End If
 
                 Case LogonUI_Modes.SolidColor
-                    bmpList.Add(ColorToBitmap(LogonUI7.Color, My.Computer.Screen.Bounds.Size))
+                    bmpList.Add(LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case LogonUI_Modes.Wallpaper
                     bmpList.Add(My.Application.GetCurrentWallpaper)
@@ -4461,9 +4442,9 @@ Public Class CP : Implements IDisposable
             For x = 0 To bmpList.Count - 1
                 If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
 
-                If LogonUI7.Grayscale Then bmpList(x) = Grayscale(bmpList(x))
-                If LogonUI7.Blur Then bmpList(x) = BlurBitmap(bmpList(x), LogonUI7.Blur_Intensity)
-                If LogonUI7.Noise Then bmpList(x) = NoiseBitmap(bmpList(x), LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
+                If LogonUI7.Grayscale Then bmpList(x) = bmpList(x).Grayscale
+                If LogonUI7.Blur Then bmpList(x) = bmpList(x).Blur(LogonUI7.Blur_Intensity)
+                If LogonUI7.Noise Then bmpList(x) = bmpList(x).Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
             Next
 
             If bmpList.Count = 1 Then
@@ -4484,7 +4465,7 @@ Public Class CP : Implements IDisposable
 
         Dim lockimg As String = My.Application.appData & "\LockScreen.png"
 
-        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", If(Windows8.NoLockScreen, 1, 0))
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows8.NoLockScreen.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String)
 
         Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
@@ -4506,10 +4487,10 @@ Public Class CP : Implements IDisposable
         rLog.SetValue("Metro_LockScreenSystemID", Windows8.LockScreenSystemID)
         rLog.SetValue("ImagePath", LogonUI7.ImagePath)
         rLog.SetValue("Color", LogonUI7.Color.ToArgb)
-        rLog.SetValue("Blur", If(LogonUI7.Blur, 1, 0))
+        rLog.SetValue("Blur", LogonUI7.Blur.ToInteger)
         rLog.SetValue("Blur_Intensity", LogonUI7.Blur_Intensity)
-        rLog.SetValue("Grayscale", If(LogonUI7.Grayscale, 1, 0))
-        rLog.SetValue("Noise", If(LogonUI7.Noise, 1, 0))
+        rLog.SetValue("Grayscale", LogonUI7.Grayscale.ToInteger)
+        rLog.SetValue("Noise", LogonUI7.Noise.ToInteger)
 
         Select Case LogonUI7.Noise_Mode
             Case NoiseMode.Aero
@@ -4541,7 +4522,7 @@ Public Class CP : Implements IDisposable
                     If IO.File.Exists(syslock) Then
                         bmp = Image.FromStream(New IO.FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
                     Else
-                        bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+                        bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
                     End If
 
                 Case LogonUI_Modes.CustomImage
@@ -4549,11 +4530,11 @@ Public Class CP : Implements IDisposable
                     If IO.File.Exists(LogonUI7.ImagePath) Then
                         bmp = Image.FromStream(New IO.FileStream(LogonUI7.ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
                     Else
-                        bmp = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+                        bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
                     End If
 
                 Case LogonUI_Modes.SolidColor
-                    bmp = ColorToBitmap(LogonUI7.Color, My.Computer.Screen.Bounds.Size)
+                    bmp = LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size)
 
                 Case LogonUI_Modes.Wallpaper
                     bmp = My.Application.GetCurrentWallpaper
@@ -4561,9 +4542,9 @@ Public Class CP : Implements IDisposable
 
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
-            If LogonUI7.Grayscale Then bmp = Grayscale(bmp)
-            If LogonUI7.Blur Then bmp = BlurBitmap(bmp, LogonUI7.Blur_Intensity)
-            If LogonUI7.Noise Then bmp = NoiseBitmap(bmp, LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
+            If LogonUI7.Grayscale Then bmp = bmp.Grayscale
+            If LogonUI7.Blur Then bmp = bmp.Blur(LogonUI7.Blur_Intensity)
+            If LogonUI7.Noise Then bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
             bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
         End If
 
@@ -5149,6 +5130,7 @@ Public Class CP : Implements IDisposable
     End Sub
 #End Region
 
+#Region "Comparisons"
     Public Overrides Function Equals(obj As Object) As Boolean
         Dim _Equals As Boolean = True
 
@@ -5161,6 +5143,7 @@ Public Class CP : Implements IDisposable
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If WinMetrics_Fonts <> DirectCast(obj, CP).WinMetrics_Fonts Then _Equals = False
 
+        If Cursors_Enabled <> DirectCast(obj, CP).Cursors_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False
         If Cursor_Help <> DirectCast(obj, CP).Cursor_Help Then _Equals = False
         If Cursor_AppLoading <> DirectCast(obj, CP).Cursor_AppLoading Then _Equals = False
@@ -5195,5 +5178,6 @@ Public Class CP : Implements IDisposable
     Public Shared Operator <>(First As CP, Second As CP)
         Return Not First = Second
     End Operator
+#End Region
 
 End Class

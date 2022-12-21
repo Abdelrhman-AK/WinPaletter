@@ -72,10 +72,10 @@ Public Class SubMenu
         XenonButton5.Visible = EnableDelete
         MainColor.BackColor = ColorHandle.BackColor
         DefaultColor.BackColor = ColorHandle.DefaultColor
-        DefaultLightestColor.BackColor = ControlPaint.LightLight(ColorHandle.DefaultColor)
-        DefaultLightColor.BackColor = ControlPaint.Light(ColorHandle.DefaultColor)
-        DefaultDarkColor.BackColor = ControlPaint.Dark(ColorHandle.DefaultColor)
-        DefaultDarkestColor.BackColor = ControlPaint.Dark(ColorHandle.DefaultColor, _dark)
+        DefaultLightestColor.BackColor = ColorHandle.DefaultColor.LightLight
+        DefaultLightColor.BackColor = ColorHandle.DefaultColor.Light
+        DefaultDarkColor.BackColor = ColorHandle.DefaultColor.Dark
+        DefaultDarkestColor.BackColor = ColorHandle.DefaultColor.Dark(_dark)
 
         If ShowDialog() = DialogResult.OK Then
             Select Case My.Application.ColorEvent
@@ -112,10 +112,7 @@ Public Class SubMenu
     Private Sub SubMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _shown = True
 
-
-
         PaletteContainer.Visible = False
-
     End Sub
 
     Private Sub SubMenu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -239,7 +236,7 @@ Public Class SubMenu
         End If
 
 
-        BackColor = If(GetDarkMode(), ControlPaint.Dark(MainColor.BackColor, _dark), ControlPaint.LightLight(MainColor.BackColor))
+        BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor).LightLight
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 
@@ -248,7 +245,7 @@ Public Class SubMenu
 
     Sub Pnl_Click(sender As Object, e As EventArgs)
         MainColor.BackColor = sender.BackColor
-        'BackColor = If(GetDarkMode(), ControlPaint.Dark(MainColor.BackColor, _dark), ControlPaint.LightLight(MainColor.BackColor))
+        'BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
 
         Update_Variants()
         Collapse_Expand()
@@ -275,19 +272,19 @@ Public Class SubMenu
     End Sub
 
     Sub Update_Variants()
-        LighterColor.BackColor = ControlPaint.Light(MainColor.BackColor)
-        LightestColor.BackColor = ControlPaint.LightLight(MainColor.BackColor)
+        LighterColor.BackColor = MainColor.BackColor.Light
+        LightestColor.BackColor = MainColor.BackColor.LightLight
 
-        DarkerColor.BackColor = ControlPaint.Dark(MainColor.BackColor)
-        DarkestColor.BackColor = ControlPaint.Dark(MainColor.BackColor, _dark)
+        DarkerColor.BackColor = MainColor.BackColor.Dark
+        DarkestColor.BackColor = MainColor.BackColor.Dark(_dark)
 
-        InvertedColor.BackColor = InvertColor(MainColor.BackColor)
+        InvertedColor.BackColor = MainColor.BackColor.Invert
 
-        ILighterColor.BackColor = ControlPaint.Light(InvertedColor.BackColor)
-        ILightestColor.BackColor = ControlPaint.LightLight(InvertedColor.BackColor)
+        ILighterColor.BackColor = InvertedColor.BackColor.Light
+        ILightestColor.BackColor = InvertedColor.BackColor.LightLight
 
-        IDarkerColor.BackColor = ControlPaint.Dark(InvertedColor.BackColor)
-        IDarkestColor.BackColor = ControlPaint.Dark(InvertedColor.BackColor, _dark)
+        IDarkerColor.BackColor = InvertedColor.BackColor.Dark
+        IDarkestColor.BackColor = InvertedColor.BackColor.Dark(_dark)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

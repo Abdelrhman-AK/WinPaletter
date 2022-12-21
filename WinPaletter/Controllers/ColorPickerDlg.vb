@@ -209,7 +209,7 @@ Public Class ColorPickerDlg
 
                     If .UseItAsTaskbar Then
                         If _Conditions.AppUnderlineOnly Then
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppUnderline", .AppUnderline, ControlPaint.Light(Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)), steps, delay)
+                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
                             .Invalidate()
                         ElseIf _Conditions.AppBackgroundOnly Then
                             Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)

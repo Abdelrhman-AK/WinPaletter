@@ -300,7 +300,7 @@ Public Class cmd
                     CMD_PopupForegroundLbl.BackColor = ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(CMD_PopupForegroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupForegroundLbl.BackColor), ControlPaint.Dark(CMD_PopupForegroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(CMD_PopupForegroundLbl.BackColor.IsDark, CMD_PopupForegroundLbl.BackColor.LightLight, CMD_PopupForegroundLbl.BackColor.Dark(0.9))
             CMD_PopupForegroundLbl.ForeColor = FC0
 
             CMD_PopupForegroundBar.AccentColor = CMD_PopupForegroundLbl.BackColor
@@ -342,7 +342,7 @@ Public Class cmd
                     CMD_PopupBackgroundLbl.BackColor = ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(CMD_PopupBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_PopupBackgroundLbl.BackColor), ControlPaint.Dark(CMD_PopupBackgroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(CMD_PopupBackgroundLbl.BackColor.IsDark, CMD_PopupBackgroundLbl.BackColor.LightLight, CMD_PopupBackgroundLbl.BackColor.Dark(0.9))
             CMD_PopupBackgroundLbl.ForeColor = FC0
             CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
             CMD_PopupBackgroundBar.Invalidate()
@@ -384,7 +384,7 @@ Public Class cmd
                     CMD_AccentBackgroundLbl.BackColor = ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(CMD_AccentBackgroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentBackgroundLbl.BackColor), ControlPaint.Dark(CMD_AccentBackgroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(CMD_AccentBackgroundLbl.BackColor.IsDark, CMD_AccentBackgroundLbl.BackColor.LightLight, CMD_AccentBackgroundLbl.BackColor.Dark(0.9))
             CMD_AccentBackgroundLbl.ForeColor = FC0
             CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
             CMD_AccentBackgroundBar.Invalidate()
@@ -431,7 +431,7 @@ Public Class cmd
                     CMD_AccentForegroundLbl.BackColor = ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(CMD_AccentForegroundLbl.BackColor), ControlPaint.LightLight(CMD_AccentForegroundLbl.BackColor), ControlPaint.Dark(CMD_AccentForegroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(CMD_AccentForegroundLbl.BackColor.IsDark, CMD_AccentForegroundLbl.BackColor.LightLight, CMD_AccentForegroundLbl.BackColor.Dark(0.9))
             CMD_AccentForegroundLbl.ForeColor = FC0
             CMD_AccentForegroundBar.AccentColor = CMD_AccentForegroundLbl.BackColor
             CMD_AccentForegroundBar.Invalidate()

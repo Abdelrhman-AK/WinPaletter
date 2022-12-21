@@ -80,10 +80,10 @@ Public Class LogonUI7
         XenonTrackbar2.Value = CP.LogonUI7.Noise_Intensity
 
         Select Case CP.LogonUI7.Noise_Mode
-            Case CP.NoiseMode.Acrylic
+            Case BitmapExtensions.NoiseMode.Acrylic
                 XenonComboBox1.SelectedIndex = 0
 
-            Case CP.NoiseMode.Aero
+            Case BitmapExtensions.NoiseMode.Aero
                 XenonComboBox1.SelectedIndex = 1
         End Select
 
@@ -120,8 +120,8 @@ Public Class LogonUI7
         CP.LogonUI7.Blur_Intensity = XenonTrackbar1.Value
         CP.LogonUI7.Noise_Intensity = XenonTrackbar2.Value
 
-        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = CP.NoiseMode.Acrylic
-        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = CP.NoiseMode.Aero
+        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic
+        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero
     End Sub
 
     Function ReturnBK() As Bitmap
@@ -145,11 +145,11 @@ Public Class LogonUI7
         ElseIf XenonRadioButton2.Checked Then
             bmpX = My.Application.GetCurrentWallpaper
         ElseIf XenonRadioButton3.Checked Then
-            bmpX = ColorToBitmap(color_pick.BackColor, My.Computer.Screen.Bounds.Size)
+            bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)
         ElseIf XenonRadioButton4.Checked And IO.File.Exists(XenonTextBox1.Text) Then
             bmpX = Image.FromStream(New FileStream(XenonTextBox1.Text, IO.FileMode.Open, IO.FileAccess.Read))
         Else
-            bmpX = ColorToBitmap(Color.Black, My.Computer.Screen.Bounds.Size)
+            bmpX = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
         End If
 
         Return ApplyEffects(ResizeImage(bmpX, pnl_preview.Width, pnl_preview.Height))
@@ -167,16 +167,16 @@ Public Class LogonUI7
         Dim _bmp As Bitmap
         _bmp = bmp
 
-        If XenonCheckBox8.Checked Then _bmp = Grayscale(_bmp)
+        If XenonCheckBox8.Checked Then _bmp = _bmp.Grayscale
 
-        If XenonCheckBox7.Checked Then _bmp = BlurBitmap(_bmp, XenonTrackbar1.Value)
+        If XenonCheckBox7.Checked Then _bmp = _bmp.Blur(XenonTrackbar1.Value)
 
         If XenonCheckBox6.Checked Then
             Select Case XenonComboBox1.SelectedIndex
                 Case 0
-                    _bmp = NoiseBitmap(_bmp, CP.NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
+                    _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
                 Case 1
-                    _bmp = NoiseBitmap(_bmp, CP.NoiseMode.Aero, XenonTrackbar2.Value / 100)
+                    _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, XenonTrackbar2.Value / 100)
             End Select
         End If
 

@@ -262,6 +262,7 @@
     <Compile Include="BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\CP_Defaults.vb" />
     <Compile Include="Classes\Localizer.vb" />

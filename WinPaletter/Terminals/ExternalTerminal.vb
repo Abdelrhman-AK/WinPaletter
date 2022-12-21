@@ -839,7 +839,7 @@ Public Class ExternalTerminal
                     ExtTerminal_PopupForegroundLbl.BackColor = ExtTerminal_ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(ExtTerminal_PopupForegroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_PopupForegroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_PopupForegroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(ExtTerminal_PopupForegroundLbl.BackColor.IsDark, ExtTerminal_PopupForegroundLbl.BackColor.LightLight, ExtTerminal_PopupForegroundLbl.BackColor.Dark(0.9))
             ExtTerminal_PopupForegroundLbl.ForeColor = FC0
             ExtTerminal_PopupForegroundBar.AccentColor = ExtTerminal_PopupForegroundLbl.BackColor
             ExtTerminal_PopupForegroundBar.Invalidate()
@@ -881,7 +881,7 @@ Public Class ExternalTerminal
                     ExtTerminal_PopupBackgroundLbl.BackColor = ExtTerminal_ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(ExtTerminal_PopupBackgroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_PopupBackgroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_PopupBackgroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(ExtTerminal_PopupBackgroundLbl.BackColor.IsDark, ExtTerminal_PopupBackgroundLbl.BackColor.LightLight, ExtTerminal_PopupBackgroundLbl.BackColor.Dark(0.9))
             ExtTerminal_PopupBackgroundLbl.ForeColor = FC0
             ExtTerminal_PopupBackgroundBar.AccentColor = ExtTerminal_PopupBackgroundLbl.BackColor
             ExtTerminal_PopupBackgroundBar.Invalidate()
@@ -923,7 +923,7 @@ Public Class ExternalTerminal
                     ExtTerminal_AccentBackgroundLbl.BackColor = ExtTerminal_ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(ExtTerminal_AccentBackgroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_AccentBackgroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_AccentBackgroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(ExtTerminal_AccentBackgroundLbl.BackColor.IsDark, ExtTerminal_AccentBackgroundLbl.BackColor.LightLight, ExtTerminal_AccentBackgroundLbl.BackColor.Dark(0.9))
             ExtTerminal_AccentBackgroundLbl.ForeColor = FC0
             ExtTerminal_AccentBackgroundBar.AccentColor = ExtTerminal_AccentBackgroundLbl.BackColor
             ExtTerminal_AccentBackgroundBar.Invalidate()
@@ -969,7 +969,7 @@ Public Class ExternalTerminal
                     ExtTerminal_AccentForegroundLbl.BackColor = ExtTerminal_ColorTable15.BackColor
             End Select
 
-            Dim FC0 As Color = If(IsColorDark(ExtTerminal_AccentForegroundLbl.BackColor), ControlPaint.LightLight(ExtTerminal_AccentForegroundLbl.BackColor), ControlPaint.Dark(ExtTerminal_AccentForegroundLbl.BackColor, 0.9))
+            Dim FC0 As Color = If(ExtTerminal_AccentForegroundLbl.BackColor.IsDark, ExtTerminal_AccentForegroundLbl.BackColor.LightLight, ExtTerminal_AccentForegroundLbl.BackColor.Dark(0.9))
             ExtTerminal_AccentForegroundLbl.ForeColor = FC0
             ExtTerminal_AccentForegroundBar.AccentColor = ExtTerminal_AccentForegroundLbl.BackColor
             ExtTerminal_AccentForegroundBar.Invalidate()
