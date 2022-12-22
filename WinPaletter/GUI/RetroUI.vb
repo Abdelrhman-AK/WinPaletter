@@ -11,9 +11,8 @@ Public Module Helpers
         TextGraphics = Graphics.FromImage(TextBitmap)
     End Sub
 
-
-    Public Function CString(T As String, F As Font, R As Rectangle) As PointF
-        Dim TS As SizeF = MeasureString(T, F)
+    Public Function CenterString(T As String, F As Font, R As Rectangle) As PointF
+        Dim TS As SizeF = T.Measure(F)
         Dim xX As Single = R.X + (R.Width - TS.Width) / 2
         Dim xY As Single = R.Y + (R.Height - TS.Height) / 2
         If F.Name.ToUpper <> "MARLETT" Then
@@ -23,23 +22,6 @@ Public Module Helpers
         End If
     End Function
 
-    Public Function ChangeColorBrightness(ByVal color As Color, ByVal correctionFactor As Single) As Color
-        Dim red As Single = CSng(color.R)
-        Dim green As Single = CSng(color.G)
-        Dim blue As Single = CSng(color.B)
-
-        If correctionFactor < 0 Then
-            correctionFactor = 1 + correctionFactor
-            red *= correctionFactor
-            green *= correctionFactor
-            blue *= correctionFactor
-        Else
-            red = (255 - red) * correctionFactor + red
-            green = (255 - green) * correctionFactor + green
-            blue = (255 - blue) * correctionFactor + blue
-        End If
-        Return Color.FromArgb(color.A, CInt(red), CInt(green), CInt(blue))
-    End Function
 End Module
 Public Class RetroButton : Inherits Button
     Sub New()
@@ -191,17 +173,17 @@ Public Class RetroButton : Inherits Button
         Catch : End Try
 
         Dim FColor As Color
-        If Enabled Then FColor = ForeColor Else FColor = ChangeColorBrightness(BackColor, -0.2)
+        If Enabled Then FColor = ForeColor Else FColor = BackColor.CB(-0.2)
 
         If Image Is Nothing Then
-            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(ChangeColorBrightness(BackColor, 0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
+            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
             G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
         Else
             Select Case Me.ImageAlign
                 Case ContentAlignment.MiddleCenter
                     ButtonString.Alignment = StringAlignment.Center : ButtonString.LineAlignment = StringAlignment.Near
 
-                    Dim alx As Integer = CInt((Height - (Image.Height + 4 + MeasureString(Text, MyBase.Font).Height)) / 2)
+                    Dim alx As Integer = CInt((Height - (Image.Height + 4 + Text.Measure(MyBase.Font).Height)) / 2)
                     Try : If Image IsNot Nothing Then
                             If Text = Nothing Then
                                 G.DrawImage(Me.Image, New Rectangle(imgX, imgY, Image.Width, Image.Height))
@@ -211,25 +193,25 @@ Public Class RetroButton : Inherits Button
 
                         End If
 
-                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(ChangeColorBrightness(BackColor, 0.8)), New Rectangle(1, alx + 10 + Image.Height, Width, Height), ButtonString)
+                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, alx + 10 + Image.Height, Width, Height), ButtonString)
                         G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString)
                     Catch : End Try
 
                 Case ContentAlignment.MiddleLeft
                     ButtonString.Alignment = StringAlignment.Near : ButtonString.LineAlignment = StringAlignment.Center
-                    Dim alx As Integer = CInt((Width - (Image.Width + 4 + MeasureString(Text, MyBase.Font).Width)) / 2)
+                    Dim alx As Integer = CInt((Width - (Image.Width + 4 + Text.Measure(MyBase.Font).Width)) / 2)
                     Try : If Image IsNot Nothing Then
                             G.DrawImage(Me.Image, New Rectangle(alx, imgY, Image.Width, Image.Height))
                         End If
 
-                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(ChangeColorBrightness(BackColor, 0.8)), New Rectangle(alx + 6 + Image.Width, 1, Width, Height), ButtonString)
+                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(alx + 6 + Image.Width, 1, Width, Height), ButtonString)
                         G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(alx + 5 + Image.Width, 0, Width, Height), ButtonString)
                     Catch : End Try
 
                 Case ContentAlignment.MiddleRight
                     Try : If Image IsNot Nothing Then G.DrawImage(Me.Image, New Rectangle(5, imgY, Image.Width, Image.Height))
-                        With CString(Text, Font, New Rectangle(1, 1, Width - 2, Height - 2))
-                            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(ChangeColorBrightness(BackColor, 0.8)), New Rectangle(6, 1, Width, Height), StringAligner(TextAlign))
+                        With CenterString(Text, Font, New Rectangle(1, 1, Width - 2, Height - 2))
+                            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(6, 1, Width, Height), StringAligner(TextAlign))
                             G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(5, 0, Width, Height), StringAligner(TextAlign))
                         End With
                     Catch : End Try
@@ -331,7 +313,7 @@ Public Class RetroCheckBox
 
         G.DrawString(Text, Font, New SolidBrush(ForeColor), New Point(16, 0))
 
-        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(18, 0, MeasureString(Text, Font).Width - 6, 12))
+        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(18, 0, Text.Measure(Font).Width - 6, 12))
     End Sub
 
     Private Sub RetroCheckBox_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -440,7 +422,7 @@ Public Class RetroRadioButton
 
         G.DrawString(Text, Font, New SolidBrush(ForeColor), New Point(14, 0))
 
-        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(16, 0, MeasureString(Text, Font).Width - 6, 12))
+        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(16, 0, Text.Measure(Font).Width - 6, 12))
     End Sub
 
     Private Sub RetroCheckBox_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -806,7 +788,7 @@ Public Class RetroGroupBox : Inherits GroupBox
         G.DrawRectangle(New Pen(C12), Rect2)
         G.DrawRectangle(New Pen(C3), Rect3)
 
-        With MeasureString(Text, Font)
+        With Text.Measure(Font)
             G.FillRectangle(New SolidBrush(BackColor), New Rectangle(10, 0, .Width - 4, .Height))
             G.DrawString(Text, Font, New SolidBrush(ForeColor), New Point(10, 0))
         End With
@@ -1001,8 +983,8 @@ Public Class RetroWindow : Inherits Panel
 
     Public Function GetTitleTextHeight()
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         Return TitleTextH_Sum
@@ -1018,8 +1000,8 @@ Public Class RetroWindow : Inherits Panel
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         Dim CompinedPadding As Integer = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3
@@ -1077,8 +1059,6 @@ Public Class RetroWindow : Inherits Panel
     End Sub
 
 End Class
-
-
 Public Class RetroScrollBar : Inherits Panel
     Sub New()
         DoubleBuffered = True

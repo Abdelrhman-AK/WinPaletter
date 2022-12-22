@@ -1,7 +1,8 @@
-﻿Imports System.Drawing.Imaging
+﻿Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports WinPaletter.XenonCore
 
 Public Module ColorsExtensions
 
@@ -96,6 +97,31 @@ Public Module ColorsExtensions
     End Function
 
     '''<summary>
+    '''Change Color Brightness
+    '''</summary>
+    <Extension()>
+    Public Function CB(ByVal color As Color, ByVal correctionFactor As Single) As Color
+        Dim red As Single = CSng(color.R)
+        Dim green As Single = CSng(color.G)
+        Dim blue As Single = CSng(color.B)
+
+        If correctionFactor < 0 Then
+            correctionFactor = 1 + correctionFactor
+            red *= correctionFactor
+            green *= correctionFactor
+            blue *= correctionFactor
+        Else
+            red = (255 - red) * correctionFactor + red
+            green = (255 - green) * correctionFactor + green
+            blue = (255 - blue) * correctionFactor + blue
+        End If
+        Try
+            Return Color.FromArgb(color.A, CInt(red), CInt(green), CInt(blue))
+        Catch
+        End Try
+    End Function
+
+    '''<summary>
     '''Get Color As String in the format you choose
     '''</summary>
     <Extension()>
@@ -123,6 +149,12 @@ Public Module ColorsExtensions
 
         Return s
     End Function
+    Enum ColorFormat
+        HEX
+        RGB
+        HSL
+        Dec
+    End Enum
 
     '''<summary>
     '''Get Bitmap From Color
@@ -306,6 +338,73 @@ Public Module StringExtensions
 
     End Function
 
+    '''<summary>
+    '''Convert String to List (String should be multi-lines)
+    '''</summary>
+    <Extension()>
+    Public Function CList(ByVal [String] As String) As List(Of String)
+        Dim [List] As New List(Of String)
+        [List].Clear()
+        Using Reader As New StringReader([String])
+            While Reader.Peek >= 0
+                [List].Add(Reader.ReadLine)
+            End While
+            Reader.Close()
+            Reader.Dispose()
+        End Using
+        Return [List]
+    End Function
+
+    '''<summary>
+    '''Measure String by a certain font
+    '''</summary>
+    <Extension()>
+    Public Function Measure(text As String, font As Font) As SizeF
+
+        Try
+            Dim TextBitmap As New Bitmap(1, 1)
+            Dim TextGraphics As Graphics = Graphics.FromImage(TextBitmap)
+            Return TextGraphics.MeasureString(text, font)
+        Catch
+        End Try
+
+    End Function
+End Module
+
+Public Module ListOfStringExtensions
+
+    '''<summary>
+    '''Deduplicate list of string
+    '''</summary>
+    <Extension()>
+    Function DeDuplicate(ByVal [List] As List(Of String)) As List(Of String)
+        Dim Result As New List(Of String)
+
+        Dim Exist As Boolean = False
+        For Each ElementString As String In [List]
+            Exist = False
+            For Each ElementStringInResult As String In Result
+                If ElementString = ElementStringInResult Then
+                    Exist = True
+                    Exit For
+                End If
+            Next
+            If Not Exist Then
+                Result.Add(ElementString)
+            End If
+        Next
+
+        Return Result
+    End Function
+
+    '''<summary>
+    '''Return String from List, each item is in a separate line
+    '''</summary>
+    <Extension()>
+    Public Function CString([List] As List(Of String)) As String
+        Return String.Join(vbCrLf, [List].ToArray)
+    End Function
+
 End Module
 
 Public Module BitmapExtensions
@@ -403,10 +502,10 @@ Public Module BitmapExtensions
 
             If NoiseMode = NoiseMode.Acrylic Then
                 Dim br As TextureBrush
-                br = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, opacity))
+                br = New TextureBrush(Fade(My.Resources.GaussianBlur, opacity))
                 g.FillRectangle(br, New Rectangle(0, 0, bmp.Width, bmp.Height))
             ElseIf NoiseMode = NoiseMode.Aero Then
-                g.DrawImage(FadeBitmap(My.Resources.AeroGlass, opacity), New Rectangle(0, 0, bmp.Width, bmp.Height))
+                g.DrawImage(Fade(My.Resources.AeroGlass, opacity), New Rectangle(0, 0, bmp.Width, bmp.Height))
             End If
 
             g.Save()
@@ -421,6 +520,161 @@ Public Module BitmapExtensions
         Aero
         Acrylic
     End Enum
+
+    '''<summary>
+    '''Replace Color in Bitmap (Pixels) by color you choose
+    '''</summary>
+    <Extension()>
+    Public Function ReplaceColor(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Bitmap
+        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
+        Dim G As Graphics = Graphics.FromImage(outputImage)
+
+
+        For y As Int32 = 0 To inputImage.Height - 1
+
+            For x As Int32 = 0 To inputImage.Width - 1
+                Dim PixelColor As Color = inputImage.GetPixel(x, y)
+
+                If PixelColor = oldColor Then
+                    outputImage.SetPixel(x, y, NewColor)
+                Else
+                    outputImage.SetPixel(x, y, PixelColor)
+                End If
+
+            Next
+        Next
+
+        G.DrawImage(outputImage, 0, 0)
+        G.Dispose()
+        Return outputImage
+        outputImage.Dispose()
+
+    End Function
+
+    '''<summary>
+    '''Replace Color in Image (Pixels) by color you choose
+    '''</summary>
+    <Extension()>
+    Public Function ReplaceColor(ByVal inputImage As Image, ByVal oldColor As Color, ByVal NewColor As Color) As Image
+        Return ReplaceColor(DirectCast(inputImage, Bitmap), oldColor, NewColor)
+    End Function
+
+    '''<summary>
+    '''Return Bitmap filled in the scale of size you choose
+    '''</summary>
+    <Extension()>
+    Public Function FillScale(ByVal Bitmap As Bitmap, Size As Size) As Bitmap
+        Try
+            Dim sourceWidth As Integer = Bitmap.Width
+            Dim sourceHeight As Integer = Bitmap.Height
+            Dim sourceX As Integer = 0
+            Dim sourceY As Integer = 0
+            Dim destX As Integer = 0
+            Dim destY As Integer = 0
+            Dim nPercent As Single = 0
+            Dim nPercentW As Single = 0
+            Dim nPercentH As Single = 0
+            nPercentW = (CSng(Size.Width) / CSng(sourceWidth))
+            nPercentH = (CSng(Size.Height) / CSng(sourceHeight))
+
+            If nPercentH < nPercentW Then
+                nPercent = nPercentH
+                destX = System.Convert.ToInt16((Size.Width - (sourceWidth * nPercent)) / 2)
+            Else
+                nPercent = nPercentW
+                destY = System.Convert.ToInt16((Size.Height - (sourceHeight * nPercent)) / 2)
+            End If
+
+            Dim destWidth As Integer = CInt((sourceWidth * nPercent))
+            Dim destHeight As Integer = CInt((sourceHeight * nPercent))
+            Dim bmPhoto As Bitmap = New Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb)
+            bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution)
+            Dim grPhoto As Graphics = Graphics.FromImage(bmPhoto)
+            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic
+            grPhoto.DrawImage(Bitmap, New Rectangle(0, 0, destWidth, destHeight))
+            grPhoto.Dispose()
+            Dim bm As Bitmap = bmPhoto.Clone(New Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb)
+            Dim f As Single
+
+            If nPercentH < nPercentW Then
+                f = Size.Width - bm.Width
+                bm = bm.Resize(Size.Width, Size.Height + f)
+                bm = bm.Clone(New Rectangle(0, 1 / 3 * f, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
+            Else
+                f = Size.Height - bm.Height
+                bm = bm.Resize(Size.Width, Size.Height + f)
+                bm = bm.Clone(New Rectangle(1 / 3 * f, 0, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
+            End If
+
+
+            Return bm
+        Catch
+            Return Bitmap
+        End Try
+    End Function
+
+    '''<summary>
+    '''Return Image filled in the scale of size you choose
+    '''</summary>
+    <Extension()>
+    Public Function FillScale(ByVal Image As Image, Size As Size) As Image
+        Return FillScale(DirectCast(Image, Bitmap), Size)
+    End Function
+
+    '''<summary>
+    '''Resize Bitmap in the size you choose
+    '''</summary>
+    <Extension()>
+    Public Function Resize(bmSource As Bitmap, TargetWidth As Integer, TargetHeight As Integer) As Bitmap
+        If bmSource Is Nothing Then
+            Exit Function
+        End If
+
+        Dim bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
+
+        Dim nSourceAspectRatio = bmSource.Width / bmSource.Height
+        Dim nDestAspectRatio = bmDest.Width / bmDest.Height
+
+        Dim NewX = 0
+        Dim NewY = 0
+
+        Using grDest = Graphics.FromImage(bmDest)
+            With grDest
+                .CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
+                .InterpolationMode = Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+                .PixelOffsetMode = Drawing.Drawing2D.PixelOffsetMode.HighQuality
+                .SmoothingMode = Drawing.Drawing2D.SmoothingMode.AntiAlias
+                .CompositingMode = Drawing.Drawing2D.CompositingMode.SourceOver
+                .DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight)
+            End With
+        End Using
+
+        Return bmDest
+    End Function
+
+    '''<summary>
+    '''Resize Bitmap in the size you choose
+    '''</summary>
+    <Extension()>
+    Public Function Resize(bmSource As Bitmap, TargetSize As Size) As Image
+        Return Resize(bmSource, TargetSize.Width, TargetSize.Height)
+    End Function
+
+    '''<summary>
+    '''Resize Image in the size you choose
+    '''</summary>
+    <Extension()>
+    Public Function Resize(imSource As Image, TargetWidth As Integer, TargetHeight As Integer) As Image
+        Return Resize(DirectCast(imSource, Bitmap), TargetWidth, TargetHeight)
+    End Function
+
+    '''<summary>
+    '''Resize Image in the size you choose
+    '''</summary>
+    <Extension()>
+    Public Function Resize(imSource As Image, TargetSize As Size) As Image
+        Return Resize(DirectCast(imSource, Bitmap), TargetSize.Width, TargetSize.Height)
+    End Function
 
     '''<summary>
     '''Return Bitmap Tinted by a color
@@ -466,6 +720,51 @@ Public Module BitmapExtensions
         Return resultBitmap
     End Function
 
+    '''<summary>
+    '''Fade Bitmap (Change Opacity)
+    '''</summary>
+    <Extension()>
+    Public Function Fade(ByVal originalBitmap As Bitmap, ByVal opacity As Double) As Bitmap
+        Const bytesPerPixel As Integer = 4
+        If opacity > 1 Then opacity = 1
+        If opacity < 0 Then opacity = 0
+
+        'If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
+        'Return originalImage
+        'End If
+
+        Dim bmp As Bitmap = CType(originalBitmap.Clone(), Bitmap)
+        Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
+        Dim rect As Rectangle = New Rectangle(0, 0, bmp.Width, bmp.Height)
+        Dim bmpData As BitmapData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf)
+        Dim ptr As IntPtr = bmpData.Scan0
+        Dim numBytes As Integer = bmp.Width * bmp.Height * bytesPerPixel
+        Dim argbValues As Byte() = New Byte(numBytes - 1) {}
+        System.Runtime.InteropServices.Marshal.Copy(ptr, argbValues, 0, numBytes)
+        Dim counter As Integer = 0
+
+        While counter < argbValues.Length
+            'If argbValues(counter + bytesPerPixel - 1) <> 0 Then Exit While
+            Dim pos As Integer = 0
+            pos += 1
+            pos += 1
+            pos += 1
+            argbValues(counter + pos) = CByte((argbValues(counter + pos) * opacity))
+            counter += bytesPerPixel
+        End While
+
+        Marshal.Copy(argbValues, 0, ptr, numBytes)
+        bmp.UnlockBits(bmpData)
+        Return bmp
+    End Function
+
+    '''<summary>
+    '''Fade Image (Change Opacity)
+    '''</summary>
+    <Extension()>
+    Public Function Fade(ByVal originalImage As Image, ByVal opacity As Double) As Image
+        Return Fade(DirectCast(originalImage, Bitmap), opacity)
+    End Function
 
     '''<summary>
     '''Return Bitmap in Grayscale

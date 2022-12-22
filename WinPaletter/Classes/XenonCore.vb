@@ -1,6 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
@@ -54,7 +52,6 @@ Public Class XenonCore
 #End Region
 
 #Region "Misc"
-
     Public Shared Sub RefreshDWM(CP As CP)
 
         Try
@@ -84,74 +81,6 @@ Public Class XenonCore
         Catch
         End Try
     End Sub
-
-    'Public Shared Sub RefreshRegisrty()
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-    'End Sub
-    Public Shared Function BitmapFillScaler(ByVal Bitmap As Bitmap, Size As Size) As Bitmap
-        Try
-            Dim sourceWidth As Integer = Bitmap.Width
-            Dim sourceHeight As Integer = Bitmap.Height
-            Dim sourceX As Integer = 0
-            Dim sourceY As Integer = 0
-            Dim destX As Integer = 0
-            Dim destY As Integer = 0
-            Dim nPercent As Single = 0
-            Dim nPercentW As Single = 0
-            Dim nPercentH As Single = 0
-            nPercentW = (CSng(Size.Width) / CSng(sourceWidth))
-            nPercentH = (CSng(Size.Height) / CSng(sourceHeight))
-
-            If nPercentH < nPercentW Then
-                nPercent = nPercentH
-                destX = System.Convert.ToInt16((Size.Width - (sourceWidth * nPercent)) / 2)
-            Else
-                nPercent = nPercentW
-                destY = System.Convert.ToInt16((Size.Height - (sourceHeight * nPercent)) / 2)
-            End If
-
-            Dim destWidth As Integer = CInt((sourceWidth * nPercent))
-            Dim destHeight As Integer = CInt((sourceHeight * nPercent))
-            Dim bmPhoto As Bitmap = New Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb)
-            bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution)
-            Dim grPhoto As Graphics = Graphics.FromImage(bmPhoto)
-            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic
-            grPhoto.DrawImage(Bitmap, New Rectangle(0, 0, destWidth, destHeight))
-            grPhoto.Dispose()
-            Dim bm As Bitmap = bmPhoto.Clone(New Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb)
-            Dim f As Single
-
-            If nPercentH < nPercentW Then
-                f = Size.Width - bm.Width
-                bm = ResizeImage(bm, Size.Width, Size.Height + f)
-                bm = bm.Clone(New Rectangle(0, 1 / 3 * f, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
-            Else
-                f = Size.Height - bm.Height
-                bm = ResizeImage(bm, Size.Width, Size.Height + f)
-                bm = bm.Clone(New Rectangle(1 / 3 * f, 0, Size.Width, Size.Height), PixelFormat.Format32bppArgb)
-            End If
-
-
-            Return bm
-        Catch
-            Return Bitmap
-        End Try
-    End Function
     Public Shared Sub RestartExplorer(Optional [TreeView] As TreeView = Nothing)
         With My.Application
             Try
@@ -197,88 +126,43 @@ Public Class XenonCore
         ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
         Return bm
     End Function
-
-
-    Public Shared Function CCB(ByVal color As Color, ByVal correctionFactor As Single) As Color
-        Dim red As Single = CSng(color.R)
-        Dim green As Single = CSng(color.G)
-        Dim blue As Single = CSng(color.B)
-
-        If correctionFactor < 0 Then
-            correctionFactor = 1 + correctionFactor
-            red *= correctionFactor
-            green *= correctionFactor
-            blue *= correctionFactor
+    Public Shared Function IsNetAvailable() As Boolean
+        If My.Computer.Network.IsAvailable Then
+            Try
+                Using client = New WebClient()
+                    Using stream = client.OpenRead("https://www.github.com")
+                        Return True
+                    End Using
+                End Using
+            Catch
+                Return False
+            End Try
         Else
-            red = (255 - red) * correctionFactor + red
-            green = (255 - green) * correctionFactor + green
-            blue = (255 - blue) * correctionFactor + blue
+            Return False
         End If
-        Try
-            Return Color.FromArgb(color.A, CInt(red), CInt(green), CInt(blue))
-        Catch
-        End Try
-    End Function
-    Public Shared Function FadeBitmap(ByVal originalImage As Image, ByVal opacity As Double) As Bitmap
-        Const bytesPerPixel As Integer = 4
-        If opacity > 1 Then opacity = 1
-        If opacity < 0 Then opacity = 0
-
-        'If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
-        'Return originalImage
-        'End If
-
-        Dim bmp As Bitmap = CType(originalImage.Clone(), Bitmap)
-        Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
-        Dim rect As Rectangle = New Rectangle(0, 0, bmp.Width, bmp.Height)
-        Dim bmpData As BitmapData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf)
-        Dim ptr As IntPtr = bmpData.Scan0
-        Dim numBytes As Integer = bmp.Width * bmp.Height * bytesPerPixel
-        Dim argbValues As Byte() = New Byte(numBytes - 1) {}
-        System.Runtime.InteropServices.Marshal.Copy(ptr, argbValues, 0, numBytes)
-        Dim counter As Integer = 0
-
-        While counter < argbValues.Length
-            'If argbValues(counter + bytesPerPixel - 1) <> 0 Then Exit While
-            Dim pos As Integer = 0
-            pos += 1
-            pos += 1
-            pos += 1
-            argbValues(counter + pos) = CByte((argbValues(counter + pos) * opacity))
-            counter += bytesPerPixel
-        End While
-
-        System.Runtime.InteropServices.Marshal.Copy(argbValues, 0, ptr, numBytes)
-        bmp.UnlockBits(bmpData)
-        Return bmp
     End Function
 
+    'Public Shared Sub RefreshRegisrty()
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, 0, Marshal.PtrToStringAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
 
-    Public Shared Function ColorReplace(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Image
-        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
-        Dim G As Graphics = Graphics.FromImage(outputImage)
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
 
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+    'End Sub
+#End Region
 
-        For y As Int32 = 0 To inputImage.Height - 1
-
-            For x As Int32 = 0 To inputImage.Width - 1
-                Dim PixelColor As Color = inputImage.GetPixel(x, y)
-
-                If PixelColor = oldColor Then
-                    outputImage.SetPixel(x, y, NewColor)
-                Else
-                    outputImage.SetPixel(x, y, PixelColor)
-                End If
-
-            Next
-        Next
-
-        G.DrawImage(outputImage, 0, 0)
-        G.Dispose()
-        Return outputImage
-        outputImage.Dispose()
-
-    End Function
+#Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
         Dim i As Long
 
@@ -305,58 +189,6 @@ Public Class XenonCore
             End Try
         End If
     End Function
-    Public Shared Function IsNetAvailable() As Boolean
-        If My.Computer.Network.IsAvailable Then
-            Try
-                Using client = New WebClient()
-                    Using stream = client.OpenRead("https://www.github.com")
-                        Return True
-                    End Using
-                End Using
-            Catch
-                Return False
-            End Try
-        Else
-            Return False
-        End If
-    End Function
-
-    Enum ColorFormat
-        HEX
-        RGB
-        HSL
-        Dec
-    End Enum
-#End Region
-
-#Region " ResizeImage "
-
-    Public Overloads Shared Function ResizeImage(bmSource As Drawing.Bitmap, TargetWidth As Int32, TargetHeight As Int32) As Drawing.Bitmap
-        If bmSource Is Nothing Then Exit Function
-        Dim bmDest As New Drawing.Bitmap(TargetWidth, TargetHeight, Drawing.Imaging.PixelFormat.Format32bppArgb)
-
-        Dim nSourceAspectRatio = bmSource.Width / bmSource.Height
-        Dim nDestAspectRatio = bmDest.Width / bmDest.Height
-
-        Dim NewX = 0
-        Dim NewY = 0
-
-        Using grDest = Drawing.Graphics.FromImage(bmDest)
-            With grDest
-                .CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
-                .InterpolationMode = Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
-                .PixelOffsetMode = Drawing.Drawing2D.PixelOffsetMode.HighQuality
-                .SmoothingMode = Drawing.Drawing2D.SmoothingMode.AntiAlias
-                .CompositingMode = Drawing.Drawing2D.CompositingMode.SourceOver
-                .DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight)
-            End With
-        End Using
-
-        Return bmDest
-    End Function
-#End Region
-
-#Region "Dark\Light Mode"
     Public Shared Sub ApplyDarkMode(Optional ByVal [Form] As Form = Nothing)
         Dim DarkMode As Boolean = GetDarkMode()
 
@@ -457,16 +289,16 @@ Public Class XenonCore
 
 
         If TypeOf ctrl Is XenonGroupBox Then
-            DirectCast(ctrl, XenonGroupBox).BackColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
-            DirectCast(ctrl, XenonGroupBox).LineColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
+            DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
+            DirectCast(ctrl, XenonGroupBox).LineColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonCP Then
-            DirectCast(ctrl, XenonCP).LineColor = CCB(ctrl.BackColor, If(ctrl.BackColor.IsDark, 0.1, -0.1))
+            DirectCast(ctrl, XenonCP).LineColor = ctrl.BackColor.CB(If(ctrl.BackColor.IsDark, 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonButton Then
-            DirectCast(ctrl, XenonButton).BackColor = CCB(GetParentColor(ctrl), If(GetParentColor(ctrl).IsDark, 0.04, -0.04))
+            DirectCast(ctrl, XenonButton).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.04))
             DirectCast(ctrl, XenonButton).ForeColor = If(DarkMode, Color.White, Color.Black)
         End If
 
@@ -558,23 +390,6 @@ Public Class XenonCore
         ctrl.Refresh()
     End Sub
 #End Region
-
-#Region "String Stream"
-    Public Shared Sub CList_FromStr(ByVal [List] As List(Of String), ByVal [String] As String)
-        [List].Clear()
-        Using Reader As New System.IO.StringReader([String])
-            While Reader.Peek >= 0
-                [List].Add(Reader.ReadLine)
-            End While
-            Reader.Close()
-            Reader.Dispose()
-        End Using
-    End Sub
-    Public Shared Function CStr_FromList(ByVal [List] As List(Of String)) As String
-        Return String.Join(vbCrLf, [List].ToArray)
-    End Function
-#End Region
-
 
 End Class
 

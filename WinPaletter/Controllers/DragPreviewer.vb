@@ -708,13 +708,13 @@ Public Class dragPreviewer
 
         RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
 
-        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.WinMetrics_Fonts.CaptionFont).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(CP.WinMetrics_Fonts.CaptionFont).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         Dim iP As Integer = 3 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth

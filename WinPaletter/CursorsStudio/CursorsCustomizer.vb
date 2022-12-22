@@ -31,7 +31,7 @@ Public Module Paths
         Circle
     End Enum
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, 0.2))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlurOpaque.Fade(0.2))
 
     Function ReturnGradientModeFromString([String] As String) As GradientMode
         If [String].Trim.ToLower = "vertical" Then
@@ -147,14 +147,14 @@ Public Module Paths
                 G.FillPath(BB, DefaultCursor(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, DefaultCursor(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
                 End If
 #End Region
@@ -190,7 +190,7 @@ Public Module Paths
                 G.FillPath(BB, DefaultCursor(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, DefaultCursor(_Arrow, Scale))
                 End If
 
@@ -198,7 +198,7 @@ Public Module Paths
                 G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
                 End If
 
@@ -206,14 +206,14 @@ Public Module Paths
                 G.FillPath(BB_H, Help(_Help, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Help(_Help, Scale))
                 End If
 
                 G.DrawPath(PL_H, Help(_Help, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Help(_Help, Scale))
                 End If
 
@@ -235,14 +235,14 @@ Public Module Paths
                 G.FillPath(BC, Busy(_Busy, Scale))
 
                 If [LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleBackNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleBackNoiseOpacity]))
                     G.FillPath(Noise, Busy(_Busy, Scale))
                 End If
 
                 G.FillPath(BH, BusyLoader(_Busy, _Angle, Scale))
 
                 If [LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleHotNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleHotNoiseOpacity]))
                     G.FillPath(Noise, BusyLoader(_Busy, _Angle, Scale))
                 End If
 #End Region
@@ -276,28 +276,28 @@ Public Module Paths
                 G.FillPath(BB, DefaultCursor(_CurRect, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, DefaultCursor(_CurRect, Scale))
                 End If
 
                 G.DrawPath(PL, DefaultCursor(_CurRect, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_CurRect, Scale))
                 End If
 
                 G.FillPath(BC, AppLoading(_LoadRect, Scale))
 
                 If [LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleBackNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleBackNoiseOpacity]))
                     G.FillPath(Noise, AppLoading(_LoadRect, Scale))
                 End If
 
                 G.FillPath(BH, AppLoaderCircle(_LoadRect, _Angle, Scale))
 
                 If [LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [LoadingCircleHotNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleHotNoiseOpacity]))
                     G.FillPath(Noise, AppLoaderCircle(_LoadRect, _Angle, Scale))
                 End If
 
@@ -321,14 +321,14 @@ Public Module Paths
                 G.FillPath(BB, NoneBackground(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, NoneBackground(_Arrow, Scale))
                 End If
 
                 G.FillPath(BL, None(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.FillPath(Noise, None(_Arrow, Scale))
                 End If
 #End Region
@@ -350,14 +350,14 @@ Public Module Paths
                 G.FillPath(BB, Move(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Move(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Move(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Move(_Arrow, Scale))
                 End If
 #End Region
@@ -379,14 +379,14 @@ Public Module Paths
                 G.FillPath(BB, Up(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Up(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Up(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Up(_Arrow, Scale))
                 End If
 #End Region
@@ -408,14 +408,14 @@ Public Module Paths
                 G.FillPath(BB, NS(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, NS(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, NS(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), NS(_Arrow, Scale))
                 End If
 #End Region
@@ -437,14 +437,14 @@ Public Module Paths
                 G.FillPath(BB, EW(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, EW(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, EW(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), EW(_Arrow, Scale))
                 End If
 #End Region
@@ -466,14 +466,14 @@ Public Module Paths
                 G.FillPath(BB, NESW(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, NESW(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, NESW(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), NESW(_Arrow, Scale))
                 End If
 
@@ -496,14 +496,14 @@ Public Module Paths
                 G.FillPath(BB, NWSE(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, NWSE(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, NWSE(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), NWSE(_Arrow, Scale))
                 End If
 #End Region
@@ -525,14 +525,14 @@ Public Module Paths
                 G.FillPath(BB, PenBackground(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, PenBackground(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Pen(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Pen(_Arrow, Scale))
                 End If
 #End Region
@@ -554,14 +554,14 @@ Public Module Paths
                 G.FillPath(BB, Hand(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Hand(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Hand(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
                 End If
 #End Region
@@ -595,35 +595,35 @@ Public Module Paths
                 G.FillPath(BB, Hand(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Hand(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Hand(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
                 End If
 
                 G.FillPath(BB_P, Pin(_Pin, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Pin(_Pin, Scale))
                 End If
 
                 G.FillPath(BL_P, Pin_CenterPoint(_Pin, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Pin_CenterPoint(_Pin, Scale))
                 End If
 
                 G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Pin(_Pin, Scale))
                 End If
 #End Region
@@ -657,28 +657,28 @@ Public Module Paths
                 G.FillPath(BB, Hand(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Hand(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Hand(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
                 End If
 
                 G.FillPath(BB_P, Person(_Person, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Person(_Person, Scale))
                 End If
 
                 G.DrawPath(New Pen(BL_P, 2), Person(_Person, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Person(_Person, Scale))
                 End If
 #End Region
@@ -700,14 +700,14 @@ Public Module Paths
                 G.FillPath(BB, IBeam(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, IBeam(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, IBeam(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), IBeam(_Arrow, Scale))
                 End If
 #End Region
@@ -729,14 +729,14 @@ Public Module Paths
                 G.FillPath(BB, Cross(_Arrow, Scale))
 
                 If [PrimaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [PrimaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
                     G.FillPath(Noise, Cross(_Arrow, Scale))
                 End If
 
                 G.DrawPath(PL, Cross(_Arrow, Scale))
 
                 If [SecondaryNoise] Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlurOpaque, [SecondaryNoiseOpacity]))
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
                     G.DrawPath(New Pen(Noise, LineThickness), Cross(_Arrow, Scale))
                 End If
 #End Region

@@ -149,26 +149,26 @@ Public Class WinTerminal
 
                     Colors.Add(New TColor With {
                            .Name = "Campbell",
-                           .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-                           .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-                           .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
-                           .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
-                           .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
-                           .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
-                           .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
-                           .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
-                           .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
-                           .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
-                           .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
-                           .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-                           .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
-                           .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-                           .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
-                           .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
-                           .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
-                           .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-                           .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-                           .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+                           .Background = "FF0C0C0C".FromHEXToColor(True),
+                           .Black = "FF0C0C0C".FromHEXToColor(True),
+                           .Blue = "FF0037DA".FromHEXToColor(True),
+                           .BrightBlack = "FF767676".FromHEXToColor(True),
+                           .BrightBlue = "FF3B78FF".FromHEXToColor(True),
+                           .BrightCyan = "FF61D6D6".FromHEXToColor(True),
+                           .BrightGreen = "FF16C60C".FromHEXToColor(True),
+                           .BrightPurple = "FFB4009E".FromHEXToColor(True),
+                           .BrightRed = "FFE74856".FromHEXToColor(True),
+                           .BrightWhite = "FFF2F2F2".FromHEXToColor(True),
+                           .BrightYellow = "FFF9F1A5".FromHEXToColor(True),
+                           .CursorColor = "FFFFFFFF".FromHEXToColor(True),
+                           .Cyan = "FF3A96DD".FromHEXToColor(True),
+                           .Foreground = "FFCCCCCC".FromHEXToColor(True),
+                           .Green = "FF13A10E".FromHEXToColor(True),
+                           .Purple = "FF881798".FromHEXToColor(True),
+                           .Red = "FFC50F1F".FromHEXToColor(True),
+                           .SelectionBackground = "FFFFFFFF".FromHEXToColor(True),
+                           .White = "FFCCCCCC".FromHEXToColor(True),
+                           .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
 
                     MsgBox(My.Application.LanguageHelper.Terminal_SettingsNotExist & File, MsgBoxStyle.Critical)
@@ -180,7 +180,7 @@ Public Class WinTerminal
 
                 Dim lst As New List(Of String)
                 lst.Clear()
-                CList_FromStr(lst, File)
+                lst = File.CList
 
                 For Each lin As String In lst
 
@@ -464,28 +464,28 @@ Public Class WinTerminal
 
                 If Colors.Count = 0 Then
                     Colors.Add(New TColor With {
-             .Name = "Campbell",
-             .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-             .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-             .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
-             .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
-             .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
-             .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
-             .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
-             .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
-             .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
-             .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
-             .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
-             .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-             .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
-             .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-             .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
-             .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
-             .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
-             .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-             .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-             .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
-             })
+                         .Name = "Campbell",
+                         .Background = "FF0C0C0C".FromHEXToColor(True),
+                         .Black = "FF0C0C0C".FromHEXToColor(True),
+                         .Blue = "FF0037DA".FromHEXToColor(True),
+                         .BrightBlack = "FF767676".FromHEXToColor(True),
+                         .BrightBlue = "FF3B78FF".FromHEXToColor(True),
+                         .BrightCyan = "FF61D6D6".FromHEXToColor(True),
+                         .BrightGreen = "FF16C60C".FromHEXToColor(True),
+                         .BrightPurple = "FFB4009E".FromHEXToColor(True),
+                         .BrightRed = "FFE74856".FromHEXToColor(True),
+                         .BrightWhite = "FFF2F2F2".FromHEXToColor(True),
+                         .BrightYellow = "FFF9F1A5".FromHEXToColor(True),
+                         .CursorColor = "FFFFFFFF".FromHEXToColor(True),
+                         .Cyan = "FF3A96DD".FromHEXToColor(True),
+                         .Foreground = "FFCCCCCC".FromHEXToColor(True),
+                         .Green = "FF13A10E".FromHEXToColor(True),
+                         .Purple = "FF881798".FromHEXToColor(True),
+                         .Red = "FFC50F1F".FromHEXToColor(True),
+                         .SelectionBackground = "FFFFFFFF".FromHEXToColor(True),
+                         .White = "FFCCCCCC".FromHEXToColor(True),
+                         .Yellow = "FFC19C00".FromHEXToColor(True)
+                         })
                 End If
 
             Case Mode.Empty
@@ -497,27 +497,28 @@ Public Class WinTerminal
 
                 Colors.Add(New TColor With {
                            .Name = "Campbell",
-                           .Background = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-                           .Black = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16)),
-                           .Blue = Color.FromArgb(Convert.ToInt32("FF0037DA", 16)),
-                           .BrightBlack = Color.FromArgb(Convert.ToInt32("FF767676", 16)),
-                           .BrightBlue = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16)),
-                           .BrightCyan = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16)),
-                           .BrightGreen = Color.FromArgb(Convert.ToInt32("FF16C60C", 16)),
-                           .BrightPurple = Color.FromArgb(Convert.ToInt32("FFB4009E", 16)),
-                           .BrightRed = Color.FromArgb(Convert.ToInt32("FFE74856", 16)),
-                           .BrightWhite = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16)),
-                           .BrightYellow = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16)),
-                           .CursorColor = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-                           .Cyan = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16)),
-                           .Foreground = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-                           .Green = Color.FromArgb(Convert.ToInt32("FF13A10E", 16)),
-                           .Purple = Color.FromArgb(Convert.ToInt32("FF881798", 16)),
-                           .Red = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16)),
-                           .SelectionBackground = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16)),
-                           .White = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16)),
-                           .Yellow = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+                           .Background = "FF0C0C0C".FromHEXToColor(True),
+                           .Black = "FF0C0C0C".FromHEXToColor(True),
+                           .Blue = "FF0037DA".FromHEXToColor(True),
+                           .BrightBlack = "FF767676".FromHEXToColor(True),
+                           .BrightBlue = "FF3B78FF".FromHEXToColor(True),
+                           .BrightCyan = "FF61D6D6".FromHEXToColor(True),
+                           .BrightGreen = "FF16C60C".FromHEXToColor(True),
+                           .BrightPurple = "FFB4009E".FromHEXToColor(True),
+                           .BrightRed = "FFE74856".FromHEXToColor(True),
+                           .BrightWhite = "FFF2F2F2".FromHEXToColor(True),
+                           .BrightYellow = "FFF9F1A5".FromHEXToColor(True),
+                           .CursorColor = "FFFFFFFF".FromHEXToColor(True),
+                           .Cyan = "FF3A96DD".FromHEXToColor(True),
+                           .Foreground = "FFCCCCCC".FromHEXToColor(True),
+                           .Green = "FF13A10E".FromHEXToColor(True),
+                           .Purple = "FF881798".FromHEXToColor(True),
+                           .Red = "FFC50F1F".FromHEXToColor(True),
+                           .SelectionBackground = "FFFFFFFF".FromHEXToColor(True),
+                           .White = "FFCCCCCC".FromHEXToColor(True),
+                           .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
+
         End Select
     End Sub
 
@@ -920,26 +921,26 @@ End Class
 Public Class TColor : Implements IComparable
 
     Public Property Name As String
-    Public Property Background As Color = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
-    Public Property Foreground As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
-    Public Property SelectionBackground As Color = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
-    Public Property Black As Color = Color.FromArgb(Convert.ToInt32("FF0C0C0C", 16))
-    Public Property Blue As Color = Color.FromArgb(Convert.ToInt32("FF0037DA", 16))
-    Public Property BrightBlack As Color = Color.FromArgb(Convert.ToInt32("FF767676", 16))
-    Public Property BrightBlue As Color = Color.FromArgb(Convert.ToInt32("FF3B78FF", 16))
-    Public Property BrightCyan As Color = Color.FromArgb(Convert.ToInt32("FF61D6D6", 16))
-    Public Property BrightGreen As Color = Color.FromArgb(Convert.ToInt32("FF16C60C", 16))
-    Public Property BrightPurple As Color = Color.FromArgb(Convert.ToInt32("FFB4009E", 16))
-    Public Property BrightRed As Color = Color.FromArgb(Convert.ToInt32("FFE74856", 16))
-    Public Property BrightWhite As Color = Color.FromArgb(Convert.ToInt32("FFF2F2F2", 16))
-    Public Property BrightYellow As Color = Color.FromArgb(Convert.ToInt32("FFF9F1A5", 16))
-    Public Property CursorColor As Color = Color.FromArgb(Convert.ToInt32("FFFFFFFF", 16))
-    Public Property Cyan As Color = Color.FromArgb(Convert.ToInt32("FF3A96DD", 16))
-    Public Property Green As Color = Color.FromArgb(Convert.ToInt32("FF13A10E", 16))
-    Public Property Purple As Color = Color.FromArgb(Convert.ToInt32("FF881798", 16))
-    Public Property Red As Color = Color.FromArgb(Convert.ToInt32("FFC50F1F", 16))
-    Public Property White As Color = Color.FromArgb(Convert.ToInt32("FFCCCCCC", 16))
-    Public Property Yellow As Color = Color.FromArgb(Convert.ToInt32("FFC19C00", 16))
+    Public Property Background As Color = "FF0C0C0C".FromHEXToColor(True)
+    Public Property Foreground As Color = "FFCCCCCC".FromHEXToColor(True)
+    Public Property SelectionBackground As Color = "FFFFFFFF".FromHEXToColor(True)
+    Public Property Black As Color = "FF0C0C0C".FromHEXToColor(True)
+    Public Property Blue As Color = "FF0037DA".FromHEXToColor(True)
+    Public Property BrightBlack As Color = "FF767676".FromHEXToColor(True)
+    Public Property BrightBlue As Color = "FF3B78FF".FromHEXToColor(True)
+    Public Property BrightCyan As Color = "FF61D6D6".FromHEXToColor(True)
+    Public Property BrightGreen As Color = "FF16C60C".FromHEXToColor(True)
+    Public Property BrightPurple As Color = "FFB4009E".FromHEXToColor(True)
+    Public Property BrightRed As Color = "FFE74856".FromHEXToColor(True)
+    Public Property BrightWhite As Color = "FFF2F2F2".FromHEXToColor(True)
+    Public Property BrightYellow As Color = "FFF9F1A5".FromHEXToColor(True)
+    Public Property CursorColor As Color = "FFFFFFFF".FromHEXToColor(True)
+    Public Property Cyan As Color = "FF3A96DD".FromHEXToColor(True)
+    Public Property Green As Color = "FF13A10E".FromHEXToColor(True)
+    Public Property Purple As Color = "FF881798".FromHEXToColor(True)
+    Public Property Red As Color = "FFC50F1F".FromHEXToColor(True)
+    Public Property White As Color = "FFCCCCCC".FromHEXToColor(True)
+    Public Property Yellow As Color = "FFC19C00".FromHEXToColor(True)
 
     Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
         If Me = DirectCast(obj, TColor) Then Return 1 Else Return 0

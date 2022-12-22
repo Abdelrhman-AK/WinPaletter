@@ -49,7 +49,7 @@ Public Class cmd
 
         End Select
 
-        XenonButton6.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
+        XenonButton6.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
     End Sub
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then

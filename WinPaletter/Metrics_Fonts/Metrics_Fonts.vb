@@ -42,7 +42,7 @@ Public Class Metrics_Fonts
             msgLbl.ForeColor = Color.Black
         End If
 
-        XenonButton12.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
+        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
     End Sub
 
@@ -442,8 +442,8 @@ Public Class Metrics_Fonts
 
     Public Function GetTitleTextHeight([Font] As Font) As Integer
         Dim TitleTextH As Integer ', TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", [Font]).Height
-        'TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure([Font]).Height
+        'TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font([Font].Name, 9, [Font].Style)).Height
         'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
 
         Return [Font].Height 'TitleTextH 'TitleTextH_Sum
@@ -451,8 +451,8 @@ Public Class Metrics_Fonts
 
     Public Function GetTitleTextWidth([Font] As Font) As Integer
         Dim TitleTextW As Integer ', TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextW = MeasureString("ABCabc0123xYz.#", [Font]).Width
-        'TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font([Font].Name, 9, [Font].Style)).Height
+        TitleTextW = "ABCabc0123xYz.#".Measure([Font]).Width
+        'TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font([Font].Name, 9, [Font].Style)).Height
         'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
 
         Return TitleTextW 'TitleTextH_Sum

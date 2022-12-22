@@ -603,7 +603,7 @@ Public Class Win32UI
             Dim FoundGradientActive As Boolean = False
             Dim FoundGradientInactive As Boolean = False
 
-            CList_FromStr(s, IO.File.ReadAllText(File))
+            s = IO.File.ReadAllText(File).CList
             For Each x As String In s
 
                 If x.ToLower.StartsWith("activetitle=".ToLower) Then
@@ -683,7 +683,7 @@ Public Class Win32UI
         Dim SelectedTheme As String = ""
         Dim SelectedThemeList As New List(Of String)
 
-        CList_FromStr(AllThemes, [String])
+        AllThemes = [String].CList
         Dim Found As Boolean = False
 
         For Each th As String In AllThemes
@@ -698,7 +698,7 @@ Public Class Win32UI
             Exit Sub
         End If
 
-        CList_FromStr(SelectedThemeList, SelectedTheme)
+        SelectedThemeList = SelectedTheme.CList
 
         Dim FoundGradientActive As Boolean = False
         Dim FoundGradientInactive As Boolean = False
@@ -781,13 +781,13 @@ Public Class Win32UI
 
         RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
 
-        RetroLabel1.Width = MeasureString(RetroLabel1.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroLabel2.Width = MeasureString(RetroLabel2.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroPanel1.Width = MeasureString(RetroLabel3.Text, CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
+        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", CP.WinMetrics_Fonts.CaptionFont).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(CP.WinMetrics_Fonts.CaptionFont).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         Dim iP As Integer = 3 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth
@@ -1252,7 +1252,7 @@ Public Class Win32UI
             End If
 
             Try
-                IO.File.WriteAllText(SaveFileDialog2.FileName, CStr_FromList(s))
+                IO.File.WriteAllText(SaveFileDialog2.FileName, s.CString)
             Catch ex As Exception
                 MsgBox(My.Application.LanguageHelper.Win32UISavingThemeError & SaveFileDialog2.FileName & " (" & ex.Message & ")" & vbCrLf & vbCrLf & ex.StackTrace)
             End Try

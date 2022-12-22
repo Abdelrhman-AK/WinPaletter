@@ -251,7 +251,7 @@ Namespace My
 
         Sub Wallpaper_Changed(sender As Object, e As EventArrivedEventArgs)
             Try
-                Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                Wallpaper = GetCurrentWallpaper().Resize(528, 297)
                 Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
                 MainForm.Invoke(updateBkX, Wallpaper)
             Catch
@@ -288,7 +288,7 @@ Namespace My
 
                     S.Stop()
 
-                    Wallpaper = ResizeImage(GetCurrentWallpaper(), 528, 297)
+                    Wallpaper = GetCurrentWallpaper().Resize(528, 297)
                     Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
                     MainForm.Invoke(updateBkX, Wallpaper)
 
@@ -367,26 +367,6 @@ Namespace My
             Catch : End Try
         End Sub
 
-        Function RemoveDuplicate(ByVal TheList As List(Of String)) As List(Of String)
-            Dim Result As New List(Of String)
-
-            Dim Exist As Boolean = False
-            For Each ElementString As String In TheList
-                Exist = False
-                For Each ElementStringInResult As String In Result
-                    If ElementString = ElementStringInResult Then
-                        Exist = True
-                        Exit For
-                    End If
-                Next
-                If Not Exist Then
-                    Result.Add(ElementString)
-                End If
-            Next
-
-            Return Result
-        End Function
-
         Public Function MsgboxRt() As MsgBoxStyle
             Return If(LanguageHelper.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
         End Function
@@ -433,7 +413,6 @@ Namespace My
             End If
 
         End Sub
-
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             _Settings = New XeSettings(XeSettings.Mode.Registry)
@@ -511,7 +490,7 @@ Namespace My
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
 
-            Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+            Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
             Monitor()
             ApplyDarkMode()
 
@@ -639,7 +618,7 @@ Namespace My
                     ver.Add(X)
                 Next
 
-                ver = RemoveDuplicate(ver)
+                ver = ver.DeDuplicate
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
             Else

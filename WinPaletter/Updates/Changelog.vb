@@ -100,7 +100,7 @@ Public Class Changelog
         SetTreeViewTheme([TreeView].Handle)
 
         Try
-            CList_FromStr(ls, If(Customchangelog_str = Nothing, changelog_str, Customchangelog_str))
+            ls = If(Customchangelog_str = Nothing, changelog_str, Customchangelog_str).CList
 
             For x = 0 To ls.Count - 1
                 Condition0 = (SpecificVersion = Nothing And ls(x).Contains("[") And ls(x).Contains("]") And ls(x).Contains("."))

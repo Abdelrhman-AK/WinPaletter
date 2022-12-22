@@ -15,7 +15,7 @@ Public Class ExternalTerminal
         FillFonts(ExtTerminal_FontsBox, Not My.Application._Settings.Terminal_OtherFonts)
         MainFrm.Visible = False
 
-        XenonButton4.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
+        XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
     End Sub

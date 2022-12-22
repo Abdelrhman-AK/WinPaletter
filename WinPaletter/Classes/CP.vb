@@ -2064,7 +2064,7 @@ Public Class CP : Implements IDisposable
             ls.Clear()
 
             Dim tx As New List(Of String)
-            CList_FromStr(tx, IO.File.ReadAllText(Filename))
+            tx = IO.File.ReadAllText(Filename).CList
 
             For Each x As String In tx
                 Try
@@ -2113,7 +2113,7 @@ Public Class CP : Implements IDisposable
         Dim SelectedTheme As String = ""
         Dim SelectedThemeList As New List(Of String)
 
-        CList_FromStr(AllThemes, [String])
+        AllThemes = [String].CList
         Dim Found As Boolean = False
 
         For Each th As String In AllThemes
@@ -2129,7 +2129,7 @@ Public Class CP : Implements IDisposable
             Exit Function
         End If
 
-        CList_FromStr(SelectedThemeList, SelectedTheme)
+        SelectedThemeList = SelectedTheme.CList
 
 
         For Each x As String In SelectedThemeList
@@ -2155,7 +2155,7 @@ Public Class CP : Implements IDisposable
     Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
         [ComboBox].Items.Clear()
         Dim ls As New List(Of String)
-        CList_FromStr(ls, My.Resources.RetroThemesDB)
+        ls = My.Resources.RetroThemesDB.CList
 
         For Each x As String In ls
             [ComboBox].Items.Add(x.Split("|")(0))
@@ -2163,13 +2163,145 @@ Public Class CP : Implements IDisposable
 
     End Sub
     Public Function ListColors() As List(Of Color)
-        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
         Dim CL As New List(Of Color)
         CL.Clear()
 
-        For Each [property] As PropertyInfo In properties1
-            If [property].PropertyType.Name.ToLower = "color" Then
-                CL.Add([property].GetValue(Me, Nothing))
+        For Each field In GetType(Windows10x_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(Windows11))
+                CL.Add(field.GetValue(Windows10))
+            End If
+        Next
+
+        For Each field In GetType(LogonUI10x_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(LogonUI10x))
+            End If
+        Next
+
+        For Each field In GetType(Windows8_Metro_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(Windows8))
+            End If
+        Next
+
+        For Each field In GetType(Windows7_DWM_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(Windows7))
+            End If
+        Next
+
+        For Each field In GetType(LogonUI7_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(LogonUI7))
+            End If
+        Next
+
+        For Each field In GetType(Win32UI_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(Win32))
+            End If
+        Next
+
+        For Each field In GetType(Console_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(CommandPrompt))
+                CL.Add(field.GetValue(PowerShellx86))
+                CL.Add(field.GetValue(PowerShellx64))
+            End If
+        Next
+
+        For Each c In Terminal.Colors
+            CL.Add(c.Background)
+            CL.Add(c.Foreground)
+            CL.Add(c.SelectionBackground)
+            CL.Add(c.Black)
+            CL.Add(c.Blue)
+            CL.Add(c.BrightBlack)
+            CL.Add(c.BrightBlue)
+            CL.Add(c.BrightCyan)
+            CL.Add(c.BrightGreen)
+            CL.Add(c.BrightPurple)
+            CL.Add(c.BrightRed)
+            CL.Add(c.BrightWhite)
+            CL.Add(c.BrightYellow)
+            CL.Add(c.CursorColor)
+            CL.Add(c.Cyan)
+            CL.Add(c.Green)
+            CL.Add(c.Purple)
+            CL.Add(c.Red)
+            CL.Add(c.White)
+            CL.Add(c.Yellow)
+        Next
+
+        For Each c In TerminalPreview.Colors
+            CL.Add(c.Background)
+            CL.Add(c.Foreground)
+            CL.Add(c.SelectionBackground)
+            CL.Add(c.Black)
+            CL.Add(c.Blue)
+            CL.Add(c.BrightBlack)
+            CL.Add(c.BrightBlue)
+            CL.Add(c.BrightCyan)
+            CL.Add(c.BrightGreen)
+            CL.Add(c.BrightPurple)
+            CL.Add(c.BrightRed)
+            CL.Add(c.BrightWhite)
+            CL.Add(c.BrightYellow)
+            CL.Add(c.CursorColor)
+            CL.Add(c.Cyan)
+            CL.Add(c.Green)
+            CL.Add(c.Purple)
+            CL.Add(c.Red)
+            CL.Add(c.White)
+            CL.Add(c.Yellow)
+        Next
+
+        For Each c In Terminal.Themes
+            CL.Add(c.Titlebar_Inactive)
+            CL.Add(c.Titlebar_Active)
+            CL.Add(c.Tab_Active)
+            CL.Add(c.Tab_Inactive)
+        Next
+
+        For Each c In TerminalPreview.Themes
+            CL.Add(c.Titlebar_Inactive)
+            CL.Add(c.Titlebar_Active)
+            CL.Add(c.Tab_Active)
+            CL.Add(c.Tab_Inactive)
+        Next
+
+        For Each c In Terminal.Profiles
+            CL.Add(c.TabColor)
+        Next
+
+        For Each c In TerminalPreview.Profiles
+            CL.Add(c.TabColor)
+        Next
+
+        CL.Add(Terminal.DefaultProf.TabColor)
+        CL.Add(TerminalPreview.DefaultProf.TabColor)
+
+        For Each field In GetType(Cursor_Structure).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(Cursor_Arrow))
+                CL.Add(field.GetValue(Cursor_Help))
+                CL.Add(field.GetValue(Cursor_AppLoading))
+                CL.Add(field.GetValue(Cursor_Busy))
+                CL.Add(field.GetValue(Cursor_Pen))
+                CL.Add(field.GetValue(Cursor_None))
+                CL.Add(field.GetValue(Cursor_Move))
+                CL.Add(field.GetValue(Cursor_Up))
+                CL.Add(field.GetValue(Cursor_NS))
+                CL.Add(field.GetValue(Cursor_EW))
+                CL.Add(field.GetValue(Cursor_NESW))
+                CL.Add(field.GetValue(Cursor_NWSE))
+                CL.Add(field.GetValue(Cursor_Link))
+                CL.Add(field.GetValue(Cursor_Pin))
+                CL.Add(field.GetValue(Cursor_Person))
+                CL.Add(field.GetValue(Cursor_IBeam))
+                CL.Add(field.GetValue(Cursor_Cross))
             End If
         Next
 
@@ -3255,7 +3387,7 @@ Public Class CP : Implements IDisposable
 #Region "File"
                 Dim txt As New List(Of String)
                 txt.Clear()
-                CList_FromStr(txt, IO.File.ReadAllText(PaletteFile))
+                txt = IO.File.ReadAllText(PaletteFile).CList
 
                 Dim CUR_Arrow_List, CUR_AppLoading_List, CUR_Busy_List, CUR_Help_List, CUR_Move_List, CUR_NS_List, CUR_EW_List, CUR_NESW_List, CUR_NWSE_List,
                     CUR_Up_List, CUR_Pen_List, CUR_None_List, CUR_Link_List, CUR_Pin_List, CUR_Person_List, CUR_IBeam_List, CUR_Cross_List As New List(Of String)
@@ -3637,8 +3769,8 @@ Public Class CP : Implements IDisposable
 
                 If Not IgnoreWindowsTerminal Then
                     Dim str_stable, str_preview As String
-                    str_stable = CStr_FromList(ls_stable)
-                    str_preview = CStr_FromList(ls_preview)
+                    str_stable = ls_stable.CString
+                    str_preview = ls_preview.CString
 
                     Terminal = New WinTerminal(str_stable, WinTerminal.Mode.WinPaletterFile)
                     TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
@@ -4350,7 +4482,7 @@ Public Class CP : Implements IDisposable
 
                 tx.Add(vbCrLf & "</WinPaletter>")
 
-                IO.File.WriteAllText(FileLocation, CStr_FromList(tx))
+                IO.File.WriteAllText(FileLocation, tx.CString)
 #End Region
 
         End Select

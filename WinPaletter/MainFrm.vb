@@ -1019,47 +1019,47 @@ Public Class MainFrm
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Windows8.Start
             Case 1
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_1.Resize(48, 48)
             Case 2
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_2, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_2.Resize(48, 48)
             Case 3
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_3, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_3.Resize(48, 48)
             Case 4
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_4, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_4.Resize(48, 48)
             Case 5
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_5, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_5.Resize(48, 48)
             Case 6
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_6, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_6.Resize(48, 48)
             Case 7
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_7, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_7.Resize(48, 48)
             Case 8
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_8, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_8.Resize(48, 48)
             Case 9
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_9, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_9.Resize(48, 48)
             Case 10
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_10, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_10.Resize(48, 48)
             Case 11
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_11, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_11.Resize(48, 48)
             Case 12
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_12, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_12.Resize(48, 48)
             Case 13
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_13, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_13.Resize(48, 48)
             Case 14
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_14, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_14.Resize(48, 48)
             Case 15
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_15, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_15.Resize(48, 48)
             Case 16
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_16, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_16.Resize(48, 48)
             Case 17
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_17, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_17.Resize(48, 48)
             Case 18
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_18, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_18.Resize(48, 48)
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                W8_start.Image = ResizeImage(My.Application.GetCurrentWallpaper, 48, 48)
+                W8_start.Image = My.Application.GetCurrentWallpaper.Resize(48, 48)
             Case Else
-                W8_start.Image = ResizeImage(My.Application.WinRes.MetroStart_1, 48, 48)
+                W8_start.Image = My.Application.WinRes.MetroStart_1.Resize(48, 48)
         End Select
     End Sub
 
@@ -1130,7 +1130,7 @@ Public Class MainFrm
                 RaiseUpdate = False
                 ver = ""
 
-                CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
+                ls = WebCL.DownloadString(My.Resources.Link_Updates).CList
 
                 For x = 0 To ls.Count - 1
                     If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
@@ -2842,7 +2842,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        My.Application.Wallpaper = ResizeImage(My.Application.GetCurrentWallpaper(), 528, 297)
+        My.Application.Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
@@ -3165,7 +3165,7 @@ Public Class MainFrm
          .AlertStyle = XenonAlertBox.Style.Adaptive,
          .Text = Text,
          .Image = [Icon],
-         .Size = New Size(NotificationsPanel.Width - 5, MeasureString([Text], .Font).Height + 15),
+         .Size = New Size(NotificationsPanel.Width - 5, [Text].Measure(.Font).Height + 15),
          .Left = 0
          }
 

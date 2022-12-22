@@ -152,7 +152,7 @@ Public Class LogonUI7
             bmpX = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
         End If
 
-        Return ApplyEffects(ResizeImage(bmpX, pnl_preview.Width, pnl_preview.Height))
+        Return ApplyEffects(bmpX.Resize(pnl_preview.Width, pnl_preview.Height))
     End Function
 
     Sub ApplyPreview()

@@ -152,7 +152,7 @@ Public Class CursorsStudio
             End If
         Next
 
-        XenonButton8.Image = ResizeImage(MainFrm.XenonButton20.Image, 16, 16)
+        XenonButton8.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
         LoadFromCP(MainFrm.CP)
     End Sub

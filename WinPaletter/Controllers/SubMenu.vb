@@ -9,7 +9,7 @@ Public Class SubMenu
     Private _overrideColor As Color
     Private _eventDone As Boolean
     Private _Speed As Integer = 20
-    Private _dark As Single = 0.9
+    Private _dark As Single = 0.7
 
 #Region "Form Shadow"
 
@@ -236,7 +236,7 @@ Public Class SubMenu
         End If
 
 
-        BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor).LightLight
+        BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 
@@ -262,7 +262,7 @@ Public Class SubMenu
         PaletteContainer.Controls.Clear()
 
         For Each c As Color In CP.ListColors
-            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20)}
+            Dim pnl As New XenonCP With {.Size = New Size(If(My.Application._Settings.Nerd_Stats, 75, 30), 20)}
             pnl.BackColor = c
             PaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_Click

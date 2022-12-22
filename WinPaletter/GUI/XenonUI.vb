@@ -33,7 +33,6 @@ Module XenonModule
         g2.Dispose()
         pth.Dispose()
     End Sub
-
     Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
         Dim oStringFormat As New StringFormat()
         Select Case goTextAlign
@@ -70,11 +69,6 @@ Module XenonModule
 
         Return oStringFormat
     End Function
-
-    Friend Function MeasureString(text As String, font As Font) As SizeF
-        Try : Return TextGraphics.MeasureString(text, font) : Catch : End Try
-    End Function
-
     Public Sub DrawGlow(G As Graphics, R As Rectangle, ByVal GlowColor As Color, Optional ByVal GlowSize As Integer = 5, Optional ByVal GlowFade As Integer = 7)
         Try
             If GlowSize <= 0 Then GlowSize = 1
@@ -130,7 +124,6 @@ Module XenonModule
         End If
 
     End Function
-
     Friend Function GetRoundedCorners() As Boolean
         Try
             If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
@@ -148,8 +141,6 @@ Module XenonModule
             Return False
         End Try
     End Function
-
-
     Public Sub DrawAero(G As Graphics, Rect As Rectangle, BackgroundBlurred As Bitmap, Color1 As Color, ColorBalance As Single, Color2 As Color, GlowBalance As Single, alpha As Single,
                        Radius As Integer, RoundedCorners As Boolean)
 
@@ -295,11 +286,11 @@ Module XenonModule
             Dim [Pen2] As Pen
 
             If GetDarkMode() Then
-                [Pen] = New Pen(CCB(BorderColor, 0.05))
-                [Pen2] = New Pen(CCB(BorderColor, -0.3)) '-0.085)) 
+                [Pen] = New Pen(BorderColor.CB(0.05))
+                [Pen2] = New Pen(BorderColor.CB(-0.3)) '-0.085)) 
             Else
-                [Pen] = New Pen(CCB(BorderColor, -0.05))
-                [Pen2] = New Pen(CCB(BorderColor, -0.15))
+                [Pen] = New Pen(BorderColor.CB(-0.05))
+                [Pen2] = New Pen(BorderColor.CB(-0.15))
             End If
 
             Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
@@ -341,10 +332,6 @@ Public Class XenonColorPalette
 
     Dim Dark As Boolean = True
 
-    Function InvertColor([Color] As Color) As Color
-        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
-    End Function
-
     Sub New(Optional ByVal [Control] As Control = Nothing)
 
         If [Control] Is Nothing Then Exit Sub
@@ -369,17 +356,17 @@ Public Class XenonColorPalette
             If Dark Then
                 Color_Back_Checked = BaseColor.Dark(0.2)
                 Color_Core = BaseColor.LightLight
-                Color_Border_Checked_Hover = CCB(BaseColor, -0.2)
-                Color_Border = CCB(Color_Parent, 0.08)
-                Color_Back = CCB(Color_Parent, 0.04)
-                Color_Parent_Hover = CCB(Color_Parent, 0.08)
+                Color_Border_Checked_Hover = BaseColor.CB(-0.2)
+                Color_Border = Color_Parent.CB(0.08)
+                Color_Back = Color_Parent.CB(0.04)
+                Color_Parent_Hover = Color_Parent.CB(0.08)
             Else
                 Color_Back_Checked = BaseColor.LightLight
                 Color_Core = BaseColor.Dark(0.1)
-                Color_Border_Checked_Hover = CCB(BaseColor, 0.2)
-                Color_Border = CCB(Color_Parent, -0.3)
-                Color_Back = CCB(Color_Parent, -0.07)
-                Color_Parent_Hover = CCB(Color_Parent, -0.08)
+                Color_Border_Checked_Hover = BaseColor.CB(0.2)
+                Color_Border = Color_Parent.CB(-0.3)
+                Color_Back = Color_Parent.CB(-0.07)
+                Color_Parent_Hover = Color_Parent.CB(-0.08)
             End If
         Else
             If Dark Then
@@ -454,7 +441,7 @@ Public Class XenonTabControl : Inherits Windows.Forms.TabControl
         End If
     End Sub
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.5))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -658,7 +645,7 @@ Public Class XenonToggle
         If GetDarkMode() Then BorderColor = BackColor.Light(1.6) Else BorderColor = BackColor.DarkDark
 
         Dim CheckColor As Color
-        If MouseState = 0 Then CheckColor = ColorPalette.BaseColor Else CheckColor = CCB(BackColor, If(GetDarkMode(), 0.3, -0.5))
+        If MouseState = 0 Then CheckColor = ColorPalette.BaseColor Else CheckColor = BackColor.CB(If(GetDarkMode(), 0.3, -0.5))
 
         '#################################################################################
         Dim min As Integer = 5
@@ -691,11 +678,11 @@ Public Class XenonToggle
             FillRect(e.Graphics, lgbNonChecked, MainRect, 9, True)
 
             If Checked Then
-                G.DrawImage(FadeBitmap(If(BorderColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light), val), CheckC)
-                G.DrawImage(FadeBitmap(If(BorderColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light), 1 - val), CheckC)
+                G.DrawImage(If(BorderColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
+                G.DrawImage(If(BorderColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
             Else
-                G.DrawImage(FadeBitmap(If(ColorPalette.BaseColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light), val), CheckC)
-                G.DrawImage(FadeBitmap(If(ColorPalette.BaseColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light), 1 - val), CheckC)
+                G.DrawImage(If(ColorPalette.BaseColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
+                G.DrawImage(If(ColorPalette.BaseColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
             End If
 
             DrawRect(e.Graphics, New Pen(lgborderChecked), MainRect, 9, True)
@@ -1631,8 +1618,8 @@ Public Class XenonGroupBox : Inherits Panel
         G.Clear(GetParentColor(Me))
 
 
-        BackColor = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.05))
-        LineColor = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.03, -0.06))
+        BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.05))
+        LineColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.03, -0.06))
 
         FillRect(G, New SolidBrush(BackColor), Rect)
         DrawRect(G, New Pen(LineColor), Rect)
@@ -1923,7 +1910,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.07))
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.07))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
@@ -2006,7 +1993,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.04))
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2017,7 +2004,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.04))
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2081,7 +2068,7 @@ Public Class XenonButton : Inherits Button
     End Sub
 #End Region
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.6))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -2108,8 +2095,8 @@ Public Class XenonButton : Inherits Button
 
         If Not State = MouseState.None Then FillRect(G, Noise, Rect)
 
-        c1 = Color.FromArgb(255 - alpha, CCB(BackColor, If(ParentColor.IsDark, 0.04, -0.04)))
-        c1x = Color.FromArgb(alpha, CCB(BackColor, If(ParentColor.IsDark, 0.04, -0.04)))
+        c1 = Color.FromArgb(255 - alpha, BackColor.CB(If(ParentColor.IsDark, 0.04, -0.04)))
+        c1x = Color.FromArgb(alpha, BackColor.CB(If(ParentColor.IsDark, 0.04, -0.04)))
 
         DrawRect_LikeW11(G, c1x, Rect)
         DrawRect_LikeW11(G, c1, InnerRect)
@@ -2138,7 +2125,7 @@ Public Class XenonButton : Inherits Button
             Select Case Me.ImageAlign
                 Case ContentAlignment.MiddleCenter
                     ButtonString.Alignment = StringAlignment.Center : ButtonString.LineAlignment = StringAlignment.Near
-                    Dim alx As Integer = CInt((Height - (Image.Height + 4 + MeasureString(Text, MyBase.Font).Height)) / 2)
+                    Dim alx As Integer = CInt((Height - (Image.Height + 4 + Text.Measure(MyBase.Font).Height)) / 2)
 
                     Try : If Image IsNot Nothing Then
                             If Text = Nothing Then
@@ -2153,7 +2140,7 @@ Public Class XenonButton : Inherits Button
                 Case ContentAlignment.MiddleLeft
                     Dim Rec As New Rectangle(imgY, imgY, Image.Width, Image.Height)
                     Dim Bo As Integer = imgY + Image.Width + imgY - 5
-                    Dim RecText As New Rectangle(Bo, imgY, MeasureString(Text, Font).Width + 15 - imgY, Image.Height)
+                    Dim RecText As New Rectangle(Bo, imgY, Text.Measure(Font).Width + 15 - imgY, Image.Height)
                     Dim u As Rectangle = Rectangle.Union(Rec, RecText)
                     u.X = (Width - u.Width) / 2
                     Dim innerSpace As Integer = RecText.Left - Rec.Right
@@ -2196,7 +2183,7 @@ Public Class XenonButton : Inherits Button
     Private Sub XenonButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         Try
             Try
-                BackColor = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.04))
+                BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
             Catch
             End Try
 
@@ -2228,7 +2215,7 @@ Public Class XenonButton : Inherits Button
 
     Sub Rfrsh()
         Try
-            BC = CCB(GetParentColor(Me), If(GetParentColor(Me).IsDark, 0.04, -0.04))
+            BC = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
             BackColor = BC
             Invalidate()
         Catch
@@ -2265,7 +2252,7 @@ Public Class XenonSeparator
         Dim IdleLine As Color
 
         If Parent IsNot Nothing Then
-            If GetDarkMode() Then IdleLine = CCB(Parent.BackColor, 0.1) Else IdleLine = CCB(Parent.BackColor, -0.1)
+            If GetDarkMode() Then IdleLine = Parent.BackColor.CB(0.1) Else IdleLine = Parent.BackColor.CB(-0.1)
         Else
             If GetDarkMode() Then IdleLine = Color.FromArgb(76, 76, 76) Else IdleLine = Color.FromArgb(210, 210, 210)
         End If
@@ -2590,7 +2577,7 @@ Public Class XenonSeparatorVertical
         '################################################################################# Customizer
         Dim IdleLine As Color
         If Parent IsNot Nothing Then
-            If GetDarkMode() Then IdleLine = CCB(Parent.BackColor, 0.1) Else IdleLine = CCB(Parent.BackColor, -0.1)
+            If GetDarkMode() Then IdleLine = Parent.BackColor.CB(0.1) Else IdleLine = Parent.BackColor.CB(-0.1)
         Else
             If GetDarkMode() Then IdleLine = Color.FromArgb(60, 60, 60) Else IdleLine = Color.FromArgb(210, 210, 210)
         End If
@@ -3119,7 +3106,7 @@ Public Class XenonComboBox : Inherits ComboBox
 #End Region
 #End Region
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.3))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
 
 
 #Region "Subs"
@@ -3572,7 +3559,7 @@ Public Class XenonAlertBox
         FillRect(G, New SolidBrush(innerColor), New Rectangle(0, 0, Width - 1, Height - 1))
         DrawRect_LikeW11(G, borderColor, New Rectangle(0, 0, Width - 1, Height - 1))
 
-        Dim textY As Integer = CInt((Height - MeasureString(Text, Font).Height) / 2)
+        Dim textY As Integer = CInt((Height - Text.Measure(Font).Height) / 2)
         Dim TextX As Integer
         Dim ExitX As Integer
 
@@ -3604,7 +3591,7 @@ Public Class XenonAlertBox
 End Class
 Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyPropertyChanged
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.15))
 
     Dim Noise7 As Bitmap = My.Resources.AeroGlass
     Dim Noise7Start As Bitmap = My.Resources.Start7Glass
@@ -3658,8 +3645,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 Me._NoisePower = value
                 NotifyNoisePowerChanged(_NoisePower)
                 If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
                 End If
             End If
         End Set
@@ -3945,7 +3932,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             Dim [Pen] As New Pen(BorderColor)
-            Dim [Pen2] As New Pen(CCB(BorderColor, 0.2))
+            Dim [Pen2] As New Pen(BorderColor.CB(0.2))
 
             Dim R1 As New Rectangle([Rectangle].X, [Rectangle].Y, 6, 6)
             Dim LG As New LinearGradientBrush(R1, [Pen2].Color, [Pen].Color, LinearGradientMode.Vertical)
@@ -4132,7 +4119,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     DrawRR(G, Cx1, Button1, Radius)
 
                     FillRect(G, New SolidBrush(Cx2), Button2, Radius, True)
-                    DrawRect(G, New Pen(CCB(Cx2, If(DarkMode, 0.05, -0.05))), Button2, Radius)
+                    DrawRect(G, New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
                 End If
 
                 If Borders Then DrawRect(G, New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
@@ -4325,20 +4312,20 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                     If Transparency Then
                         G.FillRectangle(New SolidBrush(Color.FromArgb(100, Color.White)), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(200, CCB(c, -0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(200, c.CB(-0.5))), AppBtnRect)
                         G.DrawRectangle(New Pen(Color.FromArgb(215, Color.White)), AppBtnRectInner)
                     Else
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, CCB(bc, 0.5))), AppBtnRect)
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), CCB(c, 0.5))), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, CCB(bc, -0.5))), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), CCB(c, -0.5))), AppBtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.CB(0.5))), AppBtnRect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, bc.CB(-0.5))), AppBtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5))), AppBtnRect)
                     End If
 
                     G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
 
                     If Transparency Then
                         G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, CCB(c, -0.5))), App2BtnRect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(100, c.CB(-0.5))), App2BtnRect)
                         G.DrawRectangle(New Pen(Color.FromArgb(100, Color.White)), App2BtnRectInner)
                     Else
                         G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.Light(0.1))), App2BtnRect)
@@ -4406,13 +4393,13 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Try
             If Transparency Then
                 If UseItAsTaskbar_Version = TaskbarVersion.Eleven Or UseItAsTaskbar_Version = TaskbarVersion.Ten Then
-                    Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, NoisePower))
+                    Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
                 ElseIf UseItAsTaskbar_Version = TaskbarVersion.Eight Then
-                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = FadeBitmap(My.Resources.Start7Glass, NoisePower / 100) : Catch : End Try
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
+                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
                 End If
 
             End If
@@ -4564,7 +4551,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Me._Win7Noise = value
 
                 If Win7 Then
-                    Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100) : Catch : End Try
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
                 End If
 
                 NotifyWin7NoiseChanged(_Win7Noise)
@@ -4626,8 +4613,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim i, iTop As Integer
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
         If Win7 Or Win8 Then
@@ -4700,8 +4687,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim Rect As New Rectangle(FreeMargin, FreeMargin, Width - (FreeMargin * 2 + 1), Height - (FreeMargin * 2 + 1))
         Dim RectBK As New Rectangle(0, 0, Width, Height)
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-        TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
         Dim TitlebarRect As New Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3)
         'If TitlebarRect.Height < 25 Then TitlebarRect.Height = 25
@@ -4815,8 +4802,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Dim InnerWindow_2 As New Rectangle
                 Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
                 If Sum < 2 Then Sum = 2
-                TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-                TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+                TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+                TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
                 TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
                 Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
 
@@ -4845,7 +4832,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
                 End If
 
-                Dim InC As Color = If(Not Win8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, CCB(AccentColor_Active, 0.8)))
+                Dim InC As Color = If(Not Win8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active.CB(0.8)))
 
                 Dim c As Color = If(Active, Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active), InC)
 
@@ -4875,11 +4862,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     CloseBtn = My.Resources.Win8_Close_ToolWindow
                 End If
 
-                If Win8Lite Then CloseBtn = ColorReplace(CloseBtn, Color.FromArgb(255, 255, 255), Color.Black)
+                If Win8Lite Then CloseBtn = CloseBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black)
 
                 If Not Win8Lite Then
-                    G.DrawRectangle(New Pen(Color.FromArgb(170, CCB(bc, -0.2))), InnerWindow_1)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, CCB(c, -0.2))), InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb(170, bc.CB(-0.2))), InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.2))), InnerWindow_1)
 
                     G.SmoothingMode = SmoothingMode.HighSpeed
                     G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
@@ -4887,8 +4874,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
 
-                    G.DrawRectangle(New Pen(Color.FromArgb(200, CCB(bc, -0.3))), Rect)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, CCB(c, -0.3))), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, bc.CB(-0.3))), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.3))), Rect)
 
                 Else
 
@@ -4918,8 +4905,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                 Dim RectSide2 As New Rectangle
                 Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
                 If Sum < 2 Then Sum = 2
-                TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-                TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+                TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+                TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
                 TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
                 Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
 
@@ -5096,8 +5083,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawImage(AdaptedBack, RectBK)
 
                     Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
-                    TitleTextH = MeasureString("ABCabc0123xYz.#", Font).Height
-                    TitleTextH_9 = MeasureString("ABCabc0123xYz.#", New Font(Font.Name, 9, Font.Style)).Height
+                    TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+                    TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
                     TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
                     Sum_Ttl = Sum + Metrics_CaptionHeight + TitleTextH_Sum
 
@@ -5372,7 +5359,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
             Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
             Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
-            Try : Noise7 = FadeBitmap(My.Resources.AeroGlass, Win7Noise / 100) : Catch : End Try
+            Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
         Else
             Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
         End If
@@ -6073,7 +6060,7 @@ Public Class XenonCMD
 
             End Select
 
-            G.DrawImage(ColorReplace(i0, Color.FromArgb(204, 204, 204), FC), New Point(0, 1))
+            G.DrawImage(i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC), New Point(0, 1))
 
             RectMiddle = New Rectangle(Rect.X + (Rect.Width - pW) / 2, Rect.Y + (Rect.Height - 36) / 2, pW, pH)
             RectMiddleBorder = New Rectangle(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2)
@@ -6082,7 +6069,7 @@ Public Class XenonCMD
             G.DrawRectangle(New Pen(PCF), RectMiddleBorder)
 
 
-            G.DrawImage(ColorReplace(i1, Color.FromArgb(204, 204, 204), PCF), New Point(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2, RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2))
+            G.DrawImage(i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF), New Point(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2, RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2))
 
         End If
     End Sub
@@ -6092,7 +6079,7 @@ End Class
 Public Class XenonTerminal
     Inherits ContainerControl
 
-    Dim Noise As New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.15))
+    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.15))
     Dim adaptedBack As Bitmap
     Dim adaptedBackBlurred As Bitmap
 
@@ -6407,9 +6394,9 @@ Public Class XenonTerminal
         Dim s2 As String = "This is a selection"
         Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
 
-        Dim s1X As SizeF = MeasureString(s1, Font) + New SizeF(5, 0)
-        Dim s2X As SizeF = MeasureString(s2, Font) + New SizeF(2, 0)
-        Dim s3X As SizeF = MeasureString(s3, Font) + New SizeF(2, 0)
+        Dim s1X As SizeF = s1.Measure(Font) + New SizeF(5, 0)
+        Dim s2X As SizeF = s2.Measure(Font) + New SizeF(2, 0)
+        Dim s3X As SizeF = s3.Measure(Font) + New SizeF(2, 0)
         Dim Rect_ConsoleText0 As New Rectangle(8, Rect_Titlebar.Bottom + 8, s1X.Width, s1X.Height)
         Dim Rect_ConsoleText1 As New Rectangle(8, Rect_ConsoleText0.Bottom + 3, s2X.Width, s2X.Height)
         Dim Rect_ConsoleText2 As New Rectangle(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, s3X.Width, s3X.Height)
@@ -6598,7 +6585,7 @@ Public Class XenonTerminal
 
     Sub UpdateOpacityBackImageChanged()
         If BackImage IsNot Nothing Then
-            img = FadeBitmap(BackImage, OpacityBackImage / 100)
+            img = BackImage.Fade(OpacityBackImage / 100)
             Refresh()
         End If
     End Sub
@@ -6614,7 +6601,7 @@ Public Class XenonTerminal
     End Sub
 
     Sub NoiseBack()
-        Noise = New TextureBrush(FadeBitmap(My.Resources.GaussianBlur, 0.5))
+        Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
     End Sub
 
 End Class

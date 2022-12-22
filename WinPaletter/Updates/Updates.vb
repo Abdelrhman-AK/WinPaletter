@@ -30,7 +30,7 @@ Public Class Updates
                     Label5.Text = My.Application.LanguageHelper.Label5_Checking
                     Dim ls As New List(Of String)
 
-                    CList_FromStr(ls, WebCL.DownloadString(My.Resources.Link_Updates))
+                    ls = WebCL.DownloadString(My.Resources.Link_Updates).CList
 
                     For x = 0 To ls.Count - 1
                         If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then

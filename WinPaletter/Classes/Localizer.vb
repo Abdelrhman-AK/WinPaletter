@@ -260,7 +260,7 @@ Public Class Localizer
             ins.Dispose()
         Next
 
-        IO.File.WriteAllText(File, CStr_FromList(lx) & vbCrLf & CStr_FromList(LS))
+        IO.File.WriteAllText(File, lx.CString & vbCrLf & LS.CString)
     End Sub
 
     Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)

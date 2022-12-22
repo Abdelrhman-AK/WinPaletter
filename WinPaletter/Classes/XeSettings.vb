@@ -167,8 +167,7 @@ Public Class XeSettings
                 End Select
 
             Case Mode.File
-                Dim l As New List(Of String)
-                CList_FromStr(l, IO.File.ReadAllText(File))
+                Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
                     If x.ToLower.StartsWith("AutoAddExt= ".ToLower) Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
                     If x.ToLower.StartsWith("AutoApplyCursors= ".ToLower) Then AutoApplyCursors = x.Remove(0, "AutoApplyCursors= ".Count)
@@ -296,7 +295,7 @@ Public Class XeSettings
                 End Select
 
 
-                IO.File.WriteAllText(File, CStr_FromList(l))
+                IO.File.WriteAllText(File, l.CString)
         End Select
     End Sub
 End Class
