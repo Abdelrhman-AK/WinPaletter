@@ -142,6 +142,7 @@ Public Module Paths
                 Else
                     BL = New SolidBrush([SecondaryColor1])
                 End If
+
                 Dim PL As New Pen(BL, [LineThickness])
 
                 G.FillPath(BB, DefaultCursor(_Arrow, Scale))

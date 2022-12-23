@@ -904,22 +904,22 @@ Public Class CP : Implements IDisposable
             End Try
 
             EditReg(RegAddress, "EnableColorSelection", 1)
-            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, [Console].ColorTable00).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, [Console].ColorTable01).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, [Console].ColorTable02).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, [Console].ColorTable03).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, [Console].ColorTable04).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, [Console].ColorTable05).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, [Console].ColorTable06).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, [Console].ColorTable07).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, [Console].ColorTable08).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, [Console].ColorTable09).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, [Console].ColorTable10).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, [Console].ColorTable11).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, [Console].ColorTable12).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, [Console].ColorTable13).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, [Console].ColorTable14).Reverse.ToArgb)
-            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, [Console].ColorTable15).Reverse.ToArgb)
+            EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, [Console].ColorTable00.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, [Console].ColorTable01.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, [Console].ColorTable02.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, [Console].ColorTable03.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, [Console].ColorTable04.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, [Console].ColorTable05.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, [Console].ColorTable06.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, [Console].ColorTable07.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, [Console].ColorTable08.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, [Console].ColorTable09.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, [Console].ColorTable10.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, [Console].ColorTable11.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, [Console].ColorTable12.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, [Console].ColorTable13.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, [Console].ColorTable14.Reverse).ToArgb)
+            EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, [Console].ColorTable15.Reverse).ToArgb)
             EditReg(RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
             EditReg(RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
             EditReg(RegAddress, "CursorSize", [Console].CursorSize)
@@ -936,7 +936,7 @@ Public Class CP : Implements IDisposable
             EditReg(RegAddress, "FontWeight", [Console].FontWeight)
 
             If My.W10_1909 Then
-                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, [Console].W10_1909_CursorColor).Reverse.ToArgb)
+                EditReg(RegAddress, "CursorColor", Color.FromArgb(0, [Console].W10_1909_CursorColor.Reverse).ToArgb)
                 EditReg(RegAddress, "CursorType", [Console].W10_1909_CursorType)
                 EditReg(RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
                 EditReg(RegAddress, "ForceV2", [Console].W10_1909_ForceV2.ToInteger)
@@ -3255,42 +3255,6 @@ Public Class CP : Implements IDisposable
 
 #Region "Terminals"
 
-#Region "Locking"
-                Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-
-                Try
-                    CommandPrompt.Enabled = rLogX.GetValue("Terminal_CMD_Enabled", False)
-                Catch
-                    CommandPrompt.Enabled = False
-                End Try
-
-                Try
-                    PowerShellx86.Enabled = rLogX.GetValue("Terminal_PS_32_Enabled", False)
-                Catch
-                    PowerShellx86.Enabled = False
-                End Try
-
-                Try
-                    PowerShellx64.Enabled = rLogX.GetValue("Terminal_PS_64_Enabled", False)
-                Catch
-                    PowerShellx64.Enabled = False
-                End Try
-
-                Try
-                    Terminal.Enabled = rLogX.GetValue("Terminal_Stable_Enabled", False)
-                Catch
-                    Terminal.Enabled = False
-                End Try
-
-                Try
-                    TerminalPreview.Enabled = rLogX.GetValue("Terminal_Preview_Enabled", False)
-                Catch
-                    TerminalPreview.Enabled = False
-                End Try
-
-                rLogX.Close()
-#End Region
-
                 CommandPrompt = Console_Structure.Load_Console_From_Registry("", _Def.CommandPrompt)
 
                 Dim regPath_PS86, AppPath_PS86 As String
@@ -3311,6 +3275,42 @@ Public Class CP : Implements IDisposable
                     Try : Registry.CurrentUser.CreateSubKey("Console\" & regPath_PS64, True).Close() : Catch : End Try
                     PowerShellx64 = Console_Structure.Load_Console_From_Registry(regPath_PS64, _Def.PowerShellx64)
                 End If
+
+#Region "Locking - Loading it must be after loading preferences first"
+                Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
+
+                Try
+                    CommandPrompt.Enabled = CInt(rLogX.GetValue("Terminal_CMD_Enabled", 0)).ToBoolean
+                Catch
+                    CommandPrompt.Enabled = False
+                End Try
+
+                Try
+                    PowerShellx86.Enabled = CInt(rLogX.GetValue("Terminal_PS_32_Enabled", 0)).ToBoolean
+                Catch
+                    PowerShellx86.Enabled = False
+                End Try
+
+                Try
+                    PowerShellx64.Enabled = CInt(rLogX.GetValue("Terminal_PS_64_Enabled", 0)).ToBoolean
+                Catch
+                    PowerShellx64.Enabled = False
+                End Try
+
+                Try
+                    Terminal.Enabled = CInt(rLogX.GetValue("Terminal_Stable_Enabled", 0)).ToBoolean
+                Catch
+                    Terminal.Enabled = False
+                End Try
+
+                Try
+                    TerminalPreview.Enabled = CInt(rLogX.GetValue("Terminal_Preview_Enabled", 0)).ToBoolean
+                Catch
+                    TerminalPreview.Enabled = False
+                End Try
+
+                rLogX.Close()
+#End Region
 
 
 #Region "Windows Terminal"

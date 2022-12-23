@@ -101,8 +101,8 @@ Public Class cmd
 
             End Select
 
-            'CPx.Save(CP.Mode.Registry, "", If(CPx.LogonUI7.Enabled, True, False))
             CPx.Dispose()
+
             Cursor = Cursors.Default
         Else
             MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
@@ -443,20 +443,23 @@ Public Class cmd
 #Region "   CP Handling"
     Sub ApplyFromCP([CP] As CP, [Edition] As Edition)
 
-        Dim [Console] As CP.Console_Structure
+        Dim [Console] As New CP.Console_Structure
 
         Select Case [Edition]
             Case Edition.CMD
-                [Console] = [CP].CommandPrompt
+                SetFromCP([CP].CommandPrompt)
 
             Case Edition.PowerShellx86
-                [Console] = [CP].PowerShellx86
+                SetFromCP([CP].PowerShellx86)
 
             Case Edition.PowerShellx64
-                [Console] = [CP].PowerShellx64
+                SetFromCP([CP].PowerShellx64)
 
         End Select
 
+    End Sub
+
+    Sub SetFromCP([Console] As CP.Console_Structure)
         CMDEnabled.Checked = [Console].Enabled
 
         ColorTable00.BackColor = [Console].ColorTable00
@@ -559,12 +562,11 @@ Public Class cmd
         End If
         UpdateCurPreview()
 
-
     End Sub
 
     Sub ApplyToCP([CP] As CP, [Edition] As Edition)
 
-        Dim [Console] As CP.Console_Structure
+        Dim [Console] As New CP.Console_Structure
 
         [Console].Enabled = CMDEnabled.Checked
 

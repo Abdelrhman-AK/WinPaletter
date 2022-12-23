@@ -35,7 +35,7 @@
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242),
         .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0, .FaceName = "Consolas", .FontSize = 18 * 65536,
-        .W10_1909_WindowAlpha = 255, .FontRaster = False},
+        .W10_1909_WindowAlpha = 255, .FontRaster = False, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .PowerShellx86 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
         .ColorTable02 = Color.FromArgb(19, 161, 14),
@@ -53,7 +53,7 @@
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242),
         .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255},
+        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .PowerShellx64 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
         .ColorTable02 = Color.FromArgb(19, 161, 14),
@@ -71,7 +71,7 @@
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242),
         .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255},
+        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
 
     Public Default_Windows10 As New CP(CP.Mode.Empty) With {
@@ -108,7 +108,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = False},
+        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = False, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .PowerShellx86 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
         .ColorTable02 = Color.FromArgb(19, 161, 14),
@@ -126,7 +126,7 @@
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242),
         .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255},
+        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .PowerShellx64 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
         .ColorTable02 = Color.FromArgb(19, 161, 14),
@@ -144,7 +144,7 @@
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242),
         .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255},
+        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
         .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
 
     Public Default_Windows8 As New CP(CP.Mode.Empty) With {
@@ -197,7 +197,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .PowerShellx86 = New CP.Console_Structure With {
         .ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
@@ -215,7 +215,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .PowerShellx64 = New CP.Console_Structure With {
         .ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
@@ -233,7 +233,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
 
     Public Default_Windows7 As New CP(CP.Mode.Empty) With {
@@ -278,7 +278,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .PowerShellx86 = New CP.Console_Structure With {
         .ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
@@ -296,7 +296,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .PowerShellx64 = New CP.Console_Structure With {
         .ColorTable00 = Color.FromArgb(12, 12, 12),
         .ColorTable01 = Color.FromArgb(0, 55, 218),
@@ -314,7 +314,7 @@
         .ColorTable13 = Color.FromArgb(180, 0, 158),
         .ColorTable14 = Color.FromArgb(249, 241, 165),
         .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True},
+        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
         .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.Windows11.Color_Index0.R, Default_Windows11.Windows11.Color_Index0.G, Default_Windows11.Windows11.Color_Index0.B, 255,
