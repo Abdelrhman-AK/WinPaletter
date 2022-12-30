@@ -5,7 +5,7 @@ Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 
-Public Class CP : Implements IDisposable
+Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
@@ -38,6 +38,10 @@ Public Class CP : Implements IDisposable
     End Sub
 #End Region
 
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
+
 #Region "Enumerations"
     Enum ApplyAccentonTaskbar_Level
         None
@@ -66,7 +70,7 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Structures"
-    Structure Info_Structure
+    Structure Info_Structure : Implements ICloneable
         Public AppVersion As String
         Public PaletteName As String
         Public PaletteDescription As String
@@ -81,9 +85,13 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As Info_Structure, Second As Info_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
     End Structure
 
-    Structure Win32UI_Structure
+    Structure Win32UI_Structure : Implements ICloneable
         Public EnableTheming As Boolean
         Public EnableGradient As Boolean
         Public ActiveBorder As Color
@@ -269,9 +277,13 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
         End Sub
 
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
+
     End Structure
 
-    Structure Windows10x_Structure
+    Structure Windows10x_Structure : Implements ICloneable
         Public Color_Index0 As Color
         Public Color_Index1 As Color
         Public Color_Index2 As Color
@@ -339,9 +351,13 @@ Public Class CP : Implements IDisposable
             Return Not First.Equals(Second)
         End Operator
 
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
+
     End Structure
 
-    Structure Windows7_DWM_Structure
+    Structure Windows7_DWM_Structure : Implements ICloneable
         Public ColorizationColor As Color
         Public ColorizationAfterglow As Color
         Public EnableAeroPeek As Boolean
@@ -406,9 +422,12 @@ Public Class CP : Implements IDisposable
             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
         End Sub
 
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
     End Structure
 
-    Structure Windows8_Metro_Structure
+    Structure Windows8_Metro_Structure : Implements ICloneable
         Public Start As Integer
         Public ColorizationColor As Color
         Public ColorizationColorBalance As Integer
@@ -429,6 +448,9 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As Windows8_Metro_Structure, Second As Windows8_Metro_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
 
         Public Sub Apply()
             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
@@ -461,7 +483,7 @@ Public Class CP : Implements IDisposable
 
     End Structure
 
-    Structure WinMetrics_Fonts_Structure
+    Structure WinMetrics_Fonts_Structure : Implements ICloneable
         Public Enabled As Boolean
         Public BorderWidth As Integer
         Public CaptionHeight As Integer
@@ -492,6 +514,10 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As WinMetrics_Fonts_Structure, Second As WinMetrics_Fonts_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
 
         Public Sub Apply()
             Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
@@ -582,7 +608,7 @@ Public Class CP : Implements IDisposable
 
     End Structure
 
-    Structure LogonUI10x_Structure
+    Structure LogonUI10x_Structure : Implements ICloneable
         Public DisableAcrylicBackgroundOnLogon As Boolean
         Public DisableLogonBackgroundImage As Boolean
         Public NoLockScreen As Boolean
@@ -595,6 +621,10 @@ Public Class CP : Implements IDisposable
             Return Not First.Equals(Second)
         End Operator
 
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
+
         Public Sub Apply()
             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon.ToInteger)
             EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage.ToInteger)
@@ -603,7 +633,7 @@ Public Class CP : Implements IDisposable
 
     End Structure
 
-    Structure LogonUI7_Structure
+    Structure LogonUI7_Structure : Implements ICloneable
         Public Enabled As Boolean
         Public Mode As LogonUI_Modes
         Public ImagePath As String
@@ -622,9 +652,12 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As LogonUI7_Structure, Second As LogonUI7_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
     End Structure
 
-    Structure Console_Structure
+    Structure Console_Structure : Implements ICloneable
         Public Enabled As Boolean
         Public ColorTable00 As Color
         Public ColorTable01 As Color
@@ -1030,9 +1063,14 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As Console_Structure, Second As Console_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
+
     End Structure
 
-    Structure Cursor_Structure
+    Structure Cursor_Structure : Implements ICloneable
         Public PrimaryColor1 As Color
         Public PrimaryColor2 As Color
         Public PrimaryColorGradient As Boolean
@@ -1205,6 +1243,11 @@ Public Class CP : Implements IDisposable
         Shared Operator <>(First As Cursor_Structure, Second As Cursor_Structure) As Boolean
             Return Not First.Equals(Second)
         End Operator
+
+        Public Function Clone() Implements ICloneable.Clone
+            Return MemberwiseClone()
+        End Function
+
     End Structure
 
 #End Region
@@ -1220,17 +1263,41 @@ Public Class CP : Implements IDisposable
     }
 
     Public Windows11 As New Windows10x_Structure With {
-            .Color_Index7 = Color.Black,
+            .Color_Index0 = Color.FromArgb(153, 235, 255),
+            .Color_Index1 = Color.FromArgb(76, 194, 255),
+            .Color_Index2 = Color.FromArgb(0, 145, 248),
+            .Color_Index3 = Color.FromArgb(0, 120, 212),
+            .Color_Index4 = Color.FromArgb(0, 103, 192),
+            .Color_Index5 = Color.FromArgb(0, 62, 146),
+            .Color_Index6 = Color.FromArgb(0, 26, 104),
+            .Color_Index7 = Color.FromArgb(247, 99, 12),
+            .Titlebar_Active = Color.FromArgb(0, 120, 212),
+            .Titlebar_Inactive = Color.FromArgb(0, 0, 0),
+            .StartMenu_Accent = Color.FromArgb(0, 103, 192),
+            .WinMode_Light = True,
+            .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
-            .ApplyAccentonTaskbar = 0
+            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None
             }
 
     Public Windows10 As New Windows10x_Structure With {
-            .Color_Index7 = Color.Black,
+            .Color_Index0 = Color.FromArgb(166, 216, 255),
+            .Color_Index1 = Color.FromArgb(118, 185, 237),
+            .Color_Index2 = Color.FromArgb(66, 156, 227),
+            .Color_Index3 = Color.FromArgb(0, 120, 215),
+            .Color_Index4 = Color.FromArgb(0, 90, 158),
+            .Color_Index5 = Color.FromArgb(0, 66, 117),
+            .Color_Index6 = Color.FromArgb(0, 38, 66),
+            .Color_Index7 = Color.FromArgb(247, 99, 12),
+            .Titlebar_Active = Color.FromArgb(0, 120, 215),
+            .Titlebar_Inactive = Color.FromArgb(0, 0, 0),
+            .StartMenu_Accent = Color.FromArgb(0, 90, 158),
+            .WinMode_Light = False,
+            .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
-            .ApplyAccentonTaskbar = 0
+            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None
             }
 
     Public LogonUI10x As New LogonUI10x_Structure With {
@@ -1916,59 +1983,45 @@ Public Class CP : Implements IDisposable
         Return ar
     End Function
 #End Region
-    Shared Function ReturnEightDigitsFromInt(int As Integer) As String
-        Dim i As Integer = 8 - int.ToString.Count
-        Dim s As String = ""
-        For i = 1 To i
-            s &= "0"
-        Next
-        s &= int
-        Return s
-    End Function
+
     Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
         Dim R As RegistryKey = Nothing
 
-        Dim LM As Boolean = False
+        Dim LocalMacine As Boolean = False
 
         If KeyName.ToUpper.Contains("HKEY_CURRENT_USER".ToUpper) Then
             R = Registry.CurrentUser
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
 
-            'If Registry.CurrentUser.OpenSubKey(KeyName, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(KeyName, True)
+            If Registry.CurrentUser.OpenSubKey(KeyName, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(KeyName, True)
 
         ElseIf KeyName.ToUpper.Contains("HKEY_LOCAL_MACHINE".ToUpper) Then
 
-            LM = True
+            LocalMacine = True
             R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
 
             If My.Application.isElevated Then
-                'If Registry.LocalMachine.OpenSubKey(KeyName, True) Is Nothing Then Registry.LocalMachine.CreateSubKey(KeyName, True)
+                If Registry.LocalMachine.OpenSubKey(KeyName, True) Is Nothing Then Registry.LocalMachine.CreateSubKey(KeyName, True)
             End If
 
         End If
 
-        If Not LM Or (LM And My.Application.isElevated) Then
+        If Not LocalMacine Or (LocalMacine And My.Application.isElevated) Then
 
-            If RegType = RegistryValueKind.Binary Then
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.Binary)
-            ElseIf RegType = RegistryValueKind.String Then
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.String)
-            Else
-                R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegistryValueKind.DWord)
-            End If
-
-            Try
-                If R IsNot Nothing Then
-                    R.Flush()
-                    R.Close()
-                End If
-            Catch
-            End Try
+            R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegType)
 
         Else
             EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
         End If
+
+        Try
+            If R IsNot Nothing Then
+                R.Flush()
+                R.Close()
+            End If
+        Catch
+        End Try
 
     End Sub
     Shared Sub EditReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
@@ -1985,7 +2038,7 @@ Public Class CP : Implements IDisposable
 
                 Case RegistryValueKind.DWord
                     regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=dword:{2}"
-                    _Value = ReturnEightDigitsFromInt(Value)
+                    _Value = CInt(Value).To8Digits
 
                 Case RegistryValueKind.Binary
                     regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=hex:{2}"
@@ -2347,7 +2400,7 @@ Public Class CP : Implements IDisposable
                                                 .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
                                             End With
                                             [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                            [TreeView].Refresh()
+                                            [TreeView].Invalidate()
                                         End Sub, MethodInvoker))
             Catch
             End Try
@@ -2355,11 +2408,21 @@ Public Class CP : Implements IDisposable
         Else
 
             Try
-                With [TreeView].Nodes.Add([Text])
-                    .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
-                End With
-                [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                [TreeView].Refresh()
+                'With [TreeView].Nodes.Add([Text])
+                '.ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                'End With
+                '[TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                '[TreeView].Invalidate()
+                '[TreeView].Parent.Refresh()
+
+                [TreeView].Invoke(CType(Sub()
+                                            With [TreeView].Nodes.Add([Text])
+                                                .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
+                                            End With
+                                            [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
+                                            [TreeView].Invalidate()
+                                        End Sub, MethodInvoker))
+
             Catch
 
             End Try
@@ -3403,6 +3466,16 @@ Public Class CP : Implements IDisposable
                 ls_stable.Clear()
                 ls_preview.Clear()
 
+                '## Checks if the loaded file is an old WPTH or not
+                Dim OldWPTH As Boolean = False
+                For Each lin As String In txt
+                    If lin.ToLower.StartsWith("*Created from App Version= ".ToLower) Then
+                        Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
+                        OldWPTH = (Info.AppVersion < "1.0.6.9")
+                        Exit For
+                    End If
+                Next
+
                 For Each lin As String In txt
 #Region "Personal Info"
                     If lin.ToLower.StartsWith("*Created from App Version= ".ToLower) Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
@@ -3502,8 +3575,8 @@ Public Class CP : Implements IDisposable
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
 
-                    Try
-                        If My.Application._Settings.LoadThemeFileAsLegacy Then
+                    If OldWPTH Then
+                        Try
                             If lin.ToLower.StartsWith("*WinMode_Light= ".ToLower) Then
                                 Windows11.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
                                 Windows10.WinMode_Light = Windows11.WinMode_Light
@@ -3606,11 +3679,10 @@ Public Class CP : Implements IDisposable
 
                                 Windows10.ApplyAccentonTaskbar = Windows11.ApplyAccentonTaskbar
                             End If
-                        End If
-
-                    Catch
-                        MsgBox(My.Application.LanguageHelper.WPTH_OldGen_LoadError, MsgBoxStyle.Critical + My.Application.MsgboxRt)
-                    End Try
+                        Catch
+                            MsgBox(My.Application.LanguageHelper.WPTH_OldGen_LoadError, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                        End Try
+                    End If
 
 #End Region
 
@@ -3803,7 +3875,29 @@ Public Class CP : Implements IDisposable
                 If ReportProgress Then
                     My.Application.Saving_Exceptions.Clear()
                     [TreeView].Nodes.Clear()
+
+                    Dim OS As String
+                    If My.W11 Then
+                        OS = "Windows 11"
+                    ElseIf My.W10 Then
+                        OS = "Windows 10"
+                    ElseIf My.W8 Then
+                        OS = "Windows 8.1"
+                    ElseIf My.w7 Then
+                        OS = "Windows 7"
+                    Else
+                        OS = "Windows 11 or Higher"
+                    End If
+
+                    AddNode([TreeView], String.Format("{0}: WinPaletter will apply theme from {1}'s section", Now.ToLongTimeString, OS), "info")
+
                     AddNode([TreeView], String.Format("{0}: Applying Started", Now.ToLongTimeString), "info")
+
+                    If Not My.Application.isElevated Then
+                        AddNode([TreeView], String.Format("{0}: Writing to registry without administrator rights by deflection", Now.ToLongTimeString), "admin")
+                        AddNode([TreeView], String.Format("{0}: This deflection takes time longer than if you start as administrator", Now.ToLongTimeString), "admin")
+                    End If
+
                 End If
 
 #Region "Registry"
@@ -4262,11 +4356,13 @@ Public Class CP : Implements IDisposable
 #Region "General Info"
                 tx.Add("<General>")
                 tx.Add("*Palette Name= " & Info.PaletteName)
+
                 If String.IsNullOrWhiteSpace(Info.PaletteDescription) Then
                     tx.Add("*Palette Description= ")
                 Else
                     tx.Add("*Palette Description= " & Info.PaletteDescription.Replace(vbCrLf, "<br>"))
                 End If
+
                 tx.Add("*Palette File Version= " & Info.PaletteVersion)
                 tx.Add("*Author= " & Info.Author)
                 tx.Add("*AuthorSocialMediaLink= " & Info.AuthorSocialMediaLink)
@@ -4274,7 +4370,8 @@ Public Class CP : Implements IDisposable
 #End Region
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
-                If My.Application._Settings.SaveThemeFileAsLegacy Then
+
+                If Info.AppVersion < "1.0.6.9" Then
 
                     Try
                         With If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, Windows11, Windows10)

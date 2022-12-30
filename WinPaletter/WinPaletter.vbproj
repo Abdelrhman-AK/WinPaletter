@@ -202,6 +202,7 @@
     <None Include="Resources\notify_time.png" />
     <None Include="Resources\notify_success.png" />
     <None Include="Resources\notify_skip.png" />
+    <None Include="Resources\notify_administrator.png" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />
@@ -304,9 +305,6 @@
     <Compile Include="Controllers\toaster.Designer.vb">
       <DependentUpon>toaster.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\toaster.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
       <DependentUpon>CursorsCustomizer.vb</DependentUpon>
     </Compile>
@@ -381,7 +379,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -485,6 +483,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="bk.resx">
       <DependentUpon>bk.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>bk1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
@@ -503,9 +503,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\SubMenu.resx">
       <DependentUpon>SubMenu.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\toaster.resx">
-      <DependentUpon>toaster.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
@@ -538,8 +535,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="popup_color.resx">
       <DependentUpon>popup_color.vb</DependentUpon>

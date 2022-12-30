@@ -7,13 +7,14 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Namespace My
-    Public Module WindowsVersions
-        Public W11 As Boolean
-        Public W10 As Boolean
-        Public W8 As Boolean
-        Public W7 As Boolean
-        Public W10_1909 As Boolean
+    Module WindowsVersions
+        Public W11 As Boolean = My.Computer.Info.OSFullName.Contains("11")
+        Public W10 As Boolean = My.Computer.Info.OSFullName.Contains("10")
+        Public W8 As Boolean = My.Computer.Info.OSFullName.Contains("8")
+        Public W7 As Boolean = My.Computer.Info.OSFullName.Contains("7")
+        Public W10_1909 As Boolean = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
     End Module
+
     Partial Friend Class MyApplication
 
 #Region "Variables"
@@ -61,6 +62,7 @@ Namespace My
         Public ChangeLogImgLst As New ImageList With {.ImageSize = New Size(24, 24), .ColorDepth = ColorDepth.Depth32Bit}
         Public imgLs As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
 
+        Public ArgsList As New List(Of String)
         Enum MenuEvent
             None
             Copy
@@ -345,15 +347,6 @@ Namespace My
                 Try : WallMon_Watcher2.Start() : Catch : End Try
             End If
         End Function
-
-        Sub DetectOS()
-            W11 = My.Computer.Info.OSFullName.Contains("11")
-            W10 = My.Computer.Info.OSFullName.Contains("10")
-            W8 = My.Computer.Info.OSFullName.Contains("8")
-            W7 = My.Computer.Info.OSFullName.Contains("7")
-            W10_1909 = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
-        End Sub
-
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
             WallMon_Watcher1.Stop()
             WallMon_Watcher2.Stop()
@@ -419,8 +412,6 @@ Namespace My
 
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
-            DetectOS()
-
             Try
                 MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
@@ -434,11 +425,20 @@ Namespace My
                 ConsoleFontMedium = New Font("Lucida Console", 9)
             End Try
 
+            Try
+                ArgsList.Clear()
+                For x = 1 To Environment.GetCommandLineArgs.Count - 1
+                    ArgsList.Add(Environment.GetCommandLineArgs(x))
+                Next
+            Catch
+            End Try
+
             FontsList.Clear()
             FontsFixedList.Clear()
             For Each [font] As FontFamily In FontFamily.Families
                 FontsList.Add([font].Name)
             Next
+
             Dim B As New Bitmap(30, 30)
             Dim G As Graphics = Graphics.FromImage(B)
             For Each [font] As FontFamily In NativeMethods.GDI32.GetFixedWidthFonts(G)
@@ -447,17 +447,11 @@ Namespace My
             B.Dispose()
             G.Dispose()
 
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
-                    If arg.ToLower = "/exportlanguage" Then
-                        LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
-                        MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
-                        Process.GetCurrentProcess.Kill()
-                    End If
-                Next
-            Catch
-            End Try
+            If ArgsList.Contains("/exportlanguage") Then
+                LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
+                Process.GetCurrentProcess.Kill()
+            End If
 
             If My.Application._Settings.Language Then
                 Try
@@ -486,12 +480,9 @@ Namespace My
             processKiller.StartInfo = ProcessKillerInfo
             processExplorer.StartInfo = processExplorerInfo
 
-
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
 
-            Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
-            Monitor()
             ApplyDarkMode()
 
             ExternalLink = False
@@ -501,61 +492,53 @@ Namespace My
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
-            Try
-                For x = 1 To Environment.GetCommandLineArgs.Count - 1
-                    Dim arg As String = Environment.GetCommandLineArgs(x)
+            For Each arg As String In ArgsList
 
-                    Try
-                        If arg.ToLower.StartsWith("/apply:") Then
-                            Dim File As String = arg.Remove(0, "/apply:".Count)
-                            File = File.Replace("""", "")
-                            If IO.File.Exists(File) Then
-                                Dim CPx As New CP(CP.Mode.File, File)
-                                CPx.Save(CP.Mode.Registry)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                            End If
-                            Process.GetCurrentProcess.Kill()
-                        End If
-                    Catch
-                    End Try
+                If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
-                    Try
-                        If arg.ToLower.StartsWith("/edit:") Then
-                            Dim File As String = arg.Remove(0, "/edit:".Count)
-                            File = File.Replace("""", "")
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True
-                            ExternalLink_File = File
-                        End If
-                    Catch
-                    End Try
-
-                    Try
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                            If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                                ExternalLink = True
-                                ExternalLink_File = arg
-                            Else
-                                Dim CPx As New CP(CP.Mode.File, arg)
-                                CPx.Save(CP.Mode.Registry, arg)
-                                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
-                                Process.GetCurrentProcess.Kill()
-                            End If
-                        End If
-                    Catch
-                    End Try
-
-                    Try
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                            SettingsX._External = True
-                            SettingsX._File = arg
-                            SettingsX.ShowDialog()
+                            ExternalLink_File = arg
+                        Else
+                            Dim CPx As New CP(CP.Mode.File, arg)
+                            CPx.Save(CP.Mode.Registry, arg)
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
-                    Catch
-                    End Try
-                Next
-            Catch
-            End Try
+                    End If
+
+                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                        SettingsX._External = True
+                        SettingsX._File = arg
+                        SettingsX.ShowDialog()
+                        Process.GetCurrentProcess.Kill()
+                    End If
+
+                Else
+                    If arg.ToLower.StartsWith("/apply:") Then
+                        Dim File As String = arg.Remove(0, "/apply:".Count)
+                        File = File.Replace("""", "")
+                        If IO.File.Exists(File) Then
+                            Dim CPx As New CP(CP.Mode.File, File)
+                            CPx.Save(CP.Mode.Registry)
+                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                            Process.GetCurrentProcess.Kill()
+                        End If
+                    End If
+
+                    If arg.ToLower.StartsWith("/edit:") Then
+                        Dim File As String = arg.Remove(0, "/edit:".Count)
+                        File = File.Replace("""", "")
+                        ExternalLink = True
+                        ExternalLink_File = File
+                    End If
+
+                End If
+            Next
+
+            Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
+            Monitor()
 
             Try
                 If _Settings.AutoAddExt Then
@@ -600,6 +583,7 @@ Namespace My
             imgLs.Images.Add("time", My.Resources.notify_time)
             imgLs.Images.Add("success", My.Resources.notify_success)
             imgLs.Images.Add("skip", My.Resources.notify_skip)
+            imgLs.Images.Add("admin", My.Resources.notify_administrator)
 
             Try : WinRes = New WinResources : Catch : End Try
 
@@ -638,7 +622,73 @@ Namespace My
                         MsgBox(LanguageHelper.LngShouldClose, MsgBoxStyle.Critical + MsgboxRt())
                     Else
 
-                        Try
+                        If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
+
+                            If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                                If MainFrm.CP <> MainFrm.CP_Original Then
+                                    If _Settings.ShowSaveConfirmation Then
+                                        Select Case ComplexSave.ShowDialog()
+                                            Case DialogResult.Yes
+                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
+                                                Dim r1 As String = r(0)
+                                                Dim r2 As String = r(1)
+                                                Select Case r1
+                                                    Case 0              '' Save
+                                                        If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                        Else
+                                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                                            Else
+                                                                Exit Sub
+                                                            End If
+                                                        End If
+
+                                                    Case 1              '' Save As
+                                                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                        Else
+                                                            Exit Sub
+                                                        End If
+                                                End Select
+
+                                                Select Case r2
+                                                    Case 1      '' Apply   ' Case 0= Don't Apply
+                                                        MainFrm.Apply_Theme()
+                                                End Select
+
+                                            Case DialogResult.No
+
+
+                                            Case DialogResult.Cancel
+                                                Exit Sub
+                                        End Select
+                                    End If
+
+                                End If
+
+                                MainFrm.CP = New CP(CP.Mode.File, arg)
+                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                MainFrm.OpenFileDialog1.FileName = arg
+                                MainFrm.SaveFileDialog1.FileName = arg
+                                MainFrm.ApplyCPValues(MainFrm.CP)
+                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+
+                                If Not My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                                    MainFrm.Apply_Theme()
+                                End If
+                            End If
+
+                            If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                                SettingsX._External = True
+                                SettingsX._File = arg
+                                SettingsX.ShowDialog()
+                            End If
+
+                        Else
                             If arg.ToLower.StartsWith("/apply:") Then
                                 Dim File As String = arg.Remove(0, "/apply:".Count)
                                 File = File.Replace("""", "")
@@ -648,15 +698,12 @@ Namespace My
                                     If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
-                        Catch
-                        End Try
 
-                        Try
                             If arg.ToLower.StartsWith("/edit:") Then
                                 Dim File As String = arg.Remove(0, "/edit:".Count)
                                 File = File.Replace("""", "")
 
-                                If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
+                                If MainFrm.CP <> MainFrm.CP_Original Then
 
                                     If _Settings.ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
@@ -668,11 +715,11 @@ Namespace My
                                                     Case 0              '' Save
                                                         If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
                                                             MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP
+                                                            MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                                                 MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                                MainFrm.CP_Original = MainFrm.CP
+                                                                MainFrm.CP_Original = MainFrm.CP.Clone
                                                             Else
                                                                 Exit Sub
                                                             End If
@@ -681,7 +728,7 @@ Namespace My
                                                     Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                                             MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP
+                                                            MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             Exit Sub
                                                         End If
@@ -689,8 +736,7 @@ Namespace My
 
                                                 Select Case r2
                                                     Case 1      '' Apply   ' Case 0= Don't Apply
-                                                        MainFrm.CP.Save(CP.Mode.Registry)
-                                                        RestartExplorer()
+                                                        MainFrm.Apply_Theme()
                                                 End Select
 
                                             Case DialogResult.No
@@ -704,91 +750,14 @@ Namespace My
                                 End If
 
                                 MainFrm.CP = New CP(CP.Mode.File, File)
-                                MainFrm.CP_Original = New CP(CP.Mode.File, File)
+                                MainFrm.CP_Original = MainFrm.CP.Clone
                                 MainFrm.OpenFileDialog1.FileName = File
                                 MainFrm.SaveFileDialog1.FileName = File
                                 MainFrm.ApplyCPValues(MainFrm.CP)
                                 MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
 
                             End If
-                        Catch
-                        End Try
-
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                            If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
-                                If Not MainFrm.CP.Equals(MainFrm.CP_Original) Then
-                                    If _Settings.ShowSaveConfirmation Then
-                                        Select Case ComplexSave.ShowDialog()
-                                            Case DialogResult.Yes
-                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
-                                                Dim r1 As String = r(0)
-                                                Dim r2 As String = r(1)
-                                                Select Case r1
-                                                    Case 0              '' Save
-                                                        If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP
-                                                        Else
-                                                            If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                                MainFrm.CP_Original = MainFrm.CP
-                                                            Else
-                                                                Exit Sub
-                                                            End If
-                                                        End If
-
-                                                    Case 1              '' Save As
-                                                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP
-                                                        Else
-                                                            Exit Sub
-                                                        End If
-                                                End Select
-
-                                                Select Case r2
-                                                    Case 1      '' Apply   ' Case 0= Don't Apply
-                                                        MainFrm.CP.Save(CP.Mode.Registry)
-                                                        RestartExplorer()
-                                                End Select
-
-                                            Case DialogResult.No
-
-
-                                            Case DialogResult.Cancel
-                                                Exit Sub
-                                        End Select
-                                    End If
-
-                                End If
-
-                                MainFrm.CP = New CP(CP.Mode.File, arg)
-                                MainFrm.CP_Original = New CP(CP.Mode.File, arg)
-                                MainFrm.OpenFileDialog1.FileName = arg
-                                MainFrm.SaveFileDialog1.FileName = arg
-                                MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-
-                            Else
-                                MainFrm.CP = New CP(CP.Mode.File, arg)
-                                MainFrm.CP_Original = New CP(CP.Mode.File, arg)
-                                MainFrm.OpenFileDialog1.FileName = arg
-                                MainFrm.SaveFileDialog1.FileName = arg
-                                MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-                                MainFrm.CP.Save(CP.Mode.Registry, arg)
-                                RestartExplorer()
-                                '''''''
-                            End If
                         End If
-
-                        If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
-                            SettingsX._External = True
-                            SettingsX._File = arg
-                            SettingsX.ShowDialog()
-                            '''''''
-                        End If
-
                     End If
                 End If
             Catch

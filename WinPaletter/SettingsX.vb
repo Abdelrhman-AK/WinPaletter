@@ -43,12 +43,15 @@ Public Class SettingsX
             If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
             If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
             If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
-            If .LoadThemeFileAsLegacy <> XenonCheckBox16.Checked Then Changed = True
-            If .SaveThemeFileAsLegacy <> XenonCheckBox4.Checked Then Changed = True
             If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
             If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
             If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
             If .CMD_OverrideUserPreferences <> XenonCheckBox15.Checked Then Changed = True
+
+            If .Log_ShowApplying <> XenonCheckBox19.Checked Then Changed = True
+            If .Log_Countdown_Enabled <> XenonCheckBox18.Checked Then Changed = True
+            If .Log_Countdown <> XenonNumericUpDown1.Value Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -97,9 +100,6 @@ Public Class SettingsX
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
 
-            XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
-            XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
-
             XenonCheckBox8.Checked = .Language
             XenonTextBox3.Text = .Language_File
 
@@ -123,6 +123,9 @@ Public Class SettingsX
                     XenonComboBox3.SelectedIndex = 3
             End Select
 
+            XenonCheckBox19.Checked = .Log_ShowApplying
+            XenonCheckBox18.Checked = .Log_Countdown_Enabled
+            XenonNumericUpDown1.Value = .Log_Countdown
         End With
 
         With My.Application.LanguageHelper
@@ -170,9 +173,6 @@ Public Class SettingsX
             .Appearance_Auto = XenonCheckBox6.Checked
             .ShowSaveConfirmation = XenonCheckBox17.Checked
 
-            .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
-            .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
-
             .Language = XenonCheckBox8.Checked
             .Language_File = XenonTextBox3.Text
             .Nerd_Stats = XenonCheckBox10.Checked
@@ -184,6 +184,10 @@ Public Class SettingsX
             .Terminal_Stable_Path = XenonTextBox1.Text
             .Terminal_Preview_Path = XenonTextBox2.Text
             .CMD_OverrideUserPreferences = XenonCheckBox15.Checked
+
+            .Log_ShowApplying = XenonCheckBox19.Checked
+            .Log_Countdown_Enabled = XenonCheckBox18.Checked
+            .Log_Countdown = XenonNumericUpDown1.Value
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -266,9 +270,6 @@ Public Class SettingsX
                 .Appearance_Auto = XenonCheckBox6.Checked
                 .ShowSaveConfirmation = XenonCheckBox17.Checked
 
-                .LoadThemeFileAsLegacy = XenonCheckBox16.Checked
-                .SaveThemeFileAsLegacy = XenonCheckBox4.Checked
-
                 .Language = XenonCheckBox8.Checked
                 .Language_File = XenonTextBox3.Text
                 .Nerd_Stats = XenonCheckBox10.Checked
@@ -280,6 +281,10 @@ Public Class SettingsX
                 .Terminal_Stable_Path = XenonTextBox1.Text
                 .Terminal_Preview_Path = XenonTextBox2.Text
                 .CMD_OverrideUserPreferences = XenonCheckBox15.Checked
+
+                .Log_ShowApplying = XenonCheckBox19.Checked
+                .Log_Countdown_Enabled = XenonCheckBox18.Checked
+                .Log_Countdown = XenonNumericUpDown1.Value
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -302,9 +307,6 @@ Public Class SettingsX
                 XenonCheckBox7.Checked = .AutoApplyCursors
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox9.Checked = .Win7LivePreview
-
-                XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
-                XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
                 XenonCheckBox17.Checked = .ShowSaveConfirmation
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
@@ -334,6 +336,10 @@ Public Class SettingsX
                 XenonCheckBox6.Checked = .Appearance_Auto
                 XenonCheckBox8.Checked = .Language
                 XenonTextBox3.Text = .Language_File
+
+                XenonCheckBox19.Checked = .Log_ShowApplying
+                XenonCheckBox18.Checked = .Log_Countdown_Enabled
+                XenonNumericUpDown1.Value = .Log_Countdown
             End With
         End If
     End Sub
@@ -363,9 +369,6 @@ Public Class SettingsX
             XenonCheckBox7.Checked = .AutoApplyCursors
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox9.Checked = .Win7LivePreview
-
-            XenonCheckBox16.Checked = .LoadThemeFileAsLegacy
-            XenonCheckBox4.Checked = .SaveThemeFileAsLegacy
             XenonCheckBox17.Checked = .ShowSaveConfirmation
 
             XenonCheckBox12.Checked = .Terminal_Bypass
@@ -395,6 +398,10 @@ Public Class SettingsX
             XenonCheckBox6.Checked = .Appearance_Auto
             XenonCheckBox8.Checked = .Language
             XenonTextBox3.Text = .Language_File
+
+            XenonCheckBox19.Checked = .Log_ShowApplying
+            XenonCheckBox18.Checked = .Log_Countdown_Enabled
+            XenonNumericUpDown1.Value = .Log_Countdown
         End With
 
         OpenFileDialog1.FileName = files(0)

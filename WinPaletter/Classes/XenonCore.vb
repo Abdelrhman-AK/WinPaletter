@@ -92,7 +92,7 @@ Public Class XenonCore
                 .processKiller.WaitForExit()
                 .processExplorer.Start()
                 sw.Stop()
-                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Explorer Restarted, took about {1} seconds to kill explorer", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Explorer Restarted. It took about {1} seconds to kill explorer", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 sw.Reset()
             Catch ex As Exception
                 If [TreeView] IsNot Nothing Then
@@ -120,11 +120,6 @@ Public Class XenonCore
             Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
         End Try
 
-    End Function
-    Public Shared Function GetControlImage(ByVal ctl As Control) As Bitmap
-        Dim bm As New Bitmap(ctl.Width, ctl.Height)
-        ctl.DrawToBitmap(bm, New Rectangle(0, 0, ctl.Width, ctl.Height))
-        Return bm
     End Function
     Public Shared Function IsNetAvailable() As Boolean
         If My.Computer.Network.IsAvailable Then
@@ -291,10 +286,6 @@ Public Class XenonCore
         If TypeOf ctrl Is XenonGroupBox Then
             DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
             DirectCast(ctrl, XenonGroupBox).LineColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
-        End If
-
-        If TypeOf ctrl Is XenonCP Then
-            DirectCast(ctrl, XenonCP).LineColor = ctrl.BackColor.CB(If(ctrl.BackColor.IsDark, 0.1, -0.1))
         End If
 
         If TypeOf ctrl Is XenonButton Then

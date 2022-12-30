@@ -490,7 +490,6 @@ Partial Class WindowsTerminal
         Me.TerTitlebarActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarActive.ForceNoNerd = False
-        Me.TerTitlebarActive.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTitlebarActive.Location = New System.Drawing.Point(242, 3)
         Me.TerTitlebarActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarActive.Name = "TerTitlebarActive"
@@ -504,7 +503,6 @@ Partial Class WindowsTerminal
         Me.TerTitlebarInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarInactive.ForceNoNerd = False
-        Me.TerTitlebarInactive.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTitlebarInactive.Location = New System.Drawing.Point(242, 33)
         Me.TerTitlebarInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarInactive.Name = "TerTitlebarInactive"
@@ -541,7 +539,6 @@ Partial Class WindowsTerminal
         Me.TerTabActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabActive.ForceNoNerd = False
-        Me.TerTabActive.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTabActive.Location = New System.Drawing.Point(242, 63)
         Me.TerTabActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabActive.Name = "TerTabActive"
@@ -555,7 +552,6 @@ Partial Class WindowsTerminal
         Me.TerTabInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabInactive.ForceNoNerd = False
-        Me.TerTabInactive.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTabInactive.Location = New System.Drawing.Point(242, 93)
         Me.TerTabInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabInactive.Name = "TerTabInactive"
@@ -1028,7 +1024,6 @@ Partial Class WindowsTerminal
         Me.TerCursor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerCursor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerCursor.ForceNoNerd = False
-        Me.TerCursor.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerCursor.Location = New System.Drawing.Point(245, 153)
         Me.TerCursor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCursor.Name = "TerCursor"
@@ -1042,7 +1037,6 @@ Partial Class WindowsTerminal
         Me.TerWhiteB.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.TerWhiteB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.TerWhiteB.ForceNoNerd = False
-        Me.TerWhiteB.LineColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.TerWhiteB.Location = New System.Drawing.Point(245, 401)
         Me.TerWhiteB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhiteB.Name = "TerWhiteB"
@@ -1069,7 +1063,6 @@ Partial Class WindowsTerminal
         Me.TerBlue.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.TerBlue.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.TerBlue.ForceNoNerd = False
-        Me.TerBlue.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(232, Byte), Integer))
         Me.TerBlue.Location = New System.Drawing.Point(140, 222)
         Me.TerBlue.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlue.Name = "TerBlue"
@@ -1096,7 +1089,6 @@ Partial Class WindowsTerminal
         Me.TerSelection.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerSelection.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerSelection.ForceNoNerd = False
-        Me.TerSelection.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerSelection.Location = New System.Drawing.Point(245, 123)
         Me.TerSelection.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerSelection.Name = "TerSelection"
@@ -1136,7 +1128,6 @@ Partial Class WindowsTerminal
         Me.TerWhite.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.TerWhite.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.TerWhite.ForceNoNerd = False
-        Me.TerWhite.LineColor = System.Drawing.Color.FromArgb(CType(CType(206, Byte), Integer), CType(CType(206, Byte), Integer), CType(CType(206, Byte), Integer))
         Me.TerWhite.Location = New System.Drawing.Point(140, 401)
         Me.TerWhite.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhite.Name = "TerWhite"
@@ -1150,7 +1141,6 @@ Partial Class WindowsTerminal
         Me.TerForeground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerForeground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerForeground.ForceNoNerd = False
-        Me.TerForeground.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerForeground.Location = New System.Drawing.Point(245, 93)
         Me.TerForeground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerForeground.Name = "TerForeground"
@@ -1164,7 +1154,6 @@ Partial Class WindowsTerminal
         Me.TerCyanB.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.TerCyanB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.TerCyanB.ForceNoNerd = False
-        Me.TerCyanB.LineColor = System.Drawing.Color.FromArgb(CType(CType(103, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(216, Byte), Integer))
         Me.TerCyanB.Location = New System.Drawing.Point(245, 251)
         Me.TerCyanB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyanB.Name = "TerCyanB"
@@ -1191,7 +1180,6 @@ Partial Class WindowsTerminal
         Me.TerCyan.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.TerCyan.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.TerCyan.ForceNoNerd = False
-        Me.TerCyan.LineColor = System.Drawing.Color.FromArgb(CType(CType(67, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(222, Byte), Integer))
         Me.TerCyan.Location = New System.Drawing.Point(140, 251)
         Me.TerCyan.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyan.Name = "TerCyan"
@@ -1205,7 +1193,6 @@ Partial Class WindowsTerminal
         Me.TerGreen.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.TerGreen.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.TerGreen.ForceNoNerd = False
-        Me.TerGreen.LineColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(174, Byte), Integer), CType(CType(15, Byte), Integer))
         Me.TerGreen.Location = New System.Drawing.Point(140, 281)
         Me.TerGreen.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreen.Name = "TerGreen"
@@ -1232,7 +1219,6 @@ Partial Class WindowsTerminal
         Me.TerBackground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBackground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBackground.ForceNoNerd = False
-        Me.TerBackground.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerBackground.Location = New System.Drawing.Point(245, 63)
         Me.TerBackground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBackground.Name = "TerBackground"
@@ -1246,7 +1232,6 @@ Partial Class WindowsTerminal
         Me.TerYellow.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.ForceNoNerd = False
-        Me.TerYellow.LineColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(167, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.Location = New System.Drawing.Point(140, 371)
         Me.TerYellow.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellow.Name = "TerYellow"
@@ -1260,7 +1245,6 @@ Partial Class WindowsTerminal
         Me.TerGreenB.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerGreenB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerGreenB.ForceNoNerd = False
-        Me.TerGreenB.LineColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(13, Byte), Integer))
         Me.TerGreenB.Location = New System.Drawing.Point(245, 281)
         Me.TerGreenB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreenB.Name = "TerGreenB"
@@ -1300,7 +1284,6 @@ Partial Class WindowsTerminal
         Me.TerBlack.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBlack.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBlack.ForceNoNerd = False
-        Me.TerBlack.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerBlack.Location = New System.Drawing.Point(140, 191)
         Me.TerBlack.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlack.Name = "TerBlack"
@@ -1314,7 +1297,6 @@ Partial Class WindowsTerminal
         Me.TerYellowB.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.TerYellowB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.TerYellowB.ForceNoNerd = False
-        Me.TerYellowB.LineColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(169, Byte), Integer))
         Me.TerYellowB.Location = New System.Drawing.Point(245, 371)
         Me.TerYellowB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellowB.Name = "TerYellowB"
@@ -1341,7 +1323,6 @@ Partial Class WindowsTerminal
         Me.TerBlackB.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.TerBlackB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.TerBlackB.ForceNoNerd = False
-        Me.TerBlackB.LineColor = System.Drawing.Color.FromArgb(CType(CType(124, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(124, Byte), Integer))
         Me.TerBlackB.Location = New System.Drawing.Point(245, 191)
         Me.TerBlackB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlackB.Name = "TerBlackB"
@@ -1355,7 +1336,6 @@ Partial Class WindowsTerminal
         Me.TerPurple.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.TerPurple.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.TerPurple.ForceNoNerd = False
-        Me.TerPurple.LineColor = System.Drawing.Color.FromArgb(CType(CType(148, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.TerPurple.Location = New System.Drawing.Point(140, 341)
         Me.TerPurple.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurple.Name = "TerPurple"
@@ -1382,7 +1362,6 @@ Partial Class WindowsTerminal
         Me.TerPurpleB.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.TerPurpleB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.TerPurpleB.ForceNoNerd = False
-        Me.TerPurpleB.LineColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(171, Byte), Integer))
         Me.TerPurpleB.Location = New System.Drawing.Point(245, 341)
         Me.TerPurpleB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurpleB.Name = "TerPurpleB"
@@ -1396,7 +1375,6 @@ Partial Class WindowsTerminal
         Me.TerBlueB.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.ForceNoNerd = False
-        Me.TerBlueB.LineColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(124, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.Location = New System.Drawing.Point(245, 222)
         Me.TerBlueB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlueB.Name = "TerBlueB"
@@ -1436,7 +1414,6 @@ Partial Class WindowsTerminal
         Me.TerRedB.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.TerRedB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.TerRedB.ForceNoNerd = False
-        Me.TerRedB.LineColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.TerRedB.Location = New System.Drawing.Point(245, 311)
         Me.TerRedB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRedB.Name = "TerRedB"
@@ -1450,7 +1427,6 @@ Partial Class WindowsTerminal
         Me.TerRed.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.TerRed.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.TerRed.ForceNoNerd = False
-        Me.TerRed.LineColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.TerRed.Location = New System.Drawing.Point(140, 311)
         Me.TerRed.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRed.Name = "TerRed"

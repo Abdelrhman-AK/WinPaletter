@@ -195,6 +195,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -637,7 +638,7 @@ Partial Class Metrics_Fonts
         Me.Label44.Name = "Label44"
         Me.Label44.Size = New System.Drawing.Size(336, 31)
         Me.Label44.TabIndex = 84
-        Me.Label44.Text = "Tool Window Caption Metrics:"
+        Me.Label44.Text = "Tool Window Titlebars:"
         Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar14
@@ -1086,7 +1087,7 @@ Partial Class Metrics_Fonts
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(340, 31)
         Me.Label43.TabIndex = 84
-        Me.Label43.Text = "Caption Metrics:"
+        Me.Label43.Text = "Titlebars:"
         Me.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar1
@@ -2503,6 +2504,11 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.Text = "Load these into current palette"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "wpt"
+        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
+        '
         'Metrics_Fonts
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2771,4 +2777,5 @@ Partial Class Metrics_Fonts
     Friend WithEvents ItemZToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Item4ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Item3ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

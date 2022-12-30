@@ -458,5 +458,35 @@ Public Class Metrics_Fonts
         Return TitleTextW 'TitleTextH_Sum
     End Function
 
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            ApplyFromCP(CPx)
+            CPx.Dispose()
+        End If
+    End Sub
 
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        Dim CPx As New CP(CP.Mode.Registry)
+        ApplyFromCP(CPx)
+        CPx.Dispose()
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        Dim _Def As CP
+        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+            _Def = New CP_Defaults().Default_Windows11
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+            _Def = New CP_Defaults().Default_Windows10
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+            _Def = New CP_Defaults().Default_Windows8
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+            _Def = New CP_Defaults().Default_Windows7
+        Else
+            _Def = New CP_Defaults().Default_Windows11
+        End If
+
+        ApplyFromCP(_Def)
+        _Def.Dispose()
+    End Sub
 End Class

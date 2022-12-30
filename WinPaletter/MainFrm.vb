@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
@@ -954,8 +955,8 @@ Public Class MainFrm
             End Select
         End If
 
-        W8_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
-        W8_ColorizationBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
+        W8_ColorizationColor_pick.BackColor = ColorPalette.Windows8.ColorizationColor
+        W8_ColorizationBalance_bar.Value = ColorPalette.Windows8.ColorizationColorBalance
 
         W8_start_pick.BackColor = ColorPalette.Windows8.StartColor
         W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
@@ -1162,14 +1163,14 @@ Public Class MainFrm
 
         TreeView1.ImageList = My.Application.imgLs
 
-        SetTreeViewTheme(TreeView1.Handle)
+        If Not My.W7 Then SetTreeViewTheme(TreeView1.Handle)
 
-        Try
-            ApplyDarkMode(Me)
-            MakeItDoubleBuffered(Me)
-            MakeItDoubleBuffered(TreeView1)
+        ApplyDarkMode(Me)
+        MakeItDoubleBuffered(Me)
+        MakeItDoubleBuffered(TreeView1)
+        MakeItDoubleBuffered(TablessControl1)
 
-            Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
+        Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
             Me.WindowState = My.Application._Settings.MainFormStatus
 
             For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
@@ -1179,77 +1180,73 @@ Public Class MainFrm
                 AddHandler btn.Leave, AddressOf EraseHint
             Next
 
-            For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
-                AddHandler btn.MouseEnter, AddressOf UpdateHint
-                AddHandler btn.Enter, AddressOf UpdateHint
-                AddHandler btn.MouseLeave, AddressOf EraseHint
-                AddHandler btn.Leave, AddressOf EraseHint
-            Next
+        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
+        Next
 
-            If Not My.Application.ExternalLink Then
-                CP = New CP(CP.Mode.Registry)
-                CP_Original = New CP(CP.Mode.Registry)
-                CP_FirstTime = New CP(CP.Mode.Registry)
-            Else
-                CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-                CP_Original = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-                CP_FirstTime = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-                OpenFileDialog1.FileName = My.Application.ExternalLink_File
-                SaveFileDialog1.FileName = My.Application.ExternalLink_File
-                My.Application.ExternalLink = False
-                My.Application.ExternalLink_File = ""
-            End If
+        If Not My.Application.ExternalLink Then
+            CP = New CP(CP.Mode.Registry)
+            CP_Original = CP.Clone 'New CP(CP.Mode.Registry)
+            CP_FirstTime = CP.Clone 'New CP(CP.Mode.Registry)
+        Else
+            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_Original = CP.Clone 'New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP_FirstTime = CP.Clone 'New CP(CP.Mode.File, My.Application.ExternalLink_File)
 
-
-            Select_W11.Image = My.Resources.Native11
-            Select_W10.Image = My.Resources.Native10
-            Select_W8.Image = My.Resources.Native8
-            Select_W7.Image = My.Resources.Native7
-
-            If My.W11 Then PreviewConfig = WinVer.Eleven
-            If My.W10 Then PreviewConfig = WinVer.Ten
-            If My.W8 Then PreviewConfig = WinVer.Eight
-            If My.W7 Then PreviewConfig = WinVer.Seven
-
-            If PreviewConfig = WinVer.Eleven Then
-                TablessControl1.SelectedIndex = 0
-                XenonButton20.Image = My.Resources.add_win11
-                Select_W11.Checked = True
-
-            ElseIf PreviewConfig = WinVer.Ten Then
-                TablessControl1.SelectedIndex = 1
-                XenonButton20.Image = My.Resources.add_win10
-                Select_W10.Checked = True
-
-            ElseIf PreviewConfig = WinVer.Eight Then
-                TablessControl1.SelectedIndex = 2
-                XenonButton20.Image = My.Resources.add_win8
-                Select_W8.Checked = True
-
-            ElseIf PreviewConfig = WinVer.Seven Then
-                TablessControl1.SelectedIndex = 3
-                XenonButton20.Image = My.Resources.add_win7
-                Select_W7.Checked = True
-
-            Else
-                TablessControl1.SelectedIndex = 0
-                XenonButton20.Image = My.Resources.add_win11
-                Select_W11.Checked = True
-
-            End If
+            OpenFileDialog1.FileName = My.Application.ExternalLink_File
+            SaveFileDialog1.FileName = My.Application.ExternalLink_File
+            My.Application.ExternalLink = False
+            My.Application.ExternalLink_File = ""
+        End If
 
 
-            pnl_preview.BackgroundImage = My.Application.Wallpaper
-            dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+        Select_W11.Image = My.Resources.Native11
+        Select_W10.Image = My.Resources.Native10
+        Select_W8.Image = My.Resources.Native8
+        Select_W7.Image = My.Resources.Native7
 
-            Adjust_Preview()
-            ApplyCPValues(CP)
-            ApplyDefaultCPValues()
-            ApplyLivePreviewFromCP(CP)
+        If My.W11 Then PreviewConfig = WinVer.Eleven
+        If My.W10 Then PreviewConfig = WinVer.Ten
+        If My.W8 Then PreviewConfig = WinVer.Eight
+        If My.W7 Then PreviewConfig = WinVer.Seven
 
-        Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace)
-        End Try
+        If PreviewConfig = WinVer.Eleven Then
+            TablessControl1.SelectedIndex = 0
+            XenonButton20.Image = My.Resources.add_win11
+            Select_W11.Checked = True
+
+        ElseIf PreviewConfig = WinVer.Ten Then
+            TablessControl1.SelectedIndex = 1
+            XenonButton20.Image = My.Resources.add_win10
+            Select_W10.Checked = True
+
+        ElseIf PreviewConfig = WinVer.Eight Then
+            TablessControl1.SelectedIndex = 2
+            XenonButton20.Image = My.Resources.add_win8
+            Select_W8.Checked = True
+
+        ElseIf PreviewConfig = WinVer.Seven Then
+            TablessControl1.SelectedIndex = 3
+            XenonButton20.Image = My.Resources.add_win7
+            Select_W7.Checked = True
+
+        Else
+            TablessControl1.SelectedIndex = 0
+            XenonButton20.Image = My.Resources.add_win11
+            Select_W11.Checked = True
+        End If
+
+
+        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+
+        Adjust_Preview()
+        ApplyCPValues(CP)
+        ApplyDefaultCPValues()
+        ApplyLivePreviewFromCP(CP)
 
         Visible = True
     End Sub
@@ -1277,10 +1274,10 @@ Public Class MainFrm
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        Dim Changed As Boolean = Not CP.Equals(CP_Original)
+        If CP <> CP_Original Then
 
-        If Changed Then
             If My.Application._Settings.ShowSaveConfirmation Then
+
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
@@ -1292,11 +1289,11 @@ Public Class MainFrm
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                         CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP.Clone
                                     Else
                                         e.Cancel = True
                                     End If
@@ -1304,7 +1301,7 @@ Public Class MainFrm
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     e.Cancel = True
                                 End If
@@ -1312,17 +1309,7 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+                                Apply_Theme()
                         End Select
 
                     Case DialogResult.No
@@ -1728,11 +1715,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
-        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
-    End Sub
 
-    Private Sub W11_XenonButton25_Click(sender As Object, e As EventArgs) Handles W11_XenonButton25.Click
-        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
     End Sub
 
 #End Region
@@ -2500,34 +2484,113 @@ Public Class MainFrm
 #End Region
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
+        Apply_Theme()
+    End Sub
+
+    Sub Apply_Theme()
         Cursor = Cursors.WaitCursor
 
         log_lbl.Visible = False
         log_lbl.Text = ""
+        XenonButton8.Visible = False
         XenonButton14.Visible = False
+        XenonButton22.Visible = False
 
-        TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+        If My.Application._Settings.Log_ShowApplying Then
+            TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+            TablessControl1.Refresh()
+        End If
 
-        CP.Save(CP.Mode.Registry, "", TreeView1)
+        CP.Save(CP.Mode.Registry, "", If(My.Application._Settings.Log_ShowApplying, TreeView1, Nothing))
 
         CP_Original = New CP(Mode.Registry)
 
         Cursor = Cursors.Default
 
         If My.Application._Settings.AutoRestartExplorer Then
-            RestartExplorer(TreeView1)
+            RestartExplorer(If(My.Application._Settings.Log_ShowApplying, TreeView1, Nothing))
         Else
-            CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+            If My.Application._Settings.Log_ShowApplying Then CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
         End If
 
-        CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+        If My.Application._Settings.Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+
+        log_lbl.Visible = True
+        XenonButton8.Visible = True
+        XenonButton22.Visible = True
 
         If Not My.Application.Saving_Exceptions.Count = 0 Then
-            log_lbl.Visible = True
             log_lbl.Text = "Error\s happened. Press on Show Errors for details"
             XenonButton14.Visible = True
+        Else
+            If My.Application._Settings.Log_Countdown_Enabled Then
+                ellapsedSecs = 0
+                Timer1.Enabled = True
+                Timer1.Start()
+            End If
+        End If
+    End Sub
+
+    Private ellapsedSecs As Integer = 0
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        log_lbl.Text = String.Format("This log will close after {0} second{1}.",
+                                     My.Application._Settings.Log_Countdown - ellapsedSecs, If(My.Application._Settings.Log_Countdown - ellapsedSecs > 1, "s", ""))
+
+        If ellapsedSecs + 1 <= My.Application._Settings.Log_Countdown Then
+            ellapsedSecs += 1
+        Else
+            log_lbl.Text = ""
+            Timer1.Enabled = False
+            Timer1.Stop()
+            SelectPreview()
         End If
 
+    End Sub
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        log_lbl.Text = ""
+        Timer1.Enabled = False
+        Timer1.Stop()
+        Saving_ex_list.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        log_lbl.Text = ""
+        Timer1.Enabled = False
+        Timer1.Stop()
+        SelectPreview()
+    End Sub
+
+    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+        log_lbl.Text = ""
+        Timer1.Enabled = False
+        Timer1.Stop()
+
+        If SaveFileDialog3.ShowDialog = DialogResult.OK Then
+            Dim sb As New StringBuilder
+            sb.Clear()
+
+            For Each N As TreeNode In TreeView1.Nodes
+                sb.AppendLine(String.Format("[{0}]{2} {1}{3}", N.ImageKey, N.Text, vbTab, vbCrLf))
+            Next
+
+            IO.File.WriteAllText(SaveFileDialog3.FileName, sb.ToString)
+
+        End If
+    End Sub
+
+    Sub SelectPreview()
+        If PreviewConfig = WinVer.Eleven Then
+            TablessControl1.SelectedIndex = 0
+        ElseIf PreviewConfig = WinVer.Ten Then
+            TablessControl1.SelectedIndex = 1
+        ElseIf PreviewConfig = WinVer.Eight Then
+            TablessControl1.SelectedIndex = 2
+        ElseIf PreviewConfig = WinVer.Seven Then
+            TablessControl1.SelectedIndex = 3
+        Else
+            TablessControl1.SelectedIndex = 0
+        End If
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
@@ -2559,7 +2622,7 @@ Public Class MainFrm
 
             If My.Application._Settings.DragAndDropPreview Then
                 DragAccepted = True
-                CP_BeforeDragAndDrop = CP
+                CP_BeforeDragAndDrop = CP.Clone
                 dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
                 dragPreviewer.File = files(0)
                 dragPreviewer.Show()
@@ -2578,7 +2641,7 @@ Public Class MainFrm
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         If DragAccepted Then
             If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
-            CP = CP_BeforeDragAndDrop
+            CP = CP_BeforeDragAndDrop.Clone
             ApplyCPValues(CP_BeforeDragAndDrop)
             ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
         End If
@@ -2598,7 +2661,7 @@ Public Class MainFrm
             If wpth_or_wpsf Then
                 If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
 
-                If Not CP.Equals(CP_Original) Then
+                If CP <> CP_Original Then
                     If My.Application._Settings.ShowSaveConfirmation Then
                         Select Case ComplexSave.ShowDialog
                             Case DialogResult.Yes
@@ -2611,11 +2674,11 @@ Public Class MainFrm
                                     Case 0              '' Save
                                         If IO.File.Exists(SaveFileDialog1.FileName) Then
                                             CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                            CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                            CP_Original = CP.Clone
                                         Else
                                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                                 CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                                CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                                CP_Original = CP.Clone
                                             Else
                                                 '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                                 Exit Sub
@@ -2624,7 +2687,7 @@ Public Class MainFrm
                                     Case 1              '' Save As
                                         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                             CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                            CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                            CP_Original = CP.Clone
                                         Else
                                             '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
                                             Exit Sub
@@ -2633,17 +2696,7 @@ Public Class MainFrm
 
                                 Select Case r2
                                     Case 1      '' Apply   ' Case 0= Don't Apply
-                                        log_lbl.Visible = False
-                                        log_lbl.Text = ""
-                                        XenonButton14.Visible = False
-                                        TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                        CP.Save(CP.Mode.Registry, "", TreeView1)
-                                        If My.Application._Settings.AutoRestartExplorer Then
-                                            RestartExplorer(TreeView1)
-                                        Else
-                                            CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                        End If
-                                        CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+                                        Apply_Theme()
                                 End Select
 
                             Case DialogResult.No
@@ -2680,7 +2733,9 @@ Public Class MainFrm
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            If My.Application._Settings.ShowSaveConfirmation Then
+
+
+            If CP <> CP_Original And My.Application._Settings.ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
@@ -2692,11 +2747,11 @@ Public Class MainFrm
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                         CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP.Clone
                                     Else
                                         Exit Sub
                                     End If
@@ -2704,7 +2759,7 @@ Public Class MainFrm
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     Exit Sub
                                 End If
@@ -2712,17 +2767,7 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+                                Apply_Theme()
                         End Select
 
                     Case DialogResult.No
@@ -2730,10 +2775,13 @@ Public Class MainFrm
                     Case DialogResult.Cancel
                         Exit Sub
                 End Select
+
             End If
 
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
             CP = New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            CP_Original = CP.Clone
+
             ApplyCPValues(CP)
             ApplyLivePreviewFromCP(CP)
         End If
@@ -2746,7 +2794,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If Not CP.Equals(CP_Original) Then
+        If CP <> CP_Original Then
             If My.Application._Settings.ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
@@ -2759,11 +2807,11 @@ Public Class MainFrm
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                         CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP.Clone
                                     Else
                                         Exit Sub
                                     End If
@@ -2771,7 +2819,7 @@ Public Class MainFrm
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     Exit Sub
                                 End If
@@ -2779,17 +2827,7 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+                                Apply_Theme()
                         End Select
 
                     Case DialogResult.No
@@ -2801,9 +2839,9 @@ Public Class MainFrm
         End If
 
         CP = New CP(CP.Mode.Registry)
-        CP_Original = New CP(CP.Mode.Registry)
-        OpenFileDialog1.FileName = Nothing
+        CP_Original = CP.Clone
         SaveFileDialog1.FileName = Nothing
+
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -2854,120 +2892,18 @@ Public Class MainFrm
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
-            GetControlImage(pnl_preview).Save(SaveFileDialog2.FileName)
+            pnl_preview.ToBitmap.Save(SaveFileDialog2.FileName)
         End If
     End Sub
 
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
-        If Not CP.Equals(CP_Original) Then
-            If My.Application._Settings.ShowSaveConfirmation Then
-                Select Case ComplexSave.ShowDialog
-                    Case DialogResult.Yes
-
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
-                        Dim r1 As String = r(0)
-                        Dim r2 As String = r(1)
-
-                        Select Case r1
-                            Case 0              '' Save
-                                If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                Else
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                    End If
-                                End If
-                            Case 1              '' Save As
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-
-                                End If
-                        End Select
-
-                        Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
-                        End Select
-
-                    Case DialogResult.No
-
-                    Case DialogResult.Cancel
-                        Exit Sub
-                End Select
-            End If
-        End If
-
-        CP = CP_Original
+        CP = CP_Original.Clone
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
-        If Not CP.Equals(CP_Original) Then
-            If My.Application._Settings.ShowSaveConfirmation Then
-                Select Case ComplexSave.ShowDialog
-                    Case DialogResult.Yes
-
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
-                        Dim r1 As String = r(0)
-                        Dim r2 As String = r(1)
-
-                        Select Case r1
-                            Case 0              '' Save
-                                If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                Else
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-                                    End If
-                                End If
-                            Case 1              '' Save As
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
-
-                                End If
-                        End Select
-
-                        Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
-                        End Select
-
-                    Case DialogResult.No
-
-                    Case DialogResult.Cancel
-                        Exit Sub
-                End Select
-            End If
-        End If
-
-        CP = CP_FirstTime
+        CP = CP_FirstTime.Clone
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -2977,7 +2913,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
-        If Not CP.Equals(CP_Original) Then
+        If CP <> CP_Original Then
             If My.Application._Settings.ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
@@ -2990,11 +2926,11 @@ Public Class MainFrm
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                         CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                        CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                        CP_Original = CP.Clone
                                     Else
                                         Exit Sub
                                     End If
@@ -3002,7 +2938,7 @@ Public Class MainFrm
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                                     CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
-                                    CP_Original = New CP(Mode.File, SaveFileDialog1.FileName)
+                                    CP_Original = CP.Clone
                                 Else
                                     Exit Sub
                                 End If
@@ -3010,17 +2946,7 @@ Public Class MainFrm
 
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
-                                log_lbl.Visible = False
-                                log_lbl.Text = ""
-                                XenonButton14.Visible = False
-                                TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-                                CP.Save(CP.Mode.Registry, "", TreeView1)
-                                If My.Application._Settings.AutoRestartExplorer Then
-                                    RestartExplorer(TreeView1)
-                                Else
-                                    CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
-                                End If
-                                CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+                                Apply_Theme()
                         End Select
 
                     Case DialogResult.No
@@ -3034,19 +2960,21 @@ Public Class MainFrm
         Dim Def As New CP_Defaults
 
         If My.W11 Then
-            CP = Def.Default_Windows11
+            CP = Def.Default_Windows11.Clone
         ElseIf My.W10 Then
-            CP = Def.Default_Windows10
+            CP = Def.Default_Windows10.Clone
         ElseIf My.W8 Then
-            CP = Def.Default_Windows8
+            CP = Def.Default_Windows8.Clone
         ElseIf My.W7 Then
-            CP = Def.Default_Windows7
+            CP = Def.Default_Windows7.Clone
         Else
-            CP = Def.Default_Windows11
+            CP = Def.Default_Windows11.Clone
         End If
 
-        OpenFileDialog1.FileName = Nothing
+        Def.Dispose
+
         SaveFileDialog1.FileName = Nothing
+
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -3137,24 +3065,6 @@ Public Class MainFrm
         If _Shown And Select_W7.Checked Then
             PreviewConfig = WinVer.Seven
             Select_Preview_Version()
-        End If
-    End Sub
-
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
-        Saving_ex_list.ShowDialog()
-    End Sub
-
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        If PreviewConfig = WinVer.Eleven Then
-            TablessControl1.SelectedIndex = 0
-        ElseIf PreviewConfig = WinVer.Ten Then
-            TablessControl1.SelectedIndex = 1
-        ElseIf PreviewConfig = WinVer.Eight Then
-            TablessControl1.SelectedIndex = 2
-        ElseIf PreviewConfig = WinVer.Seven Then
-            TablessControl1.SelectedIndex = 3
-        Else
-            TablessControl1.SelectedIndex = 0
         End If
     End Sub
 

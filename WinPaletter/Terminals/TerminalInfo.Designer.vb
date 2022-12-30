@@ -213,7 +213,6 @@ Partial Class TerminalInfo
         Me.TerTabColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabColor.ForceNoNerd = False
-        Me.TerTabColor.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(23, Byte), Integer))
         Me.TerTabColor.Location = New System.Drawing.Point(120, 101)
         Me.TerTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabColor.Name = "TerTabColor"

@@ -61,113 +61,113 @@ Public Class ExternalTerminal
         End If
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", InvertColor(_Def.CommandPrompt.ColorTable00).ToArgb)
-            ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", _Def.CommandPrompt.ColorTable00.Reverse.ToArgb)
+            ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable00.BackColor = _Def.CommandPrompt.ColorTable00
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", InvertColor(_Def.CommandPrompt.ColorTable01).ToArgb)
-            ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", _Def.CommandPrompt.ColorTable01.Reverse.ToArgb)
+            ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable01.BackColor = _Def.CommandPrompt.ColorTable01
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", InvertColor(_Def.CommandPrompt.ColorTable02).ToArgb)
-            ExtTerminal_ColorTable02.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", _Def.CommandPrompt.ColorTable02.Reverse.ToArgb)
+            ExtTerminal_ColorTable02.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable02.BackColor = _Def.CommandPrompt.ColorTable02
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", InvertColor(_Def.CommandPrompt.ColorTable03).ToArgb)
-            ExtTerminal_ColorTable03.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", _Def.CommandPrompt.ColorTable03.Reverse.ToArgb)
+            ExtTerminal_ColorTable03.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable03.BackColor = _Def.CommandPrompt.ColorTable03
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", InvertColor(_Def.CommandPrompt.ColorTable04).ToArgb)
-            ExtTerminal_ColorTable04.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", _Def.CommandPrompt.ColorTable04.Reverse.ToArgb)
+            ExtTerminal_ColorTable04.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable04.BackColor = _Def.CommandPrompt.ColorTable04
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", InvertColor(_Def.CommandPrompt.ColorTable05).ToArgb)
-            ExtTerminal_ColorTable05.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", _Def.CommandPrompt.ColorTable05.Reverse.ToArgb)
+            ExtTerminal_ColorTable05.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable05.BackColor = _Def.CommandPrompt.ColorTable05
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", InvertColor(_Def.CommandPrompt.ColorTable06).ToArgb)
-            ExtTerminal_ColorTable06.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", _Def.CommandPrompt.ColorTable06.Reverse.ToArgb)
+            ExtTerminal_ColorTable06.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable06.BackColor = _Def.CommandPrompt.ColorTable06
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", InvertColor(_Def.CommandPrompt.ColorTable07).ToArgb)
-            ExtTerminal_ColorTable07.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", _Def.CommandPrompt.ColorTable07.Reverse.ToArgb)
+            ExtTerminal_ColorTable07.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable07.BackColor = _Def.CommandPrompt.ColorTable07
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", InvertColor(_Def.CommandPrompt.ColorTable08).ToArgb)
-            ExtTerminal_ColorTable08.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", _Def.CommandPrompt.ColorTable08.Reverse.ToArgb)
+            ExtTerminal_ColorTable08.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable08.BackColor = _Def.CommandPrompt.ColorTable08
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", InvertColor(_Def.CommandPrompt.ColorTable09).ToArgb)
-            ExtTerminal_ColorTable09.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", _Def.CommandPrompt.ColorTable09.Reverse.ToArgb)
+            ExtTerminal_ColorTable09.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable09.BackColor = _Def.CommandPrompt.ColorTable09
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", InvertColor(_Def.CommandPrompt.ColorTable10).ToArgb)
-            ExtTerminal_ColorTable10.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", _Def.CommandPrompt.ColorTable10.Reverse.ToArgb)
+            ExtTerminal_ColorTable10.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable10.BackColor = _Def.CommandPrompt.ColorTable10
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", InvertColor(_Def.CommandPrompt.ColorTable11).ToArgb)
-            ExtTerminal_ColorTable11.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", _Def.CommandPrompt.ColorTable11.Reverse.ToArgb)
+            ExtTerminal_ColorTable11.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable11.BackColor = _Def.CommandPrompt.ColorTable11
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", InvertColor(_Def.CommandPrompt.ColorTable12).ToArgb)
-            ExtTerminal_ColorTable12.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", _Def.CommandPrompt.ColorTable12.Reverse.ToArgb)
+            ExtTerminal_ColorTable12.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable12.BackColor = _Def.CommandPrompt.ColorTable12
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", InvertColor(_Def.CommandPrompt.ColorTable13).ToArgb)
-            ExtTerminal_ColorTable13.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", _Def.CommandPrompt.ColorTable13.Reverse.ToArgb)
+            ExtTerminal_ColorTable13.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable13.BackColor = _Def.CommandPrompt.ColorTable13
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", InvertColor(_Def.CommandPrompt.ColorTable14).ToArgb)
-            ExtTerminal_ColorTable14.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", _Def.CommandPrompt.ColorTable14.Reverse.ToArgb)
+            ExtTerminal_ColorTable14.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable14.BackColor = _Def.CommandPrompt.ColorTable14
         End Try
 
         Try
-            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", InvertColor(_Def.CommandPrompt.ColorTable15).ToArgb)
-            ExtTerminal_ColorTable15.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", _Def.CommandPrompt.ColorTable15.Reverse.ToArgb)
+            ExtTerminal_ColorTable15.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
         Catch
             ExtTerminal_ColorTable15.BackColor = _Def.CommandPrompt.ColorTable15
         End Try
@@ -308,8 +308,8 @@ Public Class ExternalTerminal
 
         If My.W10_1909 Then
             Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", InvertColor(_Def.CommandPrompt.W10_1909_CursorColor).ToArgb)
-                ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, InvertColor(Color.FromArgb(y_cmd)))
+                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", _Def.CommandPrompt.W10_1909_CursorColor.Reverse.ToArgb)
+                ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
             Catch
                 ExtTerminal_CursorColor.BackColor = _Def.CommandPrompt.W10_1909_CursorColor
             End Try
@@ -361,29 +361,29 @@ Public Class ExternalTerminal
     Sub SetToExtTerminal(RegKey As String)
         Try
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "EnableColorSelection", 1)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable00.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable01.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable02.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable03.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable04.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable05.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable06.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable07.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable08.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable09.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable10.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable11.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable12.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable13.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable14.BackColor)).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", Color.FromArgb(0, InvertColor(ExtTerminal_ColorTable15.BackColor)).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", Color.FromArgb(0, ExtTerminal_ColorTable00.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", Color.FromArgb(0, ExtTerminal_ColorTable01.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", Color.FromArgb(0, ExtTerminal_ColorTable02.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", Color.FromArgb(0, ExtTerminal_ColorTable03.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", Color.FromArgb(0, ExtTerminal_ColorTable04.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", Color.FromArgb(0, ExtTerminal_ColorTable05.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", Color.FromArgb(0, ExtTerminal_ColorTable06.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", Color.FromArgb(0, ExtTerminal_ColorTable07.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", Color.FromArgb(0, ExtTerminal_ColorTable08.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", Color.FromArgb(0, ExtTerminal_ColorTable09.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", Color.FromArgb(0, ExtTerminal_ColorTable10.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", Color.FromArgb(0, ExtTerminal_ColorTable11.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", Color.FromArgb(0, ExtTerminal_ColorTable12.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", Color.FromArgb(0, ExtTerminal_ColorTable13.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", Color.FromArgb(0, ExtTerminal_ColorTable14.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", Color.FromArgb(0, ExtTerminal_ColorTable15.BackColor.Reverse).ToArgb)
 
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "PopupColors", Convert.ToInt32(ExtTerminal_PopupBackgroundBar.Value.ToString("X") & ExtTerminal_PopupForegroundBar.Value.ToString("X"), 16))
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", Convert.ToInt32(ExtTerminal_AccentBackgroundBar.Value.ToString("X") & ExtTerminal_AccentForegroundBar.Value.ToString("X"), 16))
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorSize", ExtTerminal_CursorSizeBar.Value)
 
             If My.W10_1909 Then
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, InvertColor(ExtTerminal_CursorColor.BackColor)).ToArgb)
+                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, ExtTerminal_CursorColor.BackColor.Reverse).ToArgb)
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", ExtTerminal_CursorStyle.SelectedIndex)
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "WindowAlpha", ExtTerminal_OpacityBar.Value)
                 CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", If(ExtTerminal_EnhancedTerminal.Checked, 1, 0))
@@ -614,9 +614,7 @@ Public Class ExternalTerminal
         If v > 48 Then v = 48
         Return v
     End Function
-    Function InvertColor([Color] As Color) As Color
-        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
-    End Function
+
 #End Region
 
     Private Sub ColorTable00_Click(sender As Object, e As EventArgs) Handles ExtTerminal_ColorTable15.Click, ExtTerminal_ColorTable14.Click, ExtTerminal_ColorTable13.Click, ExtTerminal_ColorTable12.Click, ExtTerminal_ColorTable11.Click, ExtTerminal_ColorTable10.Click, ExtTerminal_ColorTable09.Click, ExtTerminal_ColorTable08.Click, ExtTerminal_ColorTable07.Click, ExtTerminal_ColorTable06.Click, ExtTerminal_ColorTable05.Click, ExtTerminal_ColorTable04.Click, ExtTerminal_ColorTable03.Click, ExtTerminal_ColorTable02.Click, ExtTerminal_ColorTable01.Click, ExtTerminal_ColorTable00.Click

@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
-
 Public Class XeSettings
+
+
 
 #Region "Settings"
     Public Property LicenseAccepted As Boolean = False
@@ -11,8 +11,6 @@ Public Class XeSettings
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
-    Public Property LoadThemeFileAsLegacy As Boolean = False
-    Public Property SaveThemeFileAsLegacy As Boolean = False
     Public Property ComplexSaveResult As String = "2.1"
     Public Property ShowSaveConfirmation As Boolean = True
     Public Property Win7LivePreview As Boolean = True
@@ -36,8 +34,12 @@ Public Class XeSettings
     Public Property MainFormWidth As Integer = 1110
     Public Property MainFormHeight As Integer = 725
     Public Property MainFormStatus As FormWindowState = FormWindowState.Normal
-#End Region
 
+    Public Property Log_ShowApplying As Boolean = True
+    Public Property Log_Countdown_Enabled As Boolean = True
+    Public Property Log_Countdown As Integer = 15
+
+#End Region
 
     Public Enum Nerd_Stats_Type
         HEX
@@ -107,6 +109,10 @@ Public Class XeSettings
         If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
         If Key.GetValue("CMD_OverrideUserPreferences", Nothing) Is Nothing Then Key.SetValue("CMD_OverrideUserPreferences", True, RegistryValueKind.DWord)
 
+        If Key.GetValue("Log_ShowApplying", Nothing) Is Nothing Then Key.SetValue("Log_ShowApplying", True, RegistryValueKind.DWord)
+        If Key.GetValue("Log_Countdown_Enabled", Nothing) Is Nothing Then Key.SetValue("Log_Countdown_Enabled", True, RegistryValueKind.DWord)
+        If Key.GetValue("Log_Countdown", Nothing) Is Nothing Then Key.SetValue("Log_Countdown", 15, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -128,8 +134,6 @@ Public Class XeSettings
                 Win7LivePreview = Key.GetValue("Win7LivePreview", True)
                 AutoUpdatesChecking = Key.GetValue("AutoUpdatesChecking", True)
 
-                LoadThemeFileAsLegacy = Key.GetValue("LoadThemeFileAsLegacy", False)
-                SaveThemeFileAsLegacy = Key.GetValue("SaveThemeFileAsLegacy", False)
                 ComplexSaveResult = Key.GetValue("ComplexSaveResult", "2.1")
                 ShowSaveConfirmation = Key.GetValue("ShowSaveConfirmation", True)
 
@@ -166,6 +170,10 @@ Public Class XeSettings
                         Nerd_Stats_Kind = Nerd_Stats_Type.Dec
                 End Select
 
+                Log_ShowApplying = Key.GetValue("Log_ShowApplying", True)
+                Log_Countdown_Enabled = Key.GetValue("Log_Countdown_Enabled", True)
+                Log_Countdown = Key.GetValue("Log_Countdown", 15)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -194,6 +202,9 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("Terminal_Stable_Path= ".ToLower) Then Terminal_Stable_Path = x.Remove(0, "Terminal_Stable_Path= ".Count)
                     If x.ToLower.StartsWith("Terminal_Preview_Path= ".ToLower) Then Terminal_Preview_Path = x.Remove(0, "Terminal_Preview_Path= ".Count)
                     If x.ToLower.StartsWith("CMD_OverrideUserPreferences= ".ToLower) Then CMD_OverrideUserPreferences = x.Remove(0, "CMD_OverrideUserPreferences= ".Count)
+                    If x.ToLower.StartsWith("Log_ShowApplying= ".ToLower) Then Log_ShowApplying = x.Remove(0, "Log_ShowApplying= ".Count)
+                    If x.ToLower.StartsWith("Log_Countdown_Enabled= ".ToLower) Then Log_Countdown_Enabled = x.Remove(0, "Log_Countdown_Enabled= ".Count)
+                    If x.ToLower.StartsWith("Log_Countdown= ".ToLower) Then Log_Countdown = x.Remove(0, "Log_Countdown= ".Count)
 
                 Next
         End Select
@@ -214,8 +225,6 @@ Public Class XeSettings
                 Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 Key.SetValue("AutoUpdatesChecking", AutoUpdatesChecking, RegistryValueKind.DWord)
-                Key.SetValue("LoadThemeFileAsLegacy", LoadThemeFileAsLegacy, RegistryValueKind.DWord)
-                Key.SetValue("SaveThemeFileAsLegacy", SaveThemeFileAsLegacy, RegistryValueKind.DWord)
                 Key.SetValue("ComplexSaveResult", ComplexSaveResult, RegistryValueKind.String)
                 Key.SetValue("ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord)
                 Key.SetValue("Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord)
@@ -238,6 +247,10 @@ Public Class XeSettings
                 Key.SetValue("MainFormWidth", MainFormWidth, RegistryValueKind.DWord)
                 Key.SetValue("MainFormHeight", MainFormHeight, RegistryValueKind.DWord)
                 Key.SetValue("MainFormStatus", MainFormStatus, RegistryValueKind.DWord)
+
+                Key.SetValue("Log_ShowApplying", Log_ShowApplying, RegistryValueKind.DWord)
+                Key.SetValue("Log_Countdown_Enabled", Log_Countdown_Enabled, RegistryValueKind.DWord)
+                Key.SetValue("Log_Countdown", Log_Countdown, RegistryValueKind.DWord)
 
                 Select Case Nerd_Stats_Kind
                     Case Nerd_Stats_Type.HEX
@@ -262,8 +275,6 @@ Public Class XeSettings
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("AutoUpdatesChecking= {0}", AutoUpdatesChecking))
-                l.Add(String.Format("LoadThemeFileAsLegacy= {0}", LoadThemeFileAsLegacy))
-                l.Add(String.Format("SaveThemeFileAsLegacy= {0}", SaveThemeFileAsLegacy))
                 l.Add(String.Format("ComplexSaveResult= {0}", ComplexSaveResult))
                 l.Add(String.Format("ShowSaveConfirmation= {0}", ShowSaveConfirmation))
                 l.Add(String.Format("Win7LivePreview= {0}", Win7LivePreview))
@@ -281,6 +292,10 @@ Public Class XeSettings
                 l.Add(String.Format("Language_File= {0}", Language_File))
                 l.Add(String.Format("Nerd_Stats= {0}", Nerd_Stats))
                 l.Add(String.Format("Nerd_Stats_HexHash= {0}", Nerd_Stats_HexHash))
+
+                l.Add(String.Format("Log_ShowApplying= {0}", Log_ShowApplying))
+                l.Add(String.Format("Log_Countdown_Enabled= {0}", Log_Countdown_Enabled))
+                l.Add(String.Format("Log_Countdown= {0}", Log_Countdown))
 
 
                 Select Case Nerd_Stats_Kind

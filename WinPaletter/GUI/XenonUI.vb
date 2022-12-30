@@ -3,6 +3,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
+Imports AnimatorNS
 Imports WinPaletter.XenonCore
 
 #Region "Helpers"
@@ -409,7 +410,7 @@ Public Class TablessControl
         End If
     End Sub
 End Class
-Public Class XenonTabControl : Inherits Windows.Forms.TabControl
+Public Class XenonTabControl : Inherits TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
 
     Sub New()
@@ -1639,9 +1640,11 @@ Public Class XenonCP
     End Sub
 
 #Region "Properties"
-    Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
     Public Property DefaultColor As Color = Color.Black
     Public Property ForceNoNerd As Boolean = False
+
+    Private LineColor As Color
+
 #End Region
 
 #Region "Events"
@@ -1734,6 +1737,7 @@ Public Class XenonCP
         Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         G.Clear(GetParentColor(Me))
+
 
         Select Case State
             Case MouseState.None

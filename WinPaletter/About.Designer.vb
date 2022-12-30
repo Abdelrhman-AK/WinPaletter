@@ -203,9 +203,9 @@ Partial Class About
         Me.Label3.ForeColor = System.Drawing.Color.Gray
         Me.Label3.Location = New System.Drawing.Point(10, 462)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(229, 15)
+        Me.Label3.Size = New System.Drawing.Size(258, 15)
         Me.Label3.TabIndex = 15
-        Me.Label3.Text = "Abdelrhman-AK, 2022, All Rights Reserved"
+        Me.Label3.Text = "Abdelrhman-AK, 2022-2023, All Rights Reserved"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton1

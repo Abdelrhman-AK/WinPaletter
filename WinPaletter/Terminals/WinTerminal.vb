@@ -2,9 +2,9 @@
 Imports System.IO
 Imports System.Reflection
 Imports WinPaletter.ProfilesList
-Imports WinPaletter.XenonCore
 
-Public Class WinTerminal
+Public Class WinTerminal : Implements ICloneable
+
     Public Property Enabled As Boolean = False
     Public Property Colors As List(Of TColor)
     Public Property Profiles As List(Of ProfilesList)
@@ -916,9 +916,13 @@ Public Class WinTerminal
     Shared Operator <>(First As WinTerminal, Second As WinTerminal) As Boolean
         Return Not First = Second
     End Operator
+
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
 End Class
 
-Public Class TColor : Implements IComparable
+Public Class TColor : Implements IComparable : Implements ICloneable
 
     Public Property Name As String
     Public Property Background As Color = "FF0C0C0C".FromHEXToColor(True)
@@ -953,8 +957,12 @@ Public Class TColor : Implements IComparable
     Shared Operator <>(First As TColor, Second As TColor) As Boolean
         Return Not First.Equals(Second)
     End Operator
+
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
 End Class
-Public Class ThemesList : Implements IComparable
+Public Class ThemesList : Implements IComparable : Implements ICloneable
     Public Property Name As String
     Public Property Titlebar_Active As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Titlebar_Inactive As Color = Color.FromArgb(0, 0, 0, 0)
@@ -973,8 +981,12 @@ Public Class ThemesList : Implements IComparable
     Shared Operator <>(First As ThemesList, Second As ThemesList) As Boolean
         Return Not First.Equals(Second)
     End Operator
+
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
 End Class
-Public Class FontsBase
+Public Class FontsBase : Implements ICloneable
     Public Property Face As String = If(My.W11, "Cascadia Mono", "Consolas")
     Public Property Weight As FontWeight_Enum = FontWeight_Enum.normal
     Public Property Size As Integer = 12
@@ -986,8 +998,12 @@ Public Class FontsBase
     Shared Operator <>(First As FontsBase, Second As FontsBase) As Boolean
         Return Not First.Equals(Second)
     End Operator
+
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
 End Class
-Public Class ProfilesList : Implements IComparable
+Public Class ProfilesList : Implements IComparable : Implements ICloneable
     Public Property Name As String
     Public Property TabTitle As String = ""
     Public Property Icon As String = ""
@@ -1018,8 +1034,11 @@ Public Class ProfilesList : Implements IComparable
         Return Not First.Equals(Second)
     End Operator
 
-#Region "Helpers"
+    Public Function Clone() Implements ICloneable.Clone
+        Return MemberwiseClone()
+    End Function
 
+#Region "Helpers"
     Enum BackgroundImageAlignment_Enum
         bottom
         bottomLeft
@@ -1031,9 +1050,6 @@ Public Class ProfilesList : Implements IComparable
         topLeft
         topRight
     End Enum
-
-
-
     Enum CursorShape_Enum
         bar
         doubleUnderscore
@@ -1042,7 +1058,6 @@ Public Class ProfilesList : Implements IComparable
         underscore
         vintage
     End Enum
-
     Public Shared Function CursorShape_ReturnToString(int As CursorShape_Enum) As String
         Select Case int
             Case CursorShape_Enum.bar
@@ -1068,7 +1083,6 @@ Public Class ProfilesList : Implements IComparable
 
         End Select
     End Function
-
     Public Shared Function CursorShape_GetFromString(str As String) As CursorShape_Enum
         Select Case str.ToLower
             Case "bar".ToLower
@@ -1094,8 +1108,6 @@ Public Class ProfilesList : Implements IComparable
 
         End Select
     End Function
-
-
     Enum FontWeight_Enum   'replace _ by -
         thin
         extra_light
@@ -1149,7 +1161,6 @@ Public Class ProfilesList : Implements IComparable
 
         End Select
     End Function
-
     Public Shared Function FontWeight_GetFromString(str As String) As FontWeight_Enum
         Select Case str.ToLower
 

@@ -1,321 +1,4 @@
-﻿Public Class CP_Defaults
-
-    Public Default_Windows11 As New CP(CP.Mode.Empty) With {
-        .Info = New CP.Info_Structure With {.AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 11 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com"},
-        .Windows11 = New CP.Windows10x_Structure With {.WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .Color_Index0 = Color.FromArgb(153, 235, 255), .Color_Index1 = Color.FromArgb(76, 194, 255), .Color_Index2 = Color.FromArgb(0, 145, 248),
-        .Color_Index3 = Color.FromArgb(0, 120, 212), .Color_Index4 = Color.FromArgb(0, 103, 192), .Color_Index5 = Color.FromArgb(0, 62, 146),
-        .Color_Index6 = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192), .Color_Index7 = Color.FromArgb(247, 99, 12)},
-        .Windows10 = New CP.Windows10x_Structure With {.WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .Color_Index0 = Color.FromArgb(166, 216, 255), .Color_Index1 = Color.FromArgb(118, 185, 237), .Color_Index2 = Color.FromArgb(66, 156, 227),
-        .Color_Index3 = Color.FromArgb(0, 120, 215), .Color_Index4 = Color.FromArgb(0, 90, 158), .Color_Index5 = Color.FromArgb(0, 66, 117),
-        .Color_Index6 = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158), .Color_Index7 = Color.FromArgb(247, 99, 12)},
-        .LogonUI10x = New CP.LogonUI10x_Structure With {.DisableAcrylicBackgroundOnLogon = False, .DisableLogonBackgroundImage = False, .NoLockScreen = False},
-        .CommandPrompt = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(136, 23, 152),
-        .ColorTable06 = Color.FromArgb(193, 156, 0),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0, .FaceName = "Consolas", .FontSize = 18 * 65536,
-        .W10_1909_WindowAlpha = 255, .FontRaster = False, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .PowerShellx86 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .PowerShellx64 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
-
-    Public Default_Windows10 As New CP(CP.Mode.Empty) With {
-        .Info = New CP.Info_Structure With {.AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 10 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com"},
-        .Windows11 = New CP.Windows10x_Structure With {.WinMode_Light = True, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 212), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .Color_Index0 = Color.FromArgb(153, 235, 255), .Color_Index1 = Color.FromArgb(76, 194, 255), .Color_Index2 = Color.FromArgb(0, 145, 248),
-        .Color_Index3 = Color.FromArgb(0, 120, 212), .Color_Index4 = Color.FromArgb(0, 103, 192), .Color_Index5 = Color.FromArgb(0, 62, 146),
-        .Color_Index6 = Color.FromArgb(0, 26, 104), .StartMenu_Accent = Color.FromArgb(0, 103, 192), .Color_Index7 = Color.FromArgb(247, 99, 12)},
-        .Windows10 = New CP.Windows10x_Structure With {.WinMode_Light = False, .AppMode_Light = True, .Transparency = True, .ApplyAccentonTitlebars = False, .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-        .Titlebar_Active = Color.FromArgb(0, 120, 215), .Titlebar_Inactive = Color.FromArgb(35, 35, 35),
-        .Color_Index0 = Color.FromArgb(166, 216, 255), .Color_Index1 = Color.FromArgb(118, 185, 237), .Color_Index2 = Color.FromArgb(66, 156, 227),
-        .Color_Index3 = Color.FromArgb(0, 120, 215), .Color_Index4 = Color.FromArgb(0, 90, 158), .Color_Index5 = Color.FromArgb(0, 66, 117),
-        .Color_Index6 = Color.FromArgb(0, 38, 66), .StartMenu_Accent = Color.FromArgb(0, 90, 158), .Color_Index7 = Color.FromArgb(247, 99, 12)},
-        .LogonUI10x = New CP.LogonUI10x_Structure With {.DisableAcrylicBackgroundOnLogon = False, .DisableLogonBackgroundImage = False, .NoLockScreen = False},
-        .CommandPrompt = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(136, 23, 152),
-        .ColorTable06 = Color.FromArgb(193, 156, 0),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = False, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .PowerShellx86 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .PowerShellx64 = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242),
-        .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 17 * 65536, .FontRaster = False, .W10_1909_WindowAlpha = 255, .W10_1909_ForceV2 = True, .W10_1909_CursorColor = Color.White},
-        .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
-
-    Public Default_Windows8 As New CP(CP.Mode.Empty) With {
-        .Info = New CP.Info_Structure With {.AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 8.1 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com"},
-        .Windows7 = New CP.Windows7_DWM_Structure With {.ColorizationColor = Color.FromArgb(246, 195, 74),
-        .ColorizationAfterglow = Color.FromArgb(0, 0, 0),
-        .ColorizationColorBalance = 78,
-        .ColorizationAfterglowBalance = 31,
-        .ColorizationBlurBalance = 31,
-        .ColorizationGlassReflectionIntensity = 0,
-        .EnableAeroPeek = True,
-        .AlwaysHibernateThumbnails = False},
-        .Windows8 = New CP.Windows8_Metro_Structure With {.ColorizationColor = Color.FromArgb(246, 195, 74), .ColorizationColorBalance = 78, .PersonalColors_Background = Color.FromArgb(30, 0, 84),
-        .PersonalColors_Accent = Color.FromArgb(72, 29, 178),
-        .StartColor = Color.FromArgb(30, 0, 84),
-        .AccentColor = Color.FromArgb(72, 29, 178),
-        .Start = 0,
-        .Theme = CP.AeroTheme.Aero,
-        .LogonUI = 0,
-        .NoLockScreen = False,
-        .LockScreenType = CP.LogonUI_Modes.Default_,
-        .LockScreenSystemID = 0},
-        .LogonUI7 = New CP.LogonUI7_Structure With {.Enabled = False,
-        .ImagePath = "",
-        .Color = Color.FromArgb(0, 0, 0),
-        .Blur = False,
-        .Blur_Intensity = 0,
-        .Grayscale = False,
-        .Noise = False,
-        .Noise_Mode = BitmapExtensions.NoiseMode.Acrylic,
-        .Noise_Intensity = 0},
-        .CommandPrompt = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(136, 23, 152),
-        .ColorTable06 = Color.FromArgb(193, 156, 0),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .PowerShellx86 = New CP.Console_Structure With {
-        .ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .PowerShellx64 = New CP.Console_Structure With {
-        .ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
-
-    Public Default_Windows7 As New CP(CP.Mode.Empty) With {
-        .Info = New CP.Info_Structure With {.AppVersion = My.Application.Info.Version.ToString,
-        .PaletteName = "Windows 7 (Initial)",
-        .PaletteDescription = "Initial; Like first time after Windows Setup",
-        .PaletteVersion = "1.0.0.0",
-        .Author = "Microsoft",
-        .AuthorSocialMediaLink = "www.microsoft.com"},
-        .Windows7 = New CP.Windows7_DWM_Structure With {.ColorizationColor = Color.FromArgb(116, 184, 252),
-        .ColorizationAfterglow = Color.FromArgb(116, 184, 252),
-        .ColorizationColorBalance = 8,
-        .ColorizationAfterglowBalance = 43,
-        .ColorizationBlurBalance = 49,
-        .ColorizationGlassReflectionIntensity = 0,
-        .EnableAeroPeek = True,
-        .AlwaysHibernateThumbnails = False,
-        .Theme = CP.AeroTheme.Aero},
-        .LogonUI7 = New CP.LogonUI7_Structure With {.Enabled = False,
-        .Mode = CP.LogonUI_Modes.Default_,
-        .ImagePath = "",
-        .Color = Color.FromArgb(0, 0, 0),
-        .Blur = False,
-        .Blur_Intensity = 0,
-        .Grayscale = False,
-        .Noise = False,
-        .Noise_Mode = BitmapExtensions.NoiseMode.Acrylic,
-        .Noise_Intensity = 0},
-        .CommandPrompt = New CP.Console_Structure With {.ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(136, 23, 152),
-        .ColorTable06 = Color.FromArgb(193, 156, 0),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 5, .ScreenColorsForeground = 7, .ScreenColorsBackground = 0,
-        .FaceName = "Consolas", .FontSize = 18 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .PowerShellx86 = New CP.Console_Structure With {
-        .ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .PowerShellx64 = New CP.Console_Structure With {
-        .ColorTable00 = Color.FromArgb(12, 12, 12),
-        .ColorTable01 = Color.FromArgb(0, 55, 218),
-        .ColorTable02 = Color.FromArgb(19, 161, 14),
-        .ColorTable03 = Color.FromArgb(58, 150, 221),
-        .ColorTable04 = Color.FromArgb(197, 15, 31),
-        .ColorTable05 = Color.FromArgb(1, 36, 86),
-        .ColorTable06 = Color.FromArgb(238, 237, 240),
-        .ColorTable07 = Color.FromArgb(204, 204, 204),
-        .ColorTable08 = Color.FromArgb(118, 118, 118),
-        .ColorTable09 = Color.FromArgb(59, 120, 255),
-        .ColorTable10 = Color.FromArgb(22, 198, 12),
-        .ColorTable11 = Color.FromArgb(97, 214, 214),
-        .ColorTable12 = Color.FromArgb(231, 72, 86),
-        .ColorTable13 = Color.FromArgb(180, 0, 158),
-        .ColorTable14 = Color.FromArgb(249, 241, 165),
-        .ColorTable15 = Color.FromArgb(242, 242, 242), .PopupBackground = 15, .PopupForeground = 3, .ScreenColorsForeground = 6, .ScreenColorsBackground = 5,
-        .FaceName = "Consolas", .FontSize = 14 * 65536, .W10_1909_WindowAlpha = 255, .FontRaster = True, .W10_1909_ForceV2 = False, .W10_1909_CursorColor = Color.White},
-        .Terminal = New WinTerminal("", WinTerminal.Mode.Empty), .TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)}
+﻿Public Class CP_Defaults : Implements IDisposable
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.Windows11.Color_Index0.R, Default_Windows11.Windows11.Color_Index0.G, Default_Windows11.Windows11.Color_Index0.B, 255,
                                                     Default_Windows11.Windows11.Color_Index1.R, Default_Windows11.Windows11.Color_Index1.G, Default_Windows11.Windows11.Color_Index1.B, 255,
@@ -334,5 +17,317 @@
                                                     Default_Windows10.Windows11.Color_Index5.R, Default_Windows10.Windows11.Color_Index5.G, Default_Windows10.Windows11.Color_Index5.B, 255,
                                                     Default_Windows10.Windows11.Color_Index6.R, Default_Windows10.Windows11.Color_Index6.G, Default_Windows10.Windows11.Color_Index6.B, 255,
                                                     Default_Windows10.Windows11.Color_Index7.R, Default_Windows10.Windows11.Color_Index7.G, Default_Windows10.Windows11.Color_Index7.B, 255}
+
+    Public Function Default_Windows11() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows 11 (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = True
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 17 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = True
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 17 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = True
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
+    Public Function Default_Windows10() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows 10 (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = My.W10_1909
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 17 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = My.W10_1909
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 17 * 65536
+            .FontRaster = False
+            .W10_1909_ForceV2 = My.W10_1909
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
+    Public Function Default_Windows8() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows 8.1 (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].Windows8
+            .ColorizationColor = Color.FromArgb(246, 195, 74)
+            .ColorizationColorBalance = 78
+            .PersonalColors_Background = Color.FromArgb(30, 0, 84)
+            .PersonalColors_Accent = Color.FromArgb(72, 29, 178)
+            .StartColor = Color.FromArgb(30, 0, 84)
+            .AccentColor = Color.FromArgb(72, 29, 178)
+            .Start = 0
+            .Theme = CP.AeroTheme.Aero
+            .LogonUI = 0
+            .NoLockScreen = False
+            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenSystemID = 0
+        End With
+
+        With [CP].Windows7
+            .ColorizationColor = Color.FromArgb(246, 195, 74)
+            .ColorizationAfterglow = Color.FromArgb(0, 0, 0)
+            .ColorizationColorBalance = 78
+            .ColorizationAfterglowBalance = 31
+            .ColorizationBlurBalance = 31
+            .ColorizationGlassReflectionIntensity = 0
+            .EnableAeroPeek = True
+            .AlwaysHibernateThumbnails = False
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
+    Public Function Default_Windows7() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows 7 (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].Windows8
+            .ColorizationColor = Color.FromArgb(246, 195, 74)
+            .ColorizationColorBalance = 78
+            .PersonalColors_Background = Color.FromArgb(30, 0, 84)
+            .PersonalColors_Accent = Color.FromArgb(72, 29, 178)
+            .StartColor = Color.FromArgb(30, 0, 84)
+            .AccentColor = Color.FromArgb(72, 29, 178)
+            .Start = 0
+            .Theme = CP.AeroTheme.Aero
+            .LogonUI = 0
+            .NoLockScreen = False
+            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenSystemID = 0
+        End With
+
+        With [CP].Windows7
+            .ColorizationColor = Color.FromArgb(116, 184, 252)
+            .ColorizationAfterglow = Color.FromArgb(116, 184, 252)
+            .ColorizationColorBalance = 8
+            .ColorizationAfterglowBalance = 43
+            .ColorizationBlurBalance = 49
+            .ColorizationGlassReflectionIntensity = 0
+            .EnableAeroPeek = True
+            .AlwaysHibernateThumbnails = False
+            .Theme = CP.AeroTheme.Aero
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean ' To detect redundant calls
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not Me.disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects).
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+            ' TODO: set large fields to null.
+        End If
+        Me.disposedValue = True
+    End Sub
+
+    ' TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
+    'Protected Overrides Sub Finalize()
+    '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+#End Region
 
 End Class

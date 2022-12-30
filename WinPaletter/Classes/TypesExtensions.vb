@@ -3,6 +3,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Xml
 
 Public Module ColorsExtensions
 
@@ -34,7 +35,7 @@ Public Module ColorsExtensions
     '''Return HSL_Structure From RGB Color
     '''</summary>
     <Extension()>
-    Public Function HSL([Color] As Color) As HSL_Structure
+    Public Function ToHSL([Color] As Color) As HSL_Structure
         Dim _hsl As New HSL_Structure()
 
         Dim r As Single = ([Color].R / 255.0F)
@@ -77,11 +78,63 @@ Public Module ColorsExtensions
     End Function
 
     '''<summary>
+    '''Return RGB Color From HSL_Structure
+    '''</summary>
+    <Extension()>
+    Public Function ToRGB(hsl As HSL_Structure) As Color
+        Dim r As Byte = 0
+        Dim g As Byte = 0
+        Dim b As Byte = 0
+
+        If hsl.S = 0 Then
+            r = CByte(Math.Truncate(hsl.L * 255))
+            g = CByte(Math.Truncate(hsl.L * 255))
+            b = CByte(Math.Truncate(hsl.L * 255))
+        Else
+            Dim v1 As Single, v2 As Single
+            Dim hue As Single = CSng(hsl.H) / 360
+
+            v2 = If((hsl.L < 0.5), (hsl.L * (1 + hsl.S)), ((hsl.L + hsl.S) - (hsl.L * hsl.S)))
+            v1 = 2 * hsl.L - v2
+
+            r = CByte(Math.Truncate(255 * HueToRGB(v1, v2, hue + (1.0F / 3))))
+            g = CByte(Math.Truncate(255 * HueToRGB(v1, v2, hue)))
+            b = CByte(Math.Truncate(255 * HueToRGB(v1, v2, hue - (1.0F / 3))))
+        End If
+
+        Return Color.FromArgb(r, g, b)
+    End Function
+
+    Private Function HueToRGB(v1 As Single, v2 As Single, vH As Single) As Single
+        If vH < 0 Then
+            vH += 1
+        End If
+
+        If vH > 1 Then
+            vH -= 1
+        End If
+
+        If (6 * vH) < 1 Then
+            Return (v1 + (v2 - v1) * 6 * vH)
+        End If
+
+        If (2 * vH) < 1 Then
+            Return v2
+        End If
+
+        If (3 * vH) < 2 Then
+            Return (v1 + (v2 - v1) * ((2.0F / 3) - vH) * 6)
+        End If
+
+        Return v1
+    End Function
+
+    '''<summary>
     '''Return HSL String in the format of H S% L% From RGB Color
     '''</summary>
     <Extension()>
     Public Function HSL_Text([Color] As Color) As String
-        Return String.Format("{0} {1}% {2}%", [Color].HSL.H, Math.Round([Color].HSL.S * 100), Math.Round([Color].HSL.L * 100))
+        Return String.Format("{0} {1}% {2}%", [Color].ToHSL.H, Math.Round([Color].ToHSL.S * 100), Math.Round([Color].ToHSL.L * 100))
     End Function
 
     '''<summary>
@@ -316,6 +369,24 @@ Public Module IntegerExtensions
         Return [Integer] = CompareBy
     End Function
 
+    '''<summary>
+    '''Return String in the format of xxxxxxxx, useful for registry handling
+    '''</summary>
+    <Extension()>
+    Public Function To8Digits(int As Integer) As String
+        If int.ToString.Count <= 8 Then
+            Dim i As Integer = 8 - int.ToString.Count
+            Dim s As String = ""
+            For i = 1 To i
+                s &= "0"
+            Next
+            s &= int
+            Return s
+        Else
+            Return int.ToString
+        End If
+
+    End Function
 End Module
 
 Public Module StringExtensions
@@ -785,4 +856,16 @@ Public Module BitmapExtensions
         Return newBitmap
     End Function
 
+End Module
+
+Public Module ControlExtentions
+    '''<summary>
+    '''Return graphical state of a control to a bitmap
+    '''</summary>
+    <Extension()>
+    Public Function ToBitmap([Control] As Control) As Bitmap
+        Dim bm As New Bitmap([Control].Width, [Control].Height)
+        [Control].DrawToBitmap(bm, New Rectangle(0, 0, [Control].Width, [Control].Height))
+        Return bm
+    End Function
 End Module
