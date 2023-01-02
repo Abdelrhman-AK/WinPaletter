@@ -869,3 +869,20 @@ Public Module ControlExtentions
         Return bm
     End Function
 End Module
+
+Public Module ComboBoxExtenstions
+
+    '''<summary>
+    '''Add classic themes names to a Combobox
+    '''</summary>
+    <Extension()>
+    Public Sub PopulateThemes([ComboBox] As ComboBox)
+        [ComboBox].Items.Clear()
+        Dim ls As New List(Of String)
+        ls = My.Resources.RetroThemesDB.CList
+
+        For Each x As String In ls
+            [ComboBox].Items.Add(x.Split("|")(0))
+        Next
+    End Sub
+End Module

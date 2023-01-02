@@ -188,18 +188,12 @@ Public Class XenonCore
         Dim DarkMode As Boolean = GetDarkMode()
 
         If Form Is Nothing Then
-            '####################### For Form1
-            Try
-                EnumControls(MainFrm, DarkMode)
-                MainFrm.Invalidate()
-                MainFrm.Refresh()
-            Catch
-
-            End Try
 
             '####################### For all open forms
             Try
-                For Each OFORM In Application.OpenForms
+                For Each OFORM As Form In Application.OpenForms
+                    OFORM.Visible = False
+
                     Select Case DarkMode
                         Case True
                             If TryCast(OFORM, Form).BackColor <> My.Application.BackColor_Dark Then
@@ -219,10 +213,14 @@ Public Class XenonCore
 
                     EnumControls(TryCast(OFORM, Form), DarkMode)
                     'Adjust_Form(DarkMode, TryCast(OFORM, Form))
-                Next OFORM
+
+                    OFORM.Visible = True
+
+                Next
             Catch
 
             End Try
+
         Else
             '####################### For Selected [Form]
 

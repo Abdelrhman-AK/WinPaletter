@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.NativeMethods
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -252,7 +253,8 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
-        ttl_h.Text = sender.Value
+        ttl_h.Text = sender.Value.ToString
+
         XenonWindow1.Metrics_CaptionHeight = sender.Value
         RetroWindow1.Metrics_CaptionHeight = sender.Value
 
@@ -294,7 +296,7 @@ Public Class Metrics_Fonts
 
 
     Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
-        Label33.Text = sender.Value
+        i_s_h.Text = sender.Value
 
         XenonFakeIcon1.Width = sender.Value + 18
         XenonFakeIcon2.Width = sender.Value + 18
@@ -308,19 +310,19 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
-        Label31.Text = sender.Value
+        i_s_v.Text = sender.Value
         XenonFakeIcon2.Top = XenonFakeIcon1.Bottom + sender.Value - 45
         XenonFakeIcon2.SendToBack()
         XenonFakeIcon1.BringToFront()
     End Sub
 
     Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
-        Label30.Text = sender.Value
+        m_h.Text = sender.Value
         MenuStrip1.Height = Math.Max(sender.Value, GetTitleTextHeight(MenuStrip1.Font))
     End Sub
 
     Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
-        Label29.Text = sender.Value
+        m_w.Text = sender.Value
     End Sub
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
@@ -353,28 +355,28 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar11_Scroll(sender As Object) Handles XenonTrackbar11.Scroll
-        Label26.Text = sender.Value
+        s_h.Text = sender.Value
         HScrollBar1.Height = sender.Value
     End Sub
 
     Private Sub XenonTrackbar10_Scroll(sender As Object) Handles XenonTrackbar10.Scroll
-        Label25.Text = sender.Value
+        s_w.Text = sender.Value
         VScrollBar1.Width = sender.Value
     End Sub
 
     Private Sub XenonTrackbar14_Scroll(sender As Object) Handles XenonTrackbar14.Scroll
-        Label23.Text = sender.Value
+        tw_h.Text = sender.Value
         XenonWindow2.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub XenonTrackbar13_Scroll(sender As Object) Handles XenonTrackbar13.Scroll
-        Label15.Text = sender.Value
+        tw_w.Text = sender.Value
     End Sub
 
     Private Sub XenonTrackbar7_Scroll(sender As Object) Handles XenonTrackbar7.Scroll
         If XenonTrackbar7.Value < XenonTrackbar7.Minimum Or XenonTrackbar7.Value > XenonTrackbar7.Maximum Then Exit Sub
 
-        Label28.Text = sender.Value
+        i_d_s.Text = sender.Value
         XenonFakeIcon1.IconSize = sender.Value
         XenonFakeIcon2.IconSize = sender.Value
         XenonFakeIcon3.IconSize = sender.Value
@@ -404,27 +406,8 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
-        Label13.Text = sender.Value
+        i_s_s.Text = sender.Value
     End Sub
-
-    Private Sub ttl_h_TextChanged(sender As Object, e As EventArgs) Handles ttl_h.TextChanged
-        XenonTrackbar2.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum)
-    End Sub
-
-    Private Sub ttl_w_TextChanged(sender As Object, e As EventArgs) Handles ttl_w.TextChanged
-        XenonTrackbar3.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum)
-
-    End Sub
-
-    Private Sub ttl_b_TextChanged(sender As Object, e As EventArgs) Handles ttl_b.TextChanged
-        XenonTrackbar1.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum)
-
-    End Sub
-
-    Private Sub ttl_p_TextChanged(sender As Object, e As EventArgs) Handles ttl_p.TextChanged
-        XenonTrackbar12.Value = Math.Max(Math.Min(Val(sender.Text), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum)
-    End Sub
-
 
     Private Sub XenonWindow1_MetricsChanged() Handles XenonWindow1.MetricsChanged
         XenonWindow1.SetMetrics(XenonWindow4)
@@ -488,5 +471,75 @@ Public Class Metrics_Fonts
 
         ApplyFromCP(_Def)
         _Def.Dispose()
+    End Sub
+
+    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles ttl_h.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton13_Click_1(sender As Object, e As EventArgs) Handles ttl_w.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles ttl_b.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles ttl_p.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum) : XenonTrackbar12.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub tw_h_Click(sender As Object, e As EventArgs) Handles tw_h.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar14.Maximum), XenonTrackbar14.Minimum) : XenonTrackbar14.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub tw_w_Click(sender As Object, e As EventArgs) Handles tw_w.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar13.Maximum), XenonTrackbar13.Minimum) : XenonTrackbar13.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub i_s_v_Click(sender As Object, e As EventArgs) Handles i_s_v.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub i_s_h_Click(sender As Object, e As EventArgs) Handles i_s_h.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub i_d_s_Click(sender As Object, e As EventArgs) Handles i_d_s.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar7.Maximum), XenonTrackbar7.Minimum) : XenonTrackbar7.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub i_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub m_h_Click(sender As Object, e As EventArgs) Handles m_h.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar9.Maximum), XenonTrackbar9.Minimum) : XenonTrackbar9.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub m_w_Click(sender As Object, e As EventArgs) Handles m_w.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar8.Maximum), XenonTrackbar8.Minimum) : XenonTrackbar8.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub s_h_Click(sender As Object, e As EventArgs) Handles s_h.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar11.Maximum), XenonTrackbar11.Minimum) : XenonTrackbar11.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub s_w_Click(sender As Object, e As EventArgs) Handles s_w.Click
+        Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
     End Sub
 End Class

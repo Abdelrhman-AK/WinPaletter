@@ -30,8 +30,10 @@ Public Class SettingsX
             If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
             If .AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
             If .AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
+            If .ResetCursorsToAero <> XenonCheckBox16.Checked Then Changed = True
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
+            If .SaveForLegacyWP <> XenonCheckBox4.Checked Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
@@ -90,11 +92,14 @@ Public Class SettingsX
 
             XenonCheckBox2.Checked = .AutoRestartExplorer
             XenonCheckBox7.Checked = .AutoApplyCursors
+            XenonCheckBox16.Checked = .ResetCursorsToAero
+
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox9.Checked = .Win7LivePreview
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
             XenonCheckBox17.Checked = .ShowSaveConfirmation
+            XenonCheckBox4.Checked = .SaveForLegacyWP
 
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -166,12 +171,15 @@ Public Class SettingsX
             .OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
             .AutoRestartExplorer = XenonCheckBox2.Checked
             .AutoApplyCursors = XenonCheckBox7.Checked
+            .ResetCursorsToAero = XenonCheckBox16.Checked
+
             .AutoUpdatesChecking = XenonCheckBox5.Checked
             .Win7LivePreview = XenonCheckBox9.Checked
             .UpdateChannel = XenonComboBox2.SelectedIndex
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
             .ShowSaveConfirmation = XenonCheckBox17.Checked
+            .SaveForLegacyWP = XenonCheckBox4.Checked
 
             .Language = XenonCheckBox8.Checked
             .Language_File = XenonTextBox3.Text
@@ -263,12 +271,15 @@ Public Class SettingsX
                 .OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
                 .AutoRestartExplorer = XenonCheckBox2.Checked
                 .AutoApplyCursors = XenonCheckBox7.Checked
+                .ResetCursorsToAero = XenonCheckBox16.Checked
+
                 .AutoUpdatesChecking = XenonCheckBox5.Checked
                 .Win7LivePreview = XenonCheckBox9.Checked
                 .UpdateChannel = XenonComboBox2.SelectedIndex
                 .Appearance_Dark = XenonRadioButton3.Checked
                 .Appearance_Auto = XenonCheckBox6.Checked
                 .ShowSaveConfirmation = XenonCheckBox17.Checked
+                .SaveForLegacyWP = XenonCheckBox4.Checked
 
                 .Language = XenonCheckBox8.Checked
                 .Language_File = XenonTextBox3.Text
@@ -305,9 +316,12 @@ Public Class SettingsX
 
                 XenonCheckBox2.Checked = .AutoRestartExplorer
                 XenonCheckBox7.Checked = .AutoApplyCursors
+                XenonCheckBox16.Checked = .ResetCursorsToAero
+
                 XenonCheckBox5.Checked = .AutoUpdatesChecking
                 XenonCheckBox9.Checked = .Win7LivePreview
                 XenonCheckBox17.Checked = .ShowSaveConfirmation
+                XenonCheckBox4.Checked = .SaveForLegacyWP
 
                 XenonCheckBox12.Checked = .Terminal_Bypass
                 XenonCheckBox13.Checked = .Terminal_OtherFonts
@@ -367,9 +381,12 @@ Public Class SettingsX
 
             XenonCheckBox2.Checked = .AutoRestartExplorer
             XenonCheckBox7.Checked = .AutoApplyCursors
+            XenonCheckBox16.Checked = .ResetCursorsToAero
+
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox9.Checked = .Win7LivePreview
             XenonCheckBox17.Checked = .ShowSaveConfirmation
+            XenonCheckBox4.Checked = .SaveForLegacyWP
 
             XenonCheckBox12.Checked = .Terminal_Bypass
             XenonCheckBox13.Checked = .Terminal_OtherFonts
@@ -418,18 +435,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        If MsgBox(My.Application.LanguageHelper.UninstallMsgLine1 & vbCrLf & vbCrLf & My.Application.LanguageHelper.UninstallMsgLine2, MsgBoxStyle.Question + MsgBoxStyle.YesNo _
-                  + My.Application.MsgboxRt) = MsgBoxResult.Yes Then
-
-            My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
-            My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
-
-            Try : Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", True) : Catch : End Try
-
-            IO.Directory.Delete(My.Application.appData, True)
-
-            Application.[Exit]()
-        End If
+        Uninstall.ShowDialog()
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click

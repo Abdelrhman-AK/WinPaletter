@@ -583,6 +583,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
+        Public ReadOnly Property Icon_Uninstall() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_Uninstall", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
         Public ReadOnly Property icons8_command_line() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("icons8_command_line", resourceCulture)
@@ -623,7 +633,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to MIT License
         '''
-        '''Copyright (c) 2022 Abdelrhman-AK
+        '''Copyright (c) 2022-2023 Abdelrhman-AK
         '''
         '''Permission is hereby granted, free of charge, to any person obtaining a copy
         '''of this software and associated documentation files (the &quot;Software&quot;), to deal
@@ -632,7 +642,7 @@ Namespace My.Resources
         '''copies of the Software, and to permit persons to whom the Software is
         '''furnished to do so, subject to the following conditions:
         '''
-        '''The above copyright  [rest of string was truncated]&quot;;.
+        '''The above copyr [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property LICENSE() As String
             Get

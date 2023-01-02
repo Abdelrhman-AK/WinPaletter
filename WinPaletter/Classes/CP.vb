@@ -2205,16 +2205,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return ls.Distinct.ToList
     End Function
-    Public Shared Sub PopulateThemeToListbox([ComboBox] As ComboBox)
-        [ComboBox].Items.Clear()
-        Dim ls As New List(Of String)
-        ls = My.Resources.RetroThemesDB.CList
-
-        For Each x As String In ls
-            [ComboBox].Items.Add(x.Split("|")(0))
-        Next
-
-    End Sub
     Public Function ListColors() As List(Of Color)
 
         Dim CL As New List(Of Color)
@@ -4312,10 +4302,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
                 sw.Reset() : sw.Start()
                 Try
-                    If Cursors_Enabled Then
-                        Apply_Cursors([TreeView])
-                        If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Total Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
-                    End If
+                    Apply_Cursors([TreeView])
+                    If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Total Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -4371,7 +4359,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
 
-                If Info.AppVersion < "1.0.6.9" Then
+                If Info.AppVersion < "1.0.6.9" Or My.Application._Settings.SaveForLegacyWP Then
 
                     Try
                         With If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, Windows11, Windows10)
@@ -4806,34 +4794,34 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         rMain.SetValue("", Cursors_Enabled, RegistryValueKind.DWord)
         rMain.Close()
 
-        Dim sw As New Stopwatch
-        If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
-
-        sw.Reset()
-        sw.Start()
-
-        Cursor_Structure.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
-        Cursor_Structure.Save_Cursors_To_Registry("Help", Cursor_Help)
-        Cursor_Structure.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading)
-        Cursor_Structure.Save_Cursors_To_Registry("Busy", Cursor_Busy)
-        Cursor_Structure.Save_Cursors_To_Registry("Move", Cursor_Move)
-        Cursor_Structure.Save_Cursors_To_Registry("NS", Cursor_NS)
-        Cursor_Structure.Save_Cursors_To_Registry("EW", Cursor_EW)
-        Cursor_Structure.Save_Cursors_To_Registry("NESW", Cursor_NESW)
-        Cursor_Structure.Save_Cursors_To_Registry("NWSE", Cursor_NWSE)
-        Cursor_Structure.Save_Cursors_To_Registry("Up", Cursor_Up)
-        Cursor_Structure.Save_Cursors_To_Registry("Pen", Cursor_Pen)
-        Cursor_Structure.Save_Cursors_To_Registry("None", Cursor_None)
-        Cursor_Structure.Save_Cursors_To_Registry("Link", Cursor_Link)
-        Cursor_Structure.Save_Cursors_To_Registry("Pin", Cursor_Pin)
-        Cursor_Structure.Save_Cursors_To_Registry("Person", Cursor_Person)
-        Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
-        Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
-
-        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
-        sw.Stop()
-
         If Cursors_Enabled Then
+            Dim sw As New Stopwatch
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
+
+            sw.Reset()
+            sw.Start()
+
+            Cursor_Structure.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
+            Cursor_Structure.Save_Cursors_To_Registry("Help", Cursor_Help)
+            Cursor_Structure.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading)
+            Cursor_Structure.Save_Cursors_To_Registry("Busy", Cursor_Busy)
+            Cursor_Structure.Save_Cursors_To_Registry("Move", Cursor_Move)
+            Cursor_Structure.Save_Cursors_To_Registry("NS", Cursor_NS)
+            Cursor_Structure.Save_Cursors_To_Registry("EW", Cursor_EW)
+            Cursor_Structure.Save_Cursors_To_Registry("NESW", Cursor_NESW)
+            Cursor_Structure.Save_Cursors_To_Registry("NWSE", Cursor_NWSE)
+            Cursor_Structure.Save_Cursors_To_Registry("Up", Cursor_Up)
+            Cursor_Structure.Save_Cursors_To_Registry("Pen", Cursor_Pen)
+            Cursor_Structure.Save_Cursors_To_Registry("None", Cursor_None)
+            Cursor_Structure.Save_Cursors_To_Registry("Link", Cursor_Link)
+            Cursor_Structure.Save_Cursors_To_Registry("Pin", Cursor_Pin)
+            Cursor_Structure.Save_Cursors_To_Registry("Person", Cursor_Person)
+            Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
+            Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
+
+            If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+            sw.Stop()
+
             Try
                 sw.Reset()
                 sw.Start()
@@ -4860,7 +4848,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
             End Try
+        Else
 
+            If My.Application._Settings.ResetCursorsToAero Then
+                ResetCursorsToAero()
+            End If
 
         End If
 
@@ -5258,7 +5250,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     End Sub
 
     Sub ApplyCursorsToReg()
-        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors\Schemes")
+        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors\Schemes", True)
         Dim RegValue As String
         Dim Path As String = My.Application.curPath
 
@@ -5282,7 +5274,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         rMain.SetValue("WinPaletter", RegValue, RegistryValueKind.String)
 
-        rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors")
+        rMain = Registry.CurrentUser.CreateSubKey("Control Panel\Cursors", True)
         rMain.SetValue("", "WinPaletter")
         rMain.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
 
@@ -5356,6 +5348,97 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
         rMain.Close()
+
+        SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
+    End Sub
+
+    Shared Sub ResetCursorsToAero()
+        Dim R As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors", True)
+        Dim path As String = "%SystemRoot%\cursors"
+
+        R.SetValue("", "Windows Default", RegistryValueKind.String)
+
+        R.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
+
+        Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
+        R.SetValue("AppStarting", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", path, "aero_arrow.cur")
+        R.SetValue("Arrow", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
+
+        x = String.Format("")
+        R.SetValue("Crosshair", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
+
+        x = String.Format("{0}\{1}", path, "aero_link.cur")
+        R.SetValue("Hand", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HAND)
+
+        x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
+        R.SetValue("Help", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HELP)
+
+        x = String.Format("")
+        R.SetValue("IBeam", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
+
+        x = String.Format("{0}\{1}", path, "aero_unavail.cur")
+        R.SetValue("No", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NO)
+
+        x = String.Format("{0}\{1}", path, "aero_pen.cur")
+        R.SetValue("NWPen", x)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_)
+
+        x = String.Format("{0}\{1}", path, "aero_person.cur")
+        R.SetValue("Person", x)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", path, "aero_pin.cur")
+        R.SetValue("Pin", x)
+        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+
+        x = String.Format("{0}\{1}", path, "aero_move.cur")
+        R.SetValue("SizeAll", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+
+        x = String.Format("{0}\{1}", path, "aero_nesw.cur")
+        R.SetValue("SizeNESW", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+
+        x = String.Format("{0}\{1}", path, "aero_ns.cur")
+        R.SetValue("SizeNS", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
+
+        x = String.Format("{0}\{1}", path, "aero_nwse.cur")
+        R.SetValue("SizeNWSE", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+
+        x = String.Format("{0}\{1}", path, "aero_ew.cur")
+        R.SetValue("SizeWE", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+
+        x = String.Format("{0}\{1}", path, "aero_up.cur")
+        R.SetValue("UpArrow", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_UP)
+
+        x = String.Format("{0}\{1}", path, "aero_busy.ani")
+        R.SetValue("Wait", x)
+        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
+
+        R.SetValue("Scheme Source", 2, RegistryValueKind.DWord)
+
+        R.Close()
+
+        Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
+
+        rx.DeleteValue("WinPaletter", False)
+
+        rx.Close()
+
+        SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
     End Sub
 #End Region
 

@@ -13,7 +13,6 @@ Public Class MainFrm
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
-    Public ShowWhatsNew As Boolean = False
 
     Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
         NativeMethods.Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
@@ -1094,7 +1093,6 @@ Public Class MainFrm
         DoubleBufferedControl(Parent, True)
 
         For Each ctrl As Control In Parent.Controls
-
             If ctrl.HasChildren Then
                 For Each c As Control In ctrl.Controls
                     MakeItDoubleBuffered(c)
@@ -1171,14 +1169,14 @@ Public Class MainFrm
         MakeItDoubleBuffered(TablessControl1)
 
         Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
-            Me.WindowState = My.Application._Settings.MainFormStatus
+        Me.WindowState = My.Application._Settings.MainFormStatus
 
-            For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
-                AddHandler btn.MouseEnter, AddressOf UpdateHint
-                AddHandler btn.Enter, AddressOf UpdateHint
-                AddHandler btn.MouseLeave, AddressOf EraseHint
-                AddHandler btn.Leave, AddressOf EraseHint
-            Next
+        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
+        Next
 
         For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -1201,7 +1199,6 @@ Public Class MainFrm
             My.Application.ExternalLink = False
             My.Application.ExternalLink_File = ""
         End If
-
 
         Select_W11.Image = My.Resources.Native11
         Select_W10.Image = My.Resources.Native10
@@ -1239,7 +1236,6 @@ Public Class MainFrm
             Select_W11.Checked = True
         End If
 
-
         pnl_preview.BackgroundImage = My.Application.Wallpaper
         dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
 
@@ -1256,7 +1252,7 @@ Public Class MainFrm
 
         If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
 
-        If ShowWhatsNew Then Whatsnew.ShowDialog()
+        If My.Application.ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
 
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed

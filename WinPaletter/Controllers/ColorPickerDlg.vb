@@ -12,7 +12,7 @@ Public Class ColorPickerDlg
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         _shown = False
-        CP.PopulateThemeToListbox(XenonComboBox1)
+        XenonComboBox1.PopulateThemes
 
         If fr.WindowState = FormWindowState.Normal Then
             Me.Left = fr.Right - 14

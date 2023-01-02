@@ -339,10 +339,10 @@ Partial Class MainFrm
         Me.XenonButton24 = New WinPaletter.XenonButton()
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SaveFileDialog3 = New System.Windows.Forms.SaveFileDialog()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.PaletteContainer_W11.SuspendLayout()
@@ -4813,7 +4813,7 @@ Partial Class MainFrm
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton3.TabIndex = 2
-        Me.XenonButton3.Tag = "Create New Theme (Palette) File based on the current apply preferences"
+        Me.XenonButton3.Tag = "Create New Theme (Palette) File based on the current applied preferences"
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -4919,6 +4919,17 @@ Partial Class MainFrm
         Me.XenonButton16.Text = "LogonUI"
         Me.XenonButton16.UseVisualStyleBackColor = False
         '
+        'PictureBox6
+        '
+        Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
+        Me.PictureBox6.Location = New System.Drawing.Point(2, 3)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(35, 59)
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox6.TabIndex = 1
+        Me.PictureBox6.TabStop = False
+        '
         'XenonButton4
         '
         Me.XenonButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -4944,17 +4955,6 @@ Partial Class MainFrm
         '
         Me.SaveFileDialog3.DefaultExt = "wpt"
         Me.SaveFileDialog3.Filter = "Test File (*.txt)|*.txt"
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(2, 3)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(35, 59)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox6.TabIndex = 1
-        Me.PictureBox6.TabStop = False
         '
         'MainFrm
         '

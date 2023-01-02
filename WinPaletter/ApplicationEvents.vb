@@ -1,21 +1,91 @@
-﻿Imports System.Management
+﻿Imports System.ComponentModel
+Imports System.Management
 Imports System.Reflection
 Imports System.Security.Principal
 Imports System.Threading
+Imports System.Windows.Input
+Imports System.Windows.Media.Animation
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Namespace My
     Module WindowsVersions
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 11 or not
+        ''' </summary>
         Public W11 As Boolean = My.Computer.Info.OSFullName.Contains("11")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 10 or not
+        ''' </summary>
         Public W10 As Boolean = My.Computer.Info.OSFullName.Contains("10")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 8/8.1 or not
+        ''' </summary>
         Public W8 As Boolean = My.Computer.Info.OSFullName.Contains("8")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 7 or not
+        ''' </summary>
         Public W7 As Boolean = My.Computer.Info.OSFullName.Contains("7")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
+        ''' </summary>
         Public W10_1909 As Boolean = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
     End Module
 
     Partial Friend Class MyApplication
+#Region "Invoking Region"
+        Implements ISynchronizeInvoke
+
+        Private ReadOnly _currentContext As System.Threading.SynchronizationContext = System.Threading.SynchronizationContext.Current
+        Private ReadOnly _mainThread As System.Threading.Thread = System.Threading.Thread.CurrentThread
+        Private ReadOnly _invokeLocker As Object = New Object()
+
+        Public ReadOnly Property InvokeRequired As Boolean
+            Get
+                Return System.Threading.Thread.CurrentThread.ManagedThreadId <> Me._mainThread.ManagedThreadId
+            End Get
+        End Property
+
+        Private ReadOnly Property ISynchronizeInvoke_InvokeRequired As Boolean Implements ISynchronizeInvoke.InvokeRequired
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        <Obsolete("This method is not supported!", True)>
+        Private Function ISynchronizeInvoke_BeginInvoke(method As [Delegate], args() As Object) As IAsyncResult Implements ISynchronizeInvoke.BeginInvoke
+            Throw New NotSupportedException("The method or operation is not implemented.")
+        End Function
+
+        <Obsolete("This method is not supported!", True)>
+        Private Function ISynchronizeInvoke_EndInvoke(result As IAsyncResult) As Object Implements ISynchronizeInvoke.EndInvoke
+            Throw New NotSupportedException("The method or operation is not implemented.")
+        End Function
+
+        Private Function Invoke(method As [Delegate], args() As Object) As Object Implements ISynchronizeInvoke.Invoke
+            If method Is Nothing Then
+                Throw New ArgumentNullException("method")
+            End If
+
+            SyncLock _invokeLocker
+                Dim objectToGet As Object = Nothing
+                Dim invoker As SendOrPostCallback = New SendOrPostCallback(Function(ByVal data As Object)
+                                                                               objectToGet = method.DynamicInvoke(args)
+                                                                           End Function)
+                _currentContext.Send(invoker, method.Target)
+                Return objectToGet
+            End SyncLock
+        End Function
+
+        Public Function Invoke(ByVal method As [Delegate]) As Object
+            Return Invoke(method, Nothing)
+        End Function
+#End Region
 
 #Region "Variables"
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
@@ -33,10 +103,23 @@ Namespace My
         Public ExternalLink_File As String = ""
         Public ShowChangelog As Boolean = False
         Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
-        Public processKiller As New Process
-        Public processExplorer As New Process
-        Public AeroKiller As New Process
-        Public AeroStarter As New Process
+
+        Public processKiller As New Process With {.StartInfo = New ProcessStartInfo With {
+                            .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
+                            .Verb = "runas",
+                            .Arguments = "/F /IM explorer.exe",
+                            .WindowStyle = ProcessWindowStyle.Hidden,
+                            .UseShellExecute = True}
+                           }
+
+        Public processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
+                            .FileName = explorerPath,
+                            .Arguments = "",
+                            .Verb = If(Not My.W8, "runas", ""),
+                            .WindowStyle = ProcessWindowStyle.Normal,
+                            .UseShellExecute = True}
+                           }
+
         Public LanguageHelper As New Localizer
         Public appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public curPath As String = appData & "\Cursors"
@@ -56,6 +139,7 @@ Namespace My
         Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
         Public ExitAfterException As Boolean = False
+        Public ShowWhatsNew As Boolean = False
 
         Public Saving_Exceptions As New List(Of Tuple(Of String, Exception))
 
@@ -74,52 +158,39 @@ Namespace My
 #End Region
 
 #Region "File Association"
-        <System.Runtime.InteropServices.DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
-        End Sub
 
-        Public Const SHCNE_ASSOCCHANGED = &H8000000
-        Public Const SHCNF_IDLIST = 0
-
-        Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, ByVal exeProgram As String) As Boolean
-            ' Extension is the extension to be registered (eg ".wpth"
-            ' ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")
-            ' Description is the textual description (eg "WinPaletter ThemeFile"
-            ' ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)
+        ''' <summary>
+        ''' Associate WinPaletter Files Types in Registry
+        ''' </summary>
+        ''' <param name="extension">Extension is the extension to be registered (eg ".wpth")</param>
+        ''' <param name="className">ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")</param>
+        ''' <param name="description">Description is the textual description (eg "WinPaletter ThemeFile")</param>
+        ''' <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
+        ''' <returns></returns>
+        Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, iconPath As String, ByVal exeProgram As String) As Boolean
 
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
+            If exeProgram.Contains("""") Then exeProgram = exeProgram.Replace("""", "")
+            exeProgram = String.Format("""{0}""", exeProgram)
 
-            Dim key1, key2, key3, key4, key5 As RegistryKey
-            key1 = Nothing
-            key2 = Nothing
-            key3 = Nothing
-            key4 = Nothing
-            key5 = Nothing
+            Dim mainKey, descriptionKey As RegistryKey
+            mainKey = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            descriptionKey = Registry.CurrentUser.OpenSubKey("Software", True).CreateSubKey("WinPaletter", True)
 
             Try
-                ' create a value for this key that contains the classname
-                key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                key1.CreateSubKey(extension, True).SetValue("", className)
-                ' create a new key for the Class name
-                key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                key2.CreateSubKey(className, True).SetValue("", description)
-                ' associate the program to open the files with this extension
-                key3 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+                mainKey.CreateSubKey(extension, True).SetValue("", className)
+                mainKey.CreateSubKey(className, True).SetValue("", description)
+                mainKey.CreateSubKey(className & "\Shell\Open", True).SetValue("Icon", exeProgram.Replace("""", "") & ", 0")
+                mainKey.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
 
-                key3.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
-                key3.CreateSubKey(className & "\Shell\Edit in WinPaletter\Command", True).SetValue("", exeProgram & "  /edit:""%1""")
-                key3.CreateSubKey(className & "\Shell\Apply by WinPaletter\Command", True).SetValue("", exeProgram & "  /apply:""%1""")
+                If className.ToLower = "WinPaletter.ThemeFile".ToLower Then
+                    mainKey.CreateSubKey(className & "\Shell\Edit in WinPaletter\Command", True).SetValue("", exeProgram & "  /edit:""%1""")
+                    mainKey.CreateSubKey(className & "\Shell\Apply by WinPaletter\Command", True).SetValue("", exeProgram & "  /apply:""%1""")
+                End If
 
-                key3.OpenSubKey(className & "\Shell\Open", True).SetValue("Icon", exeProgram.Replace("""", "") & ", 0")
+                mainKey.CreateSubKey(className & "\DefaultIcon", True).SetValue("", iconPath)
 
-                ' associate file icon
-                key4 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-
-                If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
-
-                key4.CreateSubKey(className & "\DefaultIcon", True).SetValue("", If(className = "WinPaletter.ThemeFile", appData & "\fileextension.ico", appData & "\settingsfile.ico"))
-
-                key5 = Registry.CurrentUser.OpenSubKey("Software", True)
-                With key5.CreateSubKey("WinPaletter", True)
+                With descriptionKey
                     .SetValue("DisplayName", My.Application.Info.ProductName)
                     .SetValue("Publisher", My.Application.Info.CompanyName)
                     .SetValue("Version", My.Application.Info.Version.ToString)
@@ -128,48 +199,78 @@ Namespace My
             Catch e As Exception
                 Return False
             Finally
-                If key1 IsNot Nothing Then key1.Close()
-                If key2 IsNot Nothing Then key2.Close()
-                If key3 IsNot Nothing Then key3.Close()
-                If key4 IsNot Nothing Then key4.Close()
-                If key5 IsNot Nothing Then key5.Close()
+                If mainKey IsNot Nothing Then mainKey.Close()
+                If descriptionKey IsNot Nothing Then descriptionKey.Close()
             End Try
 
-            ' notify Windows that file associations have changed
-            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+            'Notify Windows that file associations have changed
+            NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.SHCNF_IDLIST, 0, 0)
+
             Return True
         End Function
 
+        ''' <summary>
+        ''' Removes WinPaletter Files Types Associate From Registry
+        ''' </summary>
+        ''' <param name="extension">Extension is the extension to be removed (eg ".wpth")</param>
+        ''' <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.ThemeFile")</param>
+        ''' <returns></returns>
         Function DeleteFileAssociation(ByVal extension As String, ByVal className As String) As Boolean
-            Const SHCNE_ASSOCCHANGED = &H8000000
-            Const SHCNF_IDLIST = 0
+
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
-            Dim key1, key2, key3, key4 As RegistryKey
-            key1 = Nothing
-            key2 = Nothing
-            key3 = Nothing
-            key4 = Nothing
+
+            Dim mainKey, descriptionKey As RegistryKey
+            mainKey = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
+            descriptionKey = Registry.CurrentUser.OpenSubKey("Software\WinPaletter", True)
 
             Try
-                key1 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                key1.DeleteSubKeyTree(extension, False)
+                mainKey.DeleteSubKeyTree(extension, False)
+                mainKey.DeleteSubKeyTree(className, False)
 
-                key2 = Registry.CurrentUser.OpenSubKey("Software\Classes", True)
-                key2.DeleteSubKeyTree(className, False)
+                descriptionKey.DeleteValue("DisplayName", False)
+                descriptionKey.DeleteValue("Publisher", False)
+                descriptionKey.DeleteValue("Version", False)
 
             Catch e As Exception
                 Return False
             Finally
-                If key1 IsNot Nothing Then key1.Close()
-                If key2 IsNot Nothing Then key2.Close()
-                If key3 IsNot Nothing Then key3.Close()
-                If key4 IsNot Nothing Then key4.Close()
+                If mainKey IsNot Nothing Then mainKey.Close()
+                If descriptionKey IsNot Nothing Then descriptionKey.Close()
             End Try
 
-            ' notify Windows that file associations have changed
-            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+            'Notify Windows that file associations have changed
+            NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.SHCNF_IDLIST, 0, 0)
             Return True
         End Function
+        Sub CreateUninstaller()
+            Dim guidText As String = My.Application.Info.ProductName
+            Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall\" & guidText
+            Dim exe As String = Assembly.GetExecutingAssembly().Location
+
+            If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+            Dim file As IO.FileStream = New IO.FileStream(appData & "\uninstall.ico", IO.FileMode.OpenOrCreate)
+            My.Resources.Icon_Uninstall.Save(file)
+            file.Close()
+
+            If Registry.CurrentUser.OpenSubKey(RegPath, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(RegPath, True)
+
+            With Registry.CurrentUser.OpenSubKey(RegPath, True)
+                .SetValue("DisplayName", "WinPaletter", RegistryValueKind.String)
+                .SetValue("ApplicationVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
+                .SetValue("DisplayVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
+                .SetValue("Publisher", My.Application.Info.CompanyName, RegistryValueKind.String)
+                .SetValue("DisplayIcon", appData & "\uninstall.ico", RegistryValueKind.String)
+                .SetValue("URLInfoAbout", My.Resources.Link_Repository, RegistryValueKind.String)
+                .SetValue("Contact", My.Resources.Link_Repository, RegistryValueKind.String)
+                .SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String)
+                .SetValue("Comments", "This will help you delete WinPaletter and clean up its used data", RegistryValueKind.String)
+                .SetValue("UninstallString", exe & " /uninstall", RegistryValueKind.String)
+                .SetValue("QuietUninstallString", exe & " /uninstall-quiet", RegistryValueKind.String)
+                .SetValue("NoModify", 1, RegistryValueKind.DWord)
+                .SetValue("NoRepair", 1, RegistryValueKind.DWord)
+                .SetValue("EstimatedSize", My.Computer.FileSystem.GetFileInfo(exe).Length / 1024, RegistryValueKind.DWord)
+            End With
+        End Sub
 #End Region
 
 #Region "Wallpaper Change Detector"
@@ -179,174 +280,136 @@ Namespace My
             Dim valueName As String
             Dim Base As String
 
-            Try
-                KeyPath = "Control Panel\Desktop"
-                valueName = "Wallpaper"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query1 = New WqlEventQuery(Base)
-                WallMon_Watcher1 = New ManagementEventWatcher(query1)
-            Catch
-            End Try
+            KeyPath = "Control Panel\Desktop"
+            valueName = "Wallpaper"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query1 = New WqlEventQuery(Base)
+            WallMon_Watcher1 = New ManagementEventWatcher(query1)
 
+            KeyPath = "Control Panel\Colors"
+            valueName = "Background"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query2 = New WqlEventQuery(Base)
+            WallMon_Watcher2 = New ManagementEventWatcher(query2)
 
-            Try
-                KeyPath = "Control Panel\Colors"
-                valueName = "Background"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query2 = New WqlEventQuery(Base)
-                WallMon_Watcher2 = New ManagementEventWatcher(query2)
-            Catch
-            End Try
+            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+            WallMon_Watcher1.Start()
 
-
-            Try
-                If Not My.W7 And Not My.W8 Then
-                    KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
-                    valueName = "BackgroundType"
-                    Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                    Dim query3 = New WqlEventQuery(Base)
-                    WallMon_Watcher3 = New ManagementEventWatcher(query3)
-                End If
-            Catch
-            End Try
-
-            Try
-                If Not My.W7 And Not My.W8 Then
-                    KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-                    valueName = "AppsUseLightTheme"
-                    Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                    Dim query4 = New WqlEventQuery(Base)
-                    WallMon_Watcher4 = New ManagementEventWatcher(query4)
-                End If
-            Catch
-            End Try
-
-            Try : AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
-            Try : AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed : Catch : End Try
+            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+            WallMon_Watcher2.Start()
 
             If Not My.W7 And Not My.W8 Then
-                Try : AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed : Catch : End Try
-                Try : AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed : Catch : End Try
+                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
+                valueName = "BackgroundType"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query3 = New WqlEventQuery(Base)
+                WallMon_Watcher3 = New ManagementEventWatcher(query3)
+
+                KeyPath = "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+                valueName = "AppsUseLightTheme"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query4 = New WqlEventQuery(Base)
+                WallMon_Watcher4 = New ManagementEventWatcher(query4)
+
+                AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed
+                WallMon_Watcher3.Start()
+
+                AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed
+                WallMon_Watcher4.Start()
+
+            Else
+                AddHandler SystemEvents.UserPreferenceChanged, AddressOf Win7_8_UserPreferenceChanged
             End If
 
-            Try : WallMon_Watcher1.Start() : Catch : End Try
-            Try : WallMon_Watcher2.Start() : Catch : End Try
+        End Sub
 
-            If Not My.W7 And Not My.W8 Then
-                Try : WallMon_Watcher3.Start() : Catch : End Try
-                Try : WallMon_Watcher4.Start() : Catch : End Try
-            End If
-
+        Public Sub Win7_8_UserPreferenceChanged(ByVal sender As Object, ByVal e As UserPreferenceChangedEventArgs)
+            If e.Category = UserPreferenceCategory.Desktop Then Wallpaper_Changed()
         End Sub
 
         Sub DarkMode_Changed()
-            Dim UpdateDarkModeX As UpdateDarkModeDelegate = AddressOf UpdateDarkMode
-            MainForm.Invoke(UpdateDarkModeX)
+            Invoke(UpdateDarkModeInvoker)
         End Sub
 
-        Private Sub UpdateDarkMode()
-            If My.Application._Settings.Appearance_Auto Then
-                ApplyDarkMode()
-            End If
+        Sub Wallpaper_Changed()
+            Wallpaper = GetCurrentWallpaper().Resize(528, 297)
+            Invoke(UpdateWallpaperInvoker)
         End Sub
-        Delegate Sub UpdateDarkModeDelegate()
-
-        Sub Wallpaper_Changed(sender As Object, e As EventArrivedEventArgs)
-            Try
-                Wallpaper = GetCurrentWallpaper().Resize(528, 297)
-                Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
-                MainForm.Invoke(updateBkX, Wallpaper)
-            Catch
-            End Try
-        End Sub
-
-        Private Sub UpdateBK(ByVal [Image] As Image)
-            MainFrm.pnl_preview.BackgroundImage = [Image]
-            dragPreviewer.pnl_preview.BackgroundImage = [Image]
-            MainFrm.pnl_preview.Invalidate()
-            dragPreviewer.pnl_preview.Invalidate()
-        End Sub
-        Delegate Sub UpdateBKDelegate(ByVal [Image] As Image)
 
         Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
-            Dim R1 As RegistryKey
-            If Not My.W7 And Not My.W8 Then
-                R1 = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
-                If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-            End If
-
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
 
             Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim S As New Stopwatch
 
-            If Not My.W7 And Not My.W8 Then
-                If R1.GetValue("BackgroundType") = 0 Then
-                    S.Reset()
-                    S.Start()
+            If R1.GetValue("BackgroundType") = 0 Then
+                S.Reset()
+                S.Start()
 
-                    Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
-                        If S.ElapsedMilliseconds > 5000 Then Exit Do
-                    Loop
+                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
+                    If S.ElapsedMilliseconds > 5000 Then Exit Do
+                Loop
 
-                    S.Stop()
+                S.Stop()
 
-                    Wallpaper = GetCurrentWallpaper().Resize(528, 297)
-                    Dim updateBkX As UpdateBKDelegate = AddressOf UpdateBK
-                    MainForm.Invoke(updateBkX, Wallpaper)
-
-                End If
+                Wallpaper_Changed()
             End If
 
-
-            R1.Close()
-            R2.Close()
+            If R1 IsNot Nothing Then R1.Close()
+            If R2 IsNot Nothing Then R2.Close()
         End Sub
+
+        Dim UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
+                                                               If My.Application._Settings.Appearance_Auto Then ApplyDarkMode()
+                                                           End Sub, MethodInvoker)
+
+        Dim UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
+                                                                MainFrm.pnl_preview.BackgroundImage = Wallpaper
+                                                                dragPreviewer.pnl_preview.BackgroundImage = Wallpaper
+                                                                Metrics_Fonts.pnl_preview1.BackgroundImage = Wallpaper
+                                                                Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
+                                                                Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper
+                                                                Metrics_Fonts.pnl_preview4.BackgroundImage = Wallpaper
+                                                                MainFrm.pnl_preview.Invalidate()
+                                                                dragPreviewer.pnl_preview.Invalidate()
+                                                                Metrics_Fonts.pnl_preview1.Invalidate()
+                                                                Metrics_Fonts.pnl_preview2.Invalidate()
+                                                                Metrics_Fonts.pnl_preview3.Invalidate()
+                                                                Metrics_Fonts.pnl_preview4.Invalidate()
+                                                            End Sub, MethodInvoker)
 #End Region
+
         Public Function GetCurrentWallpaper() As Bitmap
-            If My.W7 Then
-                Try : WallMon_Watcher1.Stop() : Catch : End Try
-                Try : WallMon_Watcher2.Stop() : Catch : End Try
-            End If
-
-
+            'Gets Wallpaper Path
             Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-            Dim R2 As RegistryKey
+            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
+            If R1 IsNot Nothing Then R1.Close()
 
+            'Gets Wallpaper Type (Valid only for Windows 10\11)
+            Dim WallpaperType As Integer = 0
             If Not My.W7 And Not My.W8 Then
-                R2 = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
-                If R2.GetValue("BackgroundType", 0) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+                If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+                WallpaperType = R2.GetValue("BackgroundType")
+                If R2 IsNot Nothing Then R2.Close()
             End If
 
-            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
-            Dim WallpaperType As Integer
-
-            If Not My.W7 And Not My.W8 Then WallpaperType = R2.GetValue("BackgroundType")
+            Dim img As Bitmap
 
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
                 Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
-                Return Image.FromStream(x)
+                img = Image.FromStream(x)
                 x.Close()
             Else
-                Dim bmp As Bitmap = New Bitmap(528, 297)
-                Dim g As Graphics = Graphics.FromImage(bmp)
-
                 With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
-                    g.Clear(Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)))
+                    img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
                 End With
-
-                Return bmp
-                g.Dispose()
-                bmp.Dispose()
             End If
 
-            R1.Close()
-            R2.Close()
-
-            If My.W7 Then
-                Try : WallMon_Watcher1.Start() : Catch : End Try
-                Try : WallMon_Watcher2.Start() : Catch : End Try
-            End If
+            Return img
         End Function
+
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
             WallMon_Watcher1.Stop()
             WallMon_Watcher2.Stop()
@@ -407,9 +470,27 @@ Namespace My
 
         End Sub
 
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            _Settings = New XeSettings(XeSettings.Mode.Registry)
+        Sub Uninstall_Quiet()
+            My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
+            My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
+            If IO.Directory.Exists(My.Application.appData) Then
+                IO.Directory.Delete(My.Application.appData, True)
+                CP.ResetCursorsToAero()
+            End If
 
+            Dim guidText As String = My.Application.Info.ProductName
+            Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall"
+            Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
+
+            Process.GetCurrentProcess.Kill()
+        End Sub
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+            Catch : End Try
+            _Settings = New XeSettings(XeSettings.Mode.Registry)
+            AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try
@@ -425,33 +506,42 @@ Namespace My
                 ConsoleFontMedium = New Font("Lucida Console", 9)
             End Try
 
-            Try
+            If Environment.GetCommandLineArgs.Count > 1 Then
                 ArgsList.Clear()
                 For x = 1 To Environment.GetCommandLineArgs.Count - 1
                     ArgsList.Add(Environment.GetCommandLineArgs(x))
                 Next
-            Catch
-            End Try
+            End If
 
             FontsList.Clear()
             FontsFixedList.Clear()
             For Each [font] As FontFamily In FontFamily.Families
                 FontsList.Add([font].Name)
             Next
-
-            Dim B As New Bitmap(30, 30)
-            Dim G As Graphics = Graphics.FromImage(B)
-            For Each [font] As FontFamily In NativeMethods.GDI32.GetFixedWidthFonts(G)
-                FontsFixedList.Add([font].Name)
+            For Each xx In Windows.Media.Fonts.SystemTypefaces.GroupBy(Function(x) x.FontFamily.ToString()).[Select](Function(grp) grp.First()).Where(Function(x) New Windows.Media.FormattedText("Hl", Globalization.CultureInfo.InvariantCulture, Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width = New Windows.Media.FormattedText("HH", Globalization.CultureInfo.InvariantCulture, System.Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width).ToList()
+                FontsFixedList.Add(xx.FontFamily.Source.Split("#")(0))
             Next
-            B.Dispose()
-            G.Dispose()
 
-            If ArgsList.Contains("/exportlanguage") Then
-                LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
-                MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
-                Process.GetCurrentProcess.Kill()
-            End If
+            ApplyDarkMode()
+
+            For Each arg As String In ArgsList
+                If arg.ToLower = "/exportlanguage" Then
+                    LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                    MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
+                    Process.GetCurrentProcess.Kill()
+                    Exit For
+                End If
+
+                If arg.ToLower = "/uninstall" Then
+                    Uninstall.ShowDialog()
+                    Exit For
+                End If
+
+                If arg.ToLower = "/uninstall-quiet" Then
+                    Uninstall_Quiet()
+                    Exit For
+                End If
+            Next
 
             If My.Application._Settings.Language Then
                 Try
@@ -463,27 +553,6 @@ Namespace My
                 My.Application.LanguageHelper.LoadInternal()
             End If
 
-            Dim ProcessKillerInfo As New ProcessStartInfo With {
-                .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
-                .Verb = "runas",
-                .Arguments = "/F /IM explorer.exe",
-                .WindowStyle = ProcessWindowStyle.Hidden,
-                .UseShellExecute = True
-            }
-            Dim processExplorerInfo As New ProcessStartInfo With {
-.FileName = explorerPath,
-.Arguments = "",
-.WindowStyle = ProcessWindowStyle.Normal,
-.UseShellExecute = True
-}
-            If Not My.W8 Then processExplorerInfo.Verb = "runas"
-            processKiller.StartInfo = ProcessKillerInfo
-            processExplorer.StartInfo = processExplorerInfo
-
-            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
-            Catch : End Try
-
-            ApplyDarkMode()
 
             ExternalLink = False
             ExternalLink_File = ""
@@ -537,35 +606,27 @@ Namespace My
                 End If
             Next
 
-            Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
+            Wallpaper = GetCurrentWallpaper().Resize(528, 297)
+
             Monitor()
 
             Try
                 If _Settings.AutoAddExt Then
                     If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
-                    If _Settings.AutoAddExt Then
-                        If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+                    Dim file As IO.FileStream = New IO.FileStream(appData & "\fileextension.ico", IO.FileMode.OpenOrCreate)
+                    My.Resources.fileextension.Save(file)
+                    file.Close()
 
-                        Dim file As System.IO.FileStream = New System.IO.FileStream(appData & "\fileextension.ico", System.IO.FileMode.OpenOrCreate)
-                        My.Resources.fileextension.Save(file)
-                        file.Close()
+                    file = New IO.FileStream(appData & "\settingsfile.ico", IO.FileMode.OpenOrCreate)
+                    My.Resources.settingsfile.Save(file)
+                    file.Close()
 
-                        file = New System.IO.FileStream(appData & "\settingsfile.ico", System.IO.FileMode.OpenOrCreate)
-                        My.Resources.settingsfile.Save(file)
-                        file.Close()
-
-                        CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", """" & Assembly.GetExecutingAssembly().Location & """")
-                        CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", """" & Assembly.GetExecutingAssembly().Location & """")
-                    End If
+                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
+                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", appData & "\settingsfile.ico", Assembly.GetExecutingAssembly().Location)
                 End If
             Catch
             End Try
-
-            AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
-
-            CP.PopulateThemeToListbox(Win32UI.XenonComboBox1)
-            CP.PopulateThemeToListbox(ColorPickerDlg.XenonComboBox1)
 
             ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
             ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
@@ -589,10 +650,11 @@ Namespace My
 
             Saving_Exceptions.Clear()
 
+
 #Region "WhatsNew"
-            If Not _Settings.WhatsNewRecord.ToArray.Contains(My.Application.Info.Version.ToString) Then
+            If Not _Settings.WhatsNewRecord.Contains(My.Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
-                MainFrm.ShowWhatsNew = True
+                ShowWhatsNew = True
 
                 Dim ver As New List(Of String)
                 ver.Clear()
@@ -605,12 +667,16 @@ Namespace My
                 ver = ver.DeDuplicate
                 _Settings.WhatsNewRecord = ver.ToArray
                 _Settings.Save(XeSettings.Mode.Registry)
+
+                CreateUninstaller()
             Else
-                MainFrm.ShowWhatsNew = False
+                ShowWhatsNew = False
             End If
 #End Region
 
+
         End Sub
+
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try
                 Dim arg As String = e.CommandLine(0)
@@ -799,5 +865,7 @@ Namespace My
             Throw DirectCast(e.ExceptionObject, Exception)
             If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
+
     End Class
+
 End Namespace

@@ -1,20 +1,20 @@
 ﻿Imports Microsoft.Win32
 Public Class XeSettings
 
-
-
 #Region "Settings"
     Public Property LicenseAccepted As Boolean = False
     Public Property AutoAddExt As Boolean = True
     Public Property AutoApplyCursors As Boolean = True
+    Public Property ResetCursorsToAero As Boolean = False
     Public Property DragAndDropPreview As Boolean = True
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property ComplexSaveResult As String = "2.1"
     Public Property ShowSaveConfirmation As Boolean = True
+    Public Property SaveForLegacyWP As Boolean = False
     Public Property Win7LivePreview As Boolean = True
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
     Public Property WhatsNewRecord As String() = {""}
@@ -72,12 +72,12 @@ Public Class XeSettings
         If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", True, RegistryValueKind.DWord)
         If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", True, RegistryValueKind.DWord)
         If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", True, RegistryValueKind.DWord)
+        If Key.GetValue("ResetCursorsToAero", Nothing) Is Nothing Then Key.SetValue("ResetCursorsToAero", False, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", False, RegistryValueKind.DWord)
         If Key.GetValue("ShowLogWhileSaving", Nothing) Is Nothing Then Key.SetValue("ShowLogWhileSaving", False, RegistryValueKind.DWord)
         If Key.GetValue("ComplexSaveResult", Nothing) Is Nothing Then Key.SetValue("ComplexSaveResult", "2.1", RegistryValueKind.String)
         If Key.GetValue("ShowSaveConfirmation", Nothing) Is Nothing Then Key.SetValue("ShowSaveConfirmation", True, RegistryValueKind.DWord)
-        If Key.GetValue("LoadThemeFileAsLegacy", Nothing) Is Nothing Then Key.SetValue("LoadThemeFileAsLegacy", False, RegistryValueKind.DWord)
-        If Key.GetValue("SaveThemeFileAsLegacy", Nothing) Is Nothing Then Key.SetValue("SaveThemeFileAsLegacy", False, RegistryValueKind.DWord)
+        If Key.GetValue("SaveForLegacyWP", Nothing) Is Nothing Then Key.SetValue("SaveForLegacyWP", False, RegistryValueKind.DWord)
         If Key.GetValue("MainFormWidth", Nothing) Is Nothing Then Key.SetValue("MainFormWidth", 1110, RegistryValueKind.DWord)
         If Key.GetValue("MainFormHeight", Nothing) Is Nothing Then Key.SetValue("MainFormHeight", 725, RegistryValueKind.DWord)
         If Key.GetValue("MainFormStatus", Nothing) Is Nothing Then Key.SetValue("MainFormStatus", FormWindowState.Normal, RegistryValueKind.DWord)
@@ -128,6 +128,8 @@ Public Class XeSettings
 
                 AutoAddExt = Key.GetValue("AutoAddExt", True)
                 AutoApplyCursors = Key.GetValue("AutoApplyCursors", True)
+                ResetCursorsToAero = Key.GetValue("ResetCursorsToAero", False)
+
                 DragAndDropPreview = Key.GetValue("DragAndDropPreview", True)
                 OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", True)
                 AutoRestartExplorer = Key.GetValue("AutoRestartExplorer", True)
@@ -136,6 +138,7 @@ Public Class XeSettings
 
                 ComplexSaveResult = Key.GetValue("ComplexSaveResult", "2.1")
                 ShowSaveConfirmation = Key.GetValue("ShowSaveConfirmation", True)
+                SaveForLegacyWP = Key.GetValue("SaveForLegacyWP", False)
 
                 MainFormWidth = Key.GetValue("MainFormWidth", 1110)
                 MainFormHeight = Key.GetValue("MainFormHeight", 725)
@@ -179,6 +182,7 @@ Public Class XeSettings
                 For Each x As String In l
                     If x.ToLower.StartsWith("AutoAddExt= ".ToLower) Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
                     If x.ToLower.StartsWith("AutoApplyCursors= ".ToLower) Then AutoApplyCursors = x.Remove(0, "AutoApplyCursors= ".Count)
+                    If x.ToLower.StartsWith("ResetCursorsToAero= ".ToLower) Then ResetCursorsToAero = x.Remove(0, "ResetCursorsToAero= ".Count)
                     If x.ToLower.StartsWith("DragAndDropPreview= ".ToLower) Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
                     If x.ToLower.StartsWith("OpeningPreviewInApp_or_AppliesIt= ".ToLower) Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
                     If x.ToLower.StartsWith("AutoRestartExplorer= ".ToLower) Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
@@ -187,6 +191,7 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("SaveThemeFileAsLegacy= ".ToLower) Then AutoUpdatesChecking = x.Remove(0, "SaveThemeFileAsLegacy= ".Count)
                     If x.ToLower.StartsWith("ComplexSaveResult= ".ToLower) Then ComplexSaveResult = x.Remove(0, "ComplexSaveResult= ".Count)
                     If x.ToLower.StartsWith("ShowSaveConfirmation= ".ToLower) Then ShowSaveConfirmation = x.Remove(0, "ShowSaveConfirmation= ".Count)
+                    If x.ToLower.StartsWith("SaveForLegacyWP= ".ToLower) Then SaveForLegacyWP = x.Remove(0, "SaveForLegacyWP= ".Count)
                     If x.ToLower.StartsWith("Win7LivePreview= ".ToLower) Then Win7LivePreview = x.Remove(0, "Win7LivePreview= ".Count)
                     If x.ToLower.StartsWith("UpdateChannel= ".ToLower) Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
                     If x.ToLower.StartsWith("Appearance_Dark= ".ToLower) Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
@@ -221,6 +226,8 @@ Public Class XeSettings
 
                 Key.SetValue("AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
                 Key.SetValue("AutoApplyCursors", AutoApplyCursors, RegistryValueKind.DWord)
+                Key.SetValue("ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord)
+
                 Key.SetValue("DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
                 Key.SetValue("OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 Key.SetValue("AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
@@ -234,6 +241,7 @@ Public Class XeSettings
                 Key.SetValue("Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String)
                 Key.SetValue("Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String)
                 Key.SetValue("CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord)
+                Key.SetValue("SaveForLegacyWP", SaveForLegacyWP, RegistryValueKind.DWord)
 
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
@@ -271,6 +279,8 @@ Public Class XeSettings
                 l.Add("")
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))
                 l.Add(String.Format("AutoApplyCursors= {0}", AutoApplyCursors))
+                l.Add(String.Format("ResetCursorsToAero= {0}", ResetCursorsToAero))
+
                 l.Add(String.Format("DragAndDropPreview= {0}", DragAndDropPreview))
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
@@ -284,6 +294,7 @@ Public Class XeSettings
                 l.Add(String.Format("Terminal_Stable_Path= {0}", Terminal_Stable_Path))
                 l.Add(String.Format("Terminal_Preview_Path= {0}", Terminal_Preview_Path))
                 l.Add(String.Format("CMD_OverrideUserPreferences= {0}", CMD_OverrideUserPreferences))
+                l.Add(String.Format("SaveForLegacyWP= {0}", SaveForLegacyWP))
 
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))

@@ -335,86 +335,6 @@ Namespace NativeMethods
 
     End Class
 
-    Public Class GDI32
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
-        Public Shared Function GetTextMetrics(ByVal hdc As IntPtr, <Out> ByRef lptm As TEXTMETRICW) As Boolean
-        End Function
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
-        Public Shared Function DeleteObject(ByVal hObject As IntPtr) As Boolean
-        End Function
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
-        Public Shared Function SelectObject(ByVal hdc As IntPtr, ByVal hgdiObj As IntPtr) As IntPtr
-        End Function
-
-        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
-        Public Structure TEXTMETRICW
-            Public tmHeight As Integer
-            Public tmAscent As Integer
-            Public tmDescent As Integer
-            Public tmInternalLeading As Integer
-            Public tmExternalLeading As Integer
-            Public tmAveCharWidth As Integer
-            Public tmMaxCharWidth As Integer
-            Public tmWeight As Integer
-            Public tmOverhang As Integer
-            Public tmDigitizedAspectX As Integer
-            Public tmDigitizedAspectY As Integer
-            Public tmFirstChar As UShort
-            Public tmLastChar As UShort
-            Public tmDefaultChar As UShort
-            Public tmBreakChar As UShort
-            Public tmItalic As Byte
-            Public tmUnderlined As Byte
-            Public tmStruckOut As Byte
-            Public tmPitchAndFamily As Byte
-            Public tmCharSet As Byte
-        End Structure
-
-        Public Shared Iterator Function GetFixedWidthFonts(ByVal dc As IDeviceContext) As IEnumerable(Of FontFamily)
-            Dim hDC As IntPtr = dc.GetHdc()
-
-            For Each oFontFamily As System.Drawing.FontFamily In System.Drawing.FontFamily.Families
-
-                Try
-                    If oFontFamily.IsStyleAvailable(FontStyle.Regular) Then
-                        Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
-                            Dim hFont As IntPtr = IntPtr.Zero
-                            Dim hFontDefault As IntPtr = IntPtr.Zero
-
-                            Try
-                                Dim oTextMetric As TEXTMETRICW
-                                hFont = oFont.ToHfont()
-                                hFontDefault = SelectObject(hDC, hFont)
-
-                                If GetTextMetrics(hDC, oTextMetric) Then
-
-                                    If (oTextMetric.tmPitchAndFamily And 1) = 0 Then
-                                        Yield oFontFamily
-                                    End If
-                                End If
-
-                            Finally
-
-                                If hFontDefault <> IntPtr.Zero Then
-                                    SelectObject(hDC, hFontDefault)
-                                End If
-
-                                If hFont <> IntPtr.Zero Then
-                                    DeleteObject(hFont)
-                                End If
-
-                            End Try
-                        End Using
-                    End If
-                Catch
-
-                End Try
-            Next
-
-            dc.ReleaseHdc()
-        End Function
-    End Class
-
     Public Class Uxtheme
         <DllImport("UxTheme.DLL", BestFitMapping:=False, CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="#65")>
         Public Shared Function SetSystemVisualStyle(ByVal pszFilename As String, ByVal pszColor As String, ByVal pszSize As String, ByVal dwReserved As Integer) As Integer
@@ -467,101 +387,491 @@ Namespace NativeMethods
         End Enum
 
         Public Enum SHSTOCKICONID
-            DOCNOASSOC = 0          'Blank document icon (Document Of a type With no associated application).
-            DOCASSOC = 1            'Application-associated document icon (Document Of a type With an associated application).
-            APPLICATION = 2         'Generic application With no custom icon.
-            FOLDER = 3              'Folder (generic unspecified state).
-            FOLDEROPEN = 4          'Folder (open).
-            DRIVE525 = 5            '5.25-inch disk drive.
-            DRIVE35 = 6             '3.5-inch disk drive.
-            DRIVEREMOVE = 7         'Removable drive.
-            DRIVEFIXED = 8          'Fixed drive (hard disk).
-            DRIVENET = 9            'Network drive (connected).
-            DRIVENETDISABLED = 10   'Network drive (disconnected).
-            DRIVECD = 11            'CD drive.
-            DRIVERAM = 12           'RAM disk drive.
-            WORLD = 13              'The entire network.
-            SERVER = 15             'A computer On the network.
-            PRINTER = 16            'A local printer Or print destination.
-            MYNETWORK = 17          'The Network virtual folder (FOLDERID_NetworkFolder/CSIDL_NETWORK).
-            FIND = 22               'The Search feature.
-            HELP = 23               'The Help And Support feature.
-            SHARE = 28              'Overlay For a Shared item.
-            LINK = 29               'Overlay For a shortcut.
-            SLOWFILE = 30           'Overlay For items that are expected To be slow To access.
-            RECYCLER = 31           'The Recycle Bin (empty).
-            RECYCLERFULL = 32       'The Recycle Bin (Not empty).
-            MEDIACDAUDIO = 40       'Audio CD media.
-            LOCK = 47               'Security lock.
-            AUTOLIST = 49           'A virtual folder that contains the results Of a search.
-            PRINTERNET = 50         'A network printer.
-            SERVERSHARE = 51        'A server Shared On a network.
-            PRINTERFAX = 52         'A local fax printer.
-            PRINTERFAXNET = 53      'A network fax printer.
-            PRINTERFILE = 54        'A file that receives the output Of a Print To file operation.
-            STACK = 55              'A category that results from a Stack by command To organize the contents Of a folder.
-            MEDIASVCD = 56          'Super Video CD (SVCD) media.
-            STUFFEDFOLDER = 57      'A folder that contains only subfolders As child items.
-            DRIVEUNKNOWN = 58       'Unknown drive type.
-            DRIVEDVD = 59           'DVD drive.
-            MEDIADVD = 60           'DVD media.
-            MEDIADVDRAM = 61        'DVD-RAM media.
-            MEDIADVDRW = 62         'DVD-RW media.
-            MEDIADVDR = 63          'DVD-R media.
-            MEDIADVDROM = 64        'DVD-ROM media.
-            MEDIACDAUDIOPLUS = 65   'CD+ (enhanced audio CD) media.
-            MEDIACDRW = 66          'CD-RW media.
-            MEDIACDR = 67           'CD-R media.
-            MEDIACDBURN = 68        'A writeable CD In the process Of being burned.
-            MEDIABLANKCD = 69       'Blank writable CD media.
-            MEDIACDROM = 70         'CD-ROM media.
-            AUDIOFILES = 71         'An audio file.
-            IMAGEFILES = 72         'An image file.
-            VIDEOFILES = 73         'A video file.
-            MIXEDFILES = 74         'A mixed file.
-            FOLDERBACK = 75         'Folder back.
-            FOLDERFRONT = 76        'Folder front.
-            SHIELD = 77             'Security shield. Use For UAC prompts only.
-            WARNING = 78            'Warning.
-            INFO = 79               'Informational.
-            Error_ = 80              'Error.
-            KEY = 81                'Key.
-            SOFTWARE = 82           'Software.
-            RENAME = 83             'A UI item such As a button that issues a rename command.
-            DELETE = 84             'A UI item such As a button that issues a delete command.
-            MEDIAAUDIODVD = 85      'Audio DVD media.
-            MEDIAMOVIEDVD = 86      'Movie DVD media.
-            MEDIAENHANCEDCD = 87    'Enhanced CD media.
-            MEDIAENHANCEDDVD = 88   'Enhanced DVD media.
-            MEDIAHDDVD = 89         'High definition DVD media In the HD DVD format.
-            MEDIABLURAY = 90        'High definition DVD media In the Blu-ray Disc™ format.
-            MEDIAVCD = 91           'Video CD (VCD) media.
-            MEDIADVDPLUSR = 92      'DVD+R media.
-            MEDIADVDPLUSRW = 93     'DVD+RW media.
-            DESKTOPPC = 94          'A desktop computer.
-            MOBILEPC = 95           'A mobile computer (laptop).
-            USERS = 96              'The User Accounts Control Panel item.
-            MEDIASMARTMEDIA = 97    'Smart media.
-            MEDIACOMPACTFLASH = 98  'CompactFlash media.
-            DEVICECELLPHONE = 99    'A cell phone.
-            DEVICECAMERA = 100      'A digital camera.
-            DEVICEVIDEOCAMERA = 101 'A digital video camera.
-            DEVICEAUDIOPLAYER = 102 'An audio player.
-            NETWORKCONNECT = 103    'Connect To network.
-            INTERNET = 104          'The Network And Internet Control Panel item.
-            ZIPFILE = 105           'A compressed file With a .zip file name extension.
-            SETTINGS = 106          'The Additional Options Control Panel item.
-            DRIVEHDDVD = 132        'Windows Vista With Service Pack 1 (SP1) And later. High definition DVD drive (any type - HD DVD-ROM HD DVD-R HD-DVD-RAM) that uses the HD DVD format.
-            DRIVEBD = 133           'Windows Vista With SP1 And later. High definition DVD drive (any type - BD-ROM BD-R BD-RE) that uses the Blu-ray Disc format.
-            MEDIAHDDVDROM = 134     'Windows Vista With SP1 And later. High definition DVD-ROM media In the HD DVD-ROM format.
-            MEDIAHDDVDR = 135       'Windows Vista With SP1 And later. High definition DVD-R media In the HD DVD-R format.
-            MEDIAHDDVDRAM = 136     'Windows Vista With SP1 And later. High definition DVD-RAM media In the HD DVD-RAM format.
-            MEDIABDROM = 137        'Windows Vista With SP1 And later. High definition DVD-ROM media In the Blu-ray Disc BD-ROM format.
-            MEDIABDR = 138          'Windows Vista With SP1 And later. High definition write-once media In the Blu-ray Disc BD-R format.
-            MEDIABDRE = 139         'Windows Vista With SP1 And later. High definition read/write media In the Blu-ray Disc BD-RE format.
-            CLUSTEREDDRIVE = 140    'Windows Vista With SP1 And later. A cluster disk array.
-            MAX_ICONS = 174         'The highest valid value In the enumeration. Values over 160 are Windows 7-only icons.
+            ''' <summary>
+            ''' Blank document icon (Document Of a type With no associated application).
+            ''' </summary>
+            DOCNOASSOC = 0
+
+            ''' <summary>
+            ''' Application-associated document icon (Document Of a type With an associated application).
+            ''' </summary>
+            DOCASSOC = 1
+
+            ''' <summary>
+            ''' Generic application With no custom icon.
+            ''' </summary>
+            APPLICATION = 2
+
+            ''' <summary>
+            ''' Folder (generic unspecified state).
+            ''' </summary>
+            FOLDER = 3
+
+            ''' <summary>
+            ''' Folder (open).
+            ''' </summary>
+            FOLDEROPEN = 4
+
+            ''' <summary>
+            ''' 5.25-inch disk drive.
+            ''' </summary>
+            DRIVE525 = 5
+
+            ''' <summary>
+            ''' 3.5-inch disk drive.
+            ''' </summary>
+            DRIVE35 = 6
+
+            ''' <summary>
+            ''' Removable drive.
+            ''' </summary>
+            DRIVEREMOVE = 7
+
+            ''' <summary>
+            ''' Fixed drive (hard disk).
+            ''' </summary>
+            DRIVEFIXED = 8
+
+            ''' <summary>
+            ''' Network drive (connected).
+            ''' </summary>
+            DRIVENET = 9
+
+            ''' <summary>
+            ''' Network drive (disconnected).
+            ''' </summary>
+            DRIVENETDISABLED = 10
+
+            ''' <summary>
+            ''' CD drive.
+            ''' </summary>
+            DRIVECD = 11
+
+            ''' <summary>
+            ''' RAM disk drive.
+            ''' </summary>
+            DRIVERAM = 12
+
+            ''' <summary>
+            ''' The entire network.
+            ''' </summary>
+            WORLD = 13
+
+            ''' <summary>
+            ''' A computer On the network.
+            ''' </summary>
+            SERVER = 15
+
+            ''' <summary>
+            ''' A local printer Or print destination.
+            ''' </summary>
+            PRINTER = 16
+
+            ''' <summary>
+            ''' The Network virtual folder (FOLDERID_NetworkFolder/CSIDL_NETWORK).
+            ''' </summary>
+            MYNETWORK = 17
+
+            ''' <summary>
+            ''' The Search feature.
+            ''' </summary>
+            FIND = 22
+
+            ''' <summary>
+            ''' The Help And Support feature.
+            ''' </summary>
+            HELP = 23
+
+            ''' <summary>
+            ''' Overlay For a Shared item.
+            ''' </summary>
+            SHARE = 28
+
+            ''' <summary>
+            ''' Overlay For a shortcut.
+            ''' </summary>
+            LINK = 29
+
+            ''' <summary>
+            ''' Overlay For items that are expected To be slow To access.
+            ''' </summary>
+            SLOWFILE = 30
+
+            ''' <summary>
+            ''' The Recycle Bin (empty).
+            ''' </summary>
+            RECYCLER = 31
+
+            ''' <summary>
+            ''' The Recycle Bin (Not empty).
+            ''' </summary>
+            RECYCLERFULL = 32
+
+            ''' <summary>
+            ''' Audio CD media.
+            ''' </summary>
+            MEDIACDAUDIO = 40
+
+            ''' <summary>
+            ''' Security lock.
+            ''' </summary>
+            LOCK = 47
+
+            ''' <summary>
+            ''' A virtual folder that contains the results Of a search.
+            ''' </summary>
+            AUTOLIST = 49
+
+            ''' <summary>
+            ''' A network printer.
+            ''' </summary>
+            PRINTERNET = 50
+
+            ''' <summary>
+            ''' A server Shared On a network.
+            ''' </summary>
+            SERVERSHARE = 51
+
+            ''' <summary>
+            ''' A local fax printer.
+            ''' </summary>
+            PRINTERFAX = 52
+
+            ''' <summary>
+            ''' A network fax printer.
+            ''' </summary>
+            PRINTERFAXNET = 53
+
+            ''' <summary>
+            ''' A file that receives the output Of a Print To file operation.
+            ''' </summary>
+            PRINTERFILE = 54
+
+            ''' <summary>
+            ''' A category that results from a Stack by command To organize the contents Of a folder.
+            ''' </summary>
+            STACK = 55
+
+            ''' <summary>
+            ''' Super Video CD (SVCD) media.
+            ''' </summary>
+            MEDIASVCD = 56
+
+            ''' <summary>
+            ''' A folder that contains only subfolders As child items.
+            ''' </summary>
+            STUFFEDFOLDER = 57
+
+            ''' <summary>
+            ''' Unknown drive type.
+            ''' </summary>
+            DRIVEUNKNOWN = 58
+
+            ''' <summary>
+            ''' DVD drive.
+            ''' </summary>
+            DRIVEDVD = 59
+
+            ''' <summary>
+            ''' DVD media.
+            ''' </summary>
+            MEDIADVD = 60
+
+            ''' <summary>
+            ''' DVD-RAM media.
+            ''' </summary>
+            MEDIADVDRAM = 61
+
+            ''' <summary>
+            ''' DVD-RW media.
+            ''' </summary>
+            MEDIADVDRW = 62
+
+            ''' <summary>
+            ''' DVD-R media.
+            ''' </summary>
+            MEDIADVDR = 63
+
+            ''' <summary>
+            ''' DVD-ROM media.
+            ''' </summary>
+            MEDIADVDROM = 64
+
+            ''' <summary>
+            ''' CD+ (enhanced audio CD) media.
+            ''' </summary>
+            MEDIACDAUDIOPLUS = 65
+
+            ''' <summary>
+            ''' CD-RW media.
+            ''' </summary>
+            MEDIACDRW = 66
+
+            ''' <summary>
+            ''' CD-R media.
+            ''' </summary>
+            MEDIACDR = 67
+
+            ''' <summary>
+            ''' A writeable CD In the process Of being burned.
+            ''' </summary>
+            MEDIACDBURN = 68
+
+            ''' <summary>
+            ''' Blank writable CD media.
+            ''' </summary>
+            MEDIABLANKCD = 69
+
+            ''' <summary>
+            ''' CD-ROM media.
+            ''' </summary>
+            MEDIACDROM = 70
+
+            ''' <summary>
+            ''' An audio file.
+            ''' </summary>
+            AUDIOFILES = 71
+
+            ''' <summary>
+            ''' An image file.
+            ''' </summary>
+            IMAGEFILES = 72
+
+            ''' <summary>
+            ''' A video file.
+            ''' </summary>
+            VIDEOFILES = 73
+
+            ''' <summary>
+            ''' A mixed file.
+            ''' </summary>
+            MIXEDFILES = 74
+
+            ''' <summary>
+            ''' Folder back.
+            ''' </summary>
+            FOLDERBACK = 75
+
+            ''' <summary>
+            ''' Folder front.
+            ''' </summary>
+            FOLDERFRONT = 76
+
+            ''' <summary>
+            ''' Security shield. Use For UAC prompts only.
+            ''' </summary>
+            SHIELD = 77
+
+            ''' <summary>
+            ''' Warning.
+            ''' </summary>
+            WARNING = 78
+
+            ''' <summary>
+            ''' Informational.
+            ''' </summary>
+            INFO = 79
+
+            ''' <summary>
+            ''' Error.
+            ''' </summary>
+            [Error] = 80
+
+            ''' <summary>
+            ''' Key.
+            ''' </summary>
+            KEY = 81
+
+            ''' <summary>
+            ''' Software.
+            ''' </summary>
+            SOFTWARE = 82
+
+            ''' <summary>
+            ''' A UI item such As a button that issues a rename command.
+            ''' </summary>
+            RENAME = 83
+
+            ''' <summary>
+            ''' A UI item such As a button that issues a delete command.
+            ''' </summary>
+            DELETE = 84
+
+            ''' <summary>
+            ''' Audio DVD media.
+            ''' </summary>
+            MEDIAAUDIODVD = 85
+
+            ''' <summary>
+            ''' Movie DVD media.
+            ''' </summary>
+            MEDIAMOVIEDVD = 86
+
+            ''' <summary>
+            ''' Enhanced CD media.
+            ''' </summary>
+            MEDIAENHANCEDCD = 87
+
+            ''' <summary>
+            ''' Enhanced DVD media.
+            ''' </summary>
+            MEDIAENHANCEDDVD = 88
+
+            ''' <summary>
+            ''' High definition DVD media In the HD DVD format.
+            ''' </summary>
+            MEDIAHDDVD = 89
+
+            ''' <summary>
+            ''' High definition DVD media In the Blu-ray Disc™ format.
+            ''' </summary>
+            MEDIABLURAY = 90
+
+            ''' <summary>
+            ''' Video CD (VCD) media.
+            ''' </summary>
+            MEDIAVCD = 91
+
+            ''' <summary>
+            ''' DVD+R media.
+            ''' </summary>
+            MEDIADVDPLUSR = 92
+
+            ''' <summary>
+            ''' DVD+RW media.
+            ''' </summary>
+            MEDIADVDPLUSRW = 93
+
+            ''' <summary>
+            ''' A desktop computer.
+            ''' </summary>
+            DESKTOPPC = 94
+
+            ''' <summary>
+            ''' A mobile computer (laptop).
+            ''' </summary>
+            MOBILEPC = 95
+
+            ''' <summary>
+            ''' The User Accounts Control Panel item.
+            ''' </summary>
+            USERS = 96
+
+            ''' <summary>
+            ''' Smart media.
+            ''' </summary>
+            MEDIASMARTMEDIA = 97
+
+            ''' <summary>
+            ''' CompactFlash media.
+            ''' </summary>
+            MEDIACOMPACTFLASH = 98
+
+            ''' <summary>
+            ''' A cell phone.
+            ''' </summary>
+            DEVICECELLPHONE = 99
+
+            ''' <summary>
+            ''' A digital camera.
+            ''' </summary>
+            DEVICECAMERA = 100
+
+            ''' <summary>
+            ''' A digital video camera.
+            ''' </summary>
+            DEVICEVIDEOCAMERA = 101
+
+            ''' <summary>
+            ''' An audio player.
+            ''' </summary>
+            DEVICEAUDIOPLAYER = 102
+
+            ''' <summary>
+            ''' Connect To network.
+            ''' </summary>
+            NETWORKCONNECT = 103
+
+            ''' <summary>
+            ''' The Network And Internet Control Panel item.
+            ''' </summary>
+            INTERNET = 104
+
+            ''' <summary>
+            ''' A compressed file With a .zip file name extension.
+            ''' </summary>
+            ZIPFILE = 105
+
+            ''' <summary>
+            ''' The Additional Options Control Panel item.
+            ''' </summary>
+            SETTINGS = 106
+
+            ''' <summary>
+            ''' High definition DVD drive (any type - HD DVD-ROM HD DVD-R HD-DVD-RAM) that uses the HD DVD format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            DRIVEHDDVD = 132
+
+            ''' <summary>
+            ''' High definition DVD drive (any type - BD-ROM BD-R BD-RE) that uses the Blu-ray Disc format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            DRIVEBD = 133
+
+            ''' <summary>
+            ''' High definition DVD-ROM media In the HD DVD-ROM format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIAHDDVDROM = 134
+
+            ''' <summary>
+            ''' High definition DVD-R media In the HD DVD-R format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIAHDDVDR = 135
+
+            ''' <summary>
+            ''' High definition DVD-RAM media In the HD DVD-RAM format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIAHDDVDRAM = 136
+
+            ''' <summary>
+            ''' High definition DVD-ROM media In the Blu-ray Disc BD-ROM format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIABDROM = 137
+
+            ''' <summary>
+            ''' High definition write-once media In the Blu-ray Disc BD-R format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIABDR = 138
+
+            ''' <summary>
+            ''' High definition read/write media In the Blu-ray Disc BD-RE format.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            MEDIABDRE = 139
+
+            ''' <summary>
+            ''' A cluster disk array.
+            ''' Windows Vista With Service Pack 1 (SP1) And later. 
+            ''' </summary>
+            CLUSTEREDDRIVE = 140
+
+            ''' <summary>
+            ''' The highest valid value In the enumeration. Values over 160 are Windows 7-only icons.
+            ''' </summary>
+            MAX_ICONS = 174
         End Enum
+
+        <DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+        End Sub
+
+        Public Const SHCNE_ASSOCCHANGED = &H8000000
+        Public Const SHCNF_IDLIST = 0
 
         <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
         Public Structure SHSTOCKICONINFO

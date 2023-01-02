@@ -2822,6 +2822,33 @@ End Class
     End Property
 
 
+    Public Property SelectionStart As Integer
+        Get
+            Return TB.SelectionStart
+        End Get
+        Set(value As Integer)
+            TB.SelectionStart = CInt(value)
+        End Set
+    End Property
+
+    Public Property SelectionLength As Integer
+        Get
+            Return TB.SelectionLength
+        End Get
+        Set(value As Integer)
+            TB.SelectionLength = CInt(value)
+        End Set
+    End Property
+
+    Public Property SelectedText As String
+        Get
+            Return TB.SelectedText
+        End Get
+        Set(value As String)
+            TB.SelectedText = CStr(value)
+        End Set
+    End Property
+
 
 #Region "Line Color Property"
     Private LineColorValue As Color = Color.DodgerBlue
@@ -2966,6 +2993,8 @@ End Class
     Private Sub UpdateHint()
         SendMessage(TB.Handle, EM_SETCUEBANNER, 1, Hint)
     End Sub
+
+
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
