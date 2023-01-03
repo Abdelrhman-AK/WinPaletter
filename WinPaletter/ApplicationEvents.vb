@@ -337,10 +337,11 @@ Namespace My
         End Sub
 
         Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
             If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
 
-            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
             Dim S As New Stopwatch
 
             If R1.GetValue("BackgroundType") = 0 Then
@@ -382,14 +383,14 @@ Namespace My
 
         Public Function GetCurrentWallpaper() As Bitmap
             'Gets Wallpaper Path
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
             Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
             If R1 IsNot Nothing Then R1.Close()
 
             'Gets Wallpaper Type (Valid only for Windows 10\11)
             Dim WallpaperType As Integer = 0
             If Not My.W7 And Not My.W8 Then
-                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
                 If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
                 WallpaperType = R2.GetValue("BackgroundType")
                 If R2 IsNot Nothing Then R2.Close()

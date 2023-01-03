@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-Imports WinPaletter.NativeMethods
+﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -27,13 +26,13 @@ Public Class Metrics_Fonts
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon2)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon3)
 
-        XenonFakeIcon1.Title = "Icon #1"
-        XenonFakeIcon2.Title = "Icon #2"
-        XenonFakeIcon3.Title = "Icon #3"
+        XenonFakeIcon1.Title = "Icon 1"
+        XenonFakeIcon2.Title = "Icon 2"
+        XenonFakeIcon3.Title = "Icon 3"
 
-        XenonFakeIcon1.Icon = My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-        XenonFakeIcon2.Icon = My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-        XenonFakeIcon3.Icon = My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+        XenonFakeIcon1.Icon = MainFrm.Icon 'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+        XenonFakeIcon2.Icon = My.Resources.fileextension  'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+        XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall 'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
 
@@ -68,6 +67,7 @@ Public Class Metrics_Fonts
         [ToXenonWindow].Win7Noise = [FromXenonWindow].Win7Noise
         [ToXenonWindow].Win8 = [FromXenonWindow].Win8
         [ToXenonWindow].Win8Lite = [FromXenonWindow].Win8Lite
+        [ToXenonWindow].Padding = [FromXenonWindow].Padding
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -298,12 +298,7 @@ Public Class Metrics_Fonts
     Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
         i_s_h.Text = sender.Value
 
-        XenonFakeIcon1.Width = sender.Value + 18
-        XenonFakeIcon2.Width = sender.Value + 18
-        XenonFakeIcon3.Width = sender.Value + 18
-
-
-        XenonFakeIcon3.Left = XenonFakeIcon1.Right
+        XenonFakeIcon3.Left = (XenonFakeIcon1.Left + (80 / 100) * XenonTrackbar6.Value) * XenonFakeIcon1.Width / (48 + 18)
 
         XenonFakeIcon3.SendToBack()
         XenonFakeIcon1.BringToFront()
@@ -311,7 +306,9 @@ Public Class Metrics_Fonts
 
     Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
         i_s_v.Text = sender.Value
-        XenonFakeIcon2.Top = XenonFakeIcon1.Bottom + sender.Value - 45
+
+        XenonFakeIcon2.Top = (XenonFakeIcon1.Top + (100 / 75) * XenonTrackbar4.Value) * XenonFakeIcon1.Height / (48 + 35)
+
         XenonFakeIcon2.SendToBack()
         XenonFakeIcon1.BringToFront()
     End Sub
@@ -386,17 +383,18 @@ Public Class Metrics_Fonts
         XenonFakeIcon3.Height = sender.Value + 35
 
         If sender.Value > 64 Then
-            XenonFakeIcon1.Width = sender.Value + 28
-            XenonFakeIcon2.Width = sender.Value + 28
-            XenonFakeIcon3.Width = sender.Value + 28
+            XenonFakeIcon1.Width = sender.Value + 18
+            XenonFakeIcon2.Width = sender.Value + 18
+            XenonFakeIcon3.Width = sender.Value + 18
         Else
-            XenonFakeIcon1.Width = XenonTrackbar6.Value + 18
-            XenonFakeIcon2.Width = XenonTrackbar6.Value + 18
-            XenonFakeIcon3.Width = XenonTrackbar6.Value + 18
+            XenonFakeIcon1.Width = XenonTrackbar6.Value + 8
+            XenonFakeIcon2.Width = XenonTrackbar6.Value + 8
+            XenonFakeIcon3.Width = XenonTrackbar6.Value + 8
         End If
 
-        XenonFakeIcon2.Top = XenonFakeIcon1.Bottom + XenonTrackbar4.Value - 45
-        XenonFakeIcon3.Left = XenonFakeIcon1.Right
+        XenonFakeIcon2.Top = (XenonFakeIcon1.Top + (100 / 75) * XenonTrackbar4.Value) * XenonFakeIcon1.Height / (48 + 35)
+
+        XenonFakeIcon3.Left = (XenonFakeIcon1.Left + (80 / 100) * XenonTrackbar6.Value) * XenonFakeIcon1.Width / (48 + 18)
 
     End Sub
 
@@ -541,5 +539,17 @@ Public Class Metrics_Fonts
     Private Sub s_w_Click(sender As Object, e As EventArgs) Handles s_w.Click
         Dim response As String = InputBox("Input value", Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton13_Click_2(sender As Object, e As EventArgs) Handles XenonButton13.Click
+        If XenonWindow1.Visible Then
+            RetroWindow1.Visible = True
+            XenonWindow1.Visible = False
+            XenonWindow2.Visible = False
+        Else
+            RetroWindow1.Visible = False
+            XenonWindow1.Visible = True
+            XenonWindow2.Visible = True
+        End If
     End Sub
 End Class

@@ -4459,7 +4459,7 @@ Public Class XenonFakeIcon : Inherits Panel
     End Property
 
     Public Property ColorText As Color = Color.White
-    Public Property ColorGlow As Color = Color.FromArgb(100, 0, 0, 0)
+    Public Property ColorGlow As Color = Color.FromArgb(50, 0, 0, 0)
     Public Property Icon As Icon
     Public Property Title As String = "New Folder"
 
@@ -4482,8 +4482,8 @@ Public Class XenonFakeIcon : Inherits Panel
 
         Dim IconRect As New Rectangle(0, 0, Width - 1, Height - 30)
 
-        Dim LabelRect As New Rectangle(0, Height - 30, Width - 1, 30)
-        Dim LabelRectShadow As New Rectangle(1, Height - 29, Width - 1, 30)
+        Dim LabelRect As New Rectangle(0, Height - 35, Width - 1, 30)
+        Dim LabelRectShadow As New Rectangle(1, Height - 34, Width - 1, 30)
 
         If _IconSize < 16 Then _IconSize = 16
         If _IconSize > 256 Then _IconSize = 256
