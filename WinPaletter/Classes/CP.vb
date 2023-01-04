@@ -2001,13 +2001,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
 
-            If My.Application.isElevated Then
+            If My.isElevated Then
                 If Registry.LocalMachine.OpenSubKey(KeyName, True) Is Nothing Then Registry.LocalMachine.CreateSubKey(KeyName, True)
             End If
 
         End If
 
-        If Not LocalMacine Or (LocalMacine And My.Application.isElevated) Then
+        If Not LocalMacine Or (LocalMacine And My.isElevated) Then
 
             R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegType)
 
@@ -2420,7 +2420,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End If
     End Sub
     Private Sub AddException([Label] As String, [Exception] As Exception)
-        My.Application.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
+        My.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
     End Sub
 #End Region
 
@@ -2480,7 +2480,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Info.Author = Environment.UserName
                 Info.AppVersion = My.Application.Info.Version.ToString
                 Info.PaletteVersion = "1.0"
-                Info.PaletteName = My.Application.LanguageHelper.CurrentMode
+                Info.PaletteName = My.Lang.CurrentMode
 #End Region
 
 #Region "Windows 11/10"
@@ -3371,18 +3371,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    If Not My.[Settings].Terminal_Path_Deflection Then
                         TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     Else
-                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                            TerDir = My.[Settings].Terminal_Stable_Path
                         Else
                             TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
 
-                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                            TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
                             TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
@@ -3670,7 +3670,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 Windows10.ApplyAccentonTaskbar = Windows11.ApplyAccentonTaskbar
                             End If
                         Catch
-                            MsgBox(My.Application.LanguageHelper.WPTH_OldGen_LoadError, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                            MsgBox(My.Lang.WPTH_OldGen_LoadError, My.Application.MsgboxRt(MsgBoxStyle.Critical))
                         End Try
                     End If
 
@@ -3863,7 +3863,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 
                 If ReportProgress Then
-                    My.Application.Saving_Exceptions.Clear()
+                    My.Saving_Exceptions.Clear()
                     [TreeView].Nodes.Clear()
 
                     Dim OS As String
@@ -3873,7 +3873,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         OS = "Windows 10"
                     ElseIf My.W8 Then
                         OS = "Windows 8.1"
-                    ElseIf My.w7 Then
+                    ElseIf My.W7 Then
                         OS = "Windows 7"
                     Else
                         OS = "Windows 11 or Higher"
@@ -3883,7 +3883,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     AddNode([TreeView], String.Format("{0}: Applying Started", Now.ToLongTimeString), "info")
 
-                    If Not My.Application.isElevated Then
+                    If Not My.isElevated Then
                         AddNode([TreeView], String.Format("{0}: Writing to registry without administrator rights by deflection", Now.ToLongTimeString), "admin")
                         AddNode([TreeView], String.Format("{0}: This deflection takes time longer than if you start as administrator", Now.ToLongTimeString), "admin")
                     End If
@@ -4211,18 +4211,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    If Not My.[Settings].Terminal_Path_Deflection Then
                         TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     Else
-                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                            TerDir = My.[Settings].Terminal_Stable_Path
                         Else
                             TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
 
-                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                            TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
                             TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
@@ -4250,7 +4250,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         Else
 
-                            If Not My.Application._Settings.Terminal_Path_Deflection Then
+                            If Not My.[Settings].Terminal_Path_Deflection Then
                                 AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it isn't installed.", Now.ToLongTimeString), "skip")
                             Else
                                 AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as deflected file isn't found.", Now.ToLongTimeString), "skip")
@@ -4280,7 +4280,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             End Try
 
                         Else
-                            If Not My.Application._Settings.Terminal_Path_Deflection Then
+                            If Not My.[Settings].Terminal_Path_Deflection Then
                                 AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it isn't installed.", Now.ToLongTimeString), "skip")
                             Else
                                 AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as deflected file isn't found.", Now.ToLongTimeString), "skip")
@@ -4359,7 +4359,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
 
-                If Info.AppVersion < "1.0.6.9" Or My.Application._Settings.SaveForLegacyWP Then
+                If Info.AppVersion < "1.0.6.9" Or My.[Settings].SaveForLegacyWP Then
 
                     Try
                         With If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, Windows11, Windows10)
@@ -4383,7 +4383,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             tx.Add("</LegacyWinPaletter_Windows11/10>" & vbCrLf)
                         End With
                     Catch
-                        MsgBox(My.Application.LanguageHelper.WPTH_OldGen_SaveError, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                        MsgBox(My.Lang.WPTH_OldGen_SaveError, My.Application.MsgboxRt(MsgBoxStyle.Critical))
                     End Try
 
                 End If
@@ -4657,7 +4657,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 
             For x = 0 To bmpList.Count - 1
-                If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
+                If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Lang.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
 
                 If LogonUI7.Grayscale Then bmpList(x) = bmpList(x).Grayscale
                 If LogonUI7.Blur Then bmpList(x) = bmpList(x).Blur(LogonUI7.Blur_Intensity)
@@ -4757,7 +4757,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmp = My.Application.GetCurrentWallpaper
             End Select
 
-            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
             If LogonUI7.Grayscale Then bmp = bmp.Grayscale
             If LogonUI7.Blur Then bmp = bmp.Blur(LogonUI7.Blur_Intensity)
@@ -4770,7 +4770,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Public Sub Apply_CommandPrompt()
         If CommandPrompt.Enabled Then
             Console_Structure.Save_Console_To_Registry("", CommandPrompt)
-            If My.Application._Settings.CMD_OverrideUserPreferences Then Console_Structure.Save_Console_To_Registry("%SystemRoot%_System32_cmd.exe", CommandPrompt)
+            If My.[Settings].CMD_OverrideUserPreferences Then Console_Structure.Save_Console_To_Registry("%SystemRoot%_System32_cmd.exe", CommandPrompt)
         End If
     End Sub
 
@@ -4796,7 +4796,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         If Cursors_Enabled Then
             Dim sw As New Stopwatch
-            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
 
             sw.Reset()
             sw.Start()
@@ -4825,13 +4825,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Try
                 sw.Reset()
                 sw.Start()
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_RenderingCursors, Now.ToLongTimeString), "info")
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCursors, Now.ToLongTimeString), "info")
                 ExportCursors(Me)
                 sw.Stop()
                 If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
 
-                If My.Application._Settings.AutoApplyCursors Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Application.LanguageHelper.CP_ApplyingCursors, Now.ToLongTimeString), "info")
+                If My.[Settings].AutoApplyCursors Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_ApplyingCursors, Now.ToLongTimeString), "info")
                     sw.Reset()
                     sw.Start()
                     ApplyCursorsToReg()
@@ -4850,7 +4850,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Try
         Else
 
-            If My.Application._Settings.ResetCursorsToAero Then
+            If My.[Settings].ResetCursorsToAero Then
                 ResetCursorsToAero()
             End If
 

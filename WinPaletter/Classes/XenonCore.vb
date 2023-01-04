@@ -97,7 +97,7 @@ Public Class XenonCore
             Catch ex As Exception
                 If [TreeView] IsNot Nothing Then
                     CP.AddNode([TreeView], String.Format("{0}: Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", Now.ToLongTimeString), "error")
-                    My.Application.Saving_Exceptions.Add(New Tuple(Of String, Exception)("Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", ex))
+                    My.Saving_Exceptions.Add(New Tuple(Of String, Exception)("Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", ex))
                 End If
             End Try
         End With
@@ -165,7 +165,7 @@ Public Class XenonCore
             Return True
         Else
             Try
-                If My.Application._Settings.Appearance_Auto Then
+                If My.[Settings].Appearance_Auto Then
                     i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
                     If i = 1 Then
                         Return False
@@ -173,11 +173,11 @@ Public Class XenonCore
                         Return True
                     End If
                 Else
-                    Return My.Application._Settings.Appearance_Dark
+                    Return My.[Settings].Appearance_Dark
                 End If
             Catch
                 Try
-                    Return My.Application._Settings.Appearance_Dark
+                    Return My.[Settings].Appearance_Dark
                 Catch
                     Return True
                 End Try

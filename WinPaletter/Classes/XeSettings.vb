@@ -274,7 +274,7 @@ Public Class XeSettings
             Case Mode.File
                 Dim l As New List(Of String)
                 l.Clear()
-                l.Add("WinPaletter_Settings_Exported")
+                l.Add("WinPaletter[Settings]_Exported")
                 l.Add(String.Format("Date: {0}", Now))
                 l.Add("")
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))

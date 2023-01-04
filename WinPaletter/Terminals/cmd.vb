@@ -17,8 +17,8 @@ Public Class cmd
     Private Sub cmd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         ApplyDarkMode(Me)
-        XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
-        FillFonts(CMD_FontsBox, Not My.Application._Settings.Terminal_OtherFonts)
+        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
+        FillFonts(CMD_FontsBox, Not My.[Settings].Terminal_OtherFonts)
         RasterList.BringToFront()
 
         ApplyFromCP(MainFrm.CP, _Edition)
@@ -54,8 +54,8 @@ Public Class cmd
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
             FillFonts(CMD_FontsBox, Not XenonCheckBox1.Checked)
-            My.Application._Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
-            My.Application._Settings.Save(XeSettings.Mode.Registry)
+            My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
+            My.[Settings].Save(XeSettings.Mode.Registry)
         End If
     End Sub
 
@@ -65,11 +65,11 @@ Public Class cmd
         [ListBox].Items.Clear()
 
         If Not FixedPitch Then
-            For Each x As String In My.Application.FontsList
+            For Each x As String In My.FontsList
                 [ListBox].Items.Add(x)
             Next
         Else
-            For Each x As String In My.Application.FontsFixedList
+            For Each x As String In My.FontsFixedList
                 [ListBox].Items.Add(x)
             Next
         End If
@@ -105,7 +105,7 @@ Public Class cmd
 
             Cursor = Cursors.Default
         Else
-            MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.CMD_Enable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
         End If
 
     End Sub
@@ -910,7 +910,7 @@ Public Class cmd
     End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        MsgBox(My.Application.LanguageHelper.CMD_NotAllWeights, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Lang.CMD_NotAllWeights, My.Application.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

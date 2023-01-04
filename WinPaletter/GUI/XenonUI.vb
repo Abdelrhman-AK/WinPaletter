@@ -3,7 +3,6 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
-Imports AnimatorNS
 Imports WinPaletter.XenonCore
 
 #Region "Helpers"
@@ -130,9 +129,9 @@ Module XenonModule
             If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
                 Return False
             Else
-                If My.WindowsVersions.W11 Or My.WindowsVersions.W7 Then
+                If My.W11 Or My.W7 Then
                     Return True
-                ElseIf My.WindowsVersions.W10 Or My.WindowsVersions.W8 Then
+                ElseIf My.W10 Or My.W8 Then
                     Return False
                 Else
                     Return False
@@ -337,8 +336,8 @@ Public Class XenonColorPalette
 
         If [Control] Is Nothing Then Exit Sub
 
-        'Try               'Try is a must because designer can't access My.Application._Settings in designer mode
-        'If My.Application._Settings.Appearance_AdaptColors Then
+        'Try               'Try is a must because designer can't access My.[Settings] in designer mode
+        'If My.[Settings].Appearance_AdaptColors Then
         'Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
         'Dim Cx As Color = Color.FromArgb(255, x(12), x(13), x(14))
         'BaseColor = Cx 'If(GetDarkMode(), Cx, 0.2), Cx, 0.5))
@@ -1762,7 +1761,7 @@ Public Class XenonCP
         DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect, R)
 
         If Not DesignMode Then
-            If My.Application._Settings.Nerd_Stats And Not ForceNoNerd Then
+            If My.[Settings].Nerd_Stats And Not ForceNoNerd Then
                 G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
                 Dim IsDefault As Boolean = (BackColor = DefaultColor)
                 Dim FC0 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
@@ -1775,13 +1774,13 @@ Public Class XenonCP
                 RectX.Y += 1
 
                 Dim CF As ColorFormat = ColorFormat.HEX
-                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
-                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
-                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
-                If My.Application._Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
+                If My.[Settings].Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
+                If My.[Settings].Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
+                If My.[Settings].Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
+                If My.[Settings].Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
 
 
-                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.Application._Settings.Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
+                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.[Settings].Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
                 Dim F As Font
 
                 If IsDefault Then
@@ -4402,7 +4401,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
     Sub GetBack()
         Try
-            adaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat)
+            adaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)
         Catch : End Try
 
         Try : If Transparency Then
@@ -5390,11 +5389,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
     Sub ProcessBack()
         If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
-            Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
+            Try : AdaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat) : Catch : End Try
             Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
             Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
         Else
-            Try : AdaptedBack = My.Application.Wallpaper.Clone(Bounds, My.Application.Wallpaper.PixelFormat) : Catch : End Try
+            Try : AdaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat) : Catch : End Try
         End If
     End Sub
 End Class
@@ -6629,7 +6628,7 @@ Public Class XenonTerminal
     End Sub
 
     Sub GetBack()
-        adaptedBack = My.Application.Wallpaper '.Clone(RectangleToScreen(Bounds), My.Application.Wallpaper.PixelFormat)
+        adaptedBack = My.Wallpaper '.Clone(RectangleToScreen(Bounds), My.Wallpaper.PixelFormat)
         adaptedBackBlurred = New Bitmap(adaptedBack).Blur(13)
     End Sub
 

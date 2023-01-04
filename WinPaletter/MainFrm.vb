@@ -43,11 +43,11 @@ Public Class MainFrm
 
                 Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows11.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
-                W11_lbl5.Text = My.Application.LanguageHelper.CP_11_Settings
-                W11_lbl6.Text = My.Application.LanguageHelper.CP_11_SomePressedButtons
-                W11_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
-                W11_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
-                W11_pic5.Image = My.Resources.Mini_SettingsIcons
+                W11_lbl5.Text = My.Lang.CP_11_Settings
+                W11_lbl6.Text = My.Lang.CP_11_SomePressedButtons
+                W11_lbl7.Text = My.Lang.CP_Undefined
+                W11_lbl8.Text = My.Lang.CP_Undefined
+                W11_pic5.Image = My.Resources.Mini_Settings_Icons
                 W11_pic6.Image = My.Resources.Mini_PressedButton
                 W11_pic7.Image = My.Resources.Mini_Undefined
                 W11_pic8.Image = My.Resources.Mini_Undefined
@@ -55,10 +55,10 @@ Public Class MainFrm
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        W11_lbl1.Text = My.Application.LanguageHelper.CP_11_StartMenu_Taskbar_AC
-                        W11_lbl2.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
-                        W11_lbl3.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
-                        W11_lbl4.Text = My.Application.LanguageHelper.CP_Undefined
+                        W11_lbl1.Text = My.Lang.CP_11_StartMenu_Taskbar_AC
+                        W11_lbl2.Text = My.Lang.CP_11_ACHover_Links
+                        W11_lbl3.Text = My.Lang.CP_11_Lines_Toggles_Buttons
+                        W11_lbl4.Text = My.Lang.CP_Undefined
 
                         W11_pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         W11_pic2.Image = My.Resources.Mini_ACHover_Links
@@ -67,10 +67,10 @@ Public Class MainFrm
 
 
                     Case False   ''''''''''Light
-                        W11_lbl1.Text = My.Application.LanguageHelper.CP_11_ACHover_Links
-                        W11_lbl2.Text = My.Application.LanguageHelper.CP_11_StartMenu_AC
-                        W11_lbl3.Text = My.Application.LanguageHelper.CP_11_Taskbar
-                        W11_lbl4.Text = My.Application.LanguageHelper.CP_11_Lines_Toggles_Buttons
+                        W11_lbl1.Text = My.Lang.CP_11_ACHover_Links
+                        W11_lbl2.Text = My.Lang.CP_11_StartMenu_AC
+                        W11_lbl3.Text = My.Lang.CP_11_Taskbar
+                        W11_lbl4.Text = My.Lang.CP_11_Lines_Toggles_Buttons
 
                         W11_pic1.Image = My.Resources.Mini_ACHover_Links
                         W11_pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
@@ -175,135 +175,135 @@ Public Class MainFrm
 
                 Select Case Not [CP].Windows10.WinMode_Light
                     Case True ''''''''''Dark
-                        W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                        W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                        W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                        W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                        W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+                        W10_lbl2.Text = My.Lang.CP_10_ACLinks
+                        W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
+                        W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                        W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
+                        W10_lbl7.Text = My.Lang.CP_Undefined
 
                         W10_pic2.Image = My.Resources.Mini_ACHover_Links
                         W10_pic3.Image = My.Resources.Mini_TaskbarApp
-                        W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                        W10_pic5.Image = My.Resources.Mini_Settings_Icons
                         W10_pic6.Image = My.Resources.Native10
                         W10_pic7.Image = My.Resources.Mini_Undefined
 
                         If [CP].Windows10.Transparency Then
-                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
-                            W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                            W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            W10_lbl1.Text = My.Lang.CP_10_Hamburger
+                            W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC
+                            W10_lbl8.Text = My.Lang.CP_10_Taskbar
 
                             W10_pic1.Image = My.Resources.Mini_Hamburger
                             W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                             W10_pic8.Image = My.Resources.Mini_Taskbar
 
                             If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_Taskbar_SomeBtns
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_Taskbar_SomeBtns
                             End If
 
                         Else
-                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                            W10_lbl1.Text = My.Lang.CP_10_Taskbar
                             W10_pic1.Image = My.Resources.Mini_Taskbar
                             W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
 
                             If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
-                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
+                                W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC_TaskbarActiveApp
                             Else
-                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
+                                W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC
                             End If
 
-                            W10_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+                            W10_lbl8.Text = My.Lang.CP_Undefined
                             W10_pic8.Image = My.Resources.Mini_Undefined
 
                         End If
 
                     Case False ''''''''''Light
                         If [CP].Windows10.Transparency Then
-                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Hamburger
-                            W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                            W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                            W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+                            W10_lbl1.Text = My.Lang.CP_10_Hamburger
+                            W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC
+                            W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
+                            W10_lbl7.Text = My.Lang.CP_Undefined
 
                             W10_pic1.Image = My.Resources.Mini_Hamburger
                             W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                            W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                            W10_pic5.Image = My.Resources.Mini_Settings_Icons
                             W10_pic6.Image = My.Resources.Native10
                             W10_pic7.Image = My.Resources.Mini_Undefined
                             W10_pic8.Image = My.Resources.Mini_Taskbar
 
                             If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+                                W10_lbl2.Text = My.Lang.CP_Undefined
+                                W10_lbl3.Text = My.Lang.CP_Undefined
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks
 
                                 W10_pic2.Image = My.Resources.Mini_Undefined
                                 W10_pic3.Image = My.Resources.Mini_Undefined
 
                             ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar_ACLinks
+                                W10_lbl2.Text = My.Lang.CP_Undefined
+                                W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks
 
                                 W10_pic2.Image = My.Resources.Mini_Undefined
                                 W10_pic3.Image = My.Resources.Mini_TaskbarApp
 
                             Else
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_Taskbar
+                                W10_lbl2.Text = My.Lang.CP_10_ACLinks
+                                W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_10_Taskbar
 
                                 W10_pic2.Image = My.Resources.Mini_ACHover_Links
                                 W10_pic3.Image = My.Resources.Mini_TaskbarApp
 
                             End If
                         Else
-                            W10_lbl1.Text = My.Application.LanguageHelper.CP_10_Taskbar
-                            W10_lbl6.Text = My.Application.LanguageHelper.CP_10_StartMenuIconHover
-                            W10_lbl7.Text = My.Application.LanguageHelper.CP_Undefined
+                            W10_lbl1.Text = My.Lang.CP_10_Taskbar
+                            W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
+                            W10_lbl7.Text = My.Lang.CP_Undefined
 
                             W10_pic1.Image = My.Resources.Mini_Taskbar
                             W10_pic6.Image = My.Resources.Native10
                             W10_pic7.Image = My.Resources.Mini_Undefined
 
                             If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                W10_lbl2.Text = My.Lang.CP_Undefined
+                                W10_lbl3.Text = My.Lang.CP_Undefined
+                                W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_10_ACLinks
 
                                 W10_pic2.Image = My.Resources.Mini_Undefined
                                 W10_pic3.Image = My.Resources.Mini_Undefined
                                 W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic5.Image = My.Resources.Mini_Settings_Icons
                                 W10_pic8.Image = My.Resources.Mini_ACHover_Links
 
                             ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_Undefined
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_TaskbarFocusedApp_StartButtonHover
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_10_ACLinks
+                                W10_lbl2.Text = My.Lang.CP_Undefined
+                                W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
+                                W10_lbl4.Text = My.Lang.CP_10_TaskbarFocusedApp_StartButtonHover
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_10_ACLinks
 
                                 W10_pic2.Image = My.Resources.Mini_Undefined
                                 W10_pic3.Image = My.Resources.Mini_TaskbarApp
                                 W10_pic4.Image = My.Resources.Mini_TaskbarActiveIcon
-                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic5.Image = My.Resources.Mini_Settings_Icons
                                 W10_pic8.Image = My.Resources.Mini_ACHover_Links
 
                             Else
-                                W10_lbl2.Text = My.Application.LanguageHelper.CP_10_ACLinks
-                                W10_lbl3.Text = My.Application.LanguageHelper.CP_10_TaskbarAppUnderline
-                                W10_lbl4.Text = My.Application.LanguageHelper.CP_10_StartMenu_AC_TaskbarActiveApp
-                                W10_lbl5.Text = My.Application.LanguageHelper.CP_10_Settings_Links_SomeBtns
-                                W10_lbl8.Text = My.Application.LanguageHelper.CP_Undefined
+                                W10_lbl2.Text = My.Lang.CP_10_ACLinks
+                                W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
+                                W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC_TaskbarActiveApp
+                                W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                                W10_lbl8.Text = My.Lang.CP_Undefined
 
                                 W10_pic2.Image = My.Resources.Mini_ACHover_Links
                                 W10_pic3.Image = My.Resources.Mini_TaskbarApp
                                 W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                                W10_pic5.Image = My.Resources.Mini_SettingsIcons
+                                W10_pic5.Image = My.Resources.Mini_Settings_Icons
                                 W10_pic8.Image = My.Resources.Mini_Undefined
                             End If
                         End If
@@ -510,7 +510,7 @@ Public Class MainFrm
 #End Region
             Case WinVer.Eight
 #Region "Win8.1"
-                If My.W8 And My.Application._Settings.Win7LivePreview Then
+                If My.W8 And My.[Settings].Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
 
@@ -542,7 +542,7 @@ Public Class MainFrm
 
             Case WinVer.Seven
 #Region "Win7"
-                If My.W7 And My.Application._Settings.Win7LivePreview And _Shown Then
+                If My.W7 And My.[Settings].Win7LivePreview And _Shown Then
                     RefreshDWM([CP])
                 End If
 
@@ -711,7 +711,7 @@ Public Class MainFrm
     End Sub
 
     Sub Adjust_Preview()
-        If _Shown Then My.Application.AnimatorX.HideSync(pnl_preview)
+        If _Shown Then My.[AnimatorNS].HideSync(pnl_preview)
 
         Panel3.Visible = True
         lnk_preview.Visible = True
@@ -855,12 +855,12 @@ Public Class MainFrm
 
         ReValidateLivePreview(pnl_preview)
 
-        If _Shown Then My.Application.AnimatorX.ShowSync(pnl_preview)
+        If _Shown Then My.[AnimatorNS].ShowSync(pnl_preview)
     End Sub
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
         themename_lbl.Text = String.Format("{0} ({1})", CP.Info.PaletteName, CP.Info.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Application.LanguageHelper.By, CP.Info.Author)
+        author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, CP.Info.Author)
 
         W11_WinMode_Toggle.Checked = Not ColorPalette.Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not ColorPalette.Windows11.AppMode_Light
@@ -1019,47 +1019,47 @@ Public Class MainFrm
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Windows8.Start
             Case 1
-                W8_start.Image = My.Application.WinRes.MetroStart_1.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
             Case 2
-                W8_start.Image = My.Application.WinRes.MetroStart_2.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_2.Resize(48, 48)
             Case 3
-                W8_start.Image = My.Application.WinRes.MetroStart_3.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_3.Resize(48, 48)
             Case 4
-                W8_start.Image = My.Application.WinRes.MetroStart_4.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_4.Resize(48, 48)
             Case 5
-                W8_start.Image = My.Application.WinRes.MetroStart_5.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_5.Resize(48, 48)
             Case 6
-                W8_start.Image = My.Application.WinRes.MetroStart_6.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_6.Resize(48, 48)
             Case 7
-                W8_start.Image = My.Application.WinRes.MetroStart_7.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_7.Resize(48, 48)
             Case 8
-                W8_start.Image = My.Application.WinRes.MetroStart_8.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_8.Resize(48, 48)
             Case 9
-                W8_start.Image = My.Application.WinRes.MetroStart_9.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_9.Resize(48, 48)
             Case 10
-                W8_start.Image = My.Application.WinRes.MetroStart_10.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_10.Resize(48, 48)
             Case 11
-                W8_start.Image = My.Application.WinRes.MetroStart_11.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_11.Resize(48, 48)
             Case 12
-                W8_start.Image = My.Application.WinRes.MetroStart_12.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_12.Resize(48, 48)
             Case 13
-                W8_start.Image = My.Application.WinRes.MetroStart_13.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_13.Resize(48, 48)
             Case 14
-                W8_start.Image = My.Application.WinRes.MetroStart_14.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_14.Resize(48, 48)
             Case 15
-                W8_start.Image = My.Application.WinRes.MetroStart_15.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_15.Resize(48, 48)
             Case 16
-                W8_start.Image = My.Application.WinRes.MetroStart_16.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_16.Resize(48, 48)
             Case 17
-                W8_start.Image = My.Application.WinRes.MetroStart_17.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_17.Resize(48, 48)
             Case 18
-                W8_start.Image = My.Application.WinRes.MetroStart_18.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_18.Resize(48, 48)
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
                 W8_start.Image = My.Application.GetCurrentWallpaper.Resize(48, 48)
             Case Else
-                W8_start.Image = My.Application.WinRes.MetroStart_1.Resize(48, 48)
+                W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
         End Select
     End Sub
 
@@ -1115,8 +1115,8 @@ Public Class MainFrm
 
     Sub AutoUpdatesCheck()
         StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
-        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
-        If My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
+        If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
+        If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -1152,14 +1152,14 @@ Public Class MainFrm
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Application.LanguageHelper.NewUpdate, My.Application.LanguageHelper.OpenForActions, ver), My.Resources.notify_update, 10000)
+        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Lang.NewUpdate, My.Lang.OpenForActions, ver), My.Resources.notify_update, 10000)
     End Sub
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         Visible = False
 
-        TreeView1.ImageList = My.Application.imgLs
+        TreeView1.ImageList = My.Notifications_IL
 
         If Not My.W7 Then SetTreeViewTheme(TreeView1.Handle)
 
@@ -1168,8 +1168,8 @@ Public Class MainFrm
         MakeItDoubleBuffered(TreeView1)
         MakeItDoubleBuffered(TablessControl1)
 
-        Me.Size = New Size(My.Application._Settings.MainFormWidth, My.Application._Settings.MainFormHeight)
-        Me.WindowState = My.Application._Settings.MainFormStatus
+        Me.Size = New Size(My.[Settings].MainFormWidth, My.[Settings].MainFormHeight)
+        Me.WindowState = My.[Settings].MainFormStatus
 
         For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
@@ -1236,8 +1236,8 @@ Public Class MainFrm
             Select_W11.Checked = True
         End If
 
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Application.Wallpaper
+        pnl_preview.BackgroundImage = My.Wallpaper
+        dragPreviewer.pnl_preview.BackgroundImage = My.Wallpaper
 
         Adjust_Preview()
         ApplyCPValues(CP)
@@ -1250,7 +1250,7 @@ Public Class MainFrm
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
 
-        If My.Application._Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
+        If My.[Settings].AutoUpdatesChecking Then AutoUpdatesCheck()
 
         If My.Application.ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
@@ -1258,26 +1258,26 @@ Public Class MainFrm
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
 
         If Me.WindowState = FormWindowState.Normal Then
-            My.Application._Settings.MainFormWidth = Me.Size.Width
-            My.Application._Settings.MainFormHeight = Me.Size.Height
+            My.[Settings].MainFormWidth = Me.Size.Width
+            My.[Settings].MainFormHeight = Me.Size.Height
         End If
 
         If Me.WindowState <> FormWindowState.Minimized Then
-            My.Application._Settings.MainFormStatus = Me.WindowState
+            My.[Settings].MainFormStatus = Me.WindowState
         End If
 
-        My.Application._Settings.Save(XeSettings.Mode.Registry)
+        My.[Settings].Save(XeSettings.Mode.Registry)
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         If CP <> CP_Original Then
 
-            If My.Application._Settings.ShowSaveConfirmation Then
+            If My.[Settings].ShowSaveConfirmation Then
 
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
@@ -1310,7 +1310,7 @@ Public Class MainFrm
 
                     Case DialogResult.No
                         e.Cancel = False
-                        If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then RefreshDWM(CP_Original)
+                        If (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then RefreshDWM(CP_Original)
                         MyBase.OnFormClosing(e)
 
                     Case DialogResult.Cancel
@@ -1350,7 +1350,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.Windows11.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -1379,7 +1379,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.Windows11.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -1712,7 +1712,7 @@ Public Class MainFrm
 
     Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
 
-        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Lang.X23, My.Application.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
 #End Region
@@ -1740,7 +1740,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.Windows10.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -1769,7 +1769,7 @@ Public Class MainFrm
         CList.Clear()
 
         If Not CP.Windows10.ApplyAccentonTitlebars Then
-            Notify(My.Application.LanguageHelper.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
         End If
     End Sub
 
@@ -2177,11 +2177,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
-        MsgBox(My.Application.LanguageHelper.X23, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Lang.X23, My.Application.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
     Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
-        MsgBox(My.Application.LanguageHelper.CP_AccentOnTaskbarTib, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Lang.CP_AccentOnTaskbarTib, My.Application.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
 #End Region
@@ -2284,7 +2284,7 @@ Public Class MainFrm
         If W7_theme_classic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
-            Notify(My.Application.LanguageHelper.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
+            Notify(My.Lang.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
         End If
 
     End Sub
@@ -2492,34 +2492,34 @@ Public Class MainFrm
         XenonButton14.Visible = False
         XenonButton22.Visible = False
 
-        If My.Application._Settings.Log_ShowApplying Then
+        If My.[Settings].Log_ShowApplying Then
             TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
             TablessControl1.Refresh()
         End If
 
-        CP.Save(CP.Mode.Registry, "", If(My.Application._Settings.Log_ShowApplying, TreeView1, Nothing))
+        CP.Save(CP.Mode.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
 
         CP_Original = New CP(Mode.Registry)
 
         Cursor = Cursors.Default
 
-        If My.Application._Settings.AutoRestartExplorer Then
-            RestartExplorer(If(My.Application._Settings.Log_ShowApplying, TreeView1, Nothing))
+        If My.[Settings].AutoRestartExplorer Then
+            RestartExplorer(If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
         Else
-            If My.Application._Settings.Log_ShowApplying Then CP.AddNode(TreeView1, My.Application.LanguageHelper.NoDefResExplorer, "warning")
+            If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.Application._Settings.Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
 
         log_lbl.Visible = True
         XenonButton8.Visible = True
         XenonButton22.Visible = True
 
-        If Not My.Application.Saving_Exceptions.Count = 0 Then
+        If Not My.Saving_Exceptions.Count = 0 Then
             log_lbl.Text = "Error\s happened. Press on Show Errors for details"
             XenonButton14.Visible = True
         Else
-            If My.Application._Settings.Log_Countdown_Enabled Then
+            If My.[Settings].Log_Countdown_Enabled Then
                 ellapsedSecs = 0
                 Timer1.Enabled = True
                 Timer1.Start()
@@ -2531,9 +2531,9 @@ Public Class MainFrm
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         log_lbl.Text = String.Format("This log will close after {0} second{1}.",
-                                     My.Application._Settings.Log_Countdown - ellapsedSecs, If(My.Application._Settings.Log_Countdown - ellapsedSecs > 1, "s", ""))
+                                     My.[Settings].Log_Countdown - ellapsedSecs, If(My.[Settings].Log_Countdown - ellapsedSecs > 1, "s", ""))
 
-        If ellapsedSecs + 1 <= My.Application._Settings.Log_Countdown Then
+        If ellapsedSecs + 1 <= My.[Settings].Log_Countdown Then
             ellapsedSecs += 1
         Else
             log_lbl.Text = ""
@@ -2590,14 +2590,14 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
-        If My.Application._Settings.AutoRestartExplorer Then
-            status_lbl.Text = My.Application.LanguageHelper.X22
+        If My.[Settings].AutoRestartExplorer Then
+            status_lbl.Text = My.Lang.X22
             status_lbl.ForeColor = Color.Gold
         End If
     End Sub
 
     Private Sub XenonButton4_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
-        If My.Application._Settings.AutoRestartExplorer Then
+        If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = ""
             status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
         End If
@@ -2616,7 +2616,7 @@ Public Class MainFrm
             wpth_or_wpsf = True
             e.Effect = DragDropEffects.Copy
 
-            If My.Application._Settings.DragAndDropPreview Then
+            If My.[Settings].DragAndDropPreview Then
                 DragAccepted = True
                 CP_BeforeDragAndDrop = CP.Clone
                 dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
@@ -2636,7 +2636,7 @@ Public Class MainFrm
 
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         If DragAccepted Then
-            If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
+            If My.[Settings].DragAndDropPreview Then dragPreviewer.Close()
             CP = CP_BeforeDragAndDrop.Clone
             ApplyCPValues(CP_BeforeDragAndDrop)
             ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
@@ -2645,7 +2645,7 @@ Public Class MainFrm
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, pnl_preview.DragOver,
         PaletteContainer_W11.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
-        If DragAccepted And My.Application._Settings.DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        If DragAccepted And My.[Settings].DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
     Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, pnl_preview.DragDrop,
@@ -2655,14 +2655,14 @@ Public Class MainFrm
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
             If wpth_or_wpsf Then
-                If My.Application._Settings.DragAndDropPreview Then dragPreviewer.Close()
+                If My.[Settings].DragAndDropPreview Then dragPreviewer.Close()
 
                 If CP <> CP_Original Then
-                    If My.Application._Settings.ShowSaveConfirmation Then
+                    If My.[Settings].ShowSaveConfirmation Then
                         Select Case ComplexSave.ShowDialog
                             Case DialogResult.Yes
 
-                                Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                                Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
                                 Dim r1 As String = r(0)
                                 Dim r2 As String = r(1)
 
@@ -2676,7 +2676,7 @@ Public Class MainFrm
                                                 CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                                 CP_Original = CP.Clone
                                             Else
-                                                '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                                                '''''''' If My.[Settings].DragPreview then ReleaseBlur()
                                                 Exit Sub
                                             End If
                                         End If
@@ -2685,7 +2685,7 @@ Public Class MainFrm
                                             CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
                                             CP_Original = CP.Clone
                                         Else
-                                            '''''''' If My.Application._Settings.DragPreview then ReleaseBlur()
+                                            '''''''' If My.[Settings].DragPreview then ReleaseBlur()
                                             Exit Sub
                                         End If
                                 End Select
@@ -2731,11 +2731,11 @@ Public Class MainFrm
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
 
-            If CP <> CP_Original And My.Application._Settings.ShowSaveConfirmation Then
+            If CP <> CP_Original And My.[Settings].ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
@@ -2791,11 +2791,11 @@ Public Class MainFrm
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If CP <> CP_Original Then
-            If My.Application._Settings.ShowSaveConfirmation Then
+            If My.[Settings].ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
@@ -2876,8 +2876,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        My.Application.Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        My.Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
+        pnl_preview.BackgroundImage = My.Wallpaper
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
     End Sub
@@ -2910,11 +2910,11 @@ Public Class MainFrm
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
         If CP <> CP_Original Then
-            If My.Application._Settings.ShowSaveConfirmation Then
+            If My.[Settings].ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
@@ -2980,12 +2980,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        If XenonButton23.Text.ToLower = My.Application.LanguageHelper.Hide.ToLower Then
+        If XenonButton23.Text.ToLower = My.Lang.Hide.ToLower Then
             pnl_preview.Visible = False
-            XenonButton23.Text = My.Application.LanguageHelper.Show
+            XenonButton23.Text = My.Lang.Show
         Else
             pnl_preview.Visible = True
-            XenonButton23.Text = My.Application.LanguageHelper.Hide
+            XenonButton23.Text = My.Lang.Hide
         End If
     End Sub
 

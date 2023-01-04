@@ -5,10 +5,10 @@ Public Class Saving_ex_list
         Icon = BugReport.Icon
 
         MainFrm.SetTreeViewTheme(TreeView1.Handle)
-        TreeView1.ImageList = My.Application.imgLs
+        TreeView1.ImageList = My.Notifications_IL
         TreeView1.Nodes.Clear()
 
-        For Each x In My.Application.Saving_Exceptions
+        For Each x In My.Saving_Exceptions
             With TreeView1.Nodes.Add(x.Item1)
                 .ImageKey = "error" : .SelectedImageKey = "error"
             End With
@@ -18,7 +18,7 @@ Public Class Saving_ex_list
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
 
-        If TreeView1.SelectedNode IsNot Nothing Then BugReport.ThrowError(My.Application.Saving_Exceptions.Item(TreeView1.SelectedNode.Index).Item2)
+        If TreeView1.SelectedNode IsNot Nothing Then BugReport.ThrowError(My.Saving_Exceptions.Item(TreeView1.SelectedNode.Index).Item2)
 
     End Sub
 

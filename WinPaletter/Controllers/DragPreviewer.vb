@@ -18,7 +18,7 @@ Public Class dragPreviewer
         Opacity = 0
         Visible = False
 
-        pnl_preview.BackgroundImage = My.Application.Wallpaper
+        pnl_preview.BackgroundImage = My.Wallpaper
 
         If My.W11 Or My.W10 Then
             FormBorderStyle = FormBorderStyle.None

@@ -13,8 +13,8 @@ Public Class SettingsX
 
     Private Sub SettingsX_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         XenonComboBox2.Items.Clear()
-        XenonComboBox2.Items.Add(My.Application.LanguageHelper.Stable)
-        XenonComboBox2.Items.Add(My.Application.LanguageHelper.Beta)
+        XenonComboBox2.Items.Add(My.Lang.Stable)
+        XenonComboBox2.Items.Add(My.Lang.Beta)
         ApplyDarkMode(Me)
         LoadSettings()
     End Sub
@@ -24,7 +24,7 @@ Public Class SettingsX
 
         Changed = False
 
-        With My.Application._Settings
+        With My.[Settings]
             If .AutoAddExt <> XenonCheckBox1.Checked Then Changed = True
             If .DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
             If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
@@ -57,7 +57,7 @@ Public Class SettingsX
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox(My.Application.LanguageHelper.SaveMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel + My.Application.MsgboxRt)
+            Select Case MsgBox(My.Lang.SaveMsg, My.Application.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel))
                 Case DialogResult.Cancel
                     e.Cancel = True
                 Case DialogResult.Yes
@@ -81,7 +81,7 @@ Public Class SettingsX
     Sub LoadSettings()
         Dim sets As XeSettings
 
-        If Not _External Then sets = My.Application._Settings Else sets = New XeSettings(XeSettings.Mode.File, _File)
+        If Not _External Then sets = My.[Settings] Else sets = New XeSettings(XeSettings.Mode.File, _File)
 
         With sets
             XenonCheckBox1.Checked = .AutoAddExt
@@ -133,7 +133,7 @@ Public Class SettingsX
             XenonNumericUpDown1.Value = .Log_Countdown
         End With
 
-        With My.Application.LanguageHelper
+        With My.Lang
             Label11.Text = .Name
             Label12.Text = .TrVer
             Label14.Text = .AppVer
@@ -143,7 +143,7 @@ Public Class SettingsX
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
-        XenonTextBox3.Text = My.Application._Settings.Language_File
+        XenonTextBox3.Text = My.[Settings].Language_File
     End Sub
 
     Sub SaveSettings()
@@ -154,7 +154,7 @@ Public Class SettingsX
         Dim ch_nerd As Boolean = False
         Dim ch_terminal As Boolean = False
 
-        With My.Application._Settings
+        With My.[Settings]
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_dark = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_dark = True
 
@@ -213,18 +213,18 @@ Public Class SettingsX
                 Dim TerDir As String
                 Dim TerPreDir As String
 
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                If Not My.[Settings].Terminal_Path_Deflection Then
                     TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                     TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                 Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                        TerDir = My.Application._Settings.Terminal_Stable_Path
+                    If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                        TerDir = My.[Settings].Terminal_Stable_Path
                     Else
                         TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                     End If
 
-                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                    If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                        TerPreDir = My.[Settings].Terminal_Preview_Path
                     Else
                         TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     End If
@@ -252,7 +252,7 @@ Public Class SettingsX
 
         Cursor = Cursors.Default
 
-        MsgBox(My.Application.LanguageHelper.SettingsSaved, MsgBoxStyle.Information + My.Application.MsgboxRt)
+        MsgBox(My.Lang.SettingsSaved, My.Application.MsgboxRt(MsgBoxStyle.Information))
         Me.Close()
     End Sub
 
@@ -425,8 +425,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If MsgBox(My.Application.LanguageHelper.RemoveExtMsg & vbCrLf & vbCrLf & My.Application.LanguageHelper.RemoveExtMsgNote, MsgBoxStyle.Question + MsgBoxStyle.YesNo _
-                  + My.Application.MsgboxRt) = MsgBoxResult.Yes Then
+        If MsgBox(My.Lang.RemoveExtMsg & vbCrLf & vbCrLf & My.Lang.RemoveExtMsgNote, My.Application.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNo)) = MsgBoxResult.Yes Then
 
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
@@ -442,7 +441,7 @@ Public Class SettingsX
 
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             XenonTextBox3.Text = OpenFileDialog2.FileName
-            MsgBox(My.Application.LanguageHelper.LanguageRestart, MsgBoxStyle.Information + My.Application.MsgboxRt)
+            MsgBox(My.Lang.LanguageRestart, My.Application.MsgboxRt(MsgBoxStyle.Information))
         End If
 
     End Sub

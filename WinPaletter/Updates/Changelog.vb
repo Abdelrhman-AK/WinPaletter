@@ -18,10 +18,10 @@ Public Class Changelog
         TreeView1.ItemHeight = 32
         TreeView1.ShowRootLines = True
         TreeView1.ShowPlusMinus = True
-        TreeView1.ImageList = My.Application.ChangeLogImgLst
+        TreeView1.ImageList = My.Changelog_IL
 
         XenonTextBox1.Text = My.Application.Info.Version.ToString
-        XenonCheckBox1.Checked = (My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta)
+        XenonCheckBox1.Checked = (My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta)
         ApplyDarkMode(Me)
         ProgressBar1.Visible = False
         LoadChangelog()
@@ -36,8 +36,8 @@ Public Class Changelog
             Try
                 W.DownloadDataAsync(New Uri(My.Resources.Link_Changelog))
             Catch ex As Exception
-                With TreeView1.Nodes.Add(My.Application.LanguageHelper.Error_Online)
-                    Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                With TreeView1.Nodes.Add(My.Lang.Error_Online)
+                    Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Error")
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                     With .Nodes.Add(ex.Message.Replace(vbCrLf, ", "))
                         .ImageIndex = imgI : .SelectedImageIndex = imgI
@@ -47,10 +47,10 @@ Public Class Changelog
                 TreeView1.ExpandAll()
             End Try
         Else
-            With TreeView1.Nodes.Add(My.Application.LanguageHelper.NoNetwork)
-                Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+            With TreeView1.Nodes.Add(My.Lang.NoNetwork)
+                Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Error")
                 .ImageIndex = imgI : .SelectedImageIndex = imgI
-                With .Nodes.Add(My.Application.LanguageHelper.CheckConnection)
+                With .Nodes.Add(My.Lang.CheckConnection)
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                 End With
             End With
@@ -68,8 +68,8 @@ Public Class Changelog
             PhraseInfo(TreeView1)
         Else
 
-            With TreeView1.Nodes.Add(My.Application.LanguageHelper.Error_Online)
-                Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+            With TreeView1.Nodes.Add(My.Lang.Error_Online)
+                Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Error")
                 .ImageIndex = imgI : .SelectedImageIndex = imgI
                 With .Nodes.Add(e.Error.Message.Replace(vbCrLf, ", "))
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
@@ -96,7 +96,7 @@ Public Class Changelog
         [TreeView].ItemHeight = 32
         [TreeView].ShowRootLines = True
         [TreeView].ShowPlusMinus = True
-        [TreeView].ImageList = My.Application.ChangeLogImgLst
+        [TreeView].ImageList = My.Changelog_IL
         SetTreeViewTheme([TreeView].Handle)
 
         Try
@@ -113,7 +113,7 @@ Public Class Changelog
 
                     Dim i1 As Integer = x
 
-                    If ls(i1 + 1).ToLower = "channel= beta" And Not My.Application._Settings.UpdateChannel = XeSettings.UpdateChannels.Beta And SpecificVersion = Nothing Then
+                    If ls(i1 + 1).ToLower = "channel= beta" And Not My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta And SpecificVersion = Nothing Then
                         If Not XenonCheckBox1.Checked Then GoTo Skip
                     End If
 
@@ -141,7 +141,7 @@ Skip:
             For x = 0 To Versions.Count - 1
 
                 With [TreeView].Nodes.Add(Versions.Keys(x).Replace("[", "").Replace("]", ""))
-                    Dim imgI As Integer = My.Application.ChangeLogImgLst.Images.IndexOfKey("Stable")
+                    Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Stable")
                     .ImageIndex = imgI : .SelectedImageIndex = imgI
                 End With
 
@@ -158,32 +158,32 @@ Skip:
                                 If ls(i).StartsWith("Channel= ") Then
                                     Str = ls(i).Remove(0, "Channel= ".Count) & " Channel"
                                     Beta = Str.ToLower.Contains("beta")
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Channel")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("Channel")
                                 End If
 
                                 If ls(i).StartsWith("BugFix= ") Then
                                     Str = ls(i).Remove(0, "BugFix= ".Count)
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("BugFix")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("BugFix")
                                 End If
 
                                 If ls(i).StartsWith("NewFeature= ") Then
                                     Str = ls(i).Remove(0, "NewFeature= ".Count)
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("New")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("New")
                                 End If
 
                                 If ls(i).StartsWith("Added= ") Then
                                     Str = ls(i).Remove(0, "Added= ".Count)
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Add")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("Add")
                                 End If
 
                                 If ls(i).StartsWith("Removed= ") Then
                                     Str = ls(i).Remove(0, "Removed= ".Count)
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Removed")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("Removed")
                                 End If
 
                                 If ls(i).StartsWith("Date= ") Then
                                     Str = "Released on: " & Date.FromBinary(ls(i).Remove(0, "Date= ".Count))
-                                    imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Date")
+                                    imgI = My.Changelog_IL.Images.IndexOfKey("Date")
                                 End If
 
                                 With [TreeView].Nodes.Item(x).Nodes.Add(Str)
@@ -191,7 +191,7 @@ Skip:
 
                                     If Beta Then
                                         With .Parent
-                                            imgI = My.Application.ChangeLogImgLst.Images.IndexOfKey("Beta")
+                                            imgI = My.Changelog_IL.Images.IndexOfKey("Beta")
                                             .ImageIndex = imgI : .SelectedImageIndex = imgI
                                         End With
                                     End If
@@ -211,17 +211,17 @@ Skip:
             Dim whatToadd As String
 
             If SpecificVersion IsNot Nothing Then
-                whatToadd = My.Application.LanguageHelper.Version & " " & SpecificVersion & " " & My.Application.LanguageHelper.VersionNotReleased
+                whatToadd = My.Lang.Version & " " & SpecificVersion & " " & My.Lang.VersionNotReleased
             Else
                 whatToadd = ex.Message.Replace(vbCrLf, ", ")
             End If
 
-            With [TreeView].Nodes.Add(My.Application.LanguageHelper.ErrorPhrasingChangelog)
-                .ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
-                .SelectedImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+            With [TreeView].Nodes.Add(My.Lang.ErrorPhrasingChangelog)
+                .ImageIndex = My.Changelog_IL.Images.IndexOfKey("Error")
+                .SelectedImageIndex = My.Changelog_IL.Images.IndexOfKey("Error")
                 With .Nodes.Add(whatToadd)
-                    .ImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
-                    .SelectedImageIndex = My.Application.ChangeLogImgLst.Images.IndexOfKey("Error")
+                    .ImageIndex = My.Changelog_IL.Images.IndexOfKey("Error")
+                    .SelectedImageIndex = My.Changelog_IL.Images.IndexOfKey("Error")
                 End With
             End With
 

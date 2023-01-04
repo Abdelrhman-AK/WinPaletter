@@ -37,7 +37,7 @@ Public Class ColorPickerDlg
         For Each c As Color In CP.ListColors
 
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 90, 30), 25),
+                .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
                 .BackColor = c
             }
 
@@ -112,12 +112,12 @@ Public Class ColorPickerDlg
         Dim PrevoiusMin As Size = fr.MinimumSize
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-            My.Application.AnimatorX.Hide(MainFrm.TablessControl1, True)
-            My.Application.AnimatorX.Hide(MainFrm.MainToolbar, True)
-            My.Application.AnimatorX.Hide(MainFrm.apply_btn, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonButton4, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonButton13, True)
-            My.Application.AnimatorX.Hide(MainFrm.XenonButton19, True)
+            My.[AnimatorNS].Hide(MainFrm.TablessControl1, True)
+            My.[AnimatorNS].Hide(MainFrm.MainToolbar, True)
+            My.[AnimatorNS].Hide(MainFrm.apply_btn, True)
+            My.[AnimatorNS].Hide(MainFrm.XenonButton4, True)
+            My.[AnimatorNS].Hide(MainFrm.XenonButton13, True)
+            My.[AnimatorNS].Hide(MainFrm.XenonButton19, True)
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
@@ -150,12 +150,12 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             MainFrm.Width = PreviousWidth
-            My.Application.AnimatorX.Show(MainFrm.TablessControl1, True)
-            My.Application.AnimatorX.Show(MainFrm.MainToolbar, True)
-            My.Application.AnimatorX.Show(MainFrm.apply_btn, True)
-            My.Application.AnimatorX.Show(MainFrm.XenonButton4, True)
-            My.Application.AnimatorX.Show(MainFrm.XenonButton13, True)
-            My.Application.AnimatorX.Show(MainFrm.XenonButton19, True)
+            My.[AnimatorNS].Show(MainFrm.TablessControl1, True)
+            My.[AnimatorNS].Show(MainFrm.MainToolbar, True)
+            My.[AnimatorNS].Show(MainFrm.apply_btn, True)
+            My.[AnimatorNS].Show(MainFrm.XenonButton4, True)
+            My.[AnimatorNS].Show(MainFrm.XenonButton13, True)
+            My.[AnimatorNS].Show(MainFrm.XenonButton19, True)
         End If
 
         MainFrm.MinimumSize = PrevoiusMin
@@ -490,7 +490,7 @@ Public Class ColorPickerDlg
 
         Next
 
-        If (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
+        If (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If
@@ -550,9 +550,9 @@ Public Class ColorPickerDlg
         End Select
 
         If img IsNot Nothing Then
-            Label4.Text = My.Application.LanguageHelper.Extracting
-            My.Application.AnimatorX.HideSync(XenonButton6, True)
-            My.Application.AnimatorX.HideSync(ImgPaletteContainer, True)
+            Label4.Text = My.Lang.Extracting
+            My.[AnimatorNS].HideSync(XenonButton6, True)
+            My.[AnimatorNS].HideSync(ImgPaletteContainer, True)
             ProgressBar1.Visible = True
             ColorsList.Clear()
 
@@ -574,7 +574,7 @@ Public Class ColorPickerDlg
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
 
-            XenonCore.SetCtrlTxt(My.Application.LanguageHelper.Sorting, Label4)
+            XenonCore.SetCtrlTxt(My.Lang.Sorting, Label4)
 
         End If
     End Sub
@@ -583,7 +583,7 @@ Public Class ColorPickerDlg
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
-            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
+            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
             pnl.BackColor = Color.FromArgb(255, C)
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
@@ -591,8 +591,8 @@ Public Class ColorPickerDlg
 
         ProgressBar1.Visible = False
         ColorsList.Clear()
-        My.Application.AnimatorX.ShowSync(ImgPaletteContainer, True)
-        My.Application.AnimatorX.ShowSync(XenonButton6, True)
+        My.[AnimatorNS].ShowSync(ImgPaletteContainer, True)
+        My.[AnimatorNS].ShowSync(XenonButton6, True)
     End Sub
 
     Private Sub Pnl_click(ByVal sender As Object, ByVal e As EventArgs)
@@ -638,17 +638,17 @@ Public Class ColorPickerDlg
 
             Try
                 For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
+                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next
             Catch
-                MsgBox(My.Application.LanguageHelper.InvalidTheme, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                MsgBox(My.Lang.InvalidTheme, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             End Try
 
         Else
-            MsgBox(My.Application.LanguageHelper.ThemeNotExist, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ThemeNotExist, My.Application.MsgboxRt(MsgBoxStyle.Critical))
         End If
     End Sub
 
@@ -658,7 +658,7 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.Application._Settings.Nerd_Stats, 85, 30), 25)}
+                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
                     pnl.BackColor = Color.FromArgb(255, C)
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
@@ -695,7 +695,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.Application._Settings.Win7LivePreview Then
+        If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(InitColor, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If

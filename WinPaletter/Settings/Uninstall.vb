@@ -36,7 +36,7 @@ Public Class Uninstall
             If OpenFileDialog1.ShowDialog = DialogResult.OK Then
                 Dim cpx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
                 cpx.Save(CP.Mode.Registry)
-                If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                If My.[Settings].AutoRestartExplorer Then RestartExplorer()
                 cpx.Dispose()
             End If
         ElseIf XenonRadioImage3.Checked Then
@@ -54,7 +54,7 @@ Public Class Uninstall
             End If
 
             _Def.Save(CP.Mode.Registry)
-            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
             _Def.Dispose()
         End If
 

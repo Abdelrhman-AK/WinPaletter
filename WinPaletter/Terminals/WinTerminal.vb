@@ -171,7 +171,7 @@ Public Class WinTerminal : Implements ICloneable
                            .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
 
-                    MsgBox(My.Application.LanguageHelper.Terminal_SettingsNotExist & File, MsgBoxStyle.Critical)
+                    MsgBox(My.Lang.Terminal_SettingsNotExist & File, MsgBoxStyle.Critical)
                 End If
 
             Case Mode.WinPaletterFile
@@ -540,22 +540,22 @@ Public Class WinTerminal : Implements ICloneable
 
                 Select Case [Version]
                     Case Version.Stable
-                        If Not My.Application._Settings.Terminal_Path_Deflection Then
+                        If Not My.[Settings].Terminal_Path_Deflection Then
                             SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         Else
-                            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                                SettingsFile = My.Application._Settings.Terminal_Stable_Path
+                            If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                                SettingsFile = My.[Settings].Terminal_Stable_Path
                             Else
                                 SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                             End If
                         End If
 
                     Case Version.Preview
-                        If Not My.Application._Settings.Terminal_Path_Deflection Then
+                        If Not My.[Settings].Terminal_Path_Deflection Then
                             SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                         Else
-                            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                                SettingsFile = My.Application._Settings.Terminal_Stable_Path
+                            If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                                SettingsFile = My.[Settings].Terminal_Stable_Path
                             Else
                                 SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                             End If

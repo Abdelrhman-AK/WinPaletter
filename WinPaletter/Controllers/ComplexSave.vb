@@ -11,9 +11,9 @@ Public Class ComplexSave
         If XenonRadioButton3.Checked Then i1 = 2
         If XenonCheckBox1.Checked Then i2 = 1 Else i2 = 0
 
-        My.Application._Settings.ComplexSaveResult = String.Format("{0}.{1}", i1, i2)
-        My.Application._Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.Application._Settings.Save(XeSettings.Mode.Registry)
+        My.[Settings].ComplexSaveResult = String.Format("{0}.{1}", i1, i2)
+        My.[Settings].ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.[Settings].Save(XeSettings.Mode.Registry)
 
         Me.DialogResult = DialogResult.Yes
         Me.Close()
@@ -30,7 +30,7 @@ Public Class ComplexSave
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
 
-        Dim r As String() = My.Application._Settings.ComplexSaveResult.Split(".")
+        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
         Dim r1 As String = r(0)
         Dim r2 As String = r(1)
 
@@ -46,14 +46,14 @@ Public Class ComplexSave
 
         XenonCheckBox1.Checked = (r2 = 1)
 
-        XenonCheckBox2.Checked = My.Application._Settings.ShowSaveConfirmation
+        XenonCheckBox2.Checked = My.[Settings].ShowSaveConfirmation
 
         Me.DialogResult = DialogResult.None
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        My.Application._Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.Application._Settings.Save(XeSettings.Mode.Registry)
+        My.[Settings].ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.[Settings].Save(XeSettings.Mode.Registry)
         Me.DialogResult = DialogResult.No
         Me.Close()
     End Sub

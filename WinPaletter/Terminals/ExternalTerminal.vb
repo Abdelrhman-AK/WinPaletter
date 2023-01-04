@@ -11,8 +11,8 @@ Public Class ExternalTerminal
         FillTerminals(XenonComboBox1)
         RasterList.BringToFront()
 
-        XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
-        FillFonts(ExtTerminal_FontsBox, Not My.Application._Settings.Terminal_OtherFonts)
+        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
+        FillFonts(ExtTerminal_FontsBox, Not My.[Settings].Terminal_OtherFonts)
         MainFrm.Visible = False
 
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
@@ -41,7 +41,7 @@ Public Class ExternalTerminal
     Sub GetFromExtTerminal(RegKey As String)
 
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(RegKey) Then
-            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -445,9 +445,9 @@ Public Class ExternalTerminal
 
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 
-            MsgBox(My.Application.LanguageHelper.ExtTer_Set, MsgBoxStyle.Information + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ExtTer_Set, My.Application.MsgboxRt(MsgBoxStyle.Information))
         Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
+            BugReport.ThrowError(ex)
         End Try
     End Sub
 
@@ -588,11 +588,11 @@ Public Class ExternalTerminal
         [ListBox].Items.Clear()
 
         If Not FixedPitch Then
-            For Each x As String In My.Application.FontsList
+            For Each x As String In My.FontsList
                 [ListBox].Items.Add(x)
             Next
         Else
-            For Each x As String In My.Application.FontsFixedList
+            For Each x As String In My.FontsFixedList
                 [ListBox].Items.Add(x)
             Next
         End If
@@ -1112,7 +1112,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1126,7 +1126,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1138,7 +1138,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Application.LanguageHelper.ExtTer_NotFound, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 

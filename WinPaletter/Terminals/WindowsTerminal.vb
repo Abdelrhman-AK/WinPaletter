@@ -11,7 +11,7 @@ Public Class WindowsTerminal
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
-        XenonCheckBox1.Checked = My.Application._Settings.Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
 
         ApplyDarkMode(Me)
         _Shown = False
@@ -32,7 +32,7 @@ Public Class WindowsTerminal
 
         End Select
 
-        FillFonts(TerFonts, Not My.Application._Settings.Terminal_OtherFonts)
+        FillFonts(TerFonts, Not My.[Settings].Terminal_OtherFonts)
 
         Load_FromTerminal()
 
@@ -158,11 +158,11 @@ Public Class WindowsTerminal
         [ListBox].Items.Clear()
 
         If Not FixedPitch Then
-            For Each x As String In My.Application.FontsList
+            For Each x As String In My.FontsList
                 [ListBox].Items.Add(x)
             Next
         Else
-            For Each x As String In My.Application.FontsFixedList
+            For Each x As String In My.FontsFixedList
                 [ListBox].Items.Add(x)
             Next
         End If
@@ -548,7 +548,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
-        _Terminal.Colors.Add(New TColor With {.Name = My.Application.LanguageHelper.Terminal_NewScheme & " #" & TerSchemes.Items.Count})
+        _Terminal.Colors.Add(New TColor With {.Name = My.Lang.Terminal_NewScheme & " #" & TerSchemes.Items.Count})
         FillTerminalSchemes(_Terminal, TerSchemes)
         TerSchemes.SelectedIndex = TerSchemes.Items.Count - 1
     End Sub
@@ -791,7 +791,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        _Terminal.Themes.Add(New ThemesList With {.Name = My.Application.LanguageHelper.Terminal_NewTheme & " #" & TerThemes.Items.Count - 3})
+        _Terminal.Themes.Add(New ThemesList With {.Name = My.Lang.Terminal_NewTheme & " #" & TerThemes.Items.Count - 3})
         FillTerminalThemes(_Terminal, TerThemes)
         TerThemes.SelectedIndex = TerThemes.Items.Count - 1
     End Sub
@@ -942,13 +942,13 @@ Public Class WindowsTerminal
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         Dim i As Object = TerFonts.SelectedItem
         FillFonts(TerFonts, Not XenonCheckBox1.Checked)
-        My.Application._Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
-        My.Application._Settings.Save(XeSettings.Mode.Registry)
+        My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
+        My.[Settings].Save(XeSettings.Mode.Registry)
         TerFonts.SelectedItem = i
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        _Terminal.Profiles.Add(New ProfilesList With {.Name = My.Application.LanguageHelper.Terminal_NewProfile & " #" & TerProfiles.Items.Count, .ColorScheme = _Terminal.DefaultProf.ColorScheme})
+        _Terminal.Profiles.Add(New ProfilesList With {.Name = My.Lang.Terminal_NewProfile & " #" & TerProfiles.Items.Count, .ColorScheme = _Terminal.DefaultProf.ColorScheme})
         FillTerminalProfiles(_Terminal, TerProfiles)
         TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1
     End Sub
@@ -957,18 +957,18 @@ Public Class WindowsTerminal
         Dim TerDir As String
         Dim TerPreDir As String
 
-        If Not My.Application._Settings.Terminal_Path_Deflection Then
+        If Not My.[Settings].Terminal_Path_Deflection Then
             TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
         Else
-            If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                TerDir = My.Application._Settings.Terminal_Stable_Path
+            If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                TerDir = My.[Settings].Terminal_Stable_Path
             Else
                 TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             End If
 
-            If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                TerPreDir = My.Application._Settings.Terminal_Preview_Path
+            If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                TerPreDir = My.[Settings].Terminal_Preview_Path
             Else
                 TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
             End If
@@ -992,7 +992,7 @@ Public Class WindowsTerminal
 
     Private Sub TerBackImage_TextChanged(sender As Object, e As EventArgs) Handles TerBackImage.TextChanged
         If TerBackImage.Text = "desktopWallpaper" Then
-            XenonTerminal1.BackImage = My.Application.Wallpaper
+            XenonTerminal1.BackImage = My.Wallpaper
         Else
             If IO.File.Exists(TerBackImage.Text) Then
                 XenonTerminal1.BackImage = Image.FromStream(New FileStream(TerBackImage.Text, IO.FileMode.Open, IO.FileAccess.Read)).FillScale(XenonTerminal1.Size).Resize(XenonTerminal1.Width - 2, XenonTerminal1.Height - 32)
@@ -1070,18 +1070,18 @@ Public Class WindowsTerminal
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.Application._Settings.Terminal_Path_Deflection Then
+                    If Not My.[Settings].Terminal_Path_Deflection Then
                         TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     Else
-                        If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Application._Settings.Terminal_Stable_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                            TerDir = My.[Settings].Terminal_Stable_Path
                         Else
                             TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
 
-                        If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                        If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                            TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
                             TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                         End If
@@ -1104,7 +1104,7 @@ Public Class WindowsTerminal
             End If
 
         Else
-            MsgBox(My.Application.LanguageHelper.CMD_Enable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.CMD_Enable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
         End If
 
     End Sub
@@ -1201,7 +1201,8 @@ Public Class WindowsTerminal
                 End If
 
             Catch ex As Exception
-                MsgBox(My.Application.LanguageHelper.Terminal_ErrorFile & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+                MsgBox(My.Lang.Terminal_ErrorFile, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+                BugReport.ThrowError(ex)
             End Try
 
         End If
@@ -1240,12 +1241,12 @@ Public Class WindowsTerminal
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
 
         If TerProfiles.SelectedIndex = 0 Then
-            MsgBox(My.Application.LanguageHelper.Terminal_ProfileNotCloneable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.Terminal_ProfileNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
         Dim P As New ProfilesList With {
-            .Name = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Name & " " & My.Application.LanguageHelper.Terminal_Clone & " #" & TerProfiles.Items.Count,
+            .Name = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Name & " " & My.Lang.Terminal_Clone & " #" & TerProfiles.Items.Count,
             .BackgroundImage = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImage,
             .BackgroundImageOpacity = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImageOpacity,
             .ColorScheme = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).ColorScheme,
@@ -1269,12 +1270,12 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
         If TerThemes.SelectedIndex < 3 Then
-            MsgBox(My.Application.LanguageHelper.Terminal_ThemeNotCloneable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
         Dim Th As New ThemesList With {
-            .Name = _Terminal.Themes(TerThemes.SelectedIndex - 3).Name & " " & My.Application.LanguageHelper.Terminal_Clone & " #" & TerThemes.Items.Count,
+            .Name = _Terminal.Themes(TerThemes.SelectedIndex - 3).Name & " " & My.Lang.Terminal_Clone & " #" & TerThemes.Items.Count,
             .applicationTheme_light = _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light,
             .Tab_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active,
             .Tab_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive,
@@ -1468,7 +1469,7 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
         If TerThemes.SelectedIndex < 3 Then
-            MsgBox(My.Application.LanguageHelper.Terminal_ThemeNotCloneable, MsgBoxStyle.Critical + My.Application.MsgboxRt)
+            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 

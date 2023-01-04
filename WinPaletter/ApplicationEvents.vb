@@ -3,38 +3,92 @@ Imports System.Management
 Imports System.Reflection
 Imports System.Security.Principal
 Imports System.Threading
-Imports System.Windows.Input
-Imports System.Windows.Media.Animation
+Imports AnimatorNS
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 
 Namespace My
-    Module WindowsVersions
+    Module GlobalVariables
         ''' <summary>
         ''' Boolean Represents if OS is Windows 11 or not
         ''' </summary>
-        Public W11 As Boolean = My.Computer.Info.OSFullName.Contains("11")
+        Public ReadOnly W11 As Boolean = My.Computer.Info.OSFullName.Contains("11")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 or not
         ''' </summary>
-        Public W10 As Boolean = My.Computer.Info.OSFullName.Contains("10")
+        Public ReadOnly W10 As Boolean = My.Computer.Info.OSFullName.Contains("10")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 8/8.1 or not
         ''' </summary>
-        Public W8 As Boolean = My.Computer.Info.OSFullName.Contains("8")
+        Public ReadOnly W8 As Boolean = My.Computer.Info.OSFullName.Contains("8")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 7 or not
         ''' </summary>
-        Public W7 As Boolean = My.Computer.Info.OSFullName.Contains("7")
+        Public ReadOnly W7 As Boolean = My.Computer.Info.OSFullName.Contains("7")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
         ''' </summary>
-        Public W10_1909 As Boolean = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
+        Public ReadOnly W10_1909 As Boolean = (W11 Or (W10 And Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
+
+        ''' <summary>
+        ''' Class Represents AnimatorNS
+        ''' </summary>
+        Public WithEvents [AnimatorNS] As Animator
+
+        ''' <summary>
+        ''' Class Represents WinPaletter's Settings
+        ''' </summary>
+        Public [Settings] As New XeSettings(XeSettings.Mode.Registry)
+
+        ''' <summary>
+        ''' Class Represents WinPaletter's Language Strings (Loaded at application startup)
+        ''' </summary>
+        Public Lang As New Localizer
+
+        ''' <summary>
+        ''' Current Applied Wallpaper
+        ''' </summary>
+        Public Wallpaper As Bitmap
+
+        ''' <summary>
+        ''' List of exceptions thrown during theme applying
+        ''' </summary>
+        Public Saving_Exceptions As New List(Of Tuple(Of String, Exception))
+
+        ''' <summary>
+        ''' Class Represents Resources (PNGs, Icons, ...) from Windows extracted from System DLLs (Loaded at application startup)
+        ''' </summary>
+        Public WinRes As WinResources
+
+        ''' <summary>
+        ''' List of installed fonts' names (Loaded at application startup)
+        ''' </summary>
+        Public FontsList As New List(Of String)
+
+        ''' <summary>
+        ''' List of installed monospaced fonts' names (Loaded at application startup)
+        ''' </summary>
+        Public FontsFixedList As New List(Of String)
+
+        ''' <summary>
+        ''' Get if Application is started as administrator or not
+        ''' </summary>
+        Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
+
+        ''' <summary>
+        ''' ImageList for Changelogs form (Loaded at application startup)
+        ''' </summary>
+        Public Changelog_IL As New ImageList With {.ImageSize = New Size(24, 24), .ColorDepth = ColorDepth.Depth32Bit}
+
+        ''' <summary>
+        ''' ImageList for Notifications mini-icons (Loaded at application startup)
+        ''' </summary>
+        Public Notifications_IL As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
     End Module
 
     Partial Friend Class MyApplication
@@ -90,29 +144,35 @@ Namespace My
 #Region "Variables"
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
+        ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
+                                                                    If My.[Settings].Appearance_Auto Then ApplyDarkMode()
+                                                                End Sub, MethodInvoker)
+        ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
+                                                                     MainFrm.pnl_preview.BackgroundImage = Wallpaper
+                                                                     dragPreviewer.pnl_preview.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.pnl_preview1.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.pnl_preview4.BackgroundImage = Wallpaper
+                                                                     MainFrm.pnl_preview.Invalidate()
+                                                                     dragPreviewer.pnl_preview.Invalidate()
+                                                                     Metrics_Fonts.pnl_preview1.Invalidate()
+                                                                     Metrics_Fonts.pnl_preview2.Invalidate()
+                                                                     Metrics_Fonts.pnl_preview3.Invalidate()
+                                                                     Metrics_Fonts.pnl_preview4.Invalidate()
+                                                                 End Sub, MethodInvoker)
 
-        Public WithEvents AnimatorX As AnimatorNS.Animator
-
-        Public _Settings As XeSettings
-        Public Wallpaper As Bitmap
-
-        Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
-        Public BackColor_Light As Color = Color.FromArgb(230, 230, 230) 'FromArgb(235, 235, 235)
-
-        Public ExternalLink As Boolean = False
-        Public ExternalLink_File As String = ""
-        Public ShowChangelog As Boolean = False
         Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
-
-        Public processKiller As New Process With {.StartInfo = New ProcessStartInfo With {
+        Public appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
+        Public curPath As String = appData & "\Cursors"
+        Public ReadOnly processKiller As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
                             .Verb = "runas",
                             .Arguments = "/F /IM explorer.exe",
                             .WindowStyle = ProcessWindowStyle.Hidden,
                             .UseShellExecute = True}
                            }
-
-        Public processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
+        Public ReadOnly processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = explorerPath,
                             .Arguments = "",
                             .Verb = If(Not My.W8, "runas", ""),
@@ -120,10 +180,12 @@ Namespace My
                             .UseShellExecute = True}
                            }
 
-        Public LanguageHelper As New Localizer
-        Public appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
-        Public curPath As String = appData & "\Cursors"
-        Public WinRes As WinResources
+        Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
+        Public BackColor_Light As Color = Color.FromArgb(230, 230, 230) 'FromArgb(235, 235, 235)
+
+        Public ExternalLink As Boolean = False
+        Public ExternalLink_File As String = ""
+        Public ShowChangelog As Boolean = False
 
         Public CopiedColor As Color = Nothing
         Public ColorEvent As MenuEvent = MenuEvent.None
@@ -133,18 +195,8 @@ Namespace My
         Public ConsoleFontLarge As New Font("Lucida Console", 10)
         Public ConsoleFontMedium As New Font("Lucida Console", 9)
 
-        Public FontsList As New List(Of String)
-        Public FontsFixedList As New List(Of String)
-
-        Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
-
         Public ExitAfterException As Boolean = False
         Public ShowWhatsNew As Boolean = False
-
-        Public Saving_Exceptions As New List(Of Tuple(Of String, Exception))
-
-        Public ChangeLogImgLst As New ImageList With {.ImageSize = New Size(24, 24), .ColorDepth = ColorDepth.Depth32Bit}
-        Public imgLs As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
 
         Public ArgsList As New List(Of String)
         Enum MenuEvent
@@ -360,25 +412,6 @@ Namespace My
             If R1 IsNot Nothing Then R1.Close()
             If R2 IsNot Nothing Then R2.Close()
         End Sub
-
-        Dim UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
-                                                               If My.Application._Settings.Appearance_Auto Then ApplyDarkMode()
-                                                           End Sub, MethodInvoker)
-
-        Dim UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                MainFrm.pnl_preview.BackgroundImage = Wallpaper
-                                                                dragPreviewer.pnl_preview.BackgroundImage = Wallpaper
-                                                                Metrics_Fonts.pnl_preview1.BackgroundImage = Wallpaper
-                                                                Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
-                                                                Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper
-                                                                Metrics_Fonts.pnl_preview4.BackgroundImage = Wallpaper
-                                                                MainFrm.pnl_preview.Invalidate()
-                                                                dragPreviewer.pnl_preview.Invalidate()
-                                                                Metrics_Fonts.pnl_preview1.Invalidate()
-                                                                Metrics_Fonts.pnl_preview2.Invalidate()
-                                                                Metrics_Fonts.pnl_preview3.Invalidate()
-                                                                Metrics_Fonts.pnl_preview4.Invalidate()
-                                                            End Sub, MethodInvoker)
 #End Region
 
         Public Function GetCurrentWallpaper() As Bitmap
@@ -424,8 +457,8 @@ Namespace My
             Catch : End Try
         End Sub
 
-        Public Function MsgboxRt() As MsgBoxStyle
-            Return If(LanguageHelper.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
+        Public Function MsgboxRt([OriginalMsgBoxStyle] As MsgBoxResult) As MsgBoxStyle
+            Return [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
         End Function
 
         Public Sub AdjustFonts()
@@ -433,7 +466,7 @@ Namespace My
 
             Dim f As String = "Segoe UI"
 
-            If My.W11 And Not My.Application.LanguageHelper.RightToLeft Then
+            If My.W11 And Not My.Lang.RightToLeft Then
                 f = "Segoe UI Variable Display"
 
                 With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
@@ -472,8 +505,8 @@ Namespace My
         End Sub
 
         Sub Uninstall_Quiet()
-            My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
-            My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
+            DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
             If IO.Directory.Exists(My.Application.appData) Then
                 IO.Directory.Delete(My.Application.appData, True)
@@ -490,8 +523,8 @@ Namespace My
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
-            _Settings = New XeSettings(XeSettings.Mode.Registry)
-            AnimatorX = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
+
+            My.[AnimatorNS] = New Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = Animation.Transparent, .AnimationType = AnimationType.Transparent}
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try
@@ -527,8 +560,8 @@ Namespace My
 
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then
-                    LanguageHelper.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
-                    MsgBox(LanguageHelper.LngExported, MsgBoxStyle.Information + MsgboxRt())
+                    Lang.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                    MsgBox(Lang.LngExported, MsgboxRt(MsgBoxStyle.Information))
                     Process.GetCurrentProcess.Kill()
                     Exit For
                 End If
@@ -544,21 +577,21 @@ Namespace My
                 End If
             Next
 
-            If My.Application._Settings.Language Then
+            If My.[Settings].Language Then
                 Try
-                    My.Application.LanguageHelper.LoadLanguageFromFile(My.Application._Settings.Language_File)
+                    My.Lang.LoadLanguageFromFile(My.[Settings].Language_File)
                 Catch ex As Exception
                     MsgBox("There is an error occured during loading language." & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
                 End Try
             Else
-                My.Application.LanguageHelper.LoadInternal()
+                My.Lang.LoadInternal()
             End If
 
 
             ExternalLink = False
             ExternalLink_File = ""
 
-            If Not _Settings.LicenseAccepted Then
+            If Not [Settings].LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
@@ -567,13 +600,13 @@ Namespace My
                 If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
                     If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        If My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                        If My.[Settings].OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True
                             ExternalLink_File = arg
                         Else
                             Dim CPx As New CP(CP.Mode.File, arg)
                             CPx.Save(CP.Mode.Registry, arg)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
                     End If
@@ -592,7 +625,7 @@ Namespace My
                         If IO.File.Exists(File) Then
                             Dim CPx As New CP(CP.Mode.File, File)
                             CPx.Save(CP.Mode.Registry)
-                            If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
                     End If
@@ -612,7 +645,7 @@ Namespace My
             Monitor()
 
             Try
-                If _Settings.AutoAddExt Then
+                If [Settings].AutoAddExt Then
                     If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
                     Dim file As IO.FileStream = New IO.FileStream(appData & "\fileextension.ico", IO.FileMode.OpenOrCreate)
@@ -629,23 +662,23 @@ Namespace My
             Catch
             End Try
 
-            ChangeLogImgLst.Images.Add("Stable", My.Resources.CL_Stable)
-            ChangeLogImgLst.Images.Add("Beta", My.Resources.CL_Beta)
-            ChangeLogImgLst.Images.Add("Add", My.Resources.CL_add)
-            ChangeLogImgLst.Images.Add("Removed", My.Resources.CL_Removed)
-            ChangeLogImgLst.Images.Add("BugFix", My.Resources.CL_BugFix)
-            ChangeLogImgLst.Images.Add("New", My.Resources.CL_New)
-            ChangeLogImgLst.Images.Add("Channel", My.Resources.CL_channel)
-            ChangeLogImgLst.Images.Add("Error", My.Resources.CL_Error)
-            ChangeLogImgLst.Images.Add("Date", My.Resources.CL_Date)
+            Changelog_IL.Images.Add("Stable", My.Resources.CL_Stable)
+            Changelog_IL.Images.Add("Beta", My.Resources.CL_Beta)
+            Changelog_IL.Images.Add("Add", My.Resources.CL_add)
+            Changelog_IL.Images.Add("Removed", My.Resources.CL_Removed)
+            Changelog_IL.Images.Add("BugFix", My.Resources.CL_BugFix)
+            Changelog_IL.Images.Add("New", My.Resources.CL_New)
+            Changelog_IL.Images.Add("Channel", My.Resources.CL_channel)
+            Changelog_IL.Images.Add("Error", My.Resources.CL_Error)
+            Changelog_IL.Images.Add("Date", My.Resources.CL_Date)
 
-            imgLs.Images.Add("info", My.Resources.notify_info)
-            imgLs.Images.Add("error", My.Resources.notify_error)
-            imgLs.Images.Add("warning", My.Resources.notify_warning)
-            imgLs.Images.Add("time", My.Resources.notify_time)
-            imgLs.Images.Add("success", My.Resources.notify_success)
-            imgLs.Images.Add("skip", My.Resources.notify_skip)
-            imgLs.Images.Add("admin", My.Resources.notify_administrator)
+            Notifications_IL.Images.Add("info", My.Resources.notify_info)
+            Notifications_IL.Images.Add("error", My.Resources.notify_error)
+            Notifications_IL.Images.Add("warning", My.Resources.notify_warning)
+            Notifications_IL.Images.Add("time", My.Resources.notify_time)
+            Notifications_IL.Images.Add("success", My.Resources.notify_success)
+            Notifications_IL.Images.Add("skip", My.Resources.notify_skip)
+            Notifications_IL.Images.Add("admin", My.Resources.notify_administrator)
 
             Try : WinRes = New WinResources : Catch : End Try
 
@@ -653,7 +686,7 @@ Namespace My
 
 
 #Region "WhatsNew"
-            If Not _Settings.WhatsNewRecord.Contains(My.Application.Info.Version.ToString) Then
+            If Not [Settings].WhatsNewRecord.Contains(My.Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
                 ShowWhatsNew = True
 
@@ -661,13 +694,13 @@ Namespace My
                 ver.Clear()
                 ver.Add(My.Application.Info.Version.ToString)
 
-                For Each X As String In _Settings.WhatsNewRecord.ToArray()
+                For Each X As String In [Settings].WhatsNewRecord.ToArray()
                     ver.Add(X)
                 Next
 
                 ver = ver.DeDuplicate
-                _Settings.WhatsNewRecord = ver.ToArray
-                _Settings.Save(XeSettings.Mode.Registry)
+                [Settings].WhatsNewRecord = ver.ToArray
+                [Settings].Save(XeSettings.Mode.Registry)
 
                 CreateUninstaller()
             Else
@@ -686,17 +719,17 @@ Namespace My
                     e.BringToForeground = True
                 Else
                     If arg.ToLower = "/exportlanguage".ToLower Then
-                        MsgBox(LanguageHelper.LngShouldClose, MsgBoxStyle.Critical + MsgboxRt())
+                        MsgBox(Lang.LngShouldClose, MsgboxRt(MsgBoxStyle.Critical))
                     Else
 
                         If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
                             If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                                 If MainFrm.CP <> MainFrm.CP_Original Then
-                                    If _Settings.ShowSaveConfirmation Then
+                                    If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
                                             Case DialogResult.Yes
-                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
+                                                Dim r As String() = [Settings].ComplexSaveResult.Split(".")
                                                 Dim r1 As String = r(0)
                                                 Dim r2 As String = r(1)
                                                 Select Case r1
@@ -744,7 +777,7 @@ Namespace My
                                 MainFrm.ApplyCPValues(MainFrm.CP)
                                 MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
 
-                                If Not My.Application._Settings.OpeningPreviewInApp_or_AppliesIt Then
+                                If Not My.[Settings].OpeningPreviewInApp_or_AppliesIt Then
                                     MainFrm.Apply_Theme()
                                 End If
                             End If
@@ -762,7 +795,7 @@ Namespace My
                                 If IO.File.Exists(File) Then
                                     Dim CPx As New CP(CP.Mode.File, File)
                                     CPx.Save(CP.Mode.Registry)
-                                    If My.Application._Settings.AutoRestartExplorer Then RestartExplorer()
+                                    If My.[Settings].AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
 
@@ -772,10 +805,10 @@ Namespace My
 
                                 If MainFrm.CP <> MainFrm.CP_Original Then
 
-                                    If _Settings.ShowSaveConfirmation Then
+                                    If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
                                             Case DialogResult.Yes
-                                                Dim r As String() = _Settings.ComplexSaveResult.Split(".")
+                                                Dim r As String() = [Settings].ComplexSaveResult.Split(".")
                                                 Dim r1 As String = r(0)
                                                 Dim r2 As String = r(1)
                                                 Select Case r1

@@ -778,9 +778,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property Mini_SettingsIcons() As System.Drawing.Bitmap
+        Public ReadOnly Property Mini_Settings_Icons() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Mini_SettingsIcons", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Mini_Settings_Icons", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

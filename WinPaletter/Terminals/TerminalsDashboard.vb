@@ -110,7 +110,7 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 
-        If My.Application._Settings.Terminal_Bypass Then
+        If My.[Settings].Terminal_Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Stable
             Me.Close()
             WindowsTerminal.ShowDialog()
@@ -119,11 +119,11 @@ Public Class TerminalsDashboard
             If My.W10 Or My.W11 Then
                 Dim TerDir As String
 
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                If Not My.[Settings].Terminal_Path_Deflection Then
                     TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                 Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Stable_Path) Then
-                        TerDir = My.Application._Settings.Terminal_Stable_Path
+                    If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                        TerDir = My.[Settings].Terminal_Stable_Path
                     Else
                         TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
                     End If
@@ -134,11 +134,11 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox(My.Application.LanguageHelper.TerminalStable_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox(My.Lang.TerminalStable_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
                 End If
 
             Else
-                MsgBox(My.Application.LanguageHelper.Terminal_CantRun & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Lang.Terminal_CantRun & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
             End If
 
         End If
@@ -146,7 +146,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If My.Application._Settings.Terminal_Bypass Then
+        If My.[Settings].Terminal_Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Preview
             Me.Close()
             WindowsTerminal.ShowDialog()
@@ -154,11 +154,11 @@ Public Class TerminalsDashboard
             If My.W10 Or My.W11 Then
                 Dim TerPreDir As String
 
-                If Not My.Application._Settings.Terminal_Path_Deflection Then
+                If Not My.[Settings].Terminal_Path_Deflection Then
                     TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                 Else
-                    If IO.File.Exists(My.Application._Settings.Terminal_Preview_Path) Then
-                        TerPreDir = My.Application._Settings.Terminal_Preview_Path
+                    If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                        TerPreDir = My.[Settings].Terminal_Preview_Path
                     Else
                         TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
                     End If
@@ -169,11 +169,11 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox(My.Application.LanguageHelper.TerminalPreview_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                    MsgBox(My.Lang.TerminalPreview_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
                 End If
 
             Else
-                MsgBox(My.Application.LanguageHelper.Terminal_CantRun & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Lang.Terminal_CantRun & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
             End If
         End If
     End Sub
@@ -190,7 +190,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        If My.Application._Settings.Terminal_Bypass Then
+        If My.[Settings].Terminal_Bypass Then
             cmd._Edition = cmd.Edition.PowerShellx86
             Me.Close()
             cmd.ShowDialog()
@@ -203,7 +203,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox(My.Application.LanguageHelper.PowerShellx86_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Lang.PowerShellx86_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -211,7 +211,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If My.Application._Settings.Terminal_Bypass Then
+        If My.[Settings].Terminal_Bypass Then
             cmd._Edition = cmd.Edition.PowerShellx64
             Me.Close()
             cmd.ShowDialog()
@@ -224,7 +224,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox(My.Application.LanguageHelper.PowerShellx64_notFound & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Application.LanguageHelper.Terminal_Bypass, MsgBoxStyle.Exclamation + My.Application.MsgboxRt)
+                MsgBox(My.Lang.PowerShellx64_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.Application.MsgboxRt(MsgBoxStyle.Exclamation))
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
