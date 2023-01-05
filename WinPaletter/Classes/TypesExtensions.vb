@@ -3,7 +3,6 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Xml
 
 Public Module ColorsExtensions
 
@@ -877,6 +876,7 @@ Public Module ComboBoxExtenstions
     '''</summary>
     <Extension()>
     Public Sub PopulateThemes([ComboBox] As ComboBox)
+
         [ComboBox].Items.Clear()
         Dim ls As New List(Of String)
         ls = My.Resources.RetroThemesDB.CList
@@ -884,5 +884,6 @@ Public Module ComboBoxExtenstions
         For Each x As String In ls
             [ComboBox].Items.Add(x.Split("|")(0))
         Next
+
     End Sub
 End Module

@@ -73,7 +73,7 @@ Public Class Start8Selector
         img17.Image = My.WinRes.MetroStart_17.Resize(64, 64)
         img18.Image = My.WinRes.MetroStart_18.Resize(64, 64)
         img19.Image = MainFrm.CP.Windows8.PersonalColors_Background.ToBitmap(New Size(64, 64))
-        img20.Image = My.Application.GetCurrentWallpaper.Resize(64, 64)
+        img20.Image = My.Application.GetWallpaper.Resize(64, 64)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

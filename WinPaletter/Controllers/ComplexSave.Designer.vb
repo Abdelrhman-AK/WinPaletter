@@ -66,7 +66,7 @@ Partial Class ComplexSave
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(418, 35)
         Me.Label17.TabIndex = 1
-        Me.Label17.Text = "Current Palette Changed. Choose what you want:"
+        Me.Label17.Text = "Current Theme Changed. Choose what you want:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox1
@@ -111,7 +111,7 @@ Partial Class ComplexSave
         Me.XenonRadioButton2.Name = "XenonRadioButton2"
         Me.XenonRadioButton2.Size = New System.Drawing.Size(406, 23)
         Me.XenonRadioButton2.TabIndex = 3
-        Me.XenonRadioButton2.Text = "Save theme palette file as ..."
+        Me.XenonRadioButton2.Text = "Save theme file as ..."
         '
         'XenonRadioButton1
         '
@@ -124,7 +124,7 @@ Partial Class ComplexSave
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
         Me.XenonRadioButton1.Size = New System.Drawing.Size(406, 23)
         Me.XenonRadioButton1.TabIndex = 2
-        Me.XenonRadioButton1.Text = "Save theme palette file"
+        Me.XenonRadioButton1.Text = "Save theme file"
         '
         'PictureBox2
         '
@@ -173,7 +173,7 @@ Partial Class ComplexSave
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(406, 23)
         Me.XenonCheckBox1.TabIndex = 2
-        Me.XenonCheckBox1.Text = "Apply the theme palette"
+        Me.XenonCheckBox1.Text = "Apply the theme"
         '
         'PictureBox3
         '
@@ -291,7 +291,7 @@ Partial Class ComplexSave
         Me.Name = "ComplexSave"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Theme palette operations"
+        Me.Text = "Theme operations"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox1.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()

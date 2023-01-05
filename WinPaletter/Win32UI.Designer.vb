@@ -626,7 +626,7 @@ Partial Class Win32UI
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(110, 4)
         Me.XenonButton3.Name = "XenonButton3"
@@ -3137,7 +3137,7 @@ Partial Class Win32UI
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(210, 30)
         Me.XenonButton1.TabIndex = 63
-        Me.XenonButton1.Text = "Load these into current palette"
+        Me.XenonButton1.Text = "Load into current theme"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonSeparator1

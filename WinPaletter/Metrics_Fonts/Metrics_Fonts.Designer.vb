@@ -2587,7 +2587,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(210, 30)
         Me.XenonButton8.TabIndex = 82
-        Me.XenonButton8.Text = "Load these into current palette"
+        Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'OpenFileDialog1

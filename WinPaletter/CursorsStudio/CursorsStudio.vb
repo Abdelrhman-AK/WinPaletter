@@ -741,7 +741,7 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
-        MsgBox(My.Lang.ScalingTip, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.ScalingTip, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click

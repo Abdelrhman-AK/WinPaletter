@@ -97,7 +97,7 @@ Public Class BugReport
             Process.Start(My.Application.appData & "\Reports")
             Try : bk.Close() : Catch : End Try
         Else
-            MsgBox(String.Format("There is no previous saved report in ""{0}""", My.Application.appData & "\Reports"), My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(String.Format("There is no previous saved report in ""{0}""", My.Application.appData & "\Reports"), My.MsgboxRt(MsgBoxStyle.Critical))
         End If
 
     End Sub

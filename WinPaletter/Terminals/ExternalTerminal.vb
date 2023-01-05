@@ -41,7 +41,7 @@ Public Class ExternalTerminal
     Sub GetFromExtTerminal(RegKey As String)
 
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(RegKey) Then
-            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.ExtTer_NotFound, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -445,7 +445,7 @@ Public Class ExternalTerminal
 
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 
-            MsgBox(My.Lang.ExtTer_Set, My.Application.MsgboxRt(MsgBoxStyle.Information))
+            MsgBox(My.Lang.ExtTer_Set, My.MsgboxRt(MsgBoxStyle.Information))
         Catch ex As Exception
             BugReport.ThrowError(ex)
         End Try
@@ -1112,7 +1112,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.ExtTer_NotFound, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1126,7 +1126,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.ExtTer_NotFound, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1138,7 +1138,7 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
-            MsgBox(My.Lang.ExtTer_NotFound, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.ExtTer_NotFound, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 

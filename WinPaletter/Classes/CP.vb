@@ -3670,7 +3670,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 Windows10.ApplyAccentonTaskbar = Windows11.ApplyAccentonTaskbar
                             End If
                         Catch
-                            MsgBox(My.Lang.WPTH_OldGen_LoadError, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+                            MsgBox(My.Lang.WPTH_OldGen_LoadError, My.MsgboxRt(MsgBoxStyle.Critical))
                         End Try
                     End If
 
@@ -4383,7 +4383,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             tx.Add("</LegacyWinPaletter_Windows11/10>" & vbCrLf)
                         End With
                     Catch
-                        MsgBox(My.Lang.WPTH_OldGen_SaveError, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+                        MsgBox(My.Lang.WPTH_OldGen_SaveError, My.MsgboxRt(MsgBoxStyle.Critical))
                     End Try
 
                 End If
@@ -4652,7 +4652,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmpList.Add(LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case LogonUI_Modes.Wallpaper
-                    bmpList.Add(My.Application.GetCurrentWallpaper)
+                    bmpList.Add(My.Application.GetWallpaper)
             End Select
 
 
@@ -4754,7 +4754,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmp = LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size)
 
                 Case LogonUI_Modes.Wallpaper
-                    bmp = My.Application.GetCurrentWallpaper
+                    bmp = My.Application.GetWallpaper
             End Select
 
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")

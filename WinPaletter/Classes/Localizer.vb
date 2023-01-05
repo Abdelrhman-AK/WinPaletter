@@ -50,7 +50,7 @@ Public Class Localizer
                         "MainFrm",
                         "Whatsnew",
                         "Updates",
-                        "Win32UI_frm",
+                        "Win32UI",
                         "SettingsX",
                         "CursorsStudio",
                         "LogonUI7",
@@ -86,7 +86,7 @@ Public Class Localizer
     Property Next_ As String = "Next"
     Property Yes As String = "Yes"
     Property No As String = "No"
-    Property NewTag As String = "Create New Theme (Palette) File"
+    Property NewTag As String = "Create New Theme File"
     Property OpenTag As String = "Open a Theme File"
     Property SaveTag As String = "Save Theme File"
     Property SaveAsTag As String = "Save Theme File as ..."
@@ -96,6 +96,8 @@ Public Class Localizer
     Property By As String = "By"
     Property Show As String = "Show"
     Property Hide As String = "Hide"
+    Property InputValue As String = "Input value"
+
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
 
     Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
@@ -135,15 +137,12 @@ Public Class Localizer
     Property SettingsSaved As String = "Settings Saved"
     Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wpsf) from registry?"
     Property RemoveExtMsgNote As String = "Note: You can reassociate them by activating its checkbox and restarting the application."
-    Property UninstallMsgLine1 As String = "Are you sure from Uninstalling the program?"
-    Property UninstallMsgLine2 As String = "This will delete associated files extensions from registry."
-    Property RestartRecommendation As String = "It's Recommended. Don't worry it won't close your work. If you are obsessed about this, save your work at first."
-    Property EmptyName As String = "You can't leave Palette Name Empty. Please type a name to it."
+    Property EmptyName As String = "You can't leave Theme Name Empty. Please type a name to it."
     Property EmptyAuthorName As String = "You can't leave Author's Name Empty. Please type Author's name or your name."
-    Property EmptyVer As String = "You can't leave Palette Version Empty. Please type a version to it in this style (x.x.x.x), replacing (x) by numbers"
+    Property EmptyVer As String = "You can't leave Theme Version Empty. Please type a version to it in this style (x.x.x.x), replacing (x) by numbers"
     Property WrongVerFormat As String = "Wrong Version Fomrat. Please type the version to it in this style (x.x.x.x), replacing (x) by numbers."
     Property Extracting As String = "Extracting palette from image depends on your device's performance, maximum palette colors number, image quality and its resolution ..."
-    Property Sorting As String = "Sorting Colors in Palette ..."
+    Property Sorting As String = "Sorting Colors in a palette ..."
     Property ErrorPhrasingChangelog As String = "Error phrasing changelog"
     Property VersionNotReleased As String = "is not released yet, deleted or written in a wrong format."
     Property ReleasedOn As String = "Released on:"
@@ -165,7 +164,7 @@ Public Class Localizer
     Property LngExported As String = "Language Exported Successfully"
     Property MenuNativeWin As String = "From Init (Native Windows)"
     Property MenuInit As String = "From Init (Empty Colors)"
-    Property MenuAppliedReg As String = "From Current Applied Palette"
+    Property MenuAppliedReg As String = "From Current Applied Theme"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the situable size will be loaded according to your DPI settings."
     Property Win32UISavingThemeError As String = "Error saving file: "
     Property LngShouldClose As String = "You should close the app if you want to export language."
@@ -208,6 +207,49 @@ Public Class Localizer
     Property CP_ApplyingCursors As String = "Applying Windows Cursors"
     Property CP_ApplyingWin32UI As String = "Applying Win32UI Colors (Classic Windows Elements)"
 #End Region
+
+    Public Sub AdjustFonts()
+        Exit Sub
+
+        Dim f As String = "Segoe UI"
+
+        If My.W11 And Not My.Lang.RightToLeft Then
+            f = "Segoe UI Variable Display"
+
+            With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With MainFrm.Label10 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With MainFrm.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With MainFrm.themename_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With MainFrm.author_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
+            With ColorPickerDlg.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With ColorPickerDlg.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With ColorPickerDlg.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With ColorPickerDlg.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
+            With About.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With About.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With About.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
+            With ComplexSave.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With ComplexSave.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With ComplexSave.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
+            With SettingsX.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+
+            With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+        End If
+
+    End Sub
 
     Public Sub ExportNativeLang(File As String)
         Dim lx As New List(Of String)
@@ -364,7 +406,7 @@ Public Class Localizer
                 Populate(PopCtrlList, [_Form])
             End If
 
-            My.Application.AdjustFonts()
+            AdjustFonts()
 
             PopCtrlList.Clear()
             Definer.Clear()
@@ -373,7 +415,7 @@ Public Class Localizer
     End Sub
 
     Sub LoadInternal()
-        My.Application.AdjustFonts()
+        AdjustFonts()
     End Sub
 
     Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)

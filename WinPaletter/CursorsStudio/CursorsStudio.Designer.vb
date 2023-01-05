@@ -1013,7 +1013,7 @@ Partial Class CursorsStudio
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(221, 35)
         Me.XenonButton4.TabIndex = 65
-        Me.XenonButton4.Text = "Load these into current palette"
+        Me.XenonButton4.Text = "Load into current theme"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'XenonGroupBox1

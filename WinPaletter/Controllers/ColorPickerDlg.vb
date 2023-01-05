@@ -534,7 +534,7 @@ Public Class ColorPickerDlg
 
         Select Case XenonRadioButton1.Checked
             Case True
-                img = My.Application.GetCurrentWallpaper()
+                img = My.Application.GetWallpaper()
             Case False
                 If IO.File.Exists(TextBox1.Text) Then
                     Try
@@ -644,11 +644,11 @@ Public Class ColorPickerDlg
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next
             Catch
-                MsgBox(My.Lang.InvalidTheme, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+                MsgBox(My.Lang.InvalidTheme, My.MsgboxRt(MsgBoxStyle.Critical))
             End Try
 
         Else
-            MsgBox(My.Lang.ThemeNotExist, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.ThemeNotExist, My.MsgboxRt(MsgBoxStyle.Critical))
         End If
     End Sub
 

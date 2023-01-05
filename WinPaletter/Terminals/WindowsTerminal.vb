@@ -1104,7 +1104,7 @@ Public Class WindowsTerminal
             End If
 
         Else
-            MsgBox(My.Lang.CMD_Enable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.CMD_Enable, My.MsgboxRt(MsgBoxStyle.Critical))
         End If
 
     End Sub
@@ -1201,7 +1201,7 @@ Public Class WindowsTerminal
                 End If
 
             Catch ex As Exception
-                MsgBox(My.Lang.Terminal_ErrorFile, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+                MsgBox(My.Lang.Terminal_ErrorFile, My.MsgboxRt(MsgBoxStyle.Critical))
                 BugReport.ThrowError(ex)
             End Try
 
@@ -1241,7 +1241,7 @@ Public Class WindowsTerminal
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
 
         If TerProfiles.SelectedIndex = 0 Then
-            MsgBox(My.Lang.Terminal_ProfileNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.Terminal_ProfileNotCloneable, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1270,7 +1270,7 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
         If TerThemes.SelectedIndex < 3 Then
-            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 
@@ -1469,7 +1469,7 @@ Public Class WindowsTerminal
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
         If TerThemes.SelectedIndex < 3 Then
-            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.Terminal_ThemeNotCloneable, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 

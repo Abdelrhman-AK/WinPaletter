@@ -67,7 +67,7 @@ Partial Class EditInfo
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(124, 18)
         Me.Label2.TabIndex = 9
-        Me.Label2.Text = "Palette Name:"
+        Me.Label2.Text = "Theme Name:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
@@ -89,7 +89,7 @@ Partial Class EditInfo
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(124, 18)
         Me.Label1.TabIndex = 11
-        Me.Label1.Text = "Palette Version:"
+        Me.Label1.Text = "Theme Version:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox3
@@ -111,7 +111,7 @@ Partial Class EditInfo
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(124, 18)
         Me.Label3.TabIndex = 13
-        Me.Label3.Text = "Palette Description:"
+        Me.Label3.Text = "Theme Description:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTextBox1
@@ -127,10 +127,15 @@ Partial Class EditInfo
         Me.XenonTextBox1.Multiline = False
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = False
+        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox1.SelectedText = ""
+        Me.XenonTextBox1.SelectionLength = 0
+        Me.XenonTextBox1.SelectionStart = 0
         Me.XenonTextBox1.Size = New System.Drawing.Size(420, 24)
         Me.XenonTextBox1.TabIndex = 14
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
+        Me.XenonTextBox1.WordWrap = True
         '
         'XenonTextBox2
         '
@@ -145,10 +150,15 @@ Partial Class EditInfo
         Me.XenonTextBox2.Multiline = False
         Me.XenonTextBox2.Name = "XenonTextBox2"
         Me.XenonTextBox2.ReadOnly = False
+        Me.XenonTextBox2.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox2.SelectedText = ""
+        Me.XenonTextBox2.SelectionLength = 0
+        Me.XenonTextBox2.SelectionStart = 0
         Me.XenonTextBox2.Size = New System.Drawing.Size(420, 24)
         Me.XenonTextBox2.TabIndex = 15
         Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox2.UseSystemPasswordChar = False
+        Me.XenonTextBox2.WordWrap = True
         '
         'XenonTextBox3
         '
@@ -163,10 +173,15 @@ Partial Class EditInfo
         Me.XenonTextBox3.Multiline = True
         Me.XenonTextBox3.Name = "XenonTextBox3"
         Me.XenonTextBox3.ReadOnly = False
+        Me.XenonTextBox3.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox3.SelectedText = ""
+        Me.XenonTextBox3.SelectionLength = 0
+        Me.XenonTextBox3.SelectionStart = 0
         Me.XenonTextBox3.Size = New System.Drawing.Size(420, 149)
         Me.XenonTextBox3.TabIndex = 16
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox3.UseSystemPasswordChar = False
+        Me.XenonTextBox3.WordWrap = True
         '
         'XenonSeparator1
         '
@@ -192,10 +207,15 @@ Partial Class EditInfo
         Me.XenonTextBox4.Multiline = False
         Me.XenonTextBox4.Name = "XenonTextBox4"
         Me.XenonTextBox4.ReadOnly = False
+        Me.XenonTextBox4.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox4.SelectedText = ""
+        Me.XenonTextBox4.SelectionLength = 0
+        Me.XenonTextBox4.SelectionStart = 0
         Me.XenonTextBox4.Size = New System.Drawing.Size(420, 24)
         Me.XenonTextBox4.TabIndex = 23
         Me.XenonTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox4.UseSystemPasswordChar = False
+        Me.XenonTextBox4.WordWrap = True
         '
         'XenonTextBox5
         '
@@ -210,10 +230,15 @@ Partial Class EditInfo
         Me.XenonTextBox5.Multiline = False
         Me.XenonTextBox5.Name = "XenonTextBox5"
         Me.XenonTextBox5.ReadOnly = False
+        Me.XenonTextBox5.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox5.SelectedText = ""
+        Me.XenonTextBox5.SelectionLength = 0
+        Me.XenonTextBox5.SelectionStart = 0
         Me.XenonTextBox5.Size = New System.Drawing.Size(420, 24)
         Me.XenonTextBox5.TabIndex = 22
         Me.XenonTextBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox5.UseSystemPasswordChar = False
+        Me.XenonTextBox5.WordWrap = True
         '
         'PictureBox4
         '
@@ -269,11 +294,11 @@ Partial Class EditInfo
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(94, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(442, 337)
+        Me.XenonButton1.Location = New System.Drawing.Point(417, 337)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(153, 34)
+        Me.XenonButton1.Size = New System.Drawing.Size(178, 34)
         Me.XenonButton1.TabIndex = 24
-        Me.XenonButton1.Text = "Load these info"
+        Me.XenonButton1.Text = "Load into current theme"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -285,7 +310,7 @@ Partial Class EditInfo
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(319, 337)
+        Me.XenonButton2.Location = New System.Drawing.Point(294, 337)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(117, 34)
         Me.XenonButton2.TabIndex = 25

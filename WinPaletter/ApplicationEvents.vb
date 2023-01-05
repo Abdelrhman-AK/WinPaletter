@@ -89,10 +89,18 @@ Namespace My
         ''' ImageList for Notifications mini-icons (Loaded at application startup)
         ''' </summary>
         Public Notifications_IL As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
+
+
+        Delegate Function MsgBoxDelegate([OriginalMsgBoxStyle] As MsgBoxResult) As MsgBoxStyle
+        ''' <summary>
+        ''' Function to return MsgboxStyle with Arabic layout (Right-to-left) or without (According to Class Lang)
+        ''' </summary>
+        Public MsgboxRt As MsgBoxDelegate = Function([OriginalMsgBoxStyle] As MsgBoxResult) [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
+
     End Module
 
     Partial Friend Class MyApplication
-#Region "Invoking Region"
+#Region "   Invoking Region"
         Implements ISynchronizeInvoke
 
         Private ReadOnly _currentContext As System.Threading.SynchronizationContext = System.Threading.SynchronizationContext.Current
@@ -141,7 +149,7 @@ Namespace My
         End Function
 #End Region
 
-#Region "Variables"
+#Region "   Variables"
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
@@ -209,14 +217,14 @@ Namespace My
         End Enum
 #End Region
 
-#Region "File Association"
+#Region "   File Association and Uninstall"
 
         ''' <summary>
         ''' Associate WinPaletter Files Types in Registry
         ''' </summary>
-        ''' <param name="extension">Extension is the extension to be registered (eg ".wpth")</param>
+        ''' <param name="extension">Extension is the file type to be registered (eg ".wpth")</param>
         ''' <param name="className">ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")</param>
-        ''' <param name="description">Description is the textual description (eg "WinPaletter ThemeFile")</param>
+        ''' <param name="description">Textual description (eg "WinPaletter ThemeFile")</param>
         ''' <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
         ''' <returns></returns>
         Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, iconPath As String, ByVal exeProgram As String) As Boolean
@@ -264,7 +272,7 @@ Namespace My
         ''' <summary>
         ''' Removes WinPaletter Files Types Associate From Registry
         ''' </summary>
-        ''' <param name="extension">Extension is the extension to be removed (eg ".wpth")</param>
+        ''' <param name="extension">Extension is the file type to be removed (eg ".wpth")</param>
         ''' <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.ThemeFile")</param>
         ''' <returns></returns>
         Function DeleteFileAssociation(ByVal extension As String, ByVal className As String) As Boolean
@@ -323,9 +331,77 @@ Namespace My
                 .SetValue("EstimatedSize", My.Computer.FileSystem.GetFileInfo(exe).Length / 1024, RegistryValueKind.DWord)
             End With
         End Sub
+        Sub Uninstall_Quiet()
+            DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
+            DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
+            If IO.Directory.Exists(My.Application.appData) Then
+                IO.Directory.Delete(My.Application.appData, True)
+                CP.ResetCursorsToAero()
+            End If
+
+            Dim guidText As String = My.Application.Info.ProductName
+            Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall"
+            Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
+
+            Process.GetCurrentProcess.Kill()
+        End Sub
 #End Region
 
-#Region "Wallpaper Change Detector"
+#Region "   Wallpaper and User Preferences System"
+        Public Function GetWallpaper() As Bitmap
+            'Gets Wallpaper Path
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
+            If R1 IsNot Nothing Then R1.Close()
+
+            'Gets Wallpaper Type (Valid only for Windows 10\11)
+            Dim WallpaperType As Integer = 0
+            If Not W7 And Not W8 Then
+                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
+                If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+                WallpaperType = R2.GetValue("BackgroundType")
+                If R2 IsNot Nothing Then R2.Close()
+            End If
+
+            Dim img As Bitmap
+
+            If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
+                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
+                img = Image.FromStream(x)
+                x.Close()
+            Else
+                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                    img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
+                End With
+            End If
+
+            Return img
+        End Function
+        Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
+
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
+            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+
+            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            Dim S As New Stopwatch
+
+            If R1.GetValue("BackgroundType") = 0 Then
+                S.Reset()
+                S.Start()
+
+                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
+                    If S.ElapsedMilliseconds > 5000 Then Exit Do
+                Loop
+
+                S.Stop()
+
+                Wallpaper_Changed()
+            End If
+
+            If R1 IsNot Nothing Then R1.Close()
+            If R2 IsNot Nothing Then R2.Close()
+        End Sub
         Sub Monitor()
             Dim currentUser = WindowsIdentity.GetCurrent()
             Dim KeyPath As String
@@ -374,150 +450,33 @@ Namespace My
             End If
 
         End Sub
-
         Public Sub Win7_8_UserPreferenceChanged(ByVal sender As Object, ByVal e As UserPreferenceChangedEventArgs)
             If e.Category = UserPreferenceCategory.Desktop Then Wallpaper_Changed()
         End Sub
-
         Sub DarkMode_Changed()
             Invoke(UpdateDarkModeInvoker)
         End Sub
-
         Sub Wallpaper_Changed()
-            Wallpaper = GetCurrentWallpaper().Resize(528, 297)
+            Wallpaper = GetWallpaper().Resize(528, 297)
             Invoke(UpdateWallpaperInvoker)
-        End Sub
-
-        Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
-
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
-            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-
-            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-            Dim S As New Stopwatch
-
-            If R1.GetValue("BackgroundType") = 0 Then
-                S.Reset()
-                S.Start()
-
-                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
-                    If S.ElapsedMilliseconds > 5000 Then Exit Do
-                Loop
-
-                S.Stop()
-
-                Wallpaper_Changed()
-            End If
-
-            If R1 IsNot Nothing Then R1.Close()
-            If R2 IsNot Nothing Then R2.Close()
         End Sub
 #End Region
 
-        Public Function GetCurrentWallpaper() As Bitmap
-            'Gets Wallpaper Path
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
-            If R1 IsNot Nothing Then R1.Close()
-
-            'Gets Wallpaper Type (Valid only for Windows 10\11)
-            Dim WallpaperType As Integer = 0
-            If Not My.W7 And Not My.W8 Then
-                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
-                If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-                WallpaperType = R2.GetValue("BackgroundType")
-                If R2 IsNot Nothing Then R2.Close()
-            End If
-
-            Dim img As Bitmap
-
-            If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
-                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
-                img = Image.FromStream(x)
-                x.Close()
-            Else
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
-                    img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
-                End With
-            End If
-
-            Return img
-        End Function
-
+#Region "   Application Startup and Shutdown Subs"
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            WallMon_Watcher1.Stop()
-            WallMon_Watcher2.Stop()
+            Try
+                WallMon_Watcher1.Stop()
+                WallMon_Watcher2.Stop()
 
-            If Not My.W7 And Not My.W8 Then
-                WallMon_Watcher3.Stop()
-                WallMon_Watcher4.Stop()
-            End If
+                If Not W7 And Not W8 Then
+                    WallMon_Watcher3.Stop()
+                    WallMon_Watcher4.Stop()
+                End If
+            Catch
+            End Try
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
-        End Sub
-
-        Public Function MsgboxRt([OriginalMsgBoxStyle] As MsgBoxResult) As MsgBoxStyle
-            Return [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
-        End Function
-
-        Public Sub AdjustFonts()
-            Exit Sub
-
-            Dim f As String = "Segoe UI"
-
-            If My.W11 And Not My.Lang.RightToLeft Then
-                f = "Segoe UI Variable Display"
-
-                With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With MainFrm.Label10 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With MainFrm.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With MainFrm.themename_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With MainFrm.author_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-                With ColorPickerDlg.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With ColorPickerDlg.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With ColorPickerDlg.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With ColorPickerDlg.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-                With About.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With About.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With About.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-                With ComplexSave.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With ComplexSave.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With ComplexSave.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-                With SettingsX.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-                With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-                With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            End If
-
-        End Sub
-
-        Sub Uninstall_Quiet()
-            DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
-            DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
-            Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
-            If IO.Directory.Exists(My.Application.appData) Then
-                IO.Directory.Delete(My.Application.appData, True)
-                CP.ResetCursorsToAero()
-            End If
-
-            Dim guidText As String = My.Application.Info.ProductName
-            Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall"
-            Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
-
-            Process.GetCurrentProcess.Kill()
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
@@ -640,7 +599,7 @@ Namespace My
                 End If
             Next
 
-            Wallpaper = GetCurrentWallpaper().Resize(528, 297)
+            Wallpaper = GetWallpaper().Resize(528, 297)
 
             Monitor()
 
@@ -720,8 +679,12 @@ Namespace My
                 Else
                     If arg.ToLower = "/exportlanguage".ToLower Then
                         MsgBox(Lang.LngShouldClose, MsgboxRt(MsgBoxStyle.Critical))
-                    Else
 
+                    ElseIf arg.ToLower = "/uninstall" Then
+                        Uninstall.ShowDialog()
+                    ElseIf arg.ToLower = "/uninstall-quiet" Then
+                        Uninstall_Quiet()
+                    Else
                         If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
                             If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
@@ -864,7 +827,9 @@ Namespace My
                 e.BringToForeground = True
             End Try
         End Sub
+#End Region
 
+#Region "   Domain (External Resources) and Exceptions Handling"
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
 
             Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
@@ -899,6 +864,7 @@ Namespace My
             Throw DirectCast(e.ExceptionObject, Exception)
             If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
+#End Region
 
     End Class
 

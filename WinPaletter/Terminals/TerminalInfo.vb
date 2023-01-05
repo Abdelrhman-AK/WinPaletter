@@ -33,7 +33,7 @@ Public Class TerminalInfo
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
 
         If WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) And Not WindowsTerminal.TerProfiles.SelectedItem.ToString.ToLower = TerName.Text.ToLower Then
-            MsgBox(My.Lang.Terminal_alreadyset, My.Application.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.Terminal_alreadyset, My.MsgboxRt(MsgBoxStyle.Critical))
             Exit Sub
         End If
 

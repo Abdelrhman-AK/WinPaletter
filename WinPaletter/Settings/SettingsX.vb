@@ -57,7 +57,7 @@ Public Class SettingsX
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox(My.Lang.SaveMsg, My.Application.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel))
+            Select Case MsgBox(My.Lang.SaveMsg, My.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel))
                 Case DialogResult.Cancel
                     e.Cancel = True
                 Case DialogResult.Yes
@@ -252,7 +252,7 @@ Public Class SettingsX
 
         Cursor = Cursors.Default
 
-        MsgBox(My.Lang.SettingsSaved, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.SettingsSaved, My.MsgboxRt(MsgBoxStyle.Information))
         Me.Close()
     End Sub
 
@@ -425,7 +425,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If MsgBox(My.Lang.RemoveExtMsg & vbCrLf & vbCrLf & My.Lang.RemoveExtMsgNote, My.Application.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNo)) = MsgBoxResult.Yes Then
+        If MsgBox(My.Lang.RemoveExtMsg & vbCrLf & vbCrLf & My.Lang.RemoveExtMsgNote, My.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNo)) = MsgBoxResult.Yes Then
 
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
@@ -441,7 +441,7 @@ Public Class SettingsX
 
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             XenonTextBox3.Text = OpenFileDialog2.FileName
-            MsgBox(My.Lang.LanguageRestart, My.Application.MsgboxRt(MsgBoxStyle.Information))
+            MsgBox(My.Lang.LanguageRestart, My.MsgboxRt(MsgBoxStyle.Information))
         End If
 
     End Sub

@@ -1057,7 +1057,7 @@ Public Class MainFrm
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                W8_start.Image = My.Application.GetCurrentWallpaper.Resize(48, 48)
+                W8_start.Image = My.Application.GetWallpaper.Resize(48, 48)
             Case Else
                 W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
         End Select
@@ -1712,7 +1712,7 @@ Public Class MainFrm
 
     Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
 
-        MsgBox(My.Lang.X23, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.X23, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
 #End Region
@@ -2177,11 +2177,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
-        MsgBox(My.Lang.X23, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.X23, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
     Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
-        MsgBox(My.Lang.CP_AccentOnTaskbarTib, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.CP_AccentOnTaskbarTib, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
 #End Region
@@ -2876,7 +2876,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        My.Wallpaper = My.Application.GetCurrentWallpaper().Resize(528, 297)
+        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
         pnl_preview.BackgroundImage = My.Wallpaper
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)

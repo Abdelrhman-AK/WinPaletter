@@ -111,7 +111,7 @@ Partial Class LogonUI7
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(210, 36)
         Me.XenonButton1.TabIndex = 65
-        Me.XenonButton1.Text = "Load these into current palette"
+        Me.XenonButton1.Text = "Load into current theme"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonGroupBox3

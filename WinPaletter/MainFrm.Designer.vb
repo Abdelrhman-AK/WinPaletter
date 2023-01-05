@@ -4644,7 +4644,7 @@ Partial Class MainFrm
         Me.XenonButton20.Name = "XenonButton20"
         Me.XenonButton20.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton20.TabIndex = 22
-        Me.XenonButton20.Tag = "Create New Theme (Palette) File based on Native Windows"
+        Me.XenonButton20.Tag = "Create New Theme File based on Native Windows"
         Me.XenonButton20.UseVisualStyleBackColor = False
         '
         'XenonButton18
@@ -4660,7 +4660,7 @@ Partial Class MainFrm
         Me.XenonButton18.Name = "XenonButton18"
         Me.XenonButton18.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton18.TabIndex = 21
-        Me.XenonButton18.Tag = "Reload First Color Palette"
+        Me.XenonButton18.Tag = "Reload First Theme"
         Me.XenonButton18.UseVisualStyleBackColor = False
         '
         'XenonButton17
@@ -4676,7 +4676,7 @@ Partial Class MainFrm
         Me.XenonButton17.Name = "XenonButton17"
         Me.XenonButton17.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton17.TabIndex = 20
-        Me.XenonButton17.Tag = "Reload Previous Color Palette (Similar to Undo)"
+        Me.XenonButton17.Tag = "Reload Previous Theme (Similar to Undo)"
         Me.XenonButton17.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -4740,7 +4740,7 @@ Partial Class MainFrm
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton10.TabIndex = 8
-        Me.XenonButton10.Tag = "Edit Information of current Theme File"
+        Me.XenonButton10.Tag = "Edit Information of current Theme"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton11
@@ -4813,7 +4813,7 @@ Partial Class MainFrm
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton3.TabIndex = 2
-        Me.XenonButton3.Tag = "Create New Theme (Palette) File based on the current applied preferences"
+        Me.XenonButton3.Tag = "Create New Theme File based on the current applied preferences"
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -4938,7 +4938,7 @@ Partial Class MainFrm
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(82, Byte), Integer), CType(CType(70, Byte), Integer))
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(143, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(84, Byte), Integer))
         Me.XenonButton4.LineSize = 1
         Me.XenonButton4.Location = New System.Drawing.Point(350, 3)
         Me.XenonButton4.Name = "XenonButton4"

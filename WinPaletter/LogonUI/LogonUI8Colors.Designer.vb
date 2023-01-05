@@ -108,7 +108,7 @@ Partial Class LogonUI8Colors
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(210, 36)
         Me.XenonButton1.TabIndex = 69
-        Me.XenonButton1.Text = "Load this into current palette"
+        Me.XenonButton1.Text = "Load into current theme"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'color24

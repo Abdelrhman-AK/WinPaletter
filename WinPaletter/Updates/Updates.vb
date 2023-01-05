@@ -194,7 +194,7 @@ Public Class Updates
     Private Sub UC_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles UC.DownloadFileCompleted
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
-        If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, My.Application.MsgboxRt(MsgBoxStyle.Information))
+        If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, My.MsgboxRt(MsgBoxStyle.Information))
         If XenonRadioButton1.Checked Then
             Process.Start(OldName)
             Process.GetCurrentProcess.Kill()

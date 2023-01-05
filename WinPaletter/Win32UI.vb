@@ -1179,8 +1179,8 @@ Public Class Win32UI
             s.Add(String.Format("; This theme was designed by WinPaletter, programmed by Abdelrhman-AK"))
             s.Add(String.Format("; Created from application version {0}", MainFrm.CP.Info.AppVersion))
             s.Add(String.Format("; Created by {0}", MainFrm.CP.Info.Author))
-            s.Add(String.Format("; Palette Name: {0}", MainFrm.CP.Info.PaletteName))
-            s.Add(String.Format("; Palette Version: {0}", MainFrm.CP.Info.PaletteVersion))
+            s.Add(String.Format("; Theme Name: {0}", MainFrm.CP.Info.PaletteName))
+            s.Add(String.Format("; Theme Version: {0}", MainFrm.CP.Info.PaletteVersion))
             s.Add("")
 
             s.Add(String.Format("[Control Panel\Colors]"))
