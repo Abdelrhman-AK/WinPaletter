@@ -631,6 +631,36 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property LangNode_JSON() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("LangNode_JSON", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property LangNode_Main() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("LangNode_Main", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property LangNode_Value() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("LangNode_Value", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to MIT License
         '''
         '''Copyright (c) 2022-2023 Abdelrhman-AK

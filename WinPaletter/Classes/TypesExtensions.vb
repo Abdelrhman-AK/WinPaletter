@@ -3,6 +3,9 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
+Imports WinPaletter.CP
 
 Public Module ColorsExtensions
 
@@ -886,4 +889,100 @@ Public Module ComboBoxExtenstions
         Next
 
     End Sub
+End Module
+
+Public Module TreeViewExtensions
+
+    '''<summary>
+    '''Serialize from a JSON File to TreeView Nodes
+    '''</summary>
+    <Extension()>
+    Public Sub FromJSON([TreeView] As TreeView, ByVal JSON_File As String, ByVal rootName As String)
+        Dim reader = New StreamReader(JSON_File)
+        Dim jsonReader = New JsonTextReader(reader)
+        Dim root = JToken.Load(jsonReader)
+        reader.Close()
+
+        [TreeView].BeginUpdate()
+        Try
+            [TreeView].Nodes.Clear()
+
+            With [TreeView].Nodes.Add(rootName)
+                .ImageKey = "json"
+                .SelectedImageKey = "json"
+                .Tag = root
+            End With
+
+            AddNode(root, [TreeView].Nodes.Item(0))
+
+            [TreeView].CollapseAll()
+        Finally
+            [TreeView].EndUpdate()
+        End Try
+    End Sub
+
+    Private Sub AddNode(ByVal token As JToken, ByVal inTreeNode As TreeNode)
+        If token Is Nothing Then Return
+
+        If TypeOf token Is JValue Then
+
+            With inTreeNode.Nodes.Add(token.ToString())
+                .ImageKey = "value"
+                .SelectedImageKey = "value"
+                .Tag = token
+            End With
+
+        ElseIf TypeOf token Is JObject Then
+            Dim obj = CType(token, JObject)
+
+            For Each [property] In obj.Properties()
+                Dim childNode = inTreeNode.Nodes(inTreeNode.Nodes.Add(New TreeNode([property].Name)))
+                childNode.Tag = [property]
+                AddNode([property].Value, childNode)
+            Next
+
+        ElseIf TypeOf token Is JArray Then
+            Dim array = CType(token, JArray)
+
+            For i As Integer = 0 To array.Count - 1
+                Dim childNode = inTreeNode.Nodes(inTreeNode.Nodes.Add(New TreeNode(i.ToString())))
+                childNode.Tag = array(i)
+                AddNode(array(i), childNode)
+            Next
+        End If
+    End Sub
+
+
+    '''<summary>
+    '''Serialize a node to JSON Formated String
+    '''</summary>
+    <Extension()>
+    Public Function ToJSON([TreeNode] As TreeNode) As String
+        Dim J_All As New JObject
+        J_All.RemoveAll()
+
+        For Each N As TreeNode In [TreeNode].Nodes
+
+            Dim J As New JObject
+            J.RemoveAll()
+            LoopThroughNodes(N, N, J)
+
+            J_All.Add(N.Text, J)
+        Next
+
+        Return J_All.ToString
+    End Function
+
+    Private Sub LoopThroughNodes([Node] As TreeNode, [MainNode] As TreeNode, [JSON] As JObject)
+        For Each N As TreeNode In [Node].Nodes
+            If N.Nodes.Count = 1 Then
+                JSON.Add(N.Text, N.Nodes.Item(0).Text)
+            ElseIf N.Nodes.Count > 1 Then
+                JSON.Add(N.Text, New JObject())
+                Dim Jx As JObject = JSON(N.Text)
+                LoopThroughNodes(N, [MainNode], Jx)
+            End If
+        Next
+    End Sub
+
 End Module

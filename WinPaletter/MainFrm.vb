@@ -3057,6 +3057,14 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        'My.Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+        'My.Lang.LoadLanguageFromJSON("C:\Users\boody\Desktop\Arabic.json")
+
+        LangJSON_Manage.ShowDialog()
+
+    End Sub
+
     Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
         If _Shown And Select_W7.Checked Then
             PreviewConfig = WinVer.Seven

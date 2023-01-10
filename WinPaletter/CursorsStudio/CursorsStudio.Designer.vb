@@ -226,7 +226,7 @@ Partial Class CursorsStudio
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(134, 29)
         Me.XenonButton8.TabIndex = 68
-        Me.XenonButton8.Text = "Default Windows" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.XenonButton8.Text = "Default Windows"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonButton9
@@ -304,6 +304,9 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown4.Name = "XenonNumericUpDown4"
         Me.XenonNumericUpDown4.ReadOnly = False
         Me.XenonNumericUpDown4.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonNumericUpDown4.SelectedText = ""
+        Me.XenonNumericUpDown4.SelectionLength = 0
+        Me.XenonNumericUpDown4.SelectionStart = 0
         Me.XenonNumericUpDown4.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown4.TabIndex = 66
         Me.XenonNumericUpDown4.Text = "25"
@@ -480,6 +483,9 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown1.Name = "XenonNumericUpDown1"
         Me.XenonNumericUpDown1.ReadOnly = False
         Me.XenonNumericUpDown1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonNumericUpDown1.SelectedText = ""
+        Me.XenonNumericUpDown1.SelectionLength = 0
+        Me.XenonNumericUpDown1.SelectionStart = 0
         Me.XenonNumericUpDown1.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown1.TabIndex = 65
         Me.XenonNumericUpDown1.Text = "25"
@@ -647,6 +653,9 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown2.Name = "XenonNumericUpDown2"
         Me.XenonNumericUpDown2.ReadOnly = False
         Me.XenonNumericUpDown2.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonNumericUpDown2.SelectedText = ""
+        Me.XenonNumericUpDown2.SelectionLength = 0
+        Me.XenonNumericUpDown2.SelectionStart = 0
         Me.XenonNumericUpDown2.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown2.TabIndex = 64
         Me.XenonNumericUpDown2.Text = "25"
@@ -823,6 +832,9 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown6.Name = "XenonNumericUpDown6"
         Me.XenonNumericUpDown6.ReadOnly = False
         Me.XenonNumericUpDown6.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonNumericUpDown6.SelectedText = ""
+        Me.XenonNumericUpDown6.SelectionLength = 0
+        Me.XenonNumericUpDown6.SelectionStart = 0
         Me.XenonNumericUpDown6.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown6.TabIndex = 65
         Me.XenonNumericUpDown6.Text = "25"

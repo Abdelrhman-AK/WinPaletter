@@ -343,6 +343,7 @@ Partial Class MainFrm
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SaveFileDialog3 = New System.Windows.Forms.SaveFileDialog()
+        Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.PaletteContainer_W11.SuspendLayout()
@@ -4956,6 +4957,22 @@ Partial Class MainFrm
         Me.SaveFileDialog3.DefaultExt = "wpt"
         Me.SaveFileDialog3.Filter = "Test File (*.txt)|*.txt"
         '
+        'XenonButton25
+        '
+        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton25.ForeColor = System.Drawing.Color.White
+        Me.XenonButton25.Image = Nothing
+        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton25.LineSize = 1
+        Me.XenonButton25.Location = New System.Drawing.Point(565, 668)
+        Me.XenonButton25.Name = "XenonButton25"
+        Me.XenonButton25.Size = New System.Drawing.Size(140, 32)
+        Me.XenonButton25.TabIndex = 34
+        Me.XenonButton25.Text = "Export JSON Language"
+        Me.XenonButton25.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -4963,6 +4980,7 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1082, 716)
+        Me.Controls.Add(Me.XenonButton25)
         Me.Controls.Add(Me.previewContainer)
         Me.Controls.Add(Me.TablessControl1)
         Me.Controls.Add(Me.XenonButton19)
@@ -5425,4 +5443,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton22 As XenonButton
     Friend WithEvents SaveFileDialog3 As SaveFileDialog
     Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents XenonButton25 As XenonButton
 End Class

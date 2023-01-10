@@ -6,6 +6,7 @@ Imports System.Threading
 Imports AnimatorNS
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+Imports Newtonsoft.Json.Linq
 Imports WinPaletter.XenonCore
 
 Namespace My
@@ -90,6 +91,10 @@ Namespace My
         ''' </summary>
         Public Notifications_IL As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
 
+        ''' <summary>
+        ''' ImageList for Languages Nodes (Loaded at application startup)
+        ''' </summary>
+        Public Lang_IL As New ImageList With {.ImageSize = New Size(16, 16), .ColorDepth = ColorDepth.Depth32Bit}
 
         Delegate Function MsgBoxDelegate([OriginalMsgBoxStyle] As MsgBoxResult) As MsgBoxStyle
         ''' <summary>
@@ -519,7 +524,9 @@ Namespace My
 
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then
-                    Lang.ExportNativeLang(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                    Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
+                    Debug.WriteLine(Lang.LngExported)
+                    Console.WriteLine(Lang.LngExported)
                     MsgBox(Lang.LngExported, MsgboxRt(MsgBoxStyle.Information))
                     Process.GetCurrentProcess.Kill()
                     Exit For
@@ -538,7 +545,7 @@ Namespace My
 
             If My.[Settings].Language Then
                 Try
-                    My.Lang.LoadLanguageFromFile(My.[Settings].Language_File)
+                    My.Lang.LoadLanguageFromJSON(My.[Settings].Language_File)
                 Catch ex As Exception
                     MsgBox("There is an error occured during loading language." & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
                 End Try
@@ -638,6 +645,10 @@ Namespace My
             Notifications_IL.Images.Add("success", My.Resources.notify_success)
             Notifications_IL.Images.Add("skip", My.Resources.notify_skip)
             Notifications_IL.Images.Add("admin", My.Resources.notify_administrator)
+
+            Lang_IL.Images.Add("main", My.Resources.LangNode_Main)
+            Lang_IL.Images.Add("value", My.Resources.LangNode_Value)
+            Lang_IL.Images.Add("json", My.Resources.LangNode_JSON)
 
             Try : WinRes = New WinResources : Catch : End Try
 
@@ -864,6 +875,7 @@ Namespace My
             Throw DirectCast(e.ExceptionObject, Exception)
             If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
+
 #End Region
 
     End Class

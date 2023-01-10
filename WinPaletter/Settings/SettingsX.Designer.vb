@@ -163,8 +163,8 @@ Partial Class SettingsX
         Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -852,6 +852,9 @@ Partial Class SettingsX
         Me.XenonTextBox3.Name = "XenonTextBox3"
         Me.XenonTextBox3.ReadOnly = False
         Me.XenonTextBox3.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox3.SelectedText = ""
+        Me.XenonTextBox3.SelectionLength = 0
+        Me.XenonTextBox3.SelectionStart = 0
         Me.XenonTextBox3.Size = New System.Drawing.Size(685, 24)
         Me.XenonTextBox3.TabIndex = 39
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -1683,6 +1686,9 @@ Partial Class SettingsX
         Me.XenonTextBox2.Name = "XenonTextBox2"
         Me.XenonTextBox2.ReadOnly = False
         Me.XenonTextBox2.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox2.SelectedText = ""
+        Me.XenonTextBox2.SelectionLength = 0
+        Me.XenonTextBox2.SelectionStart = 0
         Me.XenonTextBox2.Size = New System.Drawing.Size(595, 24)
         Me.XenonTextBox2.TabIndex = 39
         Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -1703,6 +1709,9 @@ Partial Class SettingsX
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = False
         Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox1.SelectedText = ""
+        Me.XenonTextBox1.SelectionLength = 0
+        Me.XenonTextBox1.SelectionStart = 0
         Me.XenonTextBox1.Size = New System.Drawing.Size(595, 24)
         Me.XenonTextBox1.TabIndex = 38
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -2102,13 +2111,13 @@ Partial Class SettingsX
         Me.ImageList1.Images.SetKeyName(6, "Terminals")
         Me.ImageList1.Images.SetKeyName(7, "Miscellaneous")
         '
-        'OpenFileDialog2
-        '
-        Me.OpenFileDialog2.Filter = "WinPaletter Language File (*.wplng)|*.wplng"
-        '
         'OpenJSONDlg
         '
         Me.OpenJSONDlg.Filter = "JSON File (*.json)|*.json"
+        '
+        'OpenFileDialog2
+        '
+        Me.OpenFileDialog2.Filter = "JSON File (*.json)|*.json"
         '
         'SettingsX
         '
@@ -2262,7 +2271,6 @@ Partial Class SettingsX
     Friend WithEvents XenonSeparator8 As XenonSeparator
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents OpenFileDialog2 As OpenFileDialog
     Friend WithEvents Label16 As Label
     Friend WithEvents Label18 As Label
     Friend WithEvents PictureBox24 As PictureBox
@@ -2330,4 +2338,5 @@ Partial Class SettingsX
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox35 As PictureBox
     Friend WithEvents XenonCheckBox16 As XenonCheckBox
+    Friend WithEvents OpenFileDialog2 As OpenFileDialog
 End Class

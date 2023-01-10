@@ -183,6 +183,10 @@
     <Content Include="Resources\icons8_command_line.ico" />
     <Content Include="Resources\icons8_PowerShell.ico" />
     <None Include="Resources\Icon_Uninstall.ico" />
+    <None Include="Resources\LangNode_Value.png" />
+    <None Include="Resources\LangNode_Value.png" />
+    <None Include="Resources\LangNode_Main.png" />
+    <None Include="Resources\LangNode_JSON.png" />
     <Content Include="Resources\LICENSE.txt" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
@@ -267,7 +271,19 @@
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\CP_Defaults.vb" />
-    <Compile Include="Classes\Localizer.vb" />
+    <Compile Include="Languages\LangJSON_Manage.Designer.vb">
+      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\LangJSON_Manage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_Add_Snippet.Designer.vb">
+      <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_Add_Snippet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Localizer.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
     <Compile Include="Classes\WinResources.vb" />
@@ -380,7 +396,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -519,6 +535,12 @@
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Languages\LangJSON_Manage.resx">
+      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
+      <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -543,10 +565,9 @@
       <DependentUpon>Metrics_Fonts.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="popup_color.resx">
       <DependentUpon>popup_color.vb</DependentUpon>

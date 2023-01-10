@@ -1,8 +1,40 @@
-﻿
+﻿Imports System.IO
 Imports System.Reflection
+Imports Newtonsoft.Json.Linq
 Imports WinPaletter.XenonCore
 
-Public Class Localizer
+Public Class Localizer : Implements IDisposable
+
+#Region "IDisposable Support"
+    Private disposedValue As Boolean ' To detect redundant calls
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not Me.disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects).
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+            ' TODO: set large fields to null.
+        End If
+        Me.disposedValue = True
+    End Sub
+
+    ' TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
+    'Protected Overrides Sub Finalize()
+    '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+    '    Dispose(False)
+    '    MyBase.Finalize()
+    'End Sub
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+#End Region
     Sub New()
 
     End Sub
@@ -71,8 +103,8 @@ Public Class Localizer
                         }
 
 #Region "Language Info"
-    Property Name As String = "Abdelrhman-AK"
-    Property TrVer As String = "1.0"
+    Property Name As String = Environment.UserName
+    Property TranslationVersion As String = "1.0"
     Property Lang As String = "English"
     Property LangCode As String = "EN-US"
     Property AppVer As String = "1.0.0.0"
@@ -80,26 +112,27 @@ Public Class Localizer
 #End Region
 
 #Region "Deep-In-Code Strings"
-    Property InvalidTheme As String = "Error: Invalid Theme File."
-    Property ThemeNotExist As String = "Theme File doesn't exist."
     Property OK As String = "OK"
-    Property Next_ As String = "Next"
+    Property [Next] As String = "Next"
     Property Yes As String = "Yes"
     Property No As String = "No"
-    Property NewTag As String = "Create New Theme File"
-    Property OpenTag As String = "Open a Theme File"
-    Property SaveTag As String = "Save Theme File"
-    Property SaveAsTag As String = "Save Theme File as ..."
-    Property EditInfoTag As String = "Edit Information of current Theme File"
     Property NewUpdate As String = "New Update Available"
     Property OpenForActions As String = "Open Updates form for actions."
     Property By As String = "By"
     Property Show As String = "Show"
     Property Hide As String = "Hide"
     Property InputValue As String = "Input value"
+    Property CurrentMode As String = "Current Mode"
+    Property SaveMsg As String = "Do you want to save Settings?"
+    Property SettingsSaved As String = "Settings Saved"
+    Property MBSizeUnit As String = "MB"
+    Property Stable As String = "Stable"
+    Property Beta As String = "Beta"
+    Property Channel As String = "Channel"
+    Property InvalidTheme As String = "Error: Invalid Theme File."
+    Property ThemeNotExist As String = "Theme File doesn't exist."
 
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
-
     Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
     Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
 
@@ -123,6 +156,7 @@ Public Class Localizer
     Property CP_10_Taskbar As String = "Taskbar"
     Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
+
     Property CP_Undefined As String = "Undefined"
     Property CP_ClassicThemeEditable As String = "Classic theme is editable by Win32UI Editor"
     Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
@@ -132,9 +166,6 @@ Public Class Localizer
     Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
     Property NoDefResExplorer As String = "Restarting Explorer is diabled. If theme is not applied correctly, restart it."
 
-    Property CurrentMode As String = "Current Mode"
-    Property SaveMsg As String = "Do you want to save Settings?"
-    Property SettingsSaved As String = "Settings Saved"
     Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wpsf) from registry?"
     Property RemoveExtMsgNote As String = "Note: You can reassociate them by activating its checkbox and restarting the application."
     Property EmptyName As String = "You can't leave Theme Name Empty. Please type a name to it."
@@ -157,16 +188,9 @@ Public Class Localizer
     Property NetworkError As String = "Network Error"
     Property ServerError As String = "Error: Network issues or Github repository is private or deleted. Visit Github page for details."
     Property Msgbox_Downloaded As String = "Downloaded Successfully"
-    Property MBSizeUnit As String = "MB"
-    Property Stable As String = "Stable"
-    Property Beta As String = "Beta"
-    Property Channel As String = "Channel"
+
     Property LngExported As String = "Language Exported Successfully"
-    Property MenuNativeWin As String = "From Init (Native Windows)"
-    Property MenuInit As String = "From Init (Empty Colors)"
-    Property MenuAppliedReg As String = "From Current Applied Theme"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the situable size will be loaded according to your DPI settings."
-    Property Win32UISavingThemeError As String = "Error saving file: "
     Property LngShouldClose As String = "You should close the app if you want to export language."
     Property CMD_Enable As String = "You should enable terminal editing from the toggle above."
     Property CMD_NotAllWeights As String = "Not all weights are avaliable according to your OS and the font itself. Normal and Bold ones are the basic ones."
@@ -197,15 +221,11 @@ Public Class Localizer
     Property Terminal_External_Reversed As String = "This terminal is reserved for system. Try again with another one."
     Property Terminal_External_Exists As String = "This terminal already exists. Try again with another one."
 
-    Property CP_TerminalError As String = "Error occured while saving Windows Terminal Settings. Anyway, WinPaletter will continue saving without Windows Terminal."
-    Property CP_ApplyingCustomLogonUI As String = "Applying Custom LogonUI"
     Property CP_RenderingCustomLogonUI_Progress As String = "Rendering Custom LogonUI:"
     Property CP_RenderingCustomLogonUI As String = "Rendering Custom LogonUI"
-    Property CP_ApplyingTerminalColors As String = "Applying Terminals Colors"
     Property CP_SavingCursorsColors As String = "Saving Windows Cursors Colors to Registry"
     Property CP_RenderingCursors As String = "Rendering Windows Cursors"
     Property CP_ApplyingCursors As String = "Applying Windows Cursors"
-    Property CP_ApplyingWin32UI As String = "Applying Win32UI Colors (Classic Windows Elements)"
 #End Region
 
     Public Sub AdjustFonts()
@@ -251,18 +271,21 @@ Public Class Localizer
 
     End Sub
 
-    Public Sub ExportNativeLang(File As String)
-        Dim lx As New List(Of String)
-        lx.Clear()
 
-        lx.Add("!Name = Abdelrhman-AK")
-        lx.Add("!TrVer = 1.0")
-        lx.Add("!Lang = English")
-        lx.Add("!LangCode = EN-US")
-        lx.Add("!AppVer = " & My.Application.Info.Version.ToString)
-        lx.Add("!RightToLeft = False")
-
+    Public Sub ExportJSON(File As String)
+        Dim JSON_Overall As New JObject()
         Dim newL As New Localizer
+
+        Dim j_info As New JObject()
+        j_info.RemoveAll()
+        j_info.Add("Name".ToLower, newL.Name)
+        j_info.Add("TranslationVersion".ToLower, newL.TranslationVersion)
+        j_info.Add("Lang".ToLower, newL.Lang)
+        j_info.Add("LangCode".ToLower, newL.LangCode)
+        j_info.Add("AppVer".ToLower, My.Application.Info.Version.ToString)
+        j_info.Add("RightToLeft".ToLower, newL.RightToLeft)
+
+        Dim j_globalstrings As New JObject()
 
         Dim type1 As Type = newL.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
@@ -270,126 +293,158 @@ Public Class Localizer
 
             If Not String.IsNullOrWhiteSpace([property].GetValue(newL)) _
                  And Not [property].Name.ToLower = "Name".ToLower _
-                 And Not [property].Name.ToLower = "TrVer".ToLower _
+                 And Not [property].Name.ToLower = "TranslationVersion".ToLower _
                  And Not [property].Name.ToLower = "Lang".ToLower _
                  And Not [property].Name.ToLower = "LangCode".ToLower _
                  And Not [property].Name.ToLower = "AppVer".ToLower _
                  And Not [property].Name.ToLower = "RightToLeft".ToLower Then
 
-                lx.Add(String.Format("@{0} = {1}", [property].Name, [property].GetValue(newL).ToString.Replace(vbCrLf, "<br>")))
-
+                j_globalstrings.Add([property].Name.ToLower, [property].GetValue(newL).ToString)
             End If
 
         Next
 
-        Dim LS As New List(Of String)
-        LS.Clear()
+        Dim j_Forms As New JObject()
 
         For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
-            Dim ins As New Form()
+            Dim ins As New Form
             ins = DirectCast(Activator.CreateInstance(f), Form)
 
-            LS.Add(ins.Name & ".Text = " & ins.Text)
+            Dim j_ctrl, j_child As New JObject()
+            j_ctrl.RemoveAll()
+            j_child.RemoveAll()
+
+            j_ctrl.Add("Text", ins.Text)
+
             For Each ctrl In GetAllControls(ins)
+
                 If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
-                    LS.Add(ins.Name & "." & ctrl.Name & ".Text = " & ctrl.Text.Replace(vbCrLf, "<br>"))
+                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                 End If
 
                 If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
-                    LS.Add(ins.Name & "." & ctrl.Name & ".Tag = " & ctrl.Tag.Replace(vbCrLf, "<br>"))
+                    j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
                 End If
+
             Next
+
+            If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
+
+            j_Forms.Add(ins.Name, j_ctrl)
+
             ins.Dispose()
         Next
 
-        IO.File.WriteAllText(File, lx.CString & vbCrLf & LS.CString)
+        JSON_Overall.Add("Information", j_info)
+        JSON_Overall.Add("Global Strings", j_globalstrings)
+        JSON_Overall.Add("Forms Strings", j_Forms)
+
+        IO.File.WriteAllText(File, JSON_Overall.ToString())
     End Sub
 
-    Public Sub LoadLanguageFromFile(File As String, Optional [_Form] As Form = Nothing)
+    Public Sub LoadLanguageFromJSON(File As String, Optional [_Form] As Form = Nothing)
         If IO.File.Exists(File) Then
 
-            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, String))()
-            PopCtrlList.Clear()
+            Dim St As New StreamReader(File)
+            Dim JSON_String As String = St.ReadToEnd
+            Dim JSonFile As JObject = JObject.Parse(JSON_String)
+            St.Close()
 
-            Dim Definer As New Dictionary(Of String, String)
-            Definer.Clear()
+            Dim J_Information As New JObject
+            Dim J_GlobalStrings As New JObject
+            Dim J_Forms As New JObject
 
-            For Each X As String In IO.File.ReadAllLines(File)
-                If X.Contains("=") Then
-                    If X.StartsWith("!") Then
-                        Try
-                            If X.ToLower.StartsWith("!Name = ".ToLower) Then Name = X.Remove(0, "!Name = ".Count)
-                            If X.ToLower.StartsWith("!TrVer = ".ToLower) Then TrVer = X.Remove(0, "!TrVer = ".Count)
-                            If X.ToLower.StartsWith("!Lang = ".ToLower) Then Lang = X.Remove(0, "!Lang = ".Count)
-                            If X.ToLower.StartsWith("!LangCode = ".ToLower) Then LangCode = X.Remove(0, "!LangCode = ".Count)
-                            If X.ToLower.StartsWith("!AppVer = ".ToLower) Then AppVer = X.Remove(0, "!AppVer = ".Count)
+            Dim Valid As Boolean = JSonFile.ContainsKey("Information") And JSonFile.ContainsKey("Global Strings") And JSonFile.ContainsKey("Forms Strings")
 
-                            Try
-                                If X.ToLower.StartsWith("!RightToLeft = ".ToLower) Then RightToLeft = X.Remove(0, "!RightToLeft = ".Count)
-                            Catch
-                                RightToLeft = False
-                            End Try
-                        Catch
+            If Not Valid Then
+                '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-                        End Try
-                    ElseIf X.StartsWith("@") Then
-                        Try
-                            Dim x0, x1 As String
-                            x0 = X.Split("=")(0).Replace("@", "").Trim
-                            x1 = X.Split("=")(1).Trim
+                Exit Sub
+            End If
 
-                            Try
-                                If Not Definer.Keys.Contains(x0) Then Definer.Add(x0, x1)
-                            Catch : End Try
-
-                        Catch
-                        End Try
-                    Else
-                        Try
-                            Dim FormName, ControlName, Prop, Value As String
-                            FormName = String.Empty
-                            ControlName = String.Empty
-                            Prop = String.Empty
-                            Value = String.Empty
-
-                            Select Case X.Split("=")(0).Trim.Split(".").Count
-                                Case 3
-                                    FormName = X.Split("=")(0).Trim.Split(".")(0)
-                                    ControlName = X.Split("=")(0).Trim.Split(".")(1)
-                                    Prop = X.Split("=")(0).Trim.Split(".")(2)
-                                Case 2
-                                    FormName = X.Split("=")(0).Trim.Split(".")(0)
-                                    ControlName = String.Empty
-                                    Prop = X.Split("=")(0).Trim.Split(".")(1)
-                            End Select
-
-                            Value = X.Replace(X.Split("=")(0), "").Trim.Remove(0, 1).Trim.Replace("<br>", vbCrLf)
-
-                            PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-                        Catch
-
-                        End Try
-                    End If
-                End If
-            Next
+            J_Information = JSonFile("Information")
+            J_GlobalStrings = JSonFile("Global Strings")
+            J_Forms = JSonFile("Forms Strings")
 
             Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
             For Each [property] As PropertyInfo In properties1
-                Try
-                    If Definer.Keys.Contains([property].Name) Then
-                        [property].SetValue(Me, Convert.ChangeType(Definer([property].Name).ToString.Replace("<br>", vbCrLf), [property].PropertyType))
-                    End If
-                Catch
-                End Try
+                If Not [property].Name.ToLower = "Name".ToLower _
+                 And Not [property].Name.ToLower = "TranslationVersion".ToLower _
+                 And Not [property].Name.ToLower = "Lang".ToLower _
+                 And Not [property].Name.ToLower = "LangCode".ToLower _
+                 And Not [property].Name.ToLower = "AppVer".ToLower _
+                 And Not [property].Name.ToLower = "RightToLeft".ToLower Then
+
+                    Dim FoundProp As Boolean = J_GlobalStrings.ContainsKey([property].Name.ToLower)
+                    If FoundProp Then [property].SetValue(Me, Convert.ChangeType(J_GlobalStrings([property].Name.ToLower), [property].PropertyType))
+                Else
+                    Dim FoundProp As Boolean = J_Information.ContainsKey([property].Name.ToLower)
+                    If FoundProp Then [property].SetValue(Me, Convert.ChangeType(J_Information([property].Name.ToLower), [property].PropertyType))
+                End If
             Next
 
+            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, String))()
+            PopCtrlList.Clear()
+
+            Dim FormName, ControlName, Prop, Value As String
+
+            FormName = String.Empty
+            ControlName = String.Empty
+            Prop = String.Empty
+            Value = String.Empty
+
+            For Each F In J_Forms
+                Dim J_Specific_Form As New JObject
+
+                J_Specific_Form = J_Forms(F.Key)
+                FormName = F.Key
+                ControlName = String.Empty
+
+                Prop = "Text"
+
+                If J_Specific_Form.ContainsKey("Text") Or J_Specific_Form.ContainsKey("text") Or J_Specific_Form.ContainsKey("TEXT") Then
+
+                    If J_Specific_Form.ContainsKey("Text") Then Value = J_Specific_Form("Text")
+                    If J_Specific_Form.ContainsKey("text") Then Value = J_Specific_Form("text")
+                    If J_Specific_Form.ContainsKey("TEXT") Then Value = J_Specific_Form("TEXT")
+
+                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+
+                End If
+
+                If J_Specific_Form.ContainsKey("Controls") Or J_Specific_Form.ContainsKey("controls") Or J_Specific_Form.ContainsKey("CONTROLS") Then
+
+                    Dim J_Controls As New JObject
+
+                    If J_Specific_Form.ContainsKey("Controls") Then J_Controls = J_Specific_Form("Controls")
+                    If J_Specific_Form.ContainsKey("controls") Then J_Controls = J_Specific_Form("controls")
+                    If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
+
+                    For Each ctrl In J_Controls
+                        ControlName = ctrl.Key.Split(".")(0)
+                        Prop = ctrl.Key.Split(".")(1)
+                        Value = ctrl.Value
+                        PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                    Next
+                End If
+
+            Next
+
+            PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+
+            Dim FList As New List(Of Form)
+            FList.Clear()
 
             If [_Form] Is Nothing Then
 
                 For x As Integer = 0 To allForms.Count - 1
-
                     With GetFormFromName(allForms(x))
+                        If .Visible Then
+                            FList.Add(GetFormFromName(allForms(x)))
+                            .Visible = False
+                        End If
+
                         '.SuspendLayout()
                         Populate(PopCtrlList, GetFormFromName(allForms(x)))
                         .RightToLeftLayout = RightToLeft
@@ -400,17 +455,25 @@ Public Class Localizer
                     End With
 
                 Next
-
                 LoadInternal()
             Else
+                If [_Form].Visible Then
+                    [_Form].Visible = False
+                    FList.Add([_Form])
+                End If
                 Populate(PopCtrlList, [_Form])
             End If
+
 
             AdjustFonts()
 
             PopCtrlList.Clear()
-            Definer.Clear()
 
+            For Each F In FList
+                F.Visible = True
+            Next
+
+            FList.Clear()
         End If
     End Sub
 
@@ -433,7 +496,7 @@ Public Class Localizer
                         Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4, [Form])
                         Catch : End Try
 
-                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString.Replace("<br>", vbCrLf), [Form])
+                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, [Form])
                         Catch : End Try
                     Else
                         '# Control
@@ -442,10 +505,10 @@ Public Class Localizer
 
                             For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
 
-                                Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4.ToString.Replace("<br>", vbCrLf), ctrl)
+                                Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4.ToString, ctrl)
                                 Catch : End Try
 
-                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString.Replace("<br>", vbCrLf), ctrl)
+                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)
                                 Catch : End Try
 
                                 'ctrl.RightToLeft = If(RightToLeft, 1, 0)
@@ -463,6 +526,7 @@ Public Class Localizer
         Next
 
     End Sub
+
     Sub RTL(Parent As Control)
 
         If RightToLeft Then

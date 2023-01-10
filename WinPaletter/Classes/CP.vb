@@ -2434,6 +2434,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             'MsgBox(field.FieldType.FullName)
 
             j.Add(field.Name, field.GetValue([Structure]).ToString)
+
+
         Next
 
         Return j

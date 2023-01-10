@@ -21,7 +21,7 @@ Public Class Whatsnew
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        XenonButton1.Text = My.Lang.Next_
+        XenonButton1.Text = My.Lang.Next
         If XenonTabControl1.SelectedIndex > 0 Then XenonTabControl1.SelectedIndex -= 1
         If XenonTabControl1.SelectedIndex = 0 Then XenonButton2.Enabled = False
     End Sub

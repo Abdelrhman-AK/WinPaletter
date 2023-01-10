@@ -1,5 +1,4 @@
-﻿Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.XenonCore
 
 Public Class SettingsX
 
@@ -135,7 +134,7 @@ Public Class SettingsX
 
         With My.Lang
             Label11.Text = .Name
-            Label12.Text = .TrVer
+            Label12.Text = .TranslationVersion
             Label14.Text = .AppVer
             Label19.Text = .Lang
             Label16.Text = .LangCode
