@@ -6,19 +6,12 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Announcement.png?raw=true) Temporary Announcement: Development Paused (until mid-January 2023): 
-- I'll pause working on WinPaletter because I will start final college exams in the next weeks for about 3 months and so I'll be so busy. 
-- I won't be able to work on new features until mid-January 2023.
-- If you have an issue, post it in GitHub Issues, and when I have time to fix it, I'll fix and post an update.
-- When I'm back, I will work on Windows Metrics, Mini-Store for Themes and other features/improvements. 
-- Thanks for your patience and for understanding this ... 
-
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Idea.png?raw=true) Ideas & Plans
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Windows Metrics                                        | :large_blue_circle: Postponed to Mid-January 2023                          |
-| Mini-Store for themes                                  | :yellow_square: Postponed to Mid-January 2023                          |
+| Windows Metrics                                        | :large_blue_circle: Coming Soon                          |
+| Mini-Store for themes                                  | :yellow_square: Postponed, May not be done                          |
 |                                                        |                                                                        |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
