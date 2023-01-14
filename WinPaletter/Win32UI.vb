@@ -452,15 +452,15 @@ Public Class Win32UI
                 pnl_preview.BackColor = C
 
             Case "menu_pick"
-                CList.Add(Menu)
+                CList.Add(Menu_Window)
 
                 If Not XenonToggle1.Checked Then CList.Add(RetroPanel1)
                 If Not XenonToggle1.Checked Then CList.Add(menucontainer0)
 
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                Menu.BackColor = C
-                Menu.Invalidate()
+                Menu_Window.BackColor = C
+                Menu_Window.Invalidate()
 
                 If Not XenonToggle1.Checked Then RetroPanel1.BackColor = C
                 If Not XenonToggle1.Checked Then menucontainer0.BackColor = C
@@ -599,11 +599,10 @@ Public Class Win32UI
 
     Sub LoadFromWin9xTheme(File As String)
         If IO.File.Exists(File) Then
-            Dim s As New List(Of String)
+            Dim s As List(Of String) = IO.File.ReadAllText(File).CList
             Dim FoundGradientActive As Boolean = False
             Dim FoundGradientInactive As Boolean = False
 
-            s = IO.File.ReadAllText(File).CList
             For Each x As String In s
 
                 If x.ToLower.StartsWith("activetitle=".ToLower) Then
@@ -679,11 +678,10 @@ Public Class Win32UI
         Dim ls As New List(Of Color)
         ls.Clear()
 
-        Dim AllThemes As New List(Of String)
+        Dim AllThemes As List(Of String) = [String].CList
         Dim SelectedTheme As String = ""
         Dim SelectedThemeList As New List(Of String)
 
-        AllThemes = [String].CList
         Dim Found As Boolean = False
 
         For Each th As String In AllThemes
@@ -777,7 +775,7 @@ Public Class Win32UI
         menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
-        Menu.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu.Padding.Top + Menu.Padding.Bottom
+        Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
 
         RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
 
@@ -861,8 +859,8 @@ Public Class Win32UI
 
         End Try
 
-        Menu.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
+        Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu_Window.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
 
         RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
         RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
@@ -934,7 +932,7 @@ Public Class Win32UI
         Next
 
         RetroPanel2.BackColor = c
-        Menu.ButtonFace = c
+        Menu_Window.ButtonFace = c
 
         c = btndkshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -947,7 +945,7 @@ Public Class Win32UI
             RB.ButtonDkShadow = c
         Next
         RetroTextBox1.ButtonDkShadow = c
-        Menu.ButtonDkShadow = c
+        Menu_Window.ButtonDkShadow = c
 
         c = btnhilight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -965,7 +963,7 @@ Public Class Win32UI
         RetroTextBox1.ButtonHilight = c
         RetroPanel1.ButtonHilight = c
         RetroPanel2.ButtonHilight = c
-        Menu.ButtonHilight = c
+        Menu_Window.ButtonHilight = c
 
         c = btnlight_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -978,7 +976,7 @@ Public Class Win32UI
             RB.ButtonLight = c
         Next
         RetroTextBox1.ButtonLight = c
-        Menu.ButtonLight = c
+        Menu_Window.ButtonLight = c
 
         c = btnshadow_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -996,7 +994,7 @@ Public Class Win32UI
         RetroTextBox1.ButtonShadow = c
         RetroPanel1.ButtonShadow = c
         RetroTextBox1.Invalidate()
-        Menu.ButtonShadow = c
+        Menu_Window.ButtonShadow = c
 
         c = btntext_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
@@ -1015,9 +1013,9 @@ Public Class Win32UI
         pnl_preview.BackColor = c
 
         c = menu_pick.BackColor
-        Menu.BackColor = c
+        Menu_Window.BackColor = c
         RetroPanel1.BackColor = c
-        Menu.Invalidate()
+        Menu_Window.Invalidate()
 
         c = menubar_pick.BackColor
         menucontainer0.BackColor = c
@@ -1075,7 +1073,7 @@ Public Class Win32UI
 
         If XenonToggle1.Checked Then
             'Theming Enabled (Menus Has colors and borders)
-            Menu.Flat = True
+            Menu_Window.Flat = True
             RetroPanel1.Flat = True
             menuhilight.BackColor = menuhilight_pick.BackColor 'Filling of selected item
             highlight.BackColor = hilight_pick.BackColor 'Outer Border of selected item
@@ -1087,7 +1085,7 @@ Public Class Win32UI
             RetroLabel3.ForeColor = hilighttext_pick.BackColor
         Else
             'Theming Disabled (Menus are retro 3d)
-            Menu.Flat = False
+            Menu_Window.Flat = False
             RetroPanel1.Flat = False
             menuhilight.BackColor = hilight_pick.BackColor 'Both will have same color
             highlight.BackColor = hilight_pick.BackColor 'Both will have same color
@@ -1098,7 +1096,7 @@ Public Class Win32UI
 
         End If
 
-        Menu.Invalidate()
+        Menu_Window.Invalidate()
         RetroPanel1.Invalidate()
         menuhilight.Invalidate()
         highlight.Invalidate()
@@ -1175,12 +1173,12 @@ Public Class Win32UI
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
             Dim s As New List(Of String)
             s.Clear()
-            s.Add(String.Format("; Copyright © Microsoft Corp. 1995-{0}", Now.Year))
-            s.Add(String.Format("; This theme was designed by WinPaletter, programmed by Abdelrhman-AK"))
-            s.Add(String.Format("; Created from application version {0}", MainFrm.CP.Info.AppVersion))
-            s.Add(String.Format("; Created by {0}", MainFrm.CP.Info.Author))
-            s.Add(String.Format("; Theme Name: {0}", MainFrm.CP.Info.PaletteName))
-            s.Add(String.Format("; Theme Version: {0}", MainFrm.CP.Info.PaletteVersion))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_Copyrights, Now.Year))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ProgrammedBy, My.Application.Info.CompanyName))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedFromAppVer, MainFrm.CP.Info.AppVersion))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedBy, MainFrm.CP.Info.Author))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeName, MainFrm.CP.Info.PaletteName))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeVersion, MainFrm.CP.Info.PaletteVersion))
             s.Add("")
 
             s.Add(String.Format("[Control Panel\Colors]"))

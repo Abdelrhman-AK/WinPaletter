@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Windows.Media.Effects
 Imports WinPaletter.XenonCore
 Public Class WindowsTerminal
     Private _Shown As Boolean = False
@@ -20,14 +19,14 @@ Public Class WindowsTerminal
             Case WinTerminal.Version.Stable
                 _Terminal = MainFrm.CP.Terminal
                 _TerminalDefault = MainFrm.CP.Terminal
-                Text = "Windows Terminal Stable"
+                Text = My.Lang.TerminalStable
                 TerEnabled.Checked = MainFrm.CP.Terminal.Enabled
 
             Case WinTerminal.Version.Preview
                 _Terminal = MainFrm.CP.TerminalPreview
                 _TerminalDefault = MainFrm.CP.TerminalPreview
 
-                Text = "Windows Terminal Preview"
+                Text = My.Lang.TerminalPreview
                 TerEnabled.Checked = MainFrm.CP.TerminalPreview.Enabled
 
         End Select
@@ -105,9 +104,9 @@ Public Class WindowsTerminal
                 TerTitlebarInactive.BackColor = .Titlebar_Inactive
                 TerTabActive.BackColor = .Tab_Active
                 TerTabInactive.BackColor = .Tab_Inactive
-                TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
-                XenonTerminal1.Light = If(.applicationTheme_light.ToLower = "light", True, False)
-                XenonTerminal2.Light = If(.applicationTheme_light.ToLower = "light", True, False)
+                TerMode.Checked = Not (.ApplicationTheme_light.ToLower = "light")
+                XenonTerminal1.Light = Not (.ApplicationTheme_light.ToLower = "light")
+                XenonTerminal2.Light = Not (.ApplicationTheme_light.ToLower = "light")
             End With
 
         End If
@@ -468,9 +467,9 @@ Public Class WindowsTerminal
                 If Not String.IsNullOrEmpty(.Name) Then
                     XenonTerminal1.TabTitle = .Name
                 ElseIf TerProfiles.SelectedIndex = 0 Then
-                    XenonTerminal1.TabTitle = "Default"
+                    XenonTerminal1.TabTitle = My.Lang.Default
                 Else
-                    XenonTerminal1.TabTitle = "Untitled"
+                    XenonTerminal1.TabTitle = My.Lang.Untitled
                 End If
             End If
 
@@ -479,7 +478,7 @@ Public Class WindowsTerminal
 
             Else
                 NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
-                Dim path As String
+                Dim path As String = ""
                 If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
                 NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
 
@@ -822,7 +821,7 @@ Public Class WindowsTerminal
                 TerTitlebarInactive.BackColor = .Titlebar_Inactive
                 TerTabActive.BackColor = .Tab_Active
                 TerTabInactive.BackColor = .Tab_Inactive
-                TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
+                TerMode.Checked = Not (.ApplicationTheme_light.ToLower = "light")
             End With
 
         Else
@@ -1357,9 +1356,9 @@ Public Class WindowsTerminal
                             If Not String.IsNullOrEmpty(.Name) Then
                                 XenonTerminal1.TabTitle = .Name
                             ElseIf TerProfiles.SelectedIndex = 0 Then
-                                XenonTerminal1.TabTitle = "Default"
+                                XenonTerminal1.TabTitle = My.Lang.Default
                             Else
-                                XenonTerminal1.TabTitle = "Untitled"
+                                XenonTerminal1.TabTitle = My.Lang.Untitled
                             End If
                         End If
 
@@ -1368,7 +1367,7 @@ Public Class WindowsTerminal
 
                         Else
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
-                            Dim path As String
+                            Dim path As String = ""
                             If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
 
@@ -1501,7 +1500,7 @@ Public Class WindowsTerminal
                         TerTitlebarInactive.BackColor = .Titlebar_Inactive
                         TerTabActive.BackColor = .Tab_Active
                         TerTabInactive.BackColor = .Tab_Inactive
-                        TerMode.Checked = If(.applicationTheme_light.ToLower = "light", False, True)
+                        TerMode.Checked = Not (.ApplicationTheme_light.ToLower = "light")
                     End With
 
                     Exit For

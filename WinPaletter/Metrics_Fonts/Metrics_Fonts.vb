@@ -491,52 +491,52 @@ Public Class Metrics_Fonts
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum) : XenonTrackbar12.Value = Val(sender.Text)
     End Sub
 
-    Private Sub tw_h_Click(sender As Object, e As EventArgs) Handles tw_h.Click
+    Private Sub Tw_h_Click(sender As Object, e As EventArgs) Handles tw_h.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar14.Maximum), XenonTrackbar14.Minimum) : XenonTrackbar14.Value = Val(sender.Text)
     End Sub
 
-    Private Sub tw_w_Click(sender As Object, e As EventArgs) Handles tw_w.Click
+    Private Sub Tw_w_Click(sender As Object, e As EventArgs) Handles tw_w.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar13.Maximum), XenonTrackbar13.Minimum) : XenonTrackbar13.Value = Val(sender.Text)
     End Sub
 
-    Private Sub i_s_v_Click(sender As Object, e As EventArgs) Handles i_s_v.Click
+    Private Sub I_s_v_Click(sender As Object, e As EventArgs) Handles i_s_v.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
     End Sub
 
-    Private Sub i_s_h_Click(sender As Object, e As EventArgs) Handles i_s_h.Click
+    Private Sub I_s_h_Click(sender As Object, e As EventArgs) Handles i_s_h.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
     End Sub
 
-    Private Sub i_d_s_Click(sender As Object, e As EventArgs) Handles i_d_s.Click
+    Private Sub I_d_s_Click(sender As Object, e As EventArgs) Handles i_d_s.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar7.Maximum), XenonTrackbar7.Minimum) : XenonTrackbar7.Value = Val(sender.Text)
     End Sub
 
-    Private Sub i_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s.Click
+    Private Sub I_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
     End Sub
 
-    Private Sub m_h_Click(sender As Object, e As EventArgs) Handles m_h.Click
+    Private Sub Mh_Click(sender As Object, e As EventArgs) Handles m_h.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar9.Maximum), XenonTrackbar9.Minimum) : XenonTrackbar9.Value = Val(sender.Text)
     End Sub
 
-    Private Sub m_w_Click(sender As Object, e As EventArgs) Handles m_w.Click
+    Private Sub Mw_Click(sender As Object, e As EventArgs) Handles m_w.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar8.Maximum), XenonTrackbar8.Minimum) : XenonTrackbar8.Value = Val(sender.Text)
     End Sub
 
-    Private Sub s_h_Click(sender As Object, e As EventArgs) Handles s_h.Click
+    Private Sub Sh_Click(sender As Object, e As EventArgs) Handles s_h.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar11.Maximum), XenonTrackbar11.Minimum) : XenonTrackbar11.Value = Val(sender.Text)
     End Sub
 
-    Private Sub s_w_Click(sender As Object, e As EventArgs) Handles s_w.Click
+    Private Sub Sw_Click(sender As Object, e As EventArgs) Handles s_w.Click
         Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
     End Sub

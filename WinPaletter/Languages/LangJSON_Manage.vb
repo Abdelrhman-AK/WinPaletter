@@ -43,20 +43,15 @@ Public Class LangJSON_Manage
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-
-        'Try
-        If TreeView1.SelectedNode.Nodes.Count = 0 Then
+        If TreeView1.SelectedNode IsNot Nothing Then
+            If TreeView1.SelectedNode.Nodes.Count = 0 Then
                 TreeView1.SelectedNode.Text = XenonTextBox1.Text
 
             ElseIf TreeView1.SelectedNode.Nodes.Count = 1 Then
                 TreeView1.SelectedNode.Nodes.Item(0).Text = XenonTextBox1.Text
 
             End If
-
-            'Catch
-
-        'End Try
-
+        End If
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -102,14 +97,12 @@ Public Class LangJSON_Manage
     End Sub
 
 
-    Private CurrentNodeMatches As List(Of TreeNode) = New List(Of TreeNode)()
+    ReadOnly CurrentNodeMatches As New List(Of TreeNode)()
     Private LastNodeIndex As Integer = 0
     Private LastSearchText As String
 
 
     Private Sub SearchNodes(ByVal SearchText As String, ByVal StartNode As TreeNode)
-        Dim node As TreeNode = Nothing
-
         While StartNode IsNot Nothing
 
             If StartNode.Text.ToLower().Contains(SearchText.ToLower()) Then
@@ -122,7 +115,6 @@ Public Class LangJSON_Manage
 
             StartNode = StartNode.NextNode
         End While
-
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
@@ -169,5 +161,17 @@ Public Class LangJSON_Manage
             XenonTextBox1.Text = Lang_Add_Snippet._Result
         End If
 
+    End Sub
+
+    Private Sub XenonButton10_Click_1(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        TreeView1.Visible = False
+        TreeView1.ExpandAll()
+        TreeView1.Visible = True
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        TreeView1.Visible = False
+        TreeView1.CollapseAll()
+        TreeView1.Visible = True
     End Sub
 End Class

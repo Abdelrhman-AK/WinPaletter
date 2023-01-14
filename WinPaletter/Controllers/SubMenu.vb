@@ -1,15 +1,13 @@
-﻿Imports AnimatorNS
+﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
-Imports WinPaletter.NativeMethods
-Imports System.Reflection
 
 Public Class SubMenu
 
     Private _shown As Boolean
     Private _overrideColor As Color
     Private _eventDone As Boolean
-    Private _Speed As Integer = 20
-    Private _dark As Single = 0.7
+    ReadOnly _Speed As Integer = 20
+    ReadOnly _dark As Single = 0.7
 
 #Region "Form Shadow"
 

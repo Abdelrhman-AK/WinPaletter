@@ -35,8 +35,8 @@ Public Class BugReport
 
         Label3.Text = My.Application.Info.Version.ToString
 
-        XenonTextBox1.Text = "• Error Message:" & vbCrLf & "   " & ex.Message & vbCrLf & vbCrLf &
-                             "• Stack Trace:" & vbCrLf & ex.StackTrace '.Replace("   at ", "     - ").Trim
+        XenonTextBox1.Text = String.Format("• {0}:", My.Lang.Bug_ErrorMessage) & vbCrLf & "   " & ex.Message & vbCrLf & vbCrLf &
+                             String.Format("• {0}:", My.Lang.Bug_StackTrace) & vbCrLf & ex.StackTrace '.Replace("   at ", "     - ").Trim
 
         If Not IO.Directory.Exists(My.Application.appData & "\Reports") Then IO.Directory.CreateDirectory(My.Application.appData & "\Reports")
 
@@ -79,9 +79,9 @@ Public Class BugReport
     Function GetDetails() As String
         Dim SB As New StringBuilder
         SB.Clear()
-        SB.AppendLine(String.Format("• Date of report: {0}", Now.ToLongDateString & " - " & Now.ToLongTimeString))
-        SB.AppendLine(String.Format("• OS: {0}", Label2.Text))
-        SB.AppendLine(String.Format("• WinPaletter Version: {0}", Label3.Text))
+        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Bug_Date, Now.ToLongDateString & " - " & Now.ToLongTimeString))
+        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Bug_OS, Label2.Text))
+        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Version_Str, Label3.Text))
         SB.AppendLine("--------")
         SB.AppendLine()
 
@@ -97,7 +97,7 @@ Public Class BugReport
             Process.Start(My.Application.appData & "\Reports")
             Try : bk.Close() : Catch : End Try
         Else
-            MsgBox(String.Format("There is no previous saved report in ""{0}""", My.Application.appData & "\Reports"), My.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), My.MsgboxRt(MsgBoxStyle.Critical))
         End If
 
     End Sub

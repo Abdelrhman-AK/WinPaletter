@@ -593,8 +593,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
                 SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
                 SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
-
-
                 NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
                 'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
@@ -1249,7 +1247,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End Function
 
     End Structure
-
 #End Region
 
 #Region "Properties"
@@ -2116,8 +2113,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Dim ls As New List(Of Color)
             ls.Clear()
 
-            Dim tx As New List(Of String)
-            tx = IO.File.ReadAllText(Filename).CList
+            Dim tx As List(Of String) = IO.File.ReadAllText(Filename).CList
 
             For Each x As String In tx
                 Try
@@ -2162,11 +2158,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Dim ls As New List(Of Color)
         ls.Clear()
 
-        Dim AllThemes As New List(Of String)
+        Dim AllThemes As List(Of String) = [String].CList
         Dim SelectedTheme As String = ""
         Dim SelectedThemeList As New List(Of String)
 
-        AllThemes = [String].CList
         Dim Found As Boolean = False
 
         For Each th As String In AllThemes
@@ -2824,7 +2819,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Dim Classic As Boolean = False
 
                         Try
-                            Dim stringThemeName As System.Text.StringBuilder = New System.Text.StringBuilder(260)
+                            Dim stringThemeName As New System.Text.StringBuilder(260)
                             NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
                             Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
                         Catch
@@ -2872,7 +2867,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim Def As CP = New CP_Defaults().Default_Windows8
                     Dim y As Object
 
-                    Dim stringThemeName As System.Text.StringBuilder = New System.Text.StringBuilder(260)
+                    Dim stringThemeName As New System.Text.StringBuilder(260)
                     NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
 
                     If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Or String.IsNullOrWhiteSpace(stringThemeName.ToString) Then
@@ -3870,24 +3865,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Dim OS As String
                     If My.W11 Then
-                        OS = "Windows 11"
+                        OS = My.Lang.OS_Win11
                     ElseIf My.W10 Then
-                        OS = "Windows 10"
+                        OS = My.Lang.OS_Win10
                     ElseIf My.W8 Then
-                        OS = "Windows 8.1"
+                        OS = My.Lang.OS_Win8
                     ElseIf My.W7 Then
-                        OS = "Windows 7"
+                        OS = My.Lang.OS_Win7
                     Else
-                        OS = "Windows 11 or Higher"
+                        OS = My.Lang.OS_WinUndefined
                     End If
 
-                    AddNode([TreeView], String.Format("{0}: WinPaletter will apply theme from {1}'s section", Now.ToLongTimeString, OS), "info")
+                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_ApplyFrom, OS)), "info")
 
-                    AddNode([TreeView], String.Format("{0}: Applying Started", Now.ToLongTimeString), "info")
+                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Started), "info")
 
                     If Not My.isElevated Then
-                        AddNode([TreeView], String.Format("{0}: Writing to registry without administrator rights by deflection", Now.ToLongTimeString), "admin")
-                        AddNode([TreeView], String.Format("{0}: This deflection takes time longer than if you start as administrator", Now.ToLongTimeString), "admin")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Admin_Msg0), "admin")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Admin_Msg1), "admin")
                     End If
 
                 End If
@@ -3895,18 +3890,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Registry"
 
                 If My.W11 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 Scheme", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win11), "info")
                     sw.Reset() : sw.Start()
                     Try
                         Windows11.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
 
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 Scheme", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 11 Scheme", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W11_Error), "error")
+                            AddException(My.Lang.CP_W11_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -3915,17 +3910,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End Try
                     sw.Stop()
 
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 11 LogonUI", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI11), "info")
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 11 LogonUI", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 11 LogonUI", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI11_Error), "error")
+                            AddException(My.Lang.CP_LogonUI11_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -3936,17 +3931,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
                 If My.W10 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 Scheme", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win10), "info")
                     sw.Reset() : sw.Start()
                     Try
                         Windows10.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 Scheme", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 10 Scheme", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W10_Error), "error")
+                            AddException(My.Lang.CP_W10_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -3956,17 +3951,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     sw.Stop()
 
 
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 10 LogonUI", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI10), "info")
                     sw.Reset() : sw.Start()
                     Try
                         LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 10 LogonUI", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 10 LogonUI", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI10_Error), "error")
+                            AddException(My.Lang.CP_LogonUI10_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -3977,18 +3972,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
                 If My.W7 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 Colors", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win7), "info")
                     sw.Reset() : sw.Start()
                     RefreshDWM(Me)
                     Try
                         Windows7.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 Colors", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 7 Colors", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W7_Error), "error")
+                            AddException(My.Lang.CP_W7_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -3998,17 +3993,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     sw.Stop()
 
 
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 7 LogonUI", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI7), "info")
                     sw.Reset() : sw.Start()
                     Try
                         Apply_LogonUI7([TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 7 LogonUI", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 7 LogonUI", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI7_Error), "error")
+                            AddException(My.Lang.CP_LogonUI7_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -4019,17 +4014,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
                 If My.W8 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Colors", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win8), "info")
                     sw.Reset() : sw.Start()
                     Try
                         Windows8.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Colors", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 8.1 Colors", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W8_Error), "error")
+                            AddException(My.Lang.CP_W8_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -4039,18 +4034,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     RefreshDWM(Me)
                     sw.Stop()
 
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Windows 8.1 Lock Screen", Now.ToLongTimeString), "info")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI8), "info")
                     sw.Reset() : sw.Start()
                     Try
                         Apply_LogonUI_8([TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
 
                     Catch ex As Exception
                         sw.Stop() : sw_all.Stop()
                         _ErrorHappened = True
                         If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: Error occured while applying Windows 8.1 Lock Screen", Now.ToLongTimeString), "error")
-                            AddException("Error occured while applying Windows 8.1 Lock Screen", ex)
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI8_Error), "error")
+                            AddException(My.Lang.CP_LogonUI8_Error, ex)
                         Else
                             BugReport.ThrowError(ex)
                         End If
@@ -4061,17 +4056,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 End If
 
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: Applying Win32UI (Classic Windows Elements)", Now.ToLongTimeString), "info")
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win32UI), "info")
                 sw.Reset() : sw.Start()
                 Try
                     Win32.Apply()
-                    If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying Win32UI", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying Win32UI", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WIN32UI_Error), "error")
+                        AddException(My.Lang.CP_WIN32UI_Error, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4082,21 +4077,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If ReportProgress Then
                     If WinMetrics_Fonts.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: Applying Windows Metrics and Fonts", Now.ToLongTimeString), "info")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Metrics), "info")
                     Else
-                        AddNode([TreeView], String.Format("{0}: Skipping Windows Metrics and Fonts as they are disabled", Now.ToLongTimeString), "skip")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Metrics), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
                     WinMetrics_Fonts.Apply()
-                    If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format("They took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And WinMetrics_Fonts.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time_They, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Metrics and Fonts", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying Windows Metrics and Fonts", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_Metrics), "error")
+                        AddException(My.Lang.CP_Error_Metrics, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4115,21 +4110,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If ReportProgress Then
                     If CommandPrompt.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: Applying Command Prompt", Now.ToLongTimeString), "info")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_CMD), "info")
                     Else
-                        AddNode([TreeView], String.Format("{0}: Skipping Command Prompt as it is disabled", Now.ToLongTimeString), "skip")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_CMD), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
                     Apply_CommandPrompt()
-                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying Command Prompt", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying Command Prompt", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_CMD_Error), "error")
+                        AddException(My.Lang.CP_CMD_Error, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4140,21 +4135,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If ReportProgress Then
                     If PowerShellx86.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: Applying PowerShell x86", Now.ToLongTimeString), "info")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_PS32), "info")
                     Else
-                        AddNode([TreeView], String.Format("{0}: Skipping PowerShell x86 as it is disabled", Now.ToLongTimeString), "skip")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_PS32), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell86()
-                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x86", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying PowerShell x86", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_PS32_Error), "error")
+                        AddException(My.Lang.CP_PS32_Error, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4165,21 +4160,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If ReportProgress Then
                     If PowerShellx64.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: Applying PowerShell x64", Now.ToLongTimeString), "info")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_PS64), "info")
                     Else
-                        AddNode([TreeView], String.Format("{0}: Skipping PowerShell x64 as it is disabled", Now.ToLongTimeString), "skip")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_PS64), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
                     Apply_PowerShell64()
-                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying PowerShell x64", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying PowerShell x64", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_PS64_Error), "error")
+                        AddException(My.Lang.CP_PS64_Error, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4193,18 +4188,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If ReportProgress Then
                         If Terminal.Enabled And TerminalPreview.Enabled Then
-                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal (Stable & Preview) are installed", Now.ToLongTimeString), "info")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Check_Terminals), "info")
 
                         ElseIf Terminal.Enabled Then
-                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it is disabled", Now.ToLongTimeString), "skip")
-                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal Stable is installed", Now.ToLongTimeString), "info")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalPreview), "skip")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Check_TerminalStable), "info")
 
                         ElseIf TerminalPreview.Enabled Then
-                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it is disabled", Now.ToLongTimeString), "skip")
-                            AddNode([TreeView], String.Format("{0}: Checking if Windows Terminal Preview is installed", Now.ToLongTimeString), "info")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalStable), "skip")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Check_TerminalPreview), "info")
 
                         Else
-                            AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal (Stable & Preview) as they are disabled", Now.ToLongTimeString), "skip")
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Terminals), "skip")
 
                         End If
 
@@ -4234,15 +4229,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If IO.File.Exists(TerDir) Then
 
                             Try
-                                AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Stable", Now.ToLongTimeString), "info")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_TerminalStable), "info")
                                 Terminal.Save(TerDir, WinTerminal.Mode.JSONFile)
-                                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                                If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                             Catch ex As Exception
                                 sw.Stop() : sw_all.Stop()
                                 _ErrorHappened = True
                                 If ReportProgress Then
-                                    AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Stable", Now.ToLongTimeString), "error")
-                                    AddException("Error occured while applying Windows Terminal Stable", ex)
+                                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_TerminalStable), "error")
+                                    AddException(My.Lang.CP_Error_TerminalStable, ex)
                                 Else
                                     BugReport.ThrowError(ex)
                                 End If
@@ -4253,9 +4248,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Else
 
                             If Not My.[Settings].Terminal_Path_Deflection Then
-                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as it isn't installed.", Now.ToLongTimeString), "skip")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalStable_NotInstalled), "skip")
                             Else
-                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Stable as deflected file isn't found.", Now.ToLongTimeString), "skip")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalStable_DeflectionNotFound), "skip")
                             End If
 
                         End If
@@ -4265,15 +4260,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If IO.File.Exists(TerPreDir) Then
 
                             Try
-                                AddNode([TreeView], String.Format("{0}: Applying Windows Terminal Preview", Now.ToLongTimeString), "info")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_TerminalPreview), "info")
                                 TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                                If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                             Catch ex As Exception
                                 sw.Stop() : sw_all.Stop()
                                 _ErrorHappened = True
                                 If ReportProgress Then
-                                    AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Terminal Preview", Now.ToLongTimeString), "error")
-                                    AddException("Error occured while applying Windows Terminal Preview", ex)
+                                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_TerminalPreview), "error")
+                                    AddException(My.Lang.CP_Error_TerminalPreview, ex)
                                 Else
                                     BugReport.ThrowError(ex)
                                 End If
@@ -4283,15 +4278,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         Else
                             If Not My.[Settings].Terminal_Path_Deflection Then
-                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as it isn't installed.", Now.ToLongTimeString), "skip")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalPreview_NotInstalled), "skip")
                             Else
-                                AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal Preview as deflected file isn't found.", Now.ToLongTimeString), "skip")
+                                AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalPreview_DeflectionNotFound), "skip")
                             End If
                         End If
                     End If
 
                 Else
-                    AddNode([TreeView], String.Format("{0}: Skipping Windows Terminal (Stable\Preview) as they are not supported for current OS.", Now.ToLongTimeString), "skip")
+                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Terminals_NotSupported), "skip")
                 End If
                 sw.Stop()
 
@@ -4299,19 +4294,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If Cursors_Enabled Then
                         '### Leave it empty
                     Else
-                        AddNode([TreeView], String.Format("{0}: Skipping Windows Cursors as it is disabled", Now.ToLongTimeString), "skip")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Cursors), "skip")
                     End If
                 End If
                 sw.Reset() : sw.Start()
                 Try
                     Apply_Cursors([TreeView])
-                    If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: Total Applying Windows Cursors took {1} seconds", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_Time_Cursors, sw.ElapsedMilliseconds / 1000)), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
                     If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: Error occured while applying Windows Cursors", Now.ToLongTimeString), "error")
-                        AddException("Error occured while applying Windows Cursors", ex)
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_Cursors), "error")
+                        AddException(My.Lang.CP_Error_Cursors, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4322,9 +4317,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If ReportProgress Then
                     If Not _ErrorHappened Then
-                        AddNode([TreeView], String.Format("{0}: Applying Theme Done. It took {1} seconds", Now.ToLongTimeString, sw_all.ElapsedMilliseconds / 1000), "success")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_Applied, sw_all.ElapsedMilliseconds / 1000)), "success")
                     Else
-                        AddNode([TreeView], String.Format("{0}: Applying Theme Done but with error/s. It took {1} seconds", Now.ToLongTimeString, sw_all.ElapsedMilliseconds / 1000), "warning")
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000)), "warning")
                     End If
                 End If
 
@@ -4524,6 +4519,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Win32UI_MenuHilight= " & Win32.MenuHilight.ToArgb)
                 tx.Add("*Win32UI_Desktop= " & Win32.Desktop.ToArgb)
                 tx.Add("</Win32UI>")
+#End Region
+
+#Region "Metrics & Fonts"
+                'tx.Add("<LogonUI_7_8>")
+
+                'tx.Add("*LogonUI7_Enabled= " & LogonUI7.Enabled)
+
+                'tx.Add("</LogonUI_7_8>" & vbCrLf)
 #End Region
 
 #Region "Terminals"
@@ -4726,7 +4729,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If Not Windows8.NoLockScreen Then
 
             Try : Kill(lockimg) : Catch : End Try
-            Dim bmp As Bitmap
+            Dim bmp As Bitmap = Nothing
 
             Select Case Windows8.LockScreenType
 
@@ -4821,7 +4824,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Cursor_Structure.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
             Cursor_Structure.Save_Cursors_To_Registry("Cross", Cursor_Cross)
 
-            If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+            If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
             sw.Stop()
 
             Try
@@ -4830,7 +4833,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCursors, Now.ToLongTimeString), "info")
                 ExportCursors(Me)
                 sw.Stop()
-                If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
 
                 If My.[Settings].AutoApplyCursors Then
                     If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_ApplyingCursors, Now.ToLongTimeString), "info")
@@ -4838,15 +4841,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     sw.Start()
                     ApplyCursorsToReg()
                     sw.Stop()
-                    If ReportProgress Then AddNode([TreeView], String.Format("It took {0} seconds", sw.ElapsedMilliseconds / 1000), "time")
+                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
                 Else
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: Modifying Windows Cursors is restricted from Settings", Now.ToLongTimeString), "error")
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Restricted_Cursors), "error")
                 End If
 
             Catch ex As Exception
                 If ReportProgress Then
-                    AddNode([TreeView], String.Format("{0}: Error occured while Rendering\Applying Windows Cursors", Now.ToLongTimeString), "error")
-                    AddException("Error occured while Rendering\Applying Windows Cursors", ex)
+                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_CursorsRender), "error")
+                    AddException(My.Lang.CP_Error_CursorsRender, ex)
                 End If
 
             End Try

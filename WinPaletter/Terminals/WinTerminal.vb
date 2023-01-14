@@ -1,6 +1,6 @@
-﻿Imports Newtonsoft.Json.Linq
-Imports System.IO
+﻿Imports System.IO
 Imports System.Reflection
+Imports Newtonsoft.Json.Linq
 Imports WinPaletter.ProfilesList
 
 Public Class WinTerminal : Implements ICloneable
@@ -10,8 +10,8 @@ Public Class WinTerminal : Implements ICloneable
     Public Property Profiles As List(Of ProfilesList)
     Public Property DefaultProf As ProfilesList
     Public Property Themes As List(Of ThemesList)
-    Public Property theme As String = "system"
-    Public Property useAcrylicInTabRow As Boolean = False
+    Public Property Theme As String = "system"
+    Public Property UseAcrylicInTabRow As Boolean = False
 
     Public Sub New(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable)
         Select Case Mode
@@ -536,7 +536,7 @@ Public Class WinTerminal : Implements ICloneable
     Public Function Save(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable) As String
         Select Case Mode
             Case Mode.JSONFile
-                Dim SettingsFile As String
+                Dim SettingsFile As String = ""
 
                 Select Case [Version]
                     Case Version.Stable
@@ -779,7 +779,7 @@ Public Class WinTerminal : Implements ICloneable
 
             Case Mode.WinPaletterFile
 
-                Dim First As String
+                Dim First As String = ""
 
                 Select Case [Version]
                     Case Version.Stable
@@ -968,7 +968,7 @@ Public Class ThemesList : Implements IComparable : Implements ICloneable
     Public Property Titlebar_Inactive As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Tab_Active As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property Tab_Inactive As Color = Color.FromArgb(0, 0, 0, 0)
-    Public Property applicationTheme_light As String = "dark"
+    Public Property ApplicationTheme_light As String = "dark"
 
     Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
         If Me.Equals(DirectCast(obj, ThemesList)) Then Return 1 Else Return 0
@@ -1008,7 +1008,7 @@ Public Class ProfilesList : Implements IComparable : Implements ICloneable
     Public Property TabTitle As String = ""
     Public Property Icon As String = ""
     Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
-    Public Property commandline As String
+    Public Property Commandline As String
 
     Public Property TabColor As Color = Color.FromArgb(0, 0, 0, 0)
     Public Property UseAcrylic As Boolean = False

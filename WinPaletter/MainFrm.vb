@@ -47,6 +47,8 @@ Public Class MainFrm
                 W11_lbl6.Text = My.Lang.CP_11_SomePressedButtons
                 W11_lbl7.Text = My.Lang.CP_Undefined
                 W11_lbl8.Text = My.Lang.CP_Undefined
+                W11_lbl9.Text = My.Lang.CP_Undefined
+
                 W11_pic5.Image = My.Resources.Mini_Settings_Icons
                 W11_pic6.Image = My.Resources.Mini_PressedButton
                 W11_pic7.Image = My.Resources.Mini_Undefined
@@ -172,6 +174,7 @@ Public Class MainFrm
 
                 Visual.FadeColor(Label8, "Forecolor", Label8.ForeColor, If([CP].Windows10.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
+                W10_lbl9.Text = My.Lang.CP_Undefined
 
                 Select Case Not [CP].Windows10.WinMode_Light
                     Case True ''''''''''Dark
@@ -686,7 +689,6 @@ Public Class MainFrm
         ApplyMetrics([CP], XenonWindow2)
 
         ReValidateLivePreview(pnl_preview)
-
     End Sub
 
     Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
@@ -712,6 +714,7 @@ Public Class MainFrm
 
     Sub Adjust_Preview()
         If _Shown Then My.[AnimatorNS].HideSync(pnl_preview)
+        pnl_preview.SuspendLayout()
 
         Panel3.Visible = True
         lnk_preview.Visible = True
@@ -855,6 +858,7 @@ Public Class MainFrm
 
         ReValidateLivePreview(pnl_preview)
 
+        pnl_preview.ResumeLayout()
         If _Shown Then My.[AnimatorNS].ShowSync(pnl_preview)
     End Sub
 
@@ -1606,9 +1610,7 @@ Public Class MainFrm
         End If
 
 
-        Dim CList As New List(Of Control) From {sender}
-
-        CList.Add(start)
+        Dim CList As New List(Of Control) From {sender, start}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
@@ -1699,7 +1701,6 @@ Public Class MainFrm
         End If
 
         Dim CList As New List(Of Control) From {sender}
-        CList.Add(sender)
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
         CP.Windows11.Color_Index7 = Color.FromArgb(255, C)
@@ -1712,7 +1713,7 @@ Public Class MainFrm
 
     Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
 
-        MsgBox(My.Lang.X23, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.TitlebarColorNotice, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
 #End Region
@@ -2165,7 +2166,6 @@ Public Class MainFrm
         End If
 
         Dim CList As New List(Of Control) From {sender}
-        CList.Add(sender)
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
         CP.Windows10.Color_Index7 = Color.FromArgb(255, C)
@@ -2177,7 +2177,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
-        MsgBox(My.Lang.X23, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.TitlebarColorNotice, My.MsgboxRt(MsgBoxStyle.Information))
     End Sub
 
     Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
@@ -2509,14 +2509,14 @@ Public Class MainFrm
             If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: All operations are done", Now.ToLongTimeString), "info")
+        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
         log_lbl.Visible = True
         XenonButton8.Visible = True
         XenonButton22.Visible = True
 
         If Not My.Saving_Exceptions.Count = 0 Then
-            log_lbl.Text = "Error\s happened. Press on Show Errors for details"
+            log_lbl.Text = My.Lang.CP_ErrorHappened
             XenonButton14.Visible = True
         Else
             If My.[Settings].Log_Countdown_Enabled Then
@@ -2530,8 +2530,7 @@ Public Class MainFrm
     Private ellapsedSecs As Integer = 0
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        log_lbl.Text = String.Format("This log will close after {0} second{1}.",
-                                     My.[Settings].Log_Countdown - ellapsedSecs, If(My.[Settings].Log_Countdown - ellapsedSecs > 1, "s", ""))
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - ellapsedSecs)
 
         If ellapsedSecs + 1 <= My.[Settings].Log_Countdown Then
             ellapsedSecs += 1
@@ -2591,7 +2590,7 @@ Public Class MainFrm
 
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.[Settings].AutoRestartExplorer Then
-            status_lbl.Text = My.Lang.X22
+            status_lbl.Text = My.Lang.ThisWillRestartExplorer
             status_lbl.ForeColor = Color.Gold
         End If
     End Sub
@@ -3057,13 +3056,6 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        'My.Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
-        'My.Lang.LoadLanguageFromJSON("C:\Users\boody\Desktop\Arabic.json")
-
-        LangJSON_Manage.ShowDialog()
-
-    End Sub
 
     Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
         If _Shown And Select_W7.Checked Then

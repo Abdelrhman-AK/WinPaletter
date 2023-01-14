@@ -2,8 +2,8 @@
 Imports WinPaletter.XenonCore
 Public Class LogonUI7
     Private _Shown As Boolean = False
-    Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
-    Dim b As Bitmap
+    ReadOnly imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+    ReadOnly b As Bitmap
     Public ID As Integer
 
     Private Sub LogonUI7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -14,12 +14,12 @@ Public Class LogonUI7
         ApplyPreview()
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
-            Label16.Text = "Lock Screen Enabled?"
+            Label16.Text = My.Lang.LogonUI_LockEnabled
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
         Else
-            Label16.Text = "Enabled?"
+            Label16.Text = My.Lang.LogonUI_Enabled
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
             PictureBox4.Image = My.Resources.Native7
@@ -125,7 +125,7 @@ Public Class LogonUI7
     End Sub
 
     Function ReturnBK() As Bitmap
-        Dim bmpX As Bitmap
+        Dim bmpX As Bitmap = Nothing
 
         If XenonRadioButton1.Checked Then
             If My.W7 Then
@@ -238,7 +238,7 @@ Public Class LogonUI7
         End If
     End Sub
 
-    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+    Private Sub Color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then

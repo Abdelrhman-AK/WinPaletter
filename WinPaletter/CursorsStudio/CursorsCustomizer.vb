@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports WinPaletter.XenonCore
 
 Public Module Paths
     Enum CursorType
@@ -791,7 +790,7 @@ Public Module Paths
 
         'path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -809,7 +808,7 @@ Public Module Paths
         path.AddEllipse(R)
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -841,7 +840,7 @@ Public Module Paths
 
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -859,7 +858,7 @@ Public Module Paths
         path.AddEllipse(R)
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -888,7 +887,7 @@ Public Module Paths
 
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -903,57 +902,57 @@ Public Module Paths
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim UL1 As Point = New Point([Rectangle].X + 11, [Rectangle].Y)
-        Dim UL2 As Point = New Point(UL1.X - 4, [Rectangle].Y + 4)
+        Dim UL1 As New Point([Rectangle].X + 11, [Rectangle].Y)
+        Dim UL2 As New Point(UL1.X - 4, [Rectangle].Y + 4)
         path.AddLine(UL1, UL2)
 
-        Dim ULX1 As Point = New Point(UL2.X, UL2.Y + 1)
-        Dim ULX2 As Point = New Point(ULX1.X + 3, ULX1.Y)
+        Dim ULX1 As New Point(UL2.X, UL2.Y + 1)
+        Dim ULX2 As New Point(ULX1.X + 3, ULX1.Y)
         path.AddLine(ULX1, ULX2)
 
         Dim MUL1 As Point = ULX2
-        Dim MUL2 As Point = New Point(MUL1.X, ULX2.Y + 4)
+        Dim MUL2 As New Point(MUL1.X, ULX2.Y + 4)
         path.AddLine(MUL1, MUL2)
 
-        Dim MULX1 As Point = New Point(MUL2.X, MUL2.Y + 1)
-        Dim MULX2 As Point = New Point(MULX1.X - 5, MULX1.Y)
+        Dim MULX1 As New Point(MUL2.X, MUL2.Y + 1)
+        Dim MULX2 As New Point(MULX1.X - 5, MULX1.Y)
         path.AddLine(MULX1, MULX2)
 
         Dim LU1 As Point = MULX2
-        Dim LU2 As Point = New Point(MULX2.X, MULX2.Y - 3)
+        Dim LU2 As New Point(MULX2.X, MULX2.Y - 3)
         path.AddLine(LU1, LU2)
 
-        Dim LUX1 As Point = New Point(LU2.X - 1, LU2.Y)
-        Dim LUX2 As Point = New Point([Rectangle].X, [Rectangle].Y + 11)
+        Dim LUX1 As New Point(LU2.X - 1, LU2.Y)
+        Dim LUX2 As New Point([Rectangle].X, [Rectangle].Y + 11)
         path.AddLine(LUX1, LUX2)
 
         Dim LDX1 As Point = LUX2
-        Dim LDX2 As Point = New Point(LDX1.X + 4, LDX1.Y + 4)
+        Dim LDX2 As New Point(LDX1.X + 4, LDX1.Y + 4)
         path.AddLine(LDX1, LDX2)
 
-        Dim LD1 As Point = New Point(LDX2.X + 1, LDX2.Y)
-        Dim LD2 As Point = New Point(LD1.X, LD1.Y - 2)
+        Dim LD1 As New Point(LDX2.X + 1, LDX2.Y)
+        Dim LD2 As New Point(LD1.X, LD1.Y - 2)
         path.AddLine(LD1, LD2)
 
-        Dim L1 As Point = New Point(LD2.X, LD2.Y - 1)
-        Dim L2 As Point = New Point(L1.X + 5, L1.Y)
+        Dim L1 As New Point(LD2.X, LD2.Y - 1)
+        Dim L2 As New Point(L1.X + 5, L1.Y)
         path.AddLine(L1, L2)
 
         Dim DL1 As Point = L2
-        Dim DL2 As Point = New Point(L2.X, LD2.Y + 3)
+        Dim DL2 As New Point(L2.X, LD2.Y + 3)
         path.AddLine(DL1, DL2)
 
-        Dim DX1 As Point = New Point(DL2.X, DL2.Y + 1)
-        Dim DX2 As Point = New Point(DX1.X - 3, DX1.Y)
+        Dim DX1 As New Point(DL2.X, DL2.Y + 1)
+        Dim DX2 As New Point(DX1.X - 3, DX1.Y)
         path.AddLine(DX1, DX2)
 
-        Dim DLX1 As Point = New Point(DX2.X, DX2.Y + 1)
-        Dim DLX2 As Point = New Point(DLX1.X + 4, DLX1.Y + 4)
+        Dim DLX1 As New Point(DX2.X, DX2.Y + 1)
+        Dim DLX2 As New Point(DLX1.X + 4, DLX1.Y + 4)
         path.AddLine(DLX1, DLX2)
 
         path.AddPath(MirrorRight(path), False)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -978,7 +977,7 @@ Public Module Paths
 
         path.AddString("?", F, FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1003,7 +1002,7 @@ Public Module Paths
 
         path.AddEllipse([Rectangle])
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1020,7 +1019,7 @@ Public Module Paths
 
         path.AddEllipse([Rectangle])
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1035,25 +1034,25 @@ Public Module Paths
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim UL1 As Point = New Point([Rectangle].X + 4, [Rectangle].Y)
-        Dim UL2 As Point = New Point([Rectangle].X, [Rectangle].Y + 4)
+        Dim UL1 As New Point([Rectangle].X + 4, [Rectangle].Y)
+        Dim UL2 As New Point([Rectangle].X, [Rectangle].Y + 4)
         path.AddLine(UL1, UL2)
 
-        Dim ULX1 As Point = New Point(UL2.X, UL2.Y + 1)
-        Dim ULX2 As Point = New Point(ULX1.X + 3, ULX1.Y)
+        Dim ULX1 As New Point(UL2.X, UL2.Y + 1)
+        Dim ULX2 As New Point(ULX1.X + 3, ULX1.Y)
         path.AddLine(ULX1, ULX2)
 
         Dim MUL1 As Point = ULX2
-        Dim MUL2 As Point = New Point(MUL1.X, MUL1.Y + 12)
+        Dim MUL2 As New Point(MUL1.X, MUL1.Y + 12)
         path.AddLine(MUL1, MUL2)
 
-        Dim D1 As Point = New Point(MUL2.X, MUL2.Y + 1)
-        Dim D2 As Point = New Point(D1.X + 1, D1.Y)
+        Dim D1 As New Point(MUL2.X, MUL2.Y + 1)
+        Dim D2 As New Point(D1.X + 1, D1.Y)
         path.AddLine(D1, D2)
 
         path.AddPath(MirrorRight(path), False)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1069,29 +1068,29 @@ Public Module Paths
         [Rectangle].Y = 0
 
 
-        Dim UL1 As Point = New Point([Rectangle].X + 4, [Rectangle].Y)
-        Dim UL2 As Point = New Point([Rectangle].X, [Rectangle].Y + 4)
+        Dim UL1 As New Point([Rectangle].X + 4, [Rectangle].Y)
+        Dim UL2 As New Point([Rectangle].X, [Rectangle].Y + 4)
         path.AddLine(UL1, UL2)
 
-        Dim ULX1 As Point = New Point(UL2.X, UL2.Y + 1)
-        Dim ULX2 As Point = New Point(ULX1.X + 3, ULX1.Y)
+        Dim ULX1 As New Point(UL2.X, UL2.Y + 1)
+        Dim ULX2 As New Point(ULX1.X + 3, ULX1.Y)
         path.AddLine(ULX1, ULX2)
 
         Dim MUL1 As Point = ULX2
-        Dim MUL2 As Point = New Point(MUL1.X, MUL1.Y + 12)
+        Dim MUL2 As New Point(MUL1.X, MUL1.Y + 12)
         path.AddLine(MUL1, MUL2)
 
         Dim DL1 As Point = MUL2
-        Dim DL2 As Point = New Point(MUL2.X - 3, MUL2.Y)
+        Dim DL2 As New Point(MUL2.X - 3, MUL2.Y)
         path.AddLine(DL1, DL2)
 
-        Dim DX1 As Point = New Point(DL2.X, DL2.Y + 1)
-        Dim DX2 As Point = New Point(DX1.X + 4, DX1.Y + 4)
+        Dim DX1 As New Point(DL2.X, DL2.Y + 1)
+        Dim DX2 As New Point(DX1.X + 4, DX1.Y + 4)
         path.AddLine(DX1, DX2)
 
         path.AddPath(MirrorRight(path), False)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1106,47 +1105,47 @@ Public Module Paths
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim UR1 As Point = New Point([Rectangle].X + [Rectangle].Width - 1, [Rectangle].Y)
-        Dim UR2 As Point = New Point(UR1.X - 6, UR1.Y)
+        Dim UR1 As New Point([Rectangle].X + [Rectangle].Width - 1, [Rectangle].Y)
+        Dim UR2 As New Point(UR1.X - 6, UR1.Y)
         path.AddLine(UR1, UR2)
 
-        Dim RX1 As Point = New Point(UR2.X, UR2.Y + 1)
-        Dim RX2 As Point = New Point(RX1.X + 1, RX1.Y + 1)
+        Dim RX1 As New Point(UR2.X, UR2.Y + 1)
+        Dim RX2 As New Point(RX1.X + 1, RX1.Y + 1)
         path.AddLine(RX1, RX2)
 
-        Dim LX1 As Point = New Point(RX2.X + 1, RX2.Y + 1)
-        Dim LX2 As Point = New Point(LX1.X - 9, LX1.Y + 9)
+        Dim LX1 As New Point(RX2.X + 1, RX2.Y + 1)
+        Dim LX2 As New Point(LX1.X - 9, LX1.Y + 9)
         path.AddLine(LX1, LX2)
 
-        Dim DX1 As Point = New Point(LX2.X - 1, LX2.Y - 1)
-        Dim DX2 As Point = New Point(DX1.X - 1, DX1.Y - 1)
+        Dim DX1 As New Point(LX2.X - 1, LX2.Y - 1)
+        Dim DX2 As New Point(DX1.X - 1, DX1.Y - 1)
         path.AddLine(DX1, DX2)
 
-        Dim L1 As Point = New Point(DX2.X - 1, DX2.Y)
-        Dim L2 As Point = New Point(L1.X, L1.Y + 6)
+        Dim L1 As New Point(DX2.X - 1, DX2.Y)
+        Dim L2 As New Point(L1.X, L1.Y + 6)
         path.AddLine(L1, L2)
 
-        Dim D1 As Point = New Point(L2.X + 1, L2.Y)
-        Dim D2 As Point = New Point(D1.X + 5, D1.Y)
+        Dim D1 As New Point(L2.X + 1, L2.Y)
+        Dim D2 As New Point(D1.X + 5, D1.Y)
         path.AddLine(D1, D2)
 
-        Dim DL1 As Point = New Point(D2.X, D2.Y - 1)
-        Dim DL2 As Point = New Point(DL1.X - 1, DL1.Y - 1)
+        Dim DL1 As New Point(D2.X, D2.Y - 1)
+        Dim DL2 As New Point(DL1.X - 1, DL1.Y - 1)
         path.AddLine(DL1, DL2)
 
-        Dim LX3 As Point = New Point(DL2.X - 1, DL2.Y - 1)
-        Dim LX4 As Point = New Point(LX3.X + 9, LX3.Y - 9)
+        Dim LX3 As New Point(DL2.X - 1, DL2.Y - 1)
+        Dim LX4 As New Point(LX3.X + 9, LX3.Y - 9)
         path.AddLine(LX3, LX4)
 
-        Dim DR1 As Point = New Point(LX4.X + 1, LX4.Y + 1)
-        Dim DR2 As Point = New Point(DR1.X + 1, DR1.Y + 1)
+        Dim DR1 As New Point(LX4.X + 1, LX4.Y + 1)
+        Dim DR2 As New Point(DR1.X + 1, DR1.Y + 1)
         path.AddLine(DR1, DR2)
 
-        Dim R1 As Point = New Point(DR2.X + 1, DR2.Y)
-        Dim R2 As Point = New Point(R1.X, R1.Y - 6)
+        Dim R1 As New Point(DR2.X + 1, DR2.Y)
+        Dim R2 As New Point(R1.X, R1.Y - 6)
         path.AddLine(R1, R2)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1161,12 +1160,12 @@ Public Module Paths
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim flipXMatrix As Matrix = New Matrix(-1, 0, 0, 1, [Rectangle].Width, -1)
-        Dim transformMatrix As Matrix = New Matrix()
+        Dim flipXMatrix As New Matrix(-1, 0, 0, 1, [Rectangle].Width, -1)
+        Dim transformMatrix As New Matrix()
         transformMatrix.Multiply(flipXMatrix)
         path.Transform(transformMatrix)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1181,47 +1180,47 @@ Public Module Paths
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim L1 As Point = New Point([Rectangle].X, [Rectangle].Y + 4)
-        Dim L2 As Point = New Point(L1.X + 4, L1.Y - 4)
+        Dim L1 As New Point([Rectangle].X, [Rectangle].Y + 4)
+        Dim L2 As New Point(L1.X + 4, L1.Y - 4)
         path.AddLine(L1, L2)
 
-        Dim LX1 As Point = New Point(L2.X + 1, L2.Y)
-        Dim LX2 As Point = New Point(LX1.X, LX1.Y + 2)
+        Dim LX1 As New Point(L2.X + 1, L2.Y)
+        Dim LX2 As New Point(LX1.X, LX1.Y + 2)
         path.AddLine(LX1, LX2)
 
-        Dim U1 As Point = New Point(LX2.X, LX2.Y + 1)
-        Dim U2 As Point = New Point(U1.X + 12, U1.Y)
+        Dim U1 As New Point(LX2.X, LX2.Y + 1)
+        Dim U2 As New Point(U1.X + 12, U1.Y)
         path.AddLine(U1, U2)
 
-        Dim RX1 As Point = New Point(U2.X, U2.Y - 1)
-        Dim RX2 As Point = New Point(RX1.X, RX1.Y - 2)
+        Dim RX1 As New Point(U2.X, U2.Y - 1)
+        Dim RX2 As New Point(RX1.X, RX1.Y - 2)
         path.AddLine(RX1, RX2)
 
-        Dim R1 As Point = New Point(RX2.X + 1, RX2.Y)
-        Dim R2 As Point = New Point(R1.X + 4, R1.Y + 4)
+        Dim R1 As New Point(RX2.X + 1, RX2.Y)
+        Dim R2 As New Point(R1.X + 4, R1.Y + 4)
         path.AddLine(R1, R2)
 
-        Dim R3 As Point = New Point(R2.X, R2.Y)
-        Dim R4 As Point = New Point(R3.X - 4, R3.Y + 4)
+        Dim R3 As New Point(R2.X, R2.Y)
+        Dim R4 As New Point(R3.X - 4, R3.Y + 4)
         path.AddLine(R3, R4)
 
-        Dim RX3 As Point = New Point(R4.X - 1, R4.Y)
-        Dim RX4 As Point = New Point(RX3.X, RX3.Y - 2)
+        Dim RX3 As New Point(R4.X - 1, R4.Y)
+        Dim RX4 As New Point(RX3.X, RX3.Y - 2)
         path.AddLine(RX3, RX4)
 
-        Dim D1 As Point = New Point(RX4.X, RX4.Y - 1)
-        Dim D2 As Point = New Point(D1.X - 12, D1.Y)
+        Dim D1 As New Point(RX4.X, RX4.Y - 1)
+        Dim D2 As New Point(D1.X - 12, D1.Y)
         path.AddLine(D1, D2)
 
-        Dim LX3 As Point = New Point(D2.X, D2.Y + 1)
-        Dim LX4 As Point = New Point(LX3.X, LX3.Y + 2)
+        Dim LX3 As New Point(D2.X, D2.Y + 1)
+        Dim LX4 As New Point(LX3.X, LX3.Y + 2)
         path.AddLine(LX3, LX4)
 
-        Dim L3 As Point = New Point(LX4.X - 1, LX4.Y)
-        Dim L4 As Point = New Point(L3.X - 4, L3.Y - 4)
+        Dim L3 As New Point(LX4.X - 1, LX4.Y)
+        Dim L4 As New Point(L3.X - 4, L3.Y - 4)
         path.AddLine(L3, L4)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1261,7 +1260,7 @@ Public Module Paths
         Dim S2 As New Point(S1.X + 4, S1.Y - 4)
         path.AddLine(S2, S1)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1298,7 +1297,7 @@ Public Module Paths
         path.CloseFigure()
 
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1343,7 +1342,7 @@ Public Module Paths
         path.AddLine(FreeBorder1, FreeBorder2)
 
         Dim LW1 As Point = FreeBorder2 + New Point(0, 1)
-        Dim RW1 As Point = New Point(LW1.X - 14, LW1.Y)
+        Dim RW1 As New Point(LW1.X - 14, LW1.Y)
         Dim Btm As New Rectangle(RW1.X, RW1.Y - 8, 14, 13)
         path.AddArc(Btm, 0, 180)
 
@@ -1359,7 +1358,7 @@ Public Module Paths
 
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1384,7 +1383,7 @@ Public Module Paths
         path.AddLine(C, p1)
         path.CloseFigure()
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1408,7 +1407,7 @@ Public Module Paths
         Dim TrunkLower As New Rectangle(TrunkUpper.X, TrunkUpper.Y + 3, 9, 3)
         path.AddArc(TrunkLower, 0, 180)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1478,7 +1477,7 @@ Public Module Paths
         path.AddLine(TXL, TL)
 
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1515,7 +1514,7 @@ Public Module Paths
 
         path.AddPath(MirrorRight(path), False)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)
@@ -1536,7 +1535,7 @@ Public Module Paths
         o1.Y = [Rectangle].Y + (o.Height - o1.Height) / 2
         path.AddEllipse(o1)
 
-        Dim m As Matrix = New Matrix()
+        Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
         m.Translate(1, 1, MatrixOrder.Append)
         path.Transform(m)

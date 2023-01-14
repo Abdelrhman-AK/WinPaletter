@@ -184,9 +184,8 @@
     <Content Include="Resources\icons8_PowerShell.ico" />
     <None Include="Resources\Icon_Uninstall.ico" />
     <None Include="Resources\LangNode_Value.png" />
-    <None Include="Resources\LangNode_Value.png" />
-    <None Include="Resources\LangNode_Main.png" />
     <None Include="Resources\LangNode_JSON.png" />
+    <None Include="Resources\LangNode_Main.png" />
     <Content Include="Resources\LICENSE.txt" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
@@ -271,19 +270,6 @@
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\CP.vb" />
     <Compile Include="Classes\CP_Defaults.vb" />
-    <Compile Include="Languages\LangJSON_Manage.Designer.vb">
-      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\LangJSON_Manage.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\Lang_Add_Snippet.Designer.vb">
-      <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\Lang_Add_Snippet.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\Localizer.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
     <Compile Include="Classes\WinResources.vb" />
@@ -350,6 +336,31 @@
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
     <Compile Include="GUI\XenonUI.vb" />
+    <Compile Include="Languages\LangJSON_Manage.Designer.vb">
+      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\LangJSON_Manage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_Add_Snippet.Designer.vb">
+      <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_Add_Snippet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_Dashboard.Designer.vb">
+      <DependentUpon>Lang_Dashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_Dashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Update.Designer.vb">
+      <DependentUpon>Lang_JSON_Update.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Update.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Localizer.vb" />
     <Compile Include="LicenseForm.Designer.vb">
       <DependentUpon>LicenseForm.vb</DependentUpon>
     </Compile>
@@ -540,6 +551,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_Dashboard.resx">
+      <DependentUpon>Lang_Dashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_Update.resx">
+      <DependentUpon>Lang_JSON_Update.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>

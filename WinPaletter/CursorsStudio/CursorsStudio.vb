@@ -1,11 +1,10 @@
 ﻿Imports WinPaletter.XenonCore
-Imports System.IO
 
 Public Class CursorsStudio
     Private _Shown As Boolean = False
     Private _SelectedControl As CursorControl
     Private _CopiedControl As CursorControl
-    Private AnimateList As New List(Of CursorControl)
+    Private ReadOnly AnimateList As New List(Of CursorControl)
 
     Sub CursorCP_to_Cursor([CursorControl] As CursorControl, [Cursor] As CP.Cursor_Structure)
         [CursorControl].Prop_PrimaryColor1 = [Cursor].PrimaryColor1
@@ -70,7 +69,7 @@ Public Class CursorsStudio
         CursorCP_to_Cursor(Help, [CP].Cursor_Help)
         CursorCP_to_Cursor(AppLoading, [CP].Cursor_AppLoading)
         CursorCP_to_Cursor(Busy, [CP].Cursor_Busy)
-        CursorCP_to_Cursor(Move, [CP].Cursor_Move)
+        CursorCP_to_Cursor(Move_Cur, [CP].Cursor_Move)
         CursorCP_to_Cursor(NS, [CP].Cursor_NS)
         CursorCP_to_Cursor(EW, [CP].Cursor_EW)
         CursorCP_to_Cursor(NESW, [CP].Cursor_NESW)
@@ -97,7 +96,7 @@ Public Class CursorsStudio
         [CP].Cursor_Help = Cursor_to_CursorCP(Help)
         [CP].Cursor_AppLoading = Cursor_to_CursorCP(AppLoading)
         [CP].Cursor_Busy = Cursor_to_CursorCP(Busy)
-        [CP].Cursor_Move = Cursor_to_CursorCP(Move)
+        [CP].Cursor_Move = Cursor_to_CursorCP(Move_Cur)
         [CP].Cursor_NS = Cursor_to_CursorCP(NS)
         [CP].Cursor_EW = Cursor_to_CursorCP(EW)
         [CP].Cursor_NESW = Cursor_to_CursorCP(NESW)
@@ -122,7 +121,7 @@ Public Class CursorsStudio
         MainFrm.MakeItDoubleBuffered(Help)
         MainFrm.MakeItDoubleBuffered(AppLoading)
         MainFrm.MakeItDoubleBuffered(Busy)
-        MainFrm.MakeItDoubleBuffered(Move)
+        MainFrm.MakeItDoubleBuffered(Move_Cur)
         MainFrm.MakeItDoubleBuffered(NS)
         MainFrm.MakeItDoubleBuffered(EW)
         MainFrm.MakeItDoubleBuffered(NESW)
@@ -267,9 +266,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorBack1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -294,9 +291,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorBack2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -320,9 +315,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorLine1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -346,9 +339,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorLine2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -372,9 +363,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircle1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -390,8 +379,7 @@ Public Class CursorsStudio
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If Not _Shown Then Exit Sub
-
-        _SelectedControl.Prop_PrimaryColorGradient = If(XenonCheckBox1.Checked, True, False)
+        _SelectedControl.Prop_PrimaryColorGradient = XenonCheckBox1.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox1.Invalidate()
     End Sub
@@ -399,7 +387,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox4_CheckedChanged(sender As Object) Handles XenonCheckBox4.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryColorGradient = If(XenonCheckBox4.Checked, True, False)
+        _SelectedControl.Prop_SecondaryColorGradient = XenonCheckBox4.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox4.Invalidate()
 
@@ -424,7 +412,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_PrimaryNoise = If(XenonCheckBox5.Checked, True, False)
+        _SelectedControl.Prop_PrimaryNoise = XenonCheckBox5.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox5.Invalidate()
 
@@ -433,7 +421,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryNoise = If(XenonCheckBox3.Checked, True, False)
+        _SelectedControl.Prop_SecondaryNoise = XenonCheckBox3.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox3.Invalidate()
 
@@ -454,11 +442,11 @@ Public Class CursorsStudio
             i.Refresh()
         Next
 
-        Label5.Text = String.Format("Scaling ({0}x)", sender.value / 100)
+        Label5.Text = String.Format("{0} ({1}x)", My.Lang.Scaling, sender.value / 100)
     End Sub
 
     Dim Angle As Single = 180
-    Dim Increment As Single = 5
+    ReadOnly Increment As Single = 5
     Dim Cycles As Integer = 0
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If Not _Shown Then Exit Sub
@@ -501,9 +489,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircle2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -527,9 +513,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircleHot1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -553,9 +537,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control)
-        CList.Add(DirectCast(sender, XenonCP))
-        CList.Add(_SelectedControl)
+        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircleHot2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -572,7 +554,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox8_CheckedChanged(sender As Object) Handles XenonCheckBox8.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackGradient = If(XenonCheckBox8.Checked, True, False)
+        _SelectedControl.Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox8.Invalidate()
     End Sub
@@ -580,7 +562,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox2_CheckedChanged(sender As Object) Handles XenonCheckBox2.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleHotGradient = If(XenonCheckBox2.Checked, True, False)
+        _SelectedControl.Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox2.Invalidate()
     End Sub
@@ -588,7 +570,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox7_CheckedChanged(sender As Object) Handles XenonCheckBox7.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackNoise = If(XenonCheckBox7.Checked, True, False)
+        _SelectedControl.Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox7.Invalidate()
 
@@ -597,7 +579,7 @@ Public Class CursorsStudio
     Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleHotNoise = If(XenonCheckBox6.Checked, True, False)
+        _SelectedControl.Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
         _SelectedControl.Invalidate()
         XenonCheckBox6.Invalidate()
 

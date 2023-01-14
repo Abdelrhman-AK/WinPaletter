@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Advanced Colorizing Windows Accents")>
 <Assembly: AssemblyCompany("Abdelrhman-AK")>
 <Assembly: AssemblyProduct("WinPaletter")>
-<Assembly: AssemblyCopyright("Copyright ©  2022")>
+<Assembly: AssemblyCopyright("Copyright ©  2022-2023")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

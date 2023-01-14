@@ -184,7 +184,7 @@ Partial Class Win32UI
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.pnl_preview = New System.Windows.Forms.Panel()
-        Me.Menu = New WinPaletter.RetroWindow()
+        Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
         Me.RetroLabel9 = New WinPaletter.RetroLabel()
         Me.highlight = New System.Windows.Forms.Panel()
@@ -295,7 +295,7 @@ Partial Class Win32UI
         Me.XenonGroupBox8.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_preview.SuspendLayout()
-        Me.Menu.SuspendLayout()
+        Me.Menu_Window.SuspendLayout()
         Me.menucontainer3.SuspendLayout()
         Me.highlight.SuspendLayout()
         Me.menuhilight.SuspendLayout()
@@ -2488,7 +2488,7 @@ Partial Class Win32UI
         '
         Me.pnl_preview.BackColor = System.Drawing.Color.Teal
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.pnl_preview.Controls.Add(Me.Menu)
+        Me.pnl_preview.Controls.Add(Me.Menu_Window)
         Me.pnl_preview.Controls.Add(Me.RetroWindow3)
         Me.pnl_preview.Controls.Add(Me.RetroLabel13)
         Me.pnl_preview.Controls.Add(Me.RetroWindow2)
@@ -2502,33 +2502,33 @@ Partial Class Win32UI
         '
         'Menu
         '
-        Me.Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Menu.ButtonDkShadow = System.Drawing.Color.Black
-        Me.Menu.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Menu.ButtonHilight = System.Drawing.Color.White
-        Me.Menu.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Menu.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.Menu.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.Menu.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.Menu.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Menu.ColorGradient = True
-        Me.Menu.Controls.Add(Me.menucontainer3)
-        Me.Menu.Controls.Add(Me.highlight)
-        Me.Menu.Controls.Add(Me.menucontainer1)
-        Me.Menu.Flat = False
-        Me.Menu.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.Menu.ForeColor = System.Drawing.Color.Black
-        Me.Menu.Location = New System.Drawing.Point(202, 172)
-        Me.Menu.Metrics_BorderWidth = 1
-        Me.Menu.Metrics_CaptionHeight = 22
-        Me.Menu.Metrics_CaptionWidth = 0
-        Me.Menu.Metrics_PaddedBorderWidth = 4
-        Me.Menu.Name = "Menu"
-        Me.Menu.Padding = New System.Windows.Forms.Padding(3)
-        Me.Menu.Size = New System.Drawing.Size(115, 66)
-        Me.Menu.TabIndex = 4
-        Me.Menu.TitlebarText = "New Window"
-        Me.Menu.UseItAsMenu = True
+        Me.Menu_Window.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu_Window.ButtonDkShadow = System.Drawing.Color.Black
+        Me.Menu_Window.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu_Window.ButtonHilight = System.Drawing.Color.White
+        Me.Menu_Window.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu_Window.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu_Window.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu_Window.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.Menu_Window.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Menu_Window.ColorGradient = True
+        Me.Menu_Window.Controls.Add(Me.menucontainer3)
+        Me.Menu_Window.Controls.Add(Me.highlight)
+        Me.Menu_Window.Controls.Add(Me.menucontainer1)
+        Me.Menu_Window.Flat = False
+        Me.Menu_Window.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.Menu_Window.ForeColor = System.Drawing.Color.Black
+        Me.Menu_Window.Location = New System.Drawing.Point(202, 172)
+        Me.Menu_Window.Metrics_BorderWidth = 1
+        Me.Menu_Window.Metrics_CaptionHeight = 22
+        Me.Menu_Window.Metrics_CaptionWidth = 0
+        Me.Menu_Window.Metrics_PaddedBorderWidth = 4
+        Me.Menu_Window.Name = "Menu"
+        Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3)
+        Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
+        Me.Menu_Window.TabIndex = 4
+        Me.Menu_Window.TitlebarText = "New Window"
+        Me.Menu_Window.UseItAsMenu = True
         '
         'menucontainer3
         '
@@ -3254,7 +3254,7 @@ Partial Class Win32UI
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_preview.ResumeLayout(False)
         Me.pnl_preview.PerformLayout()
-        Me.Menu.ResumeLayout(False)
+        Me.Menu_Window.ResumeLayout(False)
         Me.menucontainer3.ResumeLayout(False)
         Me.highlight.ResumeLayout(False)
         Me.menuhilight.ResumeLayout(False)
@@ -3419,7 +3419,7 @@ Partial Class Win32UI
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents programcontainer As Panel
     Friend WithEvents RetroButton9 As RetroButton
-    Friend WithEvents Menu As RetroWindow
+    Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
     Friend WithEvents RetroLabel9 As RetroLabel
     Friend WithEvents highlight As Panel

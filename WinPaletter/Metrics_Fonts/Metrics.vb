@@ -47,7 +47,7 @@ Public Class Metrics
 
 
 #Region "Structures"
-    Public Structure NONCLIENTMETRICS
+    Public Structure NONCLIENTMETRICS           'NEVER CHANGE VARIABLES ORDERS
         Public cbSize As Integer
         Public iBorderWidth As Integer
         Public iScrollWidth As Integer

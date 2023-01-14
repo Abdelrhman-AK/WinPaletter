@@ -1,6 +1,6 @@
 ﻿Imports WinPaletter.XenonCore
 Public Class Saving_ex_list
-    Private Sub saving_exceptions_list_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Saving_exceptions_list_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         Icon = BugReport.Icon
 

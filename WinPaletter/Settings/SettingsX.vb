@@ -1,4 +1,6 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.IO
+Imports Newtonsoft.Json.Linq
+Imports WinPaletter.XenonCore
 
 Public Class SettingsX
 
@@ -135,10 +137,10 @@ Public Class SettingsX
         With My.Lang
             Label11.Text = .Name
             Label12.Text = .TranslationVersion
-            Label14.Text = .AppVer
+            Label14.Text = .AppVer & " and below"
             Label19.Text = .Lang
             Label16.Text = .LangCode
-            Label21.Text = If(.RightToLeft, .Yes, .No)
+            Label22.Text = If(Not .RightToLeft, My.Lang.Lang_HasLeftToRight, My.Lang.Lang_HasRightToLeft)
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
@@ -152,6 +154,7 @@ Public Class SettingsX
         Dim ch_dark As Boolean = False
         Dim ch_nerd As Boolean = False
         Dim ch_terminal As Boolean = False
+        Dim ch_lang As Boolean = False
 
         With My.[Settings]
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_dark = True
@@ -164,6 +167,9 @@ Public Class SettingsX
             If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then ch_terminal = True
             If .Terminal_Stable_Path <> XenonTextBox1.Text Then ch_terminal = True
             If .Terminal_Preview_Path <> XenonTextBox2.Text Then ch_terminal = True
+
+            If .Language <> XenonCheckBox8.Checked Then ch_lang = True
+            If .Language_File <> XenonTextBox3.Text Then ch_lang = True
 
             .AutoAddExt = XenonCheckBox1.Checked
             .DragAndDropPreview = XenonCheckBox3.Checked
@@ -248,6 +254,14 @@ Public Class SettingsX
             End If
         End If
 
+        If ch_lang Then
+            If XenonCheckBox8.Checked Then
+                My.Lang = New Localizer
+                My.Lang.LoadLanguageFromJSON(My.Settings.Language_File)
+            Else
+                MsgBox(My.Lang.LanguageRestart, My.MsgboxRt(MsgBoxStyle.Information))
+            End If
+        End If
 
         Cursor = Cursors.Default
 
@@ -440,7 +454,21 @@ Public Class SettingsX
 
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             XenonTextBox3.Text = OpenFileDialog2.FileName
-            MsgBox(My.Lang.LanguageRestart, My.MsgboxRt(MsgBoxStyle.Information))
+
+            Try
+                Dim _File As New StreamReader(XenonTextBox3.Text)
+                Dim J As JObject = JObject.Parse(_File.ReadToEnd)
+                _File.Close()
+
+                Label11.Text = J("Information")("name")
+                Label12.Text = J("Information")("translationversion")
+                Label14.Text = J("Information")("appver").ToString & " and below"
+                Label19.Text = J("Information")("lang")
+                Label16.Text = J("Information")("langcode")
+                Label22.Text = If(Not CBool(J("Information")("righttoleft")), My.Lang.Lang_HasLeftToRight, My.Lang.Lang_HasRightToLeft)
+            Catch
+            End Try
+
         End If
 
     End Sub
@@ -463,5 +491,9 @@ Public Class SettingsX
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Process.Start(My.Resources.Link_Repository & "tree/master/Languages")
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        Lang_Dashboard.ShowDialog()
     End Sub
 End Class

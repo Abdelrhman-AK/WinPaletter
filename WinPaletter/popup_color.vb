@@ -1,7 +1,7 @@
 ﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
-Public Class popup_color
+Public Class Popup_color
 #Region "Form Shadow"
 
     Private aeroEnabled As Boolean
@@ -71,7 +71,7 @@ Public Class popup_color
         End If
     End Sub
 
-    Private Sub popup_color_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Popup_color_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         _shown = False
     End Sub

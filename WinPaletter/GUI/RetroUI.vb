@@ -3,12 +3,8 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 
 Public Module Helpers
-    Private ReadOnly TextGraphics As Graphics
-    Private ReadOnly TextBitmap As Bitmap
-
     Sub New()
-        TextBitmap = New Bitmap(1, 1)
-        TextGraphics = Graphics.FromImage(TextBitmap)
+
     End Sub
 
     Public Function CenterString(T As String, F As Font, R As Rectangle) As PointF
@@ -110,8 +106,7 @@ Public Class RetroButton : Inherits Button
         Dim rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rectinner As New Rectangle(1, 1, Width - 3, Height - 3)
         Dim rectdash As New Rectangle(4, 4, Width - 9, Height - 9)
-        Dim pendash As New Pen(Color.Black)
-        pendash.DashStyle = DashStyle.Dot
+        Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
         '#################################################################################
 
         G.Clear(BackColor)
@@ -289,9 +284,8 @@ Public Class RetroCheckBox
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim CheckRect As Rectangle = New Rectangle(0, 0, 12, 12)
-        Dim pendash As New Pen(Color.Black)
-        pendash.DashStyle = DashStyle.Dot
+        Dim CheckRect As New Rectangle(0, 0, 12, 12)
+        Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
         '#################################################################################
         G.Clear(BackColor)
 
@@ -398,10 +392,9 @@ Public Class RetroRadioButton
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim CheckRect As Rectangle = New Rectangle(0, 0, 11, 11)
-        Dim CheckRect2 As Rectangle = New Rectangle(1, 1, 9, 9)
-        Dim pendash As New Pen(Color.Black)
-        pendash.DashStyle = DashStyle.Dot
+        Dim CheckRect As New Rectangle(0, 0, 11, 11)
+        Dim CheckRect2 As New Rectangle(1, 1, 9, 9)
+        Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
         '#################################################################################
 
         G.Clear(BackColor)
@@ -437,8 +430,7 @@ End Class
         DoubleBuffered = True
         ForeColor = Color.Black
         BackColor = Color.White
-        TB = New Windows.Forms.TextBox
-        TB.Visible = True
+        TB = New TextBox With {.Visible = True}
         Font = New Font("Microsoft Sans Serif", 8)
         TB.Text = Text
         TB.ForeColor = Color.White
@@ -666,8 +658,8 @@ End Class
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
 #Region "Colors"
-    Private _BaseColor As Color = BackColor
-    Private _TextColor As Color = ForeColor
+    Private ReadOnly _BaseColor As Color = BackColor
+    Private ReadOnly _TextColor As Color = ForeColor
 #End Region
 
 #Region "Events"
@@ -703,7 +695,7 @@ End Class
         TB.ForeColor = ForeColor
 
         '################################################################################# Customizer
-        Dim CheckRect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim CheckRect As New Rectangle(0, 0, Width - 1, Height - 1)
         '#################################################################################
 
         G.Clear(BackColor)
@@ -867,7 +859,7 @@ Public Class RetroPanel : Inherits Panel
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         '#################################################################################
         G.Clear(BackColor)
 
@@ -903,7 +895,7 @@ Public Class RetroPanelRaised : Inherits Panel
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         '#################################################################################
         G.Clear(BackColor)
 
@@ -1042,7 +1034,7 @@ Public Class RetroWindow : Inherits Panel
                 F = Font
             End If
 
-            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+            Dim RTL As Boolean = (RightToLeft = 1)
             Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
             If ColorGradient Then
                 G.FillRectangle(gr, TRect)
@@ -1074,7 +1066,7 @@ Public Class RetroScrollBar : Inherits Panel
         DoubleBuffered = True
 
         '################################################################################# Customizer
-        Dim Rect As Rectangle = New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         '#################################################################################
         G.Clear(BackColor)
         Dim b As New HatchBrush(HatchStyle.Percent50, ButtonHilight, BackColor)

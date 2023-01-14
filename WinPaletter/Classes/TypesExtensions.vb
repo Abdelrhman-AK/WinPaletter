@@ -5,7 +5,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
-Imports WinPaletter.CP
 
 Public Module ColorsExtensions
 
@@ -84,9 +83,9 @@ Public Module ColorsExtensions
     '''</summary>
     <Extension()>
     Public Function ToRGB(hsl As HSL_Structure) As Color
-        Dim r As Byte = 0
-        Dim g As Byte = 0
-        Dim b As Byte = 0
+        Dim r As Byte
+        Dim g As Byte
+        Dim b As Byte
 
         If hsl.S = 0 Then
             r = CByte(Math.Truncate(hsl.L * 255))
@@ -453,7 +452,8 @@ Public Module ListOfStringExtensions
     Function DeDuplicate(ByVal [List] As List(Of String)) As List(Of String)
         Dim Result As New List(Of String)
 
-        Dim Exist As Boolean = False
+        Dim Exist As Boolean
+
         For Each ElementString As String In [List]
             Exist = False
             For Each ElementStringInResult As String In Result
@@ -599,7 +599,7 @@ Public Module BitmapExtensions
     '''</summary>
     <Extension()>
     Public Function ReplaceColor(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Bitmap
-        Dim outputImage As Bitmap = New Bitmap(inputImage.Width, inputImage.Height)
+        Dim outputImage As New Bitmap(inputImage.Width, inputImage.Height)
         Dim G As Graphics = Graphics.FromImage(outputImage)
 
 
@@ -640,8 +640,6 @@ Public Module BitmapExtensions
         Try
             Dim sourceWidth As Integer = Bitmap.Width
             Dim sourceHeight As Integer = Bitmap.Height
-            Dim sourceX As Integer = 0
-            Dim sourceY As Integer = 0
             Dim destX As Integer = 0
             Dim destY As Integer = 0
             Dim nPercent As Single = 0
@@ -660,7 +658,7 @@ Public Module BitmapExtensions
 
             Dim destWidth As Integer = CInt((sourceWidth * nPercent))
             Dim destHeight As Integer = CInt((sourceHeight * nPercent))
-            Dim bmPhoto As Bitmap = New Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb)
+            Dim bmPhoto As New Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb)
             bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution)
             Dim grPhoto As Graphics = Graphics.FromImage(bmPhoto)
             grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic
@@ -700,16 +698,11 @@ Public Module BitmapExtensions
     <Extension()>
     Public Function Resize(bmSource As Bitmap, TargetWidth As Integer, TargetHeight As Integer) As Bitmap
         If bmSource Is Nothing Then
+            Return Nothing
             Exit Function
         End If
 
         Dim bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
-
-        Dim nSourceAspectRatio = bmSource.Width / bmSource.Height
-        Dim nDestAspectRatio = bmDest.Width / bmDest.Height
-
-        Dim NewX = 0
-        Dim NewY = 0
 
         Using grDest = Graphics.FromImage(bmDest)
             With grDest
@@ -758,10 +751,10 @@ Public Module BitmapExtensions
         Dim pixelBuffer As Byte() = New Byte(sourceData.Stride * sourceData.Height - 1) {}
         Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length)
         sourceBitmap.UnlockBits(sourceData)
-        Dim blue As Single = 0
-        Dim green As Single = 0
-        Dim red As Single = 0
-        Dim k As Integer = 0
+        Dim blue As Single
+        Dim green As Single
+        Dim red As Single
+        Dim k As Integer
 
         While k + 4 < pixelBuffer.Length
             blue = pixelBuffer(k) + (255 - pixelBuffer(k)) * [Color].B
@@ -786,7 +779,7 @@ Public Module BitmapExtensions
             k += 4
         End While
 
-        Dim resultBitmap As Bitmap = New Bitmap(sourceBitmap.Width, sourceBitmap.Height)
+        Dim resultBitmap As New Bitmap(sourceBitmap.Width, sourceBitmap.Height)
         Dim resultData As BitmapData = resultBitmap.LockBits(New Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.[WriteOnly], PixelFormat.Format32bppArgb)
         Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length)
         resultBitmap.UnlockBits(resultData)
@@ -808,7 +801,7 @@ Public Module BitmapExtensions
 
         Dim bmp As Bitmap = CType(originalBitmap.Clone(), Bitmap)
         Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
-        Dim rect As Rectangle = New Rectangle(0, 0, bmp.Width, bmp.Height)
+        Dim rect As New Rectangle(0, 0, bmp.Width, bmp.Height)
         Dim bmpData As BitmapData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf)
         Dim ptr As IntPtr = bmpData.Scan0
         Dim numBytes As Integer = bmp.Width * bmp.Height * bytesPerPixel
@@ -844,12 +837,12 @@ Public Module BitmapExtensions
     '''</summary>
     <Extension()>
     Public Function Grayscale(ByVal original As Bitmap) As Bitmap
-        Dim newBitmap As Bitmap = New Bitmap(original.Width, original.Height)
+        Dim newBitmap As New Bitmap(original.Width, original.Height)
 
         Using g As Graphics = Graphics.FromImage(newBitmap)
-            Dim colorMatrix As ColorMatrix = New ColorMatrix(New Single()() {New Single() {0.3F, 0.3F, 0.3F, 0, 0}, New Single() {0.59F, 0.59F, 0.59F, 0, 0}, New Single() {0.11F, 0.11F, 0.11F, 0, 0}, New Single() {0, 0, 0, 1, 0}, New Single() {0, 0, 0, 0, 1}})
+            Dim colorMatrix As New ColorMatrix(New Single()() {New Single() {0.3F, 0.3F, 0.3F, 0, 0}, New Single() {0.59F, 0.59F, 0.59F, 0, 0}, New Single() {0.11F, 0.11F, 0.11F, 0, 0}, New Single() {0, 0, 0, 1, 0}, New Single() {0, 0, 0, 0, 1}})
 
-            Using attributes As ImageAttributes = New ImageAttributes()
+            Using attributes As New ImageAttributes()
                 attributes.SetColorMatrix(colorMatrix)
                 g.DrawImage(original, New Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes)
             End Using

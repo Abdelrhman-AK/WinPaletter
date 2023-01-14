@@ -1,5 +1,4 @@
-﻿Imports System.Net
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.XenonCore
 
 Public Class LicenseForm
     Private Sub LicenseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load

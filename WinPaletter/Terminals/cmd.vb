@@ -1,9 +1,8 @@
-﻿Imports Microsoft.Win32
-Imports WinPaletter.NativeMethods
+﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
-Public Class cmd
-    Dim f_cmd As Font = New Font("Consolas", 18, FontStyle.Regular)
+Public Class CMD
+    Dim F_cmd As New Font("Consolas", 18, FontStyle.Regular)
     Private _Shown As Boolean = False
     Public _Edition As Edition = Edition.CMD
 
@@ -14,7 +13,7 @@ Public Class cmd
     End Enum
 
 #Region "   Subs not related to colors and shapes"
-    Private Sub cmd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub CMD_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         ApplyDarkMode(Me)
         XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
@@ -33,19 +32,19 @@ Public Class cmd
 
         Select Case _Edition
             Case Edition.CMD
-                Text = "Command Prompt"
+                Text = My.Lang.CommandPrompt
                 Icon = My.Resources.icons8_command_line
-                XenonButton4.Text = "Open Command Prompt for testing"
+                XenonButton4.Text = My.Lang.Open_Testing_CMD
 
             Case Edition.PowerShellx86
-                Text = "PowerShell x86"
+                Text = My.Lang.PowerShellx86
                 Icon = My.Resources.icons8_PowerShell
-                XenonButton4.Text = "Open PowerShell x86 for testing"
+                XenonButton4.Text = My.Lang.Open_Testing_PowerShellx86
 
             Case Edition.PowerShellx64
-                Text = "PowerShell x64"
+                Text = My.Lang.PowerShellx64
                 Icon = My.Resources.icons8_PowerShell
-                XenonButton4.Text = "Open PowerShell x64 for testing"
+                XenonButton4.Text = My.Lang.Open_Testing_PowerShellx64
 
         End Select
 
@@ -116,10 +115,10 @@ Public Class cmd
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
-    Private Sub cmd_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+    Private Sub CMD_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         MainFrm.Visible = True
     End Sub
-    Private Sub cmd_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub CMD_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
     End Sub
 #End Region
@@ -218,7 +217,7 @@ Public Class cmd
         XenonCMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value
         XenonCMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value
         XenonCMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-        XenonCMD1.Font = New Font(f_cmd.Name, f_cmd.Size, f_cmd.Style)
+        XenonCMD1.Font = New Font(F_cmd.Name, F_cmd.Size, F_cmd.Style)
         XenonCMD1.PowerShell = (_Edition = Edition.PowerShellx64) Or (_Edition = Edition.PowerShellx86)
         XenonCMD1.Raster = CMD_RasterToggle.Checked
         Select Case RasterList.SelectedItem
@@ -261,9 +260,6 @@ Public Class cmd
     End Sub
 
     Sub UpdateFromTrack(i As Integer)
-        Dim steps As Integer = 15
-        Dim delay As Integer = 10
-
         If i = 1 Then
             Select Case CMD_PopupForegroundBar.Value
                 Case 0
@@ -526,12 +522,12 @@ Public Class cmd
         End Select
 
         If Not [Console].FontRaster Then
-            With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight}) : f_cmd = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style) : End With
+            With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight}) : F_cmd = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style) : End With
         End If
 
-        CMD_FontsBox.SelectedItem = f_cmd.Name
-        CMD_FontSizeBar.Value = f_cmd.Size
-        CMD_FontSizeLbl.Text = f_cmd.Size
+        CMD_FontsBox.SelectedItem = F_cmd.Name
+        CMD_FontSizeBar.Value = F_cmd.Size
+        CMD_FontSizeLbl.Text = F_cmd.Size
 
         If [Console].FontSize = 393220 Then RasterList.SelectedItem = "4x6"
         If [Console].FontSize = 524294 Then RasterList.SelectedItem = "6x8"
@@ -565,34 +561,32 @@ Public Class cmd
     End Sub
 
     Sub ApplyToCP([CP] As CP, [Edition] As Edition)
-
-        Dim [Console] As New CP.Console_Structure
-
-        [Console].Enabled = CMDEnabled.Checked
-
-        [Console].ColorTable00 = ColorTable00.BackColor
-        [Console].ColorTable01 = ColorTable01.BackColor
-        [Console].ColorTable02 = ColorTable02.BackColor
-        [Console].ColorTable03 = ColorTable03.BackColor
-        [Console].ColorTable04 = ColorTable04.BackColor
-        [Console].ColorTable05 = ColorTable05.BackColor
-        [Console].ColorTable06 = ColorTable06.BackColor
-        [Console].ColorTable07 = ColorTable07.BackColor
-        [Console].ColorTable08 = ColorTable08.BackColor
-        [Console].ColorTable09 = ColorTable09.BackColor
-        [Console].ColorTable10 = ColorTable10.BackColor
-        [Console].ColorTable11 = ColorTable11.BackColor
-        [Console].ColorTable12 = ColorTable12.BackColor
-        [Console].ColorTable13 = ColorTable13.BackColor
-        [Console].ColorTable14 = ColorTable14.BackColor
-        [Console].ColorTable15 = ColorTable15.BackColor
-        [Console].PopupForeground = CMD_PopupForegroundBar.Value
-        [Console].PopupBackground = CMD_PopupBackgroundBar.Value
-        [Console].ScreenColorsForeground = CMD_AccentForegroundBar.Value
-        [Console].ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-        [Console].FaceName = f_cmd.Name
-        [Console].FontRaster = CMD_RasterToggle.Checked
-        [Console].FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+        Dim [Console] As New CP.Console_Structure With {
+            .Enabled = CMDEnabled.Checked,
+            .ColorTable00 = ColorTable00.BackColor,
+            .ColorTable01 = ColorTable01.BackColor,
+            .ColorTable02 = ColorTable02.BackColor,
+            .ColorTable03 = ColorTable03.BackColor,
+            .ColorTable04 = ColorTable04.BackColor,
+            .ColorTable05 = ColorTable05.BackColor,
+            .ColorTable06 = ColorTable06.BackColor,
+            .ColorTable07 = ColorTable07.BackColor,
+            .ColorTable08 = ColorTable08.BackColor,
+            .ColorTable09 = ColorTable09.BackColor,
+            .ColorTable10 = ColorTable10.BackColor,
+            .ColorTable11 = ColorTable11.BackColor,
+            .ColorTable12 = ColorTable12.BackColor,
+            .ColorTable13 = ColorTable13.BackColor,
+            .ColorTable14 = ColorTable14.BackColor,
+            .ColorTable15 = ColorTable15.BackColor,
+            .PopupForeground = CMD_PopupForegroundBar.Value,
+            .PopupBackground = CMD_PopupBackgroundBar.Value,
+            .ScreenColorsForeground = CMD_AccentForegroundBar.Value,
+            .ScreenColorsBackground = CMD_AccentBackgroundBar.Value,
+            .FaceName = F_cmd.Name,
+            .FontRaster = CMD_RasterToggle.Checked,
+            .FontWeight = CMD_FontWeightBox.SelectedIndex * 100
+        }
 
         If Not CMD_RasterToggle.Checked Then
             [Console].FontSize = CMD_FontSizeBar.Value * 65536
@@ -770,17 +764,17 @@ Public Class cmd
     Private Sub CMD_FontWeightBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CMD_FontWeightBox.SelectedIndexChanged
         If Not _Shown Then Exit Sub
         Dim fx As New LogFont
-        f_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, f_cmd.Size, f_cmd.Style)
-        f_cmd.ToLogFont(fx)
+        F_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, F_cmd.Size, F_cmd.Style)
+        F_cmd.ToLogFont(fx)
         fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100
-        With Font.FromLogFont(fx) : f_cmd = New Font(.Name, f_cmd.Size, .Style) : End With
-        CMD_FontsBox.SelectedItem = f_cmd.Name
+        With Font.FromLogFont(fx) : F_cmd = New Font(.Name, F_cmd.Size, .Style) : End With
+        CMD_FontsBox.SelectedItem = F_cmd.Name
         ApplyPreview()
     End Sub
 
     Private Sub CMD_FontsBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CMD_FontsBox.SelectedIndexChanged
         If _Shown Then
-            f_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, f_cmd.Size, f_cmd.Style)
+            F_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, F_cmd.Size, F_cmd.Style)
             ApplyPreview()
         End If
 
@@ -789,7 +783,7 @@ Public Class cmd
     Private Sub CMD_FontSizeBar_Scroll(sender As Object) Handles CMD_FontSizeBar.Scroll
         CMD_FontSizeLbl.Text = CMD_FontSizeBar.Value
         If _Shown Then
-            f_cmd = New Font(f_cmd.Name, CMD_FontSizeBar.Value, f_cmd.Style)
+            F_cmd = New Font(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style)
             ApplyPreview()
         End If
     End Sub
@@ -843,9 +837,7 @@ Public Class cmd
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender}
-
-        CList.Add(XenonCMD1)
+        Dim CList As New List(Of Control) From {sender, XenonCMD1}
 
         Dim _Conditions As New Conditions
         If sender.Name.ToString.ToLower.Contains("ColorTable00".ToLower) Then _Conditions.CMD_ColorTable00 = True

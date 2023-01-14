@@ -1,6 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
-Imports System.Runtime.InteropServices
 Imports Cyotek.Windows.Forms
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -53,14 +51,12 @@ Public Class ColorPickerDlg
         ColorGrid1.Visible = False
     End Sub
 
-    Dim ls As New List(Of Control)
-
-    Dim fls As New List(Of Form)
+    ReadOnly Ls As List(Of Control)
+    ReadOnly Fls As List(Of Form)
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
-        fls.Clear()
-
-        ls.Clear()
+        Fls.Clear()
+        Ls.Clear()
 
         For Each ctrl As Control In Me.Controls
             If TypeOf ctrl IsNot ScreenColorPicker And ctrl.Visible Then
@@ -70,7 +66,7 @@ Public Class ColorPickerDlg
         Next
 
         For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
-            If Application.OpenForms(ix).Visible And Not Application.OpenForms(ix) Is Me Then fls.Add(Application.OpenForms(ix))
+            If Application.OpenForms(ix).Visible And Application.OpenForms(ix) IsNot Me Then fls.Add(Application.OpenForms(ix))
         Next
 
         For ix = 0 To fls.Count - 1
@@ -319,7 +315,7 @@ Public Class ColorPickerDlg
                 If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
                     DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                 Else
-                    If Not TypeOf ctrl Is XenonGroupBox And Not TypeOf ctrl Is XenonCP Then
+                    If TypeOf ctrl IsNot XenonGroupBox And TypeOf ctrl IsNot XenonCP Then
                         If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                         If TypeOf ctrl Is RetroPanel Then
                             If _Conditions.RetroButtonHilight Then DirectCast(ctrl, RetroPanel).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -508,14 +504,15 @@ Public Class ColorPickerDlg
             Dwmapi.DwmIsCompositionEnabled(Com)
 
             If Com Then
-                Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
-                temp.clrColor = Color1.ToArgb
-                temp.clrAfterGlow = Color2.ToArgb
-                temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
-                temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
-                temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
-                temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
-                temp.fOpaque = If(MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
+                Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS With {
+                    .clrColor = Color1.ToArgb,
+                    .clrAfterGlow = Color2.ToArgb,
+                    .nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance,
+                    .clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance,
+                    .clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance,
+                    .clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity,
+                    .fOpaque = MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque
+                }
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
         Catch
@@ -564,7 +561,7 @@ Public Class ColorPickerDlg
     End Sub
 
 
-    Dim ColorsList As New List(Of Color)
+    ReadOnly ColorsList As New List(Of Color)
     Dim img As Image
     ReadOnly ColorThiefX As New ColorThiefDotNet.ColorThief
 
@@ -583,8 +580,10 @@ Public Class ColorPickerDlg
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
-            Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
-            pnl.BackColor = Color.FromArgb(255, C)
+            Dim pnl As New XenonCP With {
+                .Size = New Size(If(My.[Settings].Nerd_Stats, 85, 30), 25),
+                .BackColor = Color.FromArgb(255, C)
+            }
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
         Next
@@ -638,8 +637,10 @@ Public Class ColorPickerDlg
 
             Try
                 For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
-                    pnl.BackColor = Color.FromArgb(255, C)
+                    Dim pnl As New XenonCP With {
+                        .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25),
+                        .BackColor = Color.FromArgb(255, C)
+                    }
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next
@@ -658,8 +659,10 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim pnl As New XenonCP With {.Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25)}
-                    pnl.BackColor = Color.FromArgb(255, C)
+                    Dim pnl As New XenonCP With {
+                        .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 85, 30), 25),
+                        .BackColor = Color.FromArgb(255, C)
+                    }
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next

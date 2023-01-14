@@ -27,8 +27,8 @@ Public Class WinResources
     Public Property MetroLock_4 As Bitmap
     Public Property MetroLock_5 As Bitmap
 
-    Private imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
-    Private Windows_UI_Immersive_dll As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\Windows.UI.Immersive.dll"
+    ReadOnly imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+    ReadOnly Windows_UI_Immersive_dll As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\Windows.UI.Immersive.dll"
 
     Sub New()
         If My.W8 Then

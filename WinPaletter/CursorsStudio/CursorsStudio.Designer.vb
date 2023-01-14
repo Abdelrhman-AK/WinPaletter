@@ -104,7 +104,7 @@ Partial Class CursorsStudio
         Me.Help = New WinPaletter.CursorControl()
         Me.AppLoading = New WinPaletter.CursorControl()
         Me.Busy = New WinPaletter.CursorControl()
-        Me.Move = New WinPaletter.CursorControl()
+        Me.Move_Cur = New WinPaletter.CursorControl()
         Me.Up = New WinPaletter.CursorControl()
         Me.NS = New WinPaletter.CursorControl()
         Me.EW = New WinPaletter.CursorControl()
@@ -1203,7 +1203,7 @@ Partial Class CursorsStudio
         Me.FlowLayoutPanel1.Controls.Add(Me.Help)
         Me.FlowLayoutPanel1.Controls.Add(Me.AppLoading)
         Me.FlowLayoutPanel1.Controls.Add(Me.Busy)
-        Me.FlowLayoutPanel1.Controls.Add(Me.Move)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Move_Cur)
         Me.FlowLayoutPanel1.Controls.Add(Me.Up)
         Me.FlowLayoutPanel1.Controls.Add(Me.NS)
         Me.FlowLayoutPanel1.Controls.Add(Me.EW)
@@ -1359,37 +1359,37 @@ Partial Class CursorsStudio
         '
         'Move
         '
-        Me.Move.Location = New System.Drawing.Point(3, 73)
-        Me.Move.Name = "Move"
-        Me.Move.Prop_Cursor = WinPaletter.Paths.CursorType.Move
-        Me.Move.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.Move.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.Move.Prop_LoadingCircleBackGradient = False
-        Me.Move.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.Move.Prop_LoadingCircleBackNoise = False
-        Me.Move.Prop_LoadingCircleBackNoiseOpacity = 0.25!
-        Me.Move.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Move.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Move.Prop_LoadingCircleHotGradient = False
-        Me.Move.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.Move.Prop_LoadingCircleHotNoise = False
-        Me.Move.Prop_LoadingCircleHotNoiseOpacity = 0.25!
-        Me.Move.Prop_PrimaryColor1 = System.Drawing.Color.White
-        Me.Move.Prop_PrimaryColor2 = System.Drawing.Color.White
-        Me.Move.Prop_PrimaryColorGradient = False
-        Me.Move.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.Move.Prop_PrimaryNoise = False
-        Me.Move.Prop_PrimaryNoiseOpacity = 0.25!
-        Me.Move.Prop_Scale = 1.0!
-        Me.Move.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.Move.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.Move.Prop_SecondaryColorGradient = False
-        Me.Move.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
-        Me.Move.Prop_SecondaryNoise = False
-        Me.Move.Prop_SecondaryNoiseOpacity = 0.25!
-        Me.Move.Size = New System.Drawing.Size(64, 64)
-        Me.Move.TabIndex = 8
-        Me.Move.Text = "CursorControl5"
+        Me.Move_Cur.Location = New System.Drawing.Point(3, 73)
+        Me.Move_Cur.Name = "Move"
+        Me.Move_Cur.Prop_Cursor = WinPaletter.Paths.CursorType.Move
+        Me.Move_Cur.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleBackGradient = False
+        Me.Move_Cur.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_LoadingCircleBackNoise = False
+        Me.Move_Cur.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleHotGradient = False
+        Me.Move_Cur.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_LoadingCircleHotNoise = False
+        Me.Move_Cur.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Move_Cur.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Move_Cur.Prop_PrimaryColorGradient = False
+        Me.Move_Cur.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_PrimaryNoise = False
+        Me.Move_Cur.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_Scale = 1.0!
+        Me.Move_Cur.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move_Cur.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move_Cur.Prop_SecondaryColorGradient = False
+        Me.Move_Cur.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_SecondaryNoise = False
+        Me.Move_Cur.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Move_Cur.Size = New System.Drawing.Size(64, 64)
+        Me.Move_Cur.TabIndex = 8
+        Me.Move_Cur.Text = "CursorControl5"
         '
         'Up
         '
@@ -1876,7 +1876,7 @@ Partial Class CursorsStudio
     Friend WithEvents Help As CursorControl
     Friend WithEvents AppLoading As CursorControl
     Friend WithEvents Busy As CursorControl
-    Friend WithEvents Move As CursorControl
+    Friend WithEvents Move_Cur As CursorControl
     Friend WithEvents Up As CursorControl
     Friend WithEvents NS As CursorControl
     Friend WithEvents EW As CursorControl

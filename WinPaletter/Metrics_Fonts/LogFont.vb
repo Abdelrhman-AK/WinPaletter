@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
-Imports WinPaletter.LogFontHelper
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
 Public Class LogFont
@@ -17,11 +16,8 @@ Public Class LogFont
     Public lfClipPrecision As Byte
     Public lfQuality As Byte
     Public lfPitchAndFamily As Byte
-
-    '<see cref="UnmanagedType.ByValTStr"/> means that the string should be marshalled as an array of TCHAR embedded in the structure.
-    'This implies that the font names can be no larger than <see cref="LF_FACESIZE"/> including the terminating '\0'. That works out to 31 characters.
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
-    Public lfFaceName As String = String.Empty
+    Public lfFaceName As String
 
     Public Sub New(Optional lfFaceName As String = Nothing)
         Me.lfFaceName = lfFaceName
@@ -150,19 +146,20 @@ Public Class LogFontHelper
     End Enum
 
     Public Shared Function ByteToLogFont(ByVal fontBytes As Byte()) As LogFont
-        Dim lOGFONT As LogFont = New LogFont()
-        lOGFONT.lfHeight = BitConverter.ToInt32(fontBytes, 0)
-        lOGFONT.lfWidth = 0
-        lOGFONT.lfEscapement = 0
-        lOGFONT.lfOrientation = 0
-        lOGFONT.lfWeight = BitConverter.ToInt32(fontBytes, 16)
-        lOGFONT.lfItalic = fontBytes(20)
-        lOGFONT.lfUnderline = fontBytes(21)
-        lOGFONT.lfStrikeOut = fontBytes(22)
-        lOGFONT.lfCharSet = fontBytes(23)
-        lOGFONT.lfOutPrecision = fontBytes(24)
-        lOGFONT.lfClipPrecision = fontBytes(25)
-        lOGFONT.lfQuality = fontBytes(26)
+        Dim lOGFONT As New LogFont With {
+            .lfHeight = BitConverter.ToInt32(fontBytes, 0),
+            .lfWidth = 0,
+            .lfEscapement = 0,
+            .lfOrientation = 0,
+            .lfWeight = BitConverter.ToInt32(fontBytes, 16),
+            .lfItalic = fontBytes(20),
+            .lfUnderline = fontBytes(21),
+            .lfStrikeOut = fontBytes(22),
+            .lfCharSet = fontBytes(23),
+            .lfOutPrecision = fontBytes(24),
+            .lfClipPrecision = fontBytes(25),
+            .lfQuality = fontBytes(26)
+        }
         lOGFONT.lfClipPrecision = fontBytes(27)
         Dim array As Byte() = New Byte(63) {}
 
@@ -198,9 +195,9 @@ Public Class LogFontHelper
         b(26) = lOGFONT.lfQuality
         b(27) = lOGFONT.lfClipPrecision
 
+        Dim i As Integer = 0
 
         For Each x As Byte In Encoding.Unicode.GetBytes(lOGFONT.lfFaceName)
-            Dim i As Integer
             b(28 + i) = x
             i += 1
         Next

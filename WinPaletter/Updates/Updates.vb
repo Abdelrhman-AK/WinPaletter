@@ -27,7 +27,7 @@ Public Class Updates
 
             Try
                 If IsNetAvailable() Then
-                    Label5.Text = My.Lang.Label5_Checking
+                    Label5.Text = My.Lang.Checking
                     Dim ls As New List(Of String)
 
                     ls = WebCL.DownloadString(My.Resources.Link_Updates).CList

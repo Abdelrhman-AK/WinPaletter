@@ -6,7 +6,6 @@ Imports System.Threading
 Imports AnimatorNS
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
-Imports Newtonsoft.Json.Linq
 Imports WinPaletter.XenonCore
 
 Namespace My
@@ -14,22 +13,22 @@ Namespace My
         ''' <summary>
         ''' Boolean Represents if OS is Windows 11 or not
         ''' </summary>
-        Public ReadOnly W11 As Boolean = My.Computer.Info.OSFullName.Contains("11")
+        Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 or not
         ''' </summary>
-        Public ReadOnly W10 As Boolean = My.Computer.Info.OSFullName.Contains("10")
+        Public ReadOnly W10 As Boolean = Computer.Info.OSFullName.Contains("10")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 8/8.1 or not
         ''' </summary>
-        Public ReadOnly W8 As Boolean = My.Computer.Info.OSFullName.Contains("8")
+        Public ReadOnly W8 As Boolean = Computer.Info.OSFullName.Contains("8")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 7 or not
         ''' </summary>
-        Public ReadOnly W7 As Boolean = My.Computer.Info.OSFullName.Contains("7")
+        Public ReadOnly W7 As Boolean = Computer.Info.OSFullName.Contains("7")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
@@ -96,11 +95,11 @@ Namespace My
         ''' </summary>
         Public Lang_IL As New ImageList With {.ImageSize = New Size(16, 16), .ColorDepth = ColorDepth.Depth32Bit}
 
-        Delegate Function MsgBoxDelegate([OriginalMsgBoxStyle] As MsgBoxResult) As MsgBoxStyle
+        Delegate Function MsgBoxDelegate([OriginalMsgBoxStyle] As MsgBoxStyle) As MsgBoxStyle
         ''' <summary>
         ''' Function to return MsgboxStyle with Arabic layout (Right-to-left) or without (According to Class Lang)
         ''' </summary>
-        Public MsgboxRt As MsgBoxDelegate = Function([OriginalMsgBoxStyle] As MsgBoxResult) [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
+        Public MsgboxRt As MsgBoxDelegate = Function([OriginalMsgBoxStyle] As MsgBoxStyle) [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
 
     End Module
 
@@ -108,15 +107,8 @@ Namespace My
 #Region "   Invoking Region"
         Implements ISynchronizeInvoke
 
-        Private ReadOnly _currentContext As System.Threading.SynchronizationContext = System.Threading.SynchronizationContext.Current
-        Private ReadOnly _mainThread As System.Threading.Thread = System.Threading.Thread.CurrentThread
-        Private ReadOnly _invokeLocker As Object = New Object()
-
-        Public ReadOnly Property InvokeRequired As Boolean
-            Get
-                Return System.Threading.Thread.CurrentThread.ManagedThreadId <> Me._mainThread.ManagedThreadId
-            End Get
-        End Property
+        Private ReadOnly _currentContext As SynchronizationContext = SynchronizationContext.Current
+        Private ReadOnly _invokeLocker As New Object()
 
         Private ReadOnly Property ISynchronizeInvoke_InvokeRequired As Boolean Implements ISynchronizeInvoke.InvokeRequired
             Get
@@ -141,9 +133,9 @@ Namespace My
 
             SyncLock _invokeLocker
                 Dim objectToGet As Object = Nothing
-                Dim invoker As SendOrPostCallback = New SendOrPostCallback(Function(ByVal data As Object)
-                                                                               objectToGet = method.DynamicInvoke(args)
-                                                                           End Function)
+                Dim invoker As New SendOrPostCallback(Function(ByVal data As Object)
+                                                          Return objectToGet = method.DynamicInvoke(args)
+                                                      End Function)
                 _currentContext.Send(invoker, method.Target)
                 Return objectToGet
             End SyncLock
@@ -158,7 +150,7 @@ Namespace My
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
-                                                                    If My.[Settings].Appearance_Auto Then ApplyDarkMode()
+                                                                    If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
                                                                      MainFrm.pnl_preview.BackgroundImage = Wallpaper
@@ -188,7 +180,7 @@ Namespace My
         Public ReadOnly processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = explorerPath,
                             .Arguments = "",
-                            .Verb = If(Not My.W8, "runas", ""),
+                            .Verb = If(Not W8, "runas", ""),
                             .WindowStyle = ProcessWindowStyle.Normal,
                             .UseShellExecute = True}
                            }
@@ -198,7 +190,6 @@ Namespace My
 
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
-        Public ShowChangelog As Boolean = False
 
         Public CopiedColor As Color = Nothing
         Public ColorEvent As MenuEvent = MenuEvent.None
@@ -231,8 +222,7 @@ Namespace My
         ''' <param name="className">ClassName is the name of the associated class (eg "WinPaletter.ThemeFile")</param>
         ''' <param name="description">Textual description (eg "WinPaletter ThemeFile")</param>
         ''' <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
-        ''' <returns></returns>
-        Function CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, iconPath As String, ByVal exeProgram As String) As Boolean
+        Sub CreateFileAssociation(ByVal extension As String, ByVal className As String, ByVal description As String, iconPath As String, ByVal exeProgram As String)
 
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
             If exeProgram.Contains("""") Then exeProgram = exeProgram.Replace("""", "")
@@ -256,13 +246,13 @@ Namespace My
                 mainKey.CreateSubKey(className & "\DefaultIcon", True).SetValue("", iconPath)
 
                 With descriptionKey
-                    .SetValue("DisplayName", My.Application.Info.ProductName)
-                    .SetValue("Publisher", My.Application.Info.CompanyName)
-                    .SetValue("Version", My.Application.Info.Version.ToString)
+                    .SetValue("DisplayName", Application.Info.ProductName)
+                    .SetValue("Publisher", Application.Info.CompanyName)
+                    .SetValue("Version", Application.Info.Version.ToString)
                 End With
 
             Catch e As Exception
-                Return False
+
             Finally
                 If mainKey IsNot Nothing Then mainKey.Close()
                 If descriptionKey IsNot Nothing Then descriptionKey.Close()
@@ -270,17 +260,14 @@ Namespace My
 
             'Notify Windows that file associations have changed
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.SHCNF_IDLIST, 0, 0)
-
-            Return True
-        End Function
+        End Sub
 
         ''' <summary>
         ''' Removes WinPaletter Files Types Associate From Registry
         ''' </summary>
         ''' <param name="extension">Extension is the file type to be removed (eg ".wpth")</param>
         ''' <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.ThemeFile")</param>
-        ''' <returns></returns>
-        Function DeleteFileAssociation(ByVal extension As String, ByVal className As String) As Boolean
+        Sub DeleteFileAssociation(ByVal extension As String, ByVal className As String)
 
             If extension.Substring(0, 1) <> "." Then extension = "." & extension
 
@@ -297,7 +284,7 @@ Namespace My
                 descriptionKey.DeleteValue("Version", False)
 
             Catch e As Exception
-                Return False
+
             Finally
                 If mainKey IsNot Nothing Then mainKey.Close()
                 If descriptionKey IsNot Nothing Then descriptionKey.Close()
@@ -305,47 +292,47 @@ Namespace My
 
             'Notify Windows that file associations have changed
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.SHCNF_IDLIST, 0, 0)
-            Return True
-        End Function
+        End Sub
         Sub CreateUninstaller()
-            Dim guidText As String = My.Application.Info.ProductName
+            Dim guidText As String = Application.Info.ProductName
             Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall\" & guidText
             Dim exe As String = Assembly.GetExecutingAssembly().Location
 
             If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
-            Dim file As IO.FileStream = New IO.FileStream(appData & "\uninstall.ico", IO.FileMode.OpenOrCreate)
-            My.Resources.Icon_Uninstall.Save(file)
+            Dim file As New IO.FileStream(appData & "\uninstall.ico", IO.FileMode.OpenOrCreate)
+            Resources.Icon_Uninstall.Save(file)
             file.Close()
 
             If Registry.CurrentUser.OpenSubKey(RegPath, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(RegPath, True)
 
             With Registry.CurrentUser.OpenSubKey(RegPath, True)
                 .SetValue("DisplayName", "WinPaletter", RegistryValueKind.String)
-                .SetValue("ApplicationVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
-                .SetValue("DisplayVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
-                .SetValue("Publisher", My.Application.Info.CompanyName, RegistryValueKind.String)
+                .SetValue("ApplicationVersion", Application.Info.Version.ToString, RegistryValueKind.String)
+                .SetValue("DisplayVersion", Application.Info.Version.ToString, RegistryValueKind.String)
+                .SetValue("Publisher", Application.Info.CompanyName, RegistryValueKind.String)
                 .SetValue("DisplayIcon", appData & "\uninstall.ico", RegistryValueKind.String)
-                .SetValue("URLInfoAbout", My.Resources.Link_Repository, RegistryValueKind.String)
-                .SetValue("Contact", My.Resources.Link_Repository, RegistryValueKind.String)
+                .SetValue("URLInfoAbout", Resources.Link_Repository, RegistryValueKind.String)
+                .SetValue("Contact", Resources.Link_Repository, RegistryValueKind.String)
                 .SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String)
                 .SetValue("Comments", "This will help you delete WinPaletter and clean up its used data", RegistryValueKind.String)
                 .SetValue("UninstallString", exe & " /uninstall", RegistryValueKind.String)
                 .SetValue("QuietUninstallString", exe & " /uninstall-quiet", RegistryValueKind.String)
+                .SetValue("InstallLocation", Application.Info.DirectoryPath, RegistryValueKind.String)
                 .SetValue("NoModify", 1, RegistryValueKind.DWord)
                 .SetValue("NoRepair", 1, RegistryValueKind.DWord)
-                .SetValue("EstimatedSize", My.Computer.FileSystem.GetFileInfo(exe).Length / 1024, RegistryValueKind.DWord)
+                .SetValue("EstimatedSize", Computer.FileSystem.GetFileInfo(exe).Length / 1024, RegistryValueKind.DWord)
             End With
         End Sub
         Sub Uninstall_Quiet()
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
-            If IO.Directory.Exists(My.Application.appData) Then
-                IO.Directory.Delete(My.Application.appData, True)
+            If IO.Directory.Exists(Application.appData) Then
+                IO.Directory.Delete(Application.appData, True)
                 CP.ResetCursorsToAero()
             End If
 
-            Dim guidText As String = My.Application.Info.ProductName
+            Dim guidText As String = Application.Info.ProductName
             Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall"
             Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
 
@@ -363,10 +350,13 @@ Namespace My
             'Gets Wallpaper Type (Valid only for Windows 10\11)
             Dim WallpaperType As Integer = 0
             If Not W7 And Not W8 Then
-                Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
-                If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-                WallpaperType = R2.GetValue("BackgroundType")
-                If R2 IsNot Nothing Then R2.Close()
+                Try
+                    Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
+                    If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
+                    WallpaperType = R2.GetValue("BackgroundType")
+                    If R2 IsNot Nothing Then R2.Close()
+                Catch
+                End Try
             End If
 
             Dim img As Bitmap
@@ -376,7 +366,7 @@ Namespace My
                 img = Image.FromStream(x)
                 x.Close()
             Else
-                With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
                     img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
                 End With
             End If
@@ -431,7 +421,7 @@ Namespace My
             AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
             WallMon_Watcher2.Start()
 
-            If Not My.W7 And Not My.W8 Then
+            If Not W7 And Not W8 Then
                 KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
                 valueName = "BackgroundType"
                 Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
@@ -488,11 +478,11 @@ Namespace My
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
 
-            My.[AnimatorNS] = New Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = Animation.Transparent, .AnimationType = AnimationType.Transparent}
+            [AnimatorNS] = New Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = Animation.Transparent, .AnimationType = AnimationType.Transparent}
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try
-                MemoryFonts.AddMemoryFont(My.Resources.JetBrainsMono_Regular)
+                MemoryFonts.AddMemoryFont(Resources.JetBrainsMono_Regular)
                 ConsoleFont = MemoryFonts.GetFont(0, 7.5)
                 ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
                 ConsoleFontLarge = MemoryFonts.GetFont(0, 10)
@@ -543,14 +533,14 @@ Namespace My
                 End If
             Next
 
-            If My.[Settings].Language Then
+            If [Settings].Language Then
                 Try
-                    My.Lang.LoadLanguageFromJSON(My.[Settings].Language_File)
+                    Lang.LoadLanguageFromJSON([Settings].Language_File)
                 Catch ex As Exception
                     MsgBox("There is an error occured during loading language." & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
                 End Try
             Else
-                My.Lang.LoadInternal()
+                Lang.LoadInternal()
             End If
 
 
@@ -565,19 +555,19 @@ Namespace My
 
                 If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
-                        If My.[Settings].OpeningPreviewInApp_or_AppliesIt Then
+                    If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                        If [Settings].OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True
                             ExternalLink_File = arg
                         Else
                             Dim CPx As New CP(CP.Mode.File, arg)
                             CPx.Save(CP.Mode.Registry, arg)
-                            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
+                            If [Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
                     End If
 
-                    If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                    If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
                         SettingsX._External = True
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
@@ -591,7 +581,7 @@ Namespace My
                         If IO.File.Exists(File) Then
                             Dim CPx As New CP(CP.Mode.File, File)
                             CPx.Save(CP.Mode.Registry)
-                            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
+                            If [Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
                     End If
@@ -614,12 +604,12 @@ Namespace My
                 If [Settings].AutoAddExt Then
                     If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
-                    Dim file As IO.FileStream = New IO.FileStream(appData & "\fileextension.ico", IO.FileMode.OpenOrCreate)
-                    My.Resources.fileextension.Save(file)
+                    Dim file As New IO.FileStream(appData & "\fileextension.ico", IO.FileMode.OpenOrCreate)
+                    Resources.fileextension.Save(file)
                     file.Close()
 
                     file = New IO.FileStream(appData & "\settingsfile.ico", IO.FileMode.OpenOrCreate)
-                    My.Resources.settingsfile.Save(file)
+                    Resources.settingsfile.Save(file)
                     file.Close()
 
                     CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
@@ -628,27 +618,27 @@ Namespace My
             Catch
             End Try
 
-            Changelog_IL.Images.Add("Stable", My.Resources.CL_Stable)
-            Changelog_IL.Images.Add("Beta", My.Resources.CL_Beta)
-            Changelog_IL.Images.Add("Add", My.Resources.CL_add)
-            Changelog_IL.Images.Add("Removed", My.Resources.CL_Removed)
-            Changelog_IL.Images.Add("BugFix", My.Resources.CL_BugFix)
-            Changelog_IL.Images.Add("New", My.Resources.CL_New)
-            Changelog_IL.Images.Add("Channel", My.Resources.CL_channel)
-            Changelog_IL.Images.Add("Error", My.Resources.CL_Error)
-            Changelog_IL.Images.Add("Date", My.Resources.CL_Date)
+            Changelog_IL.Images.Add("Stable", Resources.CL_Stable)
+            Changelog_IL.Images.Add("Beta", Resources.CL_Beta)
+            Changelog_IL.Images.Add("Add", Resources.CL_add)
+            Changelog_IL.Images.Add("Removed", Resources.CL_Removed)
+            Changelog_IL.Images.Add("BugFix", Resources.CL_BugFix)
+            Changelog_IL.Images.Add("New", Resources.CL_New)
+            Changelog_IL.Images.Add("Channel", Resources.CL_channel)
+            Changelog_IL.Images.Add("Error", Resources.CL_Error)
+            Changelog_IL.Images.Add("Date", Resources.CL_Date)
 
-            Notifications_IL.Images.Add("info", My.Resources.notify_info)
-            Notifications_IL.Images.Add("error", My.Resources.notify_error)
-            Notifications_IL.Images.Add("warning", My.Resources.notify_warning)
-            Notifications_IL.Images.Add("time", My.Resources.notify_time)
-            Notifications_IL.Images.Add("success", My.Resources.notify_success)
-            Notifications_IL.Images.Add("skip", My.Resources.notify_skip)
-            Notifications_IL.Images.Add("admin", My.Resources.notify_administrator)
+            Notifications_IL.Images.Add("info", Resources.notify_info)
+            Notifications_IL.Images.Add("error", Resources.notify_error)
+            Notifications_IL.Images.Add("warning", Resources.notify_warning)
+            Notifications_IL.Images.Add("time", Resources.notify_time)
+            Notifications_IL.Images.Add("success", Resources.notify_success)
+            Notifications_IL.Images.Add("skip", Resources.notify_skip)
+            Notifications_IL.Images.Add("admin", Resources.notify_administrator)
 
-            Lang_IL.Images.Add("main", My.Resources.LangNode_Main)
-            Lang_IL.Images.Add("value", My.Resources.LangNode_Value)
-            Lang_IL.Images.Add("json", My.Resources.LangNode_JSON)
+            Lang_IL.Images.Add("main", Resources.LangNode_Main)
+            Lang_IL.Images.Add("value", Resources.LangNode_Value)
+            Lang_IL.Images.Add("json", Resources.LangNode_JSON)
 
             Try : WinRes = New WinResources : Catch : End Try
 
@@ -656,13 +646,13 @@ Namespace My
 
 
 #Region "WhatsNew"
-            If Not [Settings].WhatsNewRecord.Contains(My.Application.Info.Version.ToString) Then
+            If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
                 ShowWhatsNew = True
 
                 Dim ver As New List(Of String)
                 ver.Clear()
-                ver.Add(My.Application.Info.Version.ToString)
+                ver.Add(Application.Info.Version.ToString)
 
                 For Each X As String In [Settings].WhatsNewRecord.ToArray()
                     ver.Add(X)
@@ -698,7 +688,7 @@ Namespace My
                     Else
                         If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
 
-                            If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                            If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
                                 If MainFrm.CP <> MainFrm.CP_Original Then
                                     If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
@@ -751,12 +741,12 @@ Namespace My
                                 MainFrm.ApplyCPValues(MainFrm.CP)
                                 MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
 
-                                If Not My.[Settings].OpeningPreviewInApp_or_AppliesIt Then
+                                If Not [Settings].OpeningPreviewInApp_or_AppliesIt Then
                                     MainFrm.Apply_Theme()
                                 End If
                             End If
 
-                            If My.Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                            If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
                                 SettingsX._External = True
                                 SettingsX._File = arg
                                 SettingsX.ShowDialog()
@@ -769,7 +759,7 @@ Namespace My
                                 If IO.File.Exists(File) Then
                                     Dim CPx As New CP(CP.Mode.File, File)
                                     CPx.Save(CP.Mode.Registry)
-                                    If My.[Settings].AutoRestartExplorer Then RestartExplorer()
+                                    If [Settings].AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
 
@@ -843,19 +833,19 @@ Namespace My
 #Region "   Domain (External Resources) and Exceptions Handling"
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
 
-            Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(My.Resources.Animator)
+            Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(Resources.Animator)
             Catch : End Try
 
-            Try : If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(My.Resources.Cyotek_Windows_Forms_ColorPicker)
+            Try : If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(Resources.Cyotek_Windows_Forms_ColorPicker)
             Catch : End Try
 
-            Try : If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(My.Resources.ColorThief_Desktop_v46)
+            Try : If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(Resources.ColorThief_Desktop_v46)
             Catch : End Try
 
-            Try : If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(My.Resources.AnimCur)
+            Try : If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(Resources.AnimCur)
             Catch : End Try
 
-            Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(My.Resources.Newtonsoft_Json)
+            Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(Resources.Newtonsoft_Json)
             Catch : End Try
         End Function
 

@@ -1,14 +1,11 @@
-﻿Imports System.Reflection.Emit
-Imports System.Runtime.InteropServices
-Imports WinPaletter.CP
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.CP
 
-Public Class dragPreviewer
+Public Class DragPreviewer
 
     Public CP As CP
     Public File As String
 
-    Private Sub dragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub DragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SuspendLayout()
 
         MainFrm.MakeItDoubleBuffered(Me)
@@ -44,7 +41,7 @@ Public Class dragPreviewer
         ResumeLayout()
     End Sub
 
-    Private Sub dragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Opacity = 1
         Visible = True
         Me.Invalidate()
@@ -704,7 +701,7 @@ Public Class dragPreviewer
         menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
-        Menu.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu.Padding.Top + Menu.Padding.Bottom
+        Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
 
         RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
 
@@ -788,8 +785,8 @@ Public Class dragPreviewer
 
         End Try
 
-        Menu.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
+        Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu_Window.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
 
         RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
         RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
@@ -859,7 +856,7 @@ Public Class dragPreviewer
             RB.BackColor = c
         Next
         RetroPanel2.BackColor = c
-        Menu.ButtonFace = c
+        Menu_Window.ButtonFace = c
 
         c = [CP].Win32.ButtonDkShadow
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -872,7 +869,7 @@ Public Class dragPreviewer
             RB.ButtonDkShadow = c
         Next
         RetroTextBox1.ButtonDkShadow = c
-        Menu.ButtonDkShadow = c
+        Menu_Window.ButtonDkShadow = c
 
         c = [CP].Win32.ButtonHilight
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -890,7 +887,7 @@ Public Class dragPreviewer
         RetroTextBox1.ButtonHilight = c
         RetroPanel1.ButtonHilight = c
         RetroPanel2.ButtonHilight = c
-        Menu.ButtonHilight = c
+        Menu_Window.ButtonHilight = c
 
         c = [CP].Win32.ButtonLight
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -903,7 +900,7 @@ Public Class dragPreviewer
             RB.ButtonLight = c
         Next
         RetroTextBox1.ButtonLight = c
-        Menu.ButtonLight = c
+        Menu_Window.ButtonLight = c
 
         c = [CP].Win32.ButtonShadow
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -921,7 +918,7 @@ Public Class dragPreviewer
         RetroTextBox1.ButtonShadow = c
         RetroPanel1.ButtonShadow = c
         RetroTextBox1.Invalidate()
-        Menu.ButtonShadow = c
+        Menu_Window.ButtonShadow = c
 
         c = [CP].Win32.ButtonText
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
@@ -940,9 +937,9 @@ Public Class dragPreviewer
         pnlRetroPreview.BackColor = c
 
         c = [CP].Win32.Menu
-        Menu.BackColor = c
+        Menu_Window.BackColor = c
         RetroPanel1.BackColor = c
-        Menu.Invalidate()
+        Menu_Window.Invalidate()
 
         c = [CP].Win32.MenuBar
         menucontainer0.BackColor = c
@@ -996,7 +993,7 @@ Public Class dragPreviewer
 
         If [CP].Win32.EnableTheming Then
             'Theming Enabled (Menus Has colors and borders)
-            Menu.Flat = True
+            Menu_Window.Flat = True
             RetroPanel1.Flat = True
             menuhilight.BackColor = [CP].Win32.MenuHilight  'Filling of selected item
             highlight.BackColor = [CP].Win32.Hilight 'Outer Border of selected item
@@ -1008,7 +1005,7 @@ Public Class dragPreviewer
             RetroLabel3.ForeColor = [CP].Win32.HilightText
         Else
             'Theming Disabled (Menus are retro 3d)
-            Menu.Flat = False
+            Menu_Window.Flat = False
             RetroPanel1.Flat = False
             menuhilight.BackColor = [CP].Win32.Hilight 'Both will have same color
             highlight.BackColor = [CP].Win32.Hilight 'Both will have same color
@@ -1019,7 +1016,7 @@ Public Class dragPreviewer
 
         End If
 
-        Menu.Invalidate()
+        Menu_Window.Invalidate()
         RetroPanel1.Invalidate()
         menuhilight.Invalidate()
         highlight.Invalidate()

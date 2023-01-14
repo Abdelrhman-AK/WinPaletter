@@ -1,7 +1,7 @@
 ﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 Public Class TerminalsDashboard
-    Private _Speed As Integer = 20
+    ReadOnly _Speed As Integer = 20
     Private _shown As Boolean
 
 #Region "Form Shadow"

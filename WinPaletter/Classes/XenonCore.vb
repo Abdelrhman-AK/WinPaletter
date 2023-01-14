@@ -74,7 +74,7 @@ Public Class XenonCore
                 temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
                 temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
                 temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
-                temp.fOpaque = If(CP.Windows7.Theme = AeroTheme.AeroOpaque, True, False)
+                temp.fOpaque = (CP.Windows7.Theme = AeroTheme.AeroOpaque)
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
 
@@ -84,7 +84,7 @@ Public Class XenonCore
     Public Shared Sub RestartExplorer(Optional [TreeView] As TreeView = Nothing)
         With My.Application
             Try
-                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Killing Explorer (To be restarted)", Now.ToLongTimeString), "info")
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.KillingExplorer), "info")
                 Dim sw As New Stopwatch
                 sw.Reset()
                 sw.Start()
@@ -92,12 +92,12 @@ Public Class XenonCore
                 .processKiller.WaitForExit()
                 .processExplorer.Start()
                 sw.Stop()
-                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: Explorer Restarted. It took about {1} seconds to kill explorer", Now.ToLongTimeString, sw.ElapsedMilliseconds / 1000), "time")
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000)), "time")
                 sw.Reset()
             Catch ex As Exception
                 If [TreeView] IsNot Nothing Then
-                    CP.AddNode([TreeView], String.Format("{0}: Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", Now.ToLongTimeString), "error")
-                    My.Saving_Exceptions.Add(New Tuple(Of String, Exception)("Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)", ex))
+                    CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.ErrorExplorerRestart), "error")
+                    My.Saving_Exceptions.Add(New Tuple(Of String, Exception)(My.Lang.ErrorExplorerRestart, ex))
                 End If
             End Try
         End With
@@ -280,14 +280,17 @@ Public Class XenonCore
             End Select
         End If
 
-
         If TypeOf ctrl Is XenonGroupBox Then
             DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
             DirectCast(ctrl, XenonGroupBox).LineColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
         End If
 
+        If TypeOf ctrl Is XenonRadioImage Then
+            DirectCast(ctrl, XenonRadioImage).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
+        End If
+
         If TypeOf ctrl Is XenonButton Then
-            DirectCast(ctrl, XenonButton).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.04))
+            DirectCast(ctrl, XenonButton).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.03))
             DirectCast(ctrl, XenonButton).ForeColor = If(DarkMode, Color.White, Color.Black)
         End If
 
@@ -299,7 +302,6 @@ Public Class XenonCore
         If TypeOf ctrl Is LinkLabel Then
             DirectCast(ctrl, LinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
         End If
-
 
 
         If TypeOf ctrl Is DataGridView Then
@@ -470,8 +472,8 @@ Public Class Visual
     '' CREATED:         10-02-06
     '' DESCRIPTION:     A common module of visual functions.
 
-    Private Shared colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
-    Private Shared backgroundWorkers As New Dictionary(Of BackgroundWorker, ColorFaderInformation) 'Associate each background worker with information it needs
+    Private Shared ReadOnly colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
+    Private Shared ReadOnly backgroundWorkers As New Dictionary(Of BackgroundWorker, ColorFaderInformation) 'Associate each background worker with information it needs
 
     ' The delegate of a method that will be called when the color finishes fading
     Public Delegate Sub DoneFading(ByVal container As Object, ByVal colorProperty As String)
@@ -632,7 +634,7 @@ Public Class Visual
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Shared Sub BackgroundWorker_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
-        Dim info As ColorFaderInformation
+        Dim info As ColorFaderInformation = Nothing
         If backgroundWorkers.TryGetValue(CType(sender, BackgroundWorker), info) Then
             Dim currentColor As Color = CType(e.UserState, Color)
             Try

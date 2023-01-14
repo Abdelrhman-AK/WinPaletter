@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Text
 
 Namespace NativeMethods
@@ -64,12 +63,12 @@ Namespace NativeMethods
             End If
 
             Dim DarkMode As Boolean = XenonCore.GetDarkMode
-            Dim m As MARGINS = New MARGINS()
+            Dim m As New MARGINS()
 
             If yes Then
                 DwmExtendFrameIntoClientArea(frm.Handle, m)
             Else
-                Dim mar As MARGINS = New MARGINS With {
+                Dim mar As New MARGINS With {
                     .bottomHeight = 0,
                     .leftWidth = 0,
                     .rightWidth = 0,
@@ -144,7 +143,7 @@ Namespace NativeMethods
         End Function
 
         Public Shared Function ExtractSmallIcon(Path As String, Optional IconIndex As Integer = 0)
-            Dim ico As Icon
+            Dim ico As Icon = Nothing
             'Make the nIconSize value (See the Msdn documents). The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
             'The largest size for an icon is 256.
             Dim LargeAndSmallSize As UInteger = CUInt(MAKEICONSIZE(256, 16))
@@ -242,10 +241,6 @@ Namespace NativeMethods
             ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
         End Enum
 
-        <DllImport("user32.dll", SetLastError:=True)>
-        Private Shared Function SetProp(ByVal hWnd As IntPtr, ByVal lpString As String, ByVal hData As IntPtr) As Boolean
-        End Function
-
         <StructLayout(LayoutKind.Sequential)>
         Public Structure WINDOWCOMPOSITIONATTRIBDATA
             Public Attrib As WindowCompositionAttribute
@@ -290,7 +285,7 @@ Namespace NativeMethods
         Public Shared WM_WININICHANGE As UInteger = &H1A
         Public Shared WM_SETTINGCHANGE As UInteger = WM_WININICHANGE
         Public Shared HWND_MESSAGE As Int32 = -&H3
-        Public Shared HWND_BROADCAST As IntPtr = New IntPtr(&HFFFF)
+        Public Shared HWND_BROADCAST As New IntPtr(&HFFFF)
         Public Shared MSG_TIMEOUT As Integer = 5000
         Public Shared RESULT As UIntPtr
 
@@ -889,8 +884,7 @@ Namespace NativeMethods
         End Function
 
         Public Shared Function GetSystemIcon(_Icon As SHSTOCKICONID, _Type As SHGSI) As Icon
-            Dim sii = New SHSTOCKICONINFO()
-            sii.cbSize = Marshal.SizeOf(GetType(SHSTOCKICONINFO))
+            Dim sii As New SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(SHSTOCKICONINFO))}
             SHGetStockIconInfo(_Icon, _Type, sii)
             Return Icon.FromHandle(sii.hIcon)
         End Function

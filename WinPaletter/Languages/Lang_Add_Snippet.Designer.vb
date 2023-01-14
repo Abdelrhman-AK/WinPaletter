@@ -177,7 +177,7 @@ Partial Class Lang_Add_Snippet
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox7.Image = Nothing
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 170)
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 181)
         Me.XenonAlertBox7.Name = "XenonAlertBox7"
         Me.XenonAlertBox7.Size = New System.Drawing.Size(479, 31)
         Me.XenonAlertBox7.TabIndex = 28
@@ -199,10 +199,11 @@ Partial Class Lang_Add_Snippet
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(45, 113)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(446, 40)
+        Me.Label4.Size = New System.Drawing.Size(446, 56)
         Me.Label4.TabIndex = 31
         Me.Label4.Text = "Codes's correct place is (Information\langcode)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add Layout's correct place is (I" &
-    "nformation\righttoleft)"
+    "nformation\righttoleft)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add Layout will insert ""True"" if language code layout i" &
+    "s right to left"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonAlertBox1
@@ -216,7 +217,7 @@ Partial Class Lang_Add_Snippet
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 207)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 218)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(479, 31)
         Me.XenonAlertBox1.TabIndex = 29
@@ -228,7 +229,7 @@ Partial Class Lang_Add_Snippet
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(503, 250)
+        Me.ClientSize = New System.Drawing.Size(503, 261)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.XenonAlertBox1)

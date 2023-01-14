@@ -1,5 +1,4 @@
-﻿Imports WinPaletter.XenonCore
-Public Class LogonUI8_Pics
+﻿Public Class LogonUI8_Pics
     Private Sub LogonUI8_Pics_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.DialogResult = DialogResult.None
 

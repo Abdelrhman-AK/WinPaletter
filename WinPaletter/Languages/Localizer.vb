@@ -48,7 +48,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "EditInfo".ToLower Then Return EditInfo
         If Name.ToLower = "LogonUI".ToLower Then Return LogonUI
         If Name.ToLower = "MainFrm".ToLower Then Return MainFrm
-        If Name.ToLower = "Whatsnew".ToLower Then Return Whatsnew
+        If Name.ToLower = "WhatsNew".ToLower Then Return Whatsnew
         If Name.ToLower = "Updates".ToLower Then Return Updates
         If Name.ToLower = "Win32UI".ToLower Then Return Win32UI
         If Name.ToLower = "SettingsX".ToLower Then Return SettingsX
@@ -68,7 +68,6 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
         If Name.ToLower = "BugReport".ToLower Then Return BugReport
         If Name.ToLower = "Metrics_Fonts".ToLower Then Return Metrics_Fonts
-
     End Function
 
     Public allForms As New List(Of String) From {
@@ -116,9 +115,16 @@ Public Class Localizer : Implements IDisposable
     Property [Next] As String = "Next"
     Property Yes As String = "Yes"
     Property No As String = "No"
+    Property Bug_StackTrace As String = "Stack Trace"
+    Property Bug_ErrorMessage As String = "Error Message"
+    Property Bug_NoReport As String = "There is no previous saved report in ""{0}"""
+    Property Bug_OS As String = "OS"
+    Property Version_Str As String = "WinPaletter Version"
+    Property Bug_Date As String = "Date of report"
     Property NewUpdate As String = "New Update Available"
     Property OpenForActions As String = "Open Updates form for actions."
     Property By As String = "By"
+    Property Done As String = "Done"
     Property Show As String = "Show"
     Property Hide As String = "Hide"
     Property InputValue As String = "Input value"
@@ -131,11 +137,20 @@ Public Class Localizer : Implements IDisposable
     Property Channel As String = "Channel"
     Property InvalidTheme As String = "Error: Invalid Theme File."
     Property ThemeNotExist As String = "Theme File doesn't exist."
-
+    Property OS_Win11 As String = "Windows 11"
+    Property OS_Win10 As String = "Windows 10"
+    Property OS_Win8 As String = "Windows 8.1"
+    Property OS_Win7 As String = "Windows 7"
+    Property OS_WinUndefined As String = "Windows 11 or Higher"
+    Property KillingExplorer As String = "Killing Explorer (To be restarted)"
+    Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"
+    Property ErrorExplorerRestart As String = "Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)"
+    Property Scaling As String = "Scaling"
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
     Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
     Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
-
+    Property LogonUI_LockEnabled As String = "Lock Screen Enabled?"
+    Property LogonUI_Enabled As String = "Enabled?"
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
@@ -143,7 +158,6 @@ Public Class Localizer : Implements IDisposable
     Property CP_11_Taskbar As String = "Taskbar Color"
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"
     Property CP_11_SomePressedButtons As String = "Some Pressed Buttons"
-
     Property CP_10_ACLinks As String = "Action Center Links"
     Property CP_10_TaskbarAppUnderline As String = "Taskbar App Underline"
     Property CP_10_StartMenuIconHover As String = "Start Menu Icon Hover"
@@ -156,16 +170,87 @@ Public Class Localizer : Implements IDisposable
     Property CP_10_Taskbar As String = "Taskbar"
     Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
-
     Property CP_Undefined As String = "Undefined"
     Property CP_ClassicThemeEditable As String = "Classic theme is editable by Win32UI Editor"
     Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
     Property CP_TitlebarToggle As String = "To colorize Titlebar, please activate its toggle."
-
-    Property X22 As String = "This will restart the explorer, don't worry this won't close other applications."
-    Property X23 As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
+    Property CP_Time As String = "It took {0} seconds"
+    Property CP_Time_They As String = "They took {0} seconds"
+    Property CP_Time_Cursors As String = "Total Applying Windows Cursors took {0} seconds"
+    Property CP_ApplyFrom As String = "WinPaletter will apply theme from {0}'s section"
+    Property CP_Admin_Msg0 As String = "Writing to registry without administrator rights by deflection"
+    Property CP_Admin_Msg1 As String = "Writing to registry without administrator rights by deflection"
+    Property CP_Applying_Started As String = "Applying Started"
+    Property CP_Applying_Win11 As String = "Applying Windows 11 Scheme"
+    Property CP_Applying_Win10 As String = "Applying Windows 10 Scheme"
+    Property CP_Applying_Win7 As String = "Applying Windows 7 Colors"
+    Property CP_Applying_Win8 As String = "Applying Windows 8.1 Colors"
+    Property CP_Applying_LogonUI11 As String = "Applying Windows 11 LogonUI"
+    Property CP_Applying_LogonUI10 As String = "Applying Windows 10 LogonUI"
+    Property CP_Applying_LogonUI7 As String = "Applying Windows 7 LogonUI"
+    Property CP_Applying_LogonUI8 As String = "Applying Windows 8.1 Lock Screen"
+    Property CP_Applying_Win32UI As String = "Applying Win32UI (Classic Windows Elements)"
+    Property CP_Applying_CMD As String = "Applying Command Prompt"
+    Property CP_Applying_Metrics As String = "Applying Windows Metrics and Fonts"
+    Property CP_Applying_TerminalPreview As String = "Applying Windows Terminal Preview"
+    Property CP_Check_Terminals As String = "Checking if Windows Terminal (Stable & Preview) are installed"
+    Property CP_Check_TerminalStable As String = "Checking if Windows Terminal Stable is installed"
+    Property CP_Check_TerminalPreview As String = "Checking if Windows Terminal Preview is installed"
+    Property CP_Skip_TerminalPreview As String = "Skipping Windows Terminal Preview as it is disabled"
+    Property CP_Skip_TerminalStable As String = "Skipping Windows Terminal Stable as it is disabled"
+    Property CP_Skip_Terminals As String = "Skipping Windows Terminal (Stable & Preview) as they are disabled"
+    Property CP_Skip_Terminals_NotSupported As String = "Skipping Windows Terminal (Stable\Preview) as they are not supported for current OS"
+    Property CP_Skip_TerminalPreview_NotInstalled As String = "Skipping Windows Terminal Preview as it isn't installed"
+    Property CP_Skip_TerminalPreview_DeflectionNotFound As String = "Skipping Windows Terminal Preview as deflected file isn't found"
+    Property CP_Skip_TerminalStable_NotInstalled As String = "Skipping Windows Terminal Stable as it isn't installed"
+    Property CP_Skip_TerminalStable_DeflectionNotFound As String = "Skipping Windows Stable Preview as deflected file isn't found"
+    Property CP_Skip_Cursors As String = "Skipping Windows Cursors as it is disabled"
+    Property CP_Restricted_Cursors As String = "Modifying Windows Cursors is restricted from Settings"
+    Property CP_Applying_TerminalStable As String = "Applying Windows Terminal Stable"
+    Property CP_AppliedWithErrors As String = "Applying Theme Done but with error/s. It took {0} seconds"
+    Property CP_Applied As String = "Applying Theme Done. It took {0} seconds"
+    Property CP_Skip_CMD As String = "Skipping Command Prompt as it is disabled"
+    Property CP_Applying_PS64 As String = "Applying PowerShell x64"
+    Property CP_Skip_PS64 As String = "Skipping PowerShell x64 as it is disabled"
+    Property CP_Applying_PS32 As String = "Applying PowerShell x86"
+    Property CP_Skip_PS32 As String = "Skipping PowerShell x86 as it is disabled"
+    Property CP_Skip_Metrics As String = "Skipping Windows Metrics and Fonts as they are disabled"
+    Property CP_CMD_Error As String = "Error occured while applying Command Prompt"
+    Property CP_PS32_Error As String = "Error occured while applying PowerShell x86"
+    Property CP_PS64_Error As String = "Error occured while applying PowerShell x64"
+    Property CP_WIN32UI_Error As String = "Error occured while applying Win32UI"
+    Property CP_LogonUI10_Error As String = "Error occured while applying Windows 10 LogonUI"
+    Property CP_LogonUI11_Error As String = "Error occured while applying Windows 11 LogonUI"
+    Property CP_LogonUI7_Error As String = "Error occured while applying Windows 7 LogonUI"
+    Property CP_LogonUI8_Error As String = "Error occured while applying Windows 8.1 Lock Screen"
+    Property CP_W10_Error As String = "Error occured while applying Windows 10 Scheme"
+    Property CP_W11_Error As String = "Error occured while applying Windows 11 Scheme"
+    Property CP_W7_Error As String = "Error occured while applying Windows 7 Colors"
+    Property CP_W8_Error As String = "Error occured while applying Windows 8.1 Colors"
+    Property CP_Error_Cursors As String = "Error occured while applying Windows Cursors"
+    Property CP_Error_CursorsRender As String = "Error occured while Rendering\Applying Windows Cursors"
+    Property CP_Error_Metrics As String = "Error occured while applying Windows Metrics and Fonts"
+    Property CP_Error_TerminalPreview As String = "Error occured while applying Windows Terminal Preview"
+    Property CP_Error_TerminalStable As String = "Error occured while applying Windows Terminal Stable"
+    Property CP_AllDone As String = "All operations are done"
+    Property CP_ErrorHappened As String = "Error\s happened. Press on Show Errors for details"
+    Property CP_LogWillClose As String = "This log will close after {0} second\s"
+    Property Lang_HasLeftToRight As String = "It has Left to Right Layout"
+    Property Lang_HasRightToLeft As String = "It has Right to Left Layout"
+    Property CommandPrompt As String = "Command Prompt"
+    Property PowerShellx86 As String = "PowerShell x86"
+    Property PowerShellx64 As String = "PowerShell x64"
+    Property Open_Testing_CMD As String = "Open Command Prompt for testing"
+    Property Open_Testing_PowerShellx86 As String = "Open PowerShell x86 for testing"
+    Property Open_Testing_PowerShellx64 As String = "Open PowerShell x64 for testing"
+    Property TerminalStable As String = "Windows Terminal Stable"
+    Property TerminalPreview As String = "Windows Terminal Preview"
+    Property [Default] As String = "Default"
+    Property Untitled As String = "Untitled"
+    Property WhatsNewInVersion As String = "What's New in {0}!"
+    Property ThisWillRestartExplorer As String = "This will restart the explorer, don't worry this won't close other applications."
+    Property TitlebarColorNotice As String = "Windows Volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
     Property NoDefResExplorer As String = "Restarting Explorer is diabled. If theme is not applied correctly, restart it."
-
     Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wpsf) from registry?"
     Property RemoveExtMsgNote As String = "Note: You can reassociate them by activating its checkbox and restarting the application."
     Property EmptyName As String = "You can't leave Theme Name Empty. Please type a name to it."
@@ -176,9 +261,8 @@ Public Class Localizer : Implements IDisposable
     Property Sorting As String = "Sorting Colors in a palette ..."
     Property ErrorPhrasingChangelog As String = "Error phrasing changelog"
     Property VersionNotReleased As String = "is not released yet, deleted or written in a wrong format."
-    Property ReleasedOn As String = "Released on:"
     Property Version As String = "Version"
-    Property Label5_Checking As String = "Checking ..."
+    Property Checking As String = "Checking ..."
     Property Error_Online As String = "Error reading changelog online"
     Property NoNetwork As String = "No Network is Available"
     Property CheckConnection As String = "Check your connection and try again"
@@ -188,7 +272,6 @@ Public Class Localizer : Implements IDisposable
     Property NetworkError As String = "Network Error"
     Property ServerError As String = "Error: Network issues or Github repository is private or deleted. Visit Github page for details."
     Property Msgbox_Downloaded As String = "Downloaded Successfully"
-
     Property LngExported As String = "Language Exported Successfully"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the situable size will be loaded according to your DPI settings."
     Property LngShouldClose As String = "You should close the app if you want to export language."
@@ -215,17 +298,22 @@ Public Class Localizer : Implements IDisposable
     Property Terminal_NewScheme As String = "New Scheme"
     Property Terminal_NewTheme As String = "New Theme"
     Property Terminal_SettingsNotExist As String = "Settings doesn't exist: "
-
     Property Terminal_External_Empty As String = "Terminal can't be empty. Enter a valid one."
     Property Terminal_External_NotExist As String = "Terminal doesn't exist. Enter a valid one."
     Property Terminal_External_Reversed As String = "This terminal is reserved for system. Try again with another one."
     Property Terminal_External_Exists As String = "This terminal already exists. Try again with another one."
-
     Property CP_RenderingCustomLogonUI_Progress As String = "Rendering Custom LogonUI:"
     Property CP_RenderingCustomLogonUI As String = "Rendering Custom LogonUI"
     Property CP_SavingCursorsColors As String = "Saving Windows Cursors Colors to Registry"
     Property CP_RenderingCursors As String = "Rendering Windows Cursors"
     Property CP_ApplyingCursors As String = "Applying Windows Cursors"
+    Property OldMSTheme_Copyrights As String = "Copyright © Microsoft Corp. 1995-{0}"
+    Property OldMSTheme_CreatedFromAppVer As String = "Created from application version {0}"
+    Property OldMSTheme_ProgrammedBy As String = "This theme was designed by WinPaletter, programmed by {0}"
+    Property OldMSTheme_CreatedBy As String = "Created by {0}"
+    Property OldMSTheme_ThemeName As String = "Theme Name: {0}"
+    Property OldMSTheme_ThemeVersion As String = "Theme Version: {0}"
+
 #End Region
 
     Public Sub AdjustFonts()
@@ -422,10 +510,20 @@ Public Class Localizer : Implements IDisposable
                     If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
 
                     For Each ctrl In J_Controls
-                        ControlName = ctrl.Key.Split(".")(0)
-                        Prop = ctrl.Key.Split(".")(1)
-                        Value = ctrl.Value
-                        PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                        Try
+                            If ctrl.Key.Contains(".") Then
+                                ControlName = ctrl.Key.Split(".")(0)
+                                Prop = ctrl.Key.Split(".")(1)
+                                Value = ctrl.Value
+                                PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                            Else
+                                ControlName = ctrl.Key
+                                Prop = "Text"
+                                Value = ctrl.Value
+                                PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                            End If
+                        Catch
+                        End Try
                     Next
                 End If
 

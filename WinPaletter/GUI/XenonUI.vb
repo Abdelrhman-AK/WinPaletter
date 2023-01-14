@@ -16,14 +16,14 @@ Module XenonModule
     Private ReadOnly TextGraphics As Graphics
 
     Public Sub GlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
-        Dim bm As Bitmap = New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
+        Dim bm As New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
         Dim g2 As Graphics = Graphics.FromImage(bm)
-        Dim pth As GraphicsPath = New GraphicsPath()
+        Dim pth As New GraphicsPath()
         pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.Size, Rect, FormatX)
-        Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+        Dim mx As New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
         g2.SmoothingMode = SmoothingMode.AntiAlias
         g2.Transform = mx
-        Dim p As Pen = New Pen(GlowColor, GlowSize)
+        Dim p As New Pen(GlowColor, GlowSize)
         g2.DrawPath(p, pth)
         g2.FillPath(New SolidBrush(GlowColor), pth)
         G.InterpolationMode = InterpolationMode.HighQualityBicubic
@@ -79,9 +79,9 @@ Module XenonModule
             With R
                 Rect = New Rectangle(.X - GlowSize - 2, .Y - GlowSize - 2, .Width + (GlowSize * 2) + 3, .Height + (GlowSize * 2) + 3)
             End With
-            Dim bm As Bitmap = New Bitmap(CInt(Rect.Width / GlowFade), CInt(Rect.Height / GlowFade))
+            Dim bm As New Bitmap(CInt(Rect.Width / GlowFade), CInt(Rect.Height / GlowFade))
             Dim G2 As Graphics = Graphics.FromImage(bm)
-            Dim Rect2 As Rectangle = New Rectangle(1, 1, bm.Width, bm.Height)
+            Dim Rect2 As New Rectangle(1, 1, bm.Width, bm.Height)
             G2.FillRectangle(New SolidBrush(GlowColor), Rect2)
             G.DrawImage(bm, Rect)
             G2.Dispose()
@@ -193,7 +193,7 @@ Module XenonModule
 #Region "Rounded Rectangle System"
     Public Sub FillRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
-            If [Radius] = -1 Then [Radius] = 6
+            If [Radius] = -1 Then [Radius] = 5
 
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
@@ -211,7 +211,7 @@ Module XenonModule
 
     Public Sub FillImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
-            If [Radius] = -1 Then [Radius] = 6
+            If [Radius] = -1 Then [Radius] = 5
 
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
 
@@ -256,7 +256,7 @@ Module XenonModule
 
     Public Sub DrawRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
-            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
+            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
             [Radius_willbe_x2] *= 2
 
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
@@ -278,19 +278,20 @@ Module XenonModule
 
     Public Sub DrawRect_LikeW11(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
-            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
+            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
             [Radius_willbe_x2] *= 2
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             Dim [Pen] As Pen
             Dim [Pen2] As Pen
+            Dim SidePen As Pen
 
             If GetDarkMode() Then
-                [Pen] = New Pen(BorderColor.CB(0.05))
-                [Pen2] = New Pen(BorderColor.CB(-0.3)) '-0.085)) 
+                [Pen] = New Pen(BorderColor.CB(0.06))
+                [Pen2] = New Pen(BorderColor) '.CB(-0.1)) '-0.085)) 
             Else
                 [Pen] = New Pen(BorderColor.CB(-0.05))
-                [Pen2] = New Pen(BorderColor.CB(-0.15))
+                [Pen2] = New Pen(BorderColor.CB(-0.13))
             End If
 
             Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
@@ -301,11 +302,17 @@ Module XenonModule
                 [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
                 [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
 
-                [Graphics].DrawLine([PenG], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-                [Graphics].DrawLine([PenG], [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+                If GetDarkMode() Then
+                    SidePen = [Pen2]
+                Else
+                    SidePen = [Pen]
+                End If
 
-                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
-                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
+                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+
+                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
+                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
                 [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
             Else
                 [Graphics].DrawRectangle([Pen], [Rectangle])
@@ -325,12 +332,12 @@ Public Class XenonColorPalette
     Public Color_Core As Color
     Public Color_Parent As Color
     Public Color_Parent_Hover As Color
+    Public Color_Border_Checked As Color
 
-    Public Color_Border_Checked As Color          ''''''''''''''''''''''''''''''''''''''
     Public Color_Back_Hover As Color              ''''''''''''''''''''''''''''''''''''''
     Public Color_Border_Hover As Color            ''''''''''''''''''''''''''''''''''''''
 
-    Dim Dark As Boolean = True
+    ReadOnly Dark As Boolean = True
 
     Sub New(Optional ByVal [Control] As Control = Nothing)
 
@@ -354,18 +361,28 @@ Public Class XenonColorPalette
 
         If Control.Enabled Then
             If Dark Then
-                Color_Back_Checked = BaseColor.Dark(0.2)
                 Color_Core = BaseColor.LightLight
-                Color_Border_Checked_Hover = BaseColor.CB(-0.2)
+
+                Color_Back = Color_Parent.CB(0.05)
+                Color_Back_Checked = BaseColor.Dark(0.2)
+
                 Color_Border = Color_Parent.CB(0.08)
-                Color_Back = Color_Parent.CB(0.04)
+                Color_Border_Checked = BaseColor.CB(0.08)
+                Color_Border_Checked_Hover = BaseColor.CB(-0.2)
+
+
                 Color_Parent_Hover = Color_Parent.CB(0.08)
             Else
-                Color_Back_Checked = BaseColor.LightLight
                 Color_Core = BaseColor.Dark(0.1)
-                Color_Border_Checked_Hover = BaseColor.CB(0.2)
-                Color_Border = Color_Parent.CB(-0.3)
-                Color_Back = Color_Parent.CB(-0.07)
+
+                Color_Back = Color_Parent.CB(-0.05)
+                Color_Back_Checked = BaseColor.LightLight
+
+                Color_Border = Color_Parent.CB(-0.08)
+                Color_Border_Checked = BaseColor.CB(0.35)
+
+                Color_Border_Checked_Hover = BaseColor.CB(0.3)
+
                 Color_Parent_Hover = Color_Parent.CB(-0.08)
             End If
         Else
@@ -441,7 +458,7 @@ Public Class XenonTabControl : Inherits TabControl
         End If
     End Sub
 
-    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
+    ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.4))
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -451,7 +468,7 @@ Public Class XenonTabControl : Inherits TabControl
         Dim SelectColor As Color
         Dim TextColor As Color
         Dim ParentColor As Color = GetParentColor(Me)
-        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+        Dim RTL As Boolean = (RightToLeft = 1)
         Dim img As Image = Nothing
 
         G.Clear(ParentColor)
@@ -471,7 +488,7 @@ Public Class XenonTabControl : Inherits TabControl
                 SelectColor = LineColor
             End Try
 
-            If Not GetDarkMode() Then SelectColor = SelectColor.Light
+            If Not GetDarkMode() Then SelectColor = SelectColor.LightLight
 
             If i = SelectedIndex Then
                 FillRect(G, New SolidBrush(SelectColor), TabRect)
@@ -536,20 +553,20 @@ End Class
 Public Class XenonToggle
     Inherits UserControl
     Public ColorPalette As New XenonColorPalette()
-    Dim CheckC As New Rectangle(5, 5, 13, 13)
+    Dim CheckC As New Rectangle(4, 4, 11, 11)
     Dim MouseState As Integer = 0
     Dim WasMoving As Boolean = False
 
     Sub New()
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         DoubleBuffered = True
-        Size = New Size(50, 24)
+        Size = New Size(40, 20)
     End Sub
     Public Property AccentColor As Color = Color.FromArgb(0, 123, 178)
 
     Public Property DarkLight_Toggler As Boolean = False
 
-    ReadOnly DarkLight_TogglerSize As Integer = 14
+    ReadOnly DarkLight_TogglerSize As Integer = 13
 
     Private _checked As Boolean
 
@@ -568,43 +585,41 @@ Public Class XenonToggle
     End Property
     Protected Overridable Sub OnCheckedChanged()
         RaiseEvent CheckedChanged(Me, EventArgs.Empty)
-        If Not DesignMode Then
+
+        If Not DesignMode And _Shown Then
             If Checked Then
-                If Not DesignMode And _Shown Then
-                    Dim s As Integer = (Width - 19) * 0.5
-                    For i As Integer = CheckC.Left To Width - 19 Step +5
-                        CheckC.X = i + s
-                        If _Shown Then
-                            Threading.Thread.Sleep(1)
-                            Refresh()
-                        End If
-                        If i + s >= Width - 19 Then Exit For
-                        s -= 1
-                        If s < 0 Then s = 0
-                    Next
-                End If
-                CheckC.X = Width - 19
+
+                Dim s As Integer = (Width - 17) * 0.5
+                For i As Integer = CheckC.Left To Width - 17 Step +5
+                    CheckC.X = i + s
+                    Threading.Thread.Sleep(1)
+                    Refresh()
+                    If i + s >= Width - 17 Then Exit For
+                    s -= 1
+                    If s < 0 Then s = 0
+                Next
+                CheckC.X = Width - 17
+
             Else
-                If Not DesignMode And _Shown Then
-                    Dim s As Integer = 10
-                    For i As Integer = CheckC.Left To 5 Step -5
-                        CheckC.X = i - s
-                        If _Shown Then
-                            Threading.Thread.Sleep(1)
-                            Refresh()
-                        End If
-                        If i - s <= 5 Then Exit For
-                        s -= 1
-                        If s < 0 Then s = 0
-                    Next
-                End If
-                CheckC.X = 5
+
+                Dim s As Integer = 10
+                For i As Integer = CheckC.Left To 4 Step -5
+                    CheckC.X = i - s
+                    Threading.Thread.Sleep(1)
+                    Refresh()
+                    If i - s <= 4 Then Exit For
+                    s -= 1
+                    If s < 0 Then s = 0
+                Next
+                CheckC.X = 4
+
             End If
+
         Else
             If Checked Then
-                CheckC.X = Width - 19
+                CheckC.X = Width - 17
             Else
-                CheckC.X = 5
+                CheckC.X = 4
             End If
         End If
 
@@ -638,42 +653,47 @@ Public Class XenonToggle
         G.Clear(GetParentColor(Me))
 
         '################################################################################# Customizer
-        Dim MainRect As New Rectangle(2, 2, Width - 5, Height - 5)
-        Dim InnerRect As New Rectangle(3, 3, Width - 7, Height - 7)
+        Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim BorderColor As Color
 
-        If GetDarkMode() Then BorderColor = BackColor.Light(1.6) Else BorderColor = BackColor.DarkDark
+        If GetDarkMode() Then BorderColor = BackColor.LightLight Else BorderColor = BackColor.Dark(0.5)
 
         Dim CheckColor As Color
         If MouseState = 0 Then CheckColor = ColorPalette.BaseColor Else CheckColor = BackColor.CB(If(GetDarkMode(), 0.3, -0.5))
 
         '#################################################################################
-        Dim min As Integer = 5
-        Dim max As Integer = Width - 24
-        Dim val As Decimal = (CheckC.X - 5) / max
+        Dim min As Integer = 4
+        Dim max As Integer = Width - 17
+        Dim val As Decimal = (CheckC.X) / max
+
         If val < 0 Then val = 0
         If val > 1 Then val = 1
+        If CheckC.X <= min Then val = 0
+        If CheckC.X >= max Then val = 1
 
         Dim lgbChecked, lgbNonChecked, lgborderChecked, lgborderNonChecked As LinearGradientBrush
 
-        lgbChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.BaseColor), Color.FromArgb(255 * val, 30, 30, 30), LinearGradientMode.ForwardDiagonal)
-        lgborderChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.BaseColor), Color.FromArgb(255 * val, 30, 30, 30), LinearGradientMode.BackwardDiagonal)
-        lgbNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), 210, 210, 210), Color.FromArgb(255 * (1 - val), ColorPalette.BaseColor), LinearGradientMode.BackwardDiagonal)
-        lgborderNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), 210, 210, 210), Color.FromArgb(255 * (1 - val), ColorPalette.BaseColor), LinearGradientMode.ForwardDiagonal)
-
+        lgbChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked_Hover), Color.FromArgb(255 * val, ColorPalette.Color_Back_Checked), LinearGradientMode.ForwardDiagonal)
+        lgborderChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked), Color.FromArgb(255 * val, ColorPalette.Color_Back_Checked), LinearGradientMode.BackwardDiagonal)
+        lgbNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), ColorPalette.Color_Back_Checked), Color.FromArgb(255 * (1 - val), ColorPalette.Color_Border_Checked_Hover), LinearGradientMode.BackwardDiagonal)
+        lgborderNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), ColorPalette.Color_Border_Checked), Color.FromArgb(255 * (1 - val), ColorPalette.Color_Back_Checked), LinearGradientMode.ForwardDiagonal)
 
         If Not DarkLight_Toggler Then
-            FillRect(e.Graphics, New SolidBrush(Color.FromArgb(255 * val, ColorPalette.BaseColor)), MainRect, 9, True)
-            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * val, ColorPalette.BaseColor)), MainRect, 9, True)
+
+            FillRect(e.Graphics, New SolidBrush(Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked_Hover)), MainRect, 9, True)
+
+            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked)), MainRect, 9, True)
+
             DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * (1 - val), BorderColor)), MainRect, 9, True)
 
             If Checked Then
-                G.FillEllipse(New SolidBrush(If(ColorPalette.BaseColor.IsDark, Color.White, Color.Black)), CheckC)
+                G.FillEllipse(New SolidBrush(If(GetDarkMode(), Color.Black, Color.White)), CheckC)
             Else
                 G.FillEllipse(New SolidBrush(BorderColor), CheckC)
             End If
 
         Else
+
             FillRect(e.Graphics, lgbChecked, MainRect, 9, True)
             FillRect(e.Graphics, lgbNonChecked, MainRect, 9, True)
 
@@ -691,7 +711,7 @@ Public Class XenonToggle
     End Sub
 
     Private Sub XenonToggle_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        Me.Height = 24
+        Me.Height = 20
         If Width < 40 Then Width = 40
 
         If DarkLight_Toggler Then
@@ -705,9 +725,9 @@ Public Class XenonToggle
     Private Sub XenonToggle_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
         If Checked Then
-            CheckC = New Rectangle(Width - 19, 5, 13, 13)
+            CheckC = New Rectangle(Width - 17, 4, 11, 11)
         Else
-            CheckC = New Rectangle(5, 5, 13, 13)
+            CheckC = New Rectangle(4, 4, 11, 11)
         End If
 
         If DarkLight_Toggler Then
@@ -751,22 +771,22 @@ Public Class XenonToggle
             WasMoving = True
             MouseState = 1
 
-            If i <= 5 Then
-                CheckC.X = 5
-            ElseIf i >= Width - 19 Then
-                CheckC.X = Width - 19
+            If i <= 4 Then
+                CheckC.X = 4
+            ElseIf i >= Width - 17 Then
+                CheckC.X = Width - 17
             Else
                 CheckC.X = i
             End If
 
-            CheckC.Y = 5
+            CheckC.Y = 4
             Refresh()
         End If
     End Sub
 
     Private Sub XenonToggle_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
         MouseState = 0
-        CheckC.Width = 13
+        CheckC.Width = 11
 
         If DarkLight_Toggler Then
             CheckC.Width = DarkLight_TogglerSize
@@ -783,7 +803,7 @@ Public Class XenonToggle
 
     Private Sub XenonToggle_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         MouseState = 1
-        CheckC.Width = 16
+        CheckC.Width = 13
 
         Refresh()
     End Sub
@@ -1005,10 +1025,7 @@ Public Class XenonRadioButton
     End Sub
 #End Region
 
-#Region "Drawing Variables"
     Private SZ1 As SizeF
-    Private PT1 As PointF
-#End Region
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Try
@@ -1025,12 +1042,12 @@ Public Class XenonRadioButton
             '################################################################################# Customizer
             SZ1 = G.MeasureString(Text, Font)
 
-            Dim format As StringFormat = New StringFormat()
+            Dim format As New StringFormat()
             Dim OuterCircle As New Rectangle(3, 4, Height - 8, Height - 8)
             Dim InnerCircle As New Rectangle(4, 5, Height - 10, Height - 10)
             Dim CheckCircle As New Rectangle(7, 8, Height - 16, Height - 16)
             Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - OuterCircle.Width, Height - 1)
-            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+            Dim RTL As Boolean = (RightToLeft = 1)
 
             If RTL Then
                 format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
@@ -1283,10 +1300,10 @@ Public Class XenonRadioImage
             Dim bkC As Color = If(_Checked, ColorPalette.Color_Back_Checked, ColorPalette.Color_Back)
             Dim bkCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Back_Checked)
 
-            FillRect(G, New SolidBrush(bkC), MainRect)
+            FillRect(G, New SolidBrush(bkC), MainRectInner)
             FillRect(G, New SolidBrush(bkCC), MainRect)
 
-            Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, ColorPalette.Color_Border_Checked_Hover, ColorPalette.Color_Border))
+            Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, ColorPalette.Color_Border_Checked, ColorPalette.Color_Border))
             Dim lCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
 
             DrawRect_LikeW11(G, lC, MainRectInner)
@@ -1517,7 +1534,7 @@ Public Class XenonCheckBox
             DoubleBuffered = True
 
             '################################################################################# Customizer
-            Dim format As StringFormat = New StringFormat()
+            Dim format As New StringFormat()
 
             Dim SZ1 As SizeF = G.MeasureString(Text, Font)
             Dim PT1 As New PointF(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1)
@@ -1536,7 +1553,7 @@ Public Class XenonCheckBox
             Dim Selection_Color As Color = ColorPalette.Color_Parent_Hover
 #End Region
 
-            Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+            Dim RTL As Boolean = (RightToLeft = 1)
 
             If RTL Then
                 format = New StringFormat(StringFormatFlags.DirectionRightToLeft)
@@ -1625,6 +1642,45 @@ Public Class XenonGroupBox : Inherits Panel
         DrawRect(G, New Pen(LineColor), Rect)
     End Sub
 
+
+
+End Class
+
+<DefaultEvent("Click")>
+Public Class XenonAnimatedBox : Inherits Panel
+
+    Sub New()
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+
+        DoubleBuffered = True
+    End Sub
+
+#Region "Properties"
+    Public Property Color1 As Color = Color.DodgerBlue
+    Public Property Color2 As Color = Color.Crimson
+#End Region
+
+    Private LineColor As Color
+    Private WithEvents Tmr As New Timer With {.Enabled = True, .Interval = 1}
+
+    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaint(e)
+        Dim G As Graphics = e.Graphics
+        DoubleBuffered = True
+        G.SmoothingMode = SmoothingMode.AntiAlias
+        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+
+        G.Clear(GetParentColor(Me))
+
+
+
+        BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.05))
+        LineColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.03, -0.06))
+
+        FillRect(G, New SolidBrush(BackColor), Rect)
+        DrawRect(G, New Pen(LineColor), Rect)
+    End Sub
 
 
 End Class
@@ -1737,28 +1793,29 @@ Public Class XenonCP
 
         G.Clear(GetParentColor(Me))
 
-
         Select Case State
             Case MouseState.None
-                LineColor = BackColor.Light(0.1)
+                LineColor = If(BackColor.IsDark, BackColor.Light(0.2), BackColor.Dark(0.1))
 
             Case MouseState.Over
-                LineColor = BackColor.Light(0.5)
+                LineColor = If(BackColor.IsDark, BackColor.Light(0.5), BackColor.Dark(0.3))
 
             Case MouseState.Down
-                LineColor = BackColor.Light(0.9)
+                LineColor = If(BackColor.IsDark, BackColor.Light(0.3), BackColor.Dark(0.2))
+
         End Select
 
 
         LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
 
-        Dim R As Integer = 6
+        Dim R As Integer = 5
 
         FillRect(G, New SolidBrush(BackColor), RectInner, R)
-        DrawRect_LikeW11(G, LineColor, RectInner, R)
-
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect, R)
+
         DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect, R)
+        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, LineColor), RectInner, R)
+
 
         If Not DesignMode Then
             If My.[Settings].Nerd_Stats And Not ForceNoNerd Then
@@ -1780,7 +1837,7 @@ Public Class XenonCP
                 If My.[Settings].Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
 
 
-                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.[Settings].Nerd_Stats_HexHash, If(BackColor.A = 255, False, True))
+                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.[Settings].Nerd_Stats_HexHash, Not (BackColor.A = 255))
                 Dim F As Font
 
                 If IsDefault Then
@@ -1873,7 +1930,7 @@ Public Class XenonButton : Inherits Button
 #Region "Events"
     Dim BC As Color
     ReadOnly Steps As Integer = 15
-    ReadOnly Delay As Integer = 2
+    ReadOnly Delay As Integer = 1
 
     Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
         MyBase.OnPaintBackground(e)
@@ -1893,9 +1950,9 @@ Public Class XenonButton : Inherits Button
 
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Dark(0.25)
+                C_After = LineColor.Dark(0.15)
             Case False
-                C_After = LineColor.Light(0.9)
+                C_After = LineColor.Light(0.9).CB(0.4)
         End Select
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
@@ -1913,7 +1970,8 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.07))
+
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
@@ -1929,12 +1987,14 @@ Public Class XenonButton : Inherits Button
 
         Dim C_Before As Color = BackColor
         Dim C_After As Color
+
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Dark(0.5)
+                C_After = LineColor.Light(0.03)
             Case False
                 C_After = LineColor.Light(0.75)
         End Select
+
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         State = MouseState.Down
 
@@ -1956,9 +2016,9 @@ Public Class XenonButton : Inherits Button
 
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Dark(0.25)
+                C_After = LineColor.Dark(0.15)
             Case False
-                C_After = LineColor.Light(0.9)
+                C_After = LineColor.Light(0.9).CB(0.4)
         End Select
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
@@ -1982,7 +2042,7 @@ Public Class XenonButton : Inherits Button
 
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Dark(0.5)
+                C_After = LineColor.Light(0.03)
             Case False
                 C_After = LineColor.Light(0.75)
         End Select
@@ -1996,7 +2056,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2007,7 +2067,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
+        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.03))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2071,18 +2131,13 @@ Public Class XenonButton : Inherits Button
     End Sub
 #End Region
 
-    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
+    ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
-
-        'Try
-        'If Image IsNot Nothing Then : LineColor = Image.AverageColor
-        'Else : LineImage = LineColor : End If
-        'Catch : End Try
 
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -2091,22 +2146,36 @@ Public Class XenonButton : Inherits Button
         '#################################################################################
 
         G.Clear(ParentColor)
-        Dim c1, c1x, c2 As Color
+        Dim c1, c1x As Color
 
         FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
         FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
 
         If Not State = MouseState.None Then FillRect(G, Noise, Rect)
 
-        c1 = Color.FromArgb(255 - alpha, BackColor.CB(If(ParentColor.IsDark, 0.04, -0.04)))
-        c1x = Color.FromArgb(alpha, BackColor.CB(If(ParentColor.IsDark, 0.04, -0.04)))
+        Dim c As Color
+
+        Select Case State
+            Case MouseState.None
+                c = BackColor.CB(If(ParentColor.IsDark, 0.04, -0.015))
+
+            Case MouseState.Over
+                c = BackColor.CB(If(ParentColor.IsDark, 0.15, 0.02))
+
+            Case MouseState.Down
+                c = BackColor.CB(If(ParentColor.IsDark, 0.08, 0.01))
+
+        End Select
+
+        c1 = Color.FromArgb(255 - alpha, c)
+        c1x = Color.FromArgb(alpha, c)
 
         DrawRect_LikeW11(G, c1x, Rect)
         DrawRect_LikeW11(G, c1, InnerRect)
 
 #Region "Text and Image Render"
         Dim ButtonString As New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
-        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+        Dim RTL As Boolean = (RightToLeft = 1)
         If RTL Then ButtonString.FormatFlags = StringFormatFlags.DirectionRightToLeft
 
         Dim imgX, imgY As Integer
@@ -2218,7 +2287,7 @@ Public Class XenonButton : Inherits Button
 
     Sub Rfrsh()
         Try
-            BC = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
+            BC = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
             BackColor = BC
             Invalidate()
         Catch
@@ -2513,7 +2582,7 @@ Public Class XenonNumericUpDown
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
-        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+        Dim RTL As Boolean = (RightToLeft = 1)
 
         '################################################################################# Customizer
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -3138,7 +3207,7 @@ Public Class XenonComboBox : Inherits ComboBox
 #End Region
 #End Region
 
-    Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
+    ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
 
 
 #Region "Subs"
@@ -3533,56 +3602,116 @@ Public Class XenonAlertBox
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
-        Dim RTL As Boolean = If(RightToLeft = 1, True, False)
+        Dim RTL As Boolean = (RightToLeft = 1)
+        Dim DM As Boolean = GetDarkMode()
 
         Select Case _alertStyle
             Case Style.Simple
-                borderColor = Color.FromArgb(90, 90, 90)
-                innerColor = Color.FromArgb(50, 50, 50)
-                textColor = Color.FromArgb(150, 150, 150)
+                If DM Then
+                    borderColor = Color.FromArgb(60, 60, 60)
+                    innerColor = Color.FromArgb(50, 50, 50)
+                    textColor = Color.FromArgb(150, 150, 150)
+                Else
+                    borderColor = Color.FromArgb(190, 190, 190)
+                    innerColor = Color.FromArgb(150, 150, 150)
+                    textColor = Color.FromArgb(250, 250, 250)
+                End If
+
             Case Style.Success
-                borderColor = Color.FromArgb(60, 98, 79)
-                innerColor = Color.FromArgb(60, 85, 79)
-                textColor = Color.FromArgb(35, 169, 110)
+                If DM Then
+                    borderColor = Color.FromArgb(60, 98, 79)
+                    innerColor = Color.FromArgb(60, 85, 79)
+                    textColor = Color.FromArgb(35, 169, 110)
+                Else
+                    borderColor = Color.FromArgb(160, 198, 179)
+                    innerColor = Color.FromArgb(140, 170, 155)
+                    textColor = Color.FromArgb(135, 255, 210)
+                End If
+
             Case Style.Notice
-                borderColor = Color.FromArgb(70, 91, 107)
-                innerColor = Color.FromArgb(70, 91, 94)
-                textColor = Color.FromArgb(97, 185, 186)
+                If DM Then
+                    borderColor = Color.FromArgb(70, 91, 107)
+                    innerColor = Color.FromArgb(70, 91, 94)
+                    textColor = Color.FromArgb(97, 185, 186)
+                Else
+                    borderColor = Color.FromArgb(170, 191, 207)
+                    innerColor = Color.FromArgb(130, 155, 155)
+                    textColor = Color.FromArgb(180, 255, 255)
+                End If
+
             Case Style.Warning
-                borderColor = Color.FromArgb(100, 71, 71)
-                innerColor = Color.FromArgb(87, 71, 71)
-                textColor = Color.FromArgb(254, 142, 122)
+                If DM Then
+                    borderColor = Color.FromArgb(100, 71, 71)
+                    innerColor = Color.FromArgb(87, 71, 71)
+                    textColor = Color.FromArgb(254, 142, 122)
+                Else
+                    borderColor = Color.FromArgb(200, 171, 171)
+                    innerColor = Color.FromArgb(150, 75, 75)
+                    textColor = Color.FromArgb(255, 175, 175)
+                End If
+
             Case Style.Informations
-                borderColor = Color.FromArgb(133, 133, 71)
-                innerColor = Color.FromArgb(120, 120, 71)
-                textColor = Color.FromArgb(254, 224, 122)
+                If DM Then
+                    borderColor = Color.FromArgb(133, 133, 71)
+                    innerColor = Color.FromArgb(120, 120, 71)
+                    textColor = Color.FromArgb(254, 224, 122)
+                Else
+                    borderColor = Color.FromArgb(233, 233, 171)
+                    innerColor = Color.FromArgb(195, 195, 150)
+                    textColor = Color.FromArgb(250, 250, 150)
+                End If
+
+
             Case Style.Indigo
-                Dim cc As Color = Color.Indigo
-                borderColor = cc.Light(0.005)
-                innerColor = cc.Dark(0.05)
-                textColor = cc.LightLight
+                If DM Then
+                    borderColor = Color.FromArgb(65, 0, 170)
+                    innerColor = Color.FromArgb(60, 0, 140)
+                    textColor = Color.FromArgb(140, 0, 255)
+                Else
+                    borderColor = Color.FromArgb(165, 0, 225)
+                    innerColor = Color.FromArgb(129, 0, 200)
+                    textColor = Color.FromArgb(210, 110, 255)
+                End If
+
             Case Style.Custom
-                borderColor = CustomColor.Light(0.005)
-                innerColor = CustomColor.Dark(0.05)
-                textColor = CustomColor.LightLight
+
+                If DM Then
+                    borderColor = CustomColor.CB(0.03)
+                    innerColor = CustomColor.CB(0.01)
+                    textColor = CustomColor.LightLight
+                Else
+                    borderColor = CustomColor.CB(0.3)
+                    innerColor = CustomColor.CB(0.1)
+                    textColor = CustomColor.CB(0.7)
+                End If
+
             Case Style.Adaptive
                 If Image IsNot Nothing Then
                     Dim cc As Color = Image.AverageColor
-                    borderColor = cc.Light(0.005)
-                    innerColor = cc.Dark(0.05)
-                    textColor = cc.LightLight
-                Else
-                    borderColor = CustomColor.Light(0.005)
-                    innerColor = CustomColor.Dark(0.05)
-                    textColor = CustomColor.LightLight
-                End If
-        End Select
 
-        If Not GetDarkMode() Then
-            borderColor = borderColor.LightLight
-            innerColor = innerColor.LightLight
-            textColor = textColor.Dark(0.7)
-        End If
+                    If DM Then
+                        borderColor = cc.Light(0.01)
+                        innerColor = cc.Dark(0.001)
+                        textColor = cc.LightLight
+                    Else
+                        borderColor = cc.Light(1)
+                        innerColor = cc.LightLight.CB(0.35)
+                        textColor = cc
+                    End If
+
+                Else
+                    If DM Then
+                        borderColor = CustomColor.CB(0.03)
+                        innerColor = CustomColor.CB(0.01)
+                        textColor = CustomColor.LightLight
+                    Else
+                        borderColor = CustomColor.CB(0.3)
+                        innerColor = CustomColor.CB(0.1)
+                        textColor = CustomColor.CB(0.7)
+                    End If
+                End If
+
+        End Select
 
         G.Clear(GetParentColor(Me))
 
@@ -4690,7 +4819,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Dim AdaptedBack, AdaptedBackBlurred As Bitmap
     Dim Noise7 As Bitmap = My.Resources.AeroGlass
 
-    Private FreeMargin As Integer = 8
+    ReadOnly FreeMargin As Integer = 8
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -5494,8 +5623,8 @@ Public Class XenonTrackbar
     End Property
 #End Region
 
-    Private ButtonSize As Integer = 0
-    Private ThumbSize As Integer = 35 ' 14 minimum
+    ReadOnly ButtonSize As Integer = 0
+    ReadOnly ThumbSize As Integer = 35 ' 14 minimum
     Private LSA As Rectangle
     Private RSA As Rectangle
     Private Shaft As Rectangle
@@ -5695,11 +5824,11 @@ Public Class XenonTrackbar
     Private Sub XenonScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
         If e.Delta < 0 Then
             If Value < Maximum Then
-                If e.Delta <= -240 Then Value = Value + LargeChange Else Value = Value + SmallChange
+                If e.Delta <= -240 Then Value += LargeChange Else Value += SmallChange
             End If
         Else
             If Value > Minimum Then
-                If e.Delta >= 240 Then Value = Value - LargeChange Else Value = Value - SmallChange
+                If e.Delta >= 240 Then Value -= LargeChange Else Value -= SmallChange
             End If
         End If
     End Sub
@@ -5771,9 +5900,9 @@ Public Class XenonCMD
 
     Public Property CustomTerminal As Boolean = False
 
-    Dim S1 As String = "(c) Microsoft Corporation. All rights reserved."
-    Dim S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
-    Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+    ReadOnly S1 As String = "(c) Microsoft Corporation. All rights reserved."
+    ReadOnly S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
+    ReadOnly CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 
     Enum Raster_Sizes
         _4x6
@@ -5810,7 +5939,7 @@ Public Class XenonCMD
         Dim FC, BK, PCF, PCB As Color
         Dim S As String
 
-        Dim F As Font
+        Dim F As Font = Font
 
         If Not Raster Then
             If Not PowerShell Then
@@ -6366,7 +6495,7 @@ Public Class XenonTerminal
         End Try
     End Sub
 
-    Dim WithEvents tm As New Timer With {.Enabled = False, .Interval = 500}
+    Dim WithEvents Tm As New Timer With {.Enabled = False, .Interval = 500}
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -6585,7 +6714,7 @@ Public Class XenonTerminal
 
     Dim tk As Boolean = False
 
-    Private Sub tm_Tick(sender As Object, e As EventArgs) Handles tm.Tick
+    Private Sub Tm_Tick(sender As Object, e As EventArgs) Handles tm.Tick
         If IsFocused Then
             If tk Then
                 tk = False

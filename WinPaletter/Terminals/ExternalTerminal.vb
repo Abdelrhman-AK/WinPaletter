@@ -1,9 +1,8 @@
-﻿Imports System.Security.Principal
-Imports Microsoft.Win32
+﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Public Class ExternalTerminal
     Private _Shown As Boolean = False
-    Dim f_extterminal As Font = New Font("Consolas", 18, FontStyle.Regular)
+    Dim f_extterminal As New Font("Consolas", 18, FontStyle.Regular)
 
     Private Sub ExternalTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
@@ -625,8 +624,7 @@ Public Class ExternalTerminal
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender}
-        CList.Add(XenonCMD4)
+        Dim CList As New List(Of Control) From {sender, XenonCMD4}
 
         Dim _Conditions As New Conditions
         If sender.Name.ToString.ToLower.Contains("ColorTable00".ToLower) Then _Conditions.CMD_ColorTable00 = True
