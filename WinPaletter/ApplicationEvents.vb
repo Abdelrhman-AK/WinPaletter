@@ -100,7 +100,6 @@ Namespace My
         ''' Function to return MsgboxStyle with Arabic layout (Right-to-left) or without (According to Class Lang)
         ''' </summary>
         Public MsgboxRt As MsgBoxDelegate = Function([OriginalMsgBoxStyle] As MsgBoxStyle) [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
-
     End Module
 
     Partial Friend Class MyApplication

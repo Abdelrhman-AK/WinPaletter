@@ -15,6 +15,11 @@ Module XenonModule
     Private ReadOnly TextBitmap As Bitmap
     Private ReadOnly TextGraphics As Graphics
 
+    ''' <summary>
+    ''' Class represents colors for WinPaletter Controls (Styles)
+    ''' </summary>
+    Public Style As New XenonStyle
+
     Public Sub GlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
         Dim bm As New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
         Dim g2 As Graphics = Graphics.FromImage(bm)
@@ -322,90 +327,7 @@ Module XenonModule
     End Sub
 #End Region
 End Module
-Public Class XenonColorPalette
 
-    Public BaseColor As Color = Color.FromArgb(0, 81, 210)
-    Public Color_Border As Color
-    Public Color_Border_Checked_Hover As Color
-    Public Color_Back As Color
-    Public Color_Back_Checked As Color
-    Public Color_Core As Color
-    Public Color_Parent As Color
-    Public Color_Parent_Hover As Color
-    Public Color_Border_Checked As Color
-
-    Public Color_Back_Hover As Color              ''''''''''''''''''''''''''''''''''''''
-    Public Color_Border_Hover As Color            ''''''''''''''''''''''''''''''''''''''
-
-    ReadOnly Dark As Boolean = True
-
-    Sub New(Optional ByVal [Control] As Control = Nothing)
-
-        If [Control] Is Nothing Then Exit Sub
-
-        'Try               'Try is a must because designer can't access My.[Settings] in designer mode
-        'If My.[Settings].Appearance_AdaptColors Then
-        'Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
-        'Dim Cx As Color = Color.FromArgb(255, x(12), x(13), x(14))
-        'BaseColor = Cx 'If(GetDarkMode(), Cx, 0.2), Cx, 0.5))
-        'End If
-        'Catch
-        'End Try
-
-        Try
-            Color_Parent = GetParentColor([Control])
-        Catch
-        End Try
-
-        Dark = GetDarkMode()
-
-        If Control.Enabled Then
-            If Dark Then
-                Color_Core = BaseColor.LightLight
-
-                Color_Back = Color_Parent.CB(0.05)
-                Color_Back_Checked = BaseColor.Dark(0.2)
-
-                Color_Border = Color_Parent.CB(0.08)
-                Color_Border_Checked = BaseColor.CB(0.08)
-                Color_Border_Checked_Hover = BaseColor.CB(-0.2)
-
-
-                Color_Parent_Hover = Color_Parent.CB(0.08)
-            Else
-                Color_Core = BaseColor.Dark(0.1)
-
-                Color_Back = Color_Parent.CB(-0.05)
-                Color_Back_Checked = BaseColor.LightLight
-
-                Color_Border = Color_Parent.CB(-0.08)
-                Color_Border_Checked = BaseColor.CB(0.35)
-
-                Color_Border_Checked_Hover = BaseColor.CB(0.3)
-
-                Color_Parent_Hover = Color_Parent.CB(-0.08)
-            End If
-        Else
-            If Dark Then
-                Color_Back_Checked = Color.FromArgb(80, 80, 80)
-                Color_Core = Color.FromArgb(90, 90, 90)
-                Color_Border_Checked_Hover = Color.FromArgb(80, 80, 80)
-                Color_Border = Color.FromArgb(90, 90, 90)
-                Color_Back = Color.FromArgb(80, 80, 80)
-                Color_Parent_Hover = Color.FromArgb(90, 90, 90)
-            Else
-                Color_Back_Checked = Color.FromArgb(180, 180, 180)
-                Color_Core = Color.FromArgb(190, 190, 190)
-                Color_Border_Checked_Hover = Color.FromArgb(180, 180, 180)
-                Color_Border = Color.FromArgb(190, 190, 190)
-                Color_Back = Color.FromArgb(180, 180, 180)
-                Color_Parent_Hover = Color.FromArgb(190, 190, 190)
-            End If
-        End If
-
-        Control.Invalidate()
-    End Sub
-End Class
 #End Region
 
 #Region "Xenon UI"
@@ -552,7 +474,6 @@ End Class
 <DefaultEvent("CheckedChanged")>
 Public Class XenonToggle
     Inherits UserControl
-    Public ColorPalette As New XenonColorPalette()
     Dim CheckC As New Rectangle(4, 4, 11, 11)
     Dim MouseState As Integer = 0
     Dim WasMoving As Boolean = False
@@ -583,10 +504,11 @@ Public Class XenonToggle
             End If
         End Set
     End Property
+
     Protected Overridable Sub OnCheckedChanged()
         RaiseEvent CheckedChanged(Me, EventArgs.Empty)
 
-        If Not DesignMode And _Shown Then
+        If Not DesignMode And _Shown And AnimateOnClick Then
             If Checked Then
 
                 Dim s As Integer = (Width - 17) * 0.5
@@ -634,8 +556,11 @@ Public Class XenonToggle
 
     Dim CheckedC As Rectangle
 
+    Private AnimateOnClick As Boolean = False
     Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
+        AnimateOnClick = True
         Me.Checked = Not Me.Checked
+        AnimateOnClick = False
         Me.Invalidate()
         MyBase.OnMouseClick(e)
     End Sub
@@ -648,7 +573,7 @@ Public Class XenonToggle
 
         If Parent Is Nothing Then Exit Sub
 
-        BackColor = ColorPalette.Color_Parent
+        BackColor = Style.Colors.Back
 
         G.Clear(GetParentColor(Me))
 
@@ -659,7 +584,7 @@ Public Class XenonToggle
         If GetDarkMode() Then BorderColor = BackColor.LightLight Else BorderColor = BackColor.Dark(0.5)
 
         Dim CheckColor As Color
-        If MouseState = 0 Then CheckColor = ColorPalette.BaseColor Else CheckColor = BackColor.CB(If(GetDarkMode(), 0.3, -0.5))
+        If MouseState = 0 Then CheckColor = Style.Colors.BaseColor Else CheckColor = BackColor.CB(If(GetDarkMode(), 0.3, -0.5))
 
         '#################################################################################
         Dim min As Integer = 4
@@ -673,16 +598,16 @@ Public Class XenonToggle
 
         Dim lgbChecked, lgbNonChecked, lgborderChecked, lgborderNonChecked As LinearGradientBrush
 
-        lgbChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked_Hover), Color.FromArgb(255 * val, ColorPalette.Color_Back_Checked), LinearGradientMode.ForwardDiagonal)
-        lgborderChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked), Color.FromArgb(255 * val, ColorPalette.Color_Back_Checked), LinearGradientMode.BackwardDiagonal)
-        lgbNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), ColorPalette.Color_Back_Checked), Color.FromArgb(255 * (1 - val), ColorPalette.Color_Border_Checked_Hover), LinearGradientMode.BackwardDiagonal)
-        lgborderNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), ColorPalette.Color_Border_Checked), Color.FromArgb(255 * (1 - val), ColorPalette.Color_Back_Checked), LinearGradientMode.ForwardDiagonal)
+        lgbChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, Style.Colors.Border_Checked_Hover), Color.FromArgb(255 * val, Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal)
+        lgborderChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * val, Style.Colors.Border_Checked), Color.FromArgb(255 * val, Style.Colors.Back_Checked), LinearGradientMode.BackwardDiagonal)
+        lgbNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), Style.Colors.Back_Checked), Color.FromArgb(255 * (1 - val), Style.Colors.Border_Checked_Hover), LinearGradientMode.BackwardDiagonal)
+        lgborderNonChecked = New LinearGradientBrush(MainRect, Color.FromArgb(255 * (1 - val), Style.Colors.Border_Checked), Color.FromArgb(255 * (1 - val), Style.Colors.Back_Checked), LinearGradientMode.ForwardDiagonal)
 
         If Not DarkLight_Toggler Then
 
-            FillRect(e.Graphics, New SolidBrush(Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked_Hover)), MainRect, 9, True)
+            FillRect(e.Graphics, New SolidBrush(Color.FromArgb(255 * val, Style.Colors.Border_Checked_Hover)), MainRect, 9, True)
 
-            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * val, ColorPalette.Color_Border_Checked)), MainRect, 9, True)
+            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * val, Style.Colors.Border_Checked)), MainRect, 9, True)
 
             DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * (1 - val), BorderColor)), MainRect, 9, True)
 
@@ -701,8 +626,8 @@ Public Class XenonToggle
                 G.DrawImage(If(BorderColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
                 G.DrawImage(If(BorderColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
             Else
-                G.DrawImage(If(ColorPalette.BaseColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
-                G.DrawImage(If(ColorPalette.BaseColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
+                G.DrawImage(If(Style.Colors.BaseColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
+                G.DrawImage(If(Style.Colors.BaseColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
             End If
 
             DrawRect(e.Graphics, New Pen(lgborderChecked), MainRect, 9, True)
@@ -735,8 +660,6 @@ Public Class XenonToggle
             CheckC.Height = DarkLight_TogglerSize
         End If
 
-        ColorPalette = New XenonColorPalette(Me)
-
         If Not DesignMode Then
             Try
                 AddHandler FindForm.Load, AddressOf Loaded
@@ -753,13 +676,11 @@ Public Class XenonToggle
 
     Sub Showed()
         _Shown = True
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
         If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
             Invalidate()
         End If
     End Sub
@@ -814,7 +735,6 @@ End Class
 Public Class XenonRadioButton
     Inherits Control
     Event CheckedChanged(sender As Object)
-    Public ColorPalette As New XenonColorPalette()
 
     Sub New()
         SetStyle(DirectCast(139286, ControlStyles), True)
@@ -851,9 +771,14 @@ Public Class XenonRadioButton
 
                 RaiseEvent CheckedChanged(Me)
 
-                Tmr2.Enabled = True
-                Tmr2.Start()
-                Invalidate()
+                If AnimateOnClick Then
+                    Tmr2.Enabled = True
+                    Tmr2.Start()
+                Else
+                    alpha2 = If(Checked, 255, 0)
+                End If
+
+                Refresh()
 
             Catch
             End Try
@@ -892,6 +817,7 @@ Public Class XenonRadioButton
     End Enum
 
     Public State As MouseState = MouseState.None
+    Private AnimateOnClick As Boolean = False
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         Checked = True
@@ -900,6 +826,16 @@ Public Class XenonRadioButton
         Tmr.Start()
         Invalidate()
         MyBase.OnMouseDown(e)
+    End Sub
+
+    Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
+        AnimateOnClick = True
+        Checked = True
+        State = MouseState.Down
+        Tmr2.Enabled = True
+        Tmr2.Start()
+        Invalidate()
+        MyBase.OnMouseClick(e)
     End Sub
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
@@ -940,19 +876,15 @@ Public Class XenonRadioButton
         Try
             alpha = 0
             alpha2 = If(Checked, 255, 0)
-            ColorPalette = New XenonColorPalette(Me)
         Catch
         End Try
     End Sub
 
-
     Sub Showed()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 #End Region
@@ -1003,6 +935,7 @@ Public Class XenonRadioButton
                     alpha2 = 255
                     Tmr2.Enabled = False
                     Tmr2.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1016,6 +949,7 @@ Public Class XenonRadioButton
                     alpha2 = 0
                     Tmr2.Enabled = False
                     Tmr2.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1058,13 +992,12 @@ Public Class XenonRadioButton
             End If
 
 #Region "Colors System"
-            Dim HoverCircle_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
-            Dim HoverCheckedCircle_Color As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
-            Dim CheckCircle_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Core)
-            Dim NonHoverCircle_Color As Color = ColorPalette.Color_Border
-            Dim BackCircle_Color As Color = ColorPalette.Color_Back
-            Dim ParentColor As Color = ColorPalette.Color_Parent
-            Dim Selection_Color As Color = ColorPalette.Color_Parent_Hover
+            Dim HoverCircle_Color As Color = Color.FromArgb(alpha2, Style.Colors.Back_Checked)
+            Dim HoverCheckedCircle_Color As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
+            Dim CheckCircle_Color As Color = Color.FromArgb(alpha2, Style.Colors.Core)
+            Dim NonHoverCircle_Color As Color = Style.Colors.Border
+            Dim BackCircle_Color As Color = Style.Colors.Back
+            Dim ParentColor As Color = GetParentColor(Me)
 #End Region
             '#################################################################################
 
@@ -1101,7 +1034,6 @@ End Class
 Public Class XenonRadioImage
     Inherits Control
     Event CheckedChanged(sender As Object)
-    Public ColorPalette As New XenonColorPalette()
 
     Sub New()
         SetStyle(DirectCast(139286, ControlStyles), True)
@@ -1179,8 +1111,10 @@ Public Class XenonRadioImage
     End Enum
 
     Public State As MouseState = MouseState.None
+    Private AnimateOnClick As Boolean = False
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+        AnimateOnClick = True
         Checked = True
         State = MouseState.Down
         Tmr.Enabled = True
@@ -1226,18 +1160,15 @@ Public Class XenonRadioImage
 
         Try
             alpha = 0
-            ColorPalette = New XenonColorPalette(Me)
         Catch
         End Try
     End Sub
 
     Sub Showed()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 #End Region
@@ -1257,6 +1188,7 @@ Public Class XenonRadioImage
                     alpha = 255
                     Tmr.Enabled = False
                     Tmr.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1270,6 +1202,7 @@ Public Class XenonRadioImage
                     alpha = 0
                     Tmr.Enabled = False
                     Tmr.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1297,14 +1230,14 @@ Public Class XenonRadioImage
                                         MainRect.Y + (MainRect.Height - Image.Height) / 2,
                                          Image.Width, Image.Height)
 
-            Dim bkC As Color = If(_Checked, ColorPalette.Color_Back_Checked, ColorPalette.Color_Back)
-            Dim bkCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Back_Checked)
+            Dim bkC As Color = If(_Checked, Style.Colors.Back_Checked, Style.Colors.Back_Hover)
+            Dim bkCC As Color = Color.FromArgb(alpha, Style.Colors.Back_Checked)
 
             FillRect(G, New SolidBrush(bkC), MainRectInner)
             FillRect(G, New SolidBrush(bkCC), MainRect)
 
-            Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, ColorPalette.Color_Border_Checked, ColorPalette.Color_Border))
-            Dim lCC As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
+            Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, Style.Colors.Border_Checked, Style.Colors.Border))
+            Dim lCC As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
 
             DrawRect_LikeW11(G, lC, MainRectInner)
             DrawRect_LikeW11(G, lCC, MainRect)
@@ -1317,15 +1250,12 @@ Public Class XenonRadioImage
         End Try
     End Sub
 
-
 End Class
 
 <DefaultEvent("CheckedChanged")>
 Public Class XenonCheckBox
     Inherits Control
     Event CheckedChanged(sender As Object)
-
-    Public ColorPalette As New XenonColorPalette()
 
     Sub New()
         SetStyle(DirectCast(139286, ControlStyles), True)
@@ -1345,8 +1275,12 @@ Public Class XenonCheckBox
             Try
                 _Checked = value
                 RaiseEvent CheckedChanged(Me)
-                Tmr2.Enabled = True
-                Tmr2.Start()
+                If AnimateOnClick Then
+                    Tmr2.Enabled = True
+                    Tmr2.Start()
+                Else
+                    alpha2 = If(Checked, 255, 0)
+                End If
                 Refresh()
             Catch
             End Try
@@ -1356,6 +1290,7 @@ Public Class XenonCheckBox
     Private _Checked As Boolean
 
     ReadOnly Radius As Integer = 5
+
 #Region "Accent Color Property"
     Private AccentColorValue As Color = Color.DodgerBlue
     Public Event AccentColorChanged As PropertyChangedEventHandler
@@ -1394,12 +1329,21 @@ Public Class XenonCheckBox
     End Enum
 
     Public State As MouseState = MouseState.None
+    Private AnimateOnClick As Boolean = False
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-        Checked = Not Checked
         State = MouseState.Down
         Tmr.Enabled = True
         Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
+        AnimateOnClick = True
+        Checked = Not Checked
+        State = MouseState.Down
+        Tmr2.Enabled = True
+        Tmr2.Start()
         Invalidate()
     End Sub
 
@@ -1428,7 +1372,6 @@ Public Class XenonCheckBox
         Try
             alpha = If(DesignMode, 255, 0)
             alpha2 = If(Checked, 255, 0)
-            ColorPalette = New XenonColorPalette(Me)
 
             If Not DesignMode Then
                 Try
@@ -1445,12 +1388,10 @@ Public Class XenonCheckBox
     End Sub
 
     Sub Showed()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 #End Region
@@ -1500,6 +1441,7 @@ Public Class XenonCheckBox
                     alpha2 = 255
                     Tmr2.Enabled = False
                     Tmr2.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1513,6 +1455,7 @@ Public Class XenonCheckBox
                     alpha2 = 0
                     Tmr2.Enabled = False
                     Tmr2.Stop()
+                    AnimateOnClick = False
                 End If
 
                 Threading.Thread.Sleep(1)
@@ -1544,13 +1487,12 @@ Public Class XenonCheckBox
             Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - InnerCheckRect.Width, Height - 1)
 
 #Region "Colors System"
-            Dim HoverRect_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)
-            Dim HoverCheckedRect_Color As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
-            Dim CheckRect_Color As Color = Color.FromArgb(alpha2, ColorPalette.Color_Core)
-            Dim NonHoverRect_Color As Color = ColorPalette.Color_Border
-            Dim BackRect_Color As Color = ColorPalette.Color_Back
-            Dim ParentColor As Color = ColorPalette.Color_Parent
-            Dim Selection_Color As Color = ColorPalette.Color_Parent_Hover
+            Dim HoverRect_Color As Color = Color.FromArgb(alpha2, Style.Colors.Back_Checked)
+            Dim HoverCheckedRect_Color As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
+            Dim CheckRect_Color As Color = Color.FromArgb(alpha2, Style.Colors.Core)
+            Dim NonHoverRect_Color As Color = Style.Colors.Border
+            Dim BackRect_Color As Color = Style.Colors.Back
+            Dim ParentColor As Color = GetParentColor(Me)
 #End Region
 
             Dim RTL As Boolean = (RightToLeft = 1)
@@ -1580,7 +1522,7 @@ Public Class XenonCheckBox
 
             G.Clear(ParentColor)
 
-            'FillRect(G, New SolidBrush(BackRect_Color), InnerCheckRect, Radius)
+            FillRect(G, New SolidBrush(Style.Colors.Back), InnerCheckRect, Radius)
 
             If _Checked Then
                 FillRect(G, New SolidBrush(HoverRect_Color), InnerCheckRect, Radius)
@@ -1658,31 +1600,116 @@ Public Class XenonAnimatedBox : Inherits Panel
 #Region "Properties"
     Public Property Color1 As Color = Color.DodgerBlue
     Public Property Color2 As Color = Color.Crimson
+    Public Property [Color] As Color = Color1
 #End Region
 
     Private LineColor As Color
-    Private WithEvents Tmr As New Timer With {.Enabled = True, .Interval = 1}
+    Private WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private _Angle As Single = 0
+
+    Property Style As ColorsStyle = ColorsStyle.SwapColors
+
+    Enum ColorsStyle
+        SwapColors
+        MixedColors
+    End Enum
+
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        If Not DesignMode Then
+
+            If _Angle + 1.5 > 360 Then
+                _Angle = 0
+
+                If Style = ColorsStyle.SwapColors Then
+                    Dim Cx1, Cx2 As Color
+
+                    If GetDarkMode() Then
+                        Cx1 = Color1.Dark(0.15)
+                        Cx2 = Color2.Dark(0.15)
+                    Else
+                        Cx1 = Color1.Light(0.6)
+                        Cx2 = Color2.Light(0.6)
+                    End If
+
+                    If [Color] = Cx1 Or [Color] = Color1 Then
+                        Visual.FadeColor(Me, "Color", [Color], Cx2, 10, 1)
+                    Else
+                        Visual.FadeColor(Me, "Color", [Color], Cx1, 10, 1)
+                    End If
+
+                End If
+
+            Else
+                _Angle += 1.5
+            End If
+
+            Refresh()
+        Else
+            Tmr.Enabled = False
+            Tmr.Stop()
+        End If
+    End Sub
+
+    Dim C1, C2 As Color
+
+    ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.7))
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
+
         G.SmoothingMode = SmoothingMode.AntiAlias
+
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         G.Clear(GetParentColor(Me))
 
+        If Style = ColorsStyle.SwapColors Then
+            If GetDarkMode() Then
+                C1 = [Color].Dark(0.15)
+            Else
+                C1 = [Color].Light(0.6)
+            End If
 
+            C2 = GetParentColor(Me)
+        ElseIf Style = ColorsStyle.MixedColors Then
 
-        BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.05))
-        LineColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.03, -0.06))
+            If GetDarkMode() Then
+                C1 = [Color].Dark(0.15)
+                C2 = [Color].Dark(0.15)
+            Else
+                C1 = [Color].Light(0.6)
+                C2 = [Color].Light(0.6)
+            End If
 
-        FillRect(G, New SolidBrush(BackColor), Rect)
-        DrawRect(G, New Pen(LineColor), Rect)
+        End If
+
+        Dim l As New LinearGradientBrush(Rect, C1, C2, _Angle, False)
+
+        LineColor = Color.FromArgb(120, 150, 150, 150)
+
+        If Dock = DockStyle.None Then
+            FillRect(G, l, Rect)
+            FillRect(G, Noise, Rect)
+            DrawRect(G, New Pen(LineColor), Rect)
+        Else
+            G.FillRectangle(l, Rect)
+            G.FillRectangle(Noise, Rect)
+        End If
+
     End Sub
 
-
+    Private Sub XenonAnimatedBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        If Not DesignMode Then
+            Tmr.Enabled = True
+            Tmr.Start()
+        Else
+            Tmr.Enabled = False
+            Tmr.Stop()
+        End If
+    End Sub
 End Class
 
 <DefaultEvent("Click")>
@@ -2338,7 +2365,7 @@ Public Class XenonNumericUpDown
     Inherits Control
     Public Event ValueChanged(sender As Object, e As EventArgs)
 
-    Public ColorPalette As New XenonColorPalette()
+
 
     Sub New()
         Enabled = True
@@ -2544,7 +2571,7 @@ Public Class XenonNumericUpDown
 
     Private Sub XenonNumericUpDown_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         alpha = 0
-        ColorPalette = New XenonColorPalette(Me)
+
         If Not DesignMode Then
             Try
                 AddHandler FindForm.Load, AddressOf Loaded
@@ -2561,13 +2588,13 @@ Public Class XenonNumericUpDown
 
     Sub Showed()
         _Shown = True
-        ColorPalette = New XenonColorPalette(Me)
+
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
         If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
+
             Invalidate()
         End If
     End Sub
@@ -2597,22 +2624,22 @@ Public Class XenonNumericUpDown
 
         '#################################################################################
 
-        G.Clear(ColorPalette.Color_Parent)
+        G.Clear(GetParentColor(Me))
 
-        FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, ColorPalette.Color_Back)), OuterRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back_Checked)), OuterRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)), SideRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, Style.Colors.Back)), OuterRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)), SideRect)
 
-        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, ColorPalette.Color_Border), InnerRect)
-        DrawRect_LikeW11(G, Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover), OuterRect)
+        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, Style.Colors.Border), InnerRect)
+        DrawRect_LikeW11(G, Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover), OuterRect)
 
-        If Focused And State = MouseState.None Then DrawRect(G, New Pen(Color.FromArgb(255, ColorPalette.Color_Border_Checked_Hover)), InnerRect)
+        If Focused And State = MouseState.None Then DrawRect(G, New Pen(Color.FromArgb(255, Style.Colors.Border_Checked_Hover)), InnerRect)
 
         Using TextColor As New SolidBrush(If(GetDarkMode(), Color.White, Color.Black)), TextFont As New Font("Segoe UI", 9)
             G.DrawString(CStr(Value), TextFont, New SolidBrush(TextColor.Color), New Rectangle(0, 0, Width - 15, Height), StringAligner(ContentAlignment.MiddleCenter))
         End Using
 
-        Using SignColor As New SolidBrush(ColorPalette.Color_Back_Checked), SignFont As New Font("Marlett", 11)
+        Using SignColor As New SolidBrush(Style.Colors.Back_Checked), SignFont As New Font("Marlett", 11)
             G.DrawString("t", SignFont, SignColor, New Point(SideRect.Left - 1, 0))
             G.DrawString("u", SignFont, SignColor, New Point(SideRect.Left - 1, Height - 16))
         End Using
@@ -3170,7 +3197,9 @@ Public Class XenonComboBox : Inherits ComboBox
         SetStyle(ControlStyles.UserPaint, True)
         SetStyle(ControlStyles.DoubleBuffer, True)
         Size = New Size(190, 27)
-        DrawMode = Windows.Forms.DrawMode.OwnerDrawVariable
+        DrawMode = DrawMode.OwnerDrawVariable
+        ItemHeight = 20
+
         If GetDarkMode() Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
         ForeColor = Color.White
         LineColor = Color.DodgerBlue
@@ -3178,8 +3207,6 @@ Public Class XenonComboBox : Inherits ComboBox
         Font = New Font("Segoe UI", 9)
         DoubleBuffered = True
     End Sub
-
-    Public ColorPalette As New XenonColorPalette()
 
 #Region "Properties"
     Public Property CustomFont As Boolean = False
@@ -3209,13 +3236,13 @@ Public Class XenonComboBox : Inherits ComboBox
 
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
 
-
 #Region "Subs"
     Sub ReplaceItem(ByVal sender As System.Object, ByVal e As DrawItemEventArgs) Handles Me.DrawItem
-        BackColor = ColorPalette.Color_Back
+        BackColor = Style.Colors.Back
+        e.DrawBackground()
+
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
         e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-        e.DrawBackground()
 
         If BackColor.IsDark Then
             If ForeColor <> Color.White Then ForeColor = Color.White
@@ -3223,27 +3250,28 @@ Public Class XenonComboBox : Inherits ComboBox
             If ForeColor <> Color.Black Then ForeColor = Color.Black
         End If
 
-        Try
-            e.Graphics.FillRectangle(New SolidBrush(BackColor), e.Bounds)
+        e.Graphics.FillRectangle(New SolidBrush(BackColor), New Rectangle(e.Bounds.X - 2, e.Bounds.Y - 2, e.Bounds.Width + 4, e.Bounds.Height + 4))
 
-            If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-                e.Graphics.FillRectangle(New SolidBrush(ColorPalette.Color_Border_Checked_Hover), e.Bounds)
-            End If
+        If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(Style.Colors.Border_Checked_Hover), e.Bounds)
+        End If
 
-            Dim f As Font
-            If Not CustomFont Then
+        Dim f As Font
+        If Not CustomFont Then
+            f = e.Font
+        Else
+            Try
+                f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
+            Catch
                 f = e.Font
-            Else
-                Try
-                    f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
-                Catch
-                    f = e.Font
-                End Try
-            End If
+            End Try
+        End If
 
-            e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, New SolidBrush(ForeColor), e.Bounds.X + 2, e.Bounds.Y + 1)
-        Catch
-        End Try
+        Dim Rect As Rectangle = e.Bounds
+        Rect.X += 2
+        Rect.Width -= 2
+
+        If e.Index >= 0 Then e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, New SolidBrush(ForeColor), Rect, StringAligner(ContentAlignment.MiddleLeft))
     End Sub
 
     Protected Sub DrawTriangle(ByVal Clr As Color, ByVal FirstPoint As Point, ByVal SecondPoint As Point, ByVal ThirdPoint As Point, ByVal G As Graphics)
@@ -3311,52 +3339,15 @@ Public Class XenonComboBox : Inherits ComboBox
     Private _Shown As Boolean = False
 
     Private Sub XenonComboBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        alpha = 0
+        alpha2 = 0
         Try
-            alpha = 0
-            alpha2 = 0
-
-            Try
-                If Not DesignMode Then
-                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf Invalidate
-                    AddHandler BackColorChanged, AddressOf Invalidate
-                End If
-            Catch
-            End Try
-
-            ColorPalette = New XenonColorPalette(Me)
-
-            If Not DesignMode And Me IsNot Nothing Then
-                Try
-                    If FindForm() IsNot Nothing Then AddHandler FindForm.Load, AddressOf Loaded
-                    If FindForm() IsNot Nothing Then AddHandler FindForm.Shown, AddressOf Showed
-                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                    If Parent IsNot Nothing Then AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
-                    If Parent IsNot Nothing Then AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
-                Catch
-                End Try
+            If Not DesignMode Then
+                If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf Invalidate
+                AddHandler BackColorChanged, AddressOf Invalidate
             End If
         Catch
         End Try
-    End Sub
-
-    Sub Loaded()
-        _Shown = False
-    End Sub
-
-    Sub Showed()
-        _Shown = True
-        ColorPalette = New XenonColorPalette(Me)
-        Invalidate()
-    End Sub
-
-    Public Sub RefreshColorPalette()
-
-        Try
-            ColorPalette = New XenonColorPalette(Me)
-            Invalidate()
-        Catch
-        End Try
-
     End Sub
 
     Private Sub XenonComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
@@ -3463,34 +3454,45 @@ Public Class XenonComboBox : Inherits ComboBox
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
         Dim TextRect As New Rectangle(5, 0, Width - 1, Height - 1)
 
-        Dim FadeInColor As Color = Color.FromArgb(alpha, ColorPalette.Color_Border_Checked_Hover)
-        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, ColorPalette.Color_Border)
+        Dim FadeInColor As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
+        Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, Style.Colors.Border)
 
-        G.Clear(ColorPalette.Color_Parent)
+        G.Clear(GetParentColor(Me))
 
-        FillRect(G, New SolidBrush(ColorPalette.Color_Back), InnerRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, ColorPalette.Color_Back)), OuterRect)
+        FillRect(G, New SolidBrush(Style.Colors.Back), InnerRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
         FillRect(G, Noise, InnerRect)
 
         DrawRect_LikeW11(G, FadeInColor, OuterRect)
         DrawRect_LikeW11(G, FadeOutColor, InnerRect)
 
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha2, ColorPalette.Color_Back_Checked)), OuterRect)
-        DrawRect_LikeW11(G, Color.FromArgb(alpha2, ColorPalette.Color_Border_Checked_Hover), OuterRect)
+        FillRect(G, New SolidBrush(Color.FromArgb(alpha2, Style.Colors.Back_Checked)), OuterRect)
+        DrawRect_LikeW11(G, Color.FromArgb(alpha2, Style.Colors.Border_Checked_Hover), OuterRect)
+
+        Dim ArrowHeight As Integer = 4
+        Dim Arrow_Y_1 As Integer = (Height - ArrowHeight) / 2 - 1
+        Dim Arrow_Y_2 As Integer = Arrow_Y_1 + ArrowHeight
 
         If Focused And State = MouseState.None Then
             DrawRect(G, New Pen(Color.FromArgb(255, FadeInColor)), InnerRect)
-            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 18, 10), New Point(Width - 14, 14))
-            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 14, 14), New Point(Width - 10, 10))
-            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor)), New Point(Width - 14, 15), New Point(Width - 14, 14))
+            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 18, Arrow_Y_1), New Point(Width - 14, Arrow_Y_2))
+            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 14, Arrow_Y_2), New Point(Width - 10, Arrow_Y_1))
+            G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor)), New Point(Width - 14, Arrow_Y_2 + 1), New Point(Width - 14, Arrow_Y_2))
         Else
-            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor), 2), New Point(Width - 18, 10), New Point(Width - 14, 14))
-            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor), 2), New Point(Width - 14, 14), New Point(Width - 10, 10))
-            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor)), New Point(Width - 14, 15), New Point(Width - 14, 14))
+            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor), 2), New Point(Width - 18, Arrow_Y_1), New Point(Width - 14, Arrow_Y_2))
+            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor), 2), New Point(Width - 14, Arrow_Y_2), New Point(Width - 10, Arrow_Y_1))
+            G.DrawLine(New Pen(Color.FromArgb(255 - alpha, ForeColor)), New Point(Width - 14, Arrow_Y_2 + 1), New Point(Width - 14, Arrow_Y_2))
 
-            G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 18, 10), New Point(Width - 14, 14))
-            G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 14, 14), New Point(Width - 10, 10))
-            G.DrawLine(New Pen(FadeInColor), New Point(Width - 14, 15), New Point(Width - 14, 14))
+            If Not DroppedDown Then
+                G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 18, Arrow_Y_1), New Point(Width - 14, Arrow_Y_2))
+                G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 14, Arrow_Y_2), New Point(Width - 10, Arrow_Y_1))
+                G.DrawLine(New Pen(FadeInColor), New Point(Width - 14, Arrow_Y_2 + 1), New Point(Width - 14, Arrow_Y_2))
+            Else
+                G.DrawLine(New Pen(FadeInColor), New Point(Width - 14, Arrow_Y_1), New Point(Width - 14, Arrow_Y_1 + 1))
+                G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 18, Arrow_Y_2), New Point(Width - 14, Arrow_Y_1))
+                G.DrawLine(New Pen(FadeInColor, 2), New Point(Width - 14, Arrow_Y_1), New Point(Width - 10, Arrow_Y_2))
+            End If
+
         End If
 
         Dim f As Font
@@ -5631,7 +5633,7 @@ Public Class XenonTrackbar
     Private Thumb As Rectangle
     Private ThumbDown As Boolean
     Private Circle As Rectangle
-    Dim Colors As XenonColorPalette
+
     Private _Shown As Boolean = False
 
     Public Property AccentColor As Color = If(GetDarkMode(), Color.FromArgb(0, 81, 210).LightLight, Color.FromArgb(0, 81, 210).Dark(0.1))
@@ -5684,7 +5686,7 @@ Public Class XenonTrackbar
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
         Height = 19
-        Colors = New XenonColorPalette(Me)
+
     End Sub
 
     Dim I1 As Integer
@@ -5699,7 +5701,7 @@ Public Class XenonTrackbar
         Dim c_back As Color = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
         Dim c_btn As Color = If(Dark, Color.FromArgb(165, 165, 165), Color.FromArgb(100, 100, 100))
 
-        Dim C As Color = AccentColor 'Colors.Color_Core
+        Dim C As Color = Style.Colors.Core
 
         Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
 
@@ -5715,14 +5717,13 @@ Public Class XenonTrackbar
 
         G.FillRectangle(New SolidBrush(BackColor), New Rectangle(Width - 4, 0, 4, Height))
 
-        G.FillEllipse(New SolidBrush(Colors.Color_Parent_Hover), Circle)
+        G.FillEllipse(New SolidBrush(Style.Colors.Border), Circle)
 
         Dim smallC1 As New Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10)
         Dim smallC2 As New Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8)
 
         G.FillEllipse(New SolidBrush(C), smallC1)
         G.FillEllipse(New SolidBrush(Color.FromArgb(alpha, C)), smallC2)
-
     End Sub
 
     Protected Overrides Sub OnSizeChanged(e As EventArgs)
@@ -5850,7 +5851,7 @@ Public Class XenonTrackbar
 
         Try
             alpha = 0
-            Colors = New XenonColorPalette(Me)
+
         Catch
         End Try
     End Sub
@@ -5861,12 +5862,12 @@ Public Class XenonTrackbar
 
     Sub Showed()
         _Shown = True
-        Colors = New XenonColorPalette(Me)
+
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
-        Colors = New XenonColorPalette(Me)
+
         Invalidate()
     End Sub
 End Class

@@ -332,10 +332,13 @@
     <Compile Include="GUI\RetroUI.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\XenonStyle.vb" />
     <Compile Include="GUI\XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="GUI\XenonUI.vb" />
+    <Compile Include="GUI\XenonUI.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Languages\LangJSON_Manage.Designer.vb">
       <DependentUpon>LangJSON_Manage.vb</DependentUpon>
     </Compile>

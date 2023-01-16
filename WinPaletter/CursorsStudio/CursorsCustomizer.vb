@@ -1588,8 +1588,6 @@ Public Class CursorControl : Inherits ContainerControl
 
     Public Property Prop_Scale As Single = 1
 
-    Dim ColorPalette As New XenonColorPalette(Me)
-
     Private _Shown As Boolean = False
 
     Dim _Focused As Boolean = False
@@ -1617,13 +1615,11 @@ Public Class CursorControl : Inherits ContainerControl
 
     Sub Showed()
         _Shown = True
-        ColorPalette = New XenonColorPalette(Me)
         Invalidate()
     End Sub
 
     Public Sub RefreshColorPalette()
         If _Shown Then
-            ColorPalette = New XenonColorPalette(Me)
             Invalidate()
         End If
     End Sub
@@ -1650,8 +1646,8 @@ Public Class CursorControl : Inherits ContainerControl
                                          bmp.Width, bmp.Height)
 
         e.Graphics.Clear(GetParentColor(Me))
-        FillRect(e.Graphics, New SolidBrush(If(_Focused, ColorPalette.Color_Back_Checked, ColorPalette.Color_Back)), MainRect)
-        DrawRect_LikeW11(e.Graphics, If(_Focused, ColorPalette.Color_Border_Checked_Hover, ColorPalette.Color_Border), MainRect)
+        FillRect(e.Graphics, New SolidBrush(If(_Focused, Style.Colors.Back_Checked, Style.Colors.Back)), MainRect)
+        DrawRect_LikeW11(e.Graphics, If(_Focused, Style.Colors.Border_Checked_Hover, Style.Colors.Border), MainRect)
         e.Graphics.DrawImage(bmp, CenterRect)
 
     End Sub

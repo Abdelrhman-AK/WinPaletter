@@ -396,12 +396,12 @@ Partial Class Win32UI
         '
         Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer))
         Me.XenonToggle1.Checked = True
         Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(436, 65)
+        Me.XenonToggle1.Location = New System.Drawing.Point(447, 66)
         Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
         Me.XenonToggle1.TabIndex = 80
         '
         'Label30
@@ -419,12 +419,12 @@ Partial Class Win32UI
         '
         Me.XenonToggle2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.XenonToggle2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonToggle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer))
         Me.XenonToggle2.Checked = True
         Me.XenonToggle2.DarkLight_Toggler = False
-        Me.XenonToggle2.Location = New System.Drawing.Point(436, 35)
+        Me.XenonToggle2.Location = New System.Drawing.Point(447, 36)
         Me.XenonToggle2.Name = "XenonToggle2"
-        Me.XenonToggle2.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle2.Size = New System.Drawing.Size(40, 20)
         Me.XenonToggle2.TabIndex = 81
         '
         'Label31
@@ -460,7 +460,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(67, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -526,13 +526,14 @@ Partial Class Win32UI
         Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox2.ForeColor = System.Drawing.Color.Black
         Me.XenonComboBox2.FormattingEnabled = True
+        Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Classic for Windows 9x", "Classic for Windows 2k and Vista", "Classic for Windows 7 and later"})
         Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonComboBox2.Location = New System.Drawing.Point(649, 6)
+        Me.XenonComboBox2.Location = New System.Drawing.Point(649, 5)
         Me.XenonComboBox2.Name = "XenonComboBox2"
-        Me.XenonComboBox2.Size = New System.Drawing.Size(200, 24)
+        Me.XenonComboBox2.Size = New System.Drawing.Size(200, 26)
         Me.XenonComboBox2.TabIndex = 84
         '
         'XenonButton9
@@ -544,7 +545,7 @@ Partial Class Win32UI
         Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(110, 34)
+        Me.XenonButton9.Location = New System.Drawing.Point(709, 34)
         Me.XenonButton9.Name = "XenonButton9"
         Me.XenonButton9.Size = New System.Drawing.Size(140, 28)
         Me.XenonButton9.TabIndex = 74
@@ -574,12 +575,13 @@ Partial Class Win32UI
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox1.ForeColor = System.Drawing.Color.Black
         Me.XenonComboBox1.FormattingEnabled = True
+        Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
-        Me.XenonComboBox1.Location = New System.Drawing.Point(253, 36)
+        Me.XenonComboBox1.Location = New System.Drawing.Point(110, 35)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(596, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(596, 26)
         Me.XenonComboBox1.TabIndex = 73
         '
         'PictureBox5
@@ -2500,7 +2502,7 @@ Partial Class Win32UI
         Me.pnl_preview.Size = New System.Drawing.Size(350, 334)
         Me.pnl_preview.TabIndex = 2
         '
-        'Menu
+        'Menu_Window
         '
         Me.Menu_Window.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu_Window.ButtonDkShadow = System.Drawing.Color.Black
@@ -2523,7 +2525,7 @@ Partial Class Win32UI
         Me.Menu_Window.Metrics_CaptionHeight = 22
         Me.Menu_Window.Metrics_CaptionWidth = 0
         Me.Menu_Window.Metrics_PaddedBorderWidth = 4
-        Me.Menu_Window.Name = "Menu"
+        Me.Menu_Window.Name = "Menu_Window"
         Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
         Me.Menu_Window.TabIndex = 4

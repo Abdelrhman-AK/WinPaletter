@@ -256,6 +256,8 @@ Public Class XenonCore
             End If
 
         End If
+
+        Style = New XenonStyle
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
         Dim b As Boolean = False
@@ -336,12 +338,6 @@ Public Class XenonCore
             ctrl.Invalidate()
             ctrl.Refresh()
         End If
-
-        If TypeOf ctrl Is XenonCheckBox Then TryCast(ctrl, XenonCheckBox).ColorPalette = New XenonColorPalette(ctrl)
-        If TypeOf ctrl Is XenonRadioButton Then TryCast(ctrl, XenonRadioButton).ColorPalette = New XenonColorPalette(ctrl)
-        If TypeOf ctrl Is XenonComboBox Then TryCast(ctrl, XenonComboBox).ColorPalette = New XenonColorPalette(ctrl)
-        'If TypeOf ctrl Is XenonTextBox Then TryCast(ctrl, XenonTextBox).ColorPalette = New XenonColorPalette(ctrl)
-        If TypeOf ctrl Is XenonToggle Then TryCast(ctrl, XenonToggle).ColorPalette = New XenonColorPalette(ctrl)
 
         If TypeOf ctrl Is TreeView Then
             With TryCast(ctrl, TreeView)

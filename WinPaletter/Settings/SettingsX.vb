@@ -266,6 +266,10 @@ Public Class SettingsX
         Cursor = Cursors.Default
 
         MsgBox(My.Lang.SettingsSaved, My.MsgboxRt(MsgBoxStyle.Information))
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        SaveSettings()
         Me.Close()
     End Sub
 
@@ -496,4 +500,6 @@ Public Class SettingsX
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         Lang_Dashboard.ShowDialog()
     End Sub
+
+
 End Class
