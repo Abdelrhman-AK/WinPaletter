@@ -47,12 +47,12 @@ Public Class XenonStyle
         If Dark Then
             Colors.Core = Colors.BaseColor.LightLight
             Colors.Back = Color.FromArgb(40, 40, 40)
-            Colors.Back_Hover = Color.FromArgb(55, 55, 55)
+            Colors.Back_Hover = Color.FromArgb(45, 45, 45)
             Colors.Back_Checked = Colors.BaseColor.Dark(0.2)
-            Colors.Border = Color.FromArgb(55, 55, 55)
-            Colors.Border_Hover = Color.FromArgb(65, 65, 65)
-            Colors.Border_Checked = Colors.BaseColor.CB(0.08)
-            Colors.Border_Checked_Hover = Colors.BaseColor.CB(-0.2)
+            Colors.Border = Color.FromArgb(40, 40, 40)
+            Colors.Border_Hover = Color.FromArgb(50, 50, 50)
+            Colors.Border_Checked = Colors.BaseColor.CB(-0.2)
+            Colors.Border_Checked_Hover = Colors.BaseColor.CB(0.08)
         Else
             Colors.Core = Colors.BaseColor.Dark(0.1)
             Colors.Back = Color.FromArgb(225, 225, 225)

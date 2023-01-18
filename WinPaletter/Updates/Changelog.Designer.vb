@@ -84,7 +84,6 @@ Partial Class Changelog
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(179, 492)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -98,7 +97,6 @@ Partial Class Changelog
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = False

@@ -1645,9 +1645,9 @@ Public Class CursorControl : Inherits ContainerControl
                                         MainRect.Y + (MainRect.Height - bmp.Height) / 2,
                                          bmp.Width, bmp.Height)
 
-        e.Graphics.Clear(GetParentColor(Me))
-        FillRect(e.Graphics, New SolidBrush(If(_Focused, Style.Colors.Back_Checked, Style.Colors.Back)), MainRect)
-        DrawRect_LikeW11(e.Graphics, If(_Focused, Style.Colors.Border_Checked_Hover, Style.Colors.Border), MainRect)
+        e.Graphics.Clear(GetParentColor)
+        e.Graphics.FillRoundedRect(New SolidBrush(If(_Focused, Style.Colors.Back_Checked, Style.Colors.Back)), MainRect)
+        e.Graphics.DrawRoundedRect_LikeW11(New Pen(If(_Focused, Style.Colors.Border_Checked_Hover, Style.Colors.Border)), MainRect)
         e.Graphics.DrawImage(bmp, CenterRect)
 
     End Sub

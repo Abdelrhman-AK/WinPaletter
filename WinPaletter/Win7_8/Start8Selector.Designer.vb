@@ -54,7 +54,6 @@ Partial Class Start8Selector
         '
         'img1
         '
-        Me.img1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img1.Checked = False
         Me.img1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img1.ForeColor = System.Drawing.Color.White
@@ -63,11 +62,9 @@ Partial Class Start8Selector
         Me.img1.Name = "img1"
         Me.img1.Size = New System.Drawing.Size(80, 80)
         Me.img1.TabIndex = 0
-        Me.img1.Text = "XenonRadioImage1"
         '
         'img2
         '
-        Me.img2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img2.Checked = False
         Me.img2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img2.ForeColor = System.Drawing.Color.White
@@ -76,11 +73,9 @@ Partial Class Start8Selector
         Me.img2.Name = "img2"
         Me.img2.Size = New System.Drawing.Size(80, 80)
         Me.img2.TabIndex = 1
-        Me.img2.Text = "XenonRadioImage2"
         '
         'img3
         '
-        Me.img3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img3.Checked = False
         Me.img3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img3.ForeColor = System.Drawing.Color.White
@@ -89,11 +84,9 @@ Partial Class Start8Selector
         Me.img3.Name = "img3"
         Me.img3.Size = New System.Drawing.Size(80, 80)
         Me.img3.TabIndex = 2
-        Me.img3.Text = "XenonRadioImage3"
         '
         'img7
         '
-        Me.img7.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img7.Checked = False
         Me.img7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img7.ForeColor = System.Drawing.Color.White
@@ -102,11 +95,9 @@ Partial Class Start8Selector
         Me.img7.Name = "img7"
         Me.img7.Size = New System.Drawing.Size(80, 80)
         Me.img7.TabIndex = 3
-        Me.img7.Text = "XenonRadioImage4"
         '
         'img4
         '
-        Me.img4.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img4.Checked = False
         Me.img4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img4.ForeColor = System.Drawing.Color.White
@@ -115,11 +106,9 @@ Partial Class Start8Selector
         Me.img4.Name = "img4"
         Me.img4.Size = New System.Drawing.Size(80, 80)
         Me.img4.TabIndex = 4
-        Me.img4.Text = "XenonRadioImage5"
         '
         'img5
         '
-        Me.img5.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img5.Checked = False
         Me.img5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img5.ForeColor = System.Drawing.Color.White
@@ -128,11 +117,9 @@ Partial Class Start8Selector
         Me.img5.Name = "img5"
         Me.img5.Size = New System.Drawing.Size(80, 80)
         Me.img5.TabIndex = 5
-        Me.img5.Text = "XenonRadioImage6"
         '
         'img6
         '
-        Me.img6.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img6.Checked = False
         Me.img6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img6.ForeColor = System.Drawing.Color.White
@@ -141,11 +128,9 @@ Partial Class Start8Selector
         Me.img6.Name = "img6"
         Me.img6.Size = New System.Drawing.Size(80, 80)
         Me.img6.TabIndex = 6
-        Me.img6.Text = "XenonRadioImage7"
         '
         'img8
         '
-        Me.img8.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img8.Checked = False
         Me.img8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img8.ForeColor = System.Drawing.Color.White
@@ -154,11 +139,9 @@ Partial Class Start8Selector
         Me.img8.Name = "img8"
         Me.img8.Size = New System.Drawing.Size(80, 80)
         Me.img8.TabIndex = 7
-        Me.img8.Text = "XenonRadioImage8"
         '
         'img9
         '
-        Me.img9.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img9.Checked = False
         Me.img9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img9.ForeColor = System.Drawing.Color.White
@@ -167,11 +150,9 @@ Partial Class Start8Selector
         Me.img9.Name = "img9"
         Me.img9.Size = New System.Drawing.Size(80, 80)
         Me.img9.TabIndex = 8
-        Me.img9.Text = "XenonRadioImage9"
         '
         'img15
         '
-        Me.img15.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img15.Checked = False
         Me.img15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img15.ForeColor = System.Drawing.Color.White
@@ -180,11 +161,9 @@ Partial Class Start8Selector
         Me.img15.Name = "img15"
         Me.img15.Size = New System.Drawing.Size(80, 80)
         Me.img15.TabIndex = 14
-        Me.img15.Text = "XenonRadioImage10"
         '
         'img14
         '
-        Me.img14.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img14.Checked = False
         Me.img14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img14.ForeColor = System.Drawing.Color.White
@@ -193,11 +172,9 @@ Partial Class Start8Selector
         Me.img14.Name = "img14"
         Me.img14.Size = New System.Drawing.Size(80, 80)
         Me.img14.TabIndex = 13
-        Me.img14.Text = "XenonRadioImage11"
         '
         'img12
         '
-        Me.img12.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img12.Checked = False
         Me.img12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img12.ForeColor = System.Drawing.Color.White
@@ -206,11 +183,9 @@ Partial Class Start8Selector
         Me.img12.Name = "img12"
         Me.img12.Size = New System.Drawing.Size(80, 80)
         Me.img12.TabIndex = 12
-        Me.img12.Text = "XenonRadioImage12"
         '
         'img11
         '
-        Me.img11.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img11.Checked = False
         Me.img11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img11.ForeColor = System.Drawing.Color.White
@@ -219,11 +194,9 @@ Partial Class Start8Selector
         Me.img11.Name = "img11"
         Me.img11.Size = New System.Drawing.Size(80, 80)
         Me.img11.TabIndex = 11
-        Me.img11.Text = "XenonRadioImage13"
         '
         'img10
         '
-        Me.img10.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img10.Checked = False
         Me.img10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img10.ForeColor = System.Drawing.Color.White
@@ -232,11 +205,9 @@ Partial Class Start8Selector
         Me.img10.Name = "img10"
         Me.img10.Size = New System.Drawing.Size(80, 80)
         Me.img10.TabIndex = 10
-        Me.img10.Text = "XenonRadioImage14"
         '
         'img13
         '
-        Me.img13.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img13.Checked = False
         Me.img13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img13.ForeColor = System.Drawing.Color.White
@@ -245,11 +216,9 @@ Partial Class Start8Selector
         Me.img13.Name = "img13"
         Me.img13.Size = New System.Drawing.Size(80, 80)
         Me.img13.TabIndex = 9
-        Me.img13.Text = "XenonRadioImage15"
         '
         'img18
         '
-        Me.img18.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img18.Checked = False
         Me.img18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img18.ForeColor = System.Drawing.Color.White
@@ -258,11 +227,9 @@ Partial Class Start8Selector
         Me.img18.Name = "img18"
         Me.img18.Size = New System.Drawing.Size(80, 80)
         Me.img18.TabIndex = 17
-        Me.img18.Text = "XenonRadioImage10"
         '
         'img17
         '
-        Me.img17.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img17.Checked = False
         Me.img17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img17.ForeColor = System.Drawing.Color.White
@@ -271,11 +238,9 @@ Partial Class Start8Selector
         Me.img17.Name = "img17"
         Me.img17.Size = New System.Drawing.Size(80, 80)
         Me.img17.TabIndex = 16
-        Me.img17.Text = "XenonRadioImage11"
         '
         'img16
         '
-        Me.img16.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img16.Checked = False
         Me.img16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img16.ForeColor = System.Drawing.Color.White
@@ -284,11 +249,9 @@ Partial Class Start8Selector
         Me.img16.Name = "img16"
         Me.img16.Size = New System.Drawing.Size(80, 80)
         Me.img16.TabIndex = 15
-        Me.img16.Text = "XenonRadioImage15"
         '
         'img20
         '
-        Me.img20.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img20.Checked = False
         Me.img20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img20.ForeColor = System.Drawing.Color.White
@@ -297,11 +260,9 @@ Partial Class Start8Selector
         Me.img20.Name = "img20"
         Me.img20.Size = New System.Drawing.Size(80, 80)
         Me.img20.TabIndex = 19
-        Me.img20.Text = "XenonRadioImage10"
         '
         'img19
         '
-        Me.img19.AccentColor = System.Drawing.Color.DodgerBlue
         Me.img19.Checked = False
         Me.img19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img19.ForeColor = System.Drawing.Color.White
@@ -310,7 +271,6 @@ Partial Class Start8Selector
         Me.img19.Name = "img19"
         Me.img19.Size = New System.Drawing.Size(80, 80)
         Me.img19.TabIndex = 18
-        Me.img19.Text = "XenonRadioImage11"
         '
         'XenonButton2
         '
@@ -370,7 +330,6 @@ Partial Class Start8Selector
         Me.XenonGroupBox1.Controls.Add(Me.img11)
         Me.XenonGroupBox1.Controls.Add(Me.img13)
         Me.XenonGroupBox1.Controls.Add(Me.img10)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(344, 468)

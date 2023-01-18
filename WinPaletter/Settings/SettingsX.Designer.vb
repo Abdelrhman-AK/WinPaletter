@@ -322,7 +322,6 @@ Partial Class SettingsX
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Stable", "Beta"})
-        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox2.Location = New System.Drawing.Point(80, 151)
         Me.XenonComboBox2.Name = "XenonComboBox2"
         Me.XenonComboBox2.Size = New System.Drawing.Size(268, 26)
@@ -395,7 +394,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox5
         '
-        Me.XenonCheckBox5.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -491,7 +489,6 @@ Partial Class SettingsX
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Hint = Nothing
-        Me.XenonTextBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox3.Location = New System.Drawing.Point(121, 87)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = False
@@ -580,7 +577,6 @@ Partial Class SettingsX
         Me.XenonGroupBox1.Controls.Add(Me.Label10)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox25)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox21)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(121, 175)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(500, 181)
@@ -812,7 +808,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox8
         '
-        Me.XenonCheckBox8.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -883,7 +878,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox4
         '
-        Me.XenonCheckBox4.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox4.Checked = True
         Me.XenonCheckBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -940,7 +934,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox3
         '
-        Me.XenonCheckBox3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox3.Checked = True
         Me.XenonCheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -973,7 +966,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = True
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1013,7 +1005,6 @@ Partial Class SettingsX
         '
         'XenonRadioButton2
         '
-        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton2.Checked = False
         Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1027,7 +1018,6 @@ Partial Class SettingsX
         '
         'XenonRadioButton1
         '
-        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton1.Checked = True
         Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1091,7 +1081,6 @@ Partial Class SettingsX
         'XenonNumericUpDown1
         '
         Me.XenonNumericUpDown1.EnabledCalc = True
-        Me.XenonNumericUpDown1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown1.Location = New System.Drawing.Point(356, 86)
         Me.XenonNumericUpDown1.Max = 300
         Me.XenonNumericUpDown1.Min = 5
@@ -1104,7 +1093,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox18
         '
-        Me.XenonCheckBox18.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox18.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox18.Checked = True
         Me.XenonCheckBox18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1137,7 +1125,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox19
         '
-        Me.XenonCheckBox19.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox19.Checked = True
         Me.XenonCheckBox19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1254,7 +1241,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox6
         '
-        Me.XenonCheckBox6.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1269,7 +1255,6 @@ Partial Class SettingsX
         '
         'XenonRadioButton3
         '
-        Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1284,7 +1269,6 @@ Partial Class SettingsX
         '
         'XenonRadioButton4
         '
-        Me.XenonRadioButton4.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonRadioButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1332,7 +1316,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox16
         '
-        Me.XenonCheckBox16.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox16.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1358,7 +1341,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox17
         '
-        Me.XenonCheckBox17.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1402,7 +1384,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox7
         '
-        Me.XenonCheckBox7.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1480,7 +1461,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox2
         '
-        Me.XenonCheckBox2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1539,7 +1519,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox15
         '
-        Me.XenonCheckBox15.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1589,7 +1568,6 @@ Partial Class SettingsX
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Hint = Nothing
-        Me.XenonTextBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox2.Location = New System.Drawing.Point(175, 334)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = False
@@ -1612,7 +1590,6 @@ Partial Class SettingsX
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(175, 304)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -1703,7 +1680,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox14
         '
-        Me.XenonCheckBox14.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1765,7 +1741,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox13
         '
-        Me.XenonCheckBox13.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1828,7 +1803,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox12
         '
-        Me.XenonCheckBox12.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1915,7 +1889,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox11
         '
-        Me.XenonCheckBox11.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1941,7 +1914,6 @@ Partial Class SettingsX
         Me.XenonComboBox3.FormattingEnabled = True
         Me.XenonComboBox3.ItemHeight = 20
         Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB", "HSL", "Decimal"})
-        Me.XenonComboBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox3.Location = New System.Drawing.Point(81, 118)
         Me.XenonComboBox3.Name = "XenonComboBox3"
         Me.XenonComboBox3.Size = New System.Drawing.Size(282, 26)
@@ -1959,7 +1931,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox10
         '
-        Me.XenonCheckBox10.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1984,7 +1955,6 @@ Partial Class SettingsX
         '
         'XenonCheckBox9
         '
-        Me.XenonCheckBox9.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))

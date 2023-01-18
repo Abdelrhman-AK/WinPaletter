@@ -164,7 +164,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox13.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox13.Controls.Add(Me.XenonButton9)
         Me.XenonGroupBox13.Controls.Add(Me.Label12)
-        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(632, 39)
@@ -175,7 +174,7 @@ Partial Class CursorsStudio
         Me.PictureBox20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox20.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox20.Image = CType(resources.GetObject("PictureBox20.Image"), System.Drawing.Image)
-        Me.PictureBox20.Location = New System.Drawing.Point(541, 4)
+        Me.PictureBox20.Location = New System.Drawing.Point(545, 4)
         Me.PictureBox20.Name = "PictureBox20"
         Me.PictureBox20.Size = New System.Drawing.Size(35, 31)
         Me.PictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -184,13 +183,12 @@ Partial Class CursorsStudio
         '
         'XenonToggle1
         '
-        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.XenonToggle1.Checked = True
         Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(576, 7)
+        Me.XenonToggle1.Location = New System.Drawing.Point(585, 9)
         Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
         Me.XenonToggle1.TabIndex = 77
         '
         'XenonButton7
@@ -276,7 +274,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox12.Controls.Add(Me.XenonCheckBox6)
         Me.XenonGroupBox12.Enabled = False
-        Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 436)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(321, 119)
@@ -297,7 +294,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonNumericUpDown4.ForeColor = System.Drawing.Color.White
         Me.XenonNumericUpDown4.Hint = Nothing
-        Me.XenonNumericUpDown4.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown4.Location = New System.Drawing.Point(142, 88)
         Me.XenonNumericUpDown4.MaxLength = 32767
         Me.XenonNumericUpDown4.Multiline = False
@@ -366,7 +362,6 @@ Partial Class CursorsStudio
         '
         'XenonCheckBox2
         '
-        Me.XenonCheckBox2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -389,11 +384,11 @@ Partial Class CursorsStudio
         Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox3.FormattingEnabled = True
+        Me.XenonComboBox3.ItemHeight = 20
         Me.XenonComboBox3.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox3.Location = New System.Drawing.Point(142, 59)
         Me.XenonComboBox3.Name = "XenonComboBox3"
-        Me.XenonComboBox3.Size = New System.Drawing.Size(175, 24)
+        Me.XenonComboBox3.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox3.TabIndex = 35
         '
         'PictureBox14
@@ -426,7 +421,6 @@ Partial Class CursorsStudio
         '
         'XenonCheckBox6
         '
-        Me.XenonCheckBox6.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -455,7 +449,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox11.Controls.Add(Me.XenonCheckBox3)
         Me.XenonGroupBox11.Enabled = False
-        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox11.Location = New System.Drawing.Point(12, 184)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(321, 120)
@@ -476,7 +469,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonNumericUpDown1.ForeColor = System.Drawing.Color.White
         Me.XenonNumericUpDown1.Hint = Nothing
-        Me.XenonNumericUpDown1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown1.Location = New System.Drawing.Point(142, 88)
         Me.XenonNumericUpDown1.MaxLength = 32767
         Me.XenonNumericUpDown1.Multiline = False
@@ -541,16 +533,15 @@ Partial Class CursorsStudio
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
+        Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox2.Location = New System.Drawing.Point(142, 59)
         Me.XenonComboBox2.Name = "XenonComboBox2"
-        Me.XenonComboBox2.Size = New System.Drawing.Size(175, 24)
+        Me.XenonComboBox2.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox2.TabIndex = 35
         '
         'XenonCheckBox4
         '
-        Me.XenonCheckBox4.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -605,7 +596,6 @@ Partial Class CursorsStudio
         '
         'XenonCheckBox3
         '
-        Me.XenonCheckBox3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -634,7 +624,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox2.Enabled = False
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 58)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(321, 120)
@@ -646,7 +635,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonNumericUpDown2.ForeColor = System.Drawing.Color.White
         Me.XenonNumericUpDown2.Hint = Nothing
-        Me.XenonNumericUpDown2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown2.Location = New System.Drawing.Point(142, 88)
         Me.XenonNumericUpDown2.MaxLength = 32767
         Me.XenonNumericUpDown2.Multiline = False
@@ -693,7 +681,6 @@ Partial Class CursorsStudio
         '
         'XenonCheckBox5
         '
-        Me.XenonCheckBox5.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -716,16 +703,15 @@ Partial Class CursorsStudio
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
+        Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(142, 59)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(175, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox1.TabIndex = 17
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -813,7 +799,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox6.Controls.Add(Me.Label10)
         Me.XenonGroupBox6.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox6.Enabled = False
-        Me.XenonGroupBox6.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox6.Location = New System.Drawing.Point(12, 310)
         Me.XenonGroupBox6.Name = "XenonGroupBox6"
         Me.XenonGroupBox6.Size = New System.Drawing.Size(321, 120)
@@ -825,7 +810,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown6.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonNumericUpDown6.ForeColor = System.Drawing.Color.White
         Me.XenonNumericUpDown6.Hint = Nothing
-        Me.XenonNumericUpDown6.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown6.Location = New System.Drawing.Point(142, 88)
         Me.XenonNumericUpDown6.MaxLength = 32767
         Me.XenonNumericUpDown6.Multiline = False
@@ -872,7 +856,6 @@ Partial Class CursorsStudio
         '
         'XenonCheckBox7
         '
-        Me.XenonCheckBox7.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -895,16 +878,15 @@ Partial Class CursorsStudio
         Me.XenonComboBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox4.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox4.FormattingEnabled = True
+        Me.XenonComboBox4.ItemHeight = 20
         Me.XenonComboBox4.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox4.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox4.Location = New System.Drawing.Point(142, 59)
         Me.XenonComboBox4.Name = "XenonComboBox4"
-        Me.XenonComboBox4.Size = New System.Drawing.Size(175, 24)
+        Me.XenonComboBox4.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox4.TabIndex = 17
         '
         'XenonCheckBox8
         '
-        Me.XenonCheckBox8.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -981,7 +963,7 @@ Partial Class CursorsStudio
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1042,7 +1024,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox1.Controls.Add(Me.FlowLayoutPanel1)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(339, 58)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Padding = New System.Windows.Forms.Padding(3)
@@ -1139,7 +1120,6 @@ Partial Class CursorsStudio
         '
         'XenonTrackbar1
         '
-        Me.XenonTrackbar1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar1.LargeChange = 50
@@ -1357,10 +1337,10 @@ Partial Class CursorsStudio
         Me.Busy.TabIndex = 7
         Me.Busy.Text = "CursorControl4"
         '
-        'Move
+        'Move_Cur
         '
         Me.Move_Cur.Location = New System.Drawing.Point(3, 73)
-        Me.Move_Cur.Name = "Move"
+        Me.Move_Cur.Name = "Move_Cur"
         Me.Move_Cur.Prop_Cursor = WinPaletter.Paths.CursorType.Move
         Me.Move_Cur.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.Move_Cur.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))

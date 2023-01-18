@@ -118,7 +118,6 @@ Partial Class WindowsTerminalDecide
         '
         'XenonRadioImage2
         '
-        Me.XenonRadioImage2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioImage2.Checked = False
         Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
@@ -131,7 +130,6 @@ Partial Class WindowsTerminalDecide
         '
         'XenonRadioImage1
         '
-        Me.XenonRadioImage1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioImage1.Checked = False
         Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White

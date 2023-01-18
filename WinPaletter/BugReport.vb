@@ -11,8 +11,6 @@ Public Class BugReport
         Panel1.BackColor = c1
         BackColor = c2
 
-        XenonTextBox1.LineColor = c1
-
         XenonTextBox1.Font = My.Application.ConsoleFontMedium
 
         Try : bk.Close() : Catch : End Try

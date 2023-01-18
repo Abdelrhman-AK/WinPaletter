@@ -246,7 +246,6 @@ Partial Class Updates
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = True
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -259,7 +258,6 @@ Partial Class Updates
         '
         'XenonRadioButton2
         '
-        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton2.Checked = False
         Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -272,7 +270,6 @@ Partial Class Updates
         '
         'XenonRadioButton3
         '
-        Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton3.Checked = False
         Me.XenonRadioButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -285,7 +282,6 @@ Partial Class Updates
         '
         'XenonRadioButton1
         '
-        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton1.Checked = True
         Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)

@@ -65,7 +65,6 @@ Partial Class WindowsTerminalCopycat
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(45, 39)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(415, 24)

@@ -163,7 +163,6 @@ Partial Class BugReport
         Me.XenonGroupBox3.Controls.Add(Me.XenonTextBox1)
         Me.XenonGroupBox3.Controls.Add(Me.Label4)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox4)
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 135)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(605, 202)
@@ -225,7 +224,6 @@ Partial Class BugReport
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(3, 33)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = True
@@ -272,7 +270,6 @@ Partial Class BugReport
         Me.XenonGroupBox1.Controls.Add(Me.Label2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 71)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(605, 58)

@@ -1071,7 +1071,7 @@ Public Class MainFrm
 
         For Each ri As XenonRadioImage In LogonUI8Colors.Controls.OfType(Of XenonRadioImage)
             If ColorPalette.Windows8.LogonUI = ri.Name.Replace("color", "") Then
-                W8_logonui.Image = ri.AccentColor.ToBitmap(New Size(48, 48))
+                'W8_logonui.Image = ri.AccentColor.ToBitmap(New Size(48, 48))
                 Exit For
             End If
         Next

@@ -80,7 +80,6 @@ Partial Class LicenseForm
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = True

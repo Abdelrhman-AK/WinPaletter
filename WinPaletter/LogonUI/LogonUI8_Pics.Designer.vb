@@ -38,7 +38,6 @@ Partial Class LogonUI8_Pics
         '
         'img4
         '
-        Me.img4.AccentColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(27, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.img4.Checked = False
         Me.img4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img4.ForeColor = System.Drawing.Color.White
@@ -47,11 +46,9 @@ Partial Class LogonUI8_Pics
         Me.img4.Name = "img4"
         Me.img4.Size = New System.Drawing.Size(128, 128)
         Me.img4.TabIndex = 41
-        Me.img4.Text = "XenonRadioImage6"
         '
         'img2
         '
-        Me.img2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.img2.Checked = False
         Me.img2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img2.ForeColor = System.Drawing.Color.White
@@ -60,11 +57,9 @@ Partial Class LogonUI8_Pics
         Me.img2.Name = "img2"
         Me.img2.Size = New System.Drawing.Size(128, 128)
         Me.img2.TabIndex = 40
-        Me.img2.Text = "XenonRadioImage3"
         '
         'img3
         '
-        Me.img3.AccentColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.img3.Checked = False
         Me.img3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img3.ForeColor = System.Drawing.Color.White
@@ -73,11 +68,9 @@ Partial Class LogonUI8_Pics
         Me.img3.Name = "img3"
         Me.img3.Size = New System.Drawing.Size(128, 128)
         Me.img3.TabIndex = 39
-        Me.img3.Text = "XenonRadioImage4"
         '
         'img1
         '
-        Me.img1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.img1.Checked = False
         Me.img1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img1.ForeColor = System.Drawing.Color.White
@@ -86,11 +79,9 @@ Partial Class LogonUI8_Pics
         Me.img1.Name = "img1"
         Me.img1.Size = New System.Drawing.Size(128, 128)
         Me.img1.TabIndex = 38
-        Me.img1.Text = "XenonRadioImage2"
         '
         'img0
         '
-        Me.img0.AccentColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.img0.Checked = True
         Me.img0.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img0.ForeColor = System.Drawing.Color.White
@@ -99,7 +90,6 @@ Partial Class LogonUI8_Pics
         Me.img0.Name = "img0"
         Me.img0.Size = New System.Drawing.Size(128, 128)
         Me.img0.TabIndex = 37
-        Me.img0.Text = "XenonRadioImage1"
         '
         'PictureBox1
         '
@@ -126,7 +116,6 @@ Partial Class LogonUI8_Pics
         '
         'img5
         '
-        Me.img5.AccentColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(27, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.img5.Checked = False
         Me.img5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img5.ForeColor = System.Drawing.Color.White
@@ -135,7 +124,6 @@ Partial Class LogonUI8_Pics
         Me.img5.Name = "img5"
         Me.img5.Size = New System.Drawing.Size(128, 128)
         Me.img5.TabIndex = 42
-        Me.img5.Text = "XenonRadioImage6"
         '
         'XenonButton2
         '

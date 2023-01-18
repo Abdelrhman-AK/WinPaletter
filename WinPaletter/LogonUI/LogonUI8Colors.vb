@@ -6,10 +6,9 @@ Public Class LogonUI8Colors
         Icon = Start8Selector.Icon
 
         For Each ri As XenonRadioImage In Controls.OfType(Of XenonRadioImage)
-            ri.Image = ri.AccentColor.ToBitmap(New Drawing.Size(32, 32))
+            'ri.Image = ri.AccentColor.ToBitmap(New Size(32, 32))
             If MainFrm.CP.Windows8.LogonUI = ri.Name.Replace("color", "") Then ri.Checked = True Else ri.Checked = False
         Next
-
 
     End Sub
 

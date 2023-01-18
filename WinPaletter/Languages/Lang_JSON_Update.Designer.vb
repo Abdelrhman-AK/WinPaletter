@@ -94,7 +94,6 @@ Partial Class Lang_JSON_Update
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(154, 12)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -117,7 +116,6 @@ Partial Class Lang_JSON_Update
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Hint = Nothing
-        Me.XenonTextBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox2.Location = New System.Drawing.Point(154, 42)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = False

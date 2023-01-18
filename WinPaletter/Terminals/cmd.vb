@@ -299,7 +299,7 @@ Public Class CMD
             Dim FC0 As Color = If(CMD_PopupForegroundLbl.BackColor.IsDark, CMD_PopupForegroundLbl.BackColor.LightLight, CMD_PopupForegroundLbl.BackColor.Dark(0.9))
             CMD_PopupForegroundLbl.ForeColor = FC0
 
-            CMD_PopupForegroundBar.AccentColor = CMD_PopupForegroundLbl.BackColor
+            'CMD_PopupForegroundBar.AccentColor = CMD_PopupForegroundLbl.BackColor
             CMD_PopupForegroundBar.Invalidate()
         ElseIf i = 2 Then
 
@@ -340,7 +340,7 @@ Public Class CMD
 
             Dim FC0 As Color = If(CMD_PopupBackgroundLbl.BackColor.IsDark, CMD_PopupBackgroundLbl.BackColor.LightLight, CMD_PopupBackgroundLbl.BackColor.Dark(0.9))
             CMD_PopupBackgroundLbl.ForeColor = FC0
-            CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
+            'CMD_PopupBackgroundBar.AccentColor = CMD_PopupBackgroundLbl.BackColor
             CMD_PopupBackgroundBar.Invalidate()
 
         ElseIf i = 3 Then
@@ -382,7 +382,7 @@ Public Class CMD
 
             Dim FC0 As Color = If(CMD_AccentBackgroundLbl.BackColor.IsDark, CMD_AccentBackgroundLbl.BackColor.LightLight, CMD_AccentBackgroundLbl.BackColor.Dark(0.9))
             CMD_AccentBackgroundLbl.ForeColor = FC0
-            CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
+            'CMD_AccentBackgroundBar.AccentColor = CMD_AccentBackgroundLbl.BackColor
             CMD_AccentBackgroundBar.Invalidate()
             CMD_PreviewCUR.BackColor = CMD_AccentBackgroundLbl.BackColor
 
@@ -429,7 +429,7 @@ Public Class CMD
 
             Dim FC0 As Color = If(CMD_AccentForegroundLbl.BackColor.IsDark, CMD_AccentForegroundLbl.BackColor.LightLight, CMD_AccentForegroundLbl.BackColor.Dark(0.9))
             CMD_AccentForegroundLbl.ForeColor = FC0
-            CMD_AccentForegroundBar.AccentColor = CMD_AccentForegroundLbl.BackColor
+            'CMD_AccentForegroundBar.AccentColor = CMD_AccentForegroundLbl.BackColor
             CMD_AccentForegroundBar.Invalidate()
 
         End If

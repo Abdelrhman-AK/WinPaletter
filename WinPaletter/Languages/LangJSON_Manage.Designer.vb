@@ -95,7 +95,6 @@ Partial Class LangJSON_Manage
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 13)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(833, 41)
@@ -189,7 +188,6 @@ Partial Class LangJSON_Manage
         Me.XenonGroupBox1.Controls.Add(Me.Label2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.TreeView1)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 60)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(833, 504)
@@ -229,7 +227,6 @@ Partial Class LangJSON_Manage
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Hint = Nothing
-        Me.XenonTextBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox3.Location = New System.Drawing.Point(439, 129)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = True
@@ -307,7 +304,6 @@ Partial Class LangJSON_Manage
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Hint = "Search"
-        Me.XenonTextBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox2.Location = New System.Drawing.Point(7, 40)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = True
@@ -329,7 +325,6 @@ Partial Class LangJSON_Manage
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonGroupBox2.Controls.Add(Me.Label6)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(7, 8)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Padding = New System.Windows.Forms.Padding(2)
@@ -371,7 +366,6 @@ Partial Class LangJSON_Manage
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(439, 288)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = True

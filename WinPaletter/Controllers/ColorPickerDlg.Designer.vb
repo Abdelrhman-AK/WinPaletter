@@ -197,7 +197,6 @@ Partial Class ColorPickerDlg
         'XenonNumericUpDown2
         '
         Me.XenonNumericUpDown2.EnabledCalc = True
-        Me.XenonNumericUpDown2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown2.Location = New System.Drawing.Point(351, 210)
         Me.XenonNumericUpDown2.Max = 100
         Me.XenonNumericUpDown2.Min = 5
@@ -210,7 +209,6 @@ Partial Class ColorPickerDlg
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = True
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -285,7 +283,6 @@ Partial Class ColorPickerDlg
         'XenonNumericUpDown1
         '
         Me.XenonNumericUpDown1.EnabledCalc = True
-        Me.XenonNumericUpDown1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonNumericUpDown1.Location = New System.Drawing.Point(351, 180)
         Me.XenonNumericUpDown1.Max = 100
         Me.XenonNumericUpDown1.Min = 5
@@ -365,7 +362,6 @@ Partial Class ColorPickerDlg
         Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TextBox1.ForeColor = System.Drawing.Color.White
         Me.TextBox1.Hint = Nothing
-        Me.TextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.TextBox1.Location = New System.Drawing.Point(80, 104)
         Me.TextBox1.MaxLength = 32767
         Me.TextBox1.Multiline = False
@@ -380,7 +376,6 @@ Partial Class ColorPickerDlg
         '
         'XenonRadioButton2
         '
-        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton2.Checked = False
         Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -393,7 +388,6 @@ Partial Class ColorPickerDlg
         '
         'XenonRadioButton1
         '
-        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonRadioButton1.Checked = True
         Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -652,7 +646,6 @@ Partial Class ColorPickerDlg
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(142, 85)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(226, 24)
@@ -701,7 +694,6 @@ Partial Class ColorPickerDlg
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(142, 48)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -781,7 +773,6 @@ Partial Class ColorPickerDlg
         Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
-        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox2.Location = New System.Drawing.Point(8, 47)
         Me.XenonComboBox2.Name = "XenonComboBox2"
         Me.XenonComboBox2.Size = New System.Drawing.Size(442, 24)

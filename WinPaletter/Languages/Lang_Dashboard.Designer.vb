@@ -49,7 +49,6 @@ Partial Class Lang_Dashboard
         Me.XenonGroupBox1.Controls.Add(Me.Label2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(611, 64)
@@ -116,7 +115,6 @@ Partial Class Lang_Dashboard
         Me.XenonGroupBox2.Controls.Add(Me.Label3)
         Me.XenonGroupBox2.Controls.Add(Me.Label4)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 82)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(611, 64)

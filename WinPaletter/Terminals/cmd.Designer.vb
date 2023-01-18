@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class cmd
+Partial Class CMD
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class cmd
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(cmd))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CMD))
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
@@ -207,7 +207,6 @@ Partial Class cmd
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox3.Controls.Add(Me.CMDEnabled)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox5)
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(896, 39)
@@ -282,14 +281,13 @@ Partial Class cmd
         '
         'CMDEnabled
         '
-        Me.CMDEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.CMDEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMDEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CMDEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.CMDEnabled.Checked = False
         Me.CMDEnabled.DarkLight_Toggler = False
-        Me.CMDEnabled.Location = New System.Drawing.Point(841, 7)
+        Me.CMDEnabled.Location = New System.Drawing.Point(847, 9)
         Me.CMDEnabled.Name = "CMDEnabled"
-        Me.CMDEnabled.Size = New System.Drawing.Size(50, 24)
+        Me.CMDEnabled.Size = New System.Drawing.Size(40, 20)
         Me.CMDEnabled.TabIndex = 85
         '
         'PictureBox5
@@ -323,7 +321,6 @@ Partial Class cmd
         Me.XenonGroupBox2.Controls.Add(Me.Label49)
         Me.XenonGroupBox2.Controls.Add(Me.CMD_PopupForegroundBar)
         Me.XenonGroupBox2.Controls.Add(Me.Label6)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(6, 298)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(301, 245)
@@ -413,7 +410,6 @@ Partial Class cmd
         '
         'CMD_AccentBackgroundBar
         '
-        Me.CMD_AccentBackgroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_AccentBackgroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentBackgroundBar.LargeChange = 10
@@ -429,7 +425,6 @@ Partial Class cmd
         '
         'CMD_PopupBackgroundBar
         '
-        Me.CMD_PopupBackgroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_PopupBackgroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupBackgroundBar.LargeChange = 10
@@ -445,7 +440,6 @@ Partial Class cmd
         '
         'CMD_AccentForegroundBar
         '
-        Me.CMD_AccentForegroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_AccentForegroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentForegroundBar.LargeChange = 10
@@ -500,7 +494,6 @@ Partial Class cmd
         '
         'CMD_PopupForegroundBar
         '
-        Me.CMD_PopupForegroundBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_PopupForegroundBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupForegroundBar.LargeChange = 10
@@ -529,7 +522,6 @@ Partial Class cmd
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = False
@@ -557,7 +549,6 @@ Partial Class cmd
         Me.XenonGroupBox12.Controls.Add(Me.CMD_OpacityBar)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox11)
         Me.XenonGroupBox12.Controls.Add(Me.Label57)
-        Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox12.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(301, 150)
@@ -585,7 +576,6 @@ Partial Class cmd
         '
         'CMD_LineSelection
         '
-        Me.CMD_LineSelection.AccentColor = System.Drawing.Color.DodgerBlue
         Me.CMD_LineSelection.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_LineSelection.Checked = False
         Me.CMD_LineSelection.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -610,7 +600,6 @@ Partial Class cmd
         '
         'CMD_EnhancedTerminal
         '
-        Me.CMD_EnhancedTerminal.AccentColor = System.Drawing.Color.DodgerBlue
         Me.CMD_EnhancedTerminal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_EnhancedTerminal.Checked = False
         Me.CMD_EnhancedTerminal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -633,7 +622,6 @@ Partial Class cmd
         '
         'CMD_TerminalScrolling
         '
-        Me.CMD_TerminalScrolling.AccentColor = System.Drawing.Color.DodgerBlue
         Me.CMD_TerminalScrolling.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_TerminalScrolling.Checked = False
         Me.CMD_TerminalScrolling.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -646,7 +634,6 @@ Partial Class cmd
         '
         'CMD_OpacityBar
         '
-        Me.CMD_OpacityBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_OpacityBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_OpacityBar.LargeChange = 10
@@ -711,7 +698,6 @@ Partial Class cmd
         Me.XenonGroupBox34.Controls.Add(Me.CMD_PreviewCUR)
         Me.XenonGroupBox34.Controls.Add(Me.CMD_CursorColor)
         Me.XenonGroupBox34.Controls.Add(Me.PictureBox8)
-        Me.XenonGroupBox34.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox34.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(301, 97)
@@ -750,11 +736,11 @@ Partial Class cmd
         Me.CMD_CursorStyle.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_CursorStyle.ForeColor = System.Drawing.Color.White
         Me.CMD_CursorStyle.FormattingEnabled = True
+        Me.CMD_CursorStyle.ItemHeight = 20
         Me.CMD_CursorStyle.Items.AddRange(New Object() {"Default", "Legacy", "Underscore", "Empty Box", "Vertical Bar", "Solid Box"})
-        Me.CMD_CursorStyle.LineColor = System.Drawing.Color.DodgerBlue
         Me.CMD_CursorStyle.Location = New System.Drawing.Point(97, 36)
         Me.CMD_CursorStyle.Name = "CMD_CursorStyle"
-        Me.CMD_CursorStyle.Size = New System.Drawing.Size(199, 24)
+        Me.CMD_CursorStyle.Size = New System.Drawing.Size(199, 26)
         Me.CMD_CursorStyle.TabIndex = 110
         '
         'Label60
@@ -770,7 +756,6 @@ Partial Class cmd
         '
         'CMD_CursorSizeBar
         '
-        Me.CMD_CursorSizeBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_CursorSizeBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_CursorSizeBar.LargeChange = 1
@@ -906,7 +891,6 @@ Partial Class cmd
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox4.Controls.Add(Me.Label59)
         Me.XenonGroupBox4.Controls.Add(Me.RasterList)
-        Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox4.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 128)
@@ -914,14 +898,13 @@ Partial Class cmd
         '
         'CMD_RasterToggle
         '
-        Me.CMD_RasterToggle.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.CMD_RasterToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.CMD_RasterToggle.Checked = False
         Me.CMD_RasterToggle.DarkLight_Toggler = False
         Me.CMD_RasterToggle.Location = New System.Drawing.Point(248, 96)
         Me.CMD_RasterToggle.Name = "CMD_RasterToggle"
-        Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 24)
+        Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 20)
         Me.CMD_RasterToggle.TabIndex = 95
         '
         'PictureBox1
@@ -956,15 +939,14 @@ Partial Class cmd
         Me.CMD_FontsBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_FontsBox.ForeColor = System.Drawing.Color.White
         Me.CMD_FontsBox.FormattingEnabled = True
-        Me.CMD_FontsBox.LineColor = System.Drawing.Color.DodgerBlue
+        Me.CMD_FontsBox.ItemHeight = 20
         Me.CMD_FontsBox.Location = New System.Drawing.Point(96, 6)
         Me.CMD_FontsBox.Name = "CMD_FontsBox"
-        Me.CMD_FontsBox.Size = New System.Drawing.Size(199, 24)
+        Me.CMD_FontsBox.Size = New System.Drawing.Size(199, 26)
         Me.CMD_FontsBox.TabIndex = 100
         '
         'CMD_FontSizeBar
         '
-        Me.CMD_FontSizeBar.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.CMD_FontSizeBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_FontSizeBar.LargeChange = 10
@@ -989,11 +971,11 @@ Partial Class cmd
         Me.CMD_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.CMD_FontWeightBox.FormattingEnabled = True
+        Me.CMD_FontWeightBox.ItemHeight = 20
         Me.CMD_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
-        Me.CMD_FontWeightBox.LineColor = System.Drawing.Color.DodgerBlue
         Me.CMD_FontWeightBox.Location = New System.Drawing.Point(96, 36)
         Me.CMD_FontWeightBox.Name = "CMD_FontWeightBox"
-        Me.CMD_FontWeightBox.Size = New System.Drawing.Size(172, 24)
+        Me.CMD_FontWeightBox.Size = New System.Drawing.Size(172, 26)
         Me.CMD_FontWeightBox.TabIndex = 99
         '
         'CMD_FontSizeLbl
@@ -1098,11 +1080,11 @@ Partial Class cmd
         Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.RasterList.ForeColor = System.Drawing.Color.White
         Me.RasterList.FormattingEnabled = True
+        Me.RasterList.ItemHeight = 20
         Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
-        Me.RasterList.LineColor = System.Drawing.Color.DodgerBlue
         Me.RasterList.Location = New System.Drawing.Point(96, 66)
         Me.RasterList.Name = "RasterList"
-        Me.RasterList.Size = New System.Drawing.Size(199, 24)
+        Me.RasterList.Size = New System.Drawing.Size(199, 26)
         Me.RasterList.TabIndex = 104
         Me.RasterList.Visible = False
         '
@@ -1161,7 +1143,6 @@ Partial Class cmd
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable12)
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable10)
         Me.XenonGroupBox1.Controls.Add(Me.ColorTable11)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(301, 286)
@@ -1567,7 +1548,6 @@ Partial Class cmd
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.XenonCMD1)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.Location = New System.Drawing.Point(436, 63)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
@@ -1748,7 +1728,7 @@ Partial Class cmd
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Tweaks"
         '
-        'cmd
+        'CMD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1770,7 +1750,7 @@ Partial Class cmd
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "cmd"
+        Me.Name = "CMD"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Terminals"
         Me.XenonGroupBox3.ResumeLayout(False)

@@ -56,6 +56,7 @@ Partial Class Metrics_Fonts
         Me.Label45 = New System.Windows.Forms.Label()
         Me.Label48 = New System.Windows.Forms.Label()
         Me.previewContainer = New WinPaletter.XenonGroupBox()
+        Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.pnl_preview1 = New System.Windows.Forms.Panel()
@@ -198,7 +199,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -279,7 +279,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
         Me.XenonGroupBox12.Controls.Add(Me.MetricsEnabled)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox30)
-        Me.XenonGroupBox12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(1078, 39)
@@ -354,21 +353,20 @@ Partial Class Metrics_Fonts
         '
         'MetricsEnabled
         '
-        Me.MetricsEnabled.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.MetricsEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.MetricsEnabled.Checked = False
         Me.MetricsEnabled.DarkLight_Toggler = False
-        Me.MetricsEnabled.Location = New System.Drawing.Point(1023, 7)
+        Me.MetricsEnabled.Location = New System.Drawing.Point(1031, 9)
         Me.MetricsEnabled.Name = "MetricsEnabled"
-        Me.MetricsEnabled.Size = New System.Drawing.Size(50, 24)
+        Me.MetricsEnabled.Size = New System.Drawing.Size(40, 20)
         Me.MetricsEnabled.TabIndex = 85
         '
         'PictureBox30
         '
         Me.PictureBox30.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
-        Me.PictureBox30.Location = New System.Drawing.Point(986, 4)
+        Me.PictureBox30.Location = New System.Drawing.Point(990, 4)
         Me.PictureBox30.Name = "PictureBox30"
         Me.PictureBox30.Size = New System.Drawing.Size(35, 31)
         Me.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -423,7 +421,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox4.Controls.Add(Me.Label59)
         Me.XenonGroupBox4.Controls.Add(Me.Label1)
         Me.XenonGroupBox4.Controls.Add(Me.XenonButton1)
-        Me.XenonGroupBox4.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox4.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(402, 146)
@@ -559,7 +556,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox2.Controls.Add(Me.XenonTrackbar14)
         Me.XenonGroupBox2.Controls.Add(Me.Label45)
         Me.XenonGroupBox2.Controls.Add(Me.Label48)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(6, 328)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(402, 105)
@@ -619,7 +615,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar13
         '
-        Me.XenonTrackbar13.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar13.LargeChange = 10
@@ -658,7 +653,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar14
         '
-        Me.XenonTrackbar14.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar14.LargeChange = 10
@@ -698,7 +692,6 @@ Partial Class Metrics_Fonts
         Me.previewContainer.Controls.Add(Me.PictureBox41)
         Me.previewContainer.Controls.Add(Me.Label19)
         Me.previewContainer.Controls.Add(Me.pnl_preview1)
-        Me.previewContainer.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.previewContainer.Location = New System.Drawing.Point(415, 6)
         Me.previewContainer.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.previewContainer.Name = "previewContainer"
@@ -706,6 +699,23 @@ Partial Class Metrics_Fonts
         Me.previewContainer.Size = New System.Drawing.Size(536, 340)
         Me.previewContainer.TabIndex = 130
         Me.previewContainer.Text = "XenonGroupBox8"
+        '
+        'XenonButton13
+        '
+        Me.XenonButton13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton13.ForeColor = System.Drawing.Color.White
+        Me.XenonButton13.Image = Nothing
+        Me.XenonButton13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.XenonButton13.LineSize = 1
+        Me.XenonButton13.Location = New System.Drawing.Point(321, 5)
+        Me.XenonButton13.Name = "XenonButton13"
+        Me.XenonButton13.Size = New System.Drawing.Size(211, 30)
+        Me.XenonButton13.TabIndex = 85
+        Me.XenonButton13.Text = "Toggle Modern\Classic Preview"
+        Me.XenonButton13.UseVisualStyleBackColor = False
         '
         'PictureBox41
         '
@@ -924,7 +934,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox1.Controls.Add(Me.XenonTrackbar3)
         Me.XenonGroupBox1.Controls.Add(Me.Label8)
         Me.XenonGroupBox1.Controls.Add(Me.XenonTrackbar2)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(6, 157)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(402, 165)
@@ -1054,7 +1063,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar12
         '
-        Me.XenonTrackbar12.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar12.LargeChange = 10
@@ -1093,7 +1101,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar1
         '
-        Me.XenonTrackbar1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar1.LargeChange = 10
@@ -1118,7 +1125,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar3
         '
-        Me.XenonTrackbar3.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar3.LargeChange = 10
@@ -1143,7 +1149,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar2
         '
-        Me.XenonTrackbar2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar2.LargeChange = 10
@@ -1199,7 +1204,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox13.Controls.Add(Me.PictureBox17)
         Me.XenonGroupBox13.Controls.Add(Me.Label24)
         Me.XenonGroupBox13.Controls.Add(Me.pnl_preview2)
-        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox13.Location = New System.Drawing.Point(415, 6)
         Me.XenonGroupBox13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
@@ -1314,7 +1318,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox5.Controls.Add(Me.XenonTrackbar7)
         Me.XenonGroupBox5.Controls.Add(Me.Label16)
-        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox5.Location = New System.Drawing.Point(6, 181)
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(402, 105)
@@ -1364,7 +1367,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar5
         '
-        Me.XenonTrackbar5.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar5.LargeChange = 10
@@ -1422,7 +1424,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar7
         '
-        Me.XenonTrackbar7.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar7.LargeChange = 10
@@ -1452,7 +1453,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox6.Controls.Add(Me.Label37)
         Me.XenonGroupBox6.Controls.Add(Me.XenonButton2)
         Me.XenonGroupBox6.Controls.Add(Me.Label2)
-        Me.XenonGroupBox6.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox6.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox6.Name = "XenonGroupBox6"
         Me.XenonGroupBox6.Size = New System.Drawing.Size(402, 58)
@@ -1519,7 +1519,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox3.Controls.Add(Me.Label49)
         Me.XenonGroupBox3.Controls.Add(Me.XenonTrackbar4)
         Me.XenonGroupBox3.Controls.Add(Me.XenonTrackbar6)
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(6, 70)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(402, 105)
@@ -1620,7 +1619,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar4
         '
-        Me.XenonTrackbar4.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar4.LargeChange = 10
@@ -1636,7 +1634,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar6
         '
-        Me.XenonTrackbar6.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar6.LargeChange = 10
@@ -1670,7 +1667,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox14.Controls.Add(Me.PictureBox33)
         Me.XenonGroupBox14.Controls.Add(Me.Label27)
         Me.XenonGroupBox14.Controls.Add(Me.pnl_preview3)
-        Me.XenonGroupBox14.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox14.Location = New System.Drawing.Point(415, 6)
         Me.XenonGroupBox14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox14.Name = "XenonGroupBox14"
@@ -1826,7 +1822,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox7.Controls.Add(Me.Label3)
         Me.XenonGroupBox7.Controls.Add(Me.PictureBox18)
         Me.XenonGroupBox7.Controls.Add(Me.Label17)
-        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox7.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
         Me.XenonGroupBox7.Size = New System.Drawing.Size(402, 58)
@@ -1893,7 +1888,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox8.Controls.Add(Me.Label21)
         Me.XenonGroupBox8.Controls.Add(Me.Label46)
         Me.XenonGroupBox8.Controls.Add(Me.Label47)
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.Location = New System.Drawing.Point(6, 70)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
         Me.XenonGroupBox8.Size = New System.Drawing.Size(402, 107)
@@ -1953,7 +1947,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar9
         '
-        Me.XenonTrackbar9.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar9.LargeChange = 10
@@ -1969,7 +1962,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar8
         '
-        Me.XenonTrackbar8.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar8.LargeChange = 10
@@ -2045,7 +2037,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox15.Controls.Add(Me.PictureBox34)
         Me.XenonGroupBox15.Controls.Add(Me.Label36)
         Me.XenonGroupBox15.Controls.Add(Me.pnl_preview4)
-        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox15.Location = New System.Drawing.Point(415, 6)
         Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
@@ -2200,7 +2191,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox32)
         Me.XenonGroupBox11.Controls.Add(Me.Label20)
         Me.XenonGroupBox11.Controls.Add(Me.Label55)
-        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox11.Location = New System.Drawing.Point(6, 271)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(402, 75)
@@ -2218,14 +2208,13 @@ Partial Class Metrics_Fonts
         '
         'XenonToggle1
         '
-        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonToggle1.Checked = False
         Me.XenonToggle1.DarkLight_Toggler = False
         Me.XenonToggle1.Location = New System.Drawing.Point(347, 44)
         Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(50, 24)
+        Me.XenonToggle1.Size = New System.Drawing.Size(50, 20)
         Me.XenonToggle1.TabIndex = 128
         '
         'PictureBox32
@@ -2273,7 +2262,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox10.Controls.Add(Me.Label53)
         Me.XenonGroupBox10.Controls.Add(Me.Label54)
         Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar11)
-        Me.XenonGroupBox10.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox10.Location = New System.Drawing.Point(6, 158)
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
         Me.XenonGroupBox10.Size = New System.Drawing.Size(402, 107)
@@ -2356,7 +2344,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar10
         '
-        Me.XenonTrackbar10.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar10.LargeChange = 10
@@ -2390,7 +2377,6 @@ Partial Class Metrics_Fonts
         '
         'XenonTrackbar11
         '
-        Me.XenonTrackbar11.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar11.LargeChange = 10
@@ -2417,7 +2403,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox9.Controls.Add(Me.Label18)
         Me.XenonGroupBox9.Controls.Add(Me.PictureBox26)
         Me.XenonGroupBox9.Controls.Add(Me.Label50)
-        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox9.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox9.Name = "XenonGroupBox9"
         Me.XenonGroupBox9.Size = New System.Drawing.Size(402, 146)
@@ -2594,23 +2579,6 @@ Partial Class Metrics_Fonts
         '
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
-        '
-        'XenonButton13
-        '
-        Me.XenonButton13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton13.ForeColor = System.Drawing.Color.White
-        Me.XenonButton13.Image = Nothing
-        Me.XenonButton13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.XenonButton13.LineSize = 1
-        Me.XenonButton13.Location = New System.Drawing.Point(321, 5)
-        Me.XenonButton13.Name = "XenonButton13"
-        Me.XenonButton13.Size = New System.Drawing.Size(211, 30)
-        Me.XenonButton13.TabIndex = 85
-        Me.XenonButton13.Text = "Toggle Modern\Classic Preview"
-        Me.XenonButton13.UseVisualStyleBackColor = False
         '
         'Metrics_Fonts
         '

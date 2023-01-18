@@ -79,7 +79,6 @@ Partial Class ComplexSave
         Me.XenonGroupBox1.Controls.Add(Me.XenonRadioButton1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(54, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(8, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 70)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
@@ -89,7 +88,6 @@ Partial Class ComplexSave
         '
         'XenonRadioButton3
         '
-        Me.XenonRadioButton3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonRadioButton3.Checked = True
         Me.XenonRadioButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -102,7 +100,6 @@ Partial Class ComplexSave
         '
         'XenonRadioButton2
         '
-        Me.XenonRadioButton2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonRadioButton2.Checked = False
         Me.XenonRadioButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -115,7 +112,6 @@ Partial Class ComplexSave
         '
         'XenonRadioButton1
         '
-        Me.XenonRadioButton1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonRadioButton1.Checked = False
         Me.XenonRadioButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -154,7 +150,6 @@ Partial Class ComplexSave
         Me.XenonGroupBox2.Controls.Add(Me.XenonCheckBox1)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(54, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(8, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 206)
         Me.XenonGroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
@@ -164,7 +159,6 @@ Partial Class ComplexSave
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.XenonCheckBox1.Checked = True
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -256,7 +250,6 @@ Partial Class ComplexSave
         '
         'XenonCheckBox2
         '
-        Me.XenonCheckBox2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.XenonCheckBox2.Checked = True
         Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)

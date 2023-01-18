@@ -61,7 +61,6 @@ Partial Class Uninstall
         Me.XenonGroupBox1.Controls.Add(Me.Label2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(677, 86)
@@ -128,7 +127,6 @@ Partial Class Uninstall
         '
         'XenonCheckBox1
         '
-        Me.XenonCheckBox1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox1.Checked = True
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -151,7 +149,6 @@ Partial Class Uninstall
         '
         'XenonCheckBox2
         '
-        Me.XenonCheckBox2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox2.Checked = True
         Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -174,7 +171,6 @@ Partial Class Uninstall
         '
         'XenonRadioImage1
         '
-        Me.XenonRadioImage1.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioImage1.Checked = True
         Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
@@ -188,7 +184,6 @@ Partial Class Uninstall
         '
         'XenonRadioImage2
         '
-        Me.XenonRadioImage2.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioImage2.Checked = False
         Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
@@ -202,7 +197,6 @@ Partial Class Uninstall
         '
         'XenonRadioImage3
         '
-        Me.XenonRadioImage3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonRadioImage3.Checked = False
         Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
@@ -287,7 +281,6 @@ Partial Class Uninstall
         '
         'XenonCheckBox3
         '
-        Me.XenonCheckBox3.AccentColor = System.Drawing.Color.DodgerBlue
         Me.XenonCheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox3.Checked = True
         Me.XenonCheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)

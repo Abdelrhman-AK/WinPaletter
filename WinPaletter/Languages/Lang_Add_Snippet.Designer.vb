@@ -85,7 +85,6 @@ Partial Class Lang_Add_Snippet
         Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.IntegralHeight = False
-        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox2.Location = New System.Drawing.Point(96, 82)
         Me.XenonComboBox2.Name = "XenonComboBox2"
         Me.XenonComboBox2.Size = New System.Drawing.Size(230, 24)
@@ -120,7 +119,6 @@ Partial Class Lang_Add_Snippet
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
         Me.XenonComboBox1.IntegralHeight = False
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(96, 12)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(314, 24)

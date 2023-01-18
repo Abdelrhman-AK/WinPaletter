@@ -2,10 +2,10 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonCore
 
-#Region "Helpers"
 Module XenonModule
     Sub New()
         TextBitmap = New Bitmap(1, 1)
@@ -20,24 +20,27 @@ Module XenonModule
     ''' </summary>
     Public Style As New XenonStyle
 
-    Public Sub GlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
-        Dim bm As New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
+    <Extension()>
+    Public Sub DrawGlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
+        Dim bm As Bitmap = New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
         Dim g2 As Graphics = Graphics.FromImage(bm)
-        Dim pth As New GraphicsPath()
-        pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.Size, Rect, FormatX)
-        Dim mx As New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+        Dim pth As GraphicsPath = New GraphicsPath()
+        pth.AddString(Ctrl.Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
+        Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
         g2.SmoothingMode = SmoothingMode.AntiAlias
         g2.Transform = mx
-        Dim p As New Pen(GlowColor, GlowSize)
+        Dim p As Pen = New Pen(GlowColor, GlowSize)
         g2.DrawPath(p, pth)
         g2.FillPath(New SolidBrush(GlowColor), pth)
         G.InterpolationMode = InterpolationMode.HighQualityBicubic
         G.DrawImage(bm, Ctrl.ClientRectangle, 0, 0, bm.Width, bm.Height, GraphicsUnit.Pixel)
         'G.FillPath(New SolidBrush([ForeColor]), pth)
-        G.DrawString(Text, Ctrl.Font, New SolidBrush([ForeColor]), New Rectangle(Rect.X, Rect.Y, Rect.Width, Rect.Height), FormatX)
+        G.DrawString(Ctrl.Text, Ctrl.Font, New SolidBrush([ForeColor]), Rect, StringAligner(ContentAlignment.MiddleLeft))
         g2.Dispose()
         pth.Dispose()
     End Sub
+
+
     Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
         Dim oStringFormat As New StringFormat()
         Select Case goTextAlign
@@ -74,6 +77,8 @@ Module XenonModule
 
         Return oStringFormat
     End Function
+
+    <Extension()>
     Public Sub DrawGlow(G As Graphics, R As Rectangle, ByVal GlowColor As Color, Optional ByVal GlowSize As Integer = 5, Optional ByVal GlowFade As Integer = 7)
         Try
             If GlowSize <= 0 Then GlowSize = 1
@@ -93,6 +98,8 @@ Module XenonModule
         Catch
         End Try
     End Sub
+
+    <Extension()>
     Friend Function GetParentColor(ByVal ctrl As Control, Optional ByVal Accept_Transparent As Boolean = False) As Color
 
         If Accept_Transparent Then
@@ -146,30 +153,32 @@ Module XenonModule
             Return False
         End Try
     End Function
-    Public Sub DrawAero(G As Graphics, Rect As Rectangle, BackgroundBlurred As Bitmap, Color1 As Color, ColorBalance As Single, Color2 As Color, GlowBalance As Single, alpha As Single,
+
+    <Extension()>
+    Public Sub DrawAeroEffect(G As Graphics, Rect As Rectangle, BackgroundBlurred As Bitmap, Color1 As Color, ColorBalance As Single, Color2 As Color, GlowBalance As Single, alpha As Single,
                        Radius As Integer, RoundedCorners As Boolean)
 
 
         If RoundedCorners Then
-            FillImg(G, BackgroundBlurred, Rect, Radius, True)
+            G.FillRoundedImg(BackgroundBlurred, Rect, Radius, True)
 
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)), Rect, Radius, True)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)), Rect, Radius, True)
 
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha * (ColorBalance * 255), Color1)), Rect, Radius, True)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * (ColorBalance * 255), Color1)), Rect, Radius, True)
 
             Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
             Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
 
             'Dim bk1 As Bitmap = FadeBitmap(ColorTint(BackgroundBlurred, C1), ColorBalance * (1 - alpha))
             'bk1 = FadeBitmap(bk1, 0.5)
-            'FillImg(G, bk1, Rect, Radius, True)
+            'G.FillRoundedImg( bk1, Rect, Radius, True)
 
             'Dim bk2 As Bitmap = FadeBitmap(Gray-scale(BackgroundBlurred), alpha * GlowBalance)
             'bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
-            'FillImg(G, bk2, Rect, Radius, True)
+            'G.FillRoundedImg( bk2, Rect, Radius, True)
 
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))), Rect, Radius, True)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))), Rect, Radius, True)
         Else
             G.DrawImage(BackgroundBlurred, Rect)
 
@@ -195,8 +204,11 @@ Module XenonModule
 
 
     End Sub
+
 #Region "Rounded Rectangle System"
-    Public Sub FillRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+
+    <Extension()>
+    Public Sub FillRoundedRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 5
 
@@ -204,7 +216,7 @@ Module XenonModule
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                Using path As GraphicsPath = Rectangle.Round(Radius)
                     Graphics.FillPath(Brush, path)
                 End Using
             Else
@@ -214,14 +226,15 @@ Module XenonModule
         End Try
     End Sub
 
-    Public Sub FillImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    <Extension()>
+    Public Sub FillRoundedImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 5
 
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                Using path As GraphicsPath = Rectangle.Round(Radius)
                     Dim reg As New Region(path)
                     [Graphics].Clip = reg
                     [Graphics].SmoothingMode = SmoothingMode.AntiAlias
@@ -235,7 +248,8 @@ Module XenonModule
         End Try
     End Sub
 
-    Public Function RoundedRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    <Extension()>
+    Public Function Round(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -259,7 +273,8 @@ Module XenonModule
         End Try
     End Function
 
-    Public Sub DrawRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    <Extension()>
+    Public Sub DrawRoundedRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
             [Radius_willbe_x2] *= 2
@@ -281,31 +296,32 @@ Module XenonModule
         End Try
     End Sub
 
-    Public Sub DrawRect_LikeW11(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    <Extension()>
+    Public Sub DrawRoundedRect_LikeW11(ByVal [Graphics] As Graphics, ByVal [PenX] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
-            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
-            [Radius_willbe_x2] *= 2
+            If [Radius] = -1 Then [Radius] = 5
+            [Radius] *= 2
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
-            Dim [Pen] As Pen
-            Dim [Pen2] As Pen
-            Dim SidePen As Pen
+            Dim [Pen] As New Pen([PenX].Color)
+            Dim [Pen2] As New Pen([PenX].Color)
+            Dim SidePen As New Pen([PenX].Color)
 
             If GetDarkMode() Then
-                [Pen] = New Pen(BorderColor.CB(0.06))
-                [Pen2] = New Pen(BorderColor) '.CB(-0.1)) '-0.085)) 
+                [Pen].Color = [PenX].Color.CB(0.06)
+                [Pen2].Color = [PenX].Color '.CB(-0.1)) '-0.085)) 
             Else
-                [Pen] = New Pen(BorderColor.CB(-0.05))
-                [Pen2] = New Pen(BorderColor.CB(-0.13))
+                [Pen].Color = [PenX].Color.CB(-0.05)
+                [Pen2].Color = [PenX].Color.CB(-0.13)
             End If
 
             Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
             Dim [PenG] As New Pen(G)
 
-            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
-                [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
-                [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
-                [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
+                [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
 
                 If GetDarkMode() Then
                     SidePen = [Pen2]
@@ -313,12 +329,12 @@ Module XenonModule
                     SidePen = [Pen]
                 End If
 
-                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
+                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
 
-                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
-                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
+                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
+                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
             Else
                 [Graphics].DrawRectangle([Pen], [Rectangle])
             End If
@@ -327,8 +343,6 @@ Module XenonModule
     End Sub
 #End Region
 End Module
-
-#End Region
 
 #Region "Xenon UI"
 Public Class TablessControl
@@ -389,7 +403,7 @@ Public Class XenonTabControl : Inherits TabControl
 
         Dim SelectColor As Color
         Dim TextColor As Color
-        Dim ParentColor As Color = GetParentColor(Me)
+        Dim ParentColor As Color = GetParentColor
         Dim RTL As Boolean = (RightToLeft = 1)
         Dim img As Image = Nothing
 
@@ -413,8 +427,8 @@ Public Class XenonTabControl : Inherits TabControl
             If Not GetDarkMode() Then SelectColor = SelectColor.LightLight
 
             If i = SelectedIndex Then
-                FillRect(G, New SolidBrush(SelectColor), TabRect)
-                FillRect(G, Noise, TabRect)
+                G.FillRoundedRect(New SolidBrush(SelectColor), TabRect)
+                G.FillRoundedRect(Noise, TabRect)
                 TextColor = If(SelectColor.IsDark, Color.White, Color.Black)
             Else
                 TextColor = If(ParentColor.IsDark, Color.White, Color.Black)
@@ -483,7 +497,6 @@ Public Class XenonToggle
         DoubleBuffered = True
         Size = New Size(40, 20)
     End Sub
-    Public Property AccentColor As Color = Color.FromArgb(0, 123, 178)
 
     Public Property DarkLight_Toggler As Boolean = False
 
@@ -575,7 +588,7 @@ Public Class XenonToggle
 
         BackColor = Style.Colors.Back
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
         '################################################################################# Customizer
         Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -605,11 +618,11 @@ Public Class XenonToggle
 
         If Not DarkLight_Toggler Then
 
-            FillRect(e.Graphics, New SolidBrush(Color.FromArgb(255 * val, Style.Colors.Border_Checked_Hover)), MainRect, 9, True)
+            e.Graphics.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * val, Style.Colors.Border_Checked_Hover)), MainRect, 9, True)
 
-            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * val, Style.Colors.Border_Checked)), MainRect, 9, True)
+            e.Graphics.DrawRoundedRect(New Pen(Color.FromArgb(255 * val, Style.Colors.Border_Checked)), MainRect, 9, True)
 
-            DrawRect(e.Graphics, New Pen(Color.FromArgb(255 * (1 - val), BorderColor)), MainRect, 9, True)
+            e.Graphics.DrawRoundedRect(New Pen(Color.FromArgb(255 * (1 - val), BorderColor)), MainRect, 9, True)
 
             If Checked Then
                 G.FillEllipse(New SolidBrush(If(GetDarkMode(), Color.Black, Color.White)), CheckC)
@@ -619,8 +632,8 @@ Public Class XenonToggle
 
         Else
 
-            FillRect(e.Graphics, lgbChecked, MainRect, 9, True)
-            FillRect(e.Graphics, lgbNonChecked, MainRect, 9, True)
+            e.Graphics.FillRoundedRect(lgbChecked, MainRect, 9, True)
+            e.Graphics.FillRoundedRect(lgbNonChecked, MainRect, 9, True)
 
             If Checked Then
                 G.DrawImage(If(BorderColor.IsDark, My.Resources.darkmode_dark, My.Resources.darkmode_light).Fade(val), CheckC)
@@ -630,8 +643,8 @@ Public Class XenonToggle
                 G.DrawImage(If(Style.Colors.BaseColor.IsDark, My.Resources.lightmode_dark, My.Resources.lightmode_light).Fade(1 - val), CheckC)
             End If
 
-            DrawRect(e.Graphics, New Pen(lgborderChecked), MainRect, 9, True)
-            DrawRect(e.Graphics, New Pen(lgborderNonChecked), MainRect, 9, True)
+            e.Graphics.DrawRoundedRect(New Pen(lgborderChecked), MainRect, 9, True)
+            e.Graphics.DrawRoundedRect(New Pen(lgborderNonChecked), MainRect, 9, True)
         End If
     End Sub
 
@@ -740,7 +753,6 @@ Public Class XenonRadioButton
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
         DoubleBuffered = True
-        AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
 
@@ -786,27 +798,6 @@ Public Class XenonRadioButton
     End Property
 
     Private _Checked As Boolean
-#Region "Accent Color Property"
-    Private AccentColorValue As Color = Color.DodgerBlue
-    Public Event AccentColorChanged As PropertyChangedEventHandler
-
-    Private Sub AccentColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent AccentColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property AccentColor() As Color
-        Get
-            Return AccentColorValue
-        End Get
-
-        Set(ByVal AccentColor As Color)
-            If Not (AccentColor = AccentColorValue) Then
-                AccentColorValue = AccentColor
-                AccentColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-#End Region
 #End Region
 
 #Region "Events"
@@ -961,12 +952,12 @@ Public Class XenonRadioButton
 
     Private SZ1 As SizeF
 
-    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Try
             Dim G As Graphics = e.Graphics
             If Parent Is Nothing Then Exit Sub
             BackColor = Parent.BackColor
-            Dim clr As Color = AccentColor
+            Dim clr As Color = Style.Colors.Core
 
             G = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
@@ -997,7 +988,7 @@ Public Class XenonRadioButton
             Dim CheckCircle_Color As Color = Color.FromArgb(alpha2, Style.Colors.Core)
             Dim NonHoverCircle_Color As Color = Style.Colors.Border
             Dim BackCircle_Color As Color = Style.Colors.Back
-            Dim ParentColor As Color = GetParentColor(Me)
+            Dim ParentColor As Color = GetParentColor
 #End Region
             '#################################################################################
 
@@ -1039,7 +1030,6 @@ Public Class XenonRadioImage
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
         DoubleBuffered = True
-        AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
     End Sub
@@ -1080,27 +1070,6 @@ Public Class XenonRadioImage
     Private _Checked As Boolean
     Public Property ShowText As Boolean = False
 
-#Region "Accent Color Property"
-    Private AccentColorValue As Color = Color.DodgerBlue
-    Public Event AccentColorChanged As PropertyChangedEventHandler
-
-    Private Sub AccentColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent AccentColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property AccentColor() As Color
-        Get
-            Return AccentColorValue
-        End Get
-
-        Set(ByVal AccentColor As Color)
-            If Not (AccentColor = AccentColorValue) Then
-                AccentColorValue = AccentColor
-                AccentColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-#End Region
 #End Region
 
 #Region "Events"
@@ -1215,7 +1184,7 @@ Public Class XenonRadioImage
         Try
             Dim G As Graphics = e.Graphics
             If Parent Is Nothing Then Exit Sub
-            G.Clear(GetParentColor(Me))
+            G.Clear(GetParentColor)
 
             G = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
@@ -1228,19 +1197,19 @@ Public Class XenonRadioImage
 
             If Image IsNot Nothing Then CenterRect = New Rectangle(MainRect.X + (MainRect.Width - Image.Width) / 2,
                                         MainRect.Y + (MainRect.Height - Image.Height) / 2,
-                                         Image.Width, Image.Height)
+                                        Image.Width, Image.Height)
 
             Dim bkC As Color = If(_Checked, Style.Colors.Back_Checked, Style.Colors.Back_Hover)
             Dim bkCC As Color = Color.FromArgb(alpha, Style.Colors.Back_Checked)
 
-            FillRect(G, New SolidBrush(bkC), MainRectInner)
-            FillRect(G, New SolidBrush(bkCC), MainRect)
+            G.FillRoundedRect(New SolidBrush(bkC), MainRectInner)
+            G.FillRoundedRect(New SolidBrush(bkCC), MainRect)
 
             Dim lC As Color = Color.FromArgb(255 - alpha, If(_Checked, Style.Colors.Border_Checked, Style.Colors.Border))
             Dim lCC As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
 
-            DrawRect_LikeW11(G, lC, MainRectInner)
-            DrawRect_LikeW11(G, lCC, MainRect)
+            G.DrawRoundedRect_LikeW11(New Pen(lC), MainRectInner)
+            G.DrawRoundedRect_LikeW11(New Pen(lCC), MainRect)
 
             If Image IsNot Nothing Then G.DrawImage(Image, CenterRect)
 
@@ -1261,7 +1230,6 @@ Public Class XenonCheckBox
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
         DoubleBuffered = True
-        AccentColor = Color.DodgerBlue
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
     End Sub
@@ -1290,33 +1258,6 @@ Public Class XenonCheckBox
     Private _Checked As Boolean
 
     ReadOnly Radius As Integer = 5
-
-#Region "Accent Color Property"
-    Private AccentColorValue As Color = Color.DodgerBlue
-    Public Event AccentColorChanged As PropertyChangedEventHandler
-
-    Private Sub AccentColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent AccentColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property AccentColor() As Color
-        Get
-            Return AccentColorValue
-        End Get
-
-        Set(ByVal AccentColor As Color)
-            If Not (AccentColor = AccentColorValue) Then
-                AccentColorValue = AccentColor
-                AccentColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-
-    Private Sub XenonCheckBox_AccentColorChanged(sender As Object, e As PropertyChangedEventArgs) Handles Me.AccentColorChanged
-        Refresh()
-    End Sub
-
-#End Region
 
 #End Region
 
@@ -1492,7 +1433,7 @@ Public Class XenonCheckBox
             Dim CheckRect_Color As Color = Color.FromArgb(alpha2, Style.Colors.Core)
             Dim NonHoverRect_Color As Color = Style.Colors.Border
             Dim BackRect_Color As Color = Style.Colors.Back
-            Dim ParentColor As Color = GetParentColor(Me)
+            Dim ParentColor As Color = GetParentColor
 #End Region
 
             Dim RTL As Boolean = (RightToLeft = 1)
@@ -1522,23 +1463,23 @@ Public Class XenonCheckBox
 
             G.Clear(ParentColor)
 
-            FillRect(G, New SolidBrush(Style.Colors.Back), InnerCheckRect, Radius)
+            G.FillRoundedRect(New SolidBrush(Style.Colors.Back), InnerCheckRect, Radius)
 
             If _Checked Then
-                FillRect(G, New SolidBrush(HoverRect_Color), InnerCheckRect, Radius)
-                FillRect(G, New SolidBrush(Color.FromArgb(alpha, HoverRect_Color)), OuterCheckRect, Radius)
+                G.FillRoundedRect(New SolidBrush(HoverRect_Color), InnerCheckRect, Radius)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, HoverRect_Color)), OuterCheckRect, Radius)
 
-                DrawRect(G, New Pen(Color.FromArgb(255 - alpha, HoverCheckedRect_Color)), InnerCheckRect, Radius)
-                DrawRect(G, New Pen(Color.FromArgb(alpha, HoverCheckedRect_Color)), OuterCheckRect, Radius)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(255 - alpha, HoverCheckedRect_Color)), InnerCheckRect, Radius)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(alpha, HoverCheckedRect_Color)), OuterCheckRect, Radius)
 
                 G.DrawLine(CheckSignPen, x1_Left, y1_Left, x2_Left, y2_Left)
                 G.DrawLine(CheckSignPen, x1_Right, y1_Right, x2_Right, y2_Right)
             Else
-                FillRect(G, New SolidBrush(HoverRect_Color), OuterCheckRect, Radius)
-                DrawRect(G, New Pen(HoverCheckedRect_Color), OuterCheckRect, Radius)
+                G.FillRoundedRect(New SolidBrush(HoverRect_Color), OuterCheckRect, Radius)
+                G.DrawRoundedRect(New Pen(HoverCheckedRect_Color), OuterCheckRect, Radius)
                 G.DrawLine(CheckSignPen, x1_Left, y1_Left, x2_Left, y2_Left)
                 G.DrawLine(CheckSignPen, x1_Right, y1_Right, x2_Right, y2_Right)
-                DrawRect(G, New Pen(Color.FromArgb(255 - alpha, NonHoverRect_Color)), InnerCheckRect, Radius)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(255 - alpha, NonHoverRect_Color)), InnerCheckRect, Radius)
             End If
 
             If Checked Then
@@ -1557,14 +1498,10 @@ Public Class XenonGroupBox : Inherits Panel
 
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
-
         DoubleBuffered = True
     End Sub
 
-#Region "Properties"
-    Public Property LineColor As Color = Color.FromArgb(87, 87, 87)
-#End Region
-
+    Private LineColor As Color
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
@@ -1572,16 +1509,11 @@ Public Class XenonGroupBox : Inherits Panel
         DoubleBuffered = True
         G.SmoothingMode = SmoothingMode.AntiAlias
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
-
-        G.Clear(GetParentColor(Me))
-
-
-        BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.05))
-        LineColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.03, -0.06))
-
-        FillRect(G, New SolidBrush(BackColor), Rect)
-        DrawRect(G, New Pen(LineColor), Rect)
+        G.Clear(GetParentColor)
+        BackColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.05))
+        LineColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.06, -0.07))
+        G.FillRoundedRect(New SolidBrush(BackColor), Rect)
+        G.DrawRoundedRect(New Pen(LineColor), Rect)
     End Sub
 
 
@@ -1664,7 +1596,7 @@ Public Class XenonAnimatedBox : Inherits Panel
 
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
         If Style = ColorsStyle.SwapColors Then
             If GetDarkMode() Then
@@ -1673,7 +1605,7 @@ Public Class XenonAnimatedBox : Inherits Panel
                 C1 = [Color].Light(0.6)
             End If
 
-            C2 = GetParentColor(Me)
+            C2 = GetParentColor
         ElseIf Style = ColorsStyle.MixedColors Then
 
             If GetDarkMode() Then
@@ -1691,9 +1623,9 @@ Public Class XenonAnimatedBox : Inherits Panel
         LineColor = Color.FromArgb(120, 150, 150, 150)
 
         If Dock = DockStyle.None Then
-            FillRect(G, l, Rect)
-            FillRect(G, Noise, Rect)
-            DrawRect(G, New Pen(LineColor), Rect)
+            G.FillRoundedRect(l, Rect)
+            G.FillRoundedRect(Noise, Rect)
+            G.DrawRoundedRect(New Pen(LineColor), Rect)
         Else
             G.FillRectangle(l, Rect)
             G.FillRectangle(Noise, Rect)
@@ -1818,17 +1750,17 @@ Public Class XenonCP
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
         Select Case State
             Case MouseState.None
-                LineColor = If(BackColor.IsDark, BackColor.Light(0.2), BackColor.Dark(0.1))
+                LineColor = If(BackColor.IsDark, BackColor.CB(0.05), BackColor.CB(-0.05))
 
             Case MouseState.Over
-                LineColor = If(BackColor.IsDark, BackColor.Light(0.5), BackColor.Dark(0.3))
+                LineColor = If(BackColor.IsDark, BackColor.CB(0.15), BackColor.CB(-0.15))
 
             Case MouseState.Down
-                LineColor = If(BackColor.IsDark, BackColor.Light(0.3), BackColor.Dark(0.2))
+                LineColor = If(BackColor.IsDark, BackColor.CB(0.1), BackColor.CB(-0.1))
 
         End Select
 
@@ -1837,11 +1769,11 @@ Public Class XenonCP
 
         Dim R As Integer = 5
 
-        FillRect(G, New SolidBrush(BackColor), RectInner, R)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect, R)
+        G.FillRoundedRect(New SolidBrush(BackColor), RectInner, R)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect, R)
 
-        DrawRect_LikeW11(G, Color.FromArgb(alpha, LineColor), Rect, R)
-        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, LineColor), RectInner, R)
+        G.DrawRoundedRect_LikeW11(New Pen(Color.FromArgb(alpha, LineColor)), Rect, R)
+        G.DrawRoundedRect_LikeW11(New Pen(Color.FromArgb(255 - alpha, LineColor)), RectInner, R)
 
 
         If Not DesignMode Then
@@ -1998,7 +1930,7 @@ Public Class XenonButton : Inherits Button
 
         Dim C_Before As Color = BackColor
 
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
+        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
@@ -2083,7 +2015,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
+        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2094,7 +2026,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.03))
+        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.03))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2168,17 +2100,17 @@ Public Class XenonButton : Inherits Button
 
         '################################################################################# Customizer
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim ParentColor As Color = GetParentColor(Me)
+        Dim ParentColor As Color = GetParentColor
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
         '#################################################################################
 
         G.Clear(ParentColor)
         Dim c1, c1x As Color
 
-        FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
 
-        If Not State = MouseState.None Then FillRect(G, Noise, Rect)
+        If Not State = MouseState.None Then G.FillRoundedRect(Noise, Rect)
 
         Dim c As Color
 
@@ -2197,8 +2129,8 @@ Public Class XenonButton : Inherits Button
         c1 = Color.FromArgb(255 - alpha, c)
         c1x = Color.FromArgb(alpha, c)
 
-        DrawRect_LikeW11(G, c1x, Rect)
-        DrawRect_LikeW11(G, c1, InnerRect)
+        G.DrawRoundedRect_LikeW11(New Pen(c1x), Rect)
+        G.DrawRoundedRect_LikeW11(New Pen(c1), InnerRect)
 
 #Region "Text and Image Render"
         Dim ButtonString As New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
@@ -2282,7 +2214,7 @@ Public Class XenonButton : Inherits Button
     Private Sub XenonButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         Try
             Try
-                BackColor = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.04, -0.04))
+                BackColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.04))
             Catch
             End Try
 
@@ -2314,7 +2246,7 @@ Public Class XenonButton : Inherits Button
 
     Sub Rfrsh()
         Try
-            BC = GetParentColor(Me).CB(If(GetParentColor(Me).IsDark, 0.05, -0.03))
+            BC = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
             BackColor = BC
             Invalidate()
         Catch
@@ -2365,12 +2297,9 @@ Public Class XenonNumericUpDown
     Inherits Control
     Public Event ValueChanged(sender As Object, e As EventArgs)
 
-
-
     Sub New()
         Enabled = True
         DoubleBuffered = True
-        LineColor = Color.DodgerBlue
     End Sub
 
 #Region "Properties"
@@ -2448,27 +2377,6 @@ Public Class XenonNumericUpDown
             Invalidate()
         End Set
     End Property
-#Region "Line Color Property"
-    Private LineColorValue As Color = Color.DodgerBlue
-    Public Event LineColorChanged As PropertyChangedEventHandler
-
-    Private Sub LineColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent LineColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property LineColor() As Color
-        Get
-            Return LineColorValue
-        End Get
-
-        Set(ByVal LineColor As Color)
-            If Not (LineColor = LineColorValue) Then
-                LineColorValue = LineColor
-                LineColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-#End Region
 #End Region
 
 #Region "Animator"
@@ -2624,16 +2532,16 @@ Public Class XenonNumericUpDown
 
         '#################################################################################
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
-        FillRect(G, New SolidBrush(Color.FromArgb(255 - alpha, Style.Colors.Back)), OuterRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)), SideRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 - alpha, Style.Colors.Back)), OuterRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)), SideRect)
 
-        DrawRect_LikeW11(G, Color.FromArgb(255 - alpha, Style.Colors.Border), InnerRect)
-        DrawRect_LikeW11(G, Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover), OuterRect)
+        G.DrawRoundedRect_LikeW11(New Pen(Color.FromArgb(255 - alpha, Style.Colors.Border)), InnerRect)
+        G.DrawRoundedRect_LikeW11(New Pen(Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)), OuterRect)
 
-        If Focused And State = MouseState.None Then DrawRect(G, New Pen(Color.FromArgb(255, Style.Colors.Border_Checked_Hover)), InnerRect)
+        If Focused And State = MouseState.None Then G.DrawRoundedRect(New Pen(Color.FromArgb(255, Style.Colors.Border_Checked_Hover)), InnerRect)
 
         Using TextColor As New SolidBrush(If(GetDarkMode(), Color.White, Color.Black)), TextFont As New Font("Segoe UI", 9)
             G.DrawString(CStr(Value), TextFont, New SolidBrush(TextColor.Color), New Rectangle(0, 0, Width - 15, Height), StringAligner(ContentAlignment.MiddleCenter))
@@ -2709,7 +2617,6 @@ End Class
         TB.Location = New Point(1, 0)
         TB.Width = Width - 3
         TB.Cursor = Cursors.IBeam
-        LineColor = Color.DodgerBlue
 
         TB.ScrollBars = Scrollbars
         TB.WordWrap = WordWrap
@@ -2943,29 +2850,6 @@ End Class
             TB.SelectedText = CStr(value)
         End Set
     End Property
-
-
-#Region "Line Color Property"
-    Private LineColorValue As Color = Color.DodgerBlue
-    Public Event LineColorChanged As PropertyChangedEventHandler
-
-    Private Sub LineColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent LineColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property LineColor() As Color
-        Get
-            Return LineColorValue
-        End Get
-
-        Set(ByVal LineColor As Color)
-            If Not (LineColor = LineColorValue) Then
-                LineColorValue = LineColor
-                LineColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-#End Region
 #End Region
 
 #End Region
@@ -3090,7 +2974,6 @@ End Class
     End Sub
 
 
-
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
@@ -3107,32 +2990,32 @@ End Class
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
 
-        Dim ParentColor As Color = GetParentColor(Me)
+        Dim ParentColor As Color = GetParentColor
         Dim LineNone, LineHovered As Color
         Dim BackNone, BackHovered As Color
 
         LineNone = If(GetDarkMode(), ParentColor.Light(0.3), ParentColor.Light(0.05))
-        LineHovered = If(GetDarkMode(), LineColor.Light(0.3), LineColor.Light(0.05))
+        LineHovered = Style.Colors.Border_Checked_Hover
 
         BackNone = If(GetDarkMode(), ParentColor.Light(0.05), ParentColor.Light(0.3))
-        BackHovered = If(GetDarkMode(), LineColor.Dark(0.2), LineColor.Light(0.5))
+        BackHovered = Style.Colors.Back_Checked
 
         Dim FadeInColor As Color = Color.FromArgb(alpha, LineHovered)
         Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, LineNone)
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
         TB.ForeColor = ForeColor
 
         If TB.Focused Or Focused Then
-            FillRect(G, New SolidBrush(BackHovered), OuterRect)
-            DrawRect_LikeW11(G, LineHovered, OuterRect)
+            G.FillRoundedRect(New SolidBrush(BackHovered), OuterRect)
+            G.DrawRoundedRect_LikeW11(New Pen(LineHovered), OuterRect)
             TB.BackColor = BackHovered
         Else
-            FillRect(G, New SolidBrush(BackNone), InnerRect)
-            FillRect(G, New SolidBrush(Color.FromArgb(alpha, BackNone)), OuterRect)
-            DrawRect_LikeW11(G, FadeInColor, OuterRect)
-            DrawRect_LikeW11(G, FadeOutColor, InnerRect)
+            G.FillRoundedRect(New SolidBrush(BackNone), InnerRect)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackNone)), OuterRect)
+            G.DrawRoundedRect_LikeW11(New Pen(FadeInColor), OuterRect)
+            G.DrawRoundedRect_LikeW11(New Pen(FadeOutColor), InnerRect)
             TB.BackColor = BackNone
         End If
 
@@ -3202,7 +3085,6 @@ Public Class XenonComboBox : Inherits ComboBox
 
         If GetDarkMode() Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
         ForeColor = Color.White
-        LineColor = Color.DodgerBlue
         DropDownStyle = ComboBoxStyle.DropDownList
         Font = New Font("Segoe UI", 9)
         DoubleBuffered = True
@@ -3211,27 +3093,6 @@ Public Class XenonComboBox : Inherits ComboBox
 #Region "Properties"
     Public Property CustomFont As Boolean = False
 
-#Region "Line Color Property"
-    Private LineColorValue As Color = Color.DodgerBlue
-    Public Event LineColorChanged As PropertyChangedEventHandler
-
-    Private Sub LineColorNotifyPropertyChanged(ByVal info As String)
-        RaiseEvent LineColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
-    Public Property LineColor() As Color
-        Get
-            Return LineColorValue
-        End Get
-
-        Set(ByVal LineColor As Color)
-            If Not (LineColor = LineColorValue) Then
-                LineColorValue = LineColor
-                LineColorNotifyPropertyChanged("ControlColorChanged")
-            End If
-        End Set
-    End Property
-#End Region
 #End Region
 
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
@@ -3457,24 +3318,24 @@ Public Class XenonComboBox : Inherits ComboBox
         Dim FadeInColor As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
         Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, Style.Colors.Border)
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
-        FillRect(G, New SolidBrush(Style.Colors.Back), InnerRect)
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
-        FillRect(G, Noise, InnerRect)
+        G.FillRoundedRect(New SolidBrush(Style.Colors.Back), InnerRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, Style.Colors.Back_Checked)), OuterRect)
+        G.FillRoundedRect(Noise, InnerRect)
 
-        DrawRect_LikeW11(G, FadeInColor, OuterRect)
-        DrawRect_LikeW11(G, FadeOutColor, InnerRect)
+        G.DrawRoundedRect_LikeW11(New Pen(FadeInColor), OuterRect)
+        G.DrawRoundedRect_LikeW11(New Pen(FadeOutColor), InnerRect)
 
-        FillRect(G, New SolidBrush(Color.FromArgb(alpha2, Style.Colors.Back_Checked)), OuterRect)
-        DrawRect_LikeW11(G, Color.FromArgb(alpha2, Style.Colors.Border_Checked_Hover), OuterRect)
+        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha2, Style.Colors.Back_Checked)), OuterRect)
+        G.DrawRoundedRect_LikeW11(New Pen(Color.FromArgb(alpha2, Style.Colors.Border_Checked_Hover)), OuterRect)
 
         Dim ArrowHeight As Integer = 4
         Dim Arrow_Y_1 As Integer = (Height - ArrowHeight) / 2 - 1
         Dim Arrow_Y_2 As Integer = Arrow_Y_1 + ArrowHeight
 
         If Focused And State = MouseState.None Then
-            DrawRect(G, New Pen(Color.FromArgb(255, FadeInColor)), InnerRect)
+            G.DrawRoundedRect(New Pen(Color.FromArgb(255, FadeInColor)), InnerRect)
             G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 18, Arrow_Y_1), New Point(Width - 14, Arrow_Y_2))
             G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor), 2), New Point(Width - 14, Arrow_Y_2), New Point(Width - 10, Arrow_Y_1))
             G.DrawLine(New Pen(Color.FromArgb(255, FadeInColor)), New Point(Width - 14, Arrow_Y_2 + 1), New Point(Width - 14, Arrow_Y_2))
@@ -3715,12 +3576,12 @@ Public Class XenonAlertBox
 
         End Select
 
-        G.Clear(GetParentColor(Me))
+        G.Clear(GetParentColor)
 
         BackColor = innerColor
 
-        FillRect(G, New SolidBrush(innerColor), New Rectangle(0, 0, Width - 1, Height - 1))
-        DrawRect_LikeW11(G, borderColor, New Rectangle(0, 0, Width - 1, Height - 1))
+        G.FillRoundedRect(New SolidBrush(innerColor), New Rectangle(0, 0, Width - 1, Height - 1))
+        G.DrawRoundedRect_LikeW11(New Pen(borderColor), New Rectangle(0, 0, Width - 1, Height - 1))
 
         Dim textY As Integer = CInt((Height - Text.Measure(Font).Height) / 2)
         Dim TextX As Integer
@@ -4089,31 +3950,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         End Set
     End Property
 
-    Public Sub DrawRR(ByVal [Graphics] As Graphics, ByVal BorderColor As Color, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1)
-        Try
-            [Radius_willbe_x2] *= 2
-            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
-
-            Dim [Pen] As New Pen(BorderColor)
-            Dim [Pen2] As New Pen(BorderColor.CB(0.2))
-
-            Dim R1 As New Rectangle([Rectangle].X, [Rectangle].Y, 6, 6)
-            Dim LG As New LinearGradientBrush(R1, [Pen2].Color, [Pen].Color, LinearGradientMode.Vertical)
-
-            [Graphics].DrawArc(New Pen(LG), [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
-            [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
-            [Graphics].DrawArc(New Pen(LG), [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
-
-            [Graphics].DrawLine([Pen], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-            [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2.5))
-
-            [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
-            [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
-            [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
-        Catch
-        End Try
-    End Sub
-
     Enum TaskbarVersion
         Eleven
         Ten
@@ -4189,7 +4025,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Try
             If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then
                 If RoundedCorners Then
-                    FillImg(G, adaptedBackBlurred, RRect, Radius, True)
+                    G.FillRoundedImg(adaptedBackBlurred, RRect, Radius, True)
                 Else
                     G.DrawImage(adaptedBackBlurred, Rect)
                 End If
@@ -4217,46 +4053,46 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         Dim Color1 As Color = BackColor
                         Dim Color2 As Color = BackColor2
 
-                        DrawAero(G, RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3, True)
+                        G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3, True)
 
                     Else
-                        FillRect(G, New SolidBrush(Color.White), RestRect, 3, True)
-                        FillRect(G, New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
+                        G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 3, True)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
                     End If
 
-                    FillImg(G, Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
+                    G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
 
-                    FillImg(G, My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
+                    G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
 
                 Else
-                    FillImg(G, My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
+                    G.FillRoundedImg(My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
                 End If
 
             Else
 
-                FillRect(G, New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
-                FillRect(G, New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
 
-                If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then FillRect(G, Noise, RRect, Radius, True)
+                If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.FillRoundedRect(Noise, RRect, Radius, True)
 
                 If UseItAsStartMenu Then
                     Dim SearchRect As New Rectangle(7, 10, 120, 18)
                     Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
                     Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
 
-                    FillImg(G, If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                    G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
-                    FillRect(G, New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
-                    FillRect(G, New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
+                    G.FillRoundedRect(New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
+                    G.FillRoundedRect(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
                     G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
-                    DrawRect(G, New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+                    G.DrawRoundedRect(New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
                 End If
 
                 If UseItAsActionCenter Then
                     Button1 = New Rectangle(8, 8, 49, 20)
                     Button2 = New Rectangle(62, 8, 49, 20)
 
-                    FillImg(G, If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                    G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
                     Dim Cx1, Cx2 As Color
 
@@ -4278,14 +4114,14 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                             Cx2 = If(DarkMode, Color.FromArgb(190, 75, 75, 75), Color.FromArgb(210, 210, 210, 210))
                     End Select
 
-                    FillRect(G, New SolidBrush(Cx1), Button1, Radius, True)
-                    DrawRR(G, Cx1, Button1, Radius)
+                    G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
+                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.6)), Button1, Radius)
 
-                    FillRect(G, New SolidBrush(Cx2), Button2, Radius, True)
-                    DrawRect(G, New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
+                    G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
+                    G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
                 End If
 
-                If Borders Then DrawRect(G, New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                If Borders Then G.DrawRoundedRect(New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
             End If
 
@@ -4338,30 +4174,30 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                     Dim AppBtnRect As New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
                     Dim AppImgRect As New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
-                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 17) / 2 - 1, AppBtnRect.Y + AppBtnRect.Height - 3, 20, 3)
+                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 16) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 16, 3)
 
                     Dim BackC As Color
                     Dim BorderC As Color
 
                     If DarkMode Then
-                        BackC = Color.FromArgb(100, 80, 80, 80)
-                        BorderC = Color.FromArgb(110, 80, 80, 80)
+                        BackC = Color.FromArgb(45, 130, 130, 130)
+                        BorderC = Color.FromArgb(45, 130, 130, 130)
                     Else
-                        BackC = Color.FromArgb(100, 230, 230, 230)
-                        BorderC = Color.FromArgb(110, 230, 230, 230)
+                        BackC = Color.FromArgb(225, 255, 255, 255)
+                        BorderC = Color.FromArgb(200, 230, 230, 230)
                     End If
 
-                    FillRect(G, New SolidBrush(BackC), StartBtnRect, Radius, True)
-                    DrawRR(G, BorderC, StartBtnRect, Radius)
+                    G.FillRoundedRect(New SolidBrush(BackC), StartBtnRect, 3, True)
+                    G.DrawRoundedRect_LikeW11(New Pen(BorderC), StartBtnRect, 3)
                     G.DrawImage(If(DarkMode, My.Resources.StartBtn_11Dark, My.Resources.StartBtn_11Light), StartImgRect)
 
-                    FillRect(G, New SolidBrush(BackC), AppBtnRect, Radius, True)
-                    DrawRR(G, BorderC, AppBtnRect, Radius)
+                    G.FillRoundedRect(New SolidBrush(BackC), AppBtnRect, 3, True)
+                    G.DrawRoundedRect_LikeW11(New Pen(BorderC), AppBtnRect, 3)
                     G.DrawImage(My.Resources.ActiveApp_Taskbar, AppImgRect)
-                    FillRect(G, New SolidBrush(_AppUnderline), AppBtnRectUnderline, 2, True)
+                    G.FillRoundedRect(New SolidBrush(_AppUnderline), AppBtnRectUnderline, 2, True)
 
                     G.DrawImage(My.Resources.InactiveApp_Taskbar, App2ImgRect)
-                    FillRect(G, New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
 
                     G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
 
@@ -4373,11 +4209,11 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
 
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2 - 1, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
                     Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
 
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
                     Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
 
 
@@ -4388,10 +4224,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Dim AppColor As Color = _AppBackground
                     G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)
                     G.FillRectangle(New SolidBrush(_AppUnderline.Light), AppBtnRectUnderline)
-                    G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
 
                     G.FillRectangle(New SolidBrush(_AppUnderline.Light), App2BtnRectUnderline)
-                    G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
+                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
 
                 Case TaskbarVersion.Seven
 
@@ -4410,7 +4246,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                             Dim Color1 As Color = BackColor
                             Dim Color2 As Color = BackColor2
 
-                            DrawAero(G, Rect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 0, False)
+                            G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 0, False)
 
                         Else
                             G.FillRectangle(New SolidBrush(Color.White), Rect)
@@ -4419,7 +4255,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                         G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
-                        FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                        G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
                     End If
 
                     If Not Basic Then
@@ -4434,20 +4270,20 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
 
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
 
                     G.DrawImage(StartORB, StartBtnRect)
 
-                    DrawRect(G, New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
                     G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
-                    G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
 
-                    DrawRect(G, New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
                     G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
-                    G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
+                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
 
 
                 Case TaskbarVersion.Eight
@@ -4465,10 +4301,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
                     Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
 
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.AppPreview.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.AppPreview.Height) / 2 - 1, My.Resources.AppPreview.Width, My.Resources.AppPreview.Height)
+                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
                     Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
                     Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.AppPreviewInActive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.AppPreviewInActive.Height) / 2 - 1, My.Resources.AppPreviewInActive.Width, My.Resources.AppPreviewInActive.Height)
+                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
 
 
                     G.DrawImage(StartORB, StartBtnRect)
@@ -4484,7 +4320,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5))), AppBtnRect)
                     End If
 
-                    G.DrawImage(My.Resources.AppPreview, AppBtnImgRect)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
 
                     If Transparency Then
                         G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
@@ -4497,7 +4333,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1))), App2BtnRect)
                     End If
 
-                    G.DrawImage(My.Resources.AppPreviewInActive, App2BtnImgRect)
+                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
 
             End Select
         End If
@@ -4627,7 +4463,7 @@ Public Class XenonFakeIcon : Inherits Panel
         G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
         'G.DrawString(Title, Font, Brushes.White, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
-        GlowString(G, 1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
+        G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
     End Sub
 
@@ -4860,7 +4696,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Dim IconRect As New Rectangle(Rect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2, IconSize, IconSize)
         Dim LabelRect As New Rectangle(IconRect.Right + 4, Rect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height)
         If ToolWindow Then LabelRect.X = IconRect.X
-        Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 3, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
+        Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
         Dim XRect As New Rectangle(Rect.Right - 20, Rect.Y, 20, TitlebarRect.Height)
         G.Clear(Color.Transparent)
 
@@ -4878,26 +4714,26 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End Try
 
                     If Shadow And Active And Not DesignMode Then
-                        DrawGlow(G, Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.Black, 5, 10)
                     End If
 
                     If DarkMode Then
-                        FillRect(G, New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
                     Else
-                        FillRect(G, New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
                     End If
 
                     If AccentColor_Enabled Then
                         If Active Then
-                            DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Active)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(150, AccentColor_Active)), Rect, Radius, True)
                         Else
-                            DrawRect(G, New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect, Radius, True)
                         End If
                     Else
                         If DarkMode Then
-                            DrawRect(G, New Pen(Color.FromArgb(100, 90, 90, 90)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(100, 90, 90, 90)), Rect, Radius, True)
                         Else
-                            DrawRect(G, New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
                         End If
                     End If
 
@@ -4921,7 +4757,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End Try
 
                     If Shadow And Active And Not DesignMode Then
-                        DrawGlow(G, Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.Black, 5, 10)
                     End If
 
                     If DarkMode Then
@@ -5088,7 +4924,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawImage(AdaptedBack, RectBK)
 
                     If Shadow And Active And Not DesignMode Then
-                        DrawGlow(G, Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.Black, 5, 10)
                     End If
 
                     Dim Radius As Integer = 5
@@ -5103,12 +4939,12 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         Dim Color1 As Color = If(Active, AccentColor_Active, AccentColor_Inactive)
                         Dim Color2 As Color = If(Active, AccentColor2_Active, AccentColor2_Inactive)
 
-                        DrawAero(G, Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, Not ToolWindow)
+                        G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, Not ToolWindow)
                     Else
 
                         If Not ToolWindow Then
-                            FillRect(G, New SolidBrush(Color.White), Rect, Radius, True)
-                            FillRect(G, New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect, Radius, True)
+                            G.FillRoundedRect(New SolidBrush(Color.White), Rect, Radius, True)
+                            G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect, Radius, True)
                         Else
                             G.FillRectangle(New SolidBrush(Color.White), Rect)
                             G.FillRectangle(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect)
@@ -5130,13 +4966,13 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
 
                     If Not ToolWindow Then
-                        FillImg(G, Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
-                        DrawRect(G, New Pen(Color.FromArgb(If(Active, 200, 100), 0, 0, 0)), Rect, Radius, True)
-                        DrawRect(G, New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
+                        G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 200, 100), 0, 0, 0)), Rect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
                         'DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect, Radius, True)
-                        DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1, 1, True)
-                        FillRect(G, New SolidBrush(Color.White), InnerWindow_1, 1, True)
-                        DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2, 1, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1, 1, True)
+                        G.FillRoundedRect(New SolidBrush(Color.White), InnerWindow_1, 1, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2, 1, True)
                     Else
                         G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect)
                         G.DrawRectangle(New Pen(Color.FromArgb(If(Active, 200, 100), 0, 0, 0)), Rect)
@@ -5203,8 +5039,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                             Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
                             Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
 
-                            FillRect(G, CloseUpperPath, CloseRectUpperHalf, 1, True)
-                            FillRect(G, CloseLowerPath, CloseRectLowerHalf, 1, True)
+                            G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, True)
+                            G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, True)
                         Else
                             Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
                             G.FillRectangle(ClosePath, CloseRect)
@@ -5233,8 +5069,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                         G.DrawImage(CloseBtn, closerenderrect)
 
-                        DrawRect(G, New Pen(CloseOuterBorder), CloseRect, 1, True)
-                        DrawRect(G, New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+                        G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
+                        G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
 
                     End If
 
@@ -5311,11 +5147,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     '### Render Titlebar
                     If Not ToolWindow Then
-                        FillRect(G, pth_back, Rect, Radius, True)
-                        DrawRect(G, New Pen(Titlebar_OuterBorder), Rect, Radius, True)
-                        DrawRect(G, New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                        G.FillRoundedRect(pth_back, Rect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Titlebar_OuterBorder), Rect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
                         G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
-                        DrawRect(G, New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                        G.DrawRoundedRect(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
                     Else
                         G.FillRectangle(pth_back, Rect)
                         G.DrawRectangle(New Pen(Titlebar_OuterBorder), Rect)
@@ -5369,8 +5205,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
                         Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
 
-                        FillRect(G, CloseUpperPath, CloseRectUpperHalf, 1, True)
-                        FillRect(G, CloseLowerPath, CloseRectLowerHalf, 1, True)
+                        G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, True)
+                        G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, True)
                     Else
                         Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
                         G.FillRectangle(ClosePath, CloseRect)
@@ -5394,8 +5230,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     G.DrawImage(CloseBtn, New Point(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2 + 1, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2))
 
-                    DrawRect(G, New Pen(CloseOuterBorder), CloseRect, 1, True)
-                    DrawRect(G, New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+                    G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
+                    G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
 
                     IconRect = New Rectangle(InnerWindow_1.X + 4, CloseRect.Top + (CloseRect.Height - IconSize) / 2, IconSize, IconSize)
 
@@ -5457,7 +5293,8 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     Dim LabelRectModified As Rectangle = LabelRect
                     LabelRectModified.X -= 2
                     LabelRectModified.Y -= 1
-                    GlowString(G, 1, Text, Me, Color.Black, Color.FromArgb(120, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
+                    Dim alpha As Integer = If(Active, 120, 75)
+                    G.DrawGlowString(1, Text, Me, Color.Black, Color.FromArgb(alpha, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
                 Else
                     G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
                 End If
@@ -5633,10 +5470,8 @@ Public Class XenonTrackbar
     Private Thumb As Rectangle
     Private ThumbDown As Boolean
     Private Circle As Rectangle
-
     Private _Shown As Boolean = False
 
-    Public Property AccentColor As Color = If(GetDarkMode(), Color.FromArgb(0, 81, 210).LightLight, Color.FromArgb(0, 81, 210).Dark(0.1))
     Enum MouseState
         None
         Over
@@ -5705,12 +5540,12 @@ Public Class XenonTrackbar
 
         Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
 
-        FillRect(G, New SolidBrush(c_back), middleRect)
+        G.FillRoundedRect(New SolidBrush(c_back), middleRect)
 
         Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
 
         With Thumb
-            FillRect(G, New SolidBrush(C), New Rectangle(.X + 1, middleRect.Y, Circle.Left + Circle.Width / 2, middleRect.Height))
+            G.FillRoundedRect(New SolidBrush(C), New Rectangle(.X + 1, middleRect.Y, Circle.Left + Circle.Width / 2, middleRect.Height))
         End With
 
         G.FillRectangle(New SolidBrush(BackColor), New Rectangle(-1, 0, 4, Height))
@@ -6406,7 +6241,7 @@ Public Class XenonTerminal
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                Using path As GraphicsPath = Rectangle.Round(Radius)
                     Graphics.FillPath(Brush, path)
                 End Using
             Else
@@ -6422,7 +6257,7 @@ Public Class XenonTerminal
             If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = RoundedRectangle(Rectangle, Radius)
+                Using path As GraphicsPath = Rectangle.Round(Radius)
                     Dim reg As New Region(path)
                     [Graphics].Clip = reg
                     [Graphics].DrawImage([Image], [Rectangle])
@@ -6566,14 +6401,14 @@ Public Class XenonTerminal
         Dim Rect_ConsoleCursor As New Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1)
 
         If UseAcrylic Then
-            FillImg(G, adaptedBackBlurred, Rect)
-            FillRect(G, Noise, Rect)
-            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
-            If BackImage IsNot Nothing Then FillImg(G, img, Rect)
+            G.FillRoundedImg(adaptedBackBlurred, Rect)
+            G.FillRoundedRect(Noise, Rect)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
+            If BackImage IsNot Nothing Then G.FillRoundedImg(img, Rect)
         Else
-            FillImg(G, adaptedBack, Rect)
-            FillRect(G, New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
-            If BackImage IsNot Nothing Then FillImg(G, img, Rect)
+            G.FillRoundedImg(adaptedBack, Rect)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
+            If BackImage IsNot Nothing Then G.FillRoundedImg(img, Rect)
         End If
 
         If UseAcrylicOnTitlebar And Not DesignMode Then
@@ -6710,7 +6545,7 @@ Public Class XenonTerminal
             G.SmoothingMode = SmoothingMode.AntiAlias
         End If
 
-        DrawRect(G, New Pen(Color.FromArgb(45, 45, 45)), Rect)
+        G.DrawRoundedRect(New Pen(Color.FromArgb(45, 45, 45)), Rect)
     End Sub
 
     Dim tk As Boolean = False

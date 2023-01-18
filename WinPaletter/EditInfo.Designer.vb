@@ -121,7 +121,6 @@ Partial Class EditInfo
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox1.Location = New System.Drawing.Point(176, 13)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -144,7 +143,6 @@ Partial Class EditInfo
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Hint = Nothing
-        Me.XenonTextBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox2.Location = New System.Drawing.Point(176, 45)
         Me.XenonTextBox2.MaxLength = 12
         Me.XenonTextBox2.Multiline = False
@@ -167,7 +165,6 @@ Partial Class EditInfo
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Hint = Nothing
-        Me.XenonTextBox3.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox3.Location = New System.Drawing.Point(176, 77)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = True
@@ -201,7 +198,6 @@ Partial Class EditInfo
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox4.Hint = Nothing
-        Me.XenonTextBox4.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox4.Location = New System.Drawing.Point(176, 240)
         Me.XenonTextBox4.MaxLength = 32767
         Me.XenonTextBox4.Multiline = False
@@ -224,7 +220,6 @@ Partial Class EditInfo
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox5.Hint = Nothing
-        Me.XenonTextBox5.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonTextBox5.Location = New System.Drawing.Point(176, 272)
         Me.XenonTextBox5.MaxLength = 32767
         Me.XenonTextBox5.Multiline = False

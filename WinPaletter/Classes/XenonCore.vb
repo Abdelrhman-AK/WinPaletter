@@ -283,8 +283,7 @@ Public Class XenonCore
         End If
 
         If TypeOf ctrl Is XenonGroupBox Then
-            DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
-            DirectCast(ctrl, XenonGroupBox).LineColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.1, -0.1))
+            DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.05))
         End If
 
         If TypeOf ctrl Is XenonRadioImage Then

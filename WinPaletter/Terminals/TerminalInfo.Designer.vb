@@ -56,13 +56,15 @@ Partial Class TerminalInfo
         Me.TerTabTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerTabTitle.ForeColor = System.Drawing.Color.White
         Me.TerTabTitle.Hint = Nothing
-        Me.TerTabTitle.LineColor = System.Drawing.Color.DodgerBlue
         Me.TerTabTitle.Location = New System.Drawing.Point(120, 42)
         Me.TerTabTitle.MaxLength = 32767
         Me.TerTabTitle.Multiline = False
         Me.TerTabTitle.Name = "TerTabTitle"
         Me.TerTabTitle.ReadOnly = False
         Me.TerTabTitle.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.TerTabTitle.SelectedText = ""
+        Me.TerTabTitle.SelectionLength = 0
+        Me.TerTabTitle.SelectionStart = 0
         Me.TerTabTitle.Size = New System.Drawing.Size(328, 24)
         Me.TerTabTitle.TabIndex = 195
         Me.TerTabTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -97,13 +99,15 @@ Partial Class TerminalInfo
         Me.TerName.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerName.ForeColor = System.Drawing.Color.White
         Me.TerName.Hint = Nothing
-        Me.TerName.LineColor = System.Drawing.Color.DodgerBlue
         Me.TerName.Location = New System.Drawing.Point(120, 12)
         Me.TerName.MaxLength = 32767
         Me.TerName.Multiline = False
         Me.TerName.Name = "TerName"
         Me.TerName.ReadOnly = False
         Me.TerName.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.TerName.SelectedText = ""
+        Me.TerName.SelectionLength = 0
+        Me.TerName.SelectionStart = 0
         Me.TerName.Size = New System.Drawing.Size(328, 24)
         Me.TerName.TabIndex = 192
         Me.TerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -174,13 +178,15 @@ Partial Class TerminalInfo
         Me.TerTabIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerTabIcon.ForeColor = System.Drawing.Color.White
         Me.TerTabIcon.Hint = Nothing
-        Me.TerTabIcon.LineColor = System.Drawing.Color.DodgerBlue
         Me.TerTabIcon.Location = New System.Drawing.Point(120, 72)
         Me.TerTabIcon.MaxLength = 32767
         Me.TerTabIcon.Multiline = False
         Me.TerTabIcon.Name = "TerTabIcon"
         Me.TerTabIcon.ReadOnly = False
         Me.TerTabIcon.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.TerTabIcon.SelectedText = ""
+        Me.TerTabIcon.SelectionLength = 0
+        Me.TerTabIcon.SelectionStart = 0
         Me.TerTabIcon.Size = New System.Drawing.Size(290, 24)
         Me.TerTabIcon.TabIndex = 188
         Me.TerTabIcon.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -216,7 +222,7 @@ Partial Class TerminalInfo
         Me.TerTabColor.Location = New System.Drawing.Point(120, 101)
         Me.TerTabColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabColor.Name = "TerTabColor"
-        Me.TerTabColor.Size = New System.Drawing.Size(92, 25)
+        Me.TerTabColor.Size = New System.Drawing.Size(132, 25)
         Me.TerTabColor.TabIndex = 196
         Me.TerTabColor.Text = "XenonGroupBox31"
         '
@@ -232,7 +238,6 @@ Partial Class TerminalInfo
         '
         'TerAcrylic
         '
-        Me.TerAcrylic.AccentColor = System.Drawing.Color.DodgerBlue
         Me.TerAcrylic.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TerAcrylic.Checked = False
         Me.TerAcrylic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -292,7 +297,7 @@ Partial Class TerminalInfo
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(67, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))

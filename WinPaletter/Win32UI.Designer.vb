@@ -345,7 +345,6 @@ Partial Class Win32UI
         Me.XenonGroupBox9.Controls.Add(Me.Label30)
         Me.XenonGroupBox9.Controls.Add(Me.XenonToggle2)
         Me.XenonGroupBox9.Controls.Add(Me.Label31)
-        Me.XenonGroupBox9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox9.Location = New System.Drawing.Point(12, 362)
         Me.XenonGroupBox9.Name = "XenonGroupBox9"
         Me.XenonGroupBox9.Size = New System.Drawing.Size(493, 95)
@@ -394,7 +393,6 @@ Partial Class Win32UI
         '
         'XenonToggle1
         '
-        Me.XenonToggle1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer))
         Me.XenonToggle1.Checked = True
@@ -417,7 +415,6 @@ Partial Class Win32UI
         '
         'XenonToggle2
         '
-        Me.XenonToggle2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(178, Byte), Integer))
         Me.XenonToggle2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonToggle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer), CType(CType(225, Byte), Integer))
         Me.XenonToggle2.Checked = True
@@ -504,7 +501,6 @@ Partial Class Win32UI
         Me.XenonGroupBox2.Controls.Add(Me.Label5)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton3)
         Me.XenonGroupBox2.Controls.Add(Me.XenonButton5)
-        Me.XenonGroupBox2.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(856, 66)
@@ -530,7 +526,6 @@ Partial Class Win32UI
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Classic for Windows 9x", "Classic for Windows 2k and Vista", "Classic for Windows 7 and later"})
-        Me.XenonComboBox2.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox2.Location = New System.Drawing.Point(649, 5)
         Me.XenonComboBox2.Name = "XenonComboBox2"
         Me.XenonComboBox2.Size = New System.Drawing.Size(200, 26)
@@ -578,7 +573,6 @@ Partial Class Win32UI
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.Black
         Me.XenonComboBox1.FormattingEnabled = True
         Me.XenonComboBox1.ItemHeight = 20
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(110, 35)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(596, 26)
@@ -717,7 +711,6 @@ Partial Class Win32UI
         Me.XenonGroupBox7.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox7.Controls.Add(Me.Label4)
         Me.XenonGroupBox7.Controls.Add(Me.btnaltface_pick)
-        Me.XenonGroupBox7.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox7.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
@@ -772,7 +765,6 @@ Partial Class Win32UI
         Me.XenonGroupBox11.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox11.Controls.Add(Me.Label6)
         Me.XenonGroupBox11.Controls.Add(Me.btntext_pick)
-        Me.XenonGroupBox11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox11.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
@@ -827,7 +819,6 @@ Partial Class Win32UI
         Me.XenonGroupBox49.Controls.Add(Me.PictureBox26)
         Me.XenonGroupBox49.Controls.Add(Me.Label25)
         Me.XenonGroupBox49.Controls.Add(Me.Frame_pick)
-        Me.XenonGroupBox49.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox49.Location = New System.Drawing.Point(3, 234)
         Me.XenonGroupBox49.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox49.Name = "XenonGroupBox49"
@@ -882,7 +873,6 @@ Partial Class Win32UI
         Me.XenonGroupBox13.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox13.Controls.Add(Me.Label7)
         Me.XenonGroupBox13.Controls.Add(Me.btnshadow_pick)
-        Me.XenonGroupBox13.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox13.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
@@ -937,7 +927,6 @@ Partial Class Win32UI
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox5.Controls.Add(Me.Label3)
         Me.XenonGroupBox5.Controls.Add(Me.btndkshadow_pick)
-        Me.XenonGroupBox5.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox5.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
@@ -992,7 +981,6 @@ Partial Class Win32UI
         Me.XenonGroupBox15.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox15.Controls.Add(Me.Label8)
         Me.XenonGroupBox15.Controls.Add(Me.btnlight_pick)
-        Me.XenonGroupBox15.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox15.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
@@ -1047,7 +1035,6 @@ Partial Class Win32UI
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox3.Controls.Add(Me.Label2)
         Me.XenonGroupBox3.Controls.Add(Me.btnface_pick)
-        Me.XenonGroupBox3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox3.Location = New System.Drawing.Point(3, 3)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
@@ -1102,7 +1089,6 @@ Partial Class Win32UI
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.btnhilight_pick)
-        Me.XenonGroupBox1.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox1.Location = New System.Drawing.Point(3, 135)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
@@ -1174,7 +1160,6 @@ Partial Class Win32UI
         Me.pnl10.Controls.Add(Me.lbl10)
         Me.pnl10.Controls.Add(Me.GActivetitle_pick)
         Me.pnl10.Controls.Add(Me.activetitle_pick)
-        Me.pnl10.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl10.Location = New System.Drawing.Point(3, 3)
         Me.pnl10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl10.Name = "pnl10"
@@ -1242,7 +1227,6 @@ Partial Class Win32UI
         Me.XenonGroupBox53.Controls.Add(Me.PictureBox31)
         Me.XenonGroupBox53.Controls.Add(Me.Label27)
         Me.XenonGroupBox53.Controls.Add(Me.TitleText_pick)
-        Me.XenonGroupBox53.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox53.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox53.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox53.Name = "XenonGroupBox53"
@@ -1297,7 +1281,6 @@ Partial Class Win32UI
         Me.pnl9.Controls.Add(Me.PictureBox30)
         Me.pnl9.Controls.Add(Me.lbl9)
         Me.pnl9.Controls.Add(Me.ActiveBorder_pick)
-        Me.pnl9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl9.Location = New System.Drawing.Point(3, 135)
         Me.pnl9.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl9.Name = "pnl9"
@@ -1352,7 +1335,6 @@ Partial Class Win32UI
         Me.XenonGroupBox19.Controls.Add(Me.PictureBox10)
         Me.XenonGroupBox19.Controls.Add(Me.Label10)
         Me.XenonGroupBox19.Controls.Add(Me.InactivetitleText_pick)
-        Me.XenonGroupBox19.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox19.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox19.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
@@ -1408,7 +1390,6 @@ Partial Class Win32UI
         Me.XenonGroupBox21.Controls.Add(Me.GInactivetitle_pick)
         Me.XenonGroupBox21.Controls.Add(Me.Label11)
         Me.XenonGroupBox21.Controls.Add(Me.InactiveTitle_pick)
-        Me.XenonGroupBox21.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox21.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox21.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
@@ -1476,7 +1457,6 @@ Partial Class Win32UI
         Me.XenonGroupBox23.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox23.Controls.Add(Me.Label12)
         Me.XenonGroupBox23.Controls.Add(Me.InactiveBorder_pick)
-        Me.XenonGroupBox23.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox23.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox23.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox23.Name = "XenonGroupBox23"
@@ -1548,7 +1528,6 @@ Partial Class Win32UI
         Me.XenonGroupBox45.Controls.Add(Me.PictureBox24)
         Me.XenonGroupBox45.Controls.Add(Me.Label23)
         Me.XenonGroupBox45.Controls.Add(Me.menu_pick)
-        Me.XenonGroupBox45.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox45.Location = New System.Drawing.Point(3, 3)
         Me.XenonGroupBox45.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox45.Name = "XenonGroupBox45"
@@ -1603,7 +1582,6 @@ Partial Class Win32UI
         Me.XenonGroupBox43.Controls.Add(Me.PictureBox22)
         Me.XenonGroupBox43.Controls.Add(Me.Label22)
         Me.XenonGroupBox43.Controls.Add(Me.menubar_pick)
-        Me.XenonGroupBox43.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox43.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox43.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox43.Name = "XenonGroupBox43"
@@ -1658,7 +1636,6 @@ Partial Class Win32UI
         Me.XenonGroupBox35.Controls.Add(Me.PictureBox18)
         Me.XenonGroupBox35.Controls.Add(Me.Label18)
         Me.XenonGroupBox35.Controls.Add(Me.menuhilight_pick)
-        Me.XenonGroupBox35.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox35.Location = New System.Drawing.Point(3, 135)
         Me.XenonGroupBox35.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox35.Name = "XenonGroupBox35"
@@ -1713,7 +1690,6 @@ Partial Class Win32UI
         Me.XenonGroupBox27.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox27.Controls.Add(Me.Label14)
         Me.XenonGroupBox27.Controls.Add(Me.hilighttext_pick)
-        Me.XenonGroupBox27.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox27.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox27.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox27.Name = "XenonGroupBox27"
@@ -1768,7 +1744,6 @@ Partial Class Win32UI
         Me.XenonGroupBox25.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox25.Controls.Add(Me.Label13)
         Me.XenonGroupBox25.Controls.Add(Me.hottracking_pick)
-        Me.XenonGroupBox25.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox25.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox25.Name = "XenonGroupBox25"
@@ -1823,7 +1798,6 @@ Partial Class Win32UI
         Me.XenonGroupBox37.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox37.Controls.Add(Me.Label19)
         Me.XenonGroupBox37.Controls.Add(Me.hilight_pick)
-        Me.XenonGroupBox37.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox37.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox37.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox37.Name = "XenonGroupBox37"
@@ -1878,7 +1852,6 @@ Partial Class Win32UI
         Me.XenonGroupBox41.Controls.Add(Me.PictureBox21)
         Me.XenonGroupBox41.Controls.Add(Me.Label21)
         Me.XenonGroupBox41.Controls.Add(Me.menutext_pick)
-        Me.XenonGroupBox41.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox41.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox41.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox41.Name = "XenonGroupBox41"
@@ -1950,7 +1923,6 @@ Partial Class Win32UI
         Me.XenonGroupBox51.Controls.Add(Me.PictureBox27)
         Me.XenonGroupBox51.Controls.Add(Me.Label26)
         Me.XenonGroupBox51.Controls.Add(Me.Window_pick)
-        Me.XenonGroupBox51.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox51.Location = New System.Drawing.Point(3, 69)
         Me.XenonGroupBox51.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox51.Name = "XenonGroupBox51"
@@ -2005,7 +1977,6 @@ Partial Class Win32UI
         Me.XenonGroupBox47.Controls.Add(Me.PictureBox25)
         Me.XenonGroupBox47.Controls.Add(Me.Label24)
         Me.XenonGroupBox47.Controls.Add(Me.InfoWindow_pick)
-        Me.XenonGroupBox47.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox47.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox47.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox47.Name = "XenonGroupBox47"
@@ -2060,7 +2031,6 @@ Partial Class Win32UI
         Me.XenonGroupBox17.Controls.Add(Me.PictureBox9)
         Me.XenonGroupBox17.Controls.Add(Me.Label9)
         Me.XenonGroupBox17.Controls.Add(Me.InfoText_pick)
-        Me.XenonGroupBox17.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox17.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox17.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox17.Name = "XenonGroupBox17"
@@ -2115,7 +2085,6 @@ Partial Class Win32UI
         Me.pnl11.Controls.Add(Me.PictureBox28)
         Me.pnl11.Controls.Add(Me.lbl11)
         Me.pnl11.Controls.Add(Me.AppWorkspace_pick)
-        Me.pnl11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl11.Location = New System.Drawing.Point(3, 36)
         Me.pnl11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl11.Name = "pnl11"
@@ -2170,7 +2139,6 @@ Partial Class Win32UI
         Me.pnl12.Controls.Add(Me.PictureBox23)
         Me.pnl12.Controls.Add(Me.lbl12)
         Me.pnl12.Controls.Add(Me.background_pick)
-        Me.pnl12.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.pnl12.Location = New System.Drawing.Point(3, 3)
         Me.pnl12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.pnl12.Name = "pnl12"
@@ -2225,7 +2193,6 @@ Partial Class Win32UI
         Me.XenonGroupBox29.Controls.Add(Me.PictureBox15)
         Me.XenonGroupBox29.Controls.Add(Me.Label15)
         Me.XenonGroupBox29.Controls.Add(Me.GrayText_pick)
-        Me.XenonGroupBox29.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox29.Location = New System.Drawing.Point(3, 135)
         Me.XenonGroupBox29.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox29.Name = "XenonGroupBox29"
@@ -2280,7 +2247,6 @@ Partial Class Win32UI
         Me.XenonGroupBox39.Controls.Add(Me.PictureBox20)
         Me.XenonGroupBox39.Controls.Add(Me.Label20)
         Me.XenonGroupBox39.Controls.Add(Me.WindowText_pick)
-        Me.XenonGroupBox39.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox39.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox39.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox39.Name = "XenonGroupBox39"
@@ -2347,7 +2313,6 @@ Partial Class Win32UI
         Me.XenonGroupBox33.Controls.Add(Me.PictureBox17)
         Me.XenonGroupBox33.Controls.Add(Me.Label17)
         Me.XenonGroupBox33.Controls.Add(Me.desktop_pick)
-        Me.XenonGroupBox33.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox33.Location = New System.Drawing.Point(3, 3)
         Me.XenonGroupBox33.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox33.Name = "XenonGroupBox33"
@@ -2402,7 +2367,6 @@ Partial Class Win32UI
         Me.XenonGroupBox55.Controls.Add(Me.PictureBox32)
         Me.XenonGroupBox55.Controls.Add(Me.Label28)
         Me.XenonGroupBox55.Controls.Add(Me.Scrollbar_pick)
-        Me.XenonGroupBox55.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox55.Location = New System.Drawing.Point(3, 36)
         Me.XenonGroupBox55.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox55.Name = "XenonGroupBox55"
@@ -2455,7 +2419,6 @@ Partial Class Win32UI
         Me.XenonGroupBox8.Controls.Add(Me.PictureBox41)
         Me.XenonGroupBox8.Controls.Add(Me.Label41)
         Me.XenonGroupBox8.Controls.Add(Me.pnl_preview)
-        Me.XenonGroupBox8.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonGroupBox8.Location = New System.Drawing.Point(512, 84)
         Me.XenonGroupBox8.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"

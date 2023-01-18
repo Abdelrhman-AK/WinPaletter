@@ -189,7 +189,6 @@ Partial Class SubMenu
         '
         'XenonTrackbar3
         '
-        Me.XenonTrackbar3.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar3.LargeChange = 10
         Me.XenonTrackbar3.Location = New System.Drawing.Point(6, 176)
         Me.XenonTrackbar3.Maximum = 200
@@ -203,7 +202,6 @@ Partial Class SubMenu
         '
         'XenonTrackbar2
         '
-        Me.XenonTrackbar2.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar2.LargeChange = 10
         Me.XenonTrackbar2.Location = New System.Drawing.Point(6, 123)
         Me.XenonTrackbar2.Maximum = 200
@@ -217,7 +215,6 @@ Partial Class SubMenu
         '
         'XenonTrackbar1
         '
-        Me.XenonTrackbar1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(163, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.XenonTrackbar1.LargeChange = 10
         Me.XenonTrackbar1.Location = New System.Drawing.Point(6, 68)
         Me.XenonTrackbar1.Maximum = 200
@@ -353,7 +350,6 @@ Partial Class SubMenu
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
         Me.XenonComboBox1.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
-        Me.XenonComboBox1.LineColor = System.Drawing.Color.DodgerBlue
         Me.XenonComboBox1.Location = New System.Drawing.Point(200, 7)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(207, 24)
