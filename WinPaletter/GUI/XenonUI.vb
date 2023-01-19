@@ -4115,7 +4115,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     End Select
 
                     G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
-                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.6)), Button1, Radius)
+                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.3)), Button1, Radius)
 
                     G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
                     G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
