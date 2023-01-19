@@ -12,7 +12,6 @@
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
 | Windows Metrics                                        | :large_blue_circle: Coming Soon                          |
 | Mini-Store for themes                                  | :yellow_square: Postponed, May not be done                          |
-|                                                        |                                                                        |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
 | Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Done (Beta: 1.0.5.9, Stable: 1.0.6.0)               |
