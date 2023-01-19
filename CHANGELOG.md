@@ -1,4 +1,4 @@
-# Changelogs
+# Changelog
 
 ---
 
