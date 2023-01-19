@@ -50,6 +50,7 @@ Partial Class Whatsnew
         '
         'XenonAnimatedBox1
         '
+        Me.XenonAnimatedBox1.Color = System.Drawing.Color.DodgerBlue
         Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue
         Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.Crimson
         Me.XenonAnimatedBox1.Controls.Add(Me.Label2)
@@ -58,6 +59,7 @@ Partial Class Whatsnew
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(825, 73)
+        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 26
         '
         'Label2
@@ -151,7 +153,7 @@ Partial Class Whatsnew
         Me.TabPage1.Location = New System.Drawing.Point(154, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(667, 332)
+        Me.TabPage1.Size = New System.Drawing.Size(667, 333)
         Me.TabPage1.TabIndex = 5
         Me.TabPage1.Text = "Windows Terminals"
         '
@@ -204,7 +206,7 @@ Partial Class Whatsnew
         Me.TabPage2.Location = New System.Drawing.Point(154, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(667, 332)
+        Me.TabPage2.Size = New System.Drawing.Size(667, 333)
         Me.TabPage2.TabIndex = 6
         Me.TabPage2.Text = "Windows 10, 11"
         '
@@ -244,7 +246,7 @@ Partial Class Whatsnew
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(135, 35)
         Me.XenonButton3.TabIndex = 3
-        Me.XenonButton3.Text = "Changelog Details"
+        Me.XenonButton3.Text = "Changelog"
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2

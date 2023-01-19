@@ -31,6 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -73,6 +74,9 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -101,6 +105,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -485,12 +490,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Terminals\WinTerminal.vb" />
-    <Compile Include="Updates\Changelog.Designer.vb">
-      <DependentUpon>Changelog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Updates\Changelog.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Updates\Updates.Designer.vb">
       <DependentUpon>Updates.vb</DependentUpon>
     </Compile>
@@ -625,9 +624,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\WindowsTerminalDecide.resx">
       <DependentUpon>WindowsTerminalDecide.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Updates\Changelog.resx">
-      <DependentUpon>Changelog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\Updates.resx">
       <DependentUpon>Updates.vb</DependentUpon>

@@ -15,7 +15,6 @@ Public Class Updates
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If url Is Nothing Then
             Me.Cursor = Cursors.AppStarting
-            TreeView1.Nodes.Clear()
 
             My.[AnimatorNS].HideSync(XenonAlertBox2, True)
             My.[AnimatorNS].HideSync(XenonButton1, True)
@@ -53,35 +52,8 @@ Public Class Updates
                         Label7.Text = UpdateSize & " " & My.Lang.MBSizeUnit
                         Label9.Text = ReleaseDate
 
-                        Dim Customchangelog_str As String = Nothing
+                        LinkLabel3.Visible = True
 
-                        If IsNetAvailable() Then
-                            Try
-                                Customchangelog_str = WebCL.DownloadString(New Uri(My.Resources.Link_Changelog))
-                            Catch ex As Exception
-                                With TreeView1.Nodes.Add(My.Lang.Error_Online)
-                                    Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Error")
-                                    .ImageIndex = imgI : .SelectedImageIndex = imgI
-                                    With .Nodes.Add(ex.Message.Replace(vbCrLf, ", "))
-                                        .ImageIndex = imgI : .SelectedImageIndex = imgI
-                                    End With
-                                End With
-
-                                TreeView1.ExpandAll()
-                            End Try
-                        Else
-                            With TreeView1.Nodes.Add(My.Lang.NoNetwork)
-                                Dim imgI As Integer = My.Changelog_IL.Images.IndexOfKey("Error")
-                                .ImageIndex = imgI : .SelectedImageIndex = imgI
-                                With .Nodes.Add(My.Lang.CheckConnection)
-                                    .ImageIndex = imgI : .SelectedImageIndex = imgI
-                                End With
-                            End With
-
-                            TreeView1.ExpandAll()
-                        End If
-
-                        Changelog.PhraseInfo(TreeView1, ver, Customchangelog_str)
                         My.[AnimatorNS].Show(Panel1, True)
                         XenonButton1.Text = My.Lang.DoAction_Update
                         XenonAlertBox2.Text = String.Format("{0} ({1})", My.Lang.NewUpdate, ver)
@@ -150,7 +122,7 @@ Public Class Updates
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        TreeView1.Nodes.Clear()
+        LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
         Label3.Text = String.Format(F, If(My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
         XenonCheckBox1.Checked = My.[Settings].AutoUpdatesChecking
@@ -179,8 +151,8 @@ Public Class Updates
         End If
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Changelog.ShowDialog()
+    Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+        Process.Start(My.Resources.Link_Changelog)
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

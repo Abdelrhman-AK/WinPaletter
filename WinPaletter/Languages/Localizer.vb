@@ -41,7 +41,6 @@ Public Class Localizer : Implements IDisposable
 
     Public Function GetFormFromName(Name As String) As Form
         If Name.ToLower = "About".ToLower Then Return About
-        If Name.ToLower = "Changelog".ToLower Then Return Changelog
         If Name.ToLower = "ColorPickerDlg".ToLower Then Return ColorPickerDlg
         If Name.ToLower = "ComplexSave".ToLower Then Return ComplexSave
         If Name.ToLower = "dragPreviewer".ToLower Then Return dragPreviewer
@@ -68,6 +67,10 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
         If Name.ToLower = "BugReport".ToLower Then Return BugReport
         If Name.ToLower = "Metrics_Fonts".ToLower Then Return Metrics_Fonts
+        If Name.ToLower = "Lang_Add_Snippet".ToLower Then Return Lang_Add_Snippet
+        If Name.ToLower = "Lang_Dashboard".ToLower Then Return Lang_Dashboard
+        If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
+        If Name.ToLower = "LangJSON_Manage".ToLower Then Return LangJSON_Manage
     End Function
 
     Public allForms As New List(Of String) From {
@@ -98,7 +101,11 @@ Public Class Localizer : Implements IDisposable
                         "WindowsTerminalCopycat",
                         "LicenseForm",
                         "BugReport",
-                        "Metrics_Fonts"
+                        "Metrics_Fonts",
+                        "Lang_Add_Snippet",
+                        "Lang_Dashboard",
+                        "Lang_JSON_Update",
+                        "LangJSON_Manage"
                         }
 
 #Region "Language Info"

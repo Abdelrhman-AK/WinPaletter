@@ -701,7 +701,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Changelog?raw=true.
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md.
         '''</summary>
         Public ReadOnly Property Link_Changelog() As String
             Get

@@ -27,7 +27,7 @@ Public Class Whatsnew
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        Changelog.ShowDialog()
+        Process.Start(My.Resources.Link_Changelog)
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click

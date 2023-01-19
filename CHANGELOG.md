@@ -1,16 +1,16 @@
-# Changelogs
+# Changelog
 
 ---
 
 ### 1.0.6.3
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 14 Nov 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 14 Nov 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Fixing minor bugs in translation. `If you're using the Russian Language, please re-download it (The old translation file contained minor issues too)`
 
@@ -30,13 +30,13 @@
 
 ### 1.0.6.2
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 13 Nov 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 13 Nov 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Now Previewing Bug\Exception Error Details changed to a better one, there was a bug preventing the app from stating up and also not showing the details of error. Now it is mostly fixed and the details will appear. These issues were faced in [#55](https://github.com/Abdelrhman-AK/WinPaletter/issues/55) [#45](https://github.com/Abdelrhman-AK/WinPaletter/issues/45)
 - Minor UI Design improvements, especially for the Light Mode.
@@ -53,13 +53,13 @@
 
 ### 1.0.6.1
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 20 Oct 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 20 Oct 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Fixed bug: Applying accent on titlebar was not working on Windows 11 22H2 for some users
 - Application Language: improved and fixed minor bugs
@@ -77,13 +77,13 @@
 
 ### 1.0.6.0
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 16 Oct 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 16 Oct 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) **New Feature (Stable) (1): Customize Windows Consoles\Terminals:**
    
@@ -123,13 +123,13 @@
 
 ### 1.0.5.9
 
-> **Details:**
+> **Info:**
 
-| Branch | Released on |
-|:------:|:-----------:|
-| `Beta` | 07 Oct 2022 |
+| Branch | Release Date |
+|:------:|:------------:|
+| `Beta` | 07 Oct 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) New Feature (Beta): Edit Terminals (Command Prompt, PowerShell & Windows Terminal):
    
@@ -150,13 +150,13 @@
 
 ### 1.0.5.2
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 13 Sep 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 13 Sep 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Windows 10,11 LogonUI colors (PersonalColors_Background, PersonalColors_Accent and Background) are removed from the program, as when they are applied correctly to registry, several critical bugs occurs to Windows (These Colors are Specific for Windows 8.1)
 - Fixing flickering while right clicking on colors in Windows 10 (Design Bug Fixed)
@@ -175,13 +175,13 @@
 
 ### 1.0.5.1
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 11 Sep 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 11 Sep 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) Right Click Menu for Colors:
    
@@ -221,13 +221,13 @@
 
 ### 1.0.5.0
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 06 Sep 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 06 Sep 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) New Huge Feature: Extended Support to Windows 8.1 and Windows 7
    
@@ -264,13 +264,13 @@
 
 ### 1.0.4.1
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 13 Aug 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 13 Aug 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) New Feature `Stable`: Colorize Cursors as you need, even the animated ones!
    
@@ -301,13 +301,13 @@
 
 ### 1.0.4.0
 
-> **Details:**
+> **Info:**
 
-| Branch | Released on |
-|:------:|:-----------:|
-| `Beta` | 10 Aug 2022 |
+| Branch | Release Date |
+|:------:|:------------:|
+| `Beta` | 10 Aug 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) New Feature `beta`: Colorize Cursors as you need, even the animated ones!
    
@@ -334,13 +334,13 @@
 
 ### 1.0.3.1
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 25 Jul 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 25 Jul 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Rescue Box Removed (due to unhandled exceptions errors, not useful anymore after fixing explorer restart mechanism)
 - Now you can apply Win32UI colors immediately without restarting explorer, without logging off or without restarting windows - Thanks to [@OrthodoxWindows](https://github.com/OrthodoxWindows) 's contribution [#13](https://github.com/Abdelrhman-AK/WinPaletter/issues/13)
@@ -359,13 +359,13 @@
 
 ### 1.0.3.0
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 22 Jul 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 22 Jul 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) Merge Nostalgia (Windows 9x) with UWP/Win3UI! By using new features of Color Picker and Win32UI:
    
@@ -390,13 +390,13 @@
 
 ### 1.0.2.0
 
-> **Details:**
+> **Info:**
 
-| Branch | Released on |
-|:------:|:-----------:|
-| `Beta` | 17 Jun 2022 |
+| Branch | Release Date |
+|:------:|:------------:|
+| `Beta` | 17 Jun 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 1) Fixing Restarting Explorer issues by:
    
@@ -420,13 +420,13 @@
 
 ### 1.0.1.0
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 10 Jun 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 10 Jun 2022  |
 
-> **Changelog:**
+> **What's New?**
 
 - Now you can use WinPaletter on Windows 11 22621, but with precautions:
   1. Disable Automatic Restarting Explorer From WinPaletter Settings
@@ -449,10 +449,10 @@
 
 ### 1.0.0.0
 
-> **Details:**
+> **Info:**
 
-| Branch   | Released on |
-|:--------:|:-----------:|
-| `Stable` | 21 May 2022 |
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 21 May 2022  |
 
 Initial Release
