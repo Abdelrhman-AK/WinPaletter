@@ -24,7 +24,7 @@ Partial Class Updates
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Updates))
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.LinkLabel()
+        Me.Label3 = New WinPaletter.XenonLinkLabel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
         Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
@@ -47,7 +47,7 @@ Partial Class Updates
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -406,7 +406,7 @@ Partial Class Updates
     Friend WithEvents XenonSeparator1 As XenonSeparator
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As LinkLabel
+    Friend WithEvents Label3 As XenonLinkLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents XenonRadioButton2 As XenonRadioButton
     Friend WithEvents XenonRadioButton3 As XenonRadioButton
@@ -425,5 +425,5 @@ Partial Class Updates
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents LinkLabel3 As LinkLabel
+    Friend WithEvents LinkLabel3 As XenonLinkLabel
 End Class

@@ -292,6 +292,9 @@ Public Class XenonCore
             DirectCast(ctrl, LinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
         End If
 
+        If TypeOf ctrl Is XenonLinkLabel Then
+            DirectCast(ctrl, XenonLinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
+        End If
 
         If TypeOf ctrl Is DataGridView Then
             Dim ColumnBack As Color

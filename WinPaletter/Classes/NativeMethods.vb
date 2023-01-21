@@ -105,6 +105,13 @@ Namespace NativeMethods
 
     Public Class User32
         <DllImport("user32.dll")>
+        Public Shared Function LoadCursor(ByVal hInstance As Integer, ByVal lpCursorName As Integer) As Integer
+        End Function
+        <DllImport("user32.dll")>
+        Public Shared Function SetCursor(ByVal hCursor As Integer) As Integer
+        End Function
+
+        <DllImport("user32.dll")>
         Public Shared Function AnimateWindow(ByVal hWnd As IntPtr, ByVal time As Integer, ByVal flags As AnimateWindowFlags) As Boolean
         End Function
 

@@ -30,25 +30,25 @@ Partial Class About
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel1 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel2 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel4 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.LinkLabel5 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel5 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel6 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel6 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel7 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel7 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel8 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel8 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel10 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel10 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -502,25 +502,25 @@ Partial Class About
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents LinkLabel1 As LinkLabel
-    Friend WithEvents LinkLabel2 As LinkLabel
-    Friend WithEvents LinkLabel3 As LinkLabel
+    Friend WithEvents LinkLabel1 As XenonLinkLabel
+    Friend WithEvents LinkLabel2 As XenonLinkLabel
+    Friend WithEvents LinkLabel3 As XenonLinkLabel
     Friend WithEvents Label3 As Label
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents LinkLabel4 As LinkLabel
+    Friend WithEvents LinkLabel4 As XenonLinkLabel
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents LinkLabel5 As LinkLabel
+    Friend WithEvents LinkLabel5 As XenonLinkLabel
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents LinkLabel6 As LinkLabel
+    Friend WithEvents LinkLabel6 As XenonLinkLabel
     Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents LinkLabel7 As LinkLabel
+    Friend WithEvents LinkLabel7 As XenonLinkLabel
     Friend WithEvents PictureBox8 As PictureBox
-    Friend WithEvents LinkLabel8 As LinkLabel
+    Friend WithEvents LinkLabel8 As XenonLinkLabel
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents LinkLabel10 As LinkLabel
+    Friend WithEvents LinkLabel10 As XenonLinkLabel
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
 End Class

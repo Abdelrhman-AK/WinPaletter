@@ -386,6 +386,24 @@ Module XenonModule
 End Module
 
 #Region "Xenon UI"
+
+Public Class XenonLinkLabel
+    Inherits Windows.Forms.LinkLabel
+
+    Const WM_SETCURSOR As Integer = 32, IDC_HAND As Integer = 32649
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = WM_SETCURSOR Then
+            Dim cursor As Integer = NativeMethods.User32.LoadCursor(0, IDC_HAND)
+            NativeMethods.User32.SetCursor(cursor)
+            m.Result = IntPtr.Zero
+            Return
+        End If
+
+        MyBase.WndProc(m)
+    End Sub
+
+End Class
 Public Class TablessControl
     Inherits TabControl
 
@@ -1574,19 +1592,17 @@ Public Class XenonAnimatedBox : Inherits Panel
     Public Property Color1 As Color = Color.DodgerBlue
     Public Property Color2 As Color = Color.Crimson
     Public Property [Color] As Color = Color1
-#End Region
-
-    Private LineColor As Color
-    Private WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
-
-    Private _Angle As Single = 0
-
     Property Style As ColorsStyle = ColorsStyle.SwapColors
-
     Enum ColorsStyle
         SwapColors
         MixedColors
     End Enum
+#End Region
+
+
+    Private LineColor As Color
+    Private WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+    Private _Angle As Single = 0
 
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
@@ -1639,37 +1655,39 @@ Public Class XenonAnimatedBox : Inherits Panel
 
         G.Clear(GetParentColor)
 
-        If Style = ColorsStyle.SwapColors Then
-            If GetDarkMode() Then
-                C1 = [Color].Dark(0.15)
-            Else
-                C1 = [Color].Light(0.6)
+        If Not DesignMode Then
+            If Style = ColorsStyle.SwapColors Then
+                If GetDarkMode() Then
+                    C1 = [Color].Dark(0.15)
+                Else
+                    C1 = [Color].Light(0.6)
+                End If
+
+                C2 = GetParentColor
+            ElseIf Style = ColorsStyle.MixedColors Then
+
+                If GetDarkMode() Then
+                    C1 = Color1.Dark(0.15)
+                    C2 = Color2.Dark(0.15)
+                Else
+                    C1 = Color1.Light(0.6)
+                    C2 = Color2.Light(0.6)
+                End If
+
             End If
 
-            C2 = GetParentColor
-        ElseIf Style = ColorsStyle.MixedColors Then
+            Dim l As New LinearGradientBrush(Rect, C1, C2, _Angle, False)
 
-            If GetDarkMode() Then
-                C1 = [Color].Dark(0.15)
-                C2 = [Color].Dark(0.15)
+            LineColor = Color.FromArgb(120, 150, 150, 150)
+
+            If Dock = DockStyle.None Then
+                G.FillRoundedRect(l, Rect)
+                G.FillRoundedRect(Noise, Rect)
+                G.DrawRoundedRect(New Pen(LineColor), Rect)
             Else
-                C1 = [Color].Light(0.6)
-                C2 = [Color].Light(0.6)
+                G.FillRectangle(l, Rect)
+                G.FillRectangle(Noise, Rect)
             End If
-
-        End If
-
-        Dim l As New LinearGradientBrush(Rect, C1, C2, _Angle, False)
-
-        LineColor = Color.FromArgb(120, 150, 150, 150)
-
-        If Dock = DockStyle.None Then
-            G.FillRoundedRect(l, Rect)
-            G.FillRoundedRect(Noise, Rect)
-            G.DrawRoundedRect(New Pen(LineColor), Rect)
-        Else
-            G.FillRectangle(l, Rect)
-            G.FillRectangle(Noise, Rect)
         End If
 
     End Sub
@@ -1683,6 +1701,7 @@ Public Class XenonAnimatedBox : Inherits Panel
             Tmr.Stop()
         End If
     End Sub
+
 End Class
 
 <DefaultEvent("Click")>

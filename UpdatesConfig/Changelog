@@ -1,0 +1,117 @@
+#Channel= String
+#Date= Date.ToBinary
+#BugFix= String
+#NewFeature= String
+#Added= String
+#Removed= String
+
+[1.0.6.2]
+Channel= Stable
+Date= -8585333164854775808
+Removed= WinPaletter Development Paused to mid-January 2023, visit repos at Github for information
+BugFix= Fixing issue of error details not showing (Changed to a better one)
+BugFix= Minor UI Design Improvements, especially for the Light Mode
+
+[1.0.6.1]
+Channel= Stable
+Date= -8585353900854775808
+Removed= WinPaletter Development Paused to mid-January 2023, visit repos at Github for information
+BugFix= Fixing bugs in applying accent on titlebar for Windows 11 22H2
+BugFix= Fixing bugs in translation
+
+[1.0.6.0]
+Channel= Stable
+Date= -8585357356854775808
+NewFeature= Edit Terminals (Command Prompt, PowerShell & Windows Terminal)
+Added= Windows 10\11: scheme re-construction
+Added= Windows 10\11: Added ability to apply accents on Taskbar alone or Taskbar, Start and Action Center
+Added= Right-Click to edit or apply a theme file
+BugFix= Fixing bugs in translation
+BugFix= Minor UI fixes and Improvements
+BugFix= Minor Improvement in Application Loading Speed
+
+[1.0.5.9]
+Channel= Beta
+Date= -8585365132854775808
+NewFeature= Edit Terminals (Command Prompt, PowerShell & Windows Terminal)
+BugFix= Minor UI fixes and Improvements
+BugFix= Minor Improvement in Application Loading Speed
+
+[1.0.5.2]
+Channel= Stable
+Date= -8585385868854775808
+Added= Same changelog of Version 1.0.5.1
+Removed= Windows 10\11 LogonUI Colors removed due to critical bugs on system
+BugFix= Minor UI fixes and Improvements
+BugFix= Win32UI: Fixing bugs
+
+[1.0.5.1]
+Channel= Stable
+Date= -8585387596854775808
+NewFeature= Right Click Menus for Colors
+NewFeature= Nerd Info on Color palette
+BugFix= Fixing multiple issues in Color Palette loading for users used WinPaletter 1.0.5.0 for the first time
+BugFix= Win32UI: Fixing bugs
+Added= Win32UI: Save theme file as classic theme *.theme to reuse in Windows 95 and up!
+
+[1.0.5.0]
+Channel= Stable
+Date= -8585391916854775808
+NewFeature= Windows 8.1 and Windows 7 Extended Support
+NewFeature= Command Line Support (WinPaletter /apply:"FilePath")
+BugFix= Color Picker: Screen Pixel Picker opens the wrong form after leaving the mouse
+BugFix= Win32UI: Fixing bugs in the previewer
+BugFix= Cursors Colorizer: Fixing bugs, specially if you were using a 32-bit OS
+Added= Adjusted Settings Saving Speed
+
+[1.0.4.1]
+Channel= Stable
+Date= -8585412652854775808
+Added= Colorize Cursors as you need, even the animated ones!
+Added= Win32UI: Retro Themes Presets (In Win32UI and Color Picker)
+Added= Win32UI: Ability to apply "Flat menus" and "Gradient Titlebar" on Win32UI without logging off and on
+Added= Win32UI: "Quick Apply" to see instant effects, instead of loading to current palette and applying
+BugFix= Win32UI: Fixing bugs in the previewer
+
+[1.0.4.0]
+Channel= Beta
+Date= -8585415244854775808
+Added= Colorize Cursors as you need, even the animated ones!
+Added= Retro Themes Presets (In Win32UI and Color Picker)
+BugFix= Fixing bugs in the Windows Classic (Win32UI) previewer
+
+[1.0.3.1]
+Channel= Stable
+Date= -8585429068854775808
+BugFix= Rescue Box Removed (due to unhandled exceptions errors)
+BugFix= Fixing Color Picker not showing chosen color
+Added= Ability to apply Win32UI colors immediately without any restart or logoff
+Added= UI Improvement
+
+[1.0.3.0]
+Channel= Stable
+Date= -8585431660854775808
+BugFix= Explorer Restarting Errors fixes by new restart mechanism (Code)
+NewFeature= Rescue Box (helps you with all restarting explorer errors)
+NewFeature= Windows 9x themes colors extractor by Color Picker
+NewFeature= Win32UI Live Preview, Windows 9x Themes support
+NewFeature= Languages (Experimental)
+Added= General Tweaks for UI and Startup speed
+
+[1.0.2.0]
+Channel= Beta
+Date= -8585461900854775808
+BugFix= Explorer Restarting Errors fixes by new restart mechanism (Code)
+NewFeature= Rescue Box (helps you with all restarting explorer errors)
+NewFeature= New Settings Layout (Instead of the old condensed one)
+Added= General Tweaks for Changelog File, and Theme and Exported Settings Files Extensions
+
+[1.0.1.0]
+Channel= Stable
+Date= -8585467948854775808
+BugFix= Removed "Blur" Toggle as it crashed UWP/WinUI3 for other users.
+
+[1.0.0.0]
+Channel= Stable
+Date= -8585486092854775808
+NewFeature= Initial Release
