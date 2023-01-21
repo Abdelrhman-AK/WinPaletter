@@ -15,8 +15,16 @@ Public Class XeSettings
     Public Property SaveForLegacyWP As Boolean = False
     Public Property Win7LivePreview As Boolean = True
     Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
+
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
+    Public Property Appearance_Custom As Boolean = False
+    Public Property Appearance_SchemeName As String = "Default Dark"
+    Public Property Appearance_Custom_Dark As Boolean = True
+    Public Property Appearance_Accent As Color = Color.FromArgb(0, 81, 210)
+    Public Property Appearance_Back As Color = Color.FromArgb(25, 25, 25)
+    Public Property Appearance_Rounded As Boolean = True
+
     Public Property WhatsNewRecord As String() = {""}
     Public Property Language As Boolean = False
     Public Property Language_File As String = Nothing
@@ -81,10 +89,17 @@ Public Class XeSettings
         If Key.GetValue("MainFormWidth", Nothing) Is Nothing Then Key.SetValue("MainFormWidth", 1110, RegistryValueKind.DWord)
         If Key.GetValue("MainFormHeight", Nothing) Is Nothing Then Key.SetValue("MainFormHeight", 725, RegistryValueKind.DWord)
         If Key.GetValue("MainFormStatus", Nothing) Is Nothing Then Key.SetValue("MainFormStatus", FormWindowState.Normal, RegistryValueKind.DWord)
-
         If Key.GetValue("UpdateChannel", Nothing) Is Nothing Then Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
+
         If Key.GetValue("Appearance_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Dark", True, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Auto", Nothing) Is Nothing Then Key.SetValue("Appearance_Auto", True, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Custom", Nothing) Is Nothing Then Key.SetValue("Appearance_Custom", False, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_SchemeName", Nothing) Is Nothing Then Key.SetValue("Appearance_SchemeName", "Default Dark", RegistryValueKind.String)
+        If Key.GetValue("Appearance_Custom_Dark", Nothing) Is Nothing Then Key.SetValue("Appearance_Custom_Dark", True, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Accent", Nothing) Is Nothing Then Key.SetValue("Appearance_Accent", Color.FromArgb(0, 81, 210).ToArgb, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Back", Nothing) Is Nothing Then Key.SetValue("Appearance_Back", Color.FromArgb(25, 25, 25).ToArgb, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Rounded", Nothing) Is Nothing Then Key.SetValue("Appearance_Rounded", True, RegistryValueKind.DWord)
+
         If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", {""}, RegistryValueKind.MultiString)
         If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", False, RegistryValueKind.DWord)
         If Key.GetValue("Language_File", Nothing) Is Nothing Then Key.SetValue("Language_File", "", RegistryValueKind.String)
@@ -153,8 +168,16 @@ Public Class XeSettings
                 CMD_OverrideUserPreferences = Key.GetValue("CMD_OverrideUserPreferences", True)
 
                 UpdateChannel = If(Key.GetValue("UpdateChannel", UpdateChannels.Stable) = UpdateChannels.Stable, UpdateChannels.Stable, UpdateChannels.Beta)
+
                 Appearance_Dark = Key.GetValue("Appearance_Dark", True)
                 Appearance_Auto = Key.GetValue("Appearance_Auto", True)
+                Appearance_Custom = Key.GetValue("Appearance_Custom", False)
+                Appearance_SchemeName = Key.GetValue("Appearance_SchemeName", "Default Dark")
+                Appearance_Custom_Dark = Key.GetValue("Appearance_Custom_Dark", True)
+                Appearance_Accent = Color.FromArgb(Key.GetValue("Appearance_Accent", Color.FromArgb(0, 81, 210).ToArgb))
+                Appearance_Back = Color.FromArgb(Key.GetValue("Appearance_Back", Color.FromArgb(25, 25, 25).ToArgb))
+                Appearance_Rounded = Key.GetValue("Appearance_Rounded", True)
+
                 WhatsNewRecord = Key.GetValue("WhatsNewRecord", {""})
                 Language = Key.GetValue("Language", False)
                 Language_File = Key.GetValue("Language_File", "")
@@ -194,8 +217,16 @@ Public Class XeSettings
                     If x.ToLower.StartsWith("SaveForLegacyWP= ".ToLower) Then SaveForLegacyWP = x.Remove(0, "SaveForLegacyWP= ".Count)
                     If x.ToLower.StartsWith("Win7LivePreview= ".ToLower) Then Win7LivePreview = x.Remove(0, "Win7LivePreview= ".Count)
                     If x.ToLower.StartsWith("UpdateChannel= ".ToLower) Then UpdateChannel = x.Remove(0, "UpdateChannel= ".Count)
+
                     If x.ToLower.StartsWith("Appearance_Dark= ".ToLower) Then Appearance_Dark = x.Remove(0, "Appearance_Dark= ".Count)
                     If x.ToLower.StartsWith("Appearance_Auto= ".ToLower) Then Appearance_Auto = x.Remove(0, "Appearance_Auto= ".Count)
+                    If x.ToLower.StartsWith("Appearance_Custom= ".ToLower) Then Appearance_Custom = x.Remove(0, "Appearance_Custom= ".Count)
+                    If x.ToLower.StartsWith("Appearance_SchemeName= ".ToLower) Then Appearance_SchemeName = x.Remove(0, "Appearance_SchemeName= ".Count)
+                    If x.ToLower.StartsWith("Appearance_Custom_Dark= ".ToLower) Then Appearance_Custom_Dark = x.Remove(0, "Appearance_Custom_Dark= ".Count)
+                    If x.ToLower.StartsWith("Appearance_Accent= ".ToLower) Then Appearance_Accent = Color.FromArgb(x.Remove(0, "Appearance_Accent= ".Count))
+                    If x.ToLower.StartsWith("Appearance_Back= ".ToLower) Then Appearance_Back = Color.FromArgb(x.Remove(0, "Appearance_Back= ".Count))
+                    If x.ToLower.StartsWith("Appearance_Rounded= ".ToLower) Then Appearance_Rounded = x.Remove(0, "Appearance_Rounded= ".Count)
+
                     If x.ToLower.StartsWith("Language= ".ToLower) Then Language = x.Remove(0, "Language= ".Count)
                     If x.ToLower.StartsWith("Language_File= ".ToLower) Then Language_File = x.Remove(0, "Language_File= ".Count)
                     If x.ToLower.StartsWith("Nerd_Stats= ".ToLower) Then Nerd_Stats = x.Remove(0, "Nerd_Stats= ".Count)
@@ -244,8 +275,16 @@ Public Class XeSettings
                 Key.SetValue("SaveForLegacyWP", SaveForLegacyWP, RegistryValueKind.DWord)
 
                 Key.SetValue("UpdateChannel", If(UpdateChannel = UpdateChannels.Stable, 0, 1))
+
                 Key.SetValue("Appearance_Dark", Appearance_Dark, RegistryValueKind.DWord)
                 Key.SetValue("Appearance_Auto", Appearance_Auto, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_Custom", Appearance_Custom, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_SchemeName", Appearance_SchemeName, RegistryValueKind.String)
+                Key.SetValue("Appearance_Custom_Dark", Appearance_Custom_Dark, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_Accent", Appearance_Accent.ToArgb, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_Back", Appearance_Back.ToArgb, RegistryValueKind.DWord)
+                Key.SetValue("Appearance_Rounded", Appearance_Rounded, RegistryValueKind.DWord)
+
                 Key.SetValue("WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString)
                 Key.SetValue("Language", Language, RegistryValueKind.DWord)
                 Key.SetValue("Language_File", Language_File, RegistryValueKind.String)
@@ -297,8 +336,16 @@ Public Class XeSettings
                 l.Add(String.Format("SaveForLegacyWP= {0}", SaveForLegacyWP))
 
                 l.Add(String.Format("UpdateChannel= {0}", If(UpdateChannel = UpdateChannels.Stable, 0, 1)))
+
                 l.Add(String.Format("Appearance_Dark= {0}", Appearance_Dark))
                 l.Add(String.Format("Appearance_Auto= {0}", Appearance_Auto))
+                l.Add(String.Format("Appearance_Custom= {0}", Appearance_Custom))
+                l.Add(String.Format("Appearance_SchemeName= {0}", Appearance_SchemeName))
+                l.Add(String.Format("Appearance_Custom_Dark= {0}", Appearance_Custom_Dark))
+                l.Add(String.Format("Appearance_Accent= {0}", Appearance_Accent.ToArgb))
+                l.Add(String.Format("Appearance_Back= {0}", Appearance_Back.ToArgb))
+                l.Add(String.Format("Appearance_Rounded= {0}", Appearance_Rounded))
+
                 l.Add(String.Format("Language= {0}", Language))
                 l.Add(String.Format("Language_File= {0}", Language_File))
                 l.Add(String.Format("Nerd_Stats= {0}", Nerd_Stats))

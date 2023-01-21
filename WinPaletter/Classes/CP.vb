@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports Microsoft.Win32
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Metrics
@@ -1375,7 +1376,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             }
 
     Public WinMetrics_Fonts As New WinMetrics_Fonts_Structure With {
-                .Enabled = False,
+                .Enabled = True,
                 .BorderWidth = 1,
                 .CaptionHeight = 22,
                 .CaptionWidth = 22,
@@ -2417,6 +2418,92 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Private Sub AddException([Label] As String, [Exception] As Exception)
         My.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
     End Sub
+
+    Function AddFontsToThemeFile(PropName As String, Font As Font) As String
+        Dim s As New List(Of String) : s.Clear()
+        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name))
+        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Size", Font.SizeInPoints))
+        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Style", Font.Style))
+        Return s.CString
+    End Function
+
+    Function SetToFont(PropName As String, PropValue As String, Font As Font) As Font
+        Dim F As New Font(Font.Name, Font.Size, Font.Style)
+
+        Select Case PropName.ToLower
+            Case "Name".ToLower
+                F = New Font(PropValue, Font.Size, Font.Style)
+
+            Case "Size".ToLower
+                F = New Font(Font.Name, CSng(PropValue), Font.Style)
+
+            Case "Style".ToLower
+                F = New Font(Font.Name, Font.Size, ReturnFontStyle(PropValue))
+
+        End Select
+
+        Return F
+    End Function
+
+    Function ReturnFontStyle([Value] As String) As FontStyle
+
+        If Not [Value].Contains(",") Then
+
+            Select Case [Value].ToLower
+                Case "Bold".ToLower
+                    Return FontStyle.Bold
+
+                Case "Italic".ToLower
+                    Return FontStyle.Italic
+
+                Case "Regular".ToLower
+                    Return FontStyle.Regular
+
+                Case "Strikeout".ToLower
+                    Return FontStyle.Strikeout
+
+                Case "Underline".ToLower
+                    Return FontStyle.Underline
+
+                Case Else
+                    Return FontStyle.Regular
+
+            End Select
+
+        Else
+            Dim Collection As New FontStyle
+
+            For Each x In Value.Split(",")
+                Dim val As String = x.Trim
+
+                Select Case val.ToLower
+                    Case "Bold".ToLower
+                        Collection += FontStyle.Bold
+
+                    Case "Italic".ToLower
+                        Collection += FontStyle.Italic
+
+                    Case "Regular".ToLower
+                        Collection += FontStyle.Regular
+
+                    Case "Strikeout".ToLower
+                        Collection += FontStyle.Strikeout
+
+                    Case "Underline".ToLower
+                        Collection += FontStyle.Underline
+
+                    Case Else
+                        Collection += FontStyle.Regular
+
+                End Select
+
+            Next
+
+            Return Collection
+        End If
+
+    End Function
+
 #End Region
 
 #Region "EXPERIMENTAL  -  JSON"
@@ -3453,6 +3540,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ls_stable.Clear()
                 ls_preview.Clear()
 
+                Dim fonts As New List(Of String)
+                fonts.Clear()
+
                 '## Checks if the loaded file is an old WPTH or not
                 Dim OldWPTH As Boolean = False
                 For Each lin As String In txt
@@ -3756,6 +3846,26 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.ToLower.StartsWith("*Win32UI_Desktop= ".ToLower) Then Win32.Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
 
+#Region "Metrics & Fonts"
+                    If lin.ToLower.StartsWith("*MetricsFonts_Enabled= ".ToLower) Then WinMetrics_Fonts.Enabled = lin.Remove(0, "*MetricsFonts_Enabled= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_BorderWidth= ".ToLower) Then WinMetrics_Fonts.BorderWidth = lin.Remove(0, "*Metrics_BorderWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_CaptionHeight= ".ToLower) Then WinMetrics_Fonts.CaptionHeight = lin.Remove(0, "*Metrics_CaptionHeight= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_CaptionWidth= ".ToLower) Then WinMetrics_Fonts.CaptionWidth = lin.Remove(0, "*Metrics_CaptionWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_IconSpacing= ".ToLower) Then WinMetrics_Fonts.IconSpacing = lin.Remove(0, "*Metrics_IconSpacing= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_IconVerticalSpacing= ".ToLower) Then WinMetrics_Fonts.IconVerticalSpacing = lin.Remove(0, "*Metrics_IconVerticalSpacing= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_MenuHeight= ".ToLower) Then WinMetrics_Fonts.MenuHeight = lin.Remove(0, "*Metrics_MenuHeight= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_MenuWidth= ".ToLower) Then WinMetrics_Fonts.MenuWidth = lin.Remove(0, "*Metrics_MenuWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_MinAnimate= ".ToLower) Then WinMetrics_Fonts.MinAnimate = lin.Remove(0, "*Metrics_MinAnimate= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_PaddedBorderWidth= ".ToLower) Then WinMetrics_Fonts.PaddedBorderWidth = lin.Remove(0, "*Metrics_PaddedBorderWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_ScrollHeight= ".ToLower) Then WinMetrics_Fonts.ScrollHeight = lin.Remove(0, "*Metrics_ScrollHeight= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_ScrollWidth= ".ToLower) Then WinMetrics_Fonts.ScrollWidth = lin.Remove(0, "*Metrics_ScrollWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_SmCaptionHeight= ".ToLower) Then WinMetrics_Fonts.SmCaptionHeight = lin.Remove(0, "*Metrics_SmCaptionHeight= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_SmCaptionWidth= ".ToLower) Then WinMetrics_Fonts.SmCaptionWidth = lin.Remove(0, "*Metrics_SmCaptionWidth= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_DesktopIconSize= ".ToLower) Then WinMetrics_Fonts.DesktopIconSize = lin.Remove(0, "*Metrics_DesktopIconSize= ".Count)
+                    If lin.ToLower.StartsWith("*Metrics_ShellIconSize= ".ToLower) Then WinMetrics_Fonts.ShellIconSize = lin.Remove(0, "*Metrics_ShellIconSize= ".Count)
+                    If lin.ToLower.StartsWith("*Fonts_".ToLower) Then fonts.Add(lin.Remove(0, "*Fonts_".Count))
+#End Region
+
 #Region "Terminals"
 
                     If lin.ToLower.StartsWith("*Terminal_CMD_Enabled= ".ToLower) Then CommandPrompt.Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
@@ -3800,6 +3910,37 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
                 Next
+
+#Region "Fonts"
+                For Each x In fonts
+                    Dim Value As String = x.Replace(x.Split("=")(0) & "= ", "").Trim
+                    Dim FontName As String = x.Split("=")(0).ToString.Split("_")(0)
+                    Dim Prop As String = x.Split("=")(0).ToString.Split("_")(1)
+
+                    Select Case FontName.ToLower
+                        Case "Caption".ToLower
+                            WinMetrics_Fonts.CaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.CaptionFont)
+
+                        Case "Icon".ToLower
+                            WinMetrics_Fonts.IconFont = SetToFont(Prop, Value, WinMetrics_Fonts.IconFont)
+
+                        Case "Menu".ToLower
+                            WinMetrics_Fonts.MenuFont = SetToFont(Prop, Value, WinMetrics_Fonts.MenuFont)
+
+                        Case "Message".ToLower
+                            WinMetrics_Fonts.MessageFont = SetToFont(Prop, Value, WinMetrics_Fonts.MessageFont)
+
+                        Case "SmCaption".ToLower
+                            WinMetrics_Fonts.SmCaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.SmCaptionFont)
+
+                        Case "Status".ToLower
+                            WinMetrics_Fonts.StatusFont = SetToFont(Prop, Value, WinMetrics_Fonts.StatusFont)
+
+                    End Select
+
+                Next
+
+#End Region
 
 #Region "Cursors"
                 Cursor_Arrow = Cursor_Structure.Load_Cursor_From_ListOfString(CUR_Arrow_List)
@@ -4522,11 +4663,30 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
 #Region "Metrics & Fonts"
-                'tx.Add("<LogonUI_7_8>")
-
-                'tx.Add("*LogonUI7_Enabled= " & LogonUI7.Enabled)
-
-                'tx.Add("</LogonUI_7_8>" & vbCrLf)
+                tx.Add(vbCrLf & "<Metrics&Fonts>")
+                tx.Add("*MetricsFonts_Enabled= " & WinMetrics_Fonts.Enabled)
+                tx.Add("*Metrics_BorderWidth= " & WinMetrics_Fonts.BorderWidth)
+                tx.Add("*Metrics_CaptionHeight= " & WinMetrics_Fonts.CaptionHeight)
+                tx.Add("*Metrics_CaptionWidth= " & WinMetrics_Fonts.CaptionWidth)
+                tx.Add("*Metrics_IconSpacing= " & WinMetrics_Fonts.IconSpacing)
+                tx.Add("*Metrics_IconVerticalSpacing= " & WinMetrics_Fonts.IconVerticalSpacing)
+                tx.Add("*Metrics_MenuHeight= " & WinMetrics_Fonts.MenuHeight)
+                tx.Add("*Metrics_MenuWidth= " & WinMetrics_Fonts.MenuWidth)
+                tx.Add("*Metrics_MinAnimate= " & WinMetrics_Fonts.MinAnimate)
+                tx.Add("*Metrics_PaddedBorderWidth= " & WinMetrics_Fonts.PaddedBorderWidth)
+                tx.Add("*Metrics_ScrollHeight= " & WinMetrics_Fonts.ScrollHeight)
+                tx.Add("*Metrics_ScrollWidth= " & WinMetrics_Fonts.ScrollWidth)
+                tx.Add("*Metrics_SmCaptionHeight= " & WinMetrics_Fonts.SmCaptionHeight)
+                tx.Add("*Metrics_SmCaptionWidth= " & WinMetrics_Fonts.SmCaptionWidth)
+                tx.Add("*Metrics_DesktopIconSize= " & WinMetrics_Fonts.DesktopIconSize)
+                tx.Add("*Metrics_ShellIconSize= " & WinMetrics_Fonts.ShellIconSize)
+                tx.Add(AddFontsToThemeFile("Caption", WinMetrics_Fonts.CaptionFont))
+                tx.Add(AddFontsToThemeFile("Icon", WinMetrics_Fonts.IconFont))
+                tx.Add(AddFontsToThemeFile("Menu", WinMetrics_Fonts.MenuFont))
+                tx.Add(AddFontsToThemeFile("Message", WinMetrics_Fonts.MessageFont))
+                tx.Add(AddFontsToThemeFile("SmCaption", WinMetrics_Fonts.SmCaptionFont))
+                tx.Add(AddFontsToThemeFile("Status", WinMetrics_Fonts.StatusFont))
+                tx.Add("</Metrics&Fonts>" & vbCrLf)
 #End Region
 
 #Region "Terminals"

@@ -55,7 +55,6 @@ Partial Class CMD
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.CMD_LineSelection = New WinPaletter.XenonCheckBox()
-        Me.CMD_OpacityLbl = New System.Windows.Forms.Label()
         Me.CMD_EnhancedTerminal = New WinPaletter.XenonCheckBox()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.CMD_TerminalScrolling = New WinPaletter.XenonCheckBox()
@@ -64,7 +63,6 @@ Partial Class CMD
         Me.Label57 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
-        Me.CMD_PreviewCUR_LBL = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.CMD_CursorStyle = New WinPaletter.XenonComboBox()
         Me.Label60 = New System.Windows.Forms.Label()
@@ -79,13 +77,13 @@ Partial Class CMD
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.CMD_FontSizeVal = New WinPaletter.XenonButton()
         Me.CMD_RasterToggle = New WinPaletter.XenonToggle()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.CMD_FontsBox = New WinPaletter.XenonComboBox()
         Me.CMD_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.CMD_FontWeightBox = New WinPaletter.XenonComboBox()
-        Me.CMD_FontSizeLbl = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
@@ -142,6 +140,8 @@ Partial Class CMD
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.CMD_PreviewCUR_Val = New WinPaletter.XenonButton()
+        Me.CMD_OpacityVal = New WinPaletter.XenonButton()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -282,7 +282,7 @@ Partial Class CMD
         'CMDEnabled
         '
         Me.CMDEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMDEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.CMDEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.CMDEnabled.Checked = False
         Me.CMDEnabled.DarkLight_Toggler = False
         Me.CMDEnabled.Location = New System.Drawing.Point(847, 9)
@@ -539,10 +539,10 @@ Partial Class CMD
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.CMD_OpacityVal)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox10)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox12.Controls.Add(Me.CMD_LineSelection)
-        Me.XenonGroupBox12.Controls.Add(Me.CMD_OpacityLbl)
         Me.XenonGroupBox12.Controls.Add(Me.CMD_EnhancedTerminal)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox12.Controls.Add(Me.CMD_TerminalScrolling)
@@ -585,18 +585,6 @@ Partial Class CMD
         Me.CMD_LineSelection.Size = New System.Drawing.Size(155, 24)
         Me.CMD_LineSelection.TabIndex = 122
         Me.CMD_LineSelection.Text = "Line Selection"
-        '
-        'CMD_OpacityLbl
-        '
-        Me.CMD_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_OpacityLbl.BackColor = System.Drawing.Color.Transparent
-        Me.CMD_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_OpacityLbl.Location = New System.Drawing.Point(268, 121)
-        Me.CMD_OpacityLbl.Name = "CMD_OpacityLbl"
-        Me.CMD_OpacityLbl.Size = New System.Drawing.Size(26, 22)
-        Me.CMD_OpacityLbl.TabIndex = 121
-        Me.CMD_OpacityLbl.Text = "100"
-        Me.CMD_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'CMD_EnhancedTerminal
         '
@@ -641,7 +629,7 @@ Partial Class CMD
         Me.CMD_OpacityBar.Maximum = 255
         Me.CMD_OpacityBar.Minimum = 0
         Me.CMD_OpacityBar.Name = "CMD_OpacityBar"
-        Me.CMD_OpacityBar.Size = New System.Drawing.Size(223, 19)
+        Me.CMD_OpacityBar.Size = New System.Drawing.Size(217, 19)
         Me.CMD_OpacityBar.SmallChange = 1
         Me.CMD_OpacityBar.TabIndex = 120
         Me.CMD_OpacityBar.Text = "XenonTrackbar1"
@@ -687,7 +675,7 @@ Partial Class CMD
         Me.XenonGroupBox34.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox34.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox34.Controls.Add(Me.CMD_PreviewCUR_LBL)
+        Me.XenonGroupBox34.Controls.Add(Me.CMD_PreviewCUR_Val)
         Me.XenonGroupBox34.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox34.Controls.Add(Me.CMD_CursorStyle)
         Me.XenonGroupBox34.Controls.Add(Me.Label60)
@@ -702,18 +690,6 @@ Partial Class CMD
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(301, 97)
         Me.XenonGroupBox34.TabIndex = 99
-        '
-        'CMD_PreviewCUR_LBL
-        '
-        Me.CMD_PreviewCUR_LBL.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
-        Me.CMD_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_PreviewCUR_LBL.Location = New System.Drawing.Point(268, 66)
-        Me.CMD_PreviewCUR_LBL.Name = "CMD_PreviewCUR_LBL"
-        Me.CMD_PreviewCUR_LBL.Size = New System.Drawing.Size(28, 24)
-        Me.CMD_PreviewCUR_LBL.TabIndex = 104
-        Me.CMD_PreviewCUR_LBL.Text = "100"
-        Me.CMD_PreviewCUR_LBL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
         '
@@ -738,7 +714,7 @@ Partial Class CMD
         Me.CMD_CursorStyle.FormattingEnabled = True
         Me.CMD_CursorStyle.ItemHeight = 20
         Me.CMD_CursorStyle.Items.AddRange(New Object() {"Default", "Legacy", "Underscore", "Empty Box", "Vertical Bar", "Solid Box"})
-        Me.CMD_CursorStyle.Location = New System.Drawing.Point(97, 36)
+        Me.CMD_CursorStyle.Location = New System.Drawing.Point(97, 35)
         Me.CMD_CursorStyle.Name = "CMD_CursorStyle"
         Me.CMD_CursorStyle.Size = New System.Drawing.Size(199, 26)
         Me.CMD_CursorStyle.TabIndex = 110
@@ -763,7 +739,7 @@ Partial Class CMD
         Me.CMD_CursorSizeBar.Maximum = 100
         Me.CMD_CursorSizeBar.Minimum = 20
         Me.CMD_CursorSizeBar.Name = "CMD_CursorSizeBar"
-        Me.CMD_CursorSizeBar.Size = New System.Drawing.Size(165, 19)
+        Me.CMD_CursorSizeBar.Size = New System.Drawing.Size(159, 19)
         Me.CMD_CursorSizeBar.SmallChange = 1
         Me.CMD_CursorSizeBar.TabIndex = 102
         Me.CMD_CursorSizeBar.Value = 20
@@ -876,13 +852,13 @@ Partial Class CMD
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeVal)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_RasterToggle)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox4.Controls.Add(Me.Label58)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontsBox)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontWeightBox)
-        Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeLbl)
         Me.XenonGroupBox4.Controls.Add(Me.Label61)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox3)
@@ -896,15 +872,30 @@ Partial Class CMD
         Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 128)
         Me.XenonGroupBox4.TabIndex = 98
         '
+        'CMD_FontSizeVal
+        '
+        Me.CMD_FontSizeVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CMD_FontSizeVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_FontSizeVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CMD_FontSizeVal.ForeColor = System.Drawing.Color.White
+        Me.CMD_FontSizeVal.Image = Nothing
+        Me.CMD_FontSizeVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.CMD_FontSizeVal.LineSize = 1
+        Me.CMD_FontSizeVal.Location = New System.Drawing.Point(261, 66)
+        Me.CMD_FontSizeVal.Name = "CMD_FontSizeVal"
+        Me.CMD_FontSizeVal.Size = New System.Drawing.Size(34, 24)
+        Me.CMD_FontSizeVal.TabIndex = 131
+        Me.CMD_FontSizeVal.UseVisualStyleBackColor = False
+        '
         'CMD_RasterToggle
         '
         Me.CMD_RasterToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CMD_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.CMD_RasterToggle.Checked = False
         Me.CMD_RasterToggle.DarkLight_Toggler = False
-        Me.CMD_RasterToggle.Location = New System.Drawing.Point(248, 96)
+        Me.CMD_RasterToggle.Location = New System.Drawing.Point(255, 98)
         Me.CMD_RasterToggle.Name = "CMD_RasterToggle"
-        Me.CMD_RasterToggle.Size = New System.Drawing.Size(47, 20)
+        Me.CMD_RasterToggle.Size = New System.Drawing.Size(40, 20)
         Me.CMD_RasterToggle.TabIndex = 95
         '
         'PictureBox1
@@ -940,7 +931,7 @@ Partial Class CMD
         Me.CMD_FontsBox.ForeColor = System.Drawing.Color.White
         Me.CMD_FontsBox.FormattingEnabled = True
         Me.CMD_FontsBox.ItemHeight = 20
-        Me.CMD_FontsBox.Location = New System.Drawing.Point(96, 6)
+        Me.CMD_FontsBox.Location = New System.Drawing.Point(96, 5)
         Me.CMD_FontsBox.Name = "CMD_FontsBox"
         Me.CMD_FontsBox.Size = New System.Drawing.Size(199, 26)
         Me.CMD_FontsBox.TabIndex = 100
@@ -954,7 +945,7 @@ Partial Class CMD
         Me.CMD_FontSizeBar.Maximum = 48
         Me.CMD_FontSizeBar.Minimum = 5
         Me.CMD_FontSizeBar.Name = "CMD_FontSizeBar"
-        Me.CMD_FontSizeBar.Size = New System.Drawing.Size(165, 19)
+        Me.CMD_FontSizeBar.Size = New System.Drawing.Size(158, 19)
         Me.CMD_FontSizeBar.SmallChange = 1
         Me.CMD_FontSizeBar.TabIndex = 101
         Me.CMD_FontSizeBar.Text = "XenonTrackbar16"
@@ -973,22 +964,10 @@ Partial Class CMD
         Me.CMD_FontWeightBox.FormattingEnabled = True
         Me.CMD_FontWeightBox.ItemHeight = 20
         Me.CMD_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
-        Me.CMD_FontWeightBox.Location = New System.Drawing.Point(96, 36)
+        Me.CMD_FontWeightBox.Location = New System.Drawing.Point(96, 35)
         Me.CMD_FontWeightBox.Name = "CMD_FontWeightBox"
         Me.CMD_FontWeightBox.Size = New System.Drawing.Size(172, 26)
         Me.CMD_FontWeightBox.TabIndex = 99
-        '
-        'CMD_FontSizeLbl
-        '
-        Me.CMD_FontSizeLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
-        Me.CMD_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_FontSizeLbl.Location = New System.Drawing.Point(268, 67)
-        Me.CMD_FontSizeLbl.Name = "CMD_FontSizeLbl"
-        Me.CMD_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
-        Me.CMD_FontSizeLbl.TabIndex = 102
-        Me.CMD_FontSizeLbl.Text = "75"
-        Me.CMD_FontSizeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label61
         '
@@ -1082,7 +1061,7 @@ Partial Class CMD
         Me.RasterList.FormattingEnabled = True
         Me.RasterList.ItemHeight = 20
         Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
-        Me.RasterList.Location = New System.Drawing.Point(96, 66)
+        Me.RasterList.Location = New System.Drawing.Point(96, 65)
         Me.RasterList.Name = "RasterList"
         Me.RasterList.Size = New System.Drawing.Size(199, 26)
         Me.RasterList.TabIndex = 104
@@ -1728,6 +1707,36 @@ Partial Class CMD
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Tweaks"
         '
+        'CMD_PreviewCUR_Val
+        '
+        Me.CMD_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CMD_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CMD_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CMD_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
+        Me.CMD_PreviewCUR_Val.Image = Nothing
+        Me.CMD_PreviewCUR_Val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.CMD_PreviewCUR_Val.LineSize = 1
+        Me.CMD_PreviewCUR_Val.Location = New System.Drawing.Point(262, 66)
+        Me.CMD_PreviewCUR_Val.Name = "CMD_PreviewCUR_Val"
+        Me.CMD_PreviewCUR_Val.Size = New System.Drawing.Size(34, 24)
+        Me.CMD_PreviewCUR_Val.TabIndex = 132
+        Me.CMD_PreviewCUR_Val.UseVisualStyleBackColor = False
+        '
+        'CMD_OpacityVal
+        '
+        Me.CMD_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CMD_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CMD_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CMD_OpacityVal.ForeColor = System.Drawing.Color.White
+        Me.CMD_OpacityVal.Image = Nothing
+        Me.CMD_OpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.CMD_OpacityVal.LineSize = 1
+        Me.CMD_OpacityVal.Location = New System.Drawing.Point(262, 120)
+        Me.CMD_OpacityVal.Name = "CMD_OpacityVal"
+        Me.CMD_OpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.CMD_OpacityVal.TabIndex = 133
+        Me.CMD_OpacityVal.UseVisualStyleBackColor = False
+        '
         'CMD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1847,14 +1856,12 @@ Partial Class CMD
     Friend WithEvents XenonButton4 As XenonButton
     Friend WithEvents CMD_FontWeightBox As XenonComboBox
     Friend WithEvents CMD_FontsBox As XenonComboBox
-    Friend WithEvents CMD_FontSizeLbl As Label
     Friend WithEvents CMD_FontSizeBar As XenonTrackbar
     Friend WithEvents XenonGroupBox34 As XenonGroupBox
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
     Friend WithEvents CMD_CursorSizeBar As XenonTrackbar
     Friend WithEvents CMD_PreviewCUR As Panel
     Friend WithEvents CMD_PreviewCUR2 As Panel
-    Friend WithEvents CMD_PreviewCUR_LBL As Label
     Friend WithEvents Label61 As Label
     Friend WithEvents CMD_PreviewCursorInner As Panel
     Friend WithEvents Label2 As Label
@@ -1864,7 +1871,6 @@ Partial Class CMD
     Friend WithEvents Label5 As Label
     Friend WithEvents XenonGroupBox12 As XenonGroupBox
     Friend WithEvents CMD_TerminalScrolling As XenonCheckBox
-    Friend WithEvents CMD_OpacityLbl As Label
     Friend WithEvents CMD_LineSelection As XenonCheckBox
     Friend WithEvents CMD_OpacityBar As XenonTrackbar
     Friend WithEvents Label57 As Label
@@ -1904,4 +1910,7 @@ Partial Class CMD
     Friend WithEvents PictureBox14 As PictureBox
     Friend WithEvents Label3 As Label
     Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents CMD_FontSizeVal As XenonButton
+    Friend WithEvents CMD_PreviewCUR_Val As XenonButton
+    Friend WithEvents CMD_OpacityVal As XenonButton
 End Class

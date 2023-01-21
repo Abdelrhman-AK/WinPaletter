@@ -500,7 +500,7 @@ Public Class WindowsTerminal
     Private Sub TerFontSizeBar_Scroll(sender As Object) Handles TerFontSizeBar.Scroll
         If Not _Shown Then Exit Sub
 
-        TerFontSizeLbl.Text = sender.Value
+        TerFontSizeVal.Text = sender.Value
 
         XenonTerminal1.Font = New Font(XenonTerminal1.Font.Name, TerFontSizeBar.Value, XenonTerminal1.Font.Style)
 
@@ -512,7 +512,7 @@ Public Class WindowsTerminal
     Private Sub TerCursorHeightBar_Scroll(sender As Object) Handles TerCursorHeightBar.Scroll
         XenonTerminal1.CursorHeight = sender.Value
         XenonTerminal1.Refresh()
-        TerCursorHeightLbl.Text = TerCursorHeightBar.Value
+        TerCursorHeightVal.Text = TerCursorHeightBar.Value
         XenonTerminal1.Refresh()
 
         If Not _Shown Then Exit Sub
@@ -523,7 +523,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerImageOpacity_Scroll(sender As Object) Handles TerImageOpacity.Scroll
-        TerImageOpacityLbl.Text = sender.Value
+        TerImageOpacityVal.Text = sender.Value
 
         XenonTerminal1.OpacityBackImage = TerImageOpacity.Value
 
@@ -706,7 +706,7 @@ Public Class WindowsTerminal
 
     Sub ApplyPreview([Terminal] As WinTerminal)
         Try
-            XenonTerminal1.UseAcrylicOnTitlebar = [Terminal].useAcrylicInTabRow
+            XenonTerminal1.UseAcrylicOnTitlebar = [Terminal].UseAcrylicInTabRow
 
             If TerProfiles.SelectedIndex = 0 Then
                 XenonTerminal1.TabColor = [Terminal].DefaultProf.TabColor
@@ -772,13 +772,13 @@ Public Class WindowsTerminal
             End If
 
             With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
-                Dim fx As New LOGFONT
+                Dim fx As New LogFont
                 Dim f_cmd As New Font(.Font.Face, .Font.Size)
                 f_cmd.ToLogFont(fx)
                 fx.lfWeight = .Font.Weight * 100
                 f_cmd = New Font(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style)
                 XenonTerminal1.Font = f_cmd
-                TerFontSizeLbl.Text = f_cmd.Size
+                TerFontSizeVal.Text = f_cmd.Size
             End With
 
             XenonTerminal1.Refresh()
@@ -796,7 +796,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerFontWeight_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerFontWeight.SelectedIndexChanged
-        Dim fx As New LOGFONT
+        Dim fx As New LogFont
         Dim f_cmd As New Font(XenonTerminal1.Font.Name, XenonTerminal1.Font.Size, XenonTerminal1.Font.Style)
         f_cmd.ToLogFont(fx)
         fx.lfWeight = TerFontWeight.SelectedIndex * 100
@@ -851,16 +851,16 @@ Public Class WindowsTerminal
         End If
 
         If TerThemes.SelectedItem.ToString.ToLower = "dark" Then
-            _Terminal.theme = "dark"
+            _Terminal.Theme = "dark"
 
         ElseIf TerThemes.SelectedItem.ToString.ToLower = "light" Then
-            _Terminal.theme = "light"
+            _Terminal.Theme = "light"
 
         ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
-            _Terminal.theme = "system"
+            _Terminal.Theme = "system"
 
         Else
-            _Terminal.theme = TerThemes.SelectedItem.ToString
+            _Terminal.Theme = TerThemes.SelectedItem.ToString
 
         End If
 
@@ -911,7 +911,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerAcrylicBar_Scroll(sender As Object) Handles TerOpacityBar.Scroll
-        TerOpacityLbl.Text = TerOpacityBar.Value
+        TerOpacityVal.Text = TerOpacityBar.Value
 
         XenonTerminal1.Opacity = TerOpacityBar.Value
 
@@ -1017,7 +1017,7 @@ Public Class WindowsTerminal
 
     Private Sub TerMode_CheckedChanged(sender As Object, e As EventArgs) Handles TerMode.CheckedChanged
         If TerThemes.SelectedIndex > 2 Then
-            _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light = If(Not TerMode.Checked, "light", "dark")
+            _Terminal.Themes(TerThemes.SelectedIndex - 3).ApplicationTheme_light = If(Not TerMode.Checked, "light", "dark")
         End If
 
         If _Shown Then ApplyPreview(_Terminal)
@@ -1249,7 +1249,7 @@ Public Class WindowsTerminal
             .BackgroundImage = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImage,
             .BackgroundImageOpacity = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).BackgroundImageOpacity,
             .ColorScheme = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).ColorScheme,
-            .commandline = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).commandline,
+            .Commandline = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Commandline,
             .CursorHeight = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).CursorHeight,
             .CursorShape = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).CursorShape,
             .Font = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Font,
@@ -1275,7 +1275,7 @@ Public Class WindowsTerminal
 
         Dim Th As New ThemesList With {
             .Name = _Terminal.Themes(TerThemes.SelectedIndex - 3).Name & " " & My.Lang.Terminal_Clone & " #" & TerThemes.Items.Count,
-            .applicationTheme_light = _Terminal.Themes(TerThemes.SelectedIndex - 3).applicationTheme_light,
+            .ApplicationTheme_light = _Terminal.Themes(TerThemes.SelectedIndex - 3).ApplicationTheme_light,
             .Tab_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active,
             .Tab_Inactive = _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive,
             .Titlebar_Active = _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active,
@@ -1368,7 +1368,7 @@ Public Class WindowsTerminal
                         Else
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
                             Dim path As String = ""
-                            If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+                            If .Commandline IsNot Nothing Then path = .Commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
 
                             If File.Exists(path) Then
@@ -1488,7 +1488,7 @@ Public Class WindowsTerminal
                     Dim CCatFrom As ThemesList = _Terminal.Themes(x - 3)
 
                     With _Terminal.Themes(TerThemes.SelectedIndex - 3)
-                        .applicationTheme_light = CCatFrom.applicationTheme_light
+                        .ApplicationTheme_light = CCatFrom.ApplicationTheme_light
                         .Tab_Active = CCatFrom.Tab_Active
                         .Tab_Inactive = CCatFrom.Tab_Inactive
                         .Titlebar_Active = CCatFrom.Titlebar_Active
@@ -1528,5 +1528,25 @@ Public Class WindowsTerminal
         Load_FromTerminal()
 
         CPx.Dispose()
+    End Sub
+
+    Private Sub TerFontSizeVal_Click(sender As Object, e As EventArgs) Handles TerFontSizeVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum) : TerFontSizeBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub TerCursorHeightVal_Click(sender As Object, e As EventArgs) Handles TerCursorHeightVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum) : TerCursorHeightBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub TerImageOpacityVal_Click(sender As Object, e As EventArgs) Handles TerImageOpacityVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum) : TerImageOpacity.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub TerOpacityVal_Click(sender As Object, e As EventArgs) Handles TerOpacityVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
     End Sub
 End Class

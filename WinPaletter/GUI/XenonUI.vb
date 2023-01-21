@@ -18,14 +18,14 @@ Module XenonModule
     ''' <summary>
     ''' Class represents colors for WinPaletter Controls (Styles)
     ''' </summary>
-    Public Style As New XenonStyle
+    Public Style As New XenonStyle(DefaultAccent, DefaultBackColorDark)
 
     <Extension()>
     Public Sub DrawGlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
         Dim bm As Bitmap = New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
         Dim g2 As Graphics = Graphics.FromImage(bm)
         Dim pth As GraphicsPath = New GraphicsPath()
-        pth.AddString(Ctrl.Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
+        pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
         Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
         g2.SmoothingMode = SmoothingMode.AntiAlias
         g2.Transform = mx
@@ -35,7 +35,7 @@ Module XenonModule
         G.InterpolationMode = InterpolationMode.HighQualityBicubic
         G.DrawImage(bm, Ctrl.ClientRectangle, 0, 0, bm.Width, bm.Height, GraphicsUnit.Pixel)
         'G.FillPath(New SolidBrush([ForeColor]), pth)
-        G.DrawString(Ctrl.Text, Ctrl.Font, New SolidBrush([ForeColor]), Rect, StringAligner(ContentAlignment.MiddleLeft))
+        G.DrawString(Text, Ctrl.Font, New SolidBrush([ForeColor]), Rect, FormatX)
         g2.Dispose()
         pth.Dispose()
     End Sub
@@ -138,15 +138,19 @@ Module XenonModule
     End Function
     Friend Function GetRoundedCorners() As Boolean
         Try
-            If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
-                Return False
+            If My.Settings.Appearance_Custom Then
+                Return My.Settings.Appearance_Rounded
             Else
-                If My.W11 Or My.W7 Then
-                    Return True
-                ElseIf My.W10 Or My.W8 Then
+                If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
                     Return False
                 Else
-                    Return False
+                    If My.W11 Or My.W7 Then
+                        Return True
+                    ElseIf My.W10 Or My.W8 Then
+                        Return False
+                    Else
+                        Return False
+                    End If
                 End If
             End If
         Catch
@@ -299,6 +303,8 @@ Module XenonModule
     <Extension()>
     Public Sub DrawRoundedRect_LikeW11(ByVal [Graphics] As Graphics, ByVal [PenX] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
+            Dim Dark As Boolean = GetDarkMode()
+
             If [Radius] = -1 Then [Radius] = 5
             [Radius] *= 2
             [Graphics].SmoothingMode = SmoothingMode.AntiAlias
@@ -307,39 +313,74 @@ Module XenonModule
             Dim [Pen2] As New Pen([PenX].Color)
             Dim SidePen As New Pen([PenX].Color)
 
-            If GetDarkMode() Then
-                [Pen].Color = [PenX].Color.CB(0.06)
-                [Pen2].Color = [PenX].Color '.CB(-0.1)) '-0.085)) 
+            If Dark Then
+                [Pen].Color = [PenX].Color.CB(0.1)
+                [Pen2].Color = [PenX].Color
             Else
-                [Pen].Color = [PenX].Color.CB(-0.05)
-                [Pen2].Color = [PenX].Color.CB(-0.13)
+                [Pen].Color = [PenX].Color.CB(-0.02)
+                [Pen2].Color = [PenX].Color.CB(-0.05)
             End If
 
-            Dim G As New LinearGradientBrush([Rectangle], [Pen].Color, [Pen2].Color, LinearGradientMode.Vertical)
+            Dim G As LinearGradientBrush
+            Dim CColor As Color = [Pen2].Color.CB(If(Dark, 0.03, -0.05))
+
+            If Dark Then
+                G = New LinearGradientBrush([Rectangle], CColor, [Pen].Color, 180)
+                Dim cblend As New ColorBlend(3) With {
+                    .Colors = New Color(2) {CColor, [Pen].Color, CColor},
+                    .Positions = New Single(2) {0F, 0.5F, 1.0F}
+                }
+                G.InterpolationColors = cblend
+
+            Else
+                G = New LinearGradientBrush([Rectangle], [Pen].Color, CColor, 180)
+                Dim cblend As New ColorBlend(3) With {
+                    .Colors = New Color(2) {[Pen].Color, CColor, [Pen].Color},
+                    .Positions = New Single(2) {0F, 0.5F, 1.0F}
+                }
+                G.InterpolationColors = cblend
+
+            End If
+
             Dim [PenG] As New Pen(G)
 
             If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
-                [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
-                [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
 
-                If GetDarkMode() Then
+                If Dark Then
+                    [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                    [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
+                    [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
+
                     SidePen = [Pen2]
+
+                    [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+                    [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+
+                    [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
+                    [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
+                    [Graphics].DrawLine([PenG], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
+
                 Else
+                    [Graphics].DrawLine([PenG], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                    [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
+                    [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
+
                     SidePen = [Pen]
+
+                    [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+                    [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+
+                    [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
+                    [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
+                    [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
                 End If
 
-                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
-                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
-
-                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
-                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
             Else
                 [Graphics].DrawRectangle([Pen], [Rectangle])
             End If
         Catch
         End Try
+
     End Sub
 #End Region
 End Module
@@ -1199,7 +1240,7 @@ Public Class XenonRadioImage
                                         MainRect.Y + (MainRect.Height - Image.Height) / 2,
                                         Image.Width, Image.Height)
 
-            Dim bkC As Color = If(_Checked, Style.Colors.Back_Checked, Style.Colors.Back_Hover)
+            Dim bkC As Color = If(_Checked, Style.Colors.Back_Checked, Style.Colors.Back)
             Dim bkCC As Color = Color.FromArgb(alpha, Style.Colors.Back_Checked)
 
             G.FillRoundedRect(New SolidBrush(bkC), MainRectInner)
@@ -1930,7 +1971,7 @@ Public Class XenonButton : Inherits Button
 
         Dim C_Before As Color = BackColor
 
-        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
+        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.03))
 
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
@@ -1949,7 +1990,7 @@ Public Class XenonButton : Inherits Button
 
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Light(0.03)
+                C_After = LineColor.Dark(0.3)
             Case False
                 C_After = LineColor.Light(0.75)
         End Select
@@ -2001,7 +2042,7 @@ Public Class XenonButton : Inherits Button
 
         Select Case GetDarkMode()
             Case True
-                C_After = LineColor.Light(0.03)
+                C_After = LineColor.Light(0.3)
             Case False
                 C_After = LineColor.Light(0.75)
         End Select
@@ -2015,7 +2056,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.None
 
         Dim C_Before As Color = BackColor
-        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
+        Dim C_After As Color = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.03))
         If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
         Invalidate()
     End Sub
@@ -2034,7 +2075,6 @@ Public Class XenonButton : Inherits Button
     Private Sub XenonButton_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
         State = MouseState.None : Invalidate()
     End Sub
-
 
     Enum MouseState
         None
@@ -2116,13 +2156,13 @@ Public Class XenonButton : Inherits Button
 
         Select Case State
             Case MouseState.None
-                c = BackColor.CB(If(ParentColor.IsDark, 0.04, -0.015))
+                c = BackColor.CB(If(ParentColor.IsDark, 0.02, -0.02))
 
             Case MouseState.Over
-                c = BackColor.CB(If(ParentColor.IsDark, 0.15, 0.02))
+                c = BackColor.CB(If(ParentColor.IsDark, 0.15, -0.05))
 
             Case MouseState.Down
-                c = BackColor.CB(If(ParentColor.IsDark, 0.08, 0.01))
+                c = BackColor.CB(If(ParentColor.IsDark, 0.08, -0.03))
 
         End Select
 

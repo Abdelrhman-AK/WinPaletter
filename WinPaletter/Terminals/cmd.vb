@@ -193,7 +193,7 @@ Public Class CMD
         Dim all As Integer = CMD_PreviewCUR.Height - 4
         CMD_PreviewCUR2.Height = all * (CMD_CursorSizeBar.Value / CMD_CursorSizeBar.Maximum)
         CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2
-        CMD_PreviewCUR_LBL.Text = CMD_CursorSizeBar.Value
+        CMD_PreviewCUR_Val.Text = CMD_CursorSizeBar.Value
         If My.W10_1909 Then ApplyCursorShape()
     End Sub
     Sub ApplyPreview()
@@ -527,7 +527,7 @@ Public Class CMD
 
         CMD_FontsBox.SelectedItem = F_cmd.Name
         CMD_FontSizeBar.Value = F_cmd.Size
-        CMD_FontSizeLbl.Text = F_cmd.Size
+        CMD_FontSizeVal.Text = F_cmd.Size
 
         If [Console].FontSize = 393220 Then RasterList.SelectedItem = "4x6"
         If [Console].FontSize = 524294 Then RasterList.SelectedItem = "6x8"
@@ -551,7 +551,7 @@ Public Class CMD
             CMD_PreviewCUR2.BackColor = [Console].W10_1909_CursorColor
             CMD_EnhancedTerminal.Checked = [Console].W10_1909_ForceV2
             CMD_OpacityBar.Value = [Console].W10_1909_WindowAlpha
-            CMD_OpacityLbl.Text = Fix(([Console].W10_1909_WindowAlpha / 255) * 100)
+            CMD_OpacityVal.Text = Fix(([Console].W10_1909_WindowAlpha / 255) * 100)
             CMD_LineSelection.Checked = [Console].W10_1909_LineSelection
             CMD_TerminalScrolling.Checked = [Console].W10_1909_TerminalScrolling
             ApplyCursorShape()
@@ -781,7 +781,7 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_FontSizeBar_Scroll(sender As Object) Handles CMD_FontSizeBar.Scroll
-        CMD_FontSizeLbl.Text = CMD_FontSizeBar.Value
+        CMD_FontSizeVal.Text = CMD_FontSizeBar.Value
         If _Shown Then
             F_cmd = New Font(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style)
             ApplyPreview()
@@ -822,7 +822,7 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_OpacityBar_Scroll(sender As Object) Handles CMD_OpacityBar.Scroll
-        CMD_OpacityLbl.Text = Fix((sender.Value / 255) * 100)
+        CMD_OpacityVal.Text = Fix((sender.Value / 255) * 100)
     End Sub
 
 
@@ -914,5 +914,18 @@ Public Class CMD
         CPx.Dispose()
     End Sub
 
+    Private Sub CMD_FontSizeVal_Click(sender As Object, e As EventArgs) Handles CMD_FontSizeVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum) : CMD_FontSizeBar.Value = Val(sender.Text)
+    End Sub
 
+    Private Sub CMD_PreviewCUR_Val_Click(sender As Object, e As EventArgs) Handles CMD_PreviewCUR_Val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum) : CMD_CursorSizeBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub CMD_OpacityVal_Click(sender As Object, e As EventArgs) Handles CMD_OpacityVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum) : CMD_OpacityBar.Value = Val(sender.Text)
+    End Sub
 End Class

@@ -159,33 +159,55 @@ Public Class XenonCore
 
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
-        Dim i As Long
 
-        If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
-            Return True
+        If My.Settings.Appearance_Custom Then
+            Return My.Settings.Appearance_Custom_Dark
         Else
-            Try
-                If My.[Settings].Appearance_Auto Then
-                    i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
-                    If i = 1 Then
-                        Return False
-                    Else
-                        Return True
-                    End If
-                Else
-                    Return My.[Settings].Appearance_Dark
-                End If
-            Catch
+            Dim i As Long
+
+            If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
+                Return True
+            Else
                 Try
-                    Return My.[Settings].Appearance_Dark
+                    If My.[Settings].Appearance_Auto Then
+                        i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
+                        If i = 1 Then
+                            Return False
+                        Else
+                            Return True
+                        End If
+                    Else
+                        Return My.[Settings].Appearance_Dark
+                    End If
                 Catch
-                    Return True
+                    Try
+                        Return My.[Settings].Appearance_Dark
+                    Catch
+                        Return True
+                    End Try
                 End Try
-            End Try
+            End If
         End If
+
     End Function
+
+    Public Shared ReadOnly DefaultAccent As Color = Color.FromArgb(0, 81, 210)
+    Public Shared ReadOnly DefaultBackColorDark As Color = Color.FromArgb(25, 25, 25)
+    Public Shared ReadOnly DefaultBackColorLight As Color = Color.FromArgb(230, 230, 230)
+
     Public Shared Sub ApplyDarkMode(Optional ByVal [Form] As Form = Nothing)
         Dim DarkMode As Boolean = GetDarkMode()
+
+        Dim BackColor As Color
+        Dim AccentColor As Color
+
+        If My.Settings.Appearance_Custom Then
+            BackColor = My.Settings.Appearance_Back
+            AccentColor = My.Settings.Appearance_Accent
+        Else
+            BackColor = If(DarkMode, DefaultBackColorDark, DefaultBackColorLight)
+            AccentColor = DefaultAccent
+        End If
 
         If Form Is Nothing Then
 
@@ -193,29 +215,13 @@ Public Class XenonCore
             Try
                 For Each OFORM As Form In Application.OpenForms
                     OFORM.Visible = False
-
-                    Select Case DarkMode
-                        Case True
-                            If TryCast(OFORM, Form).BackColor <> My.Application.BackColor_Dark Then
-                                TryCast(OFORM, Form).BackColor = My.Application.BackColor_Dark
-                                TryCast(OFORM, Form).Invalidate()
-                                TryCast(OFORM, Form).Refresh()
-                            End If
-                        Case False
-                            If TryCast(OFORM, Form).BackColor <> My.Application.BackColor_Light Then
-                                TryCast(OFORM, Form).BackColor = My.Application.BackColor_Light
-                                TryCast(OFORM, Form).Invalidate()
-                                TryCast(OFORM, Form).Refresh()
-                            End If
-                    End Select
-
-                    User32.DarkTitlebar(TryCast(OFORM, Form).Handle, DarkMode)
-
-                    EnumControls(TryCast(OFORM, Form), DarkMode)
-                    'Adjust_Form(DarkMode, TryCast(OFORM, Form))
-
+                    If DirectCast(OFORM, Form).BackColor <> BackColor Then
+                        DirectCast(OFORM, Form).BackColor = BackColor
+                    End If
+                    User32.DarkTitlebar(DirectCast(OFORM, Form).Handle, DarkMode)
+                    EnumControls(DirectCast(OFORM, Form), DarkMode)
+                    DirectCast(OFORM, Form).Refresh()
                     OFORM.Visible = True
-
                 Next
             Catch
 
@@ -224,40 +230,22 @@ Public Class XenonCore
         Else
             '####################### For Selected [Form]
 
-            Select Case DarkMode
-                Case True
-                    If TryCast([Form], Form).BackColor <> My.Application.BackColor_Dark Then
-                        TryCast([Form], Form).BackColor = My.Application.BackColor_Dark
-                        TryCast([Form], Form).Invalidate()
-                        TryCast([Form], Form).Refresh()
-                    End If
-                Case False
-                    If TryCast([Form], Form).BackColor <> My.Application.BackColor_Light Then
-                        TryCast([Form], Form).BackColor = My.Application.BackColor_Light
-                        TryCast([Form], Form).Invalidate()
-                        TryCast([Form], Form).Refresh()
-                    End If
-            End Select
-
-            User32.DarkTitlebar([Form].Handle, DarkMode)
-
-            EnumControls(TryCast([Form], Form), DarkMode)
-
-            [Form].Refresh()
-            'Adjust_Form(DarkMode, [Form])
-
-            If [Form].Name = ExternalTerminal.Name Then
-                ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.5))
+            If DirectCast([Form], Form).BackColor <> BackColor Then
+                DirectCast([Form], Form).BackColor = BackColor
             End If
-
+            User32.DarkTitlebar([Form].Handle, DarkMode)
+            EnumControls(TryCast([Form], Form), DarkMode)
+            If [Form].Name = ExternalTerminal.Name Then
+                ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.1))
+            End If
             If [Form].Name = MainFrm.Name Then
-                'MainFrm.status_lbl.BackColor = If(DarkMode, Color.FromArgb(55, 55, 55), Color.FromArgb(200, 200, 200))
                 MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
             End If
+            [Form].Refresh()
 
         End If
 
-        Style = New XenonStyle
+        Style = New XenonStyle(AccentColor, BackColor)
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
         Dim b As Boolean = False

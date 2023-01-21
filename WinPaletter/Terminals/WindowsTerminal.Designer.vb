@@ -65,12 +65,10 @@ Partial Class WindowsTerminal
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.TerOpacityBar = New WinPaletter.XenonTrackbar()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.TerOpacityLbl = New System.Windows.Forms.Label()
         Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.TerAcrylic = New WinPaletter.XenonCheckBox()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.TerBackImage = New WinPaletter.XenonTextBox()
-        Me.TerImageOpacityLbl = New System.Windows.Forms.Label()
         Me.TerImageOpacity = New WinPaletter.XenonTrackbar()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
@@ -112,7 +110,6 @@ Partial Class WindowsTerminal
         Me.TerRedB = New WinPaletter.XenonCP()
         Me.TerRed = New WinPaletter.XenonCP()
         Me.TerCursorHeightBar = New WinPaletter.XenonTrackbar()
-        Me.TerCursorHeightLbl = New System.Windows.Forms.Label()
         Me.TerCursorStyle = New WinPaletter.XenonComboBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
@@ -123,7 +120,6 @@ Partial Class WindowsTerminal
         Me.Label155 = New System.Windows.Forms.Label()
         Me.TerProfiles = New WinPaletter.XenonComboBox()
         Me.XenonButton13 = New WinPaletter.XenonButton()
-        Me.TerFontSizeLbl = New System.Windows.Forms.Label()
         Me.TerFontSizeBar = New WinPaletter.XenonTrackbar()
         Me.TerFonts = New WinPaletter.XenonComboBox()
         Me.TerFontWeight = New WinPaletter.XenonComboBox()
@@ -156,6 +152,7 @@ Partial Class WindowsTerminal
         Me.Label20 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
+        Me.TerFontSizeVal = New WinPaletter.XenonButton()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
@@ -164,15 +161,18 @@ Partial Class WindowsTerminal
         Me.Label59 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
+        Me.TerCursorHeightVal = New WinPaletter.XenonButton()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
+        Me.TerImageOpacityVal = New WinPaletter.XenonButton()
+        Me.TerOpacityVal = New WinPaletter.XenonButton()
+        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.TerThemesContainer.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -213,11 +213,11 @@ Partial Class WindowsTerminal
         Me.TabPage3.SuspendLayout()
         Me.XenonGroupBox34.SuspendLayout()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ImgDlg
@@ -305,7 +305,7 @@ Partial Class WindowsTerminal
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
+        Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
         Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 46)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(600, 30)
@@ -333,7 +333,7 @@ Partial Class WindowsTerminal
         'TerEnabled
         '
         Me.TerEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.TerEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.TerEnabled.Checked = False
         Me.TerEnabled.DarkLight_Toggler = False
         Me.TerEnabled.Location = New System.Drawing.Point(934, 10)
@@ -451,12 +451,12 @@ Partial Class WindowsTerminal
         'TerMode
         '
         Me.TerMode.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerMode.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.TerMode.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.TerMode.Checked = False
         Me.TerMode.DarkLight_Toggler = True
-        Me.TerMode.Location = New System.Drawing.Point(292, 123)
+        Me.TerMode.Location = New System.Drawing.Point(302, 123)
         Me.TerMode.Name = "TerMode"
-        Me.TerMode.Size = New System.Drawing.Size(50, 20)
+        Me.TerMode.Size = New System.Drawing.Size(40, 20)
         Me.TerMode.TabIndex = 209
         '
         'Label1
@@ -788,7 +788,7 @@ Partial Class WindowsTerminal
         Me.TerOpacityBar.Maximum = 100
         Me.TerOpacityBar.Minimum = 0
         Me.TerOpacityBar.Name = "TerOpacityBar"
-        Me.TerOpacityBar.Size = New System.Drawing.Size(208, 19)
+        Me.TerOpacityBar.Size = New System.Drawing.Size(197, 19)
         Me.TerOpacityBar.SmallChange = 1
         Me.TerOpacityBar.TabIndex = 208
         Me.TerOpacityBar.Text = "XenonTrackbar16"
@@ -803,18 +803,6 @@ Partial Class WindowsTerminal
         Me.PictureBox40.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox40.TabIndex = 206
         Me.PictureBox40.TabStop = False
-        '
-        'TerOpacityLbl
-        '
-        Me.TerOpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerOpacityLbl.BackColor = System.Drawing.Color.Transparent
-        Me.TerOpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TerOpacityLbl.Location = New System.Drawing.Point(321, 91)
-        Me.TerOpacityLbl.Name = "TerOpacityLbl"
-        Me.TerOpacityLbl.Size = New System.Drawing.Size(25, 24)
-        Me.TerOpacityLbl.TabIndex = 209
-        Me.TerOpacityLbl.Text = "100"
-        Me.TerOpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton5
         '
@@ -881,18 +869,6 @@ Partial Class WindowsTerminal
         Me.TerBackImage.UseSystemPasswordChar = False
         Me.TerBackImage.WordWrap = True
         '
-        'TerImageOpacityLbl
-        '
-        Me.TerImageOpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerImageOpacityLbl.BackColor = System.Drawing.Color.Transparent
-        Me.TerImageOpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TerImageOpacityLbl.Location = New System.Drawing.Point(321, 63)
-        Me.TerImageOpacityLbl.Name = "TerImageOpacityLbl"
-        Me.TerImageOpacityLbl.Size = New System.Drawing.Size(25, 22)
-        Me.TerImageOpacityLbl.TabIndex = 188
-        Me.TerImageOpacityLbl.Text = "75"
-        Me.TerImageOpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'TerImageOpacity
         '
         Me.TerImageOpacity.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -902,7 +878,7 @@ Partial Class WindowsTerminal
         Me.TerImageOpacity.Maximum = 100
         Me.TerImageOpacity.Minimum = 0
         Me.TerImageOpacity.Name = "TerImageOpacity"
-        Me.TerImageOpacity.Size = New System.Drawing.Size(208, 19)
+        Me.TerImageOpacity.Size = New System.Drawing.Size(197, 19)
         Me.TerImageOpacity.SmallChange = 1
         Me.TerImageOpacity.TabIndex = 187
         Me.TerImageOpacity.Text = "XenonTrackbar16"
@@ -1438,22 +1414,10 @@ Partial Class WindowsTerminal
         Me.TerCursorHeightBar.Maximum = 100
         Me.TerCursorHeightBar.Minimum = 1
         Me.TerCursorHeightBar.Name = "TerCursorHeightBar"
-        Me.TerCursorHeightBar.Size = New System.Drawing.Size(218, 19)
+        Me.TerCursorHeightBar.Size = New System.Drawing.Size(210, 19)
         Me.TerCursorHeightBar.SmallChange = 1
         Me.TerCursorHeightBar.TabIndex = 102
         Me.TerCursorHeightBar.Value = 20
-        '
-        'TerCursorHeightLbl
-        '
-        Me.TerCursorHeightLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerCursorHeightLbl.BackColor = System.Drawing.Color.Transparent
-        Me.TerCursorHeightLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TerCursorHeightLbl.Location = New System.Drawing.Point(320, 37)
-        Me.TerCursorHeightLbl.Name = "TerCursorHeightLbl"
-        Me.TerCursorHeightLbl.Size = New System.Drawing.Size(26, 22)
-        Me.TerCursorHeightLbl.TabIndex = 104
-        Me.TerCursorHeightLbl.Text = "20"
-        Me.TerCursorHeightLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TerCursorStyle
         '
@@ -1468,7 +1432,7 @@ Partial Class WindowsTerminal
         Me.TerCursorStyle.FormattingEnabled = True
         Me.TerCursorStyle.ItemHeight = 20
         Me.TerCursorStyle.Items.AddRange(New Object() {"Bar", "Double Underscore", "Empty Box", "Filled Box", "Underscore", "Vintage"})
-        Me.TerCursorStyle.Location = New System.Drawing.Point(96, 6)
+        Me.TerCursorStyle.Location = New System.Drawing.Point(96, 5)
         Me.TerCursorStyle.Name = "TerCursorStyle"
         Me.TerCursorStyle.Size = New System.Drawing.Size(250, 26)
         Me.TerCursorStyle.TabIndex = 110
@@ -1585,7 +1549,7 @@ Partial Class WindowsTerminal
         Me.TerProfiles.ForeColor = System.Drawing.Color.White
         Me.TerProfiles.FormattingEnabled = True
         Me.TerProfiles.ItemHeight = 20
-        Me.TerProfiles.Location = New System.Drawing.Point(108, 8)
+        Me.TerProfiles.Location = New System.Drawing.Point(108, 7)
         Me.TerProfiles.Name = "TerProfiles"
         Me.TerProfiles.Size = New System.Drawing.Size(216, 26)
         Me.TerProfiles.TabIndex = 118
@@ -1605,18 +1569,6 @@ Partial Class WindowsTerminal
         Me.XenonButton13.TabIndex = 140
         Me.XenonButton13.UseVisualStyleBackColor = False
         '
-        'TerFontSizeLbl
-        '
-        Me.TerFontSizeLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerFontSizeLbl.BackColor = System.Drawing.Color.Transparent
-        Me.TerFontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TerFontSizeLbl.Location = New System.Drawing.Point(321, 67)
-        Me.TerFontSizeLbl.Name = "TerFontSizeLbl"
-        Me.TerFontSizeLbl.Size = New System.Drawing.Size(25, 22)
-        Me.TerFontSizeLbl.TabIndex = 102
-        Me.TerFontSizeLbl.Text = "75"
-        Me.TerFontSizeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'TerFontSizeBar
         '
         Me.TerFontSizeBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1626,7 +1578,7 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar.Maximum = 48
         Me.TerFontSizeBar.Minimum = 5
         Me.TerFontSizeBar.Name = "TerFontSizeBar"
-        Me.TerFontSizeBar.Size = New System.Drawing.Size(219, 19)
+        Me.TerFontSizeBar.Size = New System.Drawing.Size(210, 19)
         Me.TerFontSizeBar.SmallChange = 1
         Me.TerFontSizeBar.TabIndex = 101
         Me.TerFontSizeBar.Text = "XenonTrackbar16"
@@ -1644,7 +1596,7 @@ Partial Class WindowsTerminal
         Me.TerFonts.ForeColor = System.Drawing.Color.White
         Me.TerFonts.FormattingEnabled = True
         Me.TerFonts.ItemHeight = 20
-        Me.TerFonts.Location = New System.Drawing.Point(96, 6)
+        Me.TerFonts.Location = New System.Drawing.Point(96, 5)
         Me.TerFonts.Name = "TerFonts"
         Me.TerFonts.Size = New System.Drawing.Size(250, 26)
         Me.TerFonts.TabIndex = 100
@@ -1662,7 +1614,7 @@ Partial Class WindowsTerminal
         Me.TerFontWeight.FormattingEnabled = True
         Me.TerFontWeight.ItemHeight = 20
         Me.TerFontWeight.Items.AddRange(New Object() {"Thin", "Extra Light", "Light", "Semi Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Black", "Extra Black"})
-        Me.TerFontWeight.Location = New System.Drawing.Point(96, 36)
+        Me.TerFontWeight.Location = New System.Drawing.Point(96, 35)
         Me.TerFontWeight.Name = "TerFontWeight"
         Me.TerFontWeight.Size = New System.Drawing.Size(250, 26)
         Me.TerFontWeight.TabIndex = 99
@@ -2049,9 +2001,9 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox5.Controls.Add(Me.TerFontSizeVal)
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox5.Controls.Add(Me.TerFontWeight)
-        Me.XenonGroupBox5.Controls.Add(Me.TerFontSizeLbl)
         Me.XenonGroupBox5.Controls.Add(Me.TerFonts)
         Me.XenonGroupBox5.Controls.Add(Me.TerFontSizeBar)
         Me.XenonGroupBox5.Controls.Add(Me.Label61)
@@ -2063,6 +2015,21 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(351, 97)
         Me.XenonGroupBox5.TabIndex = 98
+        '
+        'TerFontSizeVal
+        '
+        Me.TerFontSizeVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerFontSizeVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.TerFontSizeVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerFontSizeVal.ForeColor = System.Drawing.Color.White
+        Me.TerFontSizeVal.Image = Nothing
+        Me.TerFontSizeVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerFontSizeVal.LineSize = 1
+        Me.TerFontSizeVal.Location = New System.Drawing.Point(312, 66)
+        Me.TerFontSizeVal.Name = "TerFontSizeVal"
+        Me.TerFontSizeVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerFontSizeVal.TabIndex = 132
+        Me.TerFontSizeVal.UseVisualStyleBackColor = False
         '
         'PictureBox5
         '
@@ -2143,17 +2110,32 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox34.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox34.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox34.Controls.Add(Me.PictureBox10)
+        Me.XenonGroupBox34.Controls.Add(Me.TerCursorHeightVal)
         Me.XenonGroupBox34.Controls.Add(Me.Label60)
         Me.XenonGroupBox34.Controls.Add(Me.PictureBox11)
         Me.XenonGroupBox34.Controls.Add(Me.Label14)
         Me.XenonGroupBox34.Controls.Add(Me.TerCursorHeightBar)
         Me.XenonGroupBox34.Controls.Add(Me.TerCursorStyle)
-        Me.XenonGroupBox34.Controls.Add(Me.TerCursorHeightLbl)
-        Me.XenonGroupBox34.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox34.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(351, 67)
         Me.XenonGroupBox34.TabIndex = 99
+        '
+        'TerCursorHeightVal
+        '
+        Me.TerCursorHeightVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerCursorHeightVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.TerCursorHeightVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerCursorHeightVal.ForeColor = System.Drawing.Color.White
+        Me.TerCursorHeightVal.Image = Nothing
+        Me.TerCursorHeightVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerCursorHeightVal.LineSize = 1
+        Me.TerCursorHeightVal.Location = New System.Drawing.Point(312, 36)
+        Me.TerCursorHeightVal.Name = "TerCursorHeightVal"
+        Me.TerCursorHeightVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerCursorHeightVal.TabIndex = 133
+        Me.TerCursorHeightVal.UseVisualStyleBackColor = False
         '
         'Label60
         '
@@ -2187,16 +2169,6 @@ Partial Class WindowsTerminal
         Me.Label14.Text = "Style:"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PictureBox12
-        '
-        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(6, 6)
-        Me.PictureBox12.Name = "PictureBox12"
-        Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox12.TabIndex = 104
-        Me.PictureBox12.TabStop = False
-        '
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -2213,16 +2185,16 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.TerOpacityVal)
         Me.XenonGroupBox12.Controls.Add(Me.TerOpacityBar)
+        Me.XenonGroupBox12.Controls.Add(Me.TerImageOpacityVal)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox40)
-        Me.XenonGroupBox12.Controls.Add(Me.TerOpacityLbl)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox16)
         Me.XenonGroupBox12.Controls.Add(Me.TerAcrylic)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox12.Controls.Add(Me.TerBackImage)
         Me.XenonGroupBox12.Controls.Add(Me.Label57)
-        Me.XenonGroupBox12.Controls.Add(Me.TerImageOpacityLbl)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton16)
         Me.XenonGroupBox12.Controls.Add(Me.Label2)
         Me.XenonGroupBox12.Controls.Add(Me.TerImageOpacity)
@@ -2261,6 +2233,46 @@ Partial Class WindowsTerminal
         Me.Label57.TabIndex = 119
         Me.Label57.Text = "Opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TerImageOpacityVal
+        '
+        Me.TerImageOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerImageOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.TerImageOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerImageOpacityVal.ForeColor = System.Drawing.Color.White
+        Me.TerImageOpacityVal.Image = Nothing
+        Me.TerImageOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerImageOpacityVal.LineSize = 1
+        Me.TerImageOpacityVal.Location = New System.Drawing.Point(311, 62)
+        Me.TerImageOpacityVal.Name = "TerImageOpacityVal"
+        Me.TerImageOpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerImageOpacityVal.TabIndex = 134
+        Me.TerImageOpacityVal.UseVisualStyleBackColor = False
+        '
+        'TerOpacityVal
+        '
+        Me.TerOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.TerOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerOpacityVal.ForeColor = System.Drawing.Color.White
+        Me.TerOpacityVal.Image = Nothing
+        Me.TerOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerOpacityVal.LineSize = 1
+        Me.TerOpacityVal.Location = New System.Drawing.Point(311, 91)
+        Me.TerOpacityVal.Name = "TerOpacityVal"
+        Me.TerOpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerOpacityVal.TabIndex = 135
+        Me.TerOpacityVal.UseVisualStyleBackColor = False
+        '
+        'PictureBox10
+        '
+        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
+        Me.PictureBox10.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox10.Name = "PictureBox10"
+        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox10.TabIndex = 104
+        Me.PictureBox10.TabStop = False
         '
         'WindowsTerminal
         '
@@ -2327,11 +2339,11 @@ Partial Class WindowsTerminal
         Me.TabPage3.ResumeLayout(False)
         Me.XenonGroupBox34.ResumeLayout(False)
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2341,7 +2353,6 @@ Partial Class WindowsTerminal
     Friend WithEvents Label141 As Label
     Friend WithEvents XenonButton16 As XenonButton
     Friend WithEvents TerBackImage As XenonTextBox
-    Friend WithEvents TerImageOpacityLbl As Label
     Friend WithEvents TerImageOpacity As XenonTrackbar
     Friend WithEvents XenonButton12 As XenonButton
     Friend WithEvents TerSchemes As XenonComboBox
@@ -2378,7 +2389,6 @@ Partial Class WindowsTerminal
     Friend WithEvents TerRedB As XenonCP
     Friend WithEvents TerRed As XenonCP
     Friend WithEvents TerCursorHeightBar As XenonTrackbar
-    Friend WithEvents TerCursorHeightLbl As Label
     Friend WithEvents TerCursorStyle As XenonComboBox
     Friend WithEvents XenonGroupBox13 As XenonGroupBox
     Friend WithEvents XenonButton14 As XenonButton
@@ -2386,7 +2396,6 @@ Partial Class WindowsTerminal
     Friend WithEvents Label155 As Label
     Friend WithEvents TerProfiles As XenonComboBox
     Friend WithEvents XenonButton13 As XenonButton
-    Friend WithEvents TerFontSizeLbl As Label
     Friend WithEvents TerFontSizeBar As XenonTrackbar
     Friend WithEvents TerFonts As XenonComboBox
     Friend WithEvents TerFontWeight As XenonComboBox
@@ -2412,7 +2421,6 @@ Partial Class WindowsTerminal
     Friend WithEvents TerThemesContainer As Panel
     Friend WithEvents XenonButton4 As XenonButton
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents TerOpacityLbl As Label
     Friend WithEvents TerAcrylic As XenonCheckBox
     Friend WithEvents TerOpacityBar As XenonTrackbar
     Friend WithEvents XenonButton5 As XenonButton
@@ -2463,7 +2471,6 @@ Partial Class WindowsTerminal
     Friend WithEvents Label60 As Label
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents Label14 As Label
-    Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents XenonGroupBox12 As XenonGroupBox
     Friend WithEvents PictureBox13 As PictureBox
@@ -2485,4 +2492,9 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonGroupBox2 As XenonGroupBox
     Friend WithEvents PictureBox37 As PictureBox
     Friend WithEvents Label20 As Label
+    Friend WithEvents TerFontSizeVal As XenonButton
+    Friend WithEvents TerCursorHeightVal As XenonButton
+    Friend WithEvents TerOpacityVal As XenonButton
+    Friend WithEvents TerImageOpacityVal As XenonButton
+    Friend WithEvents PictureBox10 As PictureBox
 End Class

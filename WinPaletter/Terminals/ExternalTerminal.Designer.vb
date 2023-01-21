@@ -105,7 +105,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontsBox = New WinPaletter.XenonComboBox()
         Me.ExtTerminal_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.ExtTerminal_FontWeightBox = New WinPaletter.XenonComboBox()
-        Me.ExtTerminal_FontSizeLbl = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
@@ -117,7 +116,6 @@ Partial Class ExternalTerminal
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_PreviewCUR_LBL = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.ExtTerminal_CursorStyle = New WinPaletter.XenonComboBox()
         Me.Label60 = New System.Windows.Forms.Label()
@@ -129,20 +127,22 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_PreviewCUR2 = New System.Windows.Forms.Panel()
         Me.ExtTerminal_PreviewCursorInner = New System.Windows.Forms.Panel()
         Me.ExtTerminal_CursorColor = New WinPaletter.XenonCP()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.ExtTerminal_LineSelection = New WinPaletter.XenonCheckBox()
-        Me.ExtTerminal_OpacityLbl = New System.Windows.Forms.Label()
         Me.ExtTerminal_EnhancedTerminal = New WinPaletter.XenonCheckBox()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.ExtTerminal_TerminalScrolling = New WinPaletter.XenonCheckBox()
         Me.ExtTerminal_OpacityBar = New WinPaletter.XenonTrackbar()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
+        Me.ExtTerminal_FontSizeVal = New WinPaletter.XenonButton()
+        Me.ExtTerminal_PreviewCUR_Val = New WinPaletter.XenonButton()
+        Me.ExtTerminal_OpacityVal = New WinPaletter.XenonButton()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox73.SuspendLayout()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox51.SuspendLayout()
@@ -165,13 +165,13 @@ Partial Class ExternalTerminal
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ExtTerminal_PreviewCUR.SuspendLayout()
         Me.ExtTerminal_PreviewCUR2.SuspendLayout()
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'XenonGroupBox73
@@ -404,9 +404,10 @@ Partial Class ExternalTerminal
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
+        Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.Location = New System.Drawing.Point(36, 43)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(639, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(639, 26)
         Me.XenonComboBox1.TabIndex = 100
         '
         'PictureBox17
@@ -1199,13 +1200,13 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontSizeVal)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_RasterToggle)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox4.Controls.Add(Me.Label58)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontsBox)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontWeightBox)
-        Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontSizeLbl)
         Me.XenonGroupBox4.Controls.Add(Me.Label61)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox3)
@@ -1222,12 +1223,12 @@ Partial Class ExternalTerminal
         'ExtTerminal_RasterToggle
         '
         Me.ExtTerminal_RasterToggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExtTerminal_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExtTerminal_RasterToggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.ExtTerminal_RasterToggle.Checked = False
         Me.ExtTerminal_RasterToggle.DarkLight_Toggler = False
-        Me.ExtTerminal_RasterToggle.Location = New System.Drawing.Point(248, 96)
+        Me.ExtTerminal_RasterToggle.Location = New System.Drawing.Point(255, 98)
         Me.ExtTerminal_RasterToggle.Name = "ExtTerminal_RasterToggle"
-        Me.ExtTerminal_RasterToggle.Size = New System.Drawing.Size(47, 24)
+        Me.ExtTerminal_RasterToggle.Size = New System.Drawing.Size(40, 20)
         Me.ExtTerminal_RasterToggle.TabIndex = 95
         '
         'PictureBox1
@@ -1262,9 +1263,10 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontsBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_FontsBox.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_FontsBox.FormattingEnabled = True
-        Me.ExtTerminal_FontsBox.Location = New System.Drawing.Point(96, 6)
+        Me.ExtTerminal_FontsBox.ItemHeight = 20
+        Me.ExtTerminal_FontsBox.Location = New System.Drawing.Point(96, 5)
         Me.ExtTerminal_FontsBox.Name = "ExtTerminal_FontsBox"
-        Me.ExtTerminal_FontsBox.Size = New System.Drawing.Size(199, 24)
+        Me.ExtTerminal_FontsBox.Size = New System.Drawing.Size(199, 26)
         Me.ExtTerminal_FontsBox.TabIndex = 100
         '
         'ExtTerminal_FontSizeBar
@@ -1276,7 +1278,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontSizeBar.Maximum = 48
         Me.ExtTerminal_FontSizeBar.Minimum = 5
         Me.ExtTerminal_FontSizeBar.Name = "ExtTerminal_FontSizeBar"
-        Me.ExtTerminal_FontSizeBar.Size = New System.Drawing.Size(165, 19)
+        Me.ExtTerminal_FontSizeBar.Size = New System.Drawing.Size(158, 19)
         Me.ExtTerminal_FontSizeBar.SmallChange = 1
         Me.ExtTerminal_FontSizeBar.TabIndex = 101
         Me.ExtTerminal_FontSizeBar.Text = "XenonTrackbar16"
@@ -1293,23 +1295,12 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_FontWeightBox.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_FontWeightBox.FormattingEnabled = True
+        Me.ExtTerminal_FontWeightBox.ItemHeight = 20
         Me.ExtTerminal_FontWeightBox.Items.AddRange(New Object() {"Don't Care", "Thin", "Extra Light", "Light", "Normal", "Medium", "Semi Bold", "Bold", "Extra Bold", "Heavy"})
-        Me.ExtTerminal_FontWeightBox.Location = New System.Drawing.Point(96, 36)
+        Me.ExtTerminal_FontWeightBox.Location = New System.Drawing.Point(96, 35)
         Me.ExtTerminal_FontWeightBox.Name = "ExtTerminal_FontWeightBox"
-        Me.ExtTerminal_FontWeightBox.Size = New System.Drawing.Size(172, 24)
+        Me.ExtTerminal_FontWeightBox.Size = New System.Drawing.Size(172, 26)
         Me.ExtTerminal_FontWeightBox.TabIndex = 99
-        '
-        'ExtTerminal_FontSizeLbl
-        '
-        Me.ExtTerminal_FontSizeLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExtTerminal_FontSizeLbl.BackColor = System.Drawing.Color.Transparent
-        Me.ExtTerminal_FontSizeLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_FontSizeLbl.Location = New System.Drawing.Point(268, 67)
-        Me.ExtTerminal_FontSizeLbl.Name = "ExtTerminal_FontSizeLbl"
-        Me.ExtTerminal_FontSizeLbl.Size = New System.Drawing.Size(30, 22)
-        Me.ExtTerminal_FontSizeLbl.TabIndex = 102
-        Me.ExtTerminal_FontSizeLbl.Text = "75"
-        Me.ExtTerminal_FontSizeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label61
         '
@@ -1401,10 +1392,11 @@ Partial Class ExternalTerminal
         Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.RasterList.ForeColor = System.Drawing.Color.White
         Me.RasterList.FormattingEnabled = True
+        Me.RasterList.ItemHeight = 20
         Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
-        Me.RasterList.Location = New System.Drawing.Point(96, 66)
+        Me.RasterList.Location = New System.Drawing.Point(96, 65)
         Me.RasterList.Name = "RasterList"
-        Me.RasterList.Size = New System.Drawing.Size(199, 24)
+        Me.RasterList.Size = New System.Drawing.Size(199, 26)
         Me.RasterList.TabIndex = 104
         Me.RasterList.Visible = False
         '
@@ -1439,7 +1431,8 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox34.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox34.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox34.Controls.Add(Me.ExtTerminal_PreviewCUR_LBL)
+        Me.XenonGroupBox34.Controls.Add(Me.PictureBox8)
+        Me.XenonGroupBox34.Controls.Add(Me.ExtTerminal_PreviewCUR_Val)
         Me.XenonGroupBox34.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox34.Controls.Add(Me.ExtTerminal_CursorStyle)
         Me.XenonGroupBox34.Controls.Add(Me.Label60)
@@ -1449,23 +1442,10 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox34.Controls.Add(Me.Label2)
         Me.XenonGroupBox34.Controls.Add(Me.ExtTerminal_PreviewCUR)
         Me.XenonGroupBox34.Controls.Add(Me.ExtTerminal_CursorColor)
-        Me.XenonGroupBox34.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox34.Location = New System.Drawing.Point(6, 6)
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(301, 97)
         Me.XenonGroupBox34.TabIndex = 99
-        '
-        'ExtTerminal_PreviewCUR_LBL
-        '
-        Me.ExtTerminal_PreviewCUR_LBL.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExtTerminal_PreviewCUR_LBL.BackColor = System.Drawing.Color.Transparent
-        Me.ExtTerminal_PreviewCUR_LBL.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_PreviewCUR_LBL.Location = New System.Drawing.Point(268, 66)
-        Me.ExtTerminal_PreviewCUR_LBL.Name = "ExtTerminal_PreviewCUR_LBL"
-        Me.ExtTerminal_PreviewCUR_LBL.Size = New System.Drawing.Size(28, 24)
-        Me.ExtTerminal_PreviewCUR_LBL.TabIndex = 104
-        Me.ExtTerminal_PreviewCUR_LBL.Text = "100"
-        Me.ExtTerminal_PreviewCUR_LBL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
         '
@@ -1488,10 +1468,11 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorStyle.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_CursorStyle.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_CursorStyle.FormattingEnabled = True
+        Me.ExtTerminal_CursorStyle.ItemHeight = 20
         Me.ExtTerminal_CursorStyle.Items.AddRange(New Object() {"Default", "Legacy", "Underscore", "Empty Box", "Vertical Bar", "Solid Box"})
-        Me.ExtTerminal_CursorStyle.Location = New System.Drawing.Point(97, 36)
+        Me.ExtTerminal_CursorStyle.Location = New System.Drawing.Point(97, 35)
         Me.ExtTerminal_CursorStyle.Name = "ExtTerminal_CursorStyle"
-        Me.ExtTerminal_CursorStyle.Size = New System.Drawing.Size(199, 24)
+        Me.ExtTerminal_CursorStyle.Size = New System.Drawing.Size(199, 26)
         Me.ExtTerminal_CursorStyle.TabIndex = 110
         '
         'Label60
@@ -1514,7 +1495,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorSizeBar.Maximum = 100
         Me.ExtTerminal_CursorSizeBar.Minimum = 20
         Me.ExtTerminal_CursorSizeBar.Name = "ExtTerminal_CursorSizeBar"
-        Me.ExtTerminal_CursorSizeBar.Size = New System.Drawing.Size(165, 19)
+        Me.ExtTerminal_CursorSizeBar.Size = New System.Drawing.Size(159, 19)
         Me.ExtTerminal_CursorSizeBar.SmallChange = 1
         Me.ExtTerminal_CursorSizeBar.TabIndex = 102
         Me.ExtTerminal_CursorSizeBar.Value = 20
@@ -1595,16 +1576,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorColor.TabIndex = 107
         Me.ExtTerminal_CursorColor.Text = "XenonGroupBox31"
         '
-        'PictureBox8
-        '
-        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
-        Me.PictureBox8.Location = New System.Drawing.Point(6, 36)
-        Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox8.TabIndex = 104
-        Me.PictureBox8.TabStop = False
-        '
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -1636,10 +1607,10 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.ExtTerminal_OpacityVal)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox10)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox12.Controls.Add(Me.ExtTerminal_LineSelection)
-        Me.XenonGroupBox12.Controls.Add(Me.ExtTerminal_OpacityLbl)
         Me.XenonGroupBox12.Controls.Add(Me.ExtTerminal_EnhancedTerminal)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox12.Controls.Add(Me.ExtTerminal_TerminalScrolling)
@@ -1682,18 +1653,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_LineSelection.Size = New System.Drawing.Size(155, 24)
         Me.ExtTerminal_LineSelection.TabIndex = 122
         Me.ExtTerminal_LineSelection.Text = "Line Selection"
-        '
-        'ExtTerminal_OpacityLbl
-        '
-        Me.ExtTerminal_OpacityLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExtTerminal_OpacityLbl.BackColor = System.Drawing.Color.Transparent
-        Me.ExtTerminal_OpacityLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_OpacityLbl.Location = New System.Drawing.Point(268, 121)
-        Me.ExtTerminal_OpacityLbl.Name = "ExtTerminal_OpacityLbl"
-        Me.ExtTerminal_OpacityLbl.Size = New System.Drawing.Size(26, 22)
-        Me.ExtTerminal_OpacityLbl.TabIndex = 121
-        Me.ExtTerminal_OpacityLbl.Text = "100"
-        Me.ExtTerminal_OpacityLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ExtTerminal_EnhancedTerminal
         '
@@ -1738,7 +1697,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_OpacityBar.Maximum = 255
         Me.ExtTerminal_OpacityBar.Minimum = 0
         Me.ExtTerminal_OpacityBar.Name = "ExtTerminal_OpacityBar"
-        Me.ExtTerminal_OpacityBar.Size = New System.Drawing.Size(223, 19)
+        Me.ExtTerminal_OpacityBar.Size = New System.Drawing.Size(216, 19)
         Me.ExtTerminal_OpacityBar.SmallChange = 1
         Me.ExtTerminal_OpacityBar.TabIndex = 120
         Me.ExtTerminal_OpacityBar.Text = "XenonTrackbar1"
@@ -1764,6 +1723,61 @@ Partial Class ExternalTerminal
         Me.Label57.TabIndex = 119
         Me.Label57.Text = "Window Opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ExtTerminal_FontSizeVal
+        '
+        Me.ExtTerminal_FontSizeVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ExtTerminal_FontSizeVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExtTerminal_FontSizeVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ExtTerminal_FontSizeVal.ForeColor = System.Drawing.Color.White
+        Me.ExtTerminal_FontSizeVal.Image = Nothing
+        Me.ExtTerminal_FontSizeVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ExtTerminal_FontSizeVal.LineSize = 1
+        Me.ExtTerminal_FontSizeVal.Location = New System.Drawing.Point(261, 66)
+        Me.ExtTerminal_FontSizeVal.Name = "ExtTerminal_FontSizeVal"
+        Me.ExtTerminal_FontSizeVal.Size = New System.Drawing.Size(34, 24)
+        Me.ExtTerminal_FontSizeVal.TabIndex = 134
+        Me.ExtTerminal_FontSizeVal.UseVisualStyleBackColor = False
+        '
+        'ExtTerminal_PreviewCUR_Val
+        '
+        Me.ExtTerminal_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ExtTerminal_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExtTerminal_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ExtTerminal_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
+        Me.ExtTerminal_PreviewCUR_Val.Image = Nothing
+        Me.ExtTerminal_PreviewCUR_Val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ExtTerminal_PreviewCUR_Val.LineSize = 1
+        Me.ExtTerminal_PreviewCUR_Val.Location = New System.Drawing.Point(262, 66)
+        Me.ExtTerminal_PreviewCUR_Val.Name = "ExtTerminal_PreviewCUR_Val"
+        Me.ExtTerminal_PreviewCUR_Val.Size = New System.Drawing.Size(34, 24)
+        Me.ExtTerminal_PreviewCUR_Val.TabIndex = 135
+        Me.ExtTerminal_PreviewCUR_Val.UseVisualStyleBackColor = False
+        '
+        'ExtTerminal_OpacityVal
+        '
+        Me.ExtTerminal_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ExtTerminal_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExtTerminal_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ExtTerminal_OpacityVal.ForeColor = System.Drawing.Color.White
+        Me.ExtTerminal_OpacityVal.Image = Nothing
+        Me.ExtTerminal_OpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ExtTerminal_OpacityVal.LineSize = 1
+        Me.ExtTerminal_OpacityVal.Location = New System.Drawing.Point(261, 120)
+        Me.ExtTerminal_OpacityVal.Name = "ExtTerminal_OpacityVal"
+        Me.ExtTerminal_OpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.ExtTerminal_OpacityVal.TabIndex = 136
+        Me.ExtTerminal_OpacityVal.UseVisualStyleBackColor = False
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
+        Me.PictureBox8.Location = New System.Drawing.Point(6, 35)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox8.TabIndex = 136
+        Me.PictureBox8.TabStop = False
         '
         'ExternalTerminal
         '
@@ -1810,13 +1824,13 @@ Partial Class ExternalTerminal
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ExtTerminal_PreviewCUR.ResumeLayout(False)
         Me.ExtTerminal_PreviewCUR2.ResumeLayout(False)
-        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1902,7 +1916,6 @@ Partial Class ExternalTerminal
     Friend WithEvents ExtTerminal_FontsBox As XenonComboBox
     Friend WithEvents ExtTerminal_FontSizeBar As XenonTrackbar
     Friend WithEvents ExtTerminal_FontWeightBox As XenonComboBox
-    Friend WithEvents ExtTerminal_FontSizeLbl As Label
     Friend WithEvents Label61 As Label
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
@@ -1914,7 +1927,6 @@ Partial Class ExternalTerminal
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents Label3 As Label
     Friend WithEvents XenonGroupBox34 As XenonGroupBox
-    Friend WithEvents ExtTerminal_PreviewCUR_LBL As Label
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents ExtTerminal_CursorStyle As XenonComboBox
     Friend WithEvents Label60 As Label
@@ -1926,18 +1938,20 @@ Partial Class ExternalTerminal
     Friend WithEvents ExtTerminal_PreviewCUR2 As Panel
     Friend WithEvents ExtTerminal_PreviewCursorInner As Panel
     Friend WithEvents ExtTerminal_CursorColor As XenonCP
-    Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents Label5 As Label
     Friend WithEvents XenonGroupBox12 As XenonGroupBox
     Friend WithEvents PictureBox10 As PictureBox
     Friend WithEvents PictureBox13 As PictureBox
     Friend WithEvents ExtTerminal_LineSelection As XenonCheckBox
-    Friend WithEvents ExtTerminal_OpacityLbl As Label
     Friend WithEvents ExtTerminal_EnhancedTerminal As XenonCheckBox
     Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents ExtTerminal_TerminalScrolling As XenonCheckBox
     Friend WithEvents ExtTerminal_OpacityBar As XenonTrackbar
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents Label57 As Label
+    Friend WithEvents ExtTerminal_FontSizeVal As XenonButton
+    Friend WithEvents ExtTerminal_PreviewCUR_Val As XenonButton
+    Friend WithEvents ExtTerminal_OpacityVal As XenonButton
+    Friend WithEvents PictureBox8 As PictureBox
 End Class

@@ -204,7 +204,7 @@ Public Class ExternalTerminal
         End Try
 
 
-        ExtTerminal_FontSizeLbl.Text = ExtTerminal_FontSizeBar.Value
+        ExtTerminal_FontSizeVal.Text = ExtTerminal_FontSizeBar.Value
 
         Dim wg As Integer
 
@@ -538,7 +538,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_FontSizeBar_Scroll(sender As Object) Handles ExtTerminal_FontSizeBar.Scroll
-        ExtTerminal_FontSizeLbl.Text = ExtTerminal_FontSizeBar.Value
+        ExtTerminal_FontSizeVal.Text = ExtTerminal_FontSizeBar.Value
         If _Shown Then
             f_extterminal = New Font(f_extterminal.Name, ExtTerminal_FontSizeBar.Value, f_extterminal.Style)
             ApplyPreview()
@@ -572,7 +572,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_OpacityBar_Scroll(sender As Object) Handles ExtTerminal_OpacityBar.Scroll
-        ExtTerminal_OpacityLbl.Text = Fix((sender.Value / 255) * 100)
+        ExtTerminal_OpacityVal.Text = Fix((sender.Value / 255) * 100)
     End Sub
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
@@ -727,7 +727,7 @@ Public Class ExternalTerminal
         Dim all As Integer = ExtTerminal_PreviewCUR.Height - 4
         ExtTerminal_PreviewCUR2.Height = all * (ExtTerminal_CursorSizeBar.Value / ExtTerminal_CursorSizeBar.Maximum)
         ExtTerminal_PreviewCUR2.Top = ExtTerminal_PreviewCUR.Height - ExtTerminal_PreviewCUR2.Height - 2
-        ExtTerminal_PreviewCUR_LBL.Text = ExtTerminal_CursorSizeBar.Value
+        ExtTerminal_PreviewCUR_Val.Text = ExtTerminal_CursorSizeBar.Value
         If My.W10_1909 Then ApplyCursorShape()
     End Sub
     Sub ApplyPreview()
@@ -1076,7 +1076,7 @@ Public Class ExternalTerminal
 
         ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
         ExtTerminal_FontSizeBar.Value = f_extterminal.Size
-        ExtTerminal_FontSizeLbl.Text = f_extterminal.Size
+        ExtTerminal_FontSizeVal.Text = f_extterminal.Size
 
         If CP.CommandPrompt.FontSize = 393220 Then RasterList.SelectedItem = "4x6"
         If CP.CommandPrompt.FontSize = 524294 Then RasterList.SelectedItem = "6x8"
@@ -1100,7 +1100,7 @@ Public Class ExternalTerminal
             ExtTerminal_PreviewCUR2.BackColor = CP.CommandPrompt.W10_1909_CursorColor
             ExtTerminal_EnhancedTerminal.Checked = CP.CommandPrompt.W10_1909_ForceV2
             ExtTerminal_OpacityBar.Value = CP.CommandPrompt.W10_1909_WindowAlpha
-            ExtTerminal_OpacityLbl.Text = Fix((CP.CommandPrompt.W10_1909_WindowAlpha / 255) * 100)
+            ExtTerminal_OpacityVal.Text = Fix((CP.CommandPrompt.W10_1909_WindowAlpha / 255) * 100)
             ExtTerminal_LineSelection.Checked = CP.CommandPrompt.W10_1909_LineSelection
             ExtTerminal_TerminalScrolling.Checked = CP.CommandPrompt.W10_1909_TerminalScrolling
             ApplyCursorShape()
@@ -1157,5 +1157,20 @@ Public Class ExternalTerminal
         ApplyPreview()
 
         _Def.Dispose()
+    End Sub
+
+    Private Sub ExtTerminal_FontSizeVal_Click(sender As Object, e As EventArgs) Handles ExtTerminal_FontSizeVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_FontSizeBar.Maximum), ExtTerminal_FontSizeBar.Minimum) : ExtTerminal_FontSizeBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub ExtTerminal_PreviewCUR_Val_Click(sender As Object, e As EventArgs) Handles ExtTerminal_PreviewCUR_Val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_CursorSizeBar.Maximum), ExtTerminal_CursorSizeBar.Minimum) : ExtTerminal_CursorSizeBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub ExtTerminal_OpacityVal_Click(sender As Object, e As EventArgs) Handles ExtTerminal_OpacityVal.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum) : ExtTerminal_OpacityBar.Value = Val(sender.Text)
     End Sub
 End Class

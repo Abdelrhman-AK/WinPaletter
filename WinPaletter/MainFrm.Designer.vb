@@ -236,6 +236,7 @@ Partial Class MainFrm
         Me.W8_personalcls_background_pick = New WinPaletter.XenonCP()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.XenonGroupBox33 = New WinPaletter.XenonGroupBox()
+        Me.W8_ColorizationBalance_val = New WinPaletter.XenonButton()
         Me.W8_ColorizationBalance_bar = New WinPaletter.XenonTrackbar()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
         Me.W8_ColorizationColor_pick = New WinPaletter.XenonCP()
@@ -342,6 +343,10 @@ Partial Class MainFrm
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SaveFileDialog3 = New System.Windows.Forms.SaveFileDialog()
+        Me.W7_ColorizationColorBalance_val = New WinPaletter.XenonButton()
+        Me.W7_ColorizationAfterglowBalance_val = New WinPaletter.XenonButton()
+        Me.W7_ColorizationBlurBalance_val = New WinPaletter.XenonButton()
+        Me.W7_ColorizationGlassReflectionIntensity_val = New WinPaletter.XenonButton()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.PaletteContainer_W11.SuspendLayout()
@@ -1345,7 +1350,7 @@ Partial Class MainFrm
         'W11_WinMode_Toggle
         '
         Me.W11_WinMode_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W11_WinMode_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W11_WinMode_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W11_WinMode_Toggle.Checked = False
         Me.W11_WinMode_Toggle.DarkLight_Toggler = True
         Me.W11_WinMode_Toggle.Location = New System.Drawing.Point(206, 4)
@@ -1371,7 +1376,7 @@ Partial Class MainFrm
         'W11_Transparency_Toggle
         '
         Me.W11_Transparency_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W11_Transparency_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W11_Transparency_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W11_Transparency_Toggle.Checked = False
         Me.W11_Transparency_Toggle.DarkLight_Toggler = False
         Me.W11_Transparency_Toggle.Location = New System.Drawing.Point(458, 4)
@@ -1430,7 +1435,7 @@ Partial Class MainFrm
         'W11_AppMode_Toggle
         '
         Me.W11_AppMode_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W11_AppMode_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W11_AppMode_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W11_AppMode_Toggle.Checked = False
         Me.W11_AppMode_Toggle.DarkLight_Toggler = True
         Me.W11_AppMode_Toggle.Location = New System.Drawing.Point(206, 4)
@@ -1511,7 +1516,7 @@ Partial Class MainFrm
         'W11_ShowAccentOnTitlebarAndBorders_Toggle
         '
         Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = False
         Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.DarkLight_Toggler = False
         Me.W11_ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(461, 10)
@@ -2648,7 +2653,7 @@ Partial Class MainFrm
         'W10_ShowAccentOnTitlebarAndBorders_Toggle
         '
         Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = False
         Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.DarkLight_Toggler = False
         Me.W10_ShowAccentOnTitlebarAndBorders_Toggle.Location = New System.Drawing.Point(461, 10)
@@ -3230,6 +3235,7 @@ Partial Class MainFrm
         Me.XenonGroupBox33.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox33.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox33.Controls.Add(Me.W8_ColorizationBalance_val)
         Me.XenonGroupBox33.Controls.Add(Me.W8_ColorizationBalance_bar)
         Me.XenonGroupBox33.Controls.Add(Me.PictureBox30)
         Me.XenonGroupBox33.Controls.Add(Me.W8_ColorizationColor_pick)
@@ -3241,16 +3247,31 @@ Partial Class MainFrm
         Me.XenonGroupBox33.TabIndex = 20
         Me.XenonGroupBox33.Text = "XenonGroupBox3"
         '
+        'W8_ColorizationBalance_val
+        '
+        Me.W8_ColorizationBalance_val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W8_ColorizationBalance_val.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.W8_ColorizationBalance_val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.W8_ColorizationBalance_val.ForeColor = System.Drawing.Color.White
+        Me.W8_ColorizationBalance_val.Image = Nothing
+        Me.W8_ColorizationBalance_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.W8_ColorizationBalance_val.LineSize = 1
+        Me.W8_ColorizationBalance_val.Location = New System.Drawing.Point(465, 29)
+        Me.W8_ColorizationBalance_val.Name = "W8_ColorizationBalance_val"
+        Me.W8_ColorizationBalance_val.Size = New System.Drawing.Size(34, 24)
+        Me.W8_ColorizationBalance_val.TabIndex = 130
+        Me.W8_ColorizationBalance_val.UseVisualStyleBackColor = False
+        '
         'W8_ColorizationBalance_bar
         '
         Me.W8_ColorizationBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W8_ColorizationBalance_bar.LargeChange = 10
-        Me.W8_ColorizationBalance_bar.Location = New System.Drawing.Point(4, 33)
+        Me.W8_ColorizationBalance_bar.Location = New System.Drawing.Point(4, 32)
         Me.W8_ColorizationBalance_bar.Maximum = 100
         Me.W8_ColorizationBalance_bar.Minimum = 0
         Me.W8_ColorizationBalance_bar.Name = "W8_ColorizationBalance_bar"
-        Me.W8_ColorizationBalance_bar.Size = New System.Drawing.Size(495, 19)
+        Me.W8_ColorizationBalance_bar.Size = New System.Drawing.Size(455, 19)
         Me.W8_ColorizationBalance_bar.SmallChange = 1
         Me.W8_ColorizationBalance_bar.TabIndex = 6
         Me.W8_ColorizationBalance_bar.Text = "XenonTrackbar2"
@@ -3507,6 +3528,7 @@ Partial Class MainFrm
         Me.XenonGroupBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox19.Controls.Add(Me.W7_ColorizationGlassReflectionIntensity_val)
         Me.XenonGroupBox19.Controls.Add(Me.W7_ColorizationGlassReflectionIntensity_bar)
         Me.XenonGroupBox19.Controls.Add(Me.PictureBox24)
         Me.XenonGroupBox19.Controls.Add(Me.Label26)
@@ -3526,7 +3548,7 @@ Partial Class MainFrm
         Me.W7_ColorizationGlassReflectionIntensity_bar.Maximum = 100
         Me.W7_ColorizationGlassReflectionIntensity_bar.Minimum = 0
         Me.W7_ColorizationGlassReflectionIntensity_bar.Name = "W7_ColorizationGlassReflectionIntensity_bar"
-        Me.W7_ColorizationGlassReflectionIntensity_bar.Size = New System.Drawing.Size(314, 19)
+        Me.W7_ColorizationGlassReflectionIntensity_bar.Size = New System.Drawing.Size(273, 19)
         Me.W7_ColorizationGlassReflectionIntensity_bar.SmallChange = 1
         Me.W7_ColorizationGlassReflectionIntensity_bar.TabIndex = 8
         Me.W7_ColorizationGlassReflectionIntensity_bar.Text = "XenonTrackbar2"
@@ -3553,7 +3575,7 @@ Partial Class MainFrm
         Me.Label26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label26.Location = New System.Drawing.Point(30, 4)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(149, 19)
+        Me.Label26.Size = New System.Drawing.Size(149, 20)
         Me.Label26.TabIndex = 3
         Me.Label26.Text = "Glass Reflection Intensity"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3573,6 +3595,7 @@ Partial Class MainFrm
         Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.W7_ColorizationBlurBalance_val)
         Me.XenonGroupBox12.Controls.Add(Me.W7_ColorizationBlurBalance_bar)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox12.Controls.Add(Me.Label15)
@@ -3592,7 +3615,7 @@ Partial Class MainFrm
         Me.W7_ColorizationBlurBalance_bar.Maximum = 100
         Me.W7_ColorizationBlurBalance_bar.Minimum = 0
         Me.W7_ColorizationBlurBalance_bar.Name = "W7_ColorizationBlurBalance_bar"
-        Me.W7_ColorizationBlurBalance_bar.Size = New System.Drawing.Size(314, 19)
+        Me.W7_ColorizationBlurBalance_bar.Size = New System.Drawing.Size(273, 19)
         Me.W7_ColorizationBlurBalance_bar.SmallChange = 1
         Me.W7_ColorizationBlurBalance_bar.TabIndex = 7
         Me.W7_ColorizationBlurBalance_bar.Text = "XenonTrackbar2"
@@ -3619,7 +3642,7 @@ Partial Class MainFrm
         Me.Label15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label15.Location = New System.Drawing.Point(30, 4)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(149, 19)
+        Me.Label15.Size = New System.Drawing.Size(149, 20)
         Me.Label15.TabIndex = 3
         Me.Label15.Text = "Colorization Blur Balance"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3654,7 +3677,7 @@ Partial Class MainFrm
         'W7_EnableAeroPeek_toggle
         '
         Me.W7_EnableAeroPeek_toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W7_EnableAeroPeek_toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W7_EnableAeroPeek_toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W7_EnableAeroPeek_toggle.Checked = False
         Me.W7_EnableAeroPeek_toggle.DarkLight_Toggler = False
         Me.W7_EnableAeroPeek_toggle.Location = New System.Drawing.Point(458, 5)
@@ -3706,7 +3729,7 @@ Partial Class MainFrm
         'W7_AlwaysHibernateThumbnails_Toggle
         '
         Me.W7_AlwaysHibernateThumbnails_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.W7_AlwaysHibernateThumbnails_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.W7_AlwaysHibernateThumbnails_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W7_AlwaysHibernateThumbnails_Toggle.Checked = False
         Me.W7_AlwaysHibernateThumbnails_Toggle.DarkLight_Toggler = False
         Me.W7_AlwaysHibernateThumbnails_Toggle.Location = New System.Drawing.Point(458, 5)
@@ -3762,6 +3785,7 @@ Partial Class MainFrm
         Me.XenonGroupBox21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox21.Controls.Add(Me.W7_ColorizationColorBalance_val)
         Me.XenonGroupBox21.Controls.Add(Me.W7_ColorizationColorBalance_bar)
         Me.XenonGroupBox21.Controls.Add(Me.PictureBox12)
         Me.XenonGroupBox21.Controls.Add(Me.W7_ColorizationColor_pick)
@@ -3778,11 +3802,11 @@ Partial Class MainFrm
         Me.W7_ColorizationColorBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W7_ColorizationColorBalance_bar.LargeChange = 10
-        Me.W7_ColorizationColorBalance_bar.Location = New System.Drawing.Point(185, 5)
+        Me.W7_ColorizationColorBalance_bar.Location = New System.Drawing.Point(170, 5)
         Me.W7_ColorizationColorBalance_bar.Maximum = 100
         Me.W7_ColorizationColorBalance_bar.Minimum = 0
         Me.W7_ColorizationColorBalance_bar.Name = "W7_ColorizationColorBalance_bar"
-        Me.W7_ColorizationColorBalance_bar.Size = New System.Drawing.Size(220, 19)
+        Me.W7_ColorizationColorBalance_bar.Size = New System.Drawing.Size(199, 19)
         Me.W7_ColorizationColorBalance_bar.SmallChange = 1
         Me.W7_ColorizationColorBalance_bar.TabIndex = 6
         Me.W7_ColorizationColorBalance_bar.Text = "XenonTrackbar2"
@@ -3818,7 +3842,7 @@ Partial Class MainFrm
         Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label16.Location = New System.Drawing.Point(30, 4)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(149, 20)
+        Me.Label16.Size = New System.Drawing.Size(134, 20)
         Me.Label16.TabIndex = 3
         Me.Label16.Text = "Colorization Color"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3828,6 +3852,7 @@ Partial Class MainFrm
         Me.XenonGroupBox26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox26.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox26.Controls.Add(Me.W7_ColorizationAfterglowBalance_val)
         Me.XenonGroupBox26.Controls.Add(Me.W7_ColorizationAfterglowBalance_bar)
         Me.XenonGroupBox26.Controls.Add(Me.W7_ColorizationAfterglow_pick)
         Me.XenonGroupBox26.Controls.Add(Me.PictureBox14)
@@ -3844,11 +3869,11 @@ Partial Class MainFrm
         Me.W7_ColorizationAfterglowBalance_bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W7_ColorizationAfterglowBalance_bar.LargeChange = 10
-        Me.W7_ColorizationAfterglowBalance_bar.Location = New System.Drawing.Point(185, 5)
+        Me.W7_ColorizationAfterglowBalance_bar.Location = New System.Drawing.Point(170, 5)
         Me.W7_ColorizationAfterglowBalance_bar.Maximum = 100
         Me.W7_ColorizationAfterglowBalance_bar.Minimum = 0
         Me.W7_ColorizationAfterglowBalance_bar.Name = "W7_ColorizationAfterglowBalance_bar"
-        Me.W7_ColorizationAfterglowBalance_bar.Size = New System.Drawing.Size(220, 19)
+        Me.W7_ColorizationAfterglowBalance_bar.Size = New System.Drawing.Size(199, 19)
         Me.W7_ColorizationAfterglowBalance_bar.SmallChange = 1
         Me.W7_ColorizationAfterglowBalance_bar.TabIndex = 5
         Me.W7_ColorizationAfterglowBalance_bar.Text = "XenonTrackbar1"
@@ -3884,7 +3909,7 @@ Partial Class MainFrm
         Me.Label21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label21.Location = New System.Drawing.Point(30, 4)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(138, 20)
+        Me.Label21.Size = New System.Drawing.Size(134, 20)
         Me.Label21.TabIndex = 3
         Me.Label21.Text = "After Glow Color"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -4749,7 +4774,7 @@ Partial Class MainFrm
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
         Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.XenonButton27.LineSize = 1
-        Me.XenonButton27.Location = New System.Drawing.Point(47, 3)
+        Me.XenonButton27.Location = New System.Drawing.Point(90, 3)
         Me.XenonButton27.Name = "XenonButton27"
         Me.XenonButton27.Size = New System.Drawing.Size(85, 59)
         Me.XenonButton27.TabIndex = 29
@@ -4766,7 +4791,7 @@ Partial Class MainFrm
         Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
         Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(132, 3)
+        Me.XenonButton24.Location = New System.Drawing.Point(175, 3)
         Me.XenonButton24.Name = "XenonButton24"
         Me.XenonButton24.Size = New System.Drawing.Size(85, 59)
         Me.XenonButton24.TabIndex = 28
@@ -4783,7 +4808,7 @@ Partial Class MainFrm
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
         Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
         Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(217, 3)
+        Me.XenonButton21.Location = New System.Drawing.Point(260, 3)
         Me.XenonButton21.Name = "XenonButton21"
         Me.XenonButton21.Size = New System.Drawing.Size(85, 59)
         Me.XenonButton21.TabIndex = 27
@@ -4800,7 +4825,7 @@ Partial Class MainFrm
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(387, 3)
+        Me.XenonButton16.Location = New System.Drawing.Point(430, 3)
         Me.XenonButton16.Name = "XenonButton16"
         Me.XenonButton16.Size = New System.Drawing.Size(85, 59)
         Me.XenonButton16.TabIndex = 26
@@ -4817,7 +4842,7 @@ Partial Class MainFrm
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(143, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(84, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(302, 3)
+        Me.XenonButton4.Location = New System.Drawing.Point(345, 3)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(85, 59)
         Me.XenonButton4.TabIndex = 25
@@ -4832,6 +4857,66 @@ Partial Class MainFrm
         '
         Me.SaveFileDialog3.DefaultExt = "wpt"
         Me.SaveFileDialog3.Filter = "Test File (*.txt)|*.txt"
+        '
+        'W7_ColorizationColorBalance_val
+        '
+        Me.W7_ColorizationColorBalance_val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W7_ColorizationColorBalance_val.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.W7_ColorizationColorBalance_val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.W7_ColorizationColorBalance_val.ForeColor = System.Drawing.Color.White
+        Me.W7_ColorizationColorBalance_val.Image = Nothing
+        Me.W7_ColorizationColorBalance_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.W7_ColorizationColorBalance_val.LineSize = 1
+        Me.W7_ColorizationColorBalance_val.Location = New System.Drawing.Point(375, 4)
+        Me.W7_ColorizationColorBalance_val.Name = "W7_ColorizationColorBalance_val"
+        Me.W7_ColorizationColorBalance_val.Size = New System.Drawing.Size(34, 20)
+        Me.W7_ColorizationColorBalance_val.TabIndex = 131
+        Me.W7_ColorizationColorBalance_val.UseVisualStyleBackColor = False
+        '
+        'W7_ColorizationAfterglowBalance_val
+        '
+        Me.W7_ColorizationAfterglowBalance_val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W7_ColorizationAfterglowBalance_val.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.W7_ColorizationAfterglowBalance_val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.W7_ColorizationAfterglowBalance_val.ForeColor = System.Drawing.Color.White
+        Me.W7_ColorizationAfterglowBalance_val.Image = Nothing
+        Me.W7_ColorizationAfterglowBalance_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.W7_ColorizationAfterglowBalance_val.LineSize = 1
+        Me.W7_ColorizationAfterglowBalance_val.Location = New System.Drawing.Point(375, 4)
+        Me.W7_ColorizationAfterglowBalance_val.Name = "W7_ColorizationAfterglowBalance_val"
+        Me.W7_ColorizationAfterglowBalance_val.Size = New System.Drawing.Size(34, 20)
+        Me.W7_ColorizationAfterglowBalance_val.TabIndex = 132
+        Me.W7_ColorizationAfterglowBalance_val.UseVisualStyleBackColor = False
+        '
+        'W7_ColorizationBlurBalance_val
+        '
+        Me.W7_ColorizationBlurBalance_val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W7_ColorizationBlurBalance_val.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.W7_ColorizationBlurBalance_val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.W7_ColorizationBlurBalance_val.ForeColor = System.Drawing.Color.White
+        Me.W7_ColorizationBlurBalance_val.Image = Nothing
+        Me.W7_ColorizationBlurBalance_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.W7_ColorizationBlurBalance_val.LineSize = 1
+        Me.W7_ColorizationBlurBalance_val.Location = New System.Drawing.Point(464, 4)
+        Me.W7_ColorizationBlurBalance_val.Name = "W7_ColorizationBlurBalance_val"
+        Me.W7_ColorizationBlurBalance_val.Size = New System.Drawing.Size(34, 20)
+        Me.W7_ColorizationBlurBalance_val.TabIndex = 132
+        Me.W7_ColorizationBlurBalance_val.UseVisualStyleBackColor = False
+        '
+        'W7_ColorizationGlassReflectionIntensity_val
+        '
+        Me.W7_ColorizationGlassReflectionIntensity_val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W7_ColorizationGlassReflectionIntensity_val.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.W7_ColorizationGlassReflectionIntensity_val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.W7_ColorizationGlassReflectionIntensity_val.ForeColor = System.Drawing.Color.White
+        Me.W7_ColorizationGlassReflectionIntensity_val.Image = Nothing
+        Me.W7_ColorizationGlassReflectionIntensity_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.W7_ColorizationGlassReflectionIntensity_val.LineSize = 1
+        Me.W7_ColorizationGlassReflectionIntensity_val.Location = New System.Drawing.Point(464, 4)
+        Me.W7_ColorizationGlassReflectionIntensity_val.Name = "W7_ColorizationGlassReflectionIntensity_val"
+        Me.W7_ColorizationGlassReflectionIntensity_val.Size = New System.Drawing.Size(34, 20)
+        Me.W7_ColorizationGlassReflectionIntensity_val.TabIndex = 132
+        Me.W7_ColorizationGlassReflectionIntensity_val.UseVisualStyleBackColor = False
         '
         'MainFrm
         '
@@ -5300,4 +5385,9 @@ Partial Class MainFrm
     Friend WithEvents Timer1 As Timer
     Friend WithEvents XenonButton22 As XenonButton
     Friend WithEvents SaveFileDialog3 As SaveFileDialog
+    Friend WithEvents W8_ColorizationBalance_val As XenonButton
+    Friend WithEvents W7_ColorizationGlassReflectionIntensity_val As XenonButton
+    Friend WithEvents W7_ColorizationBlurBalance_val As XenonButton
+    Friend WithEvents W7_ColorizationColorBalance_val As XenonButton
+    Friend WithEvents W7_ColorizationAfterglowBalance_val As XenonButton
 End Class

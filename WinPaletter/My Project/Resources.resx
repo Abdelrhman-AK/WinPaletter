@@ -166,33 +166,6 @@
   <data name="BasicTaskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BasicTaskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CL_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_Beta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Beta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_BugFix" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_BugFix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_channel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_channel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_Date" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_New" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_Removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Removed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CL_Stable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Changelog\CL_Stable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="CMD_10x18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CMD_10x18.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

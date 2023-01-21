@@ -216,10 +216,12 @@ Public Class LogonUI7
     End Sub
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+        ttl_h.Text = sender.Value.ToString()
         If _Shown And XenonCheckBox7.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
     Private Sub XenonNumericUpDown2_Click(sender As Object) Handles XenonTrackbar2.Scroll
+        XenonButton4.Text = sender.Value.ToString()
         If _Shown And XenonCheckBox6.Checked Then pnl_preview.BackgroundImage = ReturnBK()
     End Sub
 
@@ -270,5 +272,15 @@ Public Class LogonUI7
         If LogonUI8_Pics.ShowDialog = DialogResult.OK Then
             ApplyPreview()
         End If
+    End Sub
+
+    Private Sub ttl_h_Click(sender As Object, e As EventArgs) Handles ttl_h.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
     End Sub
 End Class

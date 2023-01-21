@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports System.Net
 Imports System.Reflection
 Imports System.Text
@@ -930,6 +931,10 @@ Public Class MainFrm
         W7_ColorizationAfterglowBalance_bar.Value = ColorPalette.Windows7.ColorizationAfterglowBalance
         W7_ColorizationBlurBalance_bar.Value = ColorPalette.Windows7.ColorizationBlurBalance
         W7_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
+        W7_ColorizationColorBalance_val.Text = ColorPalette.Windows7.ColorizationColorBalance
+        W7_ColorizationAfterglowBalance_val.Text = ColorPalette.Windows7.ColorizationAfterglowBalance
+        W7_ColorizationBlurBalance_val.Text = ColorPalette.Windows7.ColorizationBlurBalance
+        W7_ColorizationGlassReflectionIntensity_val.Text = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
         W7_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
         W7_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
 
@@ -960,6 +965,7 @@ Public Class MainFrm
 
         W8_ColorizationColor_pick.BackColor = ColorPalette.Windows8.ColorizationColor
         W8_ColorizationBalance_bar.Value = ColorPalette.Windows8.ColorizationColorBalance
+        W8_ColorizationBalance_val.Text = ColorPalette.Windows8.ColorizationColorBalance
 
         W8_start_pick.BackColor = ColorPalette.Windows8.StartColor
         W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
@@ -1241,7 +1247,7 @@ Public Class MainFrm
         End If
 
         pnl_preview.BackgroundImage = My.Wallpaper
-        dragPreviewer.pnl_preview.BackgroundImage = My.Wallpaper
+        DragPreviewer.pnl_preview.BackgroundImage = My.Wallpaper
 
         Adjust_Preview()
         ApplyCPValues(CP)
@@ -2261,6 +2267,7 @@ Public Class MainFrm
 
     Private Sub W7_ColorizationColorBalance_bar_Scroll(sender As Object) Handles W7_ColorizationColorBalance_bar.Scroll
         If _Shown Then
+            W7_ColorizationColorBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
@@ -2268,6 +2275,7 @@ Public Class MainFrm
 
     Private Sub W7_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles W7_ColorizationBlurBalance_bar.Scroll
         If _Shown Then
+            W7_ColorizationBlurBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
@@ -2275,6 +2283,7 @@ Public Class MainFrm
 
     Private Sub W7_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles W7_ColorizationGlassReflectionIntensity_bar.Scroll
         If _Shown Then
+            W7_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
@@ -2312,10 +2321,31 @@ Public Class MainFrm
 
     Private Sub W7_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles W7_ColorizationAfterglowBalance_bar.Scroll
         If _Shown Then
+            W7_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
+    Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum) : W7_ColorizationColorBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglowBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum) : W7_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationBlurBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum) : W7_ColorizationBlurBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationGlassReflectionIntensity_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum) : W7_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
+    End Sub
+
 #End Region
 
 #Region "Windows 8.1"
@@ -2353,6 +2383,7 @@ Public Class MainFrm
 
     Private Sub W8_ColorizationBalance_bar_Scroll(sender As Object) Handles W8_ColorizationBalance_bar.Scroll
         If _Shown Then
+            W8_ColorizationBalance_val.Text = sender.Value.ToString()
             CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
@@ -2452,6 +2483,11 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
+    End Sub
+
+    Private Sub W8_ColorizationBalance_val_Click(sender As Object, e As EventArgs) Handles W8_ColorizationBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+        sender.Text = Math.Max(Math.Min(Val(response), W8_ColorizationBalance_bar.Maximum), W8_ColorizationBalance_bar.Minimum) : W8_ColorizationBalance_bar.Value = Val(sender.Text)
     End Sub
 
     Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
@@ -2591,7 +2627,7 @@ Public Class MainFrm
     Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
-            status_lbl.ForeColor = Color.Gold
+            status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
@@ -2618,9 +2654,9 @@ Public Class MainFrm
             If My.[Settings].DragAndDropPreview Then
                 DragAccepted = True
                 CP_BeforeDragAndDrop = CP.Clone
-                dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
-                dragPreviewer.File = files(0)
-                dragPreviewer.Show()
+                DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+                DragPreviewer.File = files(0)
+                DragPreviewer.Show()
             End If
         ElseIf My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpsf" Then
             wpth_or_wpsf = False
@@ -2635,7 +2671,7 @@ Public Class MainFrm
 
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         If DragAccepted Then
-            If My.[Settings].DragAndDropPreview Then dragPreviewer.Close()
+            If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
             CP = CP_BeforeDragAndDrop.Clone
             ApplyCPValues(CP_BeforeDragAndDrop)
             ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
@@ -2644,7 +2680,7 @@ Public Class MainFrm
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, pnl_preview.DragOver,
         PaletteContainer_W11.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
-        If DragAccepted And My.[Settings].DragAndDropPreview Then dragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        If DragAccepted And My.[Settings].DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
     End Sub
 
     Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, pnl_preview.DragDrop,
@@ -3055,7 +3091,6 @@ Public Class MainFrm
             Select_Preview_Version()
         End If
     End Sub
-
 
     Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
         If _Shown And Select_W7.Checked Then

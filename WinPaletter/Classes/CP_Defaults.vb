@@ -69,6 +69,24 @@
             .W10_1909_ForceV2 = True
         End With
 
+        With [CP].WinMetrics_Fonts
+            .BorderWidth = 1
+            .CaptionHeight = 22
+            .CaptionWidth = 22
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 22
+            .SmCaptionWidth = 22
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
+        End With
+
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
 
@@ -124,6 +142,24 @@
             .FontSize = 17 * 65536
             .FontRaster = False
             .W10_1909_ForceV2 = My.W10_1909
+        End With
+
+        With [CP].WinMetrics_Fonts
+            .BorderWidth = 1
+            .CaptionHeight = 22
+            .CaptionWidth = 22
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 22
+            .SmCaptionWidth = 22
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
@@ -209,6 +245,26 @@
             .W10_1909_ForceV2 = False
         End With
 
+        With [CP].WinMetrics_Fonts
+            .BorderWidth = 1
+            .CaptionHeight = 22
+            .CaptionWidth = 22
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 22
+            .SmCaptionWidth = 22
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
+            .CaptionFont = New Font("Segoe UI", 11.25, FontStyle.Regular)
+            .SmCaptionFont = New Font("Segoe UI", 11.25, FontStyle.Regular)
+        End With
+
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
 
@@ -291,6 +347,24 @@
             .FontSize = 14 * 65536
             .FontRaster = True
             .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].WinMetrics_Fonts
+            .BorderWidth = 1
+            .CaptionHeight = 21
+            .CaptionWidth = 21
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 17
+            .SmCaptionWidth = 17
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)

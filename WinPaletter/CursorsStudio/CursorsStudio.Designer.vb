@@ -183,7 +183,7 @@ Partial Class CursorsStudio
         '
         'XenonToggle1
         '
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonToggle1.Checked = True
         Me.XenonToggle1.DarkLight_Toggler = False
         Me.XenonToggle1.Location = New System.Drawing.Point(585, 9)
@@ -386,7 +386,7 @@ Partial Class CursorsStudio
         Me.XenonComboBox3.FormattingEnabled = True
         Me.XenonComboBox3.ItemHeight = 20
         Me.XenonComboBox3.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox3.Location = New System.Drawing.Point(142, 59)
+        Me.XenonComboBox3.Location = New System.Drawing.Point(142, 58)
         Me.XenonComboBox3.Name = "XenonComboBox3"
         Me.XenonComboBox3.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox3.TabIndex = 35
@@ -535,7 +535,7 @@ Partial Class CursorsStudio
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox2.Location = New System.Drawing.Point(142, 59)
+        Me.XenonComboBox2.Location = New System.Drawing.Point(142, 58)
         Me.XenonComboBox2.Name = "XenonComboBox2"
         Me.XenonComboBox2.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox2.TabIndex = 35
@@ -705,7 +705,7 @@ Partial Class CursorsStudio
         Me.XenonComboBox1.FormattingEnabled = True
         Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox1.Location = New System.Drawing.Point(142, 59)
+        Me.XenonComboBox1.Location = New System.Drawing.Point(142, 58)
         Me.XenonComboBox1.Name = "XenonComboBox1"
         Me.XenonComboBox1.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox1.TabIndex = 17
@@ -880,7 +880,7 @@ Partial Class CursorsStudio
         Me.XenonComboBox4.FormattingEnabled = True
         Me.XenonComboBox4.ItemHeight = 20
         Me.XenonComboBox4.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox4.Location = New System.Drawing.Point(142, 59)
+        Me.XenonComboBox4.Location = New System.Drawing.Point(142, 58)
         Me.XenonComboBox4.Name = "XenonComboBox4"
         Me.XenonComboBox4.Size = New System.Drawing.Size(175, 26)
         Me.XenonComboBox4.TabIndex = 17

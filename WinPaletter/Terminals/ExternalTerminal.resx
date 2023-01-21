@@ -149,7 +149,7 @@
   <data name="XenonButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAAhJJREFUOE9joAp4//691YcPH0LR8Z07dwyhSvADoOJfQPwfHe/du/fngQMHMqDK
+        vgAADr4B6kKxwAAAAhJJREFUOE9joAp4//691YcPH0LR8Z07dwyhSvADoOJfQPwfHe/du/fngQMHMqDK
         cANsmkF49+7d/xcvXvz/8OHDxVCl2AE2zSC8Z8+e/wsXLvy/dOnSf0ePHi2AKscE2DSD8LNnz/7fvn0b
         jO/evfsNqhwToGu8/ur1/ydv3/5/CMRx5679b7l+5/+15/f+Ky5Nlmf4z8AI1YYAIE0gxTeAGm8CscfJ
         y2CN11+/+W+wb/1/zfWF/2WXxf+XXhTzX3J+5C2JOaHeUK0QADIg7eKN/+bHLoA15V26+b//5v3/q28e
@@ -268,6 +268,19 @@
         kjBtRixJGHZytosq9GVWHH02/nB6aR2B4AceOaREl8jX2wAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="PictureBox8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAapJREFUSEvtklduwkAURVkTvX/SjRBtARQDNr132BFsIMpEWRe8+D2N8cgeEEiR
+        kg+udH4s69zrGbve+T+Jx+OfBhCLxSAajRKRSATC4TARCoUgGAwSgUAA/H4/4fP5wOv1Eh6PB9xuN/LB
+        tVZQ/kpBt9uFdDoNiqJAq9WiAnyWSCSohGutmHKxQJSLBbg8lUrd3ksmk1SAcnxPWlCtVplJpVJh5XKZ
+        lUolViwWiUKhcCOfzxPGepbL5Vg2myUymQwzvooZ5YxrrRyPRzgcDsRutyM2mw2xWq1guVzCYrGA+XwO
+        s9kMptMpTCYTGI/HMBqNYDgcwmAwgH6/D71ez/kFKN7v9yTebrckXq/XJEexTC6KERTjPei67ix4ZjXy
+        aLUp73Q6zgL76ntHgmJEtlrTNJK3221ngX018upqU46/Ldda+Y3VKFZVFZrNprNAXH06neBRLpeLVI7i
+        RqMB9XrdWSCuPp/PXCXP9Xq9HQmKRXmtViO41or9SO6d9b0jwdWmXFrw6CJRLF6kfbVdLi0Qxc9epExs
+        wrVWDPm37EheWS3wxbXv/Hlcrh8i2sl9ldV/twAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="PictureBox7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAMRJREFUSEvN
@@ -284,19 +297,6 @@
         k9OYHwZUedFD6TVDCZhzNUiGAqBEo+IYkfRp+TUogNo49WlcDD3KykYobQqoaMHOrk9SuzLblOkYD/gn
         oEKVn7/gIa2lBBWq/LxBkKEg+2bB6h0CDFV+TFyuQpWfHxDEKMBQ5UFd1+ZKumYsvbugGmy92jR12a5r
         a511LFp+EySgjfddGvPQXud9K84Bc9ZGiUOfeUFJr7k4vubRfw4hLpahrj7Ikhp1AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="PictureBox8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAcRJREFUSEvt
-        0NdSwkAUxvHYFRuCvQs23kR9JOsqdkRFVMRensqCiAjYMGKZ8W7N2c3mJEMIjNdm5jfD1f9bjvT/FfR5
-        zr/HPBef3wo6fC580KEzNHgKMszACdd//K5xHwkydR3KX+7D9Iial6ThswyxCpnHZBFj+g7AG9O7rwin
-        iZqXpMGTDCk0xGM8pMX200xPmOveU4RecKD/SCa6v2cR4jER4rFXTVdIeKGdO7oB14FM8ocwZgjtoo4d
-        8My0B59wAO7159C28ETbgqg1oBuAe5nFzEPPxtAWeGRaAqh5I4UDcK98r+IhHjOENlOapg0hSRv9CRyA
-        e+V/VY7QOnL6ExqHTzfQGkgR61clDTGnH2OONeGBNviQfSWOA3Avs1DWq9SQPmZfBXGmfkW4p3VLMRyA
-        e2WHTF6lhrJiy1ztEogxNQu6AYcvToyhHK9SQ1mxReGOVi9wNm8UB+Befw2x2DyIMlVezuaN4ADcyzwU
-        yxsClXO3mopZEKGVs7oBuJfh77EQj1mHeKycoLKZG6acXOMA3MsYKzwESqeFa1oyxSm/caDCGxlTYj8i
-        lCtmFgLFk+CKKZpgfqTxy1E1//9ZfZL0C2Za2eSO1CZVAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="PictureBox10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -331,7 +331,7 @@
   <data name="PictureBox12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAKxJREFUSEtjGBSgoaFBG4gXAvF/KF4BxPpQacoB0LB2IP7q4ODwH4SB7G9APBEq
+        vAAADrwBlbxySQAAAKxJREFUSEtjGBSgoaFBG4gXAvF/KF4BxPpQacoB0LB2IP7q4ODwH4SB7G9APBEq
         TTkAGjYZZjiSJfOg0pQDkAVADAseGB5iFhQUFPwPDg7+HxgY+D8/P5/6FsTHx/93dHQE45iYGOpbEBsb
         C4/gqKioUQtQwfCwgOapCJQPgoKCaJcPgBhkKDIetQABgIYNAwtgeQCGqW0BzatMAyBeCsSw4FkNxCZQ
         6YEEDAwA1f8YRX30ZE0AAAAASUVORK5CYII=

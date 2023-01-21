@@ -16,7 +16,7 @@ Public Class XenonStyle
     End Structure
 
     Public Colors As New Colors_Structure With {
-                    .BaseColor = Color.FromArgb(0, 81, 210),
+                    .BaseColor = DefaultAccent,
                     .Core = Colors.BaseColor.LightLight,
                     .Back = Color.FromArgb(40, 40, 40),
                     .Back_Hover = Color.FromArgb(55, 55, 55),
@@ -31,7 +31,7 @@ Public Class XenonStyle
 
     ReadOnly Dark As Boolean = True
 
-    Sub New()
+    Sub New(BaseColor As Color, BackColor As Color)
 
         'Try  'Try is a must because designer can't access My.[Settings] in designer mode
         'If My.[Settings].Appearance_AdaptColors Then
@@ -44,23 +44,34 @@ Public Class XenonStyle
 
         Dark = GetDarkMode()
 
+        Colors.BaseColor = BaseColor
+
         If Dark Then
             Colors.Core = Colors.BaseColor.LightLight
-            Colors.Back = Color.FromArgb(40, 40, 40)
-            Colors.Back_Hover = Color.FromArgb(45, 45, 45)
-            Colors.Back_Checked = Colors.BaseColor.Dark(0.2)
-            Colors.Border = Color.FromArgb(40, 40, 40)
-            Colors.Border_Hover = Color.FromArgb(50, 50, 50)
+
+            Colors.Back = BackColor.CB(0.08)
+            Colors.Back_Hover = BackColor.CB(0.2)
+
+            Colors.Back_Checked = Colors.BaseColor.Dark(0.3)
+
+            Colors.Border = BackColor.CB(0.05)
+            Colors.Border_Hover = BackColor.CB(0.1)
+
             Colors.Border_Checked = Colors.BaseColor.CB(-0.2)
             Colors.Border_Checked_Hover = Colors.BaseColor.CB(0.08)
+
         Else
-            Colors.Core = Colors.BaseColor.Dark(0.1)
-            Colors.Back = Color.FromArgb(225, 225, 225)
-            Colors.Back_Hover = Color.FromArgb(200, 200, 200)
-            Colors.Back_Checked = Colors.BaseColor.LightLight
-            Colors.Border = Color.FromArgb(200, 200, 200)
-            Colors.Border_Hover = Color.FromArgb(190, 190, 190)
-            Colors.Border_Checked = Colors.BaseColor.CB(0.35)
+            Colors.Core = Colors.BaseColor.Light(0.5)
+
+            Colors.Back = BackColor.CB(-0.15)
+            Colors.Back_Hover = BackColor.CB(-0.2)
+
+            Colors.Back_Checked = Colors.BaseColor.CB(0.6)
+
+            Colors.Border = BackColor.CB(-0.05)
+            Colors.Border_Hover = BackColor.CB(-0.1)
+
+            Colors.Border_Checked = Colors.BaseColor.CB(0.5)
             Colors.Border_Checked_Hover = Colors.BaseColor.CB(0.3)
         End If
 

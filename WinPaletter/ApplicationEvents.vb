@@ -81,11 +81,6 @@ Namespace My
         Public ReadOnly isElevated As Boolean = New WindowsPrincipal(WindowsIdentity.GetCurrent).IsInRole(WindowsBuiltInRole.Administrator)
 
         ''' <summary>
-        ''' ImageList for Changelogs form (Loaded at application startup)
-        ''' </summary>
-        Public Changelog_IL As New ImageList With {.ImageSize = New Size(24, 24), .ColorDepth = ColorDepth.Depth32Bit}
-
-        ''' <summary>
         ''' ImageList for Notifications mini-icons (Loaded at application startup)
         ''' </summary>
         Public Notifications_IL As New ImageList With {.ImageSize = New Size(20, 20), .ColorDepth = ColorDepth.Depth32Bit}
@@ -183,9 +178,6 @@ Namespace My
                             .WindowStyle = ProcessWindowStyle.Normal,
                             .UseShellExecute = True}
                            }
-
-        Public BackColor_Dark As Color = Color.FromArgb(25, 25, 25) 'FromArgb(24, 24, 26)
-        Public BackColor_Light As Color = Color.FromArgb(230, 230, 230) 'FromArgb(235, 235, 235)
 
         Public ExternalLink As Boolean = False
         Public ExternalLink_File As String = ""
@@ -616,16 +608,6 @@ Namespace My
                 End If
             Catch
             End Try
-
-            Changelog_IL.Images.Add("Stable", Resources.CL_Stable)
-            Changelog_IL.Images.Add("Beta", Resources.CL_Beta)
-            Changelog_IL.Images.Add("Add", Resources.CL_add)
-            Changelog_IL.Images.Add("Removed", Resources.CL_Removed)
-            Changelog_IL.Images.Add("BugFix", Resources.CL_BugFix)
-            Changelog_IL.Images.Add("New", Resources.CL_New)
-            Changelog_IL.Images.Add("Channel", Resources.CL_channel)
-            Changelog_IL.Images.Add("Error", Resources.CL_Error)
-            Changelog_IL.Images.Add("Date", Resources.CL_Date)
 
             Notifications_IL.Images.Add("info", Resources.notify_info)
             Notifications_IL.Images.Add("error", Resources.notify_error)

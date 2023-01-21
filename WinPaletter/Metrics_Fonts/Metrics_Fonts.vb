@@ -76,23 +76,29 @@ Public Class Metrics_Fonts
         Label1.Font = CP.WinMetrics_Fonts.CaptionFont
         XenonWindow1.Font = CP.WinMetrics_Fonts.CaptionFont
         RetroWindow1.Font = CP.WinMetrics_Fonts.CaptionFont
+        Label1.Text = CP.WinMetrics_Fonts.CaptionFont.Name
 
         Label2.Font = CP.WinMetrics_Fonts.IconFont
         XenonFakeIcon1.Font = CP.WinMetrics_Fonts.IconFont
         XenonFakeIcon2.Font = CP.WinMetrics_Fonts.IconFont
         XenonFakeIcon3.Font = CP.WinMetrics_Fonts.IconFont
+        Label2.Text = CP.WinMetrics_Fonts.IconFont.Name
 
         Label3.Font = CP.WinMetrics_Fonts.MenuFont
         MenuStrip1.Font = CP.WinMetrics_Fonts.MenuFont
+        Label3.Text = CP.WinMetrics_Fonts.MenuFont.Name
 
         Label5.Font = CP.WinMetrics_Fonts.SmCaptionFont
         XenonWindow2.Font = CP.WinMetrics_Fonts.SmCaptionFont
+        Label5.Text = CP.WinMetrics_Fonts.SmCaptionFont.Name
 
         Label4.Font = CP.WinMetrics_Fonts.MessageFont
         msgLbl.Font = CP.WinMetrics_Fonts.MessageFont
+        Label4.Text = CP.WinMetrics_Fonts.MessageFont.Name
 
         Label6.Font = CP.WinMetrics_Fonts.StatusFont
         statusLbl.Font = CP.WinMetrics_Fonts.StatusFont
+        Label6.Text = CP.WinMetrics_Fonts.StatusFont.Name
 
         XenonTrackbar1.Value = CP.WinMetrics_Fonts.BorderWidth
         XenonTrackbar2.Value = CP.WinMetrics_Fonts.CaptionHeight
@@ -174,6 +180,7 @@ Public Class Metrics_Fonts
             Label1.Font = FontDialog1.Font
             XenonWindow1.Font = FontDialog1.Font
             RetroWindow1.Font = FontDialog1.Font
+            Label1.Text = FontDialog1.Font.Name
 
             XenonWindow1.Refresh()
             RetroWindow1.Refresh()
@@ -196,6 +203,8 @@ Public Class Metrics_Fonts
             XenonFakeIcon1.Font = FontDialog1.Font
             XenonFakeIcon2.Font = FontDialog1.Font
             XenonFakeIcon3.Font = FontDialog1.Font
+            Label2.Text = FontDialog1.Font.Name
+
         End If
     End Sub
 
@@ -204,6 +213,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label3.Font = FontDialog1.Font
             MenuStrip1.Font = FontDialog1.Font
+            Label3.Text = FontDialog1.Font.Name
+
         End If
     End Sub
 
@@ -213,6 +224,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label4.Font = FontDialog1.Font
             msgLbl.Font = FontDialog1.Font
+            Label4.Text = FontDialog1.Font.Name
+
         End If
     End Sub
 
@@ -221,6 +234,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label5.Font = FontDialog1.Font
             XenonWindow2.Font = FontDialog1.Font
+            Label5.Text = FontDialog1.Font.Name
+
         End If
     End Sub
 
@@ -229,6 +244,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label6.Font = FontDialog1.Font
             statusLbl.Font = FontDialog1.Font
+            Label6.Text = FontDialog1.Font.Name
+
         End If
     End Sub
 
