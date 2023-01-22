@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Net
+Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports Ookii.Dialogs.WinForms
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 
@@ -52,7 +54,139 @@ Public Class XenonCore
 #End Region
 
 #Region "Misc"
+
+    Private Shared WithEvents TD As TaskDialog
+
+    Private Shared Sub TD_HyperlinkClicked(sender As Object, e As HyperlinkClickedEventArgs) Handles TD.HyperlinkClicked
+        'Process.Start(e.Href)
+    End Sub
+
+    Private Shared Sub TD_RadioButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.RadioButtonClicked
+
+    End Sub
+
+    Private Shared Sub TD_Timer(sender As Object, e As TimerEventArgs) Handles TD.Timer
+
+    End Sub
+
+    Private Shared Sub TD_VerificationClicked(sender As Object, e As EventArgs) Handles TD.VerificationClicked
+
+    End Sub
+
+    Private Shared Sub TD_HelpRequested(sender As Object, e As EventArgs) Handles TD.HelpRequested
+
+    End Sub
+
+    Private Shared Sub TD_ExpandButtonClicked(sender As Object, e As ExpandButtonClickedEventArgs) Handles TD.ExpandButtonClicked
+
+    End Sub
+
+    Private Shared Sub TD_ButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.ButtonClicked
+    End Sub
+
+    Shared Function ConvertToLink([String] As String) As String
+        Dim c As New List(Of String)
+        For Each x As String In [String].Split(" ")
+            If (Uri.IsWellFormedUriString(x, UriKind.Absolute)) Then
+                c.Add(String.Format("<a href=""{0}"">{0}</a>", x))
+            Else
+                c.Add(x)
+            End If
+        Next
+
+        Return c.CString(" ")
+    End Function
+
+    Public Overloads Shared Function MsgBox(Content As String, Style As MsgBoxStyle, Optional RequireElevation As Boolean = False, Optional CollapsedText As String = "", Optional ExpandedText As String = "",
+                                            Optional ExpandedDetails As String = "", Optional Header As String = "", Optional DialogTitle As String = "",
+                                            Optional Footer As String = "", Optional FooterIcon As TaskDialogIcon = TaskDialogIcon.Custom, Optional CustomIcon As Icon = Nothing) _
+                                            As MsgBoxResult
+
+        TD = New TaskDialog With {
+            .EnableHyperlinks = True,
+            .RightToLeft = My.Lang.RightToLeft,
+            .ButtonStyle = TaskDialogButtonStyle.CommandLinksNoIcon,
+            .Content = ConvertToLink(Content)}
+
+        If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
+        If Not String.IsNullOrWhiteSpace(Header) Then TD.MainInstruction = Header
+
+        If Not String.IsNullOrWhiteSpace(CollapsedText) Then TD.CollapsedControlText = CollapsedText
+        If Not String.IsNullOrWhiteSpace(ExpandedText) Then TD.ExpandedControlText = ExpandedText
+
+        If Not String.IsNullOrWhiteSpace(ExpandedDetails) Then TD.ExpandedInformation = ConvertToLink(ExpandedDetails)
+
+        If Not String.IsNullOrWhiteSpace(Footer) Then TD.Footer = ConvertToLink(Footer)
+        If CustomIcon Is Nothing Then CustomIcon = Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
+        TD.FooterIcon = FooterIcon
+        TD.CustomFooterIcon = CustomIcon
+
+        Dim okButton As New TaskDialogButton(ButtonType.Ok) With {.ElevationRequired = RequireElevation}
+        Dim yesButton As New TaskDialogButton(ButtonType.Yes) With {.ElevationRequired = RequireElevation}
+        Dim noButton As New TaskDialogButton(ButtonType.No)
+        Dim cancelButton As New TaskDialogButton(ButtonType.Cancel)
+        Dim retryButton As New TaskDialogButton(ButtonType.Retry) With {.ElevationRequired = RequireElevation}
+        Dim CloseButton As New TaskDialogButton(ButtonType.Close)
+        Dim customButton As New TaskDialogButton(ButtonType.Custom)
+        Dim icon As TaskDialogIcon
+
+        If Style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+            TD.Buttons.Add(yesButton)
+            TD.Buttons.Add(noButton)
+            TD.Buttons.Add(cancelButton)
+        ElseIf Style.HasFlag(MsgBoxStyle.YesNo) Then
+            TD.Buttons.Add(yesButton)
+            TD.Buttons.Add(noButton)
+        ElseIf Style.HasFlag(MsgBoxStyle.RetryCancel) Then
+            TD.Buttons.Add(retryButton)
+            TD.Buttons.Add(cancelButton)
+        ElseIf Style.HasFlag(MsgBoxStyle.OkCancel) Then
+            TD.Buttons.Add(okButton)
+            TD.Buttons.Add(cancelButton)
+        ElseIf Style.HasFlag(MsgBoxStyle.OkOnly) Then
+            TD.Buttons.Add(okButton)
+        Else
+            TD.Buttons.Add(okButton)
+        End If
+
+        If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
+
+        If Style.HasFlag(MsgBoxStyle.Question) Then
+            icon = TaskDialogIcon.Custom
+            TD.CustomMainIcon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
+        End If
+
+        If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
+        If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
+
+        TD.MainIcon = icon
+
+        Dim result As MsgBoxResult = MsgBoxResult.Ok
+        Dim resultButton As TaskDialogButton = TD.ShowDialog()
+
+        If resultButton Is okButton Then result = MsgBoxResult.Ok
+        If resultButton Is yesButton Then result = MsgBoxResult.Yes
+        If resultButton Is noButton Then result = MsgBoxResult.No
+        If resultButton Is cancelButton Then result = MsgBoxResult.Cancel
+        If retryButton Is retryButton Then result = MsgBoxResult.Cancel
+        If retryButton Is CloseButton Then result = MsgBoxResult.Ok
+        If retryButton Is customButton Then result = MsgBoxResult.Ok
+
+        TD.Dispose()
+        resultButton.Dispose()
+        okButton.Dispose()
+        yesButton.Dispose()
+        noButton.Dispose()
+        cancelButton.Dispose()
+        retryButton.Dispose()
+        CloseButton.Dispose()
+        customButton.Dispose()
+
+        Return result
+    End Function
+
     Public Shared Sub RefreshDWM(CP As CP)
+
 
         Try
             Dim Com As Boolean
@@ -366,6 +500,9 @@ Public Class XenonCore
 
         ctrl.Refresh()
     End Sub
+
+
+
 #End Region
 
 End Class

@@ -370,6 +370,9 @@
   <data name="notify_warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\Notifications\notify_warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Ookii_Dialogs_WinForms" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ookii.Dialogs.WinForms.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="PS_10x18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PS_10x18.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -438,6 +441,21 @@
   </data>
   <data name="StartBtn_11Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Windows Elements\StartBtn_11Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="System_Buffers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.Buffers.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="System_Memory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.Memory.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="System_Numerics_Vectors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.Numerics.Vectors.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="System_Resources_Extensions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.Resources.Extensions.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="System_Runtime_CompilerServices_Unsafe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.Runtime.CompilerServices.Unsafe.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Taskbar_ActiveApp7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Taskbar_ActiveApp7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

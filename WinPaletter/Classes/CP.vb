@@ -1,6 +1,5 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
-Imports System.Text
 Imports Microsoft.Win32
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Metrics
@@ -1174,36 +1173,38 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End Sub
 
         Shared Function Load_Cursor_From_ListOfString(tx As List(Of String)) As Cursor_Structure
-            Dim [Cursor] As New Cursor_Structure
+            If tx.Count > 0 Then
+                Dim [Cursor] As New Cursor_Structure
 
-            For Each lin As String In tx
-                If lin.ToLower.StartsWith("PrimaryColor1= ".ToLower) Then [Cursor].PrimaryColor1 = Color.FromArgb(lin.Remove(0, "PrimaryColor1= ".Count))
-                If lin.ToLower.StartsWith("PrimaryColor2= ".ToLower) Then [Cursor].PrimaryColor2 = Color.FromArgb(lin.Remove(0, "PrimaryColor2= ".Count))
-                If lin.ToLower.StartsWith("PrimaryColorGradient= ".ToLower) Then [Cursor].PrimaryColorGradient = lin.Remove(0, "PrimaryColorGradient= ".Count)
-                If lin.ToLower.StartsWith("PrimaryColorGradientMode= ".ToLower) Then [Cursor].PrimaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "PrimaryColorGradientMode= ".Count))
-                If lin.ToLower.StartsWith("PrimaryColorNoise= ".ToLower) Then [Cursor].PrimaryColorNoise = lin.Remove(0, "PrimaryColorNoise= ".Count)
-                If lin.ToLower.StartsWith("PrimaryColorNoiseOpacity= ".ToLower) Then [Cursor].PrimaryColorNoiseOpacity = lin.Remove(0, "PrimaryColorNoiseOpacity= ".Count)
-                If lin.ToLower.StartsWith("SecondaryColor1= ".ToLower) Then [Cursor].SecondaryColor1 = Color.FromArgb(lin.Remove(0, "SecondaryColor1= ".Count))
-                If lin.ToLower.StartsWith("SecondaryColor2= ".ToLower) Then [Cursor].SecondaryColor2 = Color.FromArgb(lin.Remove(0, "SecondaryColor2= ".Count))
-                If lin.ToLower.StartsWith("SecondaryColorGradient= ".ToLower) Then [Cursor].SecondaryColorGradient = lin.Remove(0, "SecondaryColorGradient= ".Count)
-                If lin.ToLower.StartsWith("SecondaryColorGradientMode= ".ToLower) Then [Cursor].SecondaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "SecondaryColorGradientMode= ".Count))
-                If lin.ToLower.StartsWith("SecondaryColorNoise= ".ToLower) Then [Cursor].SecondaryColorNoise = lin.Remove(0, "SecondaryColorNoise= ".Count)
-                If lin.ToLower.StartsWith("SecondaryColorNoiseOpacity= ".ToLower) Then [Cursor].SecondaryColorNoiseOpacity = lin.Remove(0, "SecondaryColorNoiseOpacity= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleBack1= ".ToLower) Then [Cursor].LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack1= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleBack2= ".ToLower) Then [Cursor].LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack2= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleBackGradient= ".ToLower) Then [Cursor].LoadingCircleBackGradient = lin.Remove(0, "LoadingCircleBackGradient= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleBackGradientMode= ".ToLower) Then [Cursor].LoadingCircleBackGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleBackGradientMode= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleBackNoise= ".ToLower) Then [Cursor].LoadingCircleBackNoise = lin.Remove(0, "LoadingCircleBackNoise= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleBackNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleBackNoiseOpacity = lin.Remove(0, "LoadingCircleBackNoiseOpacity= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleHot1= ".ToLower) Then [Cursor].LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot1= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleHot2= ".ToLower) Then [Cursor].LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot2= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleHotGradient= ".ToLower) Then [Cursor].LoadingCircleHotGradient = lin.Remove(0, "LoadingCircleHotGradient= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleHotGradientMode= ".ToLower) Then [Cursor].LoadingCircleHotGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleHotGradientMode= ".Count))
-                If lin.ToLower.StartsWith("LoadingCircleHotNoise= ".ToLower) Then [Cursor].LoadingCircleHotNoise = lin.Remove(0, "LoadingCircleHotNoise= ".Count)
-                If lin.ToLower.StartsWith("LoadingCircleHotNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleHotNoiseOpacity = lin.Remove(0, "LoadingCircleHotNoiseOpacity= ".Count)
-            Next
+                For Each lin As String In tx
+                    If lin.ToLower.StartsWith("PrimaryColor1= ".ToLower) Then [Cursor].PrimaryColor1 = Color.FromArgb(lin.Remove(0, "PrimaryColor1= ".Count))
+                    If lin.ToLower.StartsWith("PrimaryColor2= ".ToLower) Then [Cursor].PrimaryColor2 = Color.FromArgb(lin.Remove(0, "PrimaryColor2= ".Count))
+                    If lin.ToLower.StartsWith("PrimaryColorGradient= ".ToLower) Then [Cursor].PrimaryColorGradient = lin.Remove(0, "PrimaryColorGradient= ".Count)
+                    If lin.ToLower.StartsWith("PrimaryColorGradientMode= ".ToLower) Then [Cursor].PrimaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "PrimaryColorGradientMode= ".Count))
+                    If lin.ToLower.StartsWith("PrimaryColorNoise= ".ToLower) Then [Cursor].PrimaryColorNoise = lin.Remove(0, "PrimaryColorNoise= ".Count)
+                    If lin.ToLower.StartsWith("PrimaryColorNoiseOpacity= ".ToLower) Then [Cursor].PrimaryColorNoiseOpacity = lin.Remove(0, "PrimaryColorNoiseOpacity= ".Count)
+                    If lin.ToLower.StartsWith("SecondaryColor1= ".ToLower) Then [Cursor].SecondaryColor1 = Color.FromArgb(lin.Remove(0, "SecondaryColor1= ".Count))
+                    If lin.ToLower.StartsWith("SecondaryColor2= ".ToLower) Then [Cursor].SecondaryColor2 = Color.FromArgb(lin.Remove(0, "SecondaryColor2= ".Count))
+                    If lin.ToLower.StartsWith("SecondaryColorGradient= ".ToLower) Then [Cursor].SecondaryColorGradient = lin.Remove(0, "SecondaryColorGradient= ".Count)
+                    If lin.ToLower.StartsWith("SecondaryColorGradientMode= ".ToLower) Then [Cursor].SecondaryColorGradientMode = ReturnGradientModeFromString(lin.Remove(0, "SecondaryColorGradientMode= ".Count))
+                    If lin.ToLower.StartsWith("SecondaryColorNoise= ".ToLower) Then [Cursor].SecondaryColorNoise = lin.Remove(0, "SecondaryColorNoise= ".Count)
+                    If lin.ToLower.StartsWith("SecondaryColorNoiseOpacity= ".ToLower) Then [Cursor].SecondaryColorNoiseOpacity = lin.Remove(0, "SecondaryColorNoiseOpacity= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleBack1= ".ToLower) Then [Cursor].LoadingCircleBack1 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack1= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleBack2= ".ToLower) Then [Cursor].LoadingCircleBack2 = Color.FromArgb(lin.Remove(0, "LoadingCircleBack2= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleBackGradient= ".ToLower) Then [Cursor].LoadingCircleBackGradient = lin.Remove(0, "LoadingCircleBackGradient= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleBackGradientMode= ".ToLower) Then [Cursor].LoadingCircleBackGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleBackGradientMode= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleBackNoise= ".ToLower) Then [Cursor].LoadingCircleBackNoise = lin.Remove(0, "LoadingCircleBackNoise= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleBackNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleBackNoiseOpacity = lin.Remove(0, "LoadingCircleBackNoiseOpacity= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleHot1= ".ToLower) Then [Cursor].LoadingCircleHot1 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot1= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleHot2= ".ToLower) Then [Cursor].LoadingCircleHot2 = Color.FromArgb(lin.Remove(0, "LoadingCircleHot2= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleHotGradient= ".ToLower) Then [Cursor].LoadingCircleHotGradient = lin.Remove(0, "LoadingCircleHotGradient= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleHotGradientMode= ".ToLower) Then [Cursor].LoadingCircleHotGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleHotGradientMode= ".Count))
+                    If lin.ToLower.StartsWith("LoadingCircleHotNoise= ".ToLower) Then [Cursor].LoadingCircleHotNoise = lin.Remove(0, "LoadingCircleHotNoise= ".Count)
+                    If lin.ToLower.StartsWith("LoadingCircleHotNoiseOpacity= ".ToLower) Then [Cursor].LoadingCircleHotNoiseOpacity = lin.Remove(0, "LoadingCircleHotNoiseOpacity= ".Count)
+                Next
 
-            Return [Cursor]
+                Return [Cursor]
+            End If
         End Function
 
         Shared Sub Write_Cursors_To_ListOfString(Signature As String, [Cursor] As Cursor_Structure, tx As List(Of String))
@@ -1390,7 +1391,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .ScrollWidth = 19,
                 .SmCaptionHeight = 22,
                 .SmCaptionWidth = 22,
-                .DesktopIconSize = 32,
+                .DesktopIconSize = 48,
                 .ShellIconSize = 32,
                 .CaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .IconFont = New Font("Segoe UI", 9, FontStyle.Regular),
@@ -3912,33 +3913,34 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Next
 
 #Region "Fonts"
-                For Each x In fonts
-                    Dim Value As String = x.Replace(x.Split("=")(0) & "= ", "").Trim
-                    Dim FontName As String = x.Split("=")(0).ToString.Split("_")(0)
-                    Dim Prop As String = x.Split("=")(0).ToString.Split("_")(1)
+                If fonts.Count > 0 Then
+                    For Each x In fonts
+                        Dim Value As String = x.Replace(x.Split("=")(0) & "= ", "").Trim
+                        Dim FontName As String = x.Split("=")(0).ToString.Split("_")(0)
+                        Dim Prop As String = x.Split("=")(0).ToString.Split("_")(1)
 
-                    Select Case FontName.ToLower
-                        Case "Caption".ToLower
-                            WinMetrics_Fonts.CaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.CaptionFont)
+                        Select Case FontName.ToLower
+                            Case "Caption".ToLower
+                                WinMetrics_Fonts.CaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.CaptionFont)
 
-                        Case "Icon".ToLower
-                            WinMetrics_Fonts.IconFont = SetToFont(Prop, Value, WinMetrics_Fonts.IconFont)
+                            Case "Icon".ToLower
+                                WinMetrics_Fonts.IconFont = SetToFont(Prop, Value, WinMetrics_Fonts.IconFont)
 
-                        Case "Menu".ToLower
-                            WinMetrics_Fonts.MenuFont = SetToFont(Prop, Value, WinMetrics_Fonts.MenuFont)
+                            Case "Menu".ToLower
+                                WinMetrics_Fonts.MenuFont = SetToFont(Prop, Value, WinMetrics_Fonts.MenuFont)
 
-                        Case "Message".ToLower
-                            WinMetrics_Fonts.MessageFont = SetToFont(Prop, Value, WinMetrics_Fonts.MessageFont)
+                            Case "Message".ToLower
+                                WinMetrics_Fonts.MessageFont = SetToFont(Prop, Value, WinMetrics_Fonts.MessageFont)
 
-                        Case "SmCaption".ToLower
-                            WinMetrics_Fonts.SmCaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.SmCaptionFont)
+                            Case "SmCaption".ToLower
+                                WinMetrics_Fonts.SmCaptionFont = SetToFont(Prop, Value, WinMetrics_Fonts.SmCaptionFont)
 
-                        Case "Status".ToLower
-                            WinMetrics_Fonts.StatusFont = SetToFont(Prop, Value, WinMetrics_Fonts.StatusFont)
+                            Case "Status".ToLower
+                                WinMetrics_Fonts.StatusFont = SetToFont(Prop, Value, WinMetrics_Fonts.StatusFont)
 
-                    End Select
-
-                Next
+                        End Select
+                    Next
+                End If
 
 #End Region
 

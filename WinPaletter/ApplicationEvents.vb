@@ -828,6 +828,24 @@ Namespace My
 
             Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(Resources.Newtonsoft_Json)
             Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("Ookii.Dialogs.WinForms".ToUpper) Then Return Assembly.Load(Resources.Ookii_Dialogs_WinForms)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.Buffers".ToUpper) Then Return Assembly.Load(Resources.System_Buffers)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.Memory".ToUpper) Then Return Assembly.Load(Resources.System_Memory)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.Numerics.Vectors".ToUpper) Then Return Assembly.Load(Resources.System_Numerics_Vectors)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.Resources.Extensions".ToUpper) Then Return Assembly.Load(Resources.System_Resources_Extensions)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.Runtime.CompilerServices.Unsafe".ToUpper) Then Return Assembly.Load(Resources.System_Runtime_CompilerServices_Unsafe)
+            Catch : End Try
         End Function
 
         Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)

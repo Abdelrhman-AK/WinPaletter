@@ -622,7 +622,7 @@ Partial Class Win32UI
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(96, Byte), Integer))
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(151, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(91, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(110, 4)
         Me.XenonButton3.Name = "XenonButton3"

@@ -219,7 +219,7 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
@@ -906,6 +906,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property Ookii_Dialogs_WinForms() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Ookii_Dialogs_WinForms", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property PS_10x18() As System.Drawing.Bitmap
@@ -1131,6 +1141,56 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("StartBtn_11Light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_Buffers() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_Buffers", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_Memory() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_Memory", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_Numerics_Vectors() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_Numerics_Vectors", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_Resources_Extensions() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_Resources_Extensions", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_Runtime_CompilerServices_Unsafe() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_Runtime_CompilerServices_Unsafe", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
         

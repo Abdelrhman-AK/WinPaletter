@@ -474,8 +474,8 @@ Public Module ListOfStringExtensions
     '''Return String from List, each item is in a separate line
     '''</summary>
     <Extension()>
-    Public Function CString([List] As List(Of String)) As String
-        Return String.Join(vbCrLf, [List].ToArray)
+    Public Function CString([List] As List(Of String), Optional JoinBy As String = vbCrLf) As String
+        Return String.Join(JoinBy, [List].ToArray)
     End Function
 
 End Module

@@ -135,6 +135,7 @@ Public Class Localizer : Implements IDisposable
     Property Show As String = "Show"
     Property Hide As String = "Hide"
     Property InputValue As String = "Input value"
+    Property ItMustBeNumerical As String = "It must be a numerical value"
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save Settings?"
     Property SettingsSaved As String = "Settings Saved"

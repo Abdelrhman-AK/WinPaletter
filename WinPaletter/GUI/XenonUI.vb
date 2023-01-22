@@ -83,16 +83,18 @@ Module XenonModule
         Try
             If GlowSize <= 0 Then GlowSize = 1
             If GlowFade <= 0 Then GlowFade = 1
-            G.SmoothingMode = SmoothingMode.AntiAlias
-            G.InterpolationMode = InterpolationMode.HighQualityBicubic
+
             Dim Rect As Rectangle
             With R
                 Rect = New Rectangle(.X - GlowSize - 2, .Y - GlowSize - 2, .Width + (GlowSize * 2) + 3, .Height + (GlowSize * 2) + 3)
             End With
+
             Dim bm As New Bitmap(CInt(Rect.Width / GlowFade), CInt(Rect.Height / GlowFade))
             Dim G2 As Graphics = Graphics.FromImage(bm)
             Dim Rect2 As New Rectangle(1, 1, bm.Width, bm.Height)
+
             G2.FillRectangle(New SolidBrush(GlowColor), Rect2)
+
             G.DrawImage(bm, Rect)
             G2.Dispose()
         Catch
@@ -4174,7 +4176,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     End Select
 
                     G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
-                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.3)), Button1, Radius)
+                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius)
 
                     G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
                     G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
@@ -4764,7 +4766,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Select Case state
             Case 0      '#### Windows 10/11
 
-#Region "Windows 10/11"
+#Region "Windows 11/10"
 
                 If RoundedCorners Then     '#### Windows 11
                     Try
@@ -4773,7 +4775,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End Try
 
                     If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
                     End If
 
                     If DarkMode Then
@@ -4784,15 +4786,15 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     If AccentColor_Enabled Then
                         If Active Then
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(150, AccentColor_Active)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect, Radius, True)
                         Else
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect, Radius, True)
                         End If
                     Else
                         If DarkMode Then
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(100, 90, 90, 90)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect, Radius, True)
                         Else
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(100, 220, 220, 220)), Rect, Radius, True)
+                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect, Radius, True)
                         End If
                     End If
 
@@ -4808,7 +4810,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
                     End If
 
-
                 Else                       '#### Windows 10
                     Try
                         G.DrawImage(AdaptedBack, RectBK)
@@ -4816,7 +4817,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     End Try
 
                     If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
                     End If
 
                     If DarkMode Then
@@ -4827,15 +4828,15 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     If AccentColor_Enabled Then
                         If Active Then
-                            G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Active)), Rect)
+                            G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect)
                         Else
-                            G.DrawRectangle(New Pen(Color.FromArgb(150, AccentColor_Inactive)), Rect)
+                            G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect)
                         End If
                     Else
                         If DarkMode Then
-                            G.DrawRectangle(New Pen(Color.FromArgb(100, 90, 90, 90)), Rect)
+                            G.DrawRectangle(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect)
                         Else
-                            G.DrawRectangle(New Pen(Color.FromArgb(100, 220, 220, 220)), Rect)
+                            G.DrawRectangle(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect)
                         End If
                     End If
 
@@ -4983,7 +4984,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     G.DrawImage(AdaptedBack, RectBK)
 
                     If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.Black, 5, 10)
+                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
                     End If
 
                     Dim Radius As Integer = 5

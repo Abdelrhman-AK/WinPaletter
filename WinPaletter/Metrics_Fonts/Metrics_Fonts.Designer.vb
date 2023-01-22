@@ -33,6 +33,7 @@ Partial Class Metrics_Fonts
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
@@ -199,6 +200,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -384,7 +386,7 @@ Partial Class Metrics_Fonts
         Me.XenonTabControl1.Controls.Add(Me.TabPage5)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(40, 120)
+        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(35, 120)
         Me.XenonTabControl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonTabControl1.Location = New System.Drawing.Point(12, 57)
         Me.XenonTabControl1.Multiline = True
@@ -397,6 +399,7 @@ Partial Class Metrics_Fonts
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.XenonAlertBox3)
         Me.TabPage1.Controls.Add(Me.XenonGroupBox4)
         Me.TabPage1.Controls.Add(Me.XenonGroupBox2)
         Me.TabPage1.Controls.Add(Me.previewContainer)
@@ -407,6 +410,24 @@ Partial Class Metrics_Fonts
         Me.TabPage1.Size = New System.Drawing.Size(958, 439)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Titlebar"
+        '
+        'XenonAlertBox3
+        '
+        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox3.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox3.CenterText = False
+        Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox3.Image = CType(resources.GetObject("XenonAlertBox3.Image"), System.Drawing.Image)
+        Me.XenonAlertBox3.Location = New System.Drawing.Point(415, 352)
+        Me.XenonAlertBox3.Name = "XenonAlertBox3"
+        Me.XenonAlertBox3.Size = New System.Drawing.Size(536, 30)
+        Me.XenonAlertBox3.TabIndex = 202
+        Me.XenonAlertBox3.TabStop = False
+        Me.XenonAlertBox3.Text = "Changing these fonts require logoff and logon"
         '
         'XenonGroupBox4
         '
@@ -765,13 +786,13 @@ Partial Class Metrics_Fonts
         Me.RetroWindow1.Flat = False
         Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow1.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow1.Location = New System.Drawing.Point(140, 47)
+        Me.RetroWindow1.Location = New System.Drawing.Point(140, 55)
         Me.RetroWindow1.Metrics_BorderWidth = 2
         Me.RetroWindow1.Metrics_CaptionHeight = 19
         Me.RetroWindow1.Metrics_CaptionWidth = 0
         Me.RetroWindow1.Metrics_PaddedBorderWidth = 1
         Me.RetroWindow1.Name = "RetroWindow1"
-        Me.RetroWindow1.Size = New System.Drawing.Size(249, 202)
+        Me.RetroWindow1.Size = New System.Drawing.Size(249, 186)
         Me.RetroWindow1.TabIndex = 8
         Me.RetroWindow1.TitlebarText = "Classic"
         Me.RetroWindow1.UseItAsMenu = False
@@ -1180,13 +1201,13 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(6, 292)
+        Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(415, 352)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(402, 30)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(536, 30)
         Me.XenonAlertBox1.TabIndex = 201
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "To show real effects, restarting explorer is a must"
+        Me.XenonAlertBox1.Text = "Showing effects of these values require Explorer Restart"
         '
         'XenonGroupBox13
         '
@@ -2003,6 +2024,7 @@ Partial Class Metrics_Fonts
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox15)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox11)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox10)
@@ -2560,6 +2582,24 @@ Partial Class Metrics_Fonts
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
+        'XenonAlertBox4
+        '
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox4.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox4.CenterText = False
+        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox4.Image = CType(resources.GetObject("XenonAlertBox4.Image"), System.Drawing.Image)
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(415, 352)
+        Me.XenonAlertBox4.Name = "XenonAlertBox4"
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(536, 30)
+        Me.XenonAlertBox4.TabIndex = 203
+        Me.XenonAlertBox4.TabStop = False
+        Me.XenonAlertBox4.Text = "Changing Status Font requires logoff and logon"
+        '
         'Metrics_Fonts
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2832,4 +2872,6 @@ Partial Class Metrics_Fonts
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents XenonButton13 As XenonButton
+    Friend WithEvents XenonAlertBox3 As XenonAlertBox
+    Friend WithEvents XenonAlertBox4 As XenonAlertBox
 End Class

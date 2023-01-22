@@ -1531,22 +1531,66 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerFontSizeVal_Click(sender As Object, e As EventArgs) Handles TerFontSizeVal.Click
-        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-        sender.Text = Math.Max(Math.Min(Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum) : TerFontSizeBar.Value = Val(sender.Text)
+        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
+            .MainInstruction = My.Lang.InputValue,
+            .Input = sender.text,
+            .Content = My.Lang.ItMustBeNumerical,
+            .WindowTitle = "WinPaletter"
+           }
+
+        If ib.ShowDialog() = DialogResult.OK Then
+            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+            sender.Text = Math.Max(Math.Min(Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum) : TerFontSizeBar.Value = Val(sender.Text)
+        End If
+
+        ib.Dispose()
     End Sub
 
     Private Sub TerCursorHeightVal_Click(sender As Object, e As EventArgs) Handles TerCursorHeightVal.Click
-        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-        sender.Text = Math.Max(Math.Min(Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum) : TerCursorHeightBar.Value = Val(sender.Text)
+        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
+            .MainInstruction = My.Lang.InputValue,
+            .Input = sender.text,
+            .Content = My.Lang.ItMustBeNumerical,
+            .WindowTitle = "WinPaletter"
+           }
+
+        If ib.ShowDialog() = DialogResult.OK Then
+            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+            sender.Text = Math.Max(Math.Min(Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum) : TerCursorHeightBar.Value = Val(sender.Text)
+        End If
+
+        ib.Dispose()
     End Sub
 
     Private Sub TerImageOpacityVal_Click(sender As Object, e As EventArgs) Handles TerImageOpacityVal.Click
-        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-        sender.Text = Math.Max(Math.Min(Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum) : TerImageOpacity.Value = Val(sender.Text)
+        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
+            .MainInstruction = My.Lang.InputValue,
+            .Input = sender.text,
+            .Content = My.Lang.ItMustBeNumerical,
+            .WindowTitle = "WinPaletter"
+           }
+
+        If ib.ShowDialog() = DialogResult.OK Then
+            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+            sender.Text = Math.Max(Math.Min(Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum) : TerImageOpacity.Value = Val(sender.Text)
+        End If
+
+        ib.Dispose()
     End Sub
 
     Private Sub TerOpacityVal_Click(sender As Object, e As EventArgs) Handles TerOpacityVal.Click
-        Dim response As String = InputBox(My.Lang.InputValue, Text, sender.Text) : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-        sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
+        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
+            .MainInstruction = My.Lang.InputValue,
+            .Input = sender.text,
+            .Content = My.Lang.ItMustBeNumerical,
+            .WindowTitle = "WinPaletter"
+           }
+
+        If ib.ShowDialog() = DialogResult.OK Then
+            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
+            sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
+        End If
+
+        ib.Dispose()
     End Sub
 End Class

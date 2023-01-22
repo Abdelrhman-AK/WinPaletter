@@ -1,4 +1,6 @@
-﻿Imports WinPaletter.CP
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Status
+Imports WinPaletter.CP
+Imports WinPaletter.MainFrm
 
 Public Class DragPreviewer
 
@@ -517,12 +519,14 @@ Public Class DragPreviewer
                         End With
 
                         start.Transparency = False
-                        start.Basic = True
                         start.NoisePower = 0
                         taskbar.Transparency = False
-                        taskbar.Basic = True
                         start.NoisePower = 0
 
+                        start.Basic = True
+                        taskbar.Basic = True
+                        start.Refresh()
+                        taskbar.Refresh()
 
 #End Region
 
@@ -554,10 +558,10 @@ Public Class DragPreviewer
 
         start.Visible = True
         taskbar.Visible = True
+        ActionCenter.Visible = False
+
         XenonWindow1.Visible = True
         XenonWindow2.Visible = True
-        ActionCenter.Visible = True
-
         XenonWindow1.Win7 = False
         XenonWindow2.Win7 = False
         XenonWindow1.Win8 = False
@@ -566,62 +570,81 @@ Public Class DragPreviewer
         XenonWindow2.Win8Lite = False
 
         Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.Eleven
-                ActionCenter.Visible = True
-                ActionCenter.Size = New Size(120, 85)
-                ActionCenter.Location = New Point(398, 161)
+            Case WinVer.Eleven
+                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+            Case WinVer.Ten
+                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+            Case WinVer.Eight
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
+            Case WinVer.Seven
+                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+        End Select
+
+        Select Case MainFrm.PreviewConfig
+            Case WinVer.Eleven
                 ActionCenter.Dock = Nothing
                 ActionCenter.RoundedCorners = True
-
-                taskbar.Height = 42
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                ActionCenter.BlurPower = 7
+                ActionCenter.NoisePower = 0.2
+                ActionCenter.Visible = True
+                '########################
                 taskbar.BlurPower = 12
-
-                start.Visible = True
-                start.Size = New Size(135, 200)
-                start.Location = New Point(7, 46)
+                '########################
                 start.RoundedCorners = True
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-
+                start.Visible = True
+                '########################
                 XenonWindow1.RoundedCorners = True
                 XenonWindow2.RoundedCorners = True
+                '########################
+                ActionCenter.Size = New Size(120, 85)
+                ActionCenter.Location = New Point(398, 161)
+                '########################
 
-            Case MainFrm.WinVer.Ten
-                ActionCenter.Visible = True
+                taskbar.Height = 42
+
+                start.Size = New Size(135, 200)
+                start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
+
+
+            Case WinVer.Ten
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
-
-                taskbar.Height = 35
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                ActionCenter.BlurPower = 7
+                ActionCenter.NoisePower = 0.2
+                ActionCenter.Visible = True
+                '########################
                 taskbar.BlurPower = 12
-
-                start.Visible = True
-                start.Size = New Size(182, 201)
-                start.Location = New Point(0, 59)
+                '########################
                 start.RoundedCorners = False
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-
+                start.Visible = True
+                '########################
                 XenonWindow1.RoundedCorners = False
                 XenonWindow2.RoundedCorners = False
+                '########################
 
-            Case MainFrm.WinVer.Eight
+                taskbar.Height = 35
+
+                start.Size = New Size(182, 201)
+                start.Left = 0
+                start.Top = taskbar.Bottom - taskbar.Height - start.Height
+
+            Case WinVer.Eight
                 Panel5.Visible = False
                 lnk_preview.Visible = False
 
-                start.Visible = False
-                taskbar.Visible = True
-                XenonWindow1.Visible = True
-                XenonWindow2.Visible = True
-                ActionCenter.Visible = False
                 XenonWindow1.Active = True
                 XenonWindow2.Active = False
                 XenonWindow1.Win8 = True
                 XenonWindow2.Win8 = True
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
                 taskbar.BlurPower = 0
                 taskbar.Height = 34
 
@@ -630,9 +653,27 @@ Public Class DragPreviewer
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
 
-            Case MainFrm.WinVer.Seven
+                start.Visible = False
+                taskbar.Visible = True
+                ActionCenter.Visible = False
 
-                If CP.Windows7.Theme = CP.AeroTheme.Classic Then
+            Case WinVer.Seven
+                Panel5.Visible = False
+                lnk_preview.Visible = False
+                taskbar.BlurPower = 1
+                taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
+                taskbar.Height = 34
+
+                start.RoundedCorners = True
+                start.BlurPower = 1
+                start.NoisePower = 0.5
+                start.Width = 136
+                start.Height = 191
+                start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
+                start.Left = 0
+                start.Top = taskbar.Top - start.Height
+
+                If CP.Windows7.Theme = AeroTheme.Classic Then
                     start.Visible = False
                     taskbar.Visible = False
                     XenonWindow1.Visible = False
@@ -645,28 +686,11 @@ Public Class DragPreviewer
                     XenonWindow2.Visible = True
                     ActionCenter.Visible = False
                 End If
-
-                Panel5.Visible = False
-                lnk_preview.Visible = False
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
-                taskbar.BlurPower = 1
-                taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
-                taskbar.Height = 34
-
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
-                start.RoundedCorners = True
-                start.BlurPower = 1
-                start.NoisePower = 0.5
-                start.Left = 0
-                start.Width = 136
-                start.Height = 191
-                start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
-                start.Top = taskbar.Top - start.Height
         End Select
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Ten Or MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
-            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, 30, 35)
-            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = MainFrm.WinVer.Eleven, 30, 15)
+        If MainFrm.PreviewConfig = WinVer.Ten Or MainFrm.PreviewConfig = WinVer.Eleven Then
+            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = WinVer.Eleven, 30, 35)
+            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = WinVer.Eleven, 30, 15)
 
             XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
@@ -677,9 +701,6 @@ Public Class DragPreviewer
             XenonWindow2.Top = XenonWindow1.Bottom + 5
             XenonWindow2.Left = XenonWindow1.Left
         End If
-
-        XenonWindow1.Refresh()
-        XenonWindow2.Refresh()
 
         ReValidateLivePreview(pnl_preview)
     End Sub
