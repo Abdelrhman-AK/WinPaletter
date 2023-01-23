@@ -1,20 +1,32 @@
-# Main Note
-
-Telegram group is deleted as it isn't necessary now. We will depend on GitHub only   
-
----
-
-# Get Languages
+# Get Languages and applying them
 
 Visit this folder in WinPaletter GitHub Repository and download the language you want:
 
 https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages
 
-Download Language > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings > Restart the application for better results
+> IMPORTANT INFO: If you are using WinPaletter version less than `1.0.6.9` please enter its specific folder, if not (Equals or higher than `1.0.6.9`), then use files with JSON format.
+
+Download Language > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings
+
+> Restarting is necessary if you're switching into new language or between languages  in WinPaletter less than `1.0.6.9`.
+> 
+> In WinPaletter Version Equals or higher than `1.0.6.9`, Restarting isn't required.
 
 ---
 
-# Contribute in Translation
+# Return To English
+
+Open app > Settings > Languages > Deactivate Custom Language and erase the textbox of language file path > Save Settings Restart the application
+
+---
+
+# Contribute in Translation (For versions equal or higher than 1.0.6.9)
+
+Its instructions will be updated once WinPaletter Version `1.0.6.9` is released
+
+--- 
+
+# Contribute in Translation (For versions less than 1.0.6.9)
 
 1) Download WinPaletter Language Translator from main repository
 
@@ -54,7 +66,11 @@ https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%
 
 ### Notes:
 
-- First Version Supports Translation is 1.0.3.0.
+> These notes are for WinPaletter Versions from `1.0.3.0` to `1.0.6.3` only
+
+- First Version Supports Translation is `1.0.3.0`.
+
+- Telegram group is deleted as it isn't necessary now. We will depend on GitHub only.
 
 - It is better to export language while the language is native (English).
 
