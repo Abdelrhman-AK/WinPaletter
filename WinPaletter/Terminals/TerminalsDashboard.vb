@@ -134,11 +134,11 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox(My.Lang.TerminalStable_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & TerDir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                    MsgBox(My.Lang.TerminalStable_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & TerDir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
                 End If
 
             Else
-                MsgBox(My.Lang.Terminal_CantRun & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                MsgBox(My.Lang.Terminal_CantRun, MsgBoxStyle.Exclamation, "", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If
 
         End If
@@ -169,11 +169,11 @@ Public Class TerminalsDashboard
                     Me.Close()
                     WindowsTerminal.ShowDialog()
                 Else
-                    MsgBox(My.Lang.TerminalPreview_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & TerPreDir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                    MsgBox(My.Lang.TerminalPreview_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & TerPreDir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
                 End If
 
             Else
-                MsgBox(My.Lang.Terminal_CantRun & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                MsgBox(My.Lang.Terminal_CantRun, MsgBoxStyle.Exclamation, "", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If
         End If
     End Sub
@@ -203,7 +203,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox(My.Lang.PowerShellx86_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                MsgBox(My.Lang.PowerShellx86_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & Dir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
@@ -224,7 +224,7 @@ Public Class TerminalsDashboard
                 Me.Close()
                 cmd.ShowDialog()
             Else
-                MsgBox(My.Lang.PowerShellx64_notFound & vbCrLf & vbCrLf & My.Lang.Terminal_supposed & vbCrLf & """" & Dir & """" & vbCrLf & vbCrLf & My.Lang.Terminal_Bypass, My.MsgboxRt(MsgBoxStyle.Exclamation))
+                MsgBox(My.Lang.PowerShellx64_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & Dir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)

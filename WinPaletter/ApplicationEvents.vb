@@ -89,12 +89,6 @@ Namespace My
         ''' ImageList for Languages Nodes (Loaded at application startup)
         ''' </summary>
         Public Lang_IL As New ImageList With {.ImageSize = New Size(16, 16), .ColorDepth = ColorDepth.Depth32Bit}
-
-        Delegate Function MsgBoxDelegate([OriginalMsgBoxStyle] As MsgBoxStyle) As MsgBoxStyle
-        ''' <summary>
-        ''' Function to return MsgboxStyle with Arabic layout (Right-to-left) or without (According to Class Lang)
-        ''' </summary>
-        Public MsgboxRt As MsgBoxDelegate = Function([OriginalMsgBoxStyle] As MsgBoxStyle) [OriginalMsgBoxStyle] + If(Lang.RightToLeft, MsgBoxStyle.MsgBoxRtlReading + MsgBoxStyle.MsgBoxRight, 0)
     End Module
 
     Partial Friend Class MyApplication
@@ -508,7 +502,7 @@ Namespace My
                     Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
                     Debug.WriteLine(Lang.LngExported)
                     Console.WriteLine(Lang.LngExported)
-                    MsgBox(Lang.LngExported, MsgboxRt(MsgBoxStyle.Information))
+                    MsgBox(Lang.LngExported, MsgBoxStyle.Information)
                     Process.GetCurrentProcess.Kill()
                     Exit For
                 End If
@@ -528,7 +522,7 @@ Namespace My
                 Try
                     Lang.LoadLanguageFromJSON([Settings].Language_File)
                 Catch ex As Exception
-                    MsgBox("There is an error occured during loading language." & vbCrLf & vbCrLf & ex.Message & vbCrLf & vbCrLf & ex.StackTrace, MsgBoxStyle.Critical)
+                    MsgBox("There is an error occured during loading language.", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
                 End Try
             Else
                 Lang.LoadInternal()
@@ -660,7 +654,7 @@ Namespace My
                     e.BringToForeground = True
                 Else
                     If arg.ToLower = "/exportlanguage".ToLower Then
-                        MsgBox(Lang.LngShouldClose, MsgboxRt(MsgBoxStyle.Critical))
+                        MsgBox(Lang.LngShouldClose, MsgBoxStyle.Critical)
 
                     ElseIf arg.ToLower = "/uninstall" Then
                         Uninstall.ShowDialog()

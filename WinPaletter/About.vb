@@ -56,4 +56,9 @@ Public Class About
     Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
         Process.Start("https://www.newtonsoft.com/json")
     End Sub
+
+    Private Sub XenonLinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel1.LinkClicked
+        Process.Start("https://github.com/ookii-dialogs/ookii-dialogs-winforms")
+    End Sub
+
 End Class

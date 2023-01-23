@@ -197,7 +197,7 @@
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAZAAAAEsCAYAAADtt+XCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAA/7JJREFUeF7s/QeUXMd55o0P0uTOOafpMDnPYDCYwWCQcxrknCMBECQIgiAJBjAT
+        vAAADrwBlbxySQAA/7JJREFUeF7s/QeUXMd55o0P0uTOOafpMDnPYDCYwWCQcxrknCMBECQIgiAJBjAT
         zDlniaQkKpLKWtuyubYsW7KoYHnlXe967bWt9Yf/OkikJDzf89TtHkAkLJuy/a3/5/Q95z11c9/urnp/
         9dRbVbci7gkgUOeAv94JH1Nvrd2Yr9bGbTs8XPdw3VVjg7u2nut1PF4PL7c9RXPzuMxVTLXPXM9rAzR/
         DU335P5AjQPBGifCNi/8dS5+tgvBOje8VXbE41ksvfZG+LwReCZWI90xFammbgSm1CFU5+G5HoTsAd6f
@@ -2609,7 +2609,7 @@
   <data name="PictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAK4AAAFhCAIAAABmpwZsAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAA9PBJREFUeF7s/VdwY0m2LoxVz0x3V3UVi4T33huSAOgAeu+9996CAEECJAy9977I
+        vQAADr0BR/uQrQAA9PBJREFUeF7s/VdwY0m2LoxVz0x3V3UVi4T33huSAOgAeu+9996CAEECJAy9977I
         IousYvnq6p723WfMOWfm3Hv/Xwrd+8eVFHqWIhQKKUJ6kOLqvwo96EVamXsDBKtpqqdZPWdK/QUIrp07
         c6Vbe+XK3AuZN4RBEAFIEtOnVwhwwRWI9DL+/7PrN//vng/+W9dv/ueu3wAd+PzP3ejz33t++9970CUi
         un/z3zpv/D/ab6C7P4oMt/5b5wdABIef+/nvPb/7f/X8luAQoInsIOQNzr9+rvxAu/3fO3/z/7Xf2M4M
@@ -3676,44 +3676,47 @@
 • Crashes that occurred during startup while loading language files are mainly fixed. </value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
-    <value>• Application’s UI improved a lot, especially the light mode becomes better, with the ability to change WinPaletter’s Colors and Backgrounds (Theming WinPaletter itself: From Settings &gt; Appearance)
+    <value>• Application’s UI improved a lot, especially the light mode becomes better, with the ability to change WinPaletter’s Colors and Backgrounds (Theming WinPaletter itself: From Settings &gt; Appearance). Also, legacy dialogs like message boxes are modernized.
 
-• Themes Previews in all forms are redesigned to match Windows Metrics and fonts (becoming more realistic compared to previous versions of WinPaletter)
 
-• Drag and Drop preview are redesigned to have a bigger size
+• Themes Previews in all forms are redesigned to match Windows Metrics and fonts. (becoming more realistic compared to previous versions of WinPaletter)
 
-• Windows Terminal forms are redesigned to have tabs instead of the condensed ones</value>
+• Drag and Drop preview are redesigned to have a bigger size.
+
+• Windows Terminal forms are redesigned to have tabs instead of the condensed ones.</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>• Added the ability to uninstall from Control Panel
+    <value>• Added the ability to uninstall from Control Panel.
 
-• Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped)
+• Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped).
 
-• When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying (Become quicker than before)
+• When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying. (Become quicker than before)
 
-• Cursors: Main Arrow is improved to match the exact outline of default Windows</value>
+• Cursors: Main Arrow is improved to match the exact outline of default Windows.</value>
   </data>
   <data name="Label15.Text" xml:space="preserve">
-    <value>• Quick apply (found in Win32UI, Terminals, ...) mechanism changed to a better one (becoming quicker than before)
+    <value>• Quick apply (found in Win32UI, Terminals, ...) mechanism changed to a better one. (becoming quicker than before)
 
-• Confirmation Dialog that appear on closing WinPaletter will remember the preferences you choose, with the ability to control if this dialog appears or not (You can change the preferences also in Settings)
+• Confirmation Dialog that appear on closing WinPaletter will remember the preferences you choose, with the ability to control if this dialog appears or not. (You can change the preferences also in Settings)
 
-• Newton.JSON component updated to 13.0.2 (Used in phrasing Windows 11/10 Terminal Apps' JSON settings files and Language JSON files)
+• Newton.JSON component updated to 13.0.2 (Used in phrasing Windows 11/10 Terminal Apps' JSON settings files and Language JSON files).
 
-• Right-Click Menu on color now will have more colors varieties &amp;&amp; the extended menu will have Windows Terminals Colors (Previously they were not included)
+• Right-Click Menu on color now will have more colors varieties &amp;&amp; the extended menu will have Windows Terminals Colors. (Previously they were not included)
 
-• Application Startup Speed Optimized
+• Application Startup Speed Optimized.
 
 • Windows 7: when choosing a color with basic mode applied, there was a crash. Now it is fixed. 
 
 • Windows 7: not switching basic/aero theme correctly. (Now you should logoff and logon to apply this effect correctly)</value>
   </data>
   <data name="Label17.Text" xml:space="preserve">
-    <value>• Application Startup Speed Optimized
+    <value>• Application Startup Speed Optimized.
 
-• Windows 7: when choosing a color with basic mode applied, there was a crash. Now it is fixed. 
+• Windows 7: when choosing a color with basic mode applied, there was a crash. Now it is fixed.
 
-• Windows 7: not switching basic/aero theme correctly. (Now you should logoff and logon to apply this effect correctly)</value>
+• Windows 7: not switching basic/aero theme correctly. (Now you should logoff and logon to apply this effect correctly)
+
+• Mechanism of network detection changed, the old one was slower.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

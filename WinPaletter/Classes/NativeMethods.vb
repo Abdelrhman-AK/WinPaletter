@@ -35,6 +35,7 @@ Namespace NativeMethods
         Public Enum DWMATTRIB
             DWMWA_SYSTEMBACKDROP_TYPE = 38
             DWMWA_MICA_EFFECT = 1029
+            DWMWA_USE_IMMERSIVE_DARK_MODE = 20
         End Enum
 
         Public Structure DwmBlurbehind

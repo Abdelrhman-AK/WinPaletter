@@ -100,7 +100,7 @@ Public Class Lang_JSON_Update
 
             Cursor = Cursors.Default
 
-            MsgBox(My.Lang.Done, My.MsgboxRt(MsgBoxStyle.Information))
+            MsgBox(My.Lang.Done, MsgBoxStyle.Information)
         End If
     End Sub
 

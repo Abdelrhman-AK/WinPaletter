@@ -104,7 +104,7 @@ Public Class CMD
 
             Cursor = Cursors.Default
         Else
-            MsgBox(My.Lang.CMD_Enable, My.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(My.Lang.CMD_Enable, MsgBoxStyle.Critical)
         End If
 
     End Sub
@@ -902,7 +902,7 @@ Public Class CMD
     End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        MsgBox(My.Lang.CMD_NotAllWeights, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.CMD_NotAllWeights, MsgBoxStyle.Information)
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

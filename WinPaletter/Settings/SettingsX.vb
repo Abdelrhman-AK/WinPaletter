@@ -65,7 +65,7 @@ Public Class SettingsX
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox(My.Lang.SaveMsg, My.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel))
+            Select Case MsgBox(My.Lang.SaveMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
                 Case DialogResult.Cancel
                     e.Cancel = True
                 Case DialogResult.Yes
@@ -286,13 +286,13 @@ Public Class SettingsX
                 My.Lang = New Localizer
                 My.Lang.LoadLanguageFromJSON(My.Settings.Language_File)
             Else
-                MsgBox(My.Lang.LanguageRestart, My.MsgboxRt(MsgBoxStyle.Information))
+                MsgBox(My.Lang.LanguageRestart, MsgBoxStyle.Information)
             End If
         End If
 
         Cursor = Cursors.Default
 
-        MsgBox(My.Lang.SettingsSaved, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.SettingsSaved, MsgBoxStyle.Information)
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
@@ -491,7 +491,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If MsgBox(My.Lang.RemoveExtMsg & vbCrLf & vbCrLf & My.Lang.RemoveExtMsgNote, My.MsgboxRt(MsgBoxStyle.Question + MsgBoxStyle.YesNo)) = MsgBoxResult.Yes Then
+        If MsgBox(My.Lang.RemoveExtMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNo, "", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.RemoveExtMsgNote) = MsgBoxResult.Yes Then
 
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")

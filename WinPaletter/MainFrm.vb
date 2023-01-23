@@ -948,30 +948,27 @@ Public Class MainFrm
         W7_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
         W7_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
 
-        If PreviewConfig = WinVer.Seven Then
-            Select Case ColorPalette.Windows7.Theme
-                Case CP.AeroTheme.Aero
-                    W7_theme_aero.Checked = True
+        Select Case ColorPalette.Windows7.Theme
+            Case CP.AeroTheme.Aero
+                W7_theme_aero.Checked = True
 
-                Case CP.AeroTheme.AeroOpaque
-                    W7_theme_aeroopaque.Checked = True
+            Case CP.AeroTheme.AeroOpaque
+                W7_theme_aeroopaque.Checked = True
 
-                Case CP.AeroTheme.Basic
-                    W7_theme_basic.Checked = True
+            Case CP.AeroTheme.Basic
+                W7_theme_basic.Checked = True
 
-                Case CP.AeroTheme.Classic
-                    W7_theme_classic.Checked = True
-            End Select
+            Case CP.AeroTheme.Classic
+                W7_theme_classic.Checked = True
+        End Select
 
-        ElseIf PreviewConfig = WinVer.Eight Then
-            Select Case ColorPalette.Windows8.Theme
-                Case CP.AeroTheme.Aero
-                    W8_theme_aero.Checked = True
+        Select Case ColorPalette.Windows8.Theme
+            Case CP.AeroTheme.Aero
+                W8_theme_aero.Checked = True
 
-                Case CP.AeroTheme.AeroLite
-                    W8_theme_aerolite.Checked = True
-            End Select
-        End If
+            Case CP.AeroTheme.AeroLite
+                W8_theme_aerolite.Checked = True
+        End Select
 
         W8_ColorizationColor_pick.BackColor = ColorPalette.Windows8.ColorizationColor
         W8_ColorizationBalance_bar.Value = ColorPalette.Windows8.ColorizationColorBalance
@@ -1216,7 +1213,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        If IsNetAvailable() Then
+        If IsNetworkAvailable() Then
             Try
 
                 Dim ls As New List(Of String)
@@ -1803,7 +1800,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
-        MsgBox(My.Lang.TitlebarColorNotice, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.TitlebarColorNotice, MsgBoxStyle.Information)
     End Sub
 
 #End Region
@@ -2267,11 +2264,11 @@ Public Class MainFrm
     End Sub
 
     Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
-        MsgBox(My.Lang.TitlebarColorNotice, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.TitlebarColorNotice, MsgBoxStyle.Information)
     End Sub
 
     Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
-        MsgBox(My.Lang.CP_AccentOnTaskbarTib, My.MsgboxRt(MsgBoxStyle.Information))
+        MsgBox(My.Lang.CP_AccentOnTaskbarTib, MsgBoxStyle.Information)
     End Sub
 
 #End Region
@@ -3244,10 +3241,6 @@ Public Class MainFrm
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
-    End Sub
-
-    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
-        MsgBox("Message", MsgBoxStyle.Information, False, "Collapsed", "Expanded", "Details shown when expanded", "Header", "Title", "Footer with a link: https://www.google.com")
     End Sub
 
     Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged

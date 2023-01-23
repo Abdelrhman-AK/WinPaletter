@@ -3758,7 +3758,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 Windows10.ApplyAccentonTaskbar = Windows11.ApplyAccentonTaskbar
                             End If
                         Catch
-                            MsgBox(My.Lang.WPTH_OldGen_LoadError, My.MsgboxRt(MsgBoxStyle.Critical))
+                            MsgBox(My.Lang.WPTH_OldGen_LoadError, MsgBoxStyle.Critical)
                         End Try
                     End If
 
@@ -4523,7 +4523,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             tx.Add("</LegacyWinPaletter_Windows11/10>" & vbCrLf)
                         End With
                     Catch
-                        MsgBox(My.Lang.WPTH_OldGen_SaveError, My.MsgboxRt(MsgBoxStyle.Critical))
+                        MsgBox(My.Lang.WPTH_OldGen_SaveError, MsgBoxStyle.Critical)
                     End Try
 
                 End If

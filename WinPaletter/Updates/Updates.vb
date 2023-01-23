@@ -25,7 +25,7 @@ Public Class Updates
             StableInt = 0 : BetaInt = 0 : UpdateChannel = 0
 
             Try
-                If IsNetAvailable() Then
+                If IsNetworkAvailable() Then
                     Label5.Text = My.Lang.Checking
                     Dim ls As New List(Of String)
 
@@ -166,7 +166,7 @@ Public Class Updates
     Private Sub UC_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles UC.DownloadFileCompleted
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
-        If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, My.MsgboxRt(MsgBoxStyle.Information))
+        If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
         If XenonRadioButton1.Checked Then
             Process.Start(OldName)
             Process.GetCurrentProcess.Kill()

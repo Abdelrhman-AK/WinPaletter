@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Net
+Imports System.Net.NetworkInformation
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Ookii.Dialogs.WinForms
@@ -54,137 +54,6 @@ Public Class XenonCore
 #End Region
 
 #Region "Misc"
-
-    Private Shared WithEvents TD As TaskDialog
-
-    Private Shared Sub TD_HyperlinkClicked(sender As Object, e As HyperlinkClickedEventArgs) Handles TD.HyperlinkClicked
-        'Process.Start(e.Href)
-    End Sub
-
-    Private Shared Sub TD_RadioButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.RadioButtonClicked
-
-    End Sub
-
-    Private Shared Sub TD_Timer(sender As Object, e As TimerEventArgs) Handles TD.Timer
-
-    End Sub
-
-    Private Shared Sub TD_VerificationClicked(sender As Object, e As EventArgs) Handles TD.VerificationClicked
-
-    End Sub
-
-    Private Shared Sub TD_HelpRequested(sender As Object, e As EventArgs) Handles TD.HelpRequested
-
-    End Sub
-
-    Private Shared Sub TD_ExpandButtonClicked(sender As Object, e As ExpandButtonClickedEventArgs) Handles TD.ExpandButtonClicked
-
-    End Sub
-
-    Private Shared Sub TD_ButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.ButtonClicked
-    End Sub
-
-    Shared Function ConvertToLink([String] As String) As String
-        Dim c As New List(Of String)
-        For Each x As String In [String].Split(" ")
-            If (Uri.IsWellFormedUriString(x, UriKind.Absolute)) Then
-                c.Add(String.Format("<a href=""{0}"">{0}</a>", x))
-            Else
-                c.Add(x)
-            End If
-        Next
-
-        Return c.CString(" ")
-    End Function
-
-    Public Overloads Shared Function MsgBox(Content As String, Style As MsgBoxStyle, Optional RequireElevation As Boolean = False, Optional CollapsedText As String = "", Optional ExpandedText As String = "",
-                                            Optional ExpandedDetails As String = "", Optional Header As String = "", Optional DialogTitle As String = "",
-                                            Optional Footer As String = "", Optional FooterIcon As TaskDialogIcon = TaskDialogIcon.Custom, Optional CustomIcon As Icon = Nothing) _
-                                            As MsgBoxResult
-
-        TD = New TaskDialog With {
-            .EnableHyperlinks = True,
-            .RightToLeft = My.Lang.RightToLeft,
-            .ButtonStyle = TaskDialogButtonStyle.CommandLinksNoIcon,
-            .Content = ConvertToLink(Content)}
-
-        If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
-        If Not String.IsNullOrWhiteSpace(Header) Then TD.MainInstruction = Header
-
-        If Not String.IsNullOrWhiteSpace(CollapsedText) Then TD.CollapsedControlText = CollapsedText
-        If Not String.IsNullOrWhiteSpace(ExpandedText) Then TD.ExpandedControlText = ExpandedText
-
-        If Not String.IsNullOrWhiteSpace(ExpandedDetails) Then TD.ExpandedInformation = ConvertToLink(ExpandedDetails)
-
-        If Not String.IsNullOrWhiteSpace(Footer) Then TD.Footer = ConvertToLink(Footer)
-        If CustomIcon Is Nothing Then CustomIcon = Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
-        TD.FooterIcon = FooterIcon
-        TD.CustomFooterIcon = CustomIcon
-
-        Dim okButton As New TaskDialogButton(ButtonType.Ok) With {.ElevationRequired = RequireElevation}
-        Dim yesButton As New TaskDialogButton(ButtonType.Yes) With {.ElevationRequired = RequireElevation}
-        Dim noButton As New TaskDialogButton(ButtonType.No)
-        Dim cancelButton As New TaskDialogButton(ButtonType.Cancel)
-        Dim retryButton As New TaskDialogButton(ButtonType.Retry) With {.ElevationRequired = RequireElevation}
-        Dim CloseButton As New TaskDialogButton(ButtonType.Close)
-        Dim customButton As New TaskDialogButton(ButtonType.Custom)
-        Dim icon As TaskDialogIcon
-
-        If Style.HasFlag(MsgBoxStyle.YesNoCancel) Then
-            TD.Buttons.Add(yesButton)
-            TD.Buttons.Add(noButton)
-            TD.Buttons.Add(cancelButton)
-        ElseIf Style.HasFlag(MsgBoxStyle.YesNo) Then
-            TD.Buttons.Add(yesButton)
-            TD.Buttons.Add(noButton)
-        ElseIf Style.HasFlag(MsgBoxStyle.RetryCancel) Then
-            TD.Buttons.Add(retryButton)
-            TD.Buttons.Add(cancelButton)
-        ElseIf Style.HasFlag(MsgBoxStyle.OkCancel) Then
-            TD.Buttons.Add(okButton)
-            TD.Buttons.Add(cancelButton)
-        ElseIf Style.HasFlag(MsgBoxStyle.OkOnly) Then
-            TD.Buttons.Add(okButton)
-        Else
-            TD.Buttons.Add(okButton)
-        End If
-
-        If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
-
-        If Style.HasFlag(MsgBoxStyle.Question) Then
-            icon = TaskDialogIcon.Custom
-            TD.CustomMainIcon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
-        End If
-
-        If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
-        If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
-
-        TD.MainIcon = icon
-
-        Dim result As MsgBoxResult = MsgBoxResult.Ok
-        Dim resultButton As TaskDialogButton = TD.ShowDialog()
-
-        If resultButton Is okButton Then result = MsgBoxResult.Ok
-        If resultButton Is yesButton Then result = MsgBoxResult.Yes
-        If resultButton Is noButton Then result = MsgBoxResult.No
-        If resultButton Is cancelButton Then result = MsgBoxResult.Cancel
-        If retryButton Is retryButton Then result = MsgBoxResult.Cancel
-        If retryButton Is CloseButton Then result = MsgBoxResult.Ok
-        If retryButton Is customButton Then result = MsgBoxResult.Ok
-
-        TD.Dispose()
-        resultButton.Dispose()
-        okButton.Dispose()
-        yesButton.Dispose()
-        noButton.Dispose()
-        cancelButton.Dispose()
-        retryButton.Dispose()
-        CloseButton.Dispose()
-        customButton.Dispose()
-
-        Return result
-    End Function
-
     Public Shared Sub RefreshDWM(CP As CP)
 
 
@@ -255,20 +124,37 @@ Public Class XenonCore
         End Try
 
     End Function
-    Public Shared Function IsNetAvailable() As Boolean
-        If My.Computer.Network.IsAvailable Then
-            Try
-                Using client = New WebClient()
-                    Using stream = client.OpenRead("https://www.github.com")
-                        Return True
-                    End Using
-                End Using
-            Catch
-                Return False
-            End Try
-        Else
-            Return False
-        End If
+
+    '''<summary>
+    '''Indicates whether any network connection is available
+    '''Filter connections below a specified speed, as well as virtual network cards.
+    '''</summary>
+    '''<returns>
+    '''    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
+    '''</returns>
+    Public Shared Function IsNetworkAvailable() As Boolean
+        Return IsNetworkAvailable(0)
+    End Function
+
+    '''<summary>
+    '''Indicates whether any network connection is available
+    '''Filter connections below a specified speed, as well as virtual network cards.
+    '''</summary>
+    '''<returns>
+    '''    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
+    '''</returns>
+    Public Shared Function IsNetworkAvailable(ByVal minimumSpeed As Long) As Boolean
+        If Not NetworkInterface.GetIsNetworkAvailable() Then Return False
+
+        For Each ni As NetworkInterface In NetworkInterface.GetAllNetworkInterfaces()
+            If (ni.OperationalStatus <> OperationalStatus.Up) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Loopback) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Tunnel) Then Continue For
+            If ni.Speed < minimumSpeed Then Continue For
+            If (ni.Description.IndexOf("virtual", StringComparison.OrdinalIgnoreCase) >= 0) OrElse (ni.Name.IndexOf("virtual", StringComparison.OrdinalIgnoreCase) >= 0) Then Continue For
+            If ni.Description.Equals("Microsoft Loopback Adapter", StringComparison.OrdinalIgnoreCase) Then Continue For
+            Return True
+        Next
+
+        Return False
     End Function
 
     'Public Shared Sub RefreshRegisrty()
@@ -505,6 +391,219 @@ Public Class XenonCore
 
 #End Region
 
+#Region "Modern Dialogs"
+
+#Region "MsgBox"
+    Private Shared WithEvents TD As TaskDialog
+
+    Shared Function ConvertToLink([String] As String) As String
+        Dim c As New List(Of String)
+        For Each x As String In [String].Split(" ")
+            If (Uri.IsWellFormedUriString(x, UriKind.Absolute)) Then
+                c.Add(String.Format("<a href=""{0}"">{0}</a>", x))
+            Else
+                c.Add(x)
+            End If
+        Next
+
+        Return c.CString(" ")
+    End Function
+
+    ''' <summary>
+    ''' Windows Vista/7 Styled MsgBox
+    ''' </summary>
+    ''' <param name="Message">The first text in the dialog, with blue color and big font size</param>
+    ''' <param name="Style">The Buttons and Icon of the dialog</param>
+    ''' <param name="SubMessage">The text which is located under message, with black color and small size (It can accept URLs)</param>
+    ''' <param name="CollapsedText">Text beside collapsed button</param>
+    ''' <param name="ExpandedText">Text beside expanded button</param>
+    ''' <param name="ExpandedDetails">Text appear when the dialog is extended (It can accept URLs)</param>
+    ''' <param name="DialogTitle">Text of Dialog's Titlebar</param>
+    ''' <param name="Footer">Footer is the lowermost text (under the buttons) (It can accept URLs)</param>
+    ''' <param name="FooterIcon">Icon Type of the fotter</param>
+    ''' <param name="FooterCustomIcon">Icon of the fotter when its type is set to TaskDialogIcon.Custom</param>
+    ''' <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means Administrator\Elevation is required</param>
+    ''' <returns></returns>
+    Public Overloads Shared Function MsgBox(Message As String, Optional Style As MsgBoxStyle = Nothing, Optional SubMessage As String = "",
+                                            Optional CollapsedText As String = "", Optional ExpandedText As String = "", Optional ExpandedDetails As String = "",
+                                            Optional DialogTitle As String = "", Optional Footer As String = "", Optional FooterIcon As TaskDialogIcon = TaskDialogIcon.Custom,
+                                            Optional FooterCustomIcon As Icon = Nothing, Optional RequireElevation As Boolean = False) As MsgBoxResult
+
+        Try
+            TD = New TaskDialog With {
+                    .EnableHyperlinks = True,
+                    .RightToLeft = My.Lang.RightToLeft,
+                    .ButtonStyle = TaskDialogButtonStyle.CommandLinksNoIcon,
+                    .Content = ConvertToLink(SubMessage),
+                    .FooterIcon = FooterIcon}
+
+            If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
+            If Not String.IsNullOrWhiteSpace(Message) Then TD.MainInstruction = Message
+            If Not String.IsNullOrWhiteSpace(ExpandedText) Then TD.CollapsedControlText = ExpandedText
+            If Not String.IsNullOrWhiteSpace(CollapsedText) Then TD.ExpandedControlText = CollapsedText
+            If Not String.IsNullOrWhiteSpace(ExpandedDetails) Then TD.ExpandedInformation = ConvertToLink(ExpandedDetails)
+            If Not String.IsNullOrWhiteSpace(Footer) Then TD.Footer = ConvertToLink(Footer)
+            If FooterCustomIcon Is Nothing Then FooterCustomIcon = Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
+
+            TD.CustomFooterIcon = FooterCustomIcon
+
+            Dim okButton As New TaskDialogButton(ButtonType.Ok) With {.Text = My.Lang.OK, .ElevationRequired = RequireElevation}
+            Dim yesButton As New TaskDialogButton(ButtonType.Yes) With {.Text = My.Lang.Yes, .ElevationRequired = RequireElevation}
+            Dim noButton As New TaskDialogButton(ButtonType.No) With {.Text = My.Lang.No}
+            Dim cancelButton As New TaskDialogButton(ButtonType.Cancel) With {.Text = My.Lang.Cancel}
+            Dim retryButton As New TaskDialogButton(ButtonType.Retry) With {.Text = My.Lang.Retry, .ElevationRequired = RequireElevation}
+            Dim closeButton As New TaskDialogButton(ButtonType.Close) With {.Text = My.Lang.Close}
+            Dim customButton As New TaskDialogButton(ButtonType.Custom)
+            Dim icon As TaskDialogIcon
+
+            If Style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+                TD.Buttons.Add(yesButton)
+                TD.Buttons.Add(noButton)
+                TD.Buttons.Add(cancelButton)
+            ElseIf Style.HasFlag(MsgBoxStyle.YesNo) Then
+                TD.Buttons.Add(yesButton)
+                TD.Buttons.Add(noButton)
+            ElseIf Style.HasFlag(MsgBoxStyle.RetryCancel) Then
+                TD.Buttons.Add(retryButton)
+                TD.Buttons.Add(cancelButton)
+            ElseIf Style.HasFlag(MsgBoxStyle.OkCancel) Then
+                TD.Buttons.Add(okButton)
+                TD.Buttons.Add(cancelButton)
+            ElseIf Style.HasFlag(MsgBoxStyle.OkOnly) Then
+                TD.Buttons.Add(okButton)
+            Else
+                TD.Buttons.Add(okButton)
+            End If
+
+            If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
+
+            If Style.HasFlag(MsgBoxStyle.Question) Then
+                icon = TaskDialogIcon.Custom
+                TD.CustomMainIcon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
+            End If
+
+            If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
+            If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
+
+            TD.MainIcon = icon
+
+            Dim result As MsgBoxResult = MsgBoxResult.Ok
+            Dim resultButton As TaskDialogButton = TD.ShowDialog()
+
+            If resultButton Is yesButton Then
+                result = MsgBoxResult.Yes
+            ElseIf resultButton Is okButton Then
+                result = MsgBoxResult.Ok
+            ElseIf resultButton Is noButton Then
+                result = MsgBoxResult.No
+            ElseIf resultButton Is cancelButton Then
+                result = MsgBoxResult.Cancel
+            ElseIf retryButton Is retryButton Then
+                result = MsgBoxResult.Cancel
+            ElseIf retryButton Is closeButton Then
+                result = MsgBoxResult.Ok
+            ElseIf retryButton Is customButton Then
+                result = MsgBoxResult.Ok
+            End If
+
+            TD.Dispose()
+            resultButton.Dispose()
+            okButton.Dispose()
+            yesButton.Dispose()
+            noButton.Dispose()
+            cancelButton.Dispose()
+            retryButton.Dispose()
+            closeButton.Dispose()
+            customButton.Dispose()
+
+            Return result
+
+        Catch
+            Return Interaction.MsgBox(Message, Style, SubMessage)
+        End Try
+
+    End Function
+
+#Region "MsgBox Functions Branches"
+    Public Overloads Shared Function MsgBox(Message As String) As MsgBoxResult
+        Return MsgBox(Message, Nothing, "", "", "", "", "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle) As MsgBoxResult
+        Return MsgBox(Message, Style, "", "", "", "", "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, "", "", "", "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, "", "", "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, "", "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String,
+                                            ExpandedDetails As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, "", "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String,
+                                        ExpandedDetails As String, DialogTitle As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, "", Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String,
+                                    ExpandedDetails As String, DialogTitle As String, Footer As String) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, Nothing, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String,
+                                ExpandedDetails As String, DialogTitle As String, Footer As String, FooterIcon As TaskDialogIcon) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, FooterIcon, Nothing, False)
+    End Function
+
+    Public Overloads Shared Function MsgBox(Message As String, Style As MsgBoxStyle, SubMessage As String, CollapsedText As String, ExpandedText As String,
+                            ExpandedDetails As String, DialogTitle As String, Footer As String, FooterIcon As TaskDialogIcon, FooterCustomIcon As Icon) As MsgBoxResult
+        Return MsgBox(Message, Style, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, FooterIcon, FooterCustomIcon, False)
+    End Function
+#End Region
+
+#Region "Events"
+    Private Shared Sub TD_HyperlinkClicked(sender As Object, e As HyperlinkClickedEventArgs) Handles TD.HyperlinkClicked
+        'Process.Start(e.Href)
+    End Sub
+
+    Private Shared Sub TD_RadioButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.RadioButtonClicked
+
+    End Sub
+
+    Private Shared Sub TD_Timer(sender As Object, e As TimerEventArgs) Handles TD.Timer
+
+    End Sub
+
+    Private Shared Sub TD_VerificationClicked(sender As Object, e As EventArgs) Handles TD.VerificationClicked
+
+    End Sub
+
+    Private Shared Sub TD_HelpRequested(sender As Object, e As EventArgs) Handles TD.HelpRequested
+
+    End Sub
+
+    Private Shared Sub TD_ExpandButtonClicked(sender As Object, e As ExpandButtonClickedEventArgs) Handles TD.ExpandButtonClicked
+
+    End Sub
+
+    Private Shared Sub TD_ButtonClicked(sender As Object, e As TaskDialogItemClickedEventArgs) Handles TD.ButtonClicked
+
+    End Sub
+#End Region
+
+#End Region
+
+#End Region
 End Class
 
 Public Class Acrylism

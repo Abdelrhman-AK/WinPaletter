@@ -348,7 +348,6 @@ Partial Class MainFrm
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SaveFileDialog3 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.PaletteContainer_W11.SuspendLayout()
@@ -1248,7 +1247,7 @@ Partial Class MainFrm
         Me.W11_Accent_Taskbar.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.W11_Accent_Taskbar.ForeColor = System.Drawing.Color.White
         Me.W11_Accent_Taskbar.Image = Nothing
-        Me.W11_Accent_Taskbar.Location = New System.Drawing.Point(231, 3)
+        Me.W11_Accent_Taskbar.Location = New System.Drawing.Point(236, 3)
         Me.W11_Accent_Taskbar.Name = "W11_Accent_Taskbar"
         Me.W11_Accent_Taskbar.ShowText = True
         Me.W11_Accent_Taskbar.Size = New System.Drawing.Size(76, 23)
@@ -1263,10 +1262,10 @@ Partial Class MainFrm
         Me.W11_Accent_StartTaskbar.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.W11_Accent_StartTaskbar.ForeColor = System.Drawing.Color.White
         Me.W11_Accent_StartTaskbar.Image = Nothing
-        Me.W11_Accent_StartTaskbar.Location = New System.Drawing.Point(309, 3)
+        Me.W11_Accent_StartTaskbar.Location = New System.Drawing.Point(313, 3)
         Me.W11_Accent_StartTaskbar.Name = "W11_Accent_StartTaskbar"
         Me.W11_Accent_StartTaskbar.ShowText = True
-        Me.W11_Accent_StartTaskbar.Size = New System.Drawing.Size(190, 23)
+        Me.W11_Accent_StartTaskbar.Size = New System.Drawing.Size(186, 23)
         Me.W11_Accent_StartTaskbar.TabIndex = 22
         Me.W11_Accent_StartTaskbar.Text = "Start, Taskbar & Action Center"
         '
@@ -1278,12 +1277,12 @@ Partial Class MainFrm
         Me.W11_Accent_None.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.W11_Accent_None.ForeColor = System.Drawing.Color.White
         Me.W11_Accent_None.Image = Nothing
-        Me.W11_Accent_None.Location = New System.Drawing.Point(165, 3)
+        Me.W11_Accent_None.Location = New System.Drawing.Point(169, 3)
         Me.W11_Accent_None.Name = "W11_Accent_None"
         Me.W11_Accent_None.ShowText = True
-        Me.W11_Accent_None.Size = New System.Drawing.Size(64, 23)
+        Me.W11_Accent_None.Size = New System.Drawing.Size(66, 23)
         Me.W11_Accent_None.TabIndex = 21
-        Me.W11_Accent_None.Text = "None"
+        Me.W11_Accent_None.Text = "Nothing"
         '
         'PictureBox19
         '
@@ -1301,12 +1300,12 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.AutoEllipsis = True
         Me.Label19.BackColor = System.Drawing.Color.Transparent
-        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.Location = New System.Drawing.Point(30, 3)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(129, 22)
+        Me.Label19.Size = New System.Drawing.Size(138, 22)
         Me.Label19.TabIndex = 3
-        Me.Label19.Text = "Accent Color on:"
+        Me.Label19.Text = "Apply Accent Color on:"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox4
@@ -4938,22 +4937,6 @@ Partial Class MainFrm
         Me.SaveFileDialog3.DefaultExt = "wpt"
         Me.SaveFileDialog3.Filter = "Test File (*.txt)|*.txt"
         '
-        'XenonButton26
-        '
-        Me.XenonButton26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = Nothing
-        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(609, 668)
-        Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(96, 32)
-        Me.XenonButton26.TabIndex = 34
-        Me.XenonButton26.Text = "Cancel"
-        Me.XenonButton26.UseVisualStyleBackColor = False
-        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -4961,7 +4944,6 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1082, 716)
-        Me.Controls.Add(Me.XenonButton26)
         Me.Controls.Add(Me.previewContainer)
         Me.Controls.Add(Me.TablessControl1)
         Me.Controls.Add(Me.XenonButton19)
@@ -5428,5 +5410,4 @@ Partial Class MainFrm
     Friend WithEvents W7_ColorizationColorBalance_val As XenonButton
     Friend WithEvents W7_ColorizationAfterglowBalance_val As XenonButton
     Friend WithEvents XenonButton25 As XenonButton
-    Friend WithEvents XenonButton26 As XenonButton
 End Class

@@ -75,7 +75,6 @@ Public Class Localizer : Implements IDisposable
 
     Public allForms As New List(Of String) From {
                         "About",
-                        "Changelog",
                         "ColorPickerDlg",
                         "ComplexSave",
                         "dragPreviewer",
@@ -122,6 +121,11 @@ Public Class Localizer : Implements IDisposable
     Property [Next] As String = "Next"
     Property Yes As String = "Yes"
     Property No As String = "No"
+    Property Cancel As String = "Cancel"
+    Property Close As String = "Close"
+    Property Retry As String = "Retry"
+    Property ExpandNote As String = "Expand Note"
+    Property CollapseNote As String = "Collapse Note"
     Property Bug_StackTrace As String = "Stack Trace"
     Property Bug_ErrorMessage As String = "Error Message"
     Property Bug_NoReport As String = "There is no previous saved report in ""{0}"""
@@ -187,7 +191,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Time_Cursors As String = "Total Applying Windows Cursors took {0} seconds"
     Property CP_ApplyFrom As String = "WinPaletter will apply theme from {0}'s section"
     Property CP_Admin_Msg0 As String = "Writing to registry without administrator rights by deflection"
-    Property CP_Admin_Msg1 As String = "Writing to registry without administrator rights by deflection"
+    Property CP_Admin_Msg1 As String = "This deflection will take time more than if started as administrator"
     Property CP_Applying_Started As String = "Applying Started"
     Property CP_Applying_Win11 As String = "Applying Windows 11 Scheme"
     Property CP_Applying_Win10 As String = "Applying Windows 10 Scheme"
@@ -267,11 +271,8 @@ Public Class Localizer : Implements IDisposable
     Property WrongVerFormat As String = "Wrong Version Fomrat. Please type the version to it in this style (x.x.x.x), replacing (x) by numbers."
     Property Extracting As String = "Extracting palette from image depends on your device's performance, maximum palette colors number, image quality and its resolution ..."
     Property Sorting As String = "Sorting Colors in a palette ..."
-    Property ErrorPhrasingChangelog As String = "Error phrasing changelog"
-    Property VersionNotReleased As String = "is not released yet, deleted or written in a wrong format."
     Property Version As String = "Version"
     Property Checking As String = "Checking ..."
-    Property Error_Online As String = "Error reading changelog online"
     Property NoNetwork As String = "No Network is Available"
     Property CheckConnection As String = "Check your connection and try again"
     Property DoAction_Update As String = "Do Action"
@@ -296,7 +297,7 @@ Public Class Localizer : Implements IDisposable
     Property PowerShellx86_notFound As String = "Microsoft PowerShell x86 is not installed."
     Property PowerShellx64_notFound As String = "Microsoft PowerShell x64 is not installed."
     Property Terminal_supposed As String = "It is supposed to be located in: "
-    Property Terminal_Bypass As String = "However, you can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it)."
+    Property Terminal_Bypass As String = "You can bypass this restriction in Settings > Terminals (In case you want to design a theme for all Versions of Windows and save it as a file for sharing, not applying it)."
     Property Terminal_CantRun As String = "You can't run Windows Terminal in current OS. It is available only in Windows 10 and 11."
     Property Terminal_ErrorFile As String = "Error occurred while reading settings file: "
     Property Terminal_ProfileNotCloneable As String = "Default Profile isn't cloneable, select a different profile."

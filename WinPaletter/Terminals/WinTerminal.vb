@@ -171,7 +171,7 @@ Public Class WinTerminal : Implements ICloneable
                            .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
 
-                    MsgBox(My.Lang.Terminal_SettingsNotExist & File, MsgBoxStyle.Critical)
+                    MsgBox(My.Lang.Terminal_SettingsNotExist, MsgBoxStyle.Critical, File)
                 End If
 
             Case Mode.WinPaletterFile

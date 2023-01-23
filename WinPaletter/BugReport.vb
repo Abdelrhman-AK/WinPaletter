@@ -95,7 +95,7 @@ Public Class BugReport
             Process.Start(My.Application.appData & "\Reports")
             Try : bk.Close() : Catch : End Try
         Else
-            MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), My.MsgboxRt(MsgBoxStyle.Critical))
+            MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), MsgBoxStyle.Critical)
         End If
 
     End Sub
