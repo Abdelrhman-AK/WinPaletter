@@ -26,7 +26,7 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 
 - [You will find the uploaded languages here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
-- [Visit this page to know how to contribute in translation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md)
+- [Visit this page to know how to contribute in translation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LangContribution1.0.6.9.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 
