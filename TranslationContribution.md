@@ -1,6 +1,6 @@
 # Instructions for WinPaletter Versions less than 1.0.6.9
 
-> If you are using WinPaletter 1.0.6.9 or higher, please [read this instead]()
+> If you are using WinPaletter 1.0.6.9 or higher, please [read this instead](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LangContribution.md)
 
 ---
 
