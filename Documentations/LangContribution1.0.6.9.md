@@ -40,7 +40,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    **or**
    
-   - Press on `Generate New (English) and open it` and save JSON file as you want anywhere. You will find the JSON file is deserialized into a tree node inside the application.
+   - Press on `Generate New (English) and Open it` and save JSON file as you want anywhere. You will find the JSON file is deserialized into a tree node inside the application.
 
       ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/0.png?raw=true)
 
@@ -72,7 +72,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 
 > Ignore this if you prefer a a code\text editor
 
-1. Open WinPaletter > Settings > Language > Language Developing Tools > Create\Modify Language Files (Go) > Press on `Generate New (English) and open it` and save JSON file as you want anywhere, or press on `Open From`. You will find the JSON file is deserialized into a tree node inside the application.
+1. Open WinPaletter > Settings > Language > Language Developing Tools > Create\Modify Language Files (Go) > Press on `Generate New (English) and Open it` and save JSON file as you want anywhere, or press on `Open From`. You will find the JSON file is deserialized into a tree node inside the application.
 
 2. JSON file is composed of three main regions: Information, Global Strings & Forms Strings:
    
