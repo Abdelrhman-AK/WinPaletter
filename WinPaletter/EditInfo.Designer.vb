@@ -189,7 +189,6 @@ Partial Class EditInfo
         Me.XenonSeparator1.Size = New System.Drawing.Size(583, 1)
         Me.XenonSeparator1.TabIndex = 17
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonTextBox4
         '

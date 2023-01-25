@@ -56,7 +56,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "LogonUI8Colors".ToLower Then Return LogonUI8Colors
         If Name.ToLower = "LogonUI8_Pics".ToLower Then Return LogonUI8_Pics
         If Name.ToLower = "Start8Selector".ToLower Then Return Start8Selector
-        If Name.ToLower = "cmd".ToLower Then Return cmd
+        If Name.ToLower = "CMD".ToLower Then Return CMD
         If Name.ToLower = "ExternalTerminal".ToLower Then Return ExternalTerminal
         If Name.ToLower = "NewExtTerminal".ToLower Then Return NewExtTerminal
         If Name.ToLower = "TerminalInfo".ToLower Then Return TerminalInfo
@@ -70,7 +70,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Lang_Add_Snippet".ToLower Then Return Lang_Add_Snippet
         If Name.ToLower = "Lang_Dashboard".ToLower Then Return Lang_Dashboard
         If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
-        If Name.ToLower = "LangJSON_Manage".ToLower Then Return LangJSON_Manage
+        If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
     End Function
 
     Public allForms As New List(Of String) From {
@@ -90,7 +90,7 @@ Public Class Localizer : Implements IDisposable
                         "LogonUI8Colors",
                         "LogonUI8_Pics",
                         "Start8Selector",
-                        "cmd",
+                        "CMD",
                         "ExternalTerminal",
                         "NewExtTerminal",
                         "TerminalInfo",
@@ -104,7 +104,7 @@ Public Class Localizer : Implements IDisposable
                         "Lang_Add_Snippet",
                         "Lang_Dashboard",
                         "Lang_JSON_Update",
-                        "LangJSON_Manage"
+                        "Lang_JSON_Manage"
                         }
 
 #Region "Language Info"
@@ -404,6 +404,7 @@ Public Class Localizer : Implements IDisposable
         Dim j_Forms As New JObject()
 
         For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
+            'If allForms.Contains(f.Name) Then
             Dim ins As New Form
             ins = DirectCast(Activator.CreateInstance(f), Form)
 
@@ -422,7 +423,6 @@ Public Class Localizer : Implements IDisposable
                 If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
                     j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
                 End If
-
             Next
 
             If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
@@ -430,6 +430,7 @@ Public Class Localizer : Implements IDisposable
             j_Forms.Add(ins.Name, j_ctrl)
 
             ins.Dispose()
+            'End If
         Next
 
         JSON_Overall.Add("Information", j_info)
@@ -492,50 +493,53 @@ Public Class Localizer : Implements IDisposable
             Value = String.Empty
 
             For Each F In J_Forms
-                Dim J_Specific_Form As New JObject
+                Try
+                    Dim J_Specific_Form As New JObject
 
-                J_Specific_Form = J_Forms(F.Key)
-                FormName = F.Key
-                ControlName = String.Empty
+                    J_Specific_Form = J_Forms(F.Key)
+                    FormName = F.Key
+                    ControlName = String.Empty
 
-                Prop = "Text"
+                    Prop = "Text"
 
-                If J_Specific_Form.ContainsKey("Text") Or J_Specific_Form.ContainsKey("text") Or J_Specific_Form.ContainsKey("TEXT") Then
+                    If J_Specific_Form.ContainsKey("Text") Or J_Specific_Form.ContainsKey("text") Or J_Specific_Form.ContainsKey("TEXT") Then
 
-                    If J_Specific_Form.ContainsKey("Text") Then Value = J_Specific_Form("Text")
-                    If J_Specific_Form.ContainsKey("text") Then Value = J_Specific_Form("text")
-                    If J_Specific_Form.ContainsKey("TEXT") Then Value = J_Specific_Form("TEXT")
+                        If J_Specific_Form.ContainsKey("Text") Then Value = J_Specific_Form("Text")
+                        If J_Specific_Form.ContainsKey("text") Then Value = J_Specific_Form("text")
+                        If J_Specific_Form.ContainsKey("TEXT") Then Value = J_Specific_Form("TEXT")
 
-                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                        PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
 
-                End If
+                    End If
 
-                If J_Specific_Form.ContainsKey("Controls") Or J_Specific_Form.ContainsKey("controls") Or J_Specific_Form.ContainsKey("CONTROLS") Then
+                    If J_Specific_Form.ContainsKey("Controls") Or J_Specific_Form.ContainsKey("controls") Or J_Specific_Form.ContainsKey("CONTROLS") Then
 
-                    Dim J_Controls As New JObject
+                        Dim J_Controls As New JObject
 
-                    If J_Specific_Form.ContainsKey("Controls") Then J_Controls = J_Specific_Form("Controls")
-                    If J_Specific_Form.ContainsKey("controls") Then J_Controls = J_Specific_Form("controls")
-                    If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
+                        If J_Specific_Form.ContainsKey("Controls") Then J_Controls = J_Specific_Form("Controls")
+                        If J_Specific_Form.ContainsKey("controls") Then J_Controls = J_Specific_Form("controls")
+                        If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
 
-                    For Each ctrl In J_Controls
-                        Try
-                            If ctrl.Key.Contains(".") Then
-                                ControlName = ctrl.Key.Split(".")(0)
-                                Prop = ctrl.Key.Split(".")(1)
-                                Value = ctrl.Value
-                                PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-                            Else
-                                ControlName = ctrl.Key
-                                Prop = "Text"
-                                Value = ctrl.Value
-                                PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-                            End If
-                        Catch
-                        End Try
-                    Next
-                End If
+                        For Each ctrl In J_Controls
+                            Try
+                                If ctrl.Key.Contains(".") Then
+                                    ControlName = ctrl.Key.Split(".")(0)
+                                    Prop = ctrl.Key.Split(".")(1)
+                                    Value = ctrl.Value
+                                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                                Else
+                                    ControlName = ctrl.Key
+                                    Prop = "Text"
+                                    Value = ctrl.Value
+                                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                                End If
+                            Catch
+                            End Try
+                        Next
+                    End If
 
+                Catch
+                End Try
             Next
 
             PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))

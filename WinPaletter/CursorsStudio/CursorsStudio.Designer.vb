@@ -305,7 +305,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown4.SelectionStart = 0
         Me.XenonNumericUpDown4.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown4.TabIndex = 66
-        Me.XenonNumericUpDown4.Text = "25"
         Me.XenonNumericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown4.UseSystemPasswordChar = False
         Me.XenonNumericUpDown4.WordWrap = True
@@ -333,7 +332,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
         Me.XenonGroupBox8.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox8.TabIndex = 31
-        Me.XenonGroupBox8.Text = "XenonGroupBox12"
         '
         'XenonGroupBox7
         '
@@ -346,7 +344,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
         Me.XenonGroupBox7.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox7.TabIndex = 33
-        Me.XenonGroupBox7.Text = "XenonGroupBox12"
         '
         'Label7
         '
@@ -480,7 +477,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown1.SelectionStart = 0
         Me.XenonNumericUpDown1.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown1.TabIndex = 65
-        Me.XenonNumericUpDown1.Text = "25"
         Me.XenonNumericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown1.UseSystemPasswordChar = False
         Me.XenonNumericUpDown1.WordWrap = True
@@ -508,7 +504,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox4.TabIndex = 33
-        Me.XenonGroupBox4.Text = "XenonGroupBox12"
         '
         'XenonGroupBox5
         '
@@ -521,7 +516,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox5.TabIndex = 31
-        Me.XenonGroupBox5.Text = "XenonGroupBox12"
         '
         'XenonComboBox2
         '
@@ -646,7 +640,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown2.SelectionStart = 0
         Me.XenonNumericUpDown2.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown2.TabIndex = 64
-        Me.XenonNumericUpDown2.Text = "25"
         Me.XenonNumericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown2.UseSystemPasswordChar = False
         Me.XenonNumericUpDown2.WordWrap = True
@@ -735,7 +728,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox3.TabIndex = 13
-        Me.XenonGroupBox3.Text = "XenonGroupBox12"
         '
         'Label3
         '
@@ -760,7 +752,6 @@ Partial Class CursorsStudio
         Me.TaskbarFrontAndFoldersOnStart_picker.Name = "TaskbarFrontAndFoldersOnStart_picker"
         Me.TaskbarFrontAndFoldersOnStart_picker.Size = New System.Drawing.Size(85, 21)
         Me.TaskbarFrontAndFoldersOnStart_picker.TabIndex = 11
-        Me.TaskbarFrontAndFoldersOnStart_picker.Text = "XenonGroupBox12"
         '
         'Label2
         '
@@ -821,7 +812,6 @@ Partial Class CursorsStudio
         Me.XenonNumericUpDown6.SelectionStart = 0
         Me.XenonNumericUpDown6.Size = New System.Drawing.Size(175, 24)
         Me.XenonNumericUpDown6.TabIndex = 65
-        Me.XenonNumericUpDown6.Text = "25"
         Me.XenonNumericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonNumericUpDown6.UseSystemPasswordChar = False
         Me.XenonNumericUpDown6.WordWrap = True
@@ -910,7 +900,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox9.Name = "XenonGroupBox9"
         Me.XenonGroupBox9.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox9.TabIndex = 13
-        Me.XenonGroupBox9.Text = "XenonGroupBox12"
         '
         'Label8
         '
@@ -935,7 +924,6 @@ Partial Class CursorsStudio
         Me.XenonGroupBox10.Name = "XenonGroupBox10"
         Me.XenonGroupBox10.Size = New System.Drawing.Size(85, 21)
         Me.XenonGroupBox10.TabIndex = 11
-        Me.XenonGroupBox10.Text = "XenonGroupBox12"
         '
         'Label10
         '
@@ -1130,7 +1118,6 @@ Partial Class CursorsStudio
         Me.XenonTrackbar1.Size = New System.Drawing.Size(138, 19)
         Me.XenonTrackbar1.SmallChange = 20
         Me.XenonTrackbar1.TabIndex = 9
-        Me.XenonTrackbar1.Text = "XenonTrackbar1"
         Me.XenonTrackbar1.Value = 100
         '
         'XenonButton1
@@ -1233,7 +1220,6 @@ Partial Class CursorsStudio
         Me.Arrow.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Arrow.Size = New System.Drawing.Size(64, 64)
         Me.Arrow.TabIndex = 5
-        Me.Arrow.Text = "CursorControl1"
         '
         'Help
         '
@@ -1267,7 +1253,6 @@ Partial Class CursorsStudio
         Me.Help.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Help.Size = New System.Drawing.Size(64, 64)
         Me.Help.TabIndex = 6
-        Me.Help.Text = "CursorControl2"
         '
         'AppLoading
         '
@@ -1301,7 +1286,6 @@ Partial Class CursorsStudio
         Me.AppLoading.Prop_SecondaryNoiseOpacity = 0.25!
         Me.AppLoading.Size = New System.Drawing.Size(64, 64)
         Me.AppLoading.TabIndex = 6
-        Me.AppLoading.Text = "CursorControl3"
         '
         'Busy
         '
@@ -1335,7 +1319,6 @@ Partial Class CursorsStudio
         Me.Busy.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Busy.Size = New System.Drawing.Size(64, 64)
         Me.Busy.TabIndex = 7
-        Me.Busy.Text = "CursorControl4"
         '
         'Move_Cur
         '
@@ -1369,7 +1352,6 @@ Partial Class CursorsStudio
         Me.Move_Cur.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Move_Cur.Size = New System.Drawing.Size(64, 64)
         Me.Move_Cur.TabIndex = 8
-        Me.Move_Cur.Text = "CursorControl5"
         '
         'Up
         '
@@ -1403,7 +1385,6 @@ Partial Class CursorsStudio
         Me.Up.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Up.Size = New System.Drawing.Size(64, 64)
         Me.Up.TabIndex = 9
-        Me.Up.Text = "CursorControl6"
         '
         'NS
         '
@@ -1437,7 +1418,6 @@ Partial Class CursorsStudio
         Me.NS.Prop_SecondaryNoiseOpacity = 0.25!
         Me.NS.Size = New System.Drawing.Size(64, 64)
         Me.NS.TabIndex = 10
-        Me.NS.Text = "CursorControl7"
         '
         'EW
         '
@@ -1471,7 +1451,6 @@ Partial Class CursorsStudio
         Me.EW.Prop_SecondaryNoiseOpacity = 0.25!
         Me.EW.Size = New System.Drawing.Size(64, 64)
         Me.EW.TabIndex = 11
-        Me.EW.Text = "CursorControl8"
         '
         'NESW
         '
@@ -1505,7 +1484,6 @@ Partial Class CursorsStudio
         Me.NESW.Prop_SecondaryNoiseOpacity = 0.25!
         Me.NESW.Size = New System.Drawing.Size(64, 64)
         Me.NESW.TabIndex = 12
-        Me.NESW.Text = "CursorControl9"
         '
         'NWSE
         '
@@ -1539,7 +1517,6 @@ Partial Class CursorsStudio
         Me.NWSE.Prop_SecondaryNoiseOpacity = 0.25!
         Me.NWSE.Size = New System.Drawing.Size(64, 64)
         Me.NWSE.TabIndex = 13
-        Me.NWSE.Text = "CursorControl10"
         '
         'Pen
         '
@@ -1573,7 +1550,6 @@ Partial Class CursorsStudio
         Me.Pen.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Pen.Size = New System.Drawing.Size(64, 64)
         Me.Pen.TabIndex = 14
-        Me.Pen.Text = "CursorControl11"
         '
         'None
         '
@@ -1607,7 +1583,6 @@ Partial Class CursorsStudio
         Me.None.Prop_SecondaryNoiseOpacity = 0.25!
         Me.None.Size = New System.Drawing.Size(64, 64)
         Me.None.TabIndex = 15
-        Me.None.Text = "CursorControl12"
         '
         'Link
         '
@@ -1641,7 +1616,6 @@ Partial Class CursorsStudio
         Me.Link.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Link.Size = New System.Drawing.Size(64, 64)
         Me.Link.TabIndex = 16
-        Me.Link.Text = "CursorControl13"
         '
         'Pin
         '
@@ -1675,7 +1649,6 @@ Partial Class CursorsStudio
         Me.Pin.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Pin.Size = New System.Drawing.Size(64, 64)
         Me.Pin.TabIndex = 17
-        Me.Pin.Text = "CursorControl14"
         '
         'Person
         '
@@ -1709,7 +1682,6 @@ Partial Class CursorsStudio
         Me.Person.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Person.Size = New System.Drawing.Size(64, 64)
         Me.Person.TabIndex = 18
-        Me.Person.Text = "CursorControl15"
         '
         'IBeam
         '
@@ -1743,7 +1715,6 @@ Partial Class CursorsStudio
         Me.IBeam.Prop_SecondaryNoiseOpacity = 0.25!
         Me.IBeam.Size = New System.Drawing.Size(64, 64)
         Me.IBeam.TabIndex = 19
-        Me.IBeam.Text = "CursorControl16"
         '
         'Cross
         '
@@ -1777,7 +1748,6 @@ Partial Class CursorsStudio
         Me.Cross.Prop_SecondaryNoiseOpacity = 0.25!
         Me.Cross.Size = New System.Drawing.Size(64, 64)
         Me.Cross.TabIndex = 20
-        Me.Cross.Text = "CursorControl17"
         '
         'XenonButton11
         '

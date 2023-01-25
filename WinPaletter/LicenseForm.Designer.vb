@@ -38,7 +38,7 @@ Partial Class LicenseForm
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(424, 428)
+        Me.XenonButton2.Location = New System.Drawing.Point(541, 428)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(111, 36)
         Me.XenonButton2.TabIndex = 3
@@ -54,7 +54,7 @@ Partial Class LicenseForm
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(541, 428)
+        Me.XenonButton1.Location = New System.Drawing.Point(424, 428)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(111, 36)
         Me.XenonButton1.TabIndex = 2
@@ -70,7 +70,6 @@ Partial Class LicenseForm
         Me.XenonSeparator1.Size = New System.Drawing.Size(640, 1)
         Me.XenonSeparator1.TabIndex = 1
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonTextBox1
         '
@@ -85,10 +84,15 @@ Partial Class LicenseForm
         Me.XenonTextBox1.Multiline = True
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = True
+        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox1.SelectedText = ""
+        Me.XenonTextBox1.SelectionLength = 0
+        Me.XenonTextBox1.SelectionStart = 0
         Me.XenonTextBox1.Size = New System.Drawing.Size(640, 395)
         Me.XenonTextBox1.TabIndex = 0
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
+        Me.XenonTextBox1.WordWrap = True
         '
         'LicenseForm
         '

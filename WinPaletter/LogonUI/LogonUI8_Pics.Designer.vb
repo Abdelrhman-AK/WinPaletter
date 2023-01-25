@@ -44,6 +44,7 @@ Partial Class LogonUI8_Pics
         Me.img4.Image = Nothing
         Me.img4.Location = New System.Drawing.Point(146, 187)
         Me.img4.Name = "img4"
+        Me.img4.ShowText = False
         Me.img4.Size = New System.Drawing.Size(128, 128)
         Me.img4.TabIndex = 41
         '
@@ -55,6 +56,7 @@ Partial Class LogonUI8_Pics
         Me.img2.Image = Nothing
         Me.img2.Location = New System.Drawing.Point(280, 53)
         Me.img2.Name = "img2"
+        Me.img2.ShowText = False
         Me.img2.Size = New System.Drawing.Size(128, 128)
         Me.img2.TabIndex = 40
         '
@@ -66,6 +68,7 @@ Partial Class LogonUI8_Pics
         Me.img3.Image = Nothing
         Me.img3.Location = New System.Drawing.Point(12, 187)
         Me.img3.Name = "img3"
+        Me.img3.ShowText = False
         Me.img3.Size = New System.Drawing.Size(128, 128)
         Me.img3.TabIndex = 39
         '
@@ -77,6 +80,7 @@ Partial Class LogonUI8_Pics
         Me.img1.Image = Nothing
         Me.img1.Location = New System.Drawing.Point(146, 53)
         Me.img1.Name = "img1"
+        Me.img1.ShowText = False
         Me.img1.Size = New System.Drawing.Size(128, 128)
         Me.img1.TabIndex = 38
         '
@@ -88,6 +92,7 @@ Partial Class LogonUI8_Pics
         Me.img0.Image = Nothing
         Me.img0.Location = New System.Drawing.Point(12, 53)
         Me.img0.Name = "img0"
+        Me.img0.ShowText = False
         Me.img0.Size = New System.Drawing.Size(128, 128)
         Me.img0.TabIndex = 37
         '
@@ -122,6 +127,7 @@ Partial Class LogonUI8_Pics
         Me.img5.Image = Nothing
         Me.img5.Location = New System.Drawing.Point(280, 187)
         Me.img5.Name = "img5"
+        Me.img5.ShowText = False
         Me.img5.Size = New System.Drawing.Size(128, 128)
         Me.img5.TabIndex = 42
         '

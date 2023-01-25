@@ -362,7 +362,6 @@ Partial Class SettingsX
         Me.XenonSeparator2.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator2.TabIndex = 18
         Me.XenonSeparator2.TabStop = False
-        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'PictureBox9
         '
@@ -475,16 +474,16 @@ Partial Class SettingsX
         '
         'XenonAlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
         Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(121, 411)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(121, 392)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(500, 24)
         Me.XenonAlertBox2.TabIndex = 41
@@ -501,9 +500,9 @@ Partial Class SettingsX
         Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(5, Byte), Integer), CType(CType(62, Byte), Integer), CType(CType(98, Byte), Integer))
         Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(287, 115)
+        Me.XenonButton11.Location = New System.Drawing.Point(377, 115)
         Me.XenonButton11.Name = "XenonButton11"
-        Me.XenonButton11.Size = New System.Drawing.Size(201, 24)
+        Me.XenonButton11.Size = New System.Drawing.Size(244, 24)
         Me.XenonButton11.TabIndex = 40
         Me.XenonButton11.Text = "Language Developing Tools"
         Me.XenonButton11.UseVisualStyleBackColor = False
@@ -541,7 +540,7 @@ Partial Class SettingsX
         Me.XenonButton10.LineSize = 1
         Me.XenonButton10.Location = New System.Drawing.Point(121, 115)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(160, 24)
+        Me.XenonButton10.Size = New System.Drawing.Size(250, 24)
         Me.XenonButton10.TabIndex = 32
         Me.XenonButton10.Text = "Download language"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -557,23 +556,23 @@ Partial Class SettingsX
         Me.XenonButton8.LineSize = 1
         Me.XenonButton8.Location = New System.Drawing.Point(121, 145)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(367, 24)
+        Me.XenonButton8.Size = New System.Drawing.Size(500, 24)
         Me.XenonButton8.TabIndex = 31
         Me.XenonButton8.Text = "See how to contribute in language development"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonAlertBox9
         '
-        Me.XenonAlertBox9.AlertStyle = WinPaletter.XenonAlertBox.Style.Informations
+        Me.XenonAlertBox9.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
         Me.XenonAlertBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(120, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
         Me.XenonAlertBox9.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox9.CenterText = True
         Me.XenonAlertBox9.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox9.Image = Nothing
-        Me.XenonAlertBox9.Location = New System.Drawing.Point(121, 381)
+        Me.XenonAlertBox9.Location = New System.Drawing.Point(121, 362)
         Me.XenonAlertBox9.Name = "XenonAlertBox9"
         Me.XenonAlertBox9.Size = New System.Drawing.Size(500, 24)
         Me.XenonAlertBox9.TabIndex = 30
@@ -855,7 +854,6 @@ Partial Class SettingsX
         Me.XenonSeparator8.Size = New System.Drawing.Size(806, 1)
         Me.XenonSeparator8.TabIndex = 22
         Me.XenonSeparator8.TabStop = False
-        Me.XenonSeparator8.Text = "XenonSeparator8"
         '
         'PictureBox16
         '
@@ -1112,7 +1110,6 @@ Partial Class SettingsX
         Me.XenonSeparator1.Size = New System.Drawing.Size(800, 1)
         Me.XenonSeparator1.TabIndex = 22
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'PictureBox36
         '
@@ -1145,7 +1142,6 @@ Partial Class SettingsX
         Me.XenonSeparator5.Size = New System.Drawing.Size(800, 1)
         Me.XenonSeparator5.TabIndex = 19
         Me.XenonSeparator5.TabStop = False
-        Me.XenonSeparator5.Text = "XenonSeparator5"
         '
         'PictureBox10
         '
@@ -1286,7 +1282,6 @@ Partial Class SettingsX
         Me.XenonSeparator4.Size = New System.Drawing.Size(799, 1)
         Me.XenonSeparator4.TabIndex = 19
         Me.XenonSeparator4.TabStop = False
-        Me.XenonSeparator4.Text = "XenonSeparator4"
         '
         'PictureBox17
         '
@@ -1358,7 +1353,7 @@ Partial Class SettingsX
         'XenonAlertBox1
         '
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Success
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(79, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = True
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1431,7 +1426,7 @@ Partial Class SettingsX
         Me.XenonAlertBox_Themelog.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox_Themelog.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox_Themelog.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.XenonAlertBox_Themelog.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonAlertBox_Themelog.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox_Themelog.CenterText = True
         Me.XenonAlertBox_Themelog.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1522,7 +1517,6 @@ Partial Class SettingsX
         Me.XenonSeparator10.Size = New System.Drawing.Size(799, 1)
         Me.XenonSeparator10.TabIndex = 22
         Me.XenonSeparator10.TabStop = False
-        Me.XenonSeparator10.Text = "XenonSeparator10"
         '
         'PictureBox38
         '
@@ -1572,7 +1566,7 @@ Partial Class SettingsX
         'PictureBox35
         '
         Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
-        Me.PictureBox35.Location = New System.Drawing.Point(43, 191)
+        Me.PictureBox35.Location = New System.Drawing.Point(44, 191)
         Me.PictureBox35.Name = "PictureBox35"
         Me.PictureBox35.Size = New System.Drawing.Size(30, 26)
         Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1587,7 +1581,7 @@ Partial Class SettingsX
         Me.XenonCheckBox16.Checked = False
         Me.XenonCheckBox16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox16.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox16.Location = New System.Drawing.Point(77, 191)
+        Me.XenonCheckBox16.Location = New System.Drawing.Point(75, 191)
         Me.XenonCheckBox16.Name = "XenonCheckBox16"
         Me.XenonCheckBox16.Size = New System.Drawing.Size(607, 26)
         Me.XenonCheckBox16.TabIndex = 26
@@ -1597,7 +1591,7 @@ Partial Class SettingsX
         'PictureBox37
         '
         Me.PictureBox37.Image = CType(resources.GetObject("PictureBox37.Image"), System.Drawing.Image)
-        Me.PictureBox37.Location = New System.Drawing.Point(41, 234)
+        Me.PictureBox37.Location = New System.Drawing.Point(41, 223)
         Me.PictureBox37.Name = "PictureBox37"
         Me.PictureBox37.Size = New System.Drawing.Size(30, 26)
         Me.PictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1612,7 +1606,7 @@ Partial Class SettingsX
         Me.XenonCheckBox17.Checked = True
         Me.XenonCheckBox17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox17.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox17.Location = New System.Drawing.Point(77, 234)
+        Me.XenonCheckBox17.Location = New System.Drawing.Point(77, 223)
         Me.XenonCheckBox17.Name = "XenonCheckBox17"
         Me.XenonCheckBox17.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox17.TabIndex = 24
@@ -1620,10 +1614,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox6
         '
-        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(83, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox6.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox6.CenterText = True
         Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1671,7 +1665,6 @@ Partial Class SettingsX
         Me.XenonSeparator6.Size = New System.Drawing.Size(800, 1)
         Me.XenonSeparator6.TabIndex = 19
         Me.XenonSeparator6.TabStop = False
-        Me.XenonSeparator6.Text = "XenonSeparator6"
         '
         'PictureBox8
         '
@@ -1697,10 +1690,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox3
         '
-        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(83, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox3.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox3.CenterText = True
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1896,10 +1889,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox13
         '
-        Me.XenonAlertBox13.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox13.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox13.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox13.CenterText = True
         Me.XenonAlertBox13.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1959,10 +1952,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox12
         '
-        Me.XenonAlertBox12.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox12.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(83, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox12.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox12.CenterText = True
         Me.XenonAlertBox12.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1977,10 +1970,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox11
         '
-        Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox11.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox11.CenterText = True
         Me.XenonAlertBox11.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -2020,10 +2013,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox10
         '
-        Me.XenonAlertBox10.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox10.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox10.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox10.CenterText = True
         Me.XenonAlertBox10.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -2039,10 +2032,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox8
         '
-        Me.XenonAlertBox8.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox8.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(3, Byte), Integer), CType(CType(83, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox8.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox8.CenterText = True
         Me.XenonAlertBox8.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -2089,7 +2082,6 @@ Partial Class SettingsX
         Me.XenonSeparator3.Size = New System.Drawing.Size(800, 1)
         Me.XenonSeparator3.TabIndex = 21
         Me.XenonSeparator3.TabStop = False
-        Me.XenonSeparator3.Text = "XenonSeparator3"
         '
         'PictureBox28
         '
@@ -2135,10 +2127,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox7
         '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox7.CenterText = True
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -2242,7 +2234,6 @@ Partial Class SettingsX
         Me.XenonSeparator7.Size = New System.Drawing.Size(800, 1)
         Me.XenonSeparator7.TabIndex = 19
         Me.XenonSeparator7.TabStop = False
-        Me.XenonSeparator7.Text = "XenonSeparator7"
         '
         'PictureBox13
         '

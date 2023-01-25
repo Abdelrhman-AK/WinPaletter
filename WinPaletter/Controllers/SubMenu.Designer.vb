@@ -31,6 +31,11 @@ Partial Class SubMenu
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
@@ -44,11 +49,6 @@ Partial Class SubMenu
         Me.InvertedColor = New WinPaletter.XenonCP()
         Me.DefaultColor = New WinPaletter.XenonCP()
         Me.MainColor = New WinPaletter.XenonCP()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -136,6 +136,79 @@ Partial Class SubMenu
         Me.Panel1.Size = New System.Drawing.Size(413, 37)
         Me.Panel1.TabIndex = 64
         '
+        'XenonButton2
+        '
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(77, Byte), Integer))
+        Me.XenonButton2.LineSize = 1
+        Me.XenonButton2.Location = New System.Drawing.Point(4, 4)
+        Me.XenonButton2.Name = "XenonButton2"
+        Me.XenonButton2.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton2.TabIndex = 1
+        Me.XenonButton2.UseVisualStyleBackColor = False
+        '
+        'XenonButton1
+        '
+        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton1.ForeColor = System.Drawing.Color.White
+        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
+        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer))
+        Me.XenonButton1.LineSize = 1
+        Me.XenonButton1.Location = New System.Drawing.Point(36, 4)
+        Me.XenonButton1.Name = "XenonButton1"
+        Me.XenonButton1.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton1.TabIndex = 0
+        Me.XenonButton1.UseVisualStyleBackColor = False
+        '
+        'XenonButton3
+        '
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.XenonButton3.Enabled = False
+        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton3.ForeColor = System.Drawing.Color.White
+        Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(145, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.XenonButton3.LineSize = 1
+        Me.XenonButton3.Location = New System.Drawing.Point(68, 4)
+        Me.XenonButton3.Name = "XenonButton3"
+        Me.XenonButton3.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton3.TabIndex = 2
+        Me.XenonButton3.UseVisualStyleBackColor = False
+        '
+        'XenonComboBox1
+        '
+        Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox1.CustomFont = False
+        Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox1.FormattingEnabled = True
+        Me.XenonComboBox1.ItemHeight = 20
+        Me.XenonComboBox1.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
+        Me.XenonComboBox1.Location = New System.Drawing.Point(200, 7)
+        Me.XenonComboBox1.Name = "XenonComboBox1"
+        Me.XenonComboBox1.Size = New System.Drawing.Size(207, 26)
+        Me.XenonComboBox1.TabIndex = 47
+        '
+        'XenonButton5
+        '
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(149, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(100, 4)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(30, 30)
+        Me.XenonButton5.TabIndex = 55
+        Me.XenonButton5.UseVisualStyleBackColor = False
+        '
         'XenonSeparator1
         '
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 198)
@@ -143,7 +216,6 @@ Partial Class SubMenu
         Me.XenonSeparator1.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator1.TabIndex = 68
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonButton8
         '
@@ -197,7 +269,6 @@ Partial Class SubMenu
         Me.XenonTrackbar3.Size = New System.Drawing.Size(145, 19)
         Me.XenonTrackbar3.SmallChange = 1
         Me.XenonTrackbar3.TabIndex = 60
-        Me.XenonTrackbar3.Text = "XenonTrackbar3"
         Me.XenonTrackbar3.Value = 100
         '
         'XenonTrackbar2
@@ -210,7 +281,6 @@ Partial Class SubMenu
         Me.XenonTrackbar2.Size = New System.Drawing.Size(145, 19)
         Me.XenonTrackbar2.SmallChange = 1
         Me.XenonTrackbar2.TabIndex = 59
-        Me.XenonTrackbar2.Text = "XenonTrackbar2"
         Me.XenonTrackbar2.Value = 100
         '
         'XenonTrackbar1
@@ -223,7 +293,6 @@ Partial Class SubMenu
         Me.XenonTrackbar1.Size = New System.Drawing.Size(145, 19)
         Me.XenonTrackbar1.SmallChange = 1
         Me.XenonTrackbar1.TabIndex = 57
-        Me.XenonTrackbar1.Text = "XenonTrackbar1"
         Me.XenonTrackbar1.Value = 100
         '
         'XenonSeparator2
@@ -233,7 +302,6 @@ Partial Class SubMenu
         Me.XenonSeparator2.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator2.TabIndex = 48
         Me.XenonSeparator2.TabStop = False
-        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'XenonButton4
         '
@@ -259,7 +327,6 @@ Partial Class SubMenu
         Me.XenonSeparator3.Size = New System.Drawing.Size(176, 1)
         Me.XenonSeparator3.TabIndex = 44
         Me.XenonSeparator3.TabStop = False
-        Me.XenonSeparator3.Text = "XenonSeparator3"
         '
         'InvertedColor
         '
@@ -271,7 +338,6 @@ Partial Class SubMenu
         Me.InvertedColor.Name = "InvertedColor"
         Me.InvertedColor.Size = New System.Drawing.Size(85, 20)
         Me.InvertedColor.TabIndex = 25
-        Me.InvertedColor.Text = "XenonGroupBox15"
         '
         'DefaultColor
         '
@@ -283,7 +349,6 @@ Partial Class SubMenu
         Me.DefaultColor.Name = "DefaultColor"
         Me.DefaultColor.Size = New System.Drawing.Size(85, 20)
         Me.DefaultColor.TabIndex = 19
-        Me.DefaultColor.Text = "XenonGroupBox15"
         '
         'MainColor
         '
@@ -295,79 +360,6 @@ Partial Class SubMenu
         Me.MainColor.Name = "MainColor"
         Me.MainColor.Size = New System.Drawing.Size(85, 20)
         Me.MainColor.TabIndex = 4
-        Me.MainColor.Text = "XenonGroupBox15"
-        '
-        'XenonButton2
-        '
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(44, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(4, 4)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(30, 30)
-        Me.XenonButton2.TabIndex = 1
-        Me.XenonButton2.UseVisualStyleBackColor = False
-        '
-        'XenonButton1
-        '
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer))
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer), CType(CType(177, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(36, 4)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(30, 30)
-        Me.XenonButton1.TabIndex = 0
-        Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'XenonButton3
-        '
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer))
-        Me.XenonButton3.Enabled = False
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(145, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(68, 4)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(30, 30)
-        Me.XenonButton3.TabIndex = 2
-        Me.XenonButton3.UseVisualStyleBackColor = False
-        '
-        'XenonComboBox1
-        '
-        Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonComboBox1.CustomFont = False
-        Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox1.FormattingEnabled = True
-        Me.XenonComboBox1.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
-        Me.XenonComboBox1.Location = New System.Drawing.Point(200, 7)
-        Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(207, 24)
-        Me.XenonComboBox1.TabIndex = 47
-        '
-        'XenonButton5
-        '
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer))
-        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(149, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(100, 4)
-        Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(30, 30)
-        Me.XenonButton5.TabIndex = 55
-        Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'SubMenu
         '

@@ -181,7 +181,6 @@ Partial Class LogonUI7
         Me.XenonTrackbar2.Size = New System.Drawing.Size(127, 19)
         Me.XenonTrackbar2.SmallChange = 1
         Me.XenonTrackbar2.TabIndex = 93
-        Me.XenonTrackbar2.Text = "XenonTrackbar2"
         Me.XenonTrackbar2.Value = 50
         '
         'XenonTrackbar1
@@ -194,7 +193,6 @@ Partial Class LogonUI7
         Me.XenonTrackbar1.Size = New System.Drawing.Size(128, 19)
         Me.XenonTrackbar1.SmallChange = 1
         Me.XenonTrackbar1.TabIndex = 67
-        Me.XenonTrackbar1.Text = "XenonTrackbar1"
         Me.XenonTrackbar1.Value = 1
         '
         'PictureBox10
@@ -317,7 +315,7 @@ Partial Class LogonUI7
         Me.XenonGroupBox1.Controls.Add(Me.Label16)
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(324, 31)
+        Me.XenonGroupBox1.Size = New System.Drawing.Size(324, 32)
         Me.XenonGroupBox1.TabIndex = 16
         '
         'PictureBox1
@@ -327,7 +325,7 @@ Partial Class LogonUI7
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(25, 25)
+        Me.PictureBox1.Size = New System.Drawing.Size(25, 26)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox1.TabIndex = 17
         Me.PictureBox1.TabStop = False
@@ -339,7 +337,7 @@ Partial Class LogonUI7
         Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonToggle1.Checked = False
         Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(279, 5)
+        Me.XenonToggle1.Location = New System.Drawing.Point(279, 6)
         Me.XenonToggle1.Name = "XenonToggle1"
         Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
         Me.XenonToggle1.TabIndex = 82
@@ -352,7 +350,7 @@ Partial Class LogonUI7
         Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(32, 3)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(233, 25)
+        Me.Label16.Size = New System.Drawing.Size(233, 26)
         Me.Label16.TabIndex = 81
         Me.Label16.Text = "Enabled ?"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -369,7 +367,6 @@ Partial Class LogonUI7
         Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox8.Size = New System.Drawing.Size(536, 342)
         Me.XenonGroupBox8.TabIndex = 15
-        Me.XenonGroupBox8.Text = "XenonGroupBox8"
         '
         'PictureBox41
         '
@@ -501,7 +498,6 @@ Partial Class LogonUI7
         Me.color_pick.Name = "color_pick"
         Me.color_pick.Size = New System.Drawing.Size(97, 25)
         Me.color_pick.TabIndex = 88
-        Me.color_pick.Text = "XenonGroupBox31"
         '
         'XenonTextBox1
         '

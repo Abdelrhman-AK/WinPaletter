@@ -340,7 +340,6 @@ Partial Class ColorPickerDlg
         Me.XenonSeparator1.Size = New System.Drawing.Size(447, 1)
         Me.XenonSeparator1.TabIndex = 11
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonButton4
         '
@@ -368,6 +367,9 @@ Partial Class ColorPickerDlg
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = False
         Me.TextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.TextBox1.SelectedText = ""
+        Me.TextBox1.SelectionLength = 0
+        Me.TextBox1.SelectionStart = 0
         Me.TextBox1.Size = New System.Drawing.Size(264, 24)
         Me.TextBox1.TabIndex = 9
         Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -566,7 +568,6 @@ Partial Class ColorPickerDlg
         Me.XenonSeparator2.Size = New System.Drawing.Size(447, 1)
         Me.XenonSeparator2.TabIndex = 29
         Me.XenonSeparator2.TabStop = False
-        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'TabPage3
         '
@@ -608,7 +609,6 @@ Partial Class ColorPickerDlg
         Me.XenonSeparator3.Size = New System.Drawing.Size(434, 1)
         Me.XenonSeparator3.TabIndex = 81
         Me.XenonSeparator3.TabStop = False
-        Me.XenonSeparator3.Text = "XenonSeparator3"
         '
         'Label8
         '
@@ -646,9 +646,10 @@ Partial Class ColorPickerDlg
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
+        Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.Location = New System.Drawing.Point(142, 85)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(226, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(226, 26)
         Me.XenonComboBox1.TabIndex = 77
         '
         'PictureBox33
@@ -700,6 +701,9 @@ Partial Class ColorPickerDlg
         Me.XenonTextBox1.Name = "XenonTextBox1"
         Me.XenonTextBox1.ReadOnly = False
         Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox1.SelectedText = ""
+        Me.XenonTextBox1.SelectionLength = 0
+        Me.XenonTextBox1.SelectionStart = 0
         Me.XenonTextBox1.Size = New System.Drawing.Size(184, 24)
         Me.XenonTextBox1.TabIndex = 29
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -772,10 +776,11 @@ Partial Class ColorPickerDlg
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
+        Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Your Current Palette", "Windows 11 Palette", "Windows 10 Palette", "Windows 8.1 Palette", "Windows 7 Palette"})
         Me.XenonComboBox2.Location = New System.Drawing.Point(8, 47)
         Me.XenonComboBox2.Name = "XenonComboBox2"
-        Me.XenonComboBox2.Size = New System.Drawing.Size(442, 24)
+        Me.XenonComboBox2.Size = New System.Drawing.Size(442, 26)
         Me.XenonComboBox2.TabIndex = 49
         '
         'PaletteContainer

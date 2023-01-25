@@ -119,6 +119,7 @@ Partial Class LogonUI8Colors
         Me.color24.Image = Nothing
         Me.color24.Location = New System.Drawing.Point(284, 245)
         Me.color24.Name = "color24"
+        Me.color24.ShowText = False
         Me.color24.Size = New System.Drawing.Size(40, 40)
         Me.color24.TabIndex = 54
         '
@@ -130,6 +131,7 @@ Partial Class LogonUI8Colors
         Me.color23.Image = Nothing
         Me.color23.Location = New System.Drawing.Point(238, 245)
         Me.color23.Name = "color23"
+        Me.color23.ShowText = False
         Me.color23.Size = New System.Drawing.Size(40, 40)
         Me.color23.TabIndex = 53
         '
@@ -141,6 +143,7 @@ Partial Class LogonUI8Colors
         Me.color22.Image = Nothing
         Me.color22.Location = New System.Drawing.Point(192, 245)
         Me.color22.Name = "color22"
+        Me.color22.ShowText = False
         Me.color22.Size = New System.Drawing.Size(40, 40)
         Me.color22.TabIndex = 52
         '
@@ -152,6 +155,7 @@ Partial Class LogonUI8Colors
         Me.color21.Image = Nothing
         Me.color21.Location = New System.Drawing.Point(146, 245)
         Me.color21.Name = "color21"
+        Me.color21.ShowText = False
         Me.color21.Size = New System.Drawing.Size(40, 40)
         Me.color21.TabIndex = 51
         '
@@ -163,6 +167,7 @@ Partial Class LogonUI8Colors
         Me.color20.Image = Nothing
         Me.color20.Location = New System.Drawing.Point(100, 245)
         Me.color20.Name = "color20"
+        Me.color20.ShowText = False
         Me.color20.Size = New System.Drawing.Size(40, 40)
         Me.color20.TabIndex = 50
         '
@@ -174,6 +179,7 @@ Partial Class LogonUI8Colors
         Me.color19.Image = Nothing
         Me.color19.Location = New System.Drawing.Point(284, 199)
         Me.color19.Name = "color19"
+        Me.color19.ShowText = False
         Me.color19.Size = New System.Drawing.Size(40, 40)
         Me.color19.TabIndex = 49
         '
@@ -185,6 +191,7 @@ Partial Class LogonUI8Colors
         Me.color18.Image = Nothing
         Me.color18.Location = New System.Drawing.Point(238, 199)
         Me.color18.Name = "color18"
+        Me.color18.ShowText = False
         Me.color18.Size = New System.Drawing.Size(40, 40)
         Me.color18.TabIndex = 48
         '
@@ -196,6 +203,7 @@ Partial Class LogonUI8Colors
         Me.color17.Image = Nothing
         Me.color17.Location = New System.Drawing.Point(192, 199)
         Me.color17.Name = "color17"
+        Me.color17.ShowText = False
         Me.color17.Size = New System.Drawing.Size(40, 40)
         Me.color17.TabIndex = 47
         '
@@ -207,6 +215,7 @@ Partial Class LogonUI8Colors
         Me.color16.Image = Nothing
         Me.color16.Location = New System.Drawing.Point(146, 199)
         Me.color16.Name = "color16"
+        Me.color16.ShowText = False
         Me.color16.Size = New System.Drawing.Size(40, 40)
         Me.color16.TabIndex = 46
         '
@@ -218,6 +227,7 @@ Partial Class LogonUI8Colors
         Me.color15.Image = Nothing
         Me.color15.Location = New System.Drawing.Point(100, 199)
         Me.color15.Name = "color15"
+        Me.color15.ShowText = False
         Me.color15.Size = New System.Drawing.Size(40, 40)
         Me.color15.TabIndex = 45
         '
@@ -229,6 +239,7 @@ Partial Class LogonUI8Colors
         Me.color14.Image = Nothing
         Me.color14.Location = New System.Drawing.Point(284, 153)
         Me.color14.Name = "color14"
+        Me.color14.ShowText = False
         Me.color14.Size = New System.Drawing.Size(40, 40)
         Me.color14.TabIndex = 44
         '
@@ -240,6 +251,7 @@ Partial Class LogonUI8Colors
         Me.color13.Image = Nothing
         Me.color13.Location = New System.Drawing.Point(238, 153)
         Me.color13.Name = "color13"
+        Me.color13.ShowText = False
         Me.color13.Size = New System.Drawing.Size(40, 40)
         Me.color13.TabIndex = 43
         '
@@ -251,6 +263,7 @@ Partial Class LogonUI8Colors
         Me.color12.Image = Nothing
         Me.color12.Location = New System.Drawing.Point(192, 153)
         Me.color12.Name = "color12"
+        Me.color12.ShowText = False
         Me.color12.Size = New System.Drawing.Size(40, 40)
         Me.color12.TabIndex = 42
         '
@@ -262,6 +275,7 @@ Partial Class LogonUI8Colors
         Me.color11.Image = Nothing
         Me.color11.Location = New System.Drawing.Point(146, 153)
         Me.color11.Name = "color11"
+        Me.color11.ShowText = False
         Me.color11.Size = New System.Drawing.Size(40, 40)
         Me.color11.TabIndex = 41
         '
@@ -273,6 +287,7 @@ Partial Class LogonUI8Colors
         Me.color10.Image = Nothing
         Me.color10.Location = New System.Drawing.Point(100, 153)
         Me.color10.Name = "color10"
+        Me.color10.ShowText = False
         Me.color10.Size = New System.Drawing.Size(40, 40)
         Me.color10.TabIndex = 40
         '
@@ -284,6 +299,7 @@ Partial Class LogonUI8Colors
         Me.color9.Image = Nothing
         Me.color9.Location = New System.Drawing.Point(284, 107)
         Me.color9.Name = "color9"
+        Me.color9.ShowText = False
         Me.color9.Size = New System.Drawing.Size(40, 40)
         Me.color9.TabIndex = 39
         '
@@ -295,6 +311,7 @@ Partial Class LogonUI8Colors
         Me.color8.Image = Nothing
         Me.color8.Location = New System.Drawing.Point(238, 107)
         Me.color8.Name = "color8"
+        Me.color8.ShowText = False
         Me.color8.Size = New System.Drawing.Size(40, 40)
         Me.color8.TabIndex = 38
         '
@@ -306,6 +323,7 @@ Partial Class LogonUI8Colors
         Me.color7.Image = Nothing
         Me.color7.Location = New System.Drawing.Point(192, 107)
         Me.color7.Name = "color7"
+        Me.color7.ShowText = False
         Me.color7.Size = New System.Drawing.Size(40, 40)
         Me.color7.TabIndex = 37
         '
@@ -317,6 +335,7 @@ Partial Class LogonUI8Colors
         Me.color6.Image = Nothing
         Me.color6.Location = New System.Drawing.Point(146, 107)
         Me.color6.Name = "color6"
+        Me.color6.ShowText = False
         Me.color6.Size = New System.Drawing.Size(40, 40)
         Me.color6.TabIndex = 36
         '
@@ -329,6 +348,7 @@ Partial Class LogonUI8Colors
         Me.color5.Image = Nothing
         Me.color5.Location = New System.Drawing.Point(100, 107)
         Me.color5.Name = "color5"
+        Me.color5.ShowText = False
         Me.color5.Size = New System.Drawing.Size(40, 40)
         Me.color5.TabIndex = 35
         '
@@ -340,6 +360,7 @@ Partial Class LogonUI8Colors
         Me.color4.Image = Nothing
         Me.color4.Location = New System.Drawing.Point(284, 61)
         Me.color4.Name = "color4"
+        Me.color4.ShowText = False
         Me.color4.Size = New System.Drawing.Size(40, 40)
         Me.color4.TabIndex = 34
         '
@@ -351,6 +372,7 @@ Partial Class LogonUI8Colors
         Me.color3.Image = Nothing
         Me.color3.Location = New System.Drawing.Point(238, 61)
         Me.color3.Name = "color3"
+        Me.color3.ShowText = False
         Me.color3.Size = New System.Drawing.Size(40, 40)
         Me.color3.TabIndex = 33
         '
@@ -362,6 +384,7 @@ Partial Class LogonUI8Colors
         Me.color2.Image = Nothing
         Me.color2.Location = New System.Drawing.Point(192, 61)
         Me.color2.Name = "color2"
+        Me.color2.ShowText = False
         Me.color2.Size = New System.Drawing.Size(40, 40)
         Me.color2.TabIndex = 32
         '
@@ -373,6 +396,7 @@ Partial Class LogonUI8Colors
         Me.color1.Image = Nothing
         Me.color1.Location = New System.Drawing.Point(146, 61)
         Me.color1.Name = "color1"
+        Me.color1.ShowText = False
         Me.color1.Size = New System.Drawing.Size(40, 40)
         Me.color1.TabIndex = 31
         '
@@ -384,6 +408,7 @@ Partial Class LogonUI8Colors
         Me.color0.Image = Nothing
         Me.color0.Location = New System.Drawing.Point(100, 61)
         Me.color0.Name = "color0"
+        Me.color0.ShowText = False
         Me.color0.Size = New System.Drawing.Size(40, 40)
         Me.color0.TabIndex = 30
         '

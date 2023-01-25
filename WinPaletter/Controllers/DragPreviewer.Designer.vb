@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class dragPreviewer
+Partial Class DragPreviewer
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class dragPreviewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(dragPreviewer))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DragPreviewer))
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.ActionCenter = New WinPaletter.XenonAcrylic()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
@@ -88,7 +88,7 @@ Partial Class dragPreviewer
         '
         'pnl_preview
         '
-        Me.pnl_preview.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.pnl_preview.BackColor = System.Drawing.Color.Black
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnl_preview.Controls.Add(Me.ActionCenter)
         Me.pnl_preview.Controls.Add(Me.XenonWindow1)
@@ -342,7 +342,7 @@ Partial Class dragPreviewer
         Me.pnlRetroPreview.Size = New System.Drawing.Size(344, 297)
         Me.pnlRetroPreview.TabIndex = 13
         '
-        'Menu
+        'Menu_Window
         '
         Me.Menu_Window.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu_Window.ButtonDkShadow = System.Drawing.Color.Black
@@ -949,7 +949,7 @@ Partial Class dragPreviewer
         Me.RetroButton9.UseVisualStyleBackColor = False
         Me.RetroButton9.WindowFrame = System.Drawing.Color.Black
         '
-        'dragPreviewer
+        'DragPreviewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -965,7 +965,7 @@ Partial Class dragPreviewer
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "dragPreviewer"
+        Me.Name = "DragPreviewer"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

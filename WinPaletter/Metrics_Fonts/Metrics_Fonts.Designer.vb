@@ -156,6 +156,7 @@ Partial Class Metrics_Fonts
         Me.Label46 = New System.Windows.Forms.Label()
         Me.Label47 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.Label36 = New System.Windows.Forms.Label()
@@ -200,7 +201,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -642,7 +642,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar13.Size = New System.Drawing.Size(235, 19)
         Me.XenonTrackbar13.SmallChange = 1
         Me.XenonTrackbar13.TabIndex = 114
-        Me.XenonTrackbar13.Text = "XenonTrackbar13"
         Me.XenonTrackbar13.Value = 0
         '
         'PictureBox11
@@ -680,7 +679,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar14.Size = New System.Drawing.Size(235, 19)
         Me.XenonTrackbar14.SmallChange = 1
         Me.XenonTrackbar14.TabIndex = 113
-        Me.XenonTrackbar14.Text = "XenonTrackbar14"
         Me.XenonTrackbar14.Value = 0
         '
         'Label45
@@ -715,7 +713,6 @@ Partial Class Metrics_Fonts
         Me.previewContainer.Padding = New System.Windows.Forms.Padding(1)
         Me.previewContainer.Size = New System.Drawing.Size(536, 340)
         Me.previewContainer.TabIndex = 130
-        Me.previewContainer.Text = "XenonGroupBox8"
         '
         'XenonButton13
         '
@@ -1086,7 +1083,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar12.Size = New System.Drawing.Size(236, 19)
         Me.XenonTrackbar12.SmallChange = 1
         Me.XenonTrackbar12.TabIndex = 109
-        Me.XenonTrackbar12.Text = "XenonTrackbar12"
         Me.XenonTrackbar12.Value = 1
         '
         'PictureBox1
@@ -1124,7 +1120,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar1.Size = New System.Drawing.Size(236, 19)
         Me.XenonTrackbar1.SmallChange = 1
         Me.XenonTrackbar1.TabIndex = 100
-        Me.XenonTrackbar1.Text = "XenonTrackbar1"
         Me.XenonTrackbar1.Value = 1
         '
         'Label10
@@ -1148,7 +1143,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar3.Size = New System.Drawing.Size(236, 19)
         Me.XenonTrackbar3.SmallChange = 1
         Me.XenonTrackbar3.TabIndex = 102
-        Me.XenonTrackbar3.Text = "XenonTrackbar3"
         Me.XenonTrackbar3.Value = 18
         '
         'Label8
@@ -1172,7 +1166,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar2.Size = New System.Drawing.Size(236, 19)
         Me.XenonTrackbar2.SmallChange = 1
         Me.XenonTrackbar2.TabIndex = 101
-        Me.XenonTrackbar2.Text = "XenonTrackbar2"
         Me.XenonTrackbar2.Value = 17
         '
         'TabPage2
@@ -1223,7 +1216,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox13.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox13.Size = New System.Drawing.Size(536, 340)
         Me.XenonGroupBox13.TabIndex = 200
-        Me.XenonGroupBox13.Text = "XenonGroupBox8"
         '
         'XenonAlertBox2
         '
@@ -1388,7 +1380,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar5.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar5.SmallChange = 1
         Me.XenonTrackbar5.TabIndex = 133
-        Me.XenonTrackbar5.Text = "XenonTrackbar5"
         Me.XenonTrackbar5.Value = 32
         '
         'Label22
@@ -1445,7 +1436,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar7.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar7.SmallChange = 1
         Me.XenonTrackbar7.TabIndex = 129
-        Me.XenonTrackbar7.Text = "XenonTrackbar7"
         Me.XenonTrackbar7.Value = 32
         '
         'Label16
@@ -1637,7 +1627,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar4.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar4.SmallChange = 1
         Me.XenonTrackbar4.TabIndex = 105
-        Me.XenonTrackbar4.Text = "XenonTrackbar4"
         Me.XenonTrackbar4.Value = 30
         '
         'XenonTrackbar6
@@ -1652,7 +1641,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar6.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar6.SmallChange = 1
         Me.XenonTrackbar6.TabIndex = 103
-        Me.XenonTrackbar6.Text = "XenonTrackbar6"
         Me.XenonTrackbar6.Value = 30
         '
         'TabPage3
@@ -1681,7 +1669,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox14.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox14.Size = New System.Drawing.Size(536, 340)
         Me.XenonGroupBox14.TabIndex = 137
-        Me.XenonGroupBox14.Text = "XenonGroupBox8"
         '
         'PictureBox33
         '
@@ -1962,7 +1949,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar9.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar9.SmallChange = 1
         Me.XenonTrackbar9.TabIndex = 106
-        Me.XenonTrackbar9.Text = "XenonTrackbar9"
         Me.XenonTrackbar9.Value = 16
         '
         'XenonTrackbar8
@@ -1977,7 +1963,6 @@ Partial Class Metrics_Fonts
         Me.XenonTrackbar8.Size = New System.Drawing.Size(239, 19)
         Me.XenonTrackbar8.SmallChange = 1
         Me.XenonTrackbar8.TabIndex = 107
-        Me.XenonTrackbar8.Text = "XenonTrackbar8"
         Me.XenonTrackbar8.Value = 16
         '
         'PictureBox23
@@ -2036,6 +2021,24 @@ Partial Class Metrics_Fonts
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Micsellaneous"
         '
+        'XenonAlertBox4
+        '
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox4.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox4.CenterText = False
+        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox4.Image = CType(resources.GetObject("XenonAlertBox4.Image"), System.Drawing.Image)
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(415, 352)
+        Me.XenonAlertBox4.Name = "XenonAlertBox4"
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(536, 30)
+        Me.XenonAlertBox4.TabIndex = 203
+        Me.XenonAlertBox4.TabStop = False
+        Me.XenonAlertBox4.Text = "Changing Status Font requires logoff and logon"
+        '
         'XenonGroupBox15
         '
         Me.XenonGroupBox15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2049,7 +2052,6 @@ Partial Class Metrics_Fonts
         Me.XenonGroupBox15.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox15.Size = New System.Drawing.Size(536, 340)
         Me.XenonGroupBox15.TabIndex = 139
-        Me.XenonGroupBox15.Text = "XenonGroupBox8"
         '
         'PictureBox34
         '
@@ -2581,24 +2583,6 @@ Partial Class Metrics_Fonts
         '
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
-        '
-        'XenonAlertBox4
-        '
-        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox4.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox4.CenterText = False
-        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox4.Image = CType(resources.GetObject("XenonAlertBox4.Image"), System.Drawing.Image)
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(415, 352)
-        Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(536, 30)
-        Me.XenonAlertBox4.TabIndex = 203
-        Me.XenonAlertBox4.TabStop = False
-        Me.XenonAlertBox4.Text = "Changing Status Font requires logoff and logon"
         '
         'Metrics_Fonts
         '

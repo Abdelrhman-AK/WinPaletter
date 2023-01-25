@@ -52,6 +52,7 @@ Partial Class CMD
         Me.Label6 = New System.Windows.Forms.Label()
         Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
+        Me.CMD_OpacityVal = New WinPaletter.XenonButton()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.CMD_LineSelection = New WinPaletter.XenonCheckBox()
@@ -63,6 +64,7 @@ Partial Class CMD
         Me.Label57 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
+        Me.CMD_PreviewCUR_Val = New WinPaletter.XenonButton()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.CMD_CursorStyle = New WinPaletter.XenonComboBox()
         Me.Label60 = New System.Windows.Forms.Label()
@@ -140,8 +142,6 @@ Partial Class CMD
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.CMD_PreviewCUR_Val = New WinPaletter.XenonButton()
-        Me.CMD_OpacityVal = New WinPaletter.XenonButton()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -345,7 +345,6 @@ Partial Class CMD
         Me.XenonSeparator1.Size = New System.Drawing.Size(285, 1)
         Me.XenonSeparator1.TabIndex = 101
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'CMD_AccentBackgroundLbl
         '
@@ -420,7 +419,6 @@ Partial Class CMD
         Me.CMD_AccentBackgroundBar.Size = New System.Drawing.Size(289, 19)
         Me.CMD_AccentBackgroundBar.SmallChange = 1
         Me.CMD_AccentBackgroundBar.TabIndex = 86
-        Me.CMD_AccentBackgroundBar.Text = "XenonTrackbar3"
         Me.CMD_AccentBackgroundBar.Value = 0
         '
         'CMD_PopupBackgroundBar
@@ -435,7 +433,6 @@ Partial Class CMD
         Me.CMD_PopupBackgroundBar.Size = New System.Drawing.Size(289, 19)
         Me.CMD_PopupBackgroundBar.SmallChange = 1
         Me.CMD_PopupBackgroundBar.TabIndex = 86
-        Me.CMD_PopupBackgroundBar.Text = "XenonTrackbar2"
         Me.CMD_PopupBackgroundBar.Value = 0
         '
         'CMD_AccentForegroundBar
@@ -450,7 +447,6 @@ Partial Class CMD
         Me.CMD_AccentForegroundBar.Size = New System.Drawing.Size(289, 19)
         Me.CMD_AccentForegroundBar.SmallChange = 1
         Me.CMD_AccentForegroundBar.TabIndex = 84
-        Me.CMD_AccentForegroundBar.Text = "XenonTrackbar12"
         Me.CMD_AccentForegroundBar.Value = 0
         '
         'Label18
@@ -504,7 +500,6 @@ Partial Class CMD
         Me.CMD_PopupForegroundBar.Size = New System.Drawing.Size(289, 19)
         Me.CMD_PopupForegroundBar.SmallChange = 1
         Me.CMD_PopupForegroundBar.TabIndex = 84
-        Me.CMD_PopupForegroundBar.Text = "XenonTrackbar1"
         Me.CMD_PopupForegroundBar.Value = 0
         '
         'Label6
@@ -553,6 +548,21 @@ Partial Class CMD
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(301, 150)
         Me.XenonGroupBox12.TabIndex = 100
+        '
+        'CMD_OpacityVal
+        '
+        Me.CMD_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CMD_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CMD_OpacityVal.ForeColor = System.Drawing.Color.White
+        Me.CMD_OpacityVal.Image = Nothing
+        Me.CMD_OpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.CMD_OpacityVal.LineSize = 1
+        Me.CMD_OpacityVal.Location = New System.Drawing.Point(262, 120)
+        Me.CMD_OpacityVal.Name = "CMD_OpacityVal"
+        Me.CMD_OpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.CMD_OpacityVal.TabIndex = 133
+        Me.CMD_OpacityVal.UseVisualStyleBackColor = False
         '
         'PictureBox10
         '
@@ -632,7 +642,6 @@ Partial Class CMD
         Me.CMD_OpacityBar.Size = New System.Drawing.Size(217, 19)
         Me.CMD_OpacityBar.SmallChange = 1
         Me.CMD_OpacityBar.TabIndex = 120
-        Me.CMD_OpacityBar.Text = "XenonTrackbar1"
         Me.CMD_OpacityBar.Value = 0
         '
         'PictureBox11
@@ -690,6 +699,21 @@ Partial Class CMD
         Me.XenonGroupBox34.Name = "XenonGroupBox34"
         Me.XenonGroupBox34.Size = New System.Drawing.Size(301, 97)
         Me.XenonGroupBox34.TabIndex = 99
+        '
+        'CMD_PreviewCUR_Val
+        '
+        Me.CMD_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CMD_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CMD_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
+        Me.CMD_PreviewCUR_Val.Image = Nothing
+        Me.CMD_PreviewCUR_Val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.CMD_PreviewCUR_Val.LineSize = 1
+        Me.CMD_PreviewCUR_Val.Location = New System.Drawing.Point(262, 66)
+        Me.CMD_PreviewCUR_Val.Name = "CMD_PreviewCUR_Val"
+        Me.CMD_PreviewCUR_Val.Size = New System.Drawing.Size(34, 24)
+        Me.CMD_PreviewCUR_Val.TabIndex = 132
+        Me.CMD_PreviewCUR_Val.UseVisualStyleBackColor = False
         '
         'PictureBox7
         '
@@ -818,7 +842,6 @@ Partial Class CMD
         Me.CMD_CursorColor.Name = "CMD_CursorColor"
         Me.CMD_CursorColor.Size = New System.Drawing.Size(143, 24)
         Me.CMD_CursorColor.TabIndex = 107
-        Me.CMD_CursorColor.Text = "XenonGroupBox31"
         '
         'PictureBox8
         '
@@ -948,7 +971,6 @@ Partial Class CMD
         Me.CMD_FontSizeBar.Size = New System.Drawing.Size(158, 19)
         Me.CMD_FontSizeBar.SmallChange = 1
         Me.CMD_FontSizeBar.TabIndex = 101
-        Me.CMD_FontSizeBar.Text = "XenonTrackbar16"
         Me.CMD_FontSizeBar.Value = 5
         '
         'CMD_FontWeightBox
@@ -1171,7 +1193,6 @@ Partial Class CMD
         Me.ColorTable00.Name = "ColorTable00"
         Me.ColorTable00.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable00.TabIndex = 3
-        Me.ColorTable00.Text = "XenonGroupBox31"
         '
         'Label7
         '
@@ -1205,7 +1226,6 @@ Partial Class CMD
         Me.ColorTable01.Name = "ColorTable01"
         Me.ColorTable01.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable01.TabIndex = 5
-        Me.ColorTable01.Text = "XenonGroupBox31"
         '
         'Label20
         '
@@ -1228,7 +1248,6 @@ Partial Class CMD
         Me.ColorTable02.Name = "ColorTable02"
         Me.ColorTable02.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable02.TabIndex = 7
-        Me.ColorTable02.Text = "XenonGroupBox31"
         '
         'ColorTable03
         '
@@ -1240,7 +1259,6 @@ Partial Class CMD
         Me.ColorTable03.Name = "ColorTable03"
         Me.ColorTable03.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable03.TabIndex = 9
-        Me.ColorTable03.Text = "XenonGroupBox31"
         '
         'Label33
         '
@@ -1285,7 +1303,6 @@ Partial Class CMD
         Me.ColorTable04.Name = "ColorTable04"
         Me.ColorTable04.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable04.TabIndex = 11
-        Me.ColorTable04.Text = "XenonGroupBox31"
         '
         'Label26
         '
@@ -1319,7 +1336,6 @@ Partial Class CMD
         Me.ColorTable05.Name = "ColorTable05"
         Me.ColorTable05.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable05.TabIndex = 13
-        Me.ColorTable05.Text = "XenonGroupBox31"
         '
         'Label25
         '
@@ -1342,7 +1358,6 @@ Partial Class CMD
         Me.ColorTable06.Name = "ColorTable06"
         Me.ColorTable06.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable06.TabIndex = 15
-        Me.ColorTable06.Text = "XenonGroupBox31"
         '
         'Label24
         '
@@ -1376,7 +1391,6 @@ Partial Class CMD
         Me.ColorTable15.Name = "ColorTable15"
         Me.ColorTable15.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable15.TabIndex = 33
-        Me.ColorTable15.Text = "XenonGroupBox31"
         '
         'ColorTable07
         '
@@ -1388,7 +1402,6 @@ Partial Class CMD
         Me.ColorTable07.Name = "ColorTable07"
         Me.ColorTable07.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable07.TabIndex = 17
-        Me.ColorTable07.Text = "XenonGroupBox31"
         '
         'Label23
         '
@@ -1411,7 +1424,6 @@ Partial Class CMD
         Me.ColorTable08.Name = "ColorTable08"
         Me.ColorTable08.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable08.TabIndex = 19
-        Me.ColorTable08.Text = "XenonGroupBox31"
         '
         'ColorTable14
         '
@@ -1423,7 +1435,6 @@ Partial Class CMD
         Me.ColorTable14.Name = "ColorTable14"
         Me.ColorTable14.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable14.TabIndex = 31
-        Me.ColorTable14.Text = "XenonGroupBox31"
         '
         'Label28
         '
@@ -1457,7 +1468,6 @@ Partial Class CMD
         Me.ColorTable09.Name = "ColorTable09"
         Me.ColorTable09.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable09.TabIndex = 21
-        Me.ColorTable09.Text = "XenonGroupBox31"
         '
         'ColorTable13
         '
@@ -1469,7 +1479,6 @@ Partial Class CMD
         Me.ColorTable13.Name = "ColorTable13"
         Me.ColorTable13.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable13.TabIndex = 29
-        Me.ColorTable13.Text = "XenonGroupBox31"
         '
         'Label29
         '
@@ -1492,7 +1501,6 @@ Partial Class CMD
         Me.ColorTable12.Name = "ColorTable12"
         Me.ColorTable12.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable12.TabIndex = 27
-        Me.ColorTable12.Text = "XenonGroupBox31"
         '
         'ColorTable10
         '
@@ -1504,7 +1512,6 @@ Partial Class CMD
         Me.ColorTable10.Name = "ColorTable10"
         Me.ColorTable10.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable10.TabIndex = 23
-        Me.ColorTable10.Text = "XenonGroupBox31"
         '
         'ColorTable11
         '
@@ -1516,7 +1523,6 @@ Partial Class CMD
         Me.ColorTable11.Name = "ColorTable11"
         Me.ColorTable11.Size = New System.Drawing.Size(105, 25)
         Me.ColorTable11.TabIndex = 25
-        Me.ColorTable11.Text = "XenonGroupBox31"
         '
         'XenonGroupBox8
         '
@@ -1533,7 +1539,6 @@ Partial Class CMD
         Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox8.Size = New System.Drawing.Size(472, 293)
         Me.XenonGroupBox8.TabIndex = 91
-        Me.XenonGroupBox8.Text = "XenonGroupBox8"
         '
         'XenonButton4
         '
@@ -1596,7 +1601,6 @@ Partial Class CMD
         Me.XenonCMD1.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
         Me.XenonCMD1.Size = New System.Drawing.Size(464, 244)
         Me.XenonCMD1.TabIndex = 90
-        Me.XenonCMD1.Text = "XenonCMD1"
         '
         'Label41
         '
@@ -1706,36 +1710,6 @@ Partial Class CMD
         Me.TabPage4.Size = New System.Drawing.Size(313, 547)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Tweaks"
-        '
-        'CMD_PreviewCUR_Val
-        '
-        Me.CMD_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.CMD_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CMD_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
-        Me.CMD_PreviewCUR_Val.Image = Nothing
-        Me.CMD_PreviewCUR_Val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.CMD_PreviewCUR_Val.LineSize = 1
-        Me.CMD_PreviewCUR_Val.Location = New System.Drawing.Point(262, 66)
-        Me.CMD_PreviewCUR_Val.Name = "CMD_PreviewCUR_Val"
-        Me.CMD_PreviewCUR_Val.Size = New System.Drawing.Size(34, 24)
-        Me.CMD_PreviewCUR_Val.TabIndex = 132
-        Me.CMD_PreviewCUR_Val.UseVisualStyleBackColor = False
-        '
-        'CMD_OpacityVal
-        '
-        Me.CMD_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.CMD_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CMD_OpacityVal.ForeColor = System.Drawing.Color.White
-        Me.CMD_OpacityVal.Image = Nothing
-        Me.CMD_OpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.CMD_OpacityVal.LineSize = 1
-        Me.CMD_OpacityVal.Location = New System.Drawing.Point(262, 120)
-        Me.CMD_OpacityVal.Name = "CMD_OpacityVal"
-        Me.CMD_OpacityVal.Size = New System.Drawing.Size(34, 24)
-        Me.CMD_OpacityVal.TabIndex = 133
-        Me.CMD_OpacityVal.UseVisualStyleBackColor = False
         '
         'CMD
         '

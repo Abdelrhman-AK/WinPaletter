@@ -26,6 +26,7 @@ Partial Class Updates
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New WinPaletter.XenonLinkLabel()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
         Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
         Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
         Me.XenonRadioButton1 = New WinPaletter.XenonRadioButton()
@@ -47,7 +48,6 @@ Partial Class Updates
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,6 +95,23 @@ Partial Class Updates
         Me.Panel1.Size = New System.Drawing.Size(479, 115)
         Me.Panel1.TabIndex = 18
         Me.Panel1.Visible = False
+        '
+        'LinkLabel3
+        '
+        Me.LinkLabel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel3.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue
+        Me.LinkLabel3.Location = New System.Drawing.Point(3, 87)
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.Size = New System.Drawing.Size(473, 24)
+        Me.LinkLabel3.TabIndex = 33
+        Me.LinkLabel3.TabStop = True
+        Me.LinkLabel3.Text = "What's New?"
+        Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.LinkLabel3.Visible = False
         '
         'XenonRadioButton2
         '
@@ -303,7 +320,6 @@ Partial Class Updates
         Me.XenonSeparator1.Size = New System.Drawing.Size(479, 1)
         Me.XenonSeparator1.TabIndex = 8
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonButton3
         '
@@ -337,23 +353,6 @@ Partial Class Updates
         Me.XenonButton1.TabIndex = 0
         Me.XenonButton1.Text = "Check for updates"
         Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'LinkLabel3
-        '
-        Me.LinkLabel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel3.ForeColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel3.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel3.Location = New System.Drawing.Point(3, 87)
-        Me.LinkLabel3.Name = "LinkLabel3"
-        Me.LinkLabel3.Size = New System.Drawing.Size(473, 24)
-        Me.LinkLabel3.TabIndex = 33
-        Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "What's New?"
-        Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.LinkLabel3.Visible = False
         '
         'Updates
         '

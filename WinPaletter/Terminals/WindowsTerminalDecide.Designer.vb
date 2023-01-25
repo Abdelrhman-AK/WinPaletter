@@ -124,9 +124,9 @@ Partial Class WindowsTerminalDecide
         Me.XenonRadioImage2.Image = CType(resources.GetObject("XenonRadioImage2.Image"), System.Drawing.Image)
         Me.XenonRadioImage2.Location = New System.Drawing.Point(213, 130)
         Me.XenonRadioImage2.Name = "XenonRadioImage2"
+        Me.XenonRadioImage2.ShowText = False
         Me.XenonRadioImage2.Size = New System.Drawing.Size(64, 64)
         Me.XenonRadioImage2.TabIndex = 87
-        Me.XenonRadioImage2.Text = "XenonRadioImage2"
         '
         'XenonRadioImage1
         '
@@ -136,9 +136,9 @@ Partial Class WindowsTerminalDecide
         Me.XenonRadioImage1.Image = CType(resources.GetObject("XenonRadioImage1.Image"), System.Drawing.Image)
         Me.XenonRadioImage1.Location = New System.Drawing.Point(131, 130)
         Me.XenonRadioImage1.Name = "XenonRadioImage1"
+        Me.XenonRadioImage1.ShowText = False
         Me.XenonRadioImage1.Size = New System.Drawing.Size(64, 64)
         Me.XenonRadioImage1.TabIndex = 86
-        Me.XenonRadioImage1.Text = "XenonRadioImage1"
         '
         'Panel1
         '
@@ -156,7 +156,7 @@ Partial Class WindowsTerminalDecide
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))

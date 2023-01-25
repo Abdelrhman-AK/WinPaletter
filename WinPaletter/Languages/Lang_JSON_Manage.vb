@@ -1,6 +1,6 @@
 ﻿Imports WinPaletter.XenonCore
 
-Public Class LangJSON_Manage
+Public Class Lang_JSON_Manage
     Private Sub LangJSON_Manage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         MainFrm.SetTreeViewTheme(TreeView1.Handle)
@@ -12,7 +12,6 @@ Public Class LangJSON_Manage
             OpenJSONDlg.FileName = My.Settings.Language_File
             SaveJSONDlg.FileName = My.Settings.Language_File
         End If
-
     End Sub
 
 

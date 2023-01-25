@@ -233,12 +233,6 @@
     <Compile Include="Controllers\SubMenu.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controllers\toaster.Designer.vb">
-      <DependentUpon>toaster.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\toaster.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
       <DependentUpon>CursorsCustomizer.vb</DependentUpon>
     </Compile>
@@ -270,12 +264,6 @@
     <Compile Include="GUI\XenonUI.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Languages\LangJSON_Manage.Designer.vb">
-      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\LangJSON_Manage.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Languages\Lang_Add_Snippet.Designer.vb">
       <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
     </Compile>
@@ -286,6 +274,12 @@
       <DependentUpon>Lang_Dashboard.vb</DependentUpon>
     </Compile>
     <Compile Include="Languages\Lang_Dashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Manage.Designer.vb">
+      <DependentUpon>Lang_JSON_Manage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Manage.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Lang_JSON_Update.Designer.vb">
@@ -359,10 +353,10 @@
     <Compile Include="Settings\Uninstall.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\cmd.Designer.vb">
-      <DependentUpon>cmd.vb</DependentUpon>
+    <Compile Include="Terminals\CMD.Designer.vb">
+      <DependentUpon>CMD.vb</DependentUpon>
     </Compile>
-    <Compile Include="Terminals\cmd.vb">
+    <Compile Include="Terminals\CMD.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Terminals\ExternalTerminal.Designer.vb">
@@ -561,7 +555,6 @@
     <EmbeddedResource Include="Controllers\ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\DragDropControls.resx" />
     <EmbeddedResource Include="Controllers\DragPreviewer.resx">
       <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -571,17 +564,11 @@
     <EmbeddedResource Include="Controllers\SubMenu.resx">
       <DependentUpon>SubMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\toaster.resx">
-      <DependentUpon>toaster.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Languages\LangJSON_Manage.resx">
-      <DependentUpon>LangJSON_Manage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
@@ -589,13 +576,14 @@
     <EmbeddedResource Include="Languages\Lang_Dashboard.resx">
       <DependentUpon>Lang_Dashboard.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_Manage.resx">
+      <DependentUpon>Lang_JSON_Manage.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_JSON_Update.resx">
       <DependentUpon>Lang_JSON_Update.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LicenseForm1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>
@@ -626,8 +614,8 @@
     <EmbeddedResource Include="Settings\Uninstall.resx">
       <DependentUpon>Uninstall.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Terminals\cmd.resx">
-      <DependentUpon>cmd.vb</DependentUpon>
+    <EmbeddedResource Include="Terminals\CMD.resx">
+      <DependentUpon>CMD.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\ExternalTerminal.resx">
       <DependentUpon>ExternalTerminal.vb</DependentUpon>

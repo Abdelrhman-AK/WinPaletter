@@ -110,7 +110,6 @@ Partial Class TerminalsDashboard
         Me.XenonSeparator4.Size = New System.Drawing.Size(149, 1)
         Me.XenonSeparator4.TabIndex = 100
         Me.XenonSeparator4.TabStop = False
-        Me.XenonSeparator4.Text = "XenonSeparator4"
         '
         'XenonButton5
         '
@@ -224,7 +223,6 @@ Partial Class TerminalsDashboard
         Me.XenonSeparator1.Size = New System.Drawing.Size(149, 1)
         Me.XenonSeparator1.TabIndex = 85
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonSeparatorVertical1
         '
@@ -233,7 +231,6 @@ Partial Class TerminalsDashboard
         Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(2, 149)
         Me.XenonSeparatorVertical1.TabIndex = 102
         Me.XenonSeparatorVertical1.TabStop = False
-        Me.XenonSeparatorVertical1.Text = "XenonSeparatorVertical1"
         '
         'TerminalsDashboard
         '
@@ -260,7 +257,6 @@ Partial Class TerminalsDashboard
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

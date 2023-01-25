@@ -39,6 +39,7 @@ Partial Class Lang_JSON_Update
         Me.SaveJSONDlg = New System.Windows.Forms.SaveFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -180,16 +181,16 @@ Partial Class Lang_JSON_Update
         '
         'XenonAlertBox7
         '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
-        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox7.CenterText = True
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox7.Image = Nothing
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 126)
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 145)
         Me.XenonAlertBox7.Name = "XenonAlertBox7"
         Me.XenonAlertBox7.Size = New System.Drawing.Size(703, 52)
         Me.XenonAlertBox7.TabIndex = 114
@@ -205,7 +206,6 @@ Partial Class Lang_JSON_Update
         Me.XenonSeparator1.Size = New System.Drawing.Size(703, 1)
         Me.XenonSeparator1.TabIndex = 119
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonButton7
         '
@@ -216,7 +216,7 @@ Partial Class Lang_JSON_Update
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(505, 191)
+        Me.XenonButton7.Location = New System.Drawing.Point(505, 246)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(96, 29)
         Me.XenonButton7.TabIndex = 203
@@ -233,7 +233,7 @@ Partial Class Lang_JSON_Update
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(607, 191)
+        Me.XenonButton3.Location = New System.Drawing.Point(607, 246)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(108, 29)
         Me.XenonButton3.TabIndex = 202
@@ -250,16 +250,16 @@ Partial Class Lang_JSON_Update
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = True
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 91)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 110)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(703, 29)
         Me.XenonAlertBox1.TabIndex = 204
@@ -267,12 +267,26 @@ Partial Class Lang_JSON_Update
         Me.XenonAlertBox1.Text = "This feature is experimental, always create backups before starting. If any abnor" &
     "mal results happened, post an issue in GitHub"
         '
+        'XenonCheckBox1
+        '
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox1.Checked = False
+        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 79)
+        Me.XenonCheckBox1.Name = "XenonCheckBox1"
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(703, 23)
+        Me.XenonCheckBox1.TabIndex = 205
+        Me.XenonCheckBox1.Text = "Exclude Global Strings not found in the new file (Not Recommended in backward com" &
+    "ptability)"
+        '
         'Lang_JSON_Update
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(727, 232)
+        Me.ClientSize = New System.Drawing.Size(727, 287)
+        Me.Controls.Add(Me.XenonCheckBox1)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton3)
@@ -318,4 +332,5 @@ Partial Class Lang_JSON_Update
     Friend WithEvents SaveJSONDlg As SaveFileDialog
     Friend WithEvents OpenJSONDlg As OpenFileDialog
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonCheckBox1 As XenonCheckBox
 End Class

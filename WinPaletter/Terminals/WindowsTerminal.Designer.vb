@@ -161,18 +161,18 @@ Partial Class WindowsTerminal
         Me.Label59 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.TerCursorHeightVal = New WinPaletter.XenonButton()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
+        Me.TerOpacityVal = New WinPaletter.XenonButton()
+        Me.TerImageOpacityVal = New WinPaletter.XenonButton()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
-        Me.TerImageOpacityVal = New WinPaletter.XenonButton()
-        Me.TerOpacityVal = New WinPaletter.XenonButton()
-        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.TerThemesContainer.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -212,12 +212,12 @@ Partial Class WindowsTerminal
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         Me.XenonGroupBox34.SuspendLayout()
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ImgDlg
@@ -493,7 +493,6 @@ Partial Class WindowsTerminal
         Me.TerTitlebarActive.Name = "TerTitlebarActive"
         Me.TerTitlebarActive.Size = New System.Drawing.Size(100, 24)
         Me.TerTitlebarActive.TabIndex = 198
-        Me.TerTitlebarActive.Text = "XenonGroupBox31"
         '
         'TerTitlebarInactive
         '
@@ -506,7 +505,6 @@ Partial Class WindowsTerminal
         Me.TerTitlebarInactive.Name = "TerTitlebarInactive"
         Me.TerTitlebarInactive.Size = New System.Drawing.Size(100, 24)
         Me.TerTitlebarInactive.TabIndex = 200
-        Me.TerTitlebarInactive.Text = "XenonGroupBox31"
         '
         'PictureBox3
         '
@@ -542,7 +540,6 @@ Partial Class WindowsTerminal
         Me.TerTabActive.Name = "TerTabActive"
         Me.TerTabActive.Size = New System.Drawing.Size(100, 24)
         Me.TerTabActive.TabIndex = 203
-        Me.TerTabActive.Text = "XenonGroupBox31"
         '
         'TerTabInactive
         '
@@ -555,7 +552,6 @@ Partial Class WindowsTerminal
         Me.TerTabInactive.Name = "TerTabInactive"
         Me.TerTabInactive.Size = New System.Drawing.Size(100, 24)
         Me.TerTabInactive.TabIndex = 205
-        Me.TerTabInactive.Text = "XenonGroupBox31"
         '
         'PictureBox4
         '
@@ -658,7 +654,6 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox22.Padding = New System.Windows.Forms.Padding(1)
         Me.XenonGroupBox22.Size = New System.Drawing.Size(517, 301)
         Me.XenonGroupBox22.TabIndex = 195
-        Me.XenonGroupBox22.Text = "XenonGroupBox22"
         '
         'XenonTerminal1
         '
@@ -689,7 +684,6 @@ Partial Class WindowsTerminal
         Me.XenonTerminal1.TabIconButItIsString = ""
         Me.XenonTerminal1.TabIndex = 95
         Me.XenonTerminal1.TabTitle = "Command Prompt"
-        Me.XenonTerminal1.Text = "XenonTerminal1"
         Me.XenonTerminal1.UseAcrylic = False
         Me.XenonTerminal1.UseAcrylicOnTitlebar = False
         '
@@ -758,7 +752,6 @@ Partial Class WindowsTerminal
         Me.XenonTerminal2.TabIconButItIsString = ""
         Me.XenonTerminal2.TabIndex = 96
         Me.XenonTerminal2.TabTitle = ""
-        Me.XenonTerminal2.Text = "XenonTerminal2"
         Me.XenonTerminal2.UseAcrylic = False
         Me.XenonTerminal2.UseAcrylicOnTitlebar = False
         '
@@ -791,7 +784,6 @@ Partial Class WindowsTerminal
         Me.TerOpacityBar.Size = New System.Drawing.Size(197, 19)
         Me.TerOpacityBar.SmallChange = 1
         Me.TerOpacityBar.TabIndex = 208
-        Me.TerOpacityBar.Text = "XenonTrackbar16"
         Me.TerOpacityBar.Value = 100
         '
         'PictureBox40
@@ -881,7 +873,6 @@ Partial Class WindowsTerminal
         Me.TerImageOpacity.Size = New System.Drawing.Size(197, 19)
         Me.TerImageOpacity.SmallChange = 1
         Me.TerImageOpacity.TabIndex = 187
-        Me.TerImageOpacity.Text = "XenonTrackbar16"
         Me.TerImageOpacity.Value = 100
         '
         'Label2
@@ -1000,7 +991,6 @@ Partial Class WindowsTerminal
         Me.TerCursor.Name = "TerCursor"
         Me.TerCursor.Size = New System.Drawing.Size(100, 24)
         Me.TerCursor.TabIndex = 125
-        Me.TerCursor.Text = "XenonGroupBox31"
         '
         'TerWhiteB
         '
@@ -1013,7 +1003,6 @@ Partial Class WindowsTerminal
         Me.TerWhiteB.Name = "TerWhiteB"
         Me.TerWhiteB.Size = New System.Drawing.Size(100, 24)
         Me.TerWhiteB.TabIndex = 115
-        Me.TerWhiteB.Text = "XenonGroupBox31"
         '
         'Label150
         '
@@ -1039,7 +1028,6 @@ Partial Class WindowsTerminal
         Me.TerBlue.Name = "TerBlue"
         Me.TerBlue.Size = New System.Drawing.Size(100, 24)
         Me.TerBlue.TabIndex = 101
-        Me.TerBlue.Text = "XenonGroupBox31"
         '
         'Label151
         '
@@ -1065,7 +1053,6 @@ Partial Class WindowsTerminal
         Me.TerSelection.Name = "TerSelection"
         Me.TerSelection.Size = New System.Drawing.Size(100, 24)
         Me.TerSelection.TabIndex = 123
-        Me.TerSelection.Text = "XenonGroupBox31"
         '
         'Label152
         '
@@ -1104,7 +1091,6 @@ Partial Class WindowsTerminal
         Me.TerWhite.Name = "TerWhite"
         Me.TerWhite.Size = New System.Drawing.Size(100, 24)
         Me.TerWhite.TabIndex = 107
-        Me.TerWhite.Text = "XenonGroupBox31"
         '
         'TerForeground
         '
@@ -1117,7 +1103,6 @@ Partial Class WindowsTerminal
         Me.TerForeground.Name = "TerForeground"
         Me.TerForeground.Size = New System.Drawing.Size(100, 24)
         Me.TerForeground.TabIndex = 121
-        Me.TerForeground.Text = "XenonGroupBox31"
         '
         'TerCyanB
         '
@@ -1130,7 +1115,6 @@ Partial Class WindowsTerminal
         Me.TerCyanB.Name = "TerCyanB"
         Me.TerCyanB.Size = New System.Drawing.Size(100, 24)
         Me.TerCyanB.TabIndex = 111
-        Me.TerCyanB.Text = "XenonGroupBox31"
         '
         'Label145
         '
@@ -1156,7 +1140,6 @@ Partial Class WindowsTerminal
         Me.TerCyan.Name = "TerCyan"
         Me.TerCyan.Size = New System.Drawing.Size(100, 24)
         Me.TerCyan.TabIndex = 103
-        Me.TerCyan.Text = "XenonGroupBox31"
         '
         'TerGreen
         '
@@ -1169,7 +1152,6 @@ Partial Class WindowsTerminal
         Me.TerGreen.Name = "TerGreen"
         Me.TerGreen.Size = New System.Drawing.Size(100, 24)
         Me.TerGreen.TabIndex = 102
-        Me.TerGreen.Text = "XenonGroupBox31"
         '
         'Label144
         '
@@ -1195,7 +1177,6 @@ Partial Class WindowsTerminal
         Me.TerBackground.Name = "TerBackground"
         Me.TerBackground.Size = New System.Drawing.Size(100, 24)
         Me.TerBackground.TabIndex = 119
-        Me.TerBackground.Text = "XenonGroupBox31"
         '
         'TerYellow
         '
@@ -1208,7 +1189,6 @@ Partial Class WindowsTerminal
         Me.TerYellow.Name = "TerYellow"
         Me.TerYellow.Size = New System.Drawing.Size(100, 24)
         Me.TerYellow.TabIndex = 106
-        Me.TerYellow.Text = "XenonGroupBox31"
         '
         'TerGreenB
         '
@@ -1221,7 +1201,6 @@ Partial Class WindowsTerminal
         Me.TerGreenB.Name = "TerGreenB"
         Me.TerGreenB.Size = New System.Drawing.Size(100, 24)
         Me.TerGreenB.TabIndex = 110
-        Me.TerGreenB.Text = "XenonGroupBox31"
         '
         'Label143
         '
@@ -1260,7 +1239,6 @@ Partial Class WindowsTerminal
         Me.TerBlack.Name = "TerBlack"
         Me.TerBlack.Size = New System.Drawing.Size(100, 24)
         Me.TerBlack.TabIndex = 100
-        Me.TerBlack.Text = "XenonGroupBox31"
         '
         'TerYellowB
         '
@@ -1273,7 +1251,6 @@ Partial Class WindowsTerminal
         Me.TerYellowB.Name = "TerYellowB"
         Me.TerYellowB.Size = New System.Drawing.Size(100, 24)
         Me.TerYellowB.TabIndex = 114
-        Me.TerYellowB.Text = "XenonGroupBox31"
         '
         'Label142
         '
@@ -1299,7 +1276,6 @@ Partial Class WindowsTerminal
         Me.TerBlackB.Name = "TerBlackB"
         Me.TerBlackB.Size = New System.Drawing.Size(100, 24)
         Me.TerBlackB.TabIndex = 108
-        Me.TerBlackB.Text = "XenonGroupBox31"
         '
         'TerPurple
         '
@@ -1312,7 +1288,6 @@ Partial Class WindowsTerminal
         Me.TerPurple.Name = "TerPurple"
         Me.TerPurple.Size = New System.Drawing.Size(100, 24)
         Me.TerPurple.TabIndex = 105
-        Me.TerPurple.Text = "XenonGroupBox31"
         '
         'Label140
         '
@@ -1338,7 +1313,6 @@ Partial Class WindowsTerminal
         Me.TerPurpleB.Name = "TerPurpleB"
         Me.TerPurpleB.Size = New System.Drawing.Size(100, 24)
         Me.TerPurpleB.TabIndex = 113
-        Me.TerPurpleB.Text = "XenonGroupBox31"
         '
         'TerBlueB
         '
@@ -1351,7 +1325,6 @@ Partial Class WindowsTerminal
         Me.TerBlueB.Name = "TerBlueB"
         Me.TerBlueB.Size = New System.Drawing.Size(100, 24)
         Me.TerBlueB.TabIndex = 109
-        Me.TerBlueB.Text = "XenonGroupBox31"
         '
         'Label146
         '
@@ -1390,7 +1363,6 @@ Partial Class WindowsTerminal
         Me.TerRedB.Name = "TerRedB"
         Me.TerRedB.Size = New System.Drawing.Size(100, 24)
         Me.TerRedB.TabIndex = 112
-        Me.TerRedB.Text = "XenonGroupBox31"
         '
         'TerRed
         '
@@ -1403,7 +1375,6 @@ Partial Class WindowsTerminal
         Me.TerRed.Name = "TerRed"
         Me.TerRed.Size = New System.Drawing.Size(100, 24)
         Me.TerRed.TabIndex = 104
-        Me.TerRed.Text = "XenonGroupBox31"
         '
         'TerCursorHeightBar
         '
@@ -1581,7 +1552,6 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar.Size = New System.Drawing.Size(210, 19)
         Me.TerFontSizeBar.SmallChange = 1
         Me.TerFontSizeBar.TabIndex = 101
-        Me.TerFontSizeBar.Text = "XenonTrackbar16"
         Me.TerFontSizeBar.Value = 5
         '
         'TerFonts
@@ -1664,7 +1634,6 @@ Partial Class WindowsTerminal
         Me.XenonSeparator2.Size = New System.Drawing.Size(973, 1)
         Me.XenonSeparator2.TabIndex = 201
         Me.XenonSeparator2.TabStop = False
-        Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'Label11
         '
@@ -1872,7 +1841,6 @@ Partial Class WindowsTerminal
         Me.XenonSeparator3.Size = New System.Drawing.Size(341, 1)
         Me.XenonSeparator3.TabIndex = 222
         Me.XenonSeparator3.TabStop = False
-        Me.XenonSeparator3.Text = "XenonSeparator3"
         '
         'PictureBox21
         '
@@ -2122,6 +2090,16 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox34.Size = New System.Drawing.Size(351, 67)
         Me.XenonGroupBox34.TabIndex = 99
         '
+        'PictureBox10
+        '
+        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
+        Me.PictureBox10.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox10.Name = "PictureBox10"
+        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox10.TabIndex = 104
+        Me.PictureBox10.TabStop = False
+        '
         'TerCursorHeightVal
         '
         Me.TerCursorHeightVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2203,6 +2181,36 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox12.Size = New System.Drawing.Size(351, 122)
         Me.XenonGroupBox12.TabIndex = 100
         '
+        'TerOpacityVal
+        '
+        Me.TerOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.TerOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerOpacityVal.ForeColor = System.Drawing.Color.White
+        Me.TerOpacityVal.Image = Nothing
+        Me.TerOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerOpacityVal.LineSize = 1
+        Me.TerOpacityVal.Location = New System.Drawing.Point(311, 91)
+        Me.TerOpacityVal.Name = "TerOpacityVal"
+        Me.TerOpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerOpacityVal.TabIndex = 135
+        Me.TerOpacityVal.UseVisualStyleBackColor = False
+        '
+        'TerImageOpacityVal
+        '
+        Me.TerImageOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerImageOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.TerImageOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.TerImageOpacityVal.ForeColor = System.Drawing.Color.White
+        Me.TerImageOpacityVal.Image = Nothing
+        Me.TerImageOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.TerImageOpacityVal.LineSize = 1
+        Me.TerImageOpacityVal.Location = New System.Drawing.Point(311, 62)
+        Me.TerImageOpacityVal.Name = "TerImageOpacityVal"
+        Me.TerImageOpacityVal.Size = New System.Drawing.Size(34, 24)
+        Me.TerImageOpacityVal.TabIndex = 134
+        Me.TerImageOpacityVal.UseVisualStyleBackColor = False
+        '
         'PictureBox13
         '
         Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
@@ -2233,46 +2241,6 @@ Partial Class WindowsTerminal
         Me.Label57.TabIndex = 119
         Me.Label57.Text = "Opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'TerImageOpacityVal
-        '
-        Me.TerImageOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerImageOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.TerImageOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TerImageOpacityVal.ForeColor = System.Drawing.Color.White
-        Me.TerImageOpacityVal.Image = Nothing
-        Me.TerImageOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerImageOpacityVal.LineSize = 1
-        Me.TerImageOpacityVal.Location = New System.Drawing.Point(311, 62)
-        Me.TerImageOpacityVal.Name = "TerImageOpacityVal"
-        Me.TerImageOpacityVal.Size = New System.Drawing.Size(34, 24)
-        Me.TerImageOpacityVal.TabIndex = 134
-        Me.TerImageOpacityVal.UseVisualStyleBackColor = False
-        '
-        'TerOpacityVal
-        '
-        Me.TerOpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerOpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.TerOpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TerOpacityVal.ForeColor = System.Drawing.Color.White
-        Me.TerOpacityVal.Image = Nothing
-        Me.TerOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerOpacityVal.LineSize = 1
-        Me.TerOpacityVal.Location = New System.Drawing.Point(311, 91)
-        Me.TerOpacityVal.Name = "TerOpacityVal"
-        Me.TerOpacityVal.Size = New System.Drawing.Size(34, 24)
-        Me.TerOpacityVal.TabIndex = 135
-        Me.TerOpacityVal.UseVisualStyleBackColor = False
-        '
-        'PictureBox10
-        '
-        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
-        Me.PictureBox10.Location = New System.Drawing.Point(6, 6)
-        Me.PictureBox10.Name = "PictureBox10"
-        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox10.TabIndex = 104
-        Me.PictureBox10.TabStop = False
         '
         'WindowsTerminal
         '
@@ -2338,12 +2306,12 @@ Partial Class WindowsTerminal
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.XenonGroupBox34.ResumeLayout(False)
+        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

@@ -158,7 +158,7 @@ Partial Class Lang_Dashboard
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(414, 19)
         Me.Label4.TabIndex = 2
-        Me.Label4.Text = "Update JSON Translation File"
+        Me.Label4.Text = "Update JSON Language File"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox2

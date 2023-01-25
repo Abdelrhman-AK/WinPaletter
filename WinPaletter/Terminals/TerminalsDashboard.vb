@@ -179,7 +179,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        cmd._Edition = cmd.Edition.CMD
+        cmd._Edition = CMD.Edition.CMD
         Me.Close()
         cmd.ShowDialog()
     End Sub
@@ -191,7 +191,7 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         If My.[Settings].Terminal_Bypass Then
-            cmd._Edition = cmd.Edition.PowerShellx86
+            cmd._Edition = CMD.Edition.PowerShellx86
             Me.Close()
             cmd.ShowDialog()
         Else
@@ -199,7 +199,7 @@ Public Class TerminalsDashboard
             Dim Dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0"
 
             If IO.Directory.Exists(Dir) Then
-                cmd._Edition = cmd.Edition.PowerShellx86
+                cmd._Edition = CMD.Edition.PowerShellx86
                 Me.Close()
                 cmd.ShowDialog()
             Else
@@ -212,7 +212,7 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If My.[Settings].Terminal_Bypass Then
-            cmd._Edition = cmd.Edition.PowerShellx64
+            cmd._Edition = CMD.Edition.PowerShellx64
             Me.Close()
             cmd.ShowDialog()
         Else
@@ -220,7 +220,7 @@ Public Class TerminalsDashboard
             Dim Dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0"
 
             If IO.Directory.Exists(Dir) Then
-                cmd._Edition = cmd.Edition.PowerShellx64
+                cmd._Edition = CMD.Edition.PowerShellx64
                 Me.Close()
                 cmd.ShowDialog()
             Else

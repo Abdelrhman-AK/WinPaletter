@@ -557,6 +557,7 @@ Public Class XenonToggle
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         DoubleBuffered = True
         Size = New Size(40, 20)
+        Text = ""
     End Sub
 
     Public Property DarkLight_Toggler As Boolean = False
@@ -1093,6 +1094,7 @@ Public Class XenonRadioImage
         DoubleBuffered = True
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
+        Text = ""
     End Sub
 
 #Region "Properties"
@@ -1560,9 +1562,16 @@ Public Class XenonGroupBox : Inherits Panel
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
+        Text = ""
     End Sub
 
     Private LineColor As Color
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
@@ -1586,8 +1595,8 @@ Public Class XenonAnimatedBox : Inherits Panel
 
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
-
         DoubleBuffered = True
+        Text = ""
     End Sub
 
 #Region "Properties"
@@ -1595,6 +1604,13 @@ Public Class XenonAnimatedBox : Inherits Panel
     Public Property Color2 As Color = Color.Crimson
     Public Property [Color] As Color = Color1
     Property Style As ColorsStyle = ColorsStyle.SwapColors
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
+
     Enum ColorsStyle
         SwapColors
         MixedColors
@@ -1713,6 +1729,7 @@ Public Class XenonCP
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
+        Text = ""
     End Sub
 
 #Region "Properties"
@@ -1721,6 +1738,11 @@ Public Class XenonCP
 
     Private LineColor As Color
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 #End Region
 
 #Region "Events"
@@ -2322,6 +2344,7 @@ Public Class XenonSeparator
     Sub New()
         TabStop = False
         DoubleBuffered = True
+        Text = ""
     End Sub
 
 #Region "Events"
@@ -2622,6 +2645,7 @@ Public Class XenonSeparatorVertical
     Sub New()
         TabStop = False
         DoubleBuffered = True
+        Text = ""
     End Sub
 
 #Region "Events"
@@ -5581,7 +5605,7 @@ Public Class XenonTrackbar
         SetStyle(DirectCast(139286, ControlStyles), True)
         SetStyle(ControlStyles.Selectable, False)
         Height = 19
-
+        Text = ""
     End Sub
 
     Dim I1 As Integer
@@ -5812,6 +5836,11 @@ Public Class XenonCMD
         _12x16
         _10x18
     End Enum
+
+    Sub New()
+        Text = ""
+        DoubleBuffered = True
+    End Sub
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -6392,6 +6421,11 @@ Public Class XenonTerminal
     End Sub
 
     Dim WithEvents Tm As New Timer With {.Enabled = False, .Interval = 500}
+
+    Sub New()
+        Text = ""
+        DoubleBuffered = True
+    End Sub
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics

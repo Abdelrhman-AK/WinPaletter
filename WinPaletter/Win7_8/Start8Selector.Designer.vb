@@ -60,6 +60,7 @@ Partial Class Start8Selector
         Me.img1.Image = Nothing
         Me.img1.Location = New System.Drawing.Point(3, 41)
         Me.img1.Name = "img1"
+        Me.img1.ShowText = False
         Me.img1.Size = New System.Drawing.Size(80, 80)
         Me.img1.TabIndex = 0
         '
@@ -71,6 +72,7 @@ Partial Class Start8Selector
         Me.img2.Image = Nothing
         Me.img2.Location = New System.Drawing.Point(89, 41)
         Me.img2.Name = "img2"
+        Me.img2.ShowText = False
         Me.img2.Size = New System.Drawing.Size(80, 80)
         Me.img2.TabIndex = 1
         '
@@ -82,6 +84,7 @@ Partial Class Start8Selector
         Me.img3.Image = Nothing
         Me.img3.Location = New System.Drawing.Point(175, 41)
         Me.img3.Name = "img3"
+        Me.img3.ShowText = False
         Me.img3.Size = New System.Drawing.Size(80, 80)
         Me.img3.TabIndex = 2
         '
@@ -93,6 +96,7 @@ Partial Class Start8Selector
         Me.img7.Image = Nothing
         Me.img7.Location = New System.Drawing.Point(175, 127)
         Me.img7.Name = "img7"
+        Me.img7.ShowText = False
         Me.img7.Size = New System.Drawing.Size(80, 80)
         Me.img7.TabIndex = 3
         '
@@ -104,6 +108,7 @@ Partial Class Start8Selector
         Me.img4.Image = Nothing
         Me.img4.Location = New System.Drawing.Point(261, 41)
         Me.img4.Name = "img4"
+        Me.img4.ShowText = False
         Me.img4.Size = New System.Drawing.Size(80, 80)
         Me.img4.TabIndex = 4
         '
@@ -115,6 +120,7 @@ Partial Class Start8Selector
         Me.img5.Image = Nothing
         Me.img5.Location = New System.Drawing.Point(3, 127)
         Me.img5.Name = "img5"
+        Me.img5.ShowText = False
         Me.img5.Size = New System.Drawing.Size(80, 80)
         Me.img5.TabIndex = 5
         '
@@ -126,6 +132,7 @@ Partial Class Start8Selector
         Me.img6.Image = Nothing
         Me.img6.Location = New System.Drawing.Point(89, 127)
         Me.img6.Name = "img6"
+        Me.img6.ShowText = False
         Me.img6.Size = New System.Drawing.Size(80, 80)
         Me.img6.TabIndex = 6
         '
@@ -137,6 +144,7 @@ Partial Class Start8Selector
         Me.img8.Image = Nothing
         Me.img8.Location = New System.Drawing.Point(261, 127)
         Me.img8.Name = "img8"
+        Me.img8.ShowText = False
         Me.img8.Size = New System.Drawing.Size(80, 80)
         Me.img8.TabIndex = 7
         '
@@ -148,6 +156,7 @@ Partial Class Start8Selector
         Me.img9.Image = Nothing
         Me.img9.Location = New System.Drawing.Point(3, 213)
         Me.img9.Name = "img9"
+        Me.img9.ShowText = False
         Me.img9.Size = New System.Drawing.Size(80, 80)
         Me.img9.TabIndex = 8
         '
@@ -159,6 +168,7 @@ Partial Class Start8Selector
         Me.img15.Image = Nothing
         Me.img15.Location = New System.Drawing.Point(175, 299)
         Me.img15.Name = "img15"
+        Me.img15.ShowText = False
         Me.img15.Size = New System.Drawing.Size(80, 80)
         Me.img15.TabIndex = 14
         '
@@ -170,6 +180,7 @@ Partial Class Start8Selector
         Me.img14.Image = Nothing
         Me.img14.Location = New System.Drawing.Point(89, 299)
         Me.img14.Name = "img14"
+        Me.img14.ShowText = False
         Me.img14.Size = New System.Drawing.Size(80, 80)
         Me.img14.TabIndex = 13
         '
@@ -181,6 +192,7 @@ Partial Class Start8Selector
         Me.img12.Image = Nothing
         Me.img12.Location = New System.Drawing.Point(261, 213)
         Me.img12.Name = "img12"
+        Me.img12.ShowText = False
         Me.img12.Size = New System.Drawing.Size(80, 80)
         Me.img12.TabIndex = 12
         '
@@ -192,6 +204,7 @@ Partial Class Start8Selector
         Me.img11.Image = Nothing
         Me.img11.Location = New System.Drawing.Point(175, 213)
         Me.img11.Name = "img11"
+        Me.img11.ShowText = False
         Me.img11.Size = New System.Drawing.Size(80, 80)
         Me.img11.TabIndex = 11
         '
@@ -203,6 +216,7 @@ Partial Class Start8Selector
         Me.img10.Image = Nothing
         Me.img10.Location = New System.Drawing.Point(89, 213)
         Me.img10.Name = "img10"
+        Me.img10.ShowText = False
         Me.img10.Size = New System.Drawing.Size(80, 80)
         Me.img10.TabIndex = 10
         '
@@ -214,6 +228,7 @@ Partial Class Start8Selector
         Me.img13.Image = Nothing
         Me.img13.Location = New System.Drawing.Point(3, 299)
         Me.img13.Name = "img13"
+        Me.img13.ShowText = False
         Me.img13.Size = New System.Drawing.Size(80, 80)
         Me.img13.TabIndex = 9
         '
@@ -225,6 +240,7 @@ Partial Class Start8Selector
         Me.img18.Image = Nothing
         Me.img18.Location = New System.Drawing.Point(89, 385)
         Me.img18.Name = "img18"
+        Me.img18.ShowText = False
         Me.img18.Size = New System.Drawing.Size(80, 80)
         Me.img18.TabIndex = 17
         '
@@ -236,6 +252,7 @@ Partial Class Start8Selector
         Me.img17.Image = Nothing
         Me.img17.Location = New System.Drawing.Point(3, 385)
         Me.img17.Name = "img17"
+        Me.img17.ShowText = False
         Me.img17.Size = New System.Drawing.Size(80, 80)
         Me.img17.TabIndex = 16
         '
@@ -247,6 +264,7 @@ Partial Class Start8Selector
         Me.img16.Image = Nothing
         Me.img16.Location = New System.Drawing.Point(261, 299)
         Me.img16.Name = "img16"
+        Me.img16.ShowText = False
         Me.img16.Size = New System.Drawing.Size(80, 80)
         Me.img16.TabIndex = 15
         '
@@ -258,6 +276,7 @@ Partial Class Start8Selector
         Me.img20.Image = Nothing
         Me.img20.Location = New System.Drawing.Point(261, 385)
         Me.img20.Name = "img20"
+        Me.img20.ShowText = False
         Me.img20.Size = New System.Drawing.Size(80, 80)
         Me.img20.TabIndex = 19
         '
@@ -269,6 +288,7 @@ Partial Class Start8Selector
         Me.img19.Image = Nothing
         Me.img19.Location = New System.Drawing.Point(175, 385)
         Me.img19.Name = "img19"
+        Me.img19.ShowText = False
         Me.img19.Size = New System.Drawing.Size(80, 80)
         Me.img19.TabIndex = 18
         '

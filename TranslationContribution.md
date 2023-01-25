@@ -1,16 +1,14 @@
+# Instructions for WinPaletter Versions less than 1.0.6.9
+
+> If you are using WinPaletter 1.0.6.9 or higher, please [read this instead]()
+
+---
+
 # Get Languages and applying them
 
-Visit this folder in WinPaletter GitHub Repository and download the language you want:
+[Visit this folder in WinPaletter GitHub Repository and download the language you want](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages/For%20Versions%20Below%201.0.6.9)
 
-https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages
-
-> IMPORTANT INFO: If you are using WinPaletter version less than `1.0.6.9` please enter its specific folder, if not (Equals or higher than `1.0.6.9`), then use files with JSON format.
-
-Download Language > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings
-
-> Restarting is necessary if you're switching into new language or between languages  in WinPaletter less than `1.0.6.9`.
-> 
-> In WinPaletter Version Equals or higher than `1.0.6.9`, Restarting isn't required.
+Download Language > Open app > Settings > Languages > Activate Custom Language > Open the downloaded file > Save Settings > Restart WinPaletter (Necessary)
 
 ---
 
@@ -18,19 +16,11 @@ Download Language > Open app > Settings > Languages > Activate Custom Language >
 
 Open app > Settings > Languages > Deactivate Custom Language and erase the textbox of language file path > Save Settings Restart the application
 
----
-
-# Contribute in Translation (For versions equal or higher than 1.0.6.9)
-
-Its instructions will be updated once WinPaletter Version `1.0.6.9` is released
-
 --- 
 
-# Contribute in Translation (For versions less than 1.0.6.9)
+# Contribute in Translation
 
-1) Download WinPaletter Language Translator from main repository
-
-https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%20Translator.exe
+1) Download [WinPaletter Language](https://github.com/Abdelrhman-AK/WinPaletter/raw/master/WinPaletter%20Language%20Translator.exe) Translator from main repository
 
 2) Make sure WinPaletter is closed, Open Command prompt inside WinPaletter Folder > Type: `Winpaletter /exportlanguage`
 
@@ -46,13 +36,13 @@ https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%
    
    - Create a GitHub Account if you don't have an account, or login if you already have one.
    
-   - Visit WinPaletter Repository: https://github.com/Abdelrhman-AK/WinPaletter/
+   - [Visit WinPaletter Repository](https://github.com/Abdelrhman-AK/WinPaletter/)
    
    - Fork (You will find this button in the upper part of the page).
    
    - Now visit your personal account main page, you will find WinPaletter Forked (as if cloned to your account if you don't know the meaning of Fork).
    
-   - Navigate to folder `Languages` and create a new file \ or edit it if you already uploaded a previous one.
+   - Navigate to folder `Languages\For Versions Below 1.0.6.9` and create a new file \ or edit it if you already uploaded a previous one.
    
    - After creating the file, open it and press on edit (Pencil) icon.
    
@@ -60,13 +50,11 @@ https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Language%
    
    - Confirm saving the file.
    
-   - Create a pull request, once this request is approved, your new translation will be merged with the Main WinPaletter Repository and so anyone can access your translation\language from this link: https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages
+   - Create a pull request, once this request is approved, your new translation will be merged with the Main WinPaletter Repository and so anyone can access your translation\language from [this link](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages/For%20Versions%20Below%201.0.6.9)
 
 ---
 
 ### Notes:
-
-> These notes are for WinPaletter Versions from `1.0.3.0` to `1.0.6.3` only
 
 - First Version Supports Translation is `1.0.3.0`.
 

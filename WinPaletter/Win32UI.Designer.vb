@@ -716,7 +716,6 @@ Partial Class Win32UI
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
         Me.XenonGroupBox7.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox7.TabIndex = 33
-        Me.XenonGroupBox7.Text = "XenonGroupBox25"
         '
         'PictureBox4
         '
@@ -755,7 +754,6 @@ Partial Class Win32UI
         Me.btnaltface_pick.Name = "btnaltface_pick"
         Me.btnaltface_pick.Size = New System.Drawing.Size(89, 22)
         Me.btnaltface_pick.TabIndex = 2
-        Me.btnaltface_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox11
         '
@@ -770,7 +768,6 @@ Partial Class Win32UI
         Me.XenonGroupBox11.Name = "XenonGroupBox11"
         Me.XenonGroupBox11.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox11.TabIndex = 39
-        Me.XenonGroupBox11.Text = "XenonGroupBox31"
         '
         'PictureBox6
         '
@@ -809,7 +806,6 @@ Partial Class Win32UI
         Me.btntext_pick.Name = "btntext_pick"
         Me.btntext_pick.Size = New System.Drawing.Size(89, 22)
         Me.btntext_pick.TabIndex = 2
-        Me.btntext_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox49
         '
@@ -824,7 +820,6 @@ Partial Class Win32UI
         Me.XenonGroupBox49.Name = "XenonGroupBox49"
         Me.XenonGroupBox49.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox49.TabIndex = 36
-        Me.XenonGroupBox49.Text = "XenonGroupBox27"
         '
         'PictureBox26
         '
@@ -863,7 +858,6 @@ Partial Class Win32UI
         Me.Frame_pick.Name = "Frame_pick"
         Me.Frame_pick.Size = New System.Drawing.Size(89, 22)
         Me.Frame_pick.TabIndex = 2
-        Me.Frame_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox13
         '
@@ -878,7 +872,6 @@ Partial Class Win32UI
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox13.TabIndex = 38
-        Me.XenonGroupBox13.Text = "XenonGroupBox21"
         '
         'PictureBox7
         '
@@ -917,7 +910,6 @@ Partial Class Win32UI
         Me.btnshadow_pick.Name = "btnshadow_pick"
         Me.btnshadow_pick.Size = New System.Drawing.Size(89, 22)
         Me.btnshadow_pick.TabIndex = 2
-        Me.btnshadow_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox5
         '
@@ -932,7 +924,6 @@ Partial Class Win32UI
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox5.TabIndex = 34
-        Me.XenonGroupBox5.Text = "XenonGroupBox21"
         '
         'PictureBox3
         '
@@ -971,7 +962,6 @@ Partial Class Win32UI
         Me.btndkshadow_pick.Name = "btndkshadow_pick"
         Me.btndkshadow_pick.Size = New System.Drawing.Size(89, 22)
         Me.btndkshadow_pick.TabIndex = 2
-        Me.btndkshadow_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox15
         '
@@ -986,7 +976,6 @@ Partial Class Win32UI
         Me.XenonGroupBox15.Name = "XenonGroupBox15"
         Me.XenonGroupBox15.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox15.TabIndex = 37
-        Me.XenonGroupBox15.Text = "XenonGroupBox25"
         '
         'PictureBox8
         '
@@ -1025,7 +1014,6 @@ Partial Class Win32UI
         Me.btnlight_pick.Name = "btnlight_pick"
         Me.btnlight_pick.Size = New System.Drawing.Size(89, 22)
         Me.btnlight_pick.TabIndex = 2
-        Me.btnlight_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox3
         '
@@ -1040,7 +1028,6 @@ Partial Class Win32UI
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox3.TabIndex = 35
-        Me.XenonGroupBox3.Text = "XenonGroupBox31"
         '
         'PictureBox2
         '
@@ -1079,7 +1066,6 @@ Partial Class Win32UI
         Me.btnface_pick.Name = "btnface_pick"
         Me.btnface_pick.Size = New System.Drawing.Size(89, 22)
         Me.btnface_pick.TabIndex = 2
-        Me.btnface_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox1
         '
@@ -1094,7 +1080,6 @@ Partial Class Win32UI
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox1.TabIndex = 36
-        Me.XenonGroupBox1.Text = "XenonGroupBox27"
         '
         'PictureBox1
         '
@@ -1133,7 +1118,6 @@ Partial Class Win32UI
         Me.btnhilight_pick.Name = "btnhilight_pick"
         Me.btnhilight_pick.Size = New System.Drawing.Size(89, 22)
         Me.btnhilight_pick.TabIndex = 2
-        Me.btnhilight_pick.Text = "XenonGroupBox23"
         '
         'TabPage2
         '
@@ -1165,7 +1149,6 @@ Partial Class Win32UI
         Me.pnl10.Name = "pnl10"
         Me.pnl10.Size = New System.Drawing.Size(343, 30)
         Me.pnl10.TabIndex = 30
-        Me.pnl10.Text = "XenonGroupBox21"
         '
         'PictureBox29
         '
@@ -1204,7 +1187,6 @@ Partial Class Win32UI
         Me.GActivetitle_pick.Name = "GActivetitle_pick"
         Me.GActivetitle_pick.Size = New System.Drawing.Size(89, 22)
         Me.GActivetitle_pick.TabIndex = 2
-        Me.GActivetitle_pick.Text = "XenonGroupBox23"
         '
         'activetitle_pick
         '
@@ -1217,7 +1199,6 @@ Partial Class Win32UI
         Me.activetitle_pick.Name = "activetitle_pick"
         Me.activetitle_pick.Size = New System.Drawing.Size(89, 22)
         Me.activetitle_pick.TabIndex = 2
-        Me.activetitle_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox53
         '
@@ -1232,7 +1213,6 @@ Partial Class Win32UI
         Me.XenonGroupBox53.Name = "XenonGroupBox53"
         Me.XenonGroupBox53.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox53.TabIndex = 34
-        Me.XenonGroupBox53.Text = "XenonGroupBox21"
         '
         'PictureBox31
         '
@@ -1271,7 +1251,6 @@ Partial Class Win32UI
         Me.TitleText_pick.Name = "TitleText_pick"
         Me.TitleText_pick.Size = New System.Drawing.Size(89, 22)
         Me.TitleText_pick.TabIndex = 2
-        Me.TitleText_pick.Text = "XenonGroupBox23"
         '
         'pnl9
         '
@@ -1286,7 +1265,6 @@ Partial Class Win32UI
         Me.pnl9.Name = "pnl9"
         Me.pnl9.Size = New System.Drawing.Size(343, 30)
         Me.pnl9.TabIndex = 29
-        Me.pnl9.Text = "XenonGroupBox25"
         '
         'PictureBox30
         '
@@ -1325,7 +1303,6 @@ Partial Class Win32UI
         Me.ActiveBorder_pick.Name = "ActiveBorder_pick"
         Me.ActiveBorder_pick.Size = New System.Drawing.Size(89, 22)
         Me.ActiveBorder_pick.TabIndex = 2
-        Me.ActiveBorder_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox19
         '
@@ -1340,7 +1317,6 @@ Partial Class Win32UI
         Me.XenonGroupBox19.Name = "XenonGroupBox19"
         Me.XenonGroupBox19.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox19.TabIndex = 43
-        Me.XenonGroupBox19.Text = "XenonGroupBox31"
         '
         'PictureBox10
         '
@@ -1379,7 +1355,6 @@ Partial Class Win32UI
         Me.InactivetitleText_pick.Name = "InactivetitleText_pick"
         Me.InactivetitleText_pick.Size = New System.Drawing.Size(89, 22)
         Me.InactivetitleText_pick.TabIndex = 2
-        Me.InactivetitleText_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox21
         '
@@ -1395,7 +1370,6 @@ Partial Class Win32UI
         Me.XenonGroupBox21.Name = "XenonGroupBox21"
         Me.XenonGroupBox21.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox21.TabIndex = 42
-        Me.XenonGroupBox21.Text = "XenonGroupBox21"
         '
         'PictureBox11
         '
@@ -1420,7 +1394,6 @@ Partial Class Win32UI
         Me.GInactivetitle_pick.Name = "GInactivetitle_pick"
         Me.GInactivetitle_pick.Size = New System.Drawing.Size(89, 22)
         Me.GInactivetitle_pick.TabIndex = 2
-        Me.GInactivetitle_pick.Text = "XenonGroupBox19"
         '
         'Label11
         '
@@ -1447,7 +1420,6 @@ Partial Class Win32UI
         Me.InactiveTitle_pick.Name = "InactiveTitle_pick"
         Me.InactiveTitle_pick.Size = New System.Drawing.Size(89, 22)
         Me.InactiveTitle_pick.TabIndex = 2
-        Me.InactiveTitle_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox23
         '
@@ -1462,7 +1434,6 @@ Partial Class Win32UI
         Me.XenonGroupBox23.Name = "XenonGroupBox23"
         Me.XenonGroupBox23.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox23.TabIndex = 41
-        Me.XenonGroupBox23.Text = "XenonGroupBox25"
         '
         'PictureBox12
         '
@@ -1501,7 +1472,6 @@ Partial Class Win32UI
         Me.InactiveBorder_pick.Name = "InactiveBorder_pick"
         Me.InactiveBorder_pick.Size = New System.Drawing.Size(89, 22)
         Me.InactiveBorder_pick.TabIndex = 2
-        Me.InactiveBorder_pick.Text = "XenonGroupBox19"
         '
         'TabPage3
         '
@@ -1533,7 +1503,6 @@ Partial Class Win32UI
         Me.XenonGroupBox45.Name = "XenonGroupBox45"
         Me.XenonGroupBox45.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox45.TabIndex = 54
-        Me.XenonGroupBox45.Text = "XenonGroupBox21"
         '
         'PictureBox24
         '
@@ -1572,7 +1541,6 @@ Partial Class Win32UI
         Me.menu_pick.Name = "menu_pick"
         Me.menu_pick.Size = New System.Drawing.Size(89, 22)
         Me.menu_pick.TabIndex = 2
-        Me.menu_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox43
         '
@@ -1587,7 +1555,6 @@ Partial Class Win32UI
         Me.XenonGroupBox43.Name = "XenonGroupBox43"
         Me.XenonGroupBox43.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox43.TabIndex = 55
-        Me.XenonGroupBox43.Text = "XenonGroupBox31"
         '
         'PictureBox22
         '
@@ -1626,7 +1593,6 @@ Partial Class Win32UI
         Me.menubar_pick.Name = "menubar_pick"
         Me.menubar_pick.Size = New System.Drawing.Size(89, 22)
         Me.menubar_pick.TabIndex = 2
-        Me.menubar_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox35
         '
@@ -1641,7 +1607,6 @@ Partial Class Win32UI
         Me.XenonGroupBox35.Name = "XenonGroupBox35"
         Me.XenonGroupBox35.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox35.TabIndex = 51
-        Me.XenonGroupBox35.Text = "XenonGroupBox31"
         '
         'PictureBox18
         '
@@ -1680,7 +1645,6 @@ Partial Class Win32UI
         Me.menuhilight_pick.Name = "menuhilight_pick"
         Me.menuhilight_pick.Size = New System.Drawing.Size(89, 22)
         Me.menuhilight_pick.TabIndex = 2
-        Me.menuhilight_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox27
         '
@@ -1695,7 +1659,6 @@ Partial Class Win32UI
         Me.XenonGroupBox27.Name = "XenonGroupBox27"
         Me.XenonGroupBox27.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox27.TabIndex = 47
-        Me.XenonGroupBox27.Text = "XenonGroupBox31"
         '
         'PictureBox14
         '
@@ -1734,7 +1697,6 @@ Partial Class Win32UI
         Me.hilighttext_pick.Name = "hilighttext_pick"
         Me.hilighttext_pick.Size = New System.Drawing.Size(89, 22)
         Me.hilighttext_pick.TabIndex = 2
-        Me.hilighttext_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox25
         '
@@ -1749,7 +1711,6 @@ Partial Class Win32UI
         Me.XenonGroupBox25.Name = "XenonGroupBox25"
         Me.XenonGroupBox25.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox25.TabIndex = 48
-        Me.XenonGroupBox25.Text = "XenonGroupBox27"
         '
         'PictureBox13
         '
@@ -1788,7 +1749,6 @@ Partial Class Win32UI
         Me.hottracking_pick.Name = "hottracking_pick"
         Me.hottracking_pick.Size = New System.Drawing.Size(89, 22)
         Me.hottracking_pick.TabIndex = 2
-        Me.hottracking_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox37
         '
@@ -1803,7 +1763,6 @@ Partial Class Win32UI
         Me.XenonGroupBox37.Name = "XenonGroupBox37"
         Me.XenonGroupBox37.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox37.TabIndex = 50
-        Me.XenonGroupBox37.Text = "XenonGroupBox21"
         '
         'PictureBox19
         '
@@ -1842,7 +1801,6 @@ Partial Class Win32UI
         Me.hilight_pick.Name = "hilight_pick"
         Me.hilight_pick.Size = New System.Drawing.Size(89, 22)
         Me.hilight_pick.TabIndex = 2
-        Me.hilight_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox41
         '
@@ -1857,7 +1815,6 @@ Partial Class Win32UI
         Me.XenonGroupBox41.Name = "XenonGroupBox41"
         Me.XenonGroupBox41.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox41.TabIndex = 56
-        Me.XenonGroupBox41.Text = "XenonGroupBox27"
         '
         'PictureBox21
         '
@@ -1896,7 +1853,6 @@ Partial Class Win32UI
         Me.menutext_pick.Name = "menutext_pick"
         Me.menutext_pick.Size = New System.Drawing.Size(89, 22)
         Me.menutext_pick.TabIndex = 2
-        Me.menutext_pick.Text = "XenonGroupBox23"
         '
         'TabPage4
         '
@@ -1928,7 +1884,6 @@ Partial Class Win32UI
         Me.XenonGroupBox51.Name = "XenonGroupBox51"
         Me.XenonGroupBox51.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox51.TabIndex = 35
-        Me.XenonGroupBox51.Text = "XenonGroupBox31"
         '
         'PictureBox27
         '
@@ -1967,7 +1922,6 @@ Partial Class Win32UI
         Me.Window_pick.Name = "Window_pick"
         Me.Window_pick.Size = New System.Drawing.Size(89, 22)
         Me.Window_pick.TabIndex = 2
-        Me.Window_pick.Text = "XenonGroupBox31"
         '
         'XenonGroupBox47
         '
@@ -1982,7 +1936,6 @@ Partial Class Win32UI
         Me.XenonGroupBox47.Name = "XenonGroupBox47"
         Me.XenonGroupBox47.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox47.TabIndex = 53
-        Me.XenonGroupBox47.Text = "XenonGroupBox25"
         '
         'PictureBox25
         '
@@ -2021,7 +1974,6 @@ Partial Class Win32UI
         Me.InfoWindow_pick.Name = "InfoWindow_pick"
         Me.InfoWindow_pick.Size = New System.Drawing.Size(89, 22)
         Me.InfoWindow_pick.TabIndex = 2
-        Me.InfoWindow_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox17
         '
@@ -2036,7 +1988,6 @@ Partial Class Win32UI
         Me.XenonGroupBox17.Name = "XenonGroupBox17"
         Me.XenonGroupBox17.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox17.TabIndex = 44
-        Me.XenonGroupBox17.Text = "XenonGroupBox27"
         '
         'PictureBox9
         '
@@ -2075,7 +2026,6 @@ Partial Class Win32UI
         Me.InfoText_pick.Name = "InfoText_pick"
         Me.InfoText_pick.Size = New System.Drawing.Size(89, 22)
         Me.InfoText_pick.TabIndex = 2
-        Me.InfoText_pick.Text = "XenonGroupBox23"
         '
         'pnl11
         '
@@ -2090,7 +2040,6 @@ Partial Class Win32UI
         Me.pnl11.Name = "pnl11"
         Me.pnl11.Size = New System.Drawing.Size(343, 30)
         Me.pnl11.TabIndex = 31
-        Me.pnl11.Text = "XenonGroupBox31"
         '
         'PictureBox28
         '
@@ -2129,7 +2078,6 @@ Partial Class Win32UI
         Me.AppWorkspace_pick.Name = "AppWorkspace_pick"
         Me.AppWorkspace_pick.Size = New System.Drawing.Size(89, 22)
         Me.AppWorkspace_pick.TabIndex = 2
-        Me.AppWorkspace_pick.Text = "XenonGroupBox31"
         '
         'pnl12
         '
@@ -2144,7 +2092,6 @@ Partial Class Win32UI
         Me.pnl12.Name = "pnl12"
         Me.pnl12.Size = New System.Drawing.Size(343, 30)
         Me.pnl12.TabIndex = 32
-        Me.pnl12.Text = "XenonGroupBox27"
         '
         'PictureBox23
         '
@@ -2183,7 +2130,6 @@ Partial Class Win32UI
         Me.background_pick.Name = "background_pick"
         Me.background_pick.Size = New System.Drawing.Size(89, 22)
         Me.background_pick.TabIndex = 2
-        Me.background_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox29
         '
@@ -2198,7 +2144,6 @@ Partial Class Win32UI
         Me.XenonGroupBox29.Name = "XenonGroupBox29"
         Me.XenonGroupBox29.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox29.TabIndex = 46
-        Me.XenonGroupBox29.Text = "XenonGroupBox21"
         '
         'PictureBox15
         '
@@ -2237,7 +2182,6 @@ Partial Class Win32UI
         Me.GrayText_pick.Name = "GrayText_pick"
         Me.GrayText_pick.Size = New System.Drawing.Size(89, 22)
         Me.GrayText_pick.TabIndex = 2
-        Me.GrayText_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox39
         '
@@ -2252,7 +2196,6 @@ Partial Class Win32UI
         Me.XenonGroupBox39.Name = "XenonGroupBox39"
         Me.XenonGroupBox39.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox39.TabIndex = 49
-        Me.XenonGroupBox39.Text = "XenonGroupBox25"
         '
         'PictureBox20
         '
@@ -2291,7 +2234,6 @@ Partial Class Win32UI
         Me.WindowText_pick.Name = "WindowText_pick"
         Me.WindowText_pick.Size = New System.Drawing.Size(89, 22)
         Me.WindowText_pick.TabIndex = 2
-        Me.WindowText_pick.Text = "XenonGroupBox19"
         '
         'TabPage5
         '
@@ -2318,7 +2260,6 @@ Partial Class Win32UI
         Me.XenonGroupBox33.Name = "XenonGroupBox33"
         Me.XenonGroupBox33.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox33.TabIndex = 52
-        Me.XenonGroupBox33.Text = "XenonGroupBox27"
         '
         'PictureBox17
         '
@@ -2357,7 +2298,6 @@ Partial Class Win32UI
         Me.desktop_pick.Name = "desktop_pick"
         Me.desktop_pick.Size = New System.Drawing.Size(89, 22)
         Me.desktop_pick.TabIndex = 2
-        Me.desktop_pick.Text = "XenonGroupBox23"
         '
         'XenonGroupBox55
         '
@@ -2372,7 +2312,6 @@ Partial Class Win32UI
         Me.XenonGroupBox55.Name = "XenonGroupBox55"
         Me.XenonGroupBox55.Size = New System.Drawing.Size(343, 30)
         Me.XenonGroupBox55.TabIndex = 33
-        Me.XenonGroupBox55.Text = "XenonGroupBox25"
         '
         'PictureBox32
         '
@@ -2411,7 +2350,6 @@ Partial Class Win32UI
         Me.Scrollbar_pick.Name = "Scrollbar_pick"
         Me.Scrollbar_pick.Size = New System.Drawing.Size(89, 22)
         Me.Scrollbar_pick.TabIndex = 2
-        Me.Scrollbar_pick.Text = "XenonGroupBox19"
         '
         'XenonGroupBox8
         '
@@ -2425,7 +2363,6 @@ Partial Class Win32UI
         Me.XenonGroupBox8.Padding = New System.Windows.Forms.Padding(3)
         Me.XenonGroupBox8.Size = New System.Drawing.Size(356, 373)
         Me.XenonGroupBox8.TabIndex = 65
-        Me.XenonGroupBox8.Text = "XenonGroupBox8"
         '
         'PictureBox41
         '
@@ -3114,7 +3051,6 @@ Partial Class Win32UI
         Me.XenonSeparator1.Size = New System.Drawing.Size(856, 1)
         Me.XenonSeparator1.TabIndex = 62
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'Win32UI
         '

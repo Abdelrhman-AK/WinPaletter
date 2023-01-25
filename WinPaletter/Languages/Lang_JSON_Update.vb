@@ -4,7 +4,7 @@ Imports WinPaletter.XenonCore
 
 Public Class Lang_JSON_Update
     Private Sub Lang_JSON_Update_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Icon = LangJSON_Manage.Icon
+        Icon = Lang_JSON_Manage.Icon
         ApplyDarkMode(Me)
     End Sub
 
@@ -56,9 +56,15 @@ Public Class Lang_JSON_Update
             For Each j In x_new.Properties
                 If x_old(j.Name) Is Nothing Then J_GlobalStrings.Add(j.Name, j.Value)       ' Add Missing Strings From New JSON
             Next
+
             For Each j In x_old.Properties
-                J_GlobalStrings.Add(j.Name, j.Value)                                        ' Add Rest of items from Old JSON
+                If XenonCheckBox1.Checked Then
+                    If x_new.ContainsKey(j.Name) Then J_GlobalStrings.Add(j.Name, j.Value)  ' Add with exclusion of Old JSON
+                Else
+                    J_GlobalStrings.Add(j.Name, j.Value)                                    ' Add Rest of items from Old JSON
+                End If
             Next
+
             J_Output.Add("Global Strings", J_GlobalStrings)
 
             '# Manage Forms
@@ -69,10 +75,9 @@ Public Class Lang_JSON_Update
             For Each j In x_new.Properties
 
                 If x_old(j.Name) Is Nothing Then
-                    J_Forms.Add(j.Name, j.Value)       ' Add Missing Forms From New JSON
+                    J_Forms.Add(j.Name, j.Value)                                         ' Add Missing Forms From New JSON
 
                 Else
-
                     Dim c_old As JObject = x_old(j.Name)("Controls")
                     Dim c_new As JObject = x_new(j.Name)("Controls")
                     Dim c As New JObject
@@ -80,21 +85,25 @@ Public Class Lang_JSON_Update
                     For Each jj In c_new.Properties
                         If c_old(jj.Name) Is Nothing Then c.Add(jj.Name, jj.Value)       ' Add Missing Controls From New JSON
                     Next
+
                     For Each jj In c_old.Properties
-                        c.Add(jj.Name, jj.Value)                                        ' Add Rest of controls from Old JSON
+                        c.Add(jj.Name, jj.Value)                                         ' Add Rest of controls from Old JSON
                     Next
 
                     x_new(j.Name)("Controls") = c
+                    x_new(j.Name)("Text") = x_old(j.Name)("Text")
+
                 End If
 
             Next
 
-            For Each j In x_old.Properties
-                J_Forms.Add(j.Name, j.Value)                                        ' Add Rest of forms from Old JSON
+            ' Add Modification to the newly created JSON
+
+            For Each j In x_new.Properties
+                If Not J_Forms.ContainsKey(j.Name) Then J_Forms.Add(j.Name, j.Value)
             Next
 
             J_Output.Add("Forms Strings", J_Forms)
-
 
             IO.File.WriteAllText(_output, J_Output.ToString)
 

@@ -224,7 +224,6 @@ Partial Class TerminalInfo
         Me.TerTabColor.Name = "TerTabColor"
         Me.TerTabColor.Size = New System.Drawing.Size(132, 25)
         Me.TerTabColor.TabIndex = 196
-        Me.TerTabColor.Text = "XenonGroupBox31"
         '
         'PictureBox40
         '
@@ -290,7 +289,6 @@ Partial Class TerminalInfo
         Me.XenonSeparator1.Size = New System.Drawing.Size(436, 1)
         Me.XenonSeparator1.TabIndex = 207
         Me.XenonSeparator1.TabStop = False
-        Me.XenonSeparator1.Text = "XenonSeparator1"
         '
         'XenonAlertBox1
         '
