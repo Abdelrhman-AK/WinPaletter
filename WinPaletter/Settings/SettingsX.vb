@@ -527,7 +527,7 @@ Public Class SettingsX
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        Process.Start(My.Resources.Link_Repository & "blob/master/TranslationContribution.md")
+        Process.Start(My.Resources.Link_Repository & "blob/master/Documentations/LangContribution.md")
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
