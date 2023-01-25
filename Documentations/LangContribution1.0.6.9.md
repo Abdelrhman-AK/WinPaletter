@@ -1,12 +1,12 @@
 # Instructions for Language Creation\Modification for WinPaletter Versions equals or higher than 1.0.6.9
 
-> If you are using WinPaletter less than 1.0.6.9, please [read this instead]([WinPaletter/TranslationContribution.md at master · Abdelrhman-AK/WinPaletter · GitHub](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md))
+> If you are using WinPaletter less than 1.0.6.9, please [read this instead](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md)
 
 ---
 
 # Get Languages and applying them
 
-[Visit this folder in WinPaletter GitHub Repository and download the language you want]([WinPaletter/Languages at master · Abdelrhman-AK/WinPaletter · GitHub](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages))
+[Visit this folder in WinPaletter GitHub Repository and download the language you want](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
 
 > The New Format is `JSON`, this is the right file
 > 
