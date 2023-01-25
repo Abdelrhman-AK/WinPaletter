@@ -3,6 +3,10 @@
 > If you are using WinPaletter less than 1.0.6.9, please [read this instead](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md)
 
 ---
+# This new method has been made instead of the older one, being dependent on JSON
+to try to minimize errors as much as possible, increase functionality and make it easier to modify.
+
+---
 
 # Get Languages and applying them
 
