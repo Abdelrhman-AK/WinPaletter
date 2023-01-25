@@ -36,7 +36,9 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    **or**
    
-   - Press on `Generate New (English) and load it` and save JSON file as you want anywhere. You will find the JSON file is deserialized into a tree node inside the application.
+   - Press on `Generate New (English) and open it` and save JSON file as you want anywhere. You will find the JSON file is deserialized into a tree node inside the application.
+
+      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/0.png?raw=true)
 
 ---
 
@@ -46,25 +48,27 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 > 
 > We will use VSCode for example
 
+   ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/3.png?raw=true)
+
 - Modify the strings in the right part colored in orange
 
 - Never modify name of a variable in the left part colored in blue as this will lead to errors
 
 - In `Information`'s part, `righttoleft` can be `"righttoleft": false` or `"righttoleft": true` (Not TRUE or True, keep it the same as explained before)
 
-- Don't remove or modify brackets ({0}), slashes (\ or /) or quotation marks ( " )
+- Don't remove or modify brackets (`{0}`), slashes (`\` or `/`) or quotation marks (`"`), keep them consistent with your new translation.
 
-- Load your language file as explained above in *"Get Languages and applying them"* to test it.
+- Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
 
-- Upload Your Language File to GitHub (Will be explained below)
+- [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
 
 ---
 
 # Modify contents using WinPaletter itself
 
-> Ignore this you prefer a a code\text editor
+> Ignore this if you prefer a a code\text editor
 
-1. Open WinPaletter > Settings > Language > Language Developing Tools > Create\Modify Language Files (Go) > Press on `Generate New (English) and load it` and save JSON file as you want anywhere, or press on `Open From`. You will find the JSON file is deserialized into a tree node inside the application.
+1. Open WinPaletter > Settings > Language > Language Developing Tools > Create\Modify Language Files (Go) > Press on `Generate New (English) and open it` and save JSON file as you want anywhere, or press on `Open From`. You will find the JSON file is deserialized into a tree node inside the application.
 
 2. JSON file is composed of three main regions: Information, Global Strings & Forms Strings:
    
@@ -73,6 +77,8 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    - **Global Strings**: contains text inside the code (For example: the strings used in messages boxes, ...)
    
    - **Forms Strings**: contains text of the controls inside the form.
+
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/1.png?raw=true)
 
 3. How to modify contents?
    
@@ -84,9 +90,11 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    - When you finish, press on `Save As ...` and close the form
    
-   - Load your language file as explained above in *"Get Languages and applying them"* to test it.
+   - Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
 
-4. Upload Your Language File to GitHub (Will be explained below)
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/2.png?raw=true)
+
+4. [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
 
 5. Important notes:
    
@@ -96,7 +104,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    - Numbers in Curly brackets should be left unchanged.
    
-   - > For example: `There is {0} files` is translated into Arabic like that: `توجد {0} ملفات`
+   - > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
 
 ---
 
@@ -111,7 +119,9 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    > Never forget to check for "Information"'s section as it will be overwritten by other values everytime you do a language file update
 7. Load your language file as explained above in *"Get Languages and applying them"* to test it.
-8. Upload Your Language File to GitHub (Will be explained)
+8. [Upload Your Language File to GitHub (Will be explained)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
+
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/4.png?raw=true)
 
 ---
 
