@@ -132,7 +132,7 @@ Public Class Localizer : Implements IDisposable
     Property Bug_OS As String = "OS"
     Property Version_Str As String = "WinPaletter Version"
     Property Bug_Date As String = "Date of report"
-    Property NewUpdate As String = "New Update Available"
+    Property NewUpdate As String = "New Update is available"
     Property OpenForActions As String = "Open Updates form for actions."
     Property By As String = "By"
     Property Done As String = "Done"
@@ -604,7 +604,7 @@ Public Class Localizer : Implements IDisposable
 
                     If member.Item2 = String.Empty Then
                         '# Form
-                        Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4, [Form])
+                        Try : If member.Item3.ToLower = "text" Then [Form].SetText(member.Item4)
                         Catch : End Try
 
                         Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, [Form])
@@ -616,7 +616,7 @@ Public Class Localizer : Implements IDisposable
 
                             For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
 
-                                Try : If member.Item3.ToLower = "text" Then SetCtrlTxt(member.Item4.ToString, ctrl)
+                                Try : If member.Item3.ToLower = "text" Then ctrl.SetText(member.Item4.ToString)
                                 Catch : End Try
 
                                 Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)

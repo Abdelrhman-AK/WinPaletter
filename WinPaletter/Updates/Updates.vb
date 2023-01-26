@@ -4,20 +4,24 @@ Imports WinPaletter.XenonCore
 
 Public Class Updates
     Dim WithEvents WebCL, UC As New WebClient
-    Dim url As String = Nothing
-    Dim ver As String
+    Public url As String = Nothing
+    Public ver As String
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim OldName As String
-    Dim UpdateSize As Decimal
-    Dim ReleaseDate As Date
+    Public UpdateSize As Decimal
+    Public ReleaseDate As Date
     Private _Shown As Boolean = False
+    Public ls As New List(Of String)
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        MainFrm.NotifyUpdates.Visible = False
+
         If url Is Nothing Then
             Me.Cursor = Cursors.AppStarting
 
             My.[AnimatorNS].HideSync(XenonAlertBox2, True)
             My.[AnimatorNS].HideSync(XenonButton1, True)
+            My.[AnimatorNS].HideSync(XenonButton3, True)
             My.[AnimatorNS].HideSync(Panel1, True)
             ProgressBar1.Visible = False
             ProgressBar1.Value = 0
@@ -26,8 +30,7 @@ Public Class Updates
 
             Try
                 If IsNetworkAvailable() Then
-                    Label5.Text = My.Lang.Checking
-                    Dim ls As New List(Of String)
+                    Label17.SetText(My.Lang.Checking)
 
                     ls = WebCL.DownloadString(My.Resources.Link_Updates).CList
 
@@ -48,18 +51,16 @@ Public Class Updates
                         UpdateSize = ls(UpdateChannel).Split(" ")(2)
                         ReleaseDate = Date.FromBinary(ls(UpdateChannel).Split(" ")(3))
 
-                        Label5.Text = ver
                         Label7.Text = UpdateSize & " " & My.Lang.MBSizeUnit
-                        Label9.Text = ReleaseDate
+                        Label9.Text = ReleaseDate.ToLongDateString
 
                         LinkLabel3.Visible = True
 
                         My.[AnimatorNS].Show(Panel1, True)
                         XenonButton1.Text = My.Lang.DoAction_Update
-                        XenonAlertBox2.Text = String.Format("{0} ({1})", My.Lang.NewUpdate, ver)
-                        XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+                        XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
+                        XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
                     Else
-                        Label5.Text = ""
                         Label7.Text = ""
                         Label9.Text = ""
                         url = Nothing
@@ -67,8 +68,9 @@ Public Class Updates
                         XenonAlertBox2.Text = String.Format(My.Lang.NoUpdateAvailable)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Success
                     End If
+
+                    Label17.SetText(Text)
                 Else
-                    Label5.Text = ""
                     Label7.Text = ""
                     Label9.Text = ""
                     url = Nothing
@@ -77,17 +79,18 @@ Public Class Updates
                     XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
                 End If
             Catch ex As Exception
-                Label5.Text = ""
                 Label7.Text = ""
                 Label9.Text = ""
                 url = Nothing
                 XenonButton1.Text = My.Lang.CheckForUpdates
                 XenonAlertBox2.Text = String.Format(My.Lang.ServerError)
                 XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+                BugReport.ThrowError(ex)
             End Try
 
             My.[AnimatorNS].Show(XenonAlertBox2, True)
-            My.[AnimatorNS].ShowSync(XenonButton1, True)
+            My.[AnimatorNS].Show(XenonButton1, True)
+            My.[AnimatorNS].ShowSync(XenonButton3, True)
 
             Me.Cursor = Cursors.Default
         Else
@@ -122,15 +125,54 @@ Public Class Updates
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        UC = New WebClient
         LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
         Label3.Text = String.Format(F, If(My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
         XenonCheckBox1.Checked = My.[Settings].AutoUpdatesChecking
         _Shown = False
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+        XenonAlertBox2.Visible = False
+        Panel1.Visible = False
+        Label7.Text = ""
+        Label9.Text = ""
         url = Nothing
+
         XenonButton1.Text = My.Lang.CheckForUpdates
         Label2.Text = My.Application.Info.Version.ToString
+
+        If ls.Count > 0 Then
+            StableInt = 0 : BetaInt = 0 : UpdateChannel = 0
+
+            For x = 0 To ls.Count - 1
+                If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
+                    If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
+                    If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                End If
+            Next
+
+            If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then UpdateChannel = StableInt
+            If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then UpdateChannel = BetaInt
+
+            url = ls(UpdateChannel).Split(" ")(4)
+            UpdateSize = ls(UpdateChannel).Split(" ")(2)
+            ReleaseDate = Date.FromBinary(ls(UpdateChannel).Split(" ")(3))
+            ver = ls(UpdateChannel).Split(" ")(1)
+
+            Label7.Text = UpdateSize & " " & My.Lang.MBSizeUnit
+            Label9.Text = ReleaseDate.ToLongDateString
+
+            LinkLabel3.Visible = True
+
+            My.[AnimatorNS].Show(Panel1, True)
+            XenonButton1.Text = My.Lang.DoAction_Update
+            XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
+            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
+
+            My.[AnimatorNS].Show(XenonAlertBox2, True)
+            My.[AnimatorNS].ShowSync(XenonButton1, True)
+        End If
+
     End Sub
 
     Private Sub Label3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Label3.LinkClicked
@@ -167,9 +209,41 @@ Public Class Updates
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
         If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
-        If XenonRadioButton1.Checked Then
+        If XenonRadioButton1.Checked And Not Distutbed Then
             Process.Start(OldName)
             Process.GetCurrentProcess.Kill()
         End If
     End Sub
+
+    Private Sub Updates_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        DisturbActions()
+        ls.Clear()
+    End Sub
+
+    Private Sub Updates_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        DisturbActions()
+        ls.Clear()
+    End Sub
+
+    Private Distutbed As Boolean = False
+
+    Sub DisturbActions()
+        If UC.IsBusy Then
+            Distutbed = True
+
+            UC.CancelAsync()
+            UC.Dispose()
+
+            If XenonRadioButton1.Checked Then
+                If IO.File.Exists(OldName) Then Kill(OldName)
+                My.Computer.FileSystem.RenameFile("oldWinpaletter.trash", OldName.Split("\").Last)
+            End If
+
+            If XenonRadioButton2.Checked Then
+                If IO.File.Exists(SaveFileDialog1.FileName) Then Kill(SaveFileDialog1.FileName)
+            End If
+
+        End If
+    End Sub
+
 End Class

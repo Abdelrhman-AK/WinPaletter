@@ -61,16 +61,15 @@ Public Class ColorPickerDlg
         For Each ctrl As Control In Me.Controls
             If TypeOf ctrl IsNot ScreenColorPicker And ctrl.Visible Then
                 ctrl.Visible = False
-                ls.Add(ctrl)
+                Ls.Add(ctrl)
             End If
         Next
 
         For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
-            If Application.OpenForms(ix).Visible And Application.OpenForms(ix) IsNot Me Then fls.Add(Application.OpenForms(ix))
+            If Application.OpenForms(ix).Visible And Application.OpenForms(ix) IsNot Me Then Fls.Add(Application.OpenForms(ix))
         Next
-
-        For ix = 0 To fls.Count - 1
-            fls(ix).Visible = False
+        For ix = 0 To Fls.Count - 1
+            Fls(ix).Visible = False
         Next
 
         Me.FormBorderStyle = FormBorderStyle.None
@@ -79,16 +78,14 @@ Public Class ColorPickerDlg
 
     Private Sub ScreenColorPicker1_MouseUp(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseUp
 
-        For Each ctrl As Control In ls
+        For Each ctrl As Control In Ls
             ctrl.Visible = True
         Next
-
-        For ix = 0 To fls.Count - 1
-            fls(ix).Visible = True
+        For ix = 0 To Fls.Count - 1
+            Fls(ix).Visible = True
         Next
-
-        fls.Clear()
-        ls.Clear()
+        Fls.Clear()
+        Ls.Clear()
         Me.FormBorderStyle = FormBorderStyle.SizableToolWindow
         Me.TransparencyKey = Nothing
     End Sub
@@ -571,7 +568,7 @@ Public Class ColorPickerDlg
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
 
-            XenonCore.SetCtrlTxt(My.Lang.Sorting, Label4)
+            Label4.SetText(My.Lang.Sorting)
 
         End If
     End Sub

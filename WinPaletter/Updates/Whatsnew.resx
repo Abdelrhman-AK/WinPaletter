@@ -2609,7 +2609,7 @@
   <data name="PictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAK4AAAFhCAIAAABmpwZsAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAA9PBJREFUeF7s/VdwY0m2LoxVz0x3V3UVi4T33huSAOgAeu+9996CAEECJAy9977I
+        vAAADrwBlbxySQAA9PBJREFUeF7s/VdwY0m2LoxVz0x3V3UVi4T33huSAOgAeu+9996CAEECJAy9977I
         IousYvnq6p723WfMOWfm3Hv/Xwrd+8eVFHqWIhQKKUJ6kOLqvwo96EVamXsDBKtpqqdZPWdK/QUIrp07
         c6Vbe+XK3AuZN4RBEAFIEtOnVwhwwRWI9DL+/7PrN//vng/+W9dv/ueu3wAd+PzP3ejz33t++9970CUi
         un/z3zpv/D/ab6C7P4oMt/5b5wdABIef+/nvPb/7f/X8luAQoInsIOQNzr9+rvxAu/3fO3/z/7Xf2M4M
@@ -3715,6 +3715,8 @@
 • Windows 7: when choosing a color with basic mode applied, there was a crash. Now it is fixed.
 
 • Windows 7: not switching basic/aero theme correctly. (Now you should logoff and logon to apply this effect correctly)
+
+•Improvements in Updates, especially the situation of Windows 7 that can’t connect to GitHub Repository (Fixed)
 
 • Mechanism of network detection changed, the old one was slower.</value>
   </data>

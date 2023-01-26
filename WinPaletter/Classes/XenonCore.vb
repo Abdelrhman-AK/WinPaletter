@@ -10,19 +10,6 @@ Imports WinPaletter.NativeMethods
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
-    Public Shared Sub SetCtrlTxt(ByVal text As String, ByVal Ctrl As Control)
-        Try
-            If Ctrl.InvokeRequired Then
-                Ctrl.Invoke(New setCtrlTxtInvoker(AddressOf SetCtrlTxt), text, Ctrl)
-            Else
-                Ctrl.Text = text
-                Ctrl.Refresh()
-            End If
-        Catch
-
-        End Try
-    End Sub
-    Private Delegate Sub setCtrlTxtInvoker(ByVal text As String, ByVal Ctrl As Control)
 
     Public Shared Sub SetCtrlTag(ByVal Tag As String, ByVal Ctrl As Control)
         Try

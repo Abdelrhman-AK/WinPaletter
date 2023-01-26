@@ -474,10 +474,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -563,10 +563,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox9
         '
-        Me.XenonAlertBox9.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox9.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox9.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox9.CenterText = True
         Me.XenonAlertBox9.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1423,10 +1423,10 @@ Partial Class SettingsX
         '
         'XenonAlertBox_Themelog
         '
-        Me.XenonAlertBox_Themelog.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox_Themelog.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox_Themelog.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox_Themelog.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox_Themelog.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox_Themelog.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox_Themelog.CenterText = True
         Me.XenonAlertBox_Themelog.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -1434,7 +1434,7 @@ Partial Class SettingsX
         Me.XenonAlertBox_Themelog.Image = Nothing
         Me.XenonAlertBox_Themelog.Location = New System.Drawing.Point(77, 118)
         Me.XenonAlertBox_Themelog.Name = "XenonAlertBox_Themelog"
-        Me.XenonAlertBox_Themelog.Size = New System.Drawing.Size(418, 31)
+        Me.XenonAlertBox_Themelog.Size = New System.Drawing.Size(418, 24)
         Me.XenonAlertBox_Themelog.TabIndex = 29
         Me.XenonAlertBox_Themelog.TabStop = False
         Me.XenonAlertBox_Themelog.Text = "If there is an error, automatic close won't start so you can read the log"

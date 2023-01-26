@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Management
+Imports System.Net
 Imports System.Reflection
 Imports System.Security.Principal
 Imports System.Threading
@@ -509,6 +510,7 @@ Namespace My
 
                 If arg.ToLower = "/uninstall" Then
                     Uninstall.ShowDialog()
+                    Process.GetCurrentProcess.Kill()
                     Exit For
                 End If
 
@@ -619,6 +621,7 @@ Namespace My
 
             Saving_Exceptions.Clear()
 
+            If My.W7 Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then

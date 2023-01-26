@@ -979,3 +979,20 @@ Public Module TreeViewExtensions
     End Sub
 
 End Module
+
+Public Module Others
+    <Extension()>
+    Public Sub SetText(Ctrl As Control, text As String)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New setCtrlTxtInvoker(AddressOf SetText), Ctrl, text)
+            Else
+                Ctrl.Text = text
+                Ctrl.Refresh()
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, ByVal text As String)
+End Module

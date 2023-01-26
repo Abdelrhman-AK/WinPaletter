@@ -1,8 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports System.Security.Policy
 Imports System.Text
 Imports WinPaletter.CP
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class MainFrm
@@ -13,9 +15,10 @@ Public Class MainFrm
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
+    Dim Updates_ls As New List(Of String)
 
     Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
-        NativeMethods.Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
+        Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
     End Sub
 
 #Region "CP Subs"
@@ -1215,41 +1218,53 @@ Public Class MainFrm
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If IsNetworkAvailable() Then
             Try
-
-                Dim ls As New List(Of String)
                 Dim WebCL As New WebClient
                 RaiseUpdate = False
                 ver = ""
 
-                ls = WebCL.DownloadString(My.Resources.Link_Updates).CList
+                Updates_ls = WebCL.DownloadString(My.Resources.Link_Updates).CList
 
-                For x = 0 To ls.Count - 1
-                    If Not String.IsNullOrEmpty(ls(x)) And Not ls(x).IndexOf("#") = 0 Then
-                        If ls(x).Split(" ")(0) = "Stable" Then StableInt = x
-                        If ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
+                For x = 0 To Updates_ls.Count - 1
+                    If Not String.IsNullOrEmpty(Updates_ls(x)) And Not Updates_ls(x).IndexOf("#") = 0 Then
+                        If Updates_ls(x).Split(" ")(0) = "Stable" Then StableInt = x
+                        If Updates_ls(x).Split(" ")(0) = "Beta" Then BetaInt = x
                     End If
                 Next
 
                 If ChannelFixer = 0 Then UpdateChannel = StableInt
                 If ChannelFixer = 1 Then UpdateChannel = BetaInt
 
-                ver = ls(UpdateChannel).Split(" ")(1)
+                ver = Updates_ls(UpdateChannel).Split(" ")(1)
 
-                If ver > My.Application.Info.Version.ToString Then
-                    RaiseUpdate = True
-                End If
+                RaiseUpdate = (ver > My.Application.Info.Version.ToString)
             Catch
             End Try
         End If
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        If RaiseUpdate Then Notify(String.Format("{0} ({2}). {1}.", My.Lang.NewUpdate, My.Lang.OpenForActions, ver), My.Resources.notify_update, 10000)
+        If RaiseUpdate Then
+            Updates.ls = Updates_ls
+            NotifyUpdates.Visible = True
+            XenonButton5.Image = My.Resources.Update_Dot
+            NotifyUpdates.ShowBalloonTip(10000, My.Application.Info.Title, String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver), ToolTipIcon.Info)
+        End If
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyUpdates.BalloonTipClicked
+        NotifyUpdates.Visible = False
+
+        If My.Application.OpenForms(Updates.Name) Is Nothing Then
+            Updates.ShowDialog()
+        Else
+            Updates.Focus()
+        End If
     End Sub
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         Visible = False
+        NotifyUpdates.Icon = Icon
 
         TreeView1.ImageList = My.Notifications_IL
 
@@ -1441,9 +1456,9 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows11.ApplyAccentonTitlebars Then
-            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        End If
+        'If Not CP.Windows11.ApplyAccentonTitlebars Then
+        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        'End If
     End Sub
 
     Private Sub W11_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_InactiveTitlebar_pick.Click
@@ -1470,9 +1485,9 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows11.ApplyAccentonTitlebars Then
-            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        End If
+        'If Not CP.Windows11.ApplyAccentonTitlebars Then
+        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        'End If
     End Sub
 
     Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
@@ -1827,9 +1842,9 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows10.ApplyAccentonTitlebars Then
-            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        End If
+        'If Not CP.Windows10.ApplyAccentonTitlebars Then
+        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        'End If
     End Sub
 
     Private Sub W10_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_InactiveTitlebar_pick.Click
@@ -1856,9 +1871,9 @@ Public Class MainFrm
 
         CList.Clear()
 
-        If Not CP.Windows10.ApplyAccentonTitlebars Then
-            Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        End If
+        'If Not CP.Windows10.ApplyAccentonTitlebars Then
+        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
+        'End If
     End Sub
 
     Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
@@ -2374,7 +2389,7 @@ Public Class MainFrm
         If W7_theme_classic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
-            Notify(My.Lang.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
+            'Notify(My.Lang.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
         End If
 
     End Sub
@@ -2764,18 +2779,28 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton4_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
+    Private Sub apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
             status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
-    Private Sub XenonButton4_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
+    Private Sub apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
         If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = ""
             status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
         End If
+    End Sub
+
+    Private Sub XenonButton19_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton19.MouseEnter
+        status_lbl.Text = My.Lang.ThisWillRestartExplorer
+        status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
+    End Sub
+
+    Private Sub XenonButton19_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton19.MouseLeave
+        status_lbl.Text = ""
+        status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
 
 #Region "Drag And Drop"
@@ -2828,9 +2853,8 @@ Public Class MainFrm
 
         If DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-
             If wpth_or_wpsf Then
-                If My.[Settings].DragAndDropPreview Then dragPreviewer.Close()
+                If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
 
                 If CP <> CP_Original Then
                     If My.[Settings].ShowSaveConfirmation Then
@@ -3028,6 +3052,7 @@ Public Class MainFrm
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         Updates.ShowDialog()
+        XenonButton5.Image = My.Resources.Update
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
@@ -3250,61 +3275,6 @@ Public Class MainFrm
         End If
     End Sub
 
-
-#Region "Notifications Base"
-    Sub Notify([Text] As String, [Icon] As Image, [Interval] As Integer)
-        Dim NB As New XenonAlertBox With {
-         .AlertStyle = XenonAlertBox.Style.Adaptive,
-         .Text = Text,
-         .Image = [Icon],
-         .Size = New Size(NotificationsPanel.Width - 5, [Text].Measure(.Font).Height + 15),
-         .Left = 0
-         }
-
-        AddHandler NB.Click, AddressOf NB.Hide
-
-        NotificationsList.Add(New Notifier(NB, [Interval]))
-        NotificationsPanel.Controls.Add(NB)
-        NotificationsPanel.BringToFront()
-        NTimer.Enabled = True
-        NTimer.Start()
-    End Sub
-    Private Sub NTimer_Tick(sender As Object, e As EventArgs) Handles NTimer.Tick
-
-        Try
-            For Each nx As Notifier In NotificationsList
-                If nx.Interval - NTimer.Interval <= 0 Then
-                    NotificationsPanel.Controls.Remove(nx.Control)
-                    nx.Control.Dispose()
-                    RemoveHandler nx.Control.Click, AddressOf nx.Control.Hide
-                    NotificationsList.Remove(nx)
-                Else
-                    nx.Interval -= NTimer.Interval
-                End If
-            Next
-        Catch
-        End Try
-
-        If NotificationsList.Count = 0 Then
-            NTimer.Enabled = False
-            NTimer.Stop()
-        End If
-
-    End Sub
-
-
-    ReadOnly NotificationsList As New List(Of Notifier)
-    Dim WithEvents NTimer As New Timer With {.Enabled = False, .Interval = 100}
-
-#End Region
-
 End Class
 
-Public Class Notifier
-    Public Sub New(Control As XenonAlertBox, Interval As Integer)
-        Me.Control = Control
-        Me.Interval = Interval
-    End Sub
-    Public Property Control As XenonAlertBox
-    Public Property Interval As Integer
-End Class
+

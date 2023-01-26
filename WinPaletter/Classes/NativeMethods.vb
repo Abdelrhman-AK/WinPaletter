@@ -888,7 +888,6 @@ Namespace NativeMethods
 
         <DllImport("Shell32.dll", SetLastError:=False)>
         Public Shared Function SHGetStockIconInfo(ByVal siid As SHSTOCKICONID, ByVal uFlags As SHGSI, ByRef psii As SHSTOCKICONINFO) As Int32
-
         End Function
 
         Public Shared Function GetSystemIcon(_Icon As SHSTOCKICONID, _Type As SHGSI) As Icon

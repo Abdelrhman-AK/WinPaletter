@@ -3614,7 +3614,7 @@ Public Class XenonAlertBox
                 If DM Then
                     borderColor = Color.FromArgb(65, 0, 170)
                     innerColor = Color.FromArgb(60, 0, 140)
-                    textColor = Color.FromArgb(140, 0, 255)
+                    textColor = Color.FromArgb(140, 0, 255).CB(0.35)
                 Else
                     borderColor = Color.FromArgb(165, 0, 225)
                     innerColor = Color.FromArgb(129, 0, 200)
@@ -5051,7 +5051,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
                     If Not ToolWindow Then
                         G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 200, 100), 0, 0, 0)), Rect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect, Radius, True)
                         G.DrawRoundedRect(New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
                         'DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect, Radius, True)
                         G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1, 1, True)
@@ -5059,7 +5059,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2, 1, True)
                     Else
                         G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(If(Active, 200, 100), 0, 0, 0)), Rect)
+                        G.DrawRectangle(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect)
                         G.DrawRectangle(New Pen(Color.FromArgb(100, 255, 255, 255)), inner)
                         'G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect)
                         G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1)
