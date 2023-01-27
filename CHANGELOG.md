@@ -2,6 +2,76 @@
 
 ---
 
+### 1.0.6.9
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   |  27 Jan 2023 |
+
+> **What's New?**
+
+# New Features:
+### 1. Windows Metrics & Fonts: 
+- Now you can change Windows Metrics and fonts (e.g., Titlebar Height, Titlebar Font, Window Border Width, Icons Spacing & Fonts, .... etc.)
+- There are some limitations when you apply (not all items) that require logoff and logon
+- `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
+
+### 2. Languages: 
+- Languages become stable (not experimental), and its mechanism has been changed, becoming dependent on JSON files not the old file (*.wplng)
+- This makes it easier to modify by a text\code editor like VSCode or by WinPaletter Language Developing Tools (In Settings > Language)
+- You can load language quickly (there is no delay) and without restarting WinPaletter (Except for returning to English)
+- You can use WinPaletter Language Developing Tools to create, modify or update language json files (The Tools were separated before in WinPaletter Language Translator.exe, now you won’t use it you will use WinPaletter itself).
+- So, it is necessary for language creators\contributors to use the latest version of WinPaletter and update their translations\languages (As it is not complete compared to earlier versions)
+- Crashes that occurred during startup while loading language files are mostly fixed.
+- `Known Issue`: People who are using old language files (*.wplng) and updated WinPaletter, an error will occur during loading the application, ignore this error, download newer language files (*.json), go to settings and load the new file and save.
+
+### 3. Logs:
+Extended Details will be shown during applying the theme (including time info and errors), you can change the preferences in Settings > Theme Logging.
+
+### 4. Preview Switch
+ In main page, you can navigate between all supported versions of Windows, making it easier to design one theme file for all supported Windows editions. 
+
+### 5. Theme File Blocks:
+Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows 11/10 (before it was one block applied to both Windows 11/10), making it easier to design a theme presented in one file for both versions of Windows (To avoid conflict between colors applied between these Windows Versions) (Themes File of WinPaletter earlier than 1.0.6.9 can be loaded/saved too)
+
+---
+
+# Redesigns:
+- Application’s UI improved a lot, especially the light mode becomes better, with the ability to change WinPaletter’s Colors and Backgrounds (Theming WinPaletter itself). Also, legacy dialogs like message boxes are modernized.
+- Themes Previews in all forms are redesigned to match Windows Metrics and fonts (becoming more realistic compared to previous versions of WinPaletter)
+- Drag and Drop preview are redesigned to have a bigger size
+- Windows Terminal forms are redesigned to have tabs instead of the condensed ones.
+
+---
+
+# Multiple Improvements and Bugs Fixes:
+1. Added the ability to uninstall from Control Panel
+2. Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped)
+3. When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying (Become quicker than before)
+4. Cursors: Main Arrow is improved to match the exact outline of default Windows
+5. Quick apply (found in Win32UI, Terminals, ...) mechanism changed to a better one (becoming quicker than before)
+6. Confirmation Dialog that appear on closing WinPaletter will remember the preferences you choose, with the ability to control if this dialog appears or not (You can change the preferences also in Settings)
+7. Newton.JSON component updated to 13.0.2 (Used in phrasing JSON files)
+8. Right-Click Menu on color now will have more colors varieties & the extended menu will have Windows Terminals Colors (Previously they were not included)
+9. Application Startup Speed Optimized
+10. Windows 7: when choosing a color with basic mode applied, there was a crash. Now it is fixed. 
+11. Windows 7: not switching basic/aero theme correctly. (Now you should logoff and logon to apply this effect correctly)
+12. Improvements in Updates, especially the situation of Windows 7 that can’t connect to GitHub Repository (Fixed)
+13. Fixed Windows Terminal (Stable\Preview) error after modification by WinPaletter
+14. Mechanism of network detection changed, the old one was slower.
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.6.3`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.3...v1.0.6.9) |
+| Previous Beta   | `1.0.5.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.5.9...v1.0.6.9) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.6.9) |
+
+---
+
 ### 1.0.6.3
 
 > **Info:**
