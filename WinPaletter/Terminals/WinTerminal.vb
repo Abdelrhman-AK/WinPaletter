@@ -299,9 +299,6 @@ Public Class WinTerminal : Implements ICloneable
                                 Case "Icon".ToLower
                                     P.Icon = value
 
-                                Case "Source".ToLower
-                                    P.Source = value
-
                                 Case "TabColor".ToLower
                                     P.TabColor = Color.FromArgb(value)
 
@@ -640,8 +637,6 @@ Public Class WinTerminal : Implements ICloneable
 #End Region
 
 #Region "Defaults"
-                JSonFile("profiles")("defaults")("source") = DefaultProf.Source
-
                 JSonFile("profiles")("defaults")("backgroundImage") = DefaultProf.BackgroundImage
                 If Not String.IsNullOrEmpty(DefaultProf.ColorScheme) Then JSonFile("profiles")("defaults")("colorScheme") = DefaultProf.ColorScheme
                 If Not String.IsNullOrEmpty(DefaultProf.TabTitle) Then JSonFile("profiles")("defaults")("tabTitle") = DefaultProf.TabTitle
@@ -682,7 +677,6 @@ Public Class WinTerminal : Implements ICloneable
                 For x = 0 To Profiles.Count - 1
                     Dim JS As New JObject
                     JS("name") = Profiles(x).Name
-                    JS("source") = Profiles(x).Source
 
                     JS("backgroundImage") = Profiles(x).BackgroundImage
                     JS("cursorShape") = CursorShape_ReturnToString(Profiles(x).CursorShape)
@@ -1007,7 +1001,6 @@ Public Class ProfilesList : Implements IComparable : Implements ICloneable
     Public Property Name As String
     Public Property TabTitle As String = ""
     Public Property Icon As String = ""
-    Public Property Source As String = "WinPaletter " & My.Application.Info.Version.ToString
     Public Property Commandline As String
 
     Public Property TabColor As Color = Color.FromArgb(0, 0, 0, 0)

@@ -1255,7 +1255,6 @@ Public Class WindowsTerminal
             .Font = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Font,
             .Icon = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Icon,
             .Opacity = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Opacity,
-            .Source = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).Source,
             .TabColor = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).TabColor,
             .TabTitle = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).TabTitle,
             .UseAcrylic = _Terminal.Profiles(TerProfiles.SelectedIndex - 1).UseAcrylic
@@ -1322,7 +1321,6 @@ Public Class WindowsTerminal
                         .Font.Size = CCatFrom.Font.Size
                         .Icon = CCatFrom.Icon
                         .Opacity = CCatFrom.Opacity
-                        .Source = CCatFrom.Source
                         .TabColor = CCatFrom.TabColor
                         .TabTitle = CCatFrom.TabTitle
                         .UseAcrylic = CCatFrom.UseAcrylic

@@ -16,7 +16,6 @@ Public Class Win32UI
         ApplyDefaultCPValues()
         LoadCP(MainFrm.CP)
         SetMetics(MainFrm.CP)
-
     End Sub
 
 

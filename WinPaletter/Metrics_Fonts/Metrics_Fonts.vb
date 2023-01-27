@@ -44,6 +44,7 @@ Public Class Metrics_Fonts
 
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
+        MainFrm.Visible = False
     End Sub
 
     Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
@@ -725,5 +726,9 @@ Public Class Metrics_Fonts
             XenonWindow1.Visible = True
             XenonWindow2.Visible = True
         End If
+    End Sub
+
+    Private Sub Metrics_Fonts_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
     End Sub
 End Class

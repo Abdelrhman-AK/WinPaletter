@@ -4,7 +4,7 @@
 
 ---
 
-# Get Languages and applying them
+# Get Languages and apply them
 
 [Visit this folder in WinPaletter GitHub Repository and download the language you want](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages/For%20Versions%20Below%201.0.6.9)
 
