@@ -14,6 +14,7 @@
 
 # New Features:
 ### 1. Windows Metrics & Fonts: 
+- Suggested by @Anixx #17 
 - Now you can change Windows Metrics and fonts (e.g., Titlebar Height, Titlebar Font, Window Border Width, Icons Spacing & Fonts, .... etc.)
 - There are some limitations when you apply (not all items) that require logoff and logon
 - `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
@@ -24,7 +25,7 @@
 - You can load language quickly (there is no delay) and without restarting WinPaletter (Except for returning to English)
 - You can use WinPaletter Language Developing Tools to create, modify or update language json files (The Tools were separated before in WinPaletter Language Translator.exe, now you won’t use it you will use WinPaletter itself).
 - So, it is necessary for language creators\contributors to use the latest version of WinPaletter and update their translations\languages (As it is not complete compared to earlier versions)
-- Crashes that occurred during startup while loading language files are mostly fixed.
+- Crashes that occurred during startup while loading language files are mostly fixed. (Like: #56)
 - `Known Issue`: People who are using old language files (*.wplng) and updated WinPaletter, an error will occur during loading the application, ignore this error, download newer language files (*.json), go to settings and load the new file and save.
 
 ### 3. Logs:
@@ -48,7 +49,7 @@ Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows
 
 # Multiple Improvements and Bugs Fixes:
 1. Added the ability to uninstall from Control Panel
-2. Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped)
+2. Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped) (Issue of #59 won't be experienced and it won't disturb the whole process of applying theme, the error will be known separately after applying theme)
 3. When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying (Become quicker than before)
 4. Cursors: Main Arrow is improved to match the exact outline of default Windows
 5. Quick apply (found in Win32UI, Terminals, ...) mechanism changed to a better one (becoming quicker than before)
