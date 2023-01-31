@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Status
-Imports WinPaletter.CP
+﻿Imports WinPaletter.CP
 Imports WinPaletter.MainFrm
 
 Public Class DragPreviewer
@@ -36,8 +35,6 @@ Public Class DragPreviewer
         ApplyRetroPreview(CP)
         SetMetics(CP)
 
-        'pnl_preview.Visible = True : PictureBox1.Image = GetControlImage(pnl_preview) : pnl_preview.Visible = False
-
         Acrylism.EnableBlur(Me, True)
 
         ResumeLayout()
@@ -54,7 +51,7 @@ Public Class DragPreviewer
         XenonWindow2.Active = False
 
         Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.Eleven
+            Case MainFrm.WinVer.W11
 #Region "Win11"
                 XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
@@ -150,7 +147,7 @@ Public Class DragPreviewer
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
-            Case MainFrm.WinVer.Ten
+            Case MainFrm.WinVer.W10
 #Region "Win10"
                 XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
@@ -368,17 +365,18 @@ Public Class DragPreviewer
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
-            Case MainFrm.WinVer.Eight
+            Case MainFrm.WinVer.W8
 #Region "Win8.1"
                 Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
-                        XenonWindow1.Win8Lite = False
-                        XenonWindow2.Win8Lite = False
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
+                        XenonWindow2.Preview = XenonWindow.Preview_Enum.W8
                         taskbar.Transparency = True
                         taskbar.BackColorAlpha = 100
+
                     Case CP.AeroTheme.AeroLite
-                        XenonWindow1.Win8Lite = True
-                        XenonWindow2.Win8Lite = True
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W8Lite
+                        XenonWindow2.Preview = XenonWindow.Preview_Enum.W8Lite
                         taskbar.Transparency = False
                         taskbar.BackColorAlpha = 255
                 End Select
@@ -394,7 +392,7 @@ Public Class DragPreviewer
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
-            Case MainFrm.WinVer.Seven
+            Case MainFrm.WinVer.W7
 #Region "Win7"
 
                 Select Case [CP].Windows7.Theme
@@ -404,10 +402,7 @@ Public Class DragPreviewer
                         taskbar.Transparency = True
                         taskbar.Basic = False
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -418,10 +413,7 @@ Public Class DragPreviewer
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -457,20 +449,14 @@ Public Class DragPreviewer
                         taskbar.Basic = False
 
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
                             .AccentColor_Inactive = [CP].Windows7.ColorizationColor
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
                             .AccentColor_Inactive = [CP].Windows7.ColorizationColor
@@ -499,20 +485,14 @@ Public Class DragPreviewer
                         start.BackColorAlpha = 100
 
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
 
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
@@ -553,55 +533,69 @@ Public Class DragPreviewer
     End Sub
 
     Sub Adjust_Preview()
-        Panel5.Visible = True
-        lnk_preview.Visible = True
 
-        start.Visible = True
-        taskbar.Visible = True
-        ActionCenter.Visible = False
-
-        XenonWindow1.Visible = True
-        XenonWindow2.Visible = True
-        XenonWindow1.Win7 = False
-        XenonWindow2.Win7 = False
-        XenonWindow1.Win8 = False
-        XenonWindow2.Win8 = False
-        XenonWindow1.Win8Lite = False
-        XenonWindow2.Win8Lite = False
+        tabs_preview.Visible = False
+        Panel5.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        start.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        tabs_preview.SelectedIndex = If(MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic, 1, 0)
 
         Select Case MainFrm.PreviewConfig
-            Case WinVer.Eleven
+            Case WinVer.W11
                 ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-            Case WinVer.Ten
+                XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+
+            Case WinVer.W10
                 ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-            Case WinVer.Eight
+                XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
+
+            Case WinVer.W8
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
-            Case WinVer.Seven
+                XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+
+            Case WinVer.W7
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+
+                Select Case CP.Windows7.Theme
+                    Case AeroTheme.Aero
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.AeroOpaque
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Basic
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
+
+                End Select
+
         End Select
 
+        XenonWindow2.Preview = XenonWindow1.Preview
+
         Select Case MainFrm.PreviewConfig
-            Case WinVer.Eleven
+            Case WinVer.W11
                 ActionCenter.Dock = Nothing
                 ActionCenter.RoundedCorners = True
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                ActionCenter.Visible = True
                 '########################
                 taskbar.BlurPower = 12
                 '########################
                 start.RoundedCorners = True
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-                start.Visible = True
-                '########################
-                XenonWindow1.RoundedCorners = True
-                XenonWindow2.RoundedCorners = True
                 '########################
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
@@ -613,22 +607,17 @@ Public Class DragPreviewer
                 start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
 
 
-            Case WinVer.Ten
+            Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                ActionCenter.Visible = True
                 '########################
                 taskbar.BlurPower = 12
                 '########################
                 start.RoundedCorners = False
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-                start.Visible = True
-                '########################
-                XenonWindow1.RoundedCorners = False
-                XenonWindow2.RoundedCorners = False
                 '########################
 
                 taskbar.Height = 35
@@ -637,29 +626,23 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Bottom - taskbar.Height - start.Height
 
-            Case WinVer.Eight
+            Case WinVer.W8
                 Panel5.Visible = False
                 lnk_preview.Visible = False
-
-                XenonWindow1.Active = True
-                XenonWindow2.Active = False
-                XenonWindow1.Win8 = True
-                XenonWindow2.Win8 = True
+                start.Visible = False
+                ActionCenter.Visible = False
                 taskbar.BlurPower = 0
                 taskbar.Height = 34
 
-                start.Visible = False
                 start.BlurPower = 0
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
 
-                start.Visible = False
-                taskbar.Visible = True
-                ActionCenter.Visible = False
-
-            Case WinVer.Seven
+            Case WinVer.W7
                 Panel5.Visible = False
                 lnk_preview.Visible = False
+                ActionCenter.Visible = False
+
                 taskbar.BlurPower = 1
                 taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
@@ -672,25 +655,11 @@ Public Class DragPreviewer
                 start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
-
-                If CP.Windows7.Theme = AeroTheme.Classic Then
-                    start.Visible = False
-                    taskbar.Visible = False
-                    XenonWindow1.Visible = False
-                    XenonWindow2.Visible = False
-                    ActionCenter.Visible = False
-                Else
-                    start.Visible = True
-                    taskbar.Visible = True
-                    XenonWindow1.Visible = True
-                    XenonWindow2.Visible = True
-                    ActionCenter.Visible = False
-                End If
         End Select
 
-        If MainFrm.PreviewConfig = WinVer.Ten Or MainFrm.PreviewConfig = WinVer.Eleven Then
-            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = WinVer.Eleven, 30, 35)
-            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = WinVer.Eleven, 30, 15)
+        If MainFrm.PreviewConfig = WinVer.W10 Or MainFrm.PreviewConfig = WinVer.W11 Then
+            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = WinVer.W11, 30, 35)
+            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = WinVer.W11, 30, 15)
 
             XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
@@ -702,109 +671,61 @@ Public Class DragPreviewer
             XenonWindow2.Left = XenonWindow1.Left
         End If
 
-        ReValidateLivePreview(pnl_preview)
+        ReValidateLivePreview(tabs_preview)
+
+        tabs_preview.Visible = True
     End Sub
 
+
     Sub SetMetics(CP As CP)
-        RetroPanel2.Width = CP.WinMetrics_Fonts.ScrollWidth
-        menucontainer0.Height = CP.WinMetrics_Fonts.MenuHeight
+        RetroPanel2.Width = CP.MetricsFonts.ScrollWidth
+        menucontainer0.Height = CP.MetricsFonts.MenuHeight
 
-        menucontainer0.Height = Math.Max(CP.WinMetrics_Fonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont))
+        menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont))
 
-        RetroLabel1.Font = CP.WinMetrics_Fonts.MenuFont
-        RetroLabel2.Font = CP.WinMetrics_Fonts.MenuFont
-        RetroLabel3.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel1.Font = CP.MetricsFonts.MenuFont
+        RetroLabel2.Font = CP.MetricsFonts.MenuFont
+        RetroLabel3.Font = CP.MetricsFonts.MenuFont
 
-        RetroLabel9.Font = CP.WinMetrics_Fonts.MenuFont
-        RetroLabel5.Font = CP.WinMetrics_Fonts.MenuFont
-        RetroLabel6.Font = CP.WinMetrics_Fonts.MenuFont
+        RetroLabel9.Font = CP.MetricsFonts.MenuFont
+        RetroLabel5.Font = CP.MetricsFonts.MenuFont
+        RetroLabel6.Font = CP.MetricsFonts.MenuFont
 
-        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.WinMetrics_Fonts.MenuFont) + 3
+        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
         Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
 
-        RetroLabel4.Font = CP.WinMetrics_Fonts.MessageFont
+        RetroLabel4.Font = CP.MetricsFonts.MessageFont
 
-        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5
-        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.WinMetrics_Fonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextH = "ABCabc0123xYz.#".Measure(CP.WinMetrics_Fonts.CaptionFont).Height
-        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(CP.WinMetrics_Fonts.CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH = "ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(CP.MetricsFonts.CaptionFont.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        Dim iP As Integer = 3 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth
-        Dim iT As Integer = 4 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + CP.WinMetrics_Fonts.CaptionHeight + TitleTextH_Sum
+        Dim iP As Integer = 3 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth
+        Dim iT As Integer = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Padding(iP, iT, iP, iP)
 
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             If Not RW.UseItAsMenu Then
-                RW.Metrics_BorderWidth = CP.WinMetrics_Fonts.BorderWidth
-                RW.Metrics_CaptionHeight = CP.WinMetrics_Fonts.CaptionHeight
-                RW.Metrics_CaptionWidth = CP.WinMetrics_Fonts.CaptionWidth
-                RW.Metrics_PaddedBorderWidth = CP.WinMetrics_Fonts.PaddedBorderWidth
-                RW.Font = CP.WinMetrics_Fonts.CaptionFont
+                RW.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+                RW.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+                RW.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+                RW.Font = CP.MetricsFonts.CaptionFont
 
                 RW.Padding = _Padding
             End If
         Next
 
-        RetroWindow3.Height = 85 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + RetroWindow3.GetTitleTextHeight
-        RetroWindow2.Height = 120 + CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.WinMetrics_Fonts.MenuHeight
+        RetroWindow3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
 
-        RetroButton3.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton4.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton5.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow2.GetTitleTextHeight - 4
-        RetroButton6.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton7.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton8.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow1.GetTitleTextHeight - 4
-        RetroButton9.Height = CP.WinMetrics_Fonts.CaptionHeight + RetroWindow4.GetTitleTextHeight - 4
-
-        RetroButton3.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton4.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton5.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton8.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton7.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton6.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-        RetroButton9.Width = CP.WinMetrics_Fonts.CaptionWidth - 2
-
-        RetroButton3.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
-        RetroButton4.Top = RetroButton3.Top
-        RetroButton5.Top = RetroButton3.Top
-
-        RetroButton8.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
-        RetroButton7.Top = RetroButton8.Top
-        RetroButton6.Top = RetroButton8.Top
-
-        RetroButton9.Top = CP.WinMetrics_Fonts.PaddedBorderWidth + CP.WinMetrics_Fonts.BorderWidth + 5
-
-        RetroButton3.Left = RetroWindow2.Width - RetroButton3.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
-        RetroButton4.Left = RetroButton3.Left - 2 - RetroButton4.Width
-        RetroButton5.Left = RetroButton4.Left - RetroButton5.Width
-
-        RetroButton8.Left = RetroWindow1.Width - RetroButton8.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
-        RetroButton7.Left = RetroButton8.Left - 2 - RetroButton7.Width
-        RetroButton6.Left = RetroButton7.Left - RetroButton6.Width
-
-        RetroButton9.Left = RetroWindow4.Width - RetroButton9.Width - CP.WinMetrics_Fonts.PaddedBorderWidth - CP.WinMetrics_Fonts.BorderWidth - 5
-
-        Try
-            Dim i0, iFx As Single
-            i0 = Math.Abs(Math.Min(CP.WinMetrics_Fonts.CaptionWidth, CP.WinMetrics_Fonts.CaptionHeight))
-            iFx = i0 / Math.Abs(Math.Min(Metrics_Fonts.XenonTrackbar2.Minimum, Metrics_Fonts.XenonTrackbar3.Minimum))
-            Dim f As New Font("Marlett", 6.8 * iFx)
-            RetroButton3.Font = f
-            RetroButton4.Font = f
-            RetroButton5.Font = f
-            RetroButton6.Font = f
-            RetroButton7.Font = f
-            RetroButton8.Font = f
-            RetroButton9.Font = f
-        Catch
-
-        End Try
 
         Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
         Menu_Window.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
@@ -812,8 +733,8 @@ Public Class DragPreviewer
         RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
         RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
 
-        RetroLabel13.Top = RetroWindow4.Top + RetroButton9.Bottom + 2
-        RetroLabel13.Left = RetroWindow4.Right - RetroButton9.Width - 2
+        RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
+        RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
 
     End Sub
 

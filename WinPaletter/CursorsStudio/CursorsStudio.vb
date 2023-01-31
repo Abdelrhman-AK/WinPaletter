@@ -6,7 +6,7 @@ Public Class CursorsStudio
     Private _CopiedControl As CursorControl
     Private ReadOnly AnimateList As New List(Of CursorControl)
 
-    Sub CursorCP_to_Cursor([CursorControl] As CursorControl, [Cursor] As CP.Cursor_Structure)
+    Sub CursorCP_to_Cursor([CursorControl] As CursorControl, [Cursor] As CP.Structures.Cursor)
         [CursorControl].Prop_PrimaryColor1 = [Cursor].PrimaryColor1
         [CursorControl].Prop_PrimaryColor2 = [Cursor].PrimaryColor2
         [CursorControl].Prop_PrimaryColorGradient = [Cursor].PrimaryColorGradient
@@ -33,8 +33,8 @@ Public Class CursorsStudio
         [CursorControl].Prop_LoadingCircleHotNoiseOpacity = [Cursor].LoadingCircleHotNoiseOpacity
     End Sub
 
-    Function Cursor_to_CursorCP([CursorControl] As CursorControl) As CP.Cursor_Structure
-        Dim [Cursor] As CP.Cursor_Structure
+    Function Cursor_to_CursorCP([CursorControl] As CursorControl) As CP.Structures.Cursor
+        Dim [Cursor] As CP.Structures.Cursor
         [Cursor].PrimaryColor1 = [CursorControl].Prop_PrimaryColor1
         [Cursor].PrimaryColor2 = [CursorControl].Prop_PrimaryColor2
         [Cursor].PrimaryColorGradient = [CursorControl].Prop_PrimaryColorGradient
@@ -706,13 +706,13 @@ Public Class CursorsStudio
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
         Else
             _Def = New CP_Defaults().Default_Windows11

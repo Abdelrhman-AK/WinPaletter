@@ -480,6 +480,7 @@
     <Content Include="Resources\Mini_ACHover_Links.png" />
     <Content Include="Resources\Mini_Hamburger.png" />
     <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
+    <None Include="Resources\Mini_Overflow.png" />
     <Content Include="Resources\Mini_PressedButton.png" />
     <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <Content Include="Resources\Mini_Taskbar.png" />

@@ -14,7 +14,7 @@ Public Class XeSettings
     Public Property ShowSaveConfirmation As Boolean = True
     Public Property SaveForLegacyWP As Boolean = False
     Public Property Win7LivePreview As Boolean = True
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Beta   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
 
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True

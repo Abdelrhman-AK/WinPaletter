@@ -41,13 +41,13 @@ Public Class Uninstall
             End If
         ElseIf XenonRadioImage3.Checked Then
             Dim _Def As CP
-            If My.W11 = MainFrm.WinVer.Eleven Then
+            If My.W11 = MainFrm.WinVer.W11 Then
                 _Def = New CP_Defaults().Default_Windows11
-            ElseIf My.W10 = MainFrm.WinVer.Ten Then
+            ElseIf My.W10 = MainFrm.WinVer.W10 Then
                 _Def = New CP_Defaults().Default_Windows10
-            ElseIf My.W8 = MainFrm.WinVer.Eight Then
+            ElseIf My.W8 = MainFrm.WinVer.W8 Then
                 _Def = New CP_Defaults().Default_Windows8
-            ElseIf My.W7 = MainFrm.WinVer.Seven Then
+            ElseIf My.W7 = MainFrm.WinVer.W7 Then
                 _Def = New CP_Defaults().Default_Windows7
             Else
                 _Def = New CP_Defaults().Default_Windows11

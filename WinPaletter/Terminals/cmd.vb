@@ -439,7 +439,7 @@ Public Class CMD
 #Region "   CP Handling"
     Sub ApplyFromCP([CP] As CP, [Edition] As Edition)
 
-        Dim [Console] As New CP.Console_Structure
+        Dim [Console] As New CP.Structures.Console
 
         Select Case [Edition]
             Case Edition.CMD
@@ -455,7 +455,7 @@ Public Class CMD
 
     End Sub
 
-    Sub SetFromCP([Console] As CP.Console_Structure)
+    Sub SetFromCP([Console] As CP.Structures.Console)
         CMDEnabled.Checked = [Console].Enabled
 
         ColorTable00.BackColor = [Console].ColorTable00
@@ -561,7 +561,7 @@ Public Class CMD
     End Sub
 
     Sub ApplyToCP([CP] As CP, [Edition] As Edition)
-        Dim [Console] As New CP.Console_Structure With {
+        Dim [Console] As New CP.Structures.Console With {
             .Enabled = CMDEnabled.Checked,
             .ColorTable00 = ColorTable00.BackColor,
             .ColorTable01 = ColorTable01.BackColor,
@@ -871,13 +871,13 @@ Public Class CMD
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
         Else
             _Def = New CP_Defaults().Default_Windows11

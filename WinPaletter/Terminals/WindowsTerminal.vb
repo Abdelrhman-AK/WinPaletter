@@ -76,12 +76,12 @@ Public Class WindowsTerminal
             TerTabInactive.BackColor = Nothing
 
             Select Case MainFrm.PreviewConfig
-                Case MainFrm.WinVer.Eleven
+                Case MainFrm.WinVer.W11
                     TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
                     XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
                     XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
 
-                Case MainFrm.WinVer.Ten
+                Case MainFrm.WinVer.W10
                     TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
                     XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
                     XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
@@ -752,11 +752,11 @@ Public Class WindowsTerminal
 
                 ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
                     Select Case MainFrm.PreviewConfig
-                        Case MainFrm.WinVer.Eleven
+                        Case MainFrm.WinVer.W11
                             XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
                             XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
 
-                        Case MainFrm.WinVer.Ten
+                        Case MainFrm.WinVer.W10
                             XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
                             XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
 
@@ -836,10 +836,10 @@ Public Class WindowsTerminal
             If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
 
             Select Case MainFrm.PreviewConfig
-                Case MainFrm.WinVer.Eleven
+                Case MainFrm.WinVer.W11
                     If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
 
-                Case MainFrm.WinVer.Ten
+                Case MainFrm.WinVer.W10
                     If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
 
                 Case Else

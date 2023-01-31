@@ -166,6 +166,8 @@ Public Class Localizer : Implements IDisposable
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
+    Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, Toggles, Buttons && Notifications Tray (Overflow)"
+    Property CP_11_OverflowTray As String = "Notifications Tray (Overflow) Background (Requires 22H2)"
     Property CP_11_StartMenu_AC As String = "Start Menu && Action Center Colors"
     Property CP_11_Taskbar As String = "Taskbar Color"
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"

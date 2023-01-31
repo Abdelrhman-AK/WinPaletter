@@ -51,7 +51,7 @@ Public Class XenonCore
             If Com Then
                 Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
 
-                If MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+                If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
                     temp.clrColor = CP.Windows8.ColorizationColor.ToArgb
                     temp.nIntensity = CP.Windows8.ColorizationColorBalance
 

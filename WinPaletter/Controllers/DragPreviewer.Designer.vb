@@ -53,20 +53,23 @@ Partial Class DragPreviewer
         Me.RetroLabel3 = New WinPaletter.RetroLabel()
         Me.RetroLabel2 = New WinPaletter.RetroLabel()
         Me.RetroLabel1 = New WinPaletter.RetroLabel()
-        Me.RetroButton5 = New WinPaletter.RetroButton()
-        Me.RetroButton4 = New WinPaletter.RetroButton()
-        Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroWindow1 = New WinPaletter.RetroWindow()
-        Me.RetroButton6 = New WinPaletter.RetroButton()
-        Me.RetroButton7 = New WinPaletter.RetroButton()
-        Me.RetroButton8 = New WinPaletter.RetroButton()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
         Me.programcontainer = New System.Windows.Forms.Panel()
         Me.RetroPanel2 = New WinPaletter.RetroScrollBar()
         Me.RetroButton12 = New WinPaletter.RetroButton()
         Me.RetroButton11 = New WinPaletter.RetroButton()
         Me.RetroButton10 = New WinPaletter.RetroButton()
-        Me.RetroButton9 = New WinPaletter.RetroButton()
+        Me.tabs_preview = New WinPaletter.TablessControl()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.pnl_preview_classic = New System.Windows.Forms.Panel()
+        Me.ClassicWindow1 = New WinPaletter.RetroWindow()
+        Me.ClassicWindow2 = New WinPaletter.RetroWindow()
+        Me.ClassicTaskbar = New WinPaletter.RetroPanelRaised()
+        Me.RetroButton4 = New WinPaletter.RetroButton()
+        Me.RetroButton3 = New WinPaletter.RetroButton()
+        Me.RetroButton2 = New WinPaletter.RetroButton()
         Me.pnl_preview.SuspendLayout()
         Me.XenonWindow1.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -80,10 +83,14 @@ Partial Class DragPreviewer
         Me.RetroWindow2.SuspendLayout()
         Me.menucontainer0.SuspendLayout()
         Me.RetroPanel1.SuspendLayout()
-        Me.RetroWindow1.SuspendLayout()
         Me.RetroWindow4.SuspendLayout()
         Me.programcontainer.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
+        Me.tabs_preview.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
+        Me.TabPage7.SuspendLayout()
+        Me.pnl_preview_classic.SuspendLayout()
+        Me.ClassicTaskbar.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnl_preview
@@ -95,7 +102,7 @@ Partial Class DragPreviewer
         Me.pnl_preview.Controls.Add(Me.XenonWindow2)
         Me.pnl_preview.Controls.Add(Me.start)
         Me.pnl_preview.Controls.Add(Me.taskbar)
-        Me.pnl_preview.Location = New System.Drawing.Point(11, 13)
+        Me.pnl_preview.Location = New System.Drawing.Point(0, 0)
         Me.pnl_preview.Name = "pnl_preview"
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
         Me.pnl_preview.TabIndex = 12
@@ -154,23 +161,17 @@ Partial Class DragPreviewer
         Me.XenonWindow1.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow1.Name = "XenonWindow1"
         Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
+        Me.XenonWindow1.Preview = WinPaletter.XenonWindow.Preview_Enum.W11
         Me.XenonWindow1.Radius = 5
-        Me.XenonWindow1.RoundedCorners = True
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 148)
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "App Preview"
         Me.XenonWindow1.ToolWindow = False
-        Me.XenonWindow1.Win7 = False
-        Me.XenonWindow1.Win7Aero = False
-        Me.XenonWindow1.Win7AeroOpaque = False
         Me.XenonWindow1.Win7Alpha = 100
-        Me.XenonWindow1.Win7Basic = False
         Me.XenonWindow1.Win7ColorBal = 100
         Me.XenonWindow1.Win7GlowBal = 100
         Me.XenonWindow1.Win7Noise = 1.0!
-        Me.XenonWindow1.Win8 = False
-        Me.XenonWindow1.Win8Lite = False
         '
         'Panel5
         '
@@ -238,23 +239,17 @@ Partial Class DragPreviewer
         Me.XenonWindow2.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow2.Name = "XenonWindow2"
         Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
+        Me.XenonWindow2.Preview = WinPaletter.XenonWindow.Preview_Enum.W11
         Me.XenonWindow2.Radius = 5
-        Me.XenonWindow2.RoundedCorners = True
         Me.XenonWindow2.Shadow = True
         Me.XenonWindow2.Size = New System.Drawing.Size(189, 85)
         Me.XenonWindow2.TabIndex = 3
         Me.XenonWindow2.Text = "Inactive app"
         Me.XenonWindow2.ToolWindow = False
-        Me.XenonWindow2.Win7 = False
-        Me.XenonWindow2.Win7Aero = False
-        Me.XenonWindow2.Win7AeroOpaque = False
         Me.XenonWindow2.Win7Alpha = 100
-        Me.XenonWindow2.Win7Basic = False
         Me.XenonWindow2.Win7ColorBal = 100
         Me.XenonWindow2.Win7GlowBal = 100
         Me.XenonWindow2.Win7Noise = 1.0!
-        Me.XenonWindow2.Win8 = False
-        Me.XenonWindow2.Win8Lite = False
         '
         'start
         '
@@ -350,10 +345,12 @@ Partial Class DragPreviewer
         Me.Menu_Window.ButtonHilight = System.Drawing.Color.White
         Me.Menu_Window.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu_Window.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Menu_Window.ButtonText = System.Drawing.Color.Black
         Me.Menu_Window.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.Menu_Window.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.Menu_Window.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu_Window.ColorGradient = True
+        Me.Menu_Window.ControlBox = True
         Me.Menu_Window.Controls.Add(Me.menucontainer3)
         Me.Menu_Window.Controls.Add(Me.highlight)
         Me.Menu_Window.Controls.Add(Me.menucontainer1)
@@ -361,10 +358,12 @@ Partial Class DragPreviewer
         Me.Menu_Window.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.Menu_Window.ForeColor = System.Drawing.Color.Black
         Me.Menu_Window.Location = New System.Drawing.Point(194, 151)
+        Me.Menu_Window.MaximizeBox = True
         Me.Menu_Window.Metrics_BorderWidth = 1
         Me.Menu_Window.Metrics_CaptionHeight = 22
         Me.Menu_Window.Metrics_CaptionWidth = 0
         Me.Menu_Window.Metrics_PaddedBorderWidth = 4
+        Me.Menu_Window.MinimizeBox = True
         Me.Menu_Window.Name = "Menu_Window"
         Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3)
         Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
@@ -465,20 +464,24 @@ Partial Class DragPreviewer
         Me.RetroWindow3.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow3.ButtonText = System.Drawing.Color.Black
         Me.RetroWindow3.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroWindow3.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.RetroWindow3.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow3.ColorGradient = True
+        Me.RetroWindow3.ControlBox = False
         Me.RetroWindow3.Controls.Add(Me.RetroButton1)
         Me.RetroWindow3.Controls.Add(Me.RetroLabel4)
         Me.RetroWindow3.Flat = False
         Me.RetroWindow3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow3.ForeColor = System.Drawing.Color.White
         Me.RetroWindow3.Location = New System.Drawing.Point(109, 185)
+        Me.RetroWindow3.MaximizeBox = True
         Me.RetroWindow3.Metrics_BorderWidth = 0
         Me.RetroWindow3.Metrics_CaptionHeight = 18
         Me.RetroWindow3.Metrics_CaptionWidth = 0
         Me.RetroWindow3.Metrics_PaddedBorderWidth = 0
+        Me.RetroWindow3.MinimizeBox = True
         Me.RetroWindow3.Name = "RetroWindow3"
         Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 80)
@@ -489,6 +492,7 @@ Partial Class DragPreviewer
         'RetroButton1
         '
         Me.RetroButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton1.AppearsAsPressed = False
         Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton1.ButtonDkShadow = System.Drawing.Color.Black
         Me.RetroButton1.ButtonHilight = System.Drawing.Color.White
@@ -544,23 +548,24 @@ Partial Class DragPreviewer
         Me.RetroWindow2.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow2.ButtonText = System.Drawing.Color.Black
         Me.RetroWindow2.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroWindow2.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.RetroWindow2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow2.ColorGradient = True
+        Me.RetroWindow2.ControlBox = True
         Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
         Me.RetroWindow2.Controls.Add(Me.menucontainer0)
-        Me.RetroWindow2.Controls.Add(Me.RetroButton5)
-        Me.RetroWindow2.Controls.Add(Me.RetroButton4)
-        Me.RetroWindow2.Controls.Add(Me.RetroButton3)
         Me.RetroWindow2.Flat = False
         Me.RetroWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow2.ForeColor = System.Drawing.Color.White
         Me.RetroWindow2.Location = New System.Drawing.Point(89, 110)
+        Me.RetroWindow2.MaximizeBox = True
         Me.RetroWindow2.Metrics_BorderWidth = 0
         Me.RetroWindow2.Metrics_CaptionHeight = 18
         Me.RetroWindow2.Metrics_CaptionWidth = 0
         Me.RetroWindow2.Metrics_PaddedBorderWidth = 0
+        Me.RetroWindow2.MinimizeBox = True
         Me.RetroWindow2.Name = "RetroWindow2"
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
@@ -660,66 +665,6 @@ Partial Class DragPreviewer
         Me.RetroLabel1.Text = "Normal"
         Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroButton5
-        '
-        Me.RetroButton5.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton5.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton5.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton5.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton5.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton5.Font = New System.Drawing.Font("Marlett", 8.0!)
-        Me.RetroButton5.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton5.Image = Nothing
-        Me.RetroButton5.Location = New System.Drawing.Point(141, 5)
-        Me.RetroButton5.Name = "RetroButton5"
-        Me.RetroButton5.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton5.TabIndex = 6
-        Me.RetroButton5.Text = "0"
-        Me.RetroButton5.UseItAsScrollbar = False
-        Me.RetroButton5.UseVisualStyleBackColor = False
-        Me.RetroButton5.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton4
-        '
-        Me.RetroButton4.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton4.Font = New System.Drawing.Font("Marlett", 8.0!)
-        Me.RetroButton4.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton4.Image = Nothing
-        Me.RetroButton4.Location = New System.Drawing.Point(157, 5)
-        Me.RetroButton4.Name = "RetroButton4"
-        Me.RetroButton4.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton4.TabIndex = 5
-        Me.RetroButton4.Text = "1"
-        Me.RetroButton4.UseItAsScrollbar = False
-        Me.RetroButton4.UseVisualStyleBackColor = False
-        Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton3
-        '
-        Me.RetroButton3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton3.Font = New System.Drawing.Font("Marlett", 7.8!)
-        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton3.Image = Nothing
-        Me.RetroButton3.Location = New System.Drawing.Point(175, 5)
-        Me.RetroButton3.Name = "RetroButton3"
-        Me.RetroButton3.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton3.TabIndex = 4
-        Me.RetroButton3.Text = "r"
-        Me.RetroButton3.UseItAsScrollbar = False
-        Me.RetroButton3.UseVisualStyleBackColor = False
-        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
-        '
         'RetroWindow1
         '
         Me.RetroWindow1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -728,21 +673,22 @@ Partial Class DragPreviewer
         Me.RetroWindow1.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow1.ButtonText = System.Drawing.Color.Black
         Me.RetroWindow1.Color1 = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
         Me.RetroWindow1.Color2 = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer))
         Me.RetroWindow1.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow1.ColorGradient = True
-        Me.RetroWindow1.Controls.Add(Me.RetroButton6)
-        Me.RetroWindow1.Controls.Add(Me.RetroButton7)
-        Me.RetroWindow1.Controls.Add(Me.RetroButton8)
+        Me.RetroWindow1.ControlBox = True
         Me.RetroWindow1.Flat = False
         Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow1.ForeColor = System.Drawing.Color.White
         Me.RetroWindow1.Location = New System.Drawing.Point(73, 77)
+        Me.RetroWindow1.MaximizeBox = True
         Me.RetroWindow1.Metrics_BorderWidth = 0
         Me.RetroWindow1.Metrics_CaptionHeight = 18
         Me.RetroWindow1.Metrics_CaptionWidth = 0
         Me.RetroWindow1.Metrics_PaddedBorderWidth = 0
+        Me.RetroWindow1.MinimizeBox = True
         Me.RetroWindow1.Name = "RetroWindow1"
         Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
@@ -750,66 +696,6 @@ Partial Class DragPreviewer
         Me.RetroWindow1.Text = "New Window"
         Me.RetroWindow1.TitlebarText = "Inactive Window"
         Me.RetroWindow1.UseItAsMenu = False
-        '
-        'RetroButton6
-        '
-        Me.RetroButton6.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton6.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton6.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton6.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton6.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton6.Font = New System.Drawing.Font("Marlett", 8.0!)
-        Me.RetroButton6.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton6.Image = Nothing
-        Me.RetroButton6.Location = New System.Drawing.Point(125, 5)
-        Me.RetroButton6.Name = "RetroButton6"
-        Me.RetroButton6.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton6.TabIndex = 9
-        Me.RetroButton6.Text = "0"
-        Me.RetroButton6.UseItAsScrollbar = False
-        Me.RetroButton6.UseVisualStyleBackColor = False
-        Me.RetroButton6.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton7
-        '
-        Me.RetroButton7.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton7.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton7.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton7.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton7.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton7.Font = New System.Drawing.Font("Marlett", 8.0!)
-        Me.RetroButton7.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton7.Image = Nothing
-        Me.RetroButton7.Location = New System.Drawing.Point(141, 5)
-        Me.RetroButton7.Name = "RetroButton7"
-        Me.RetroButton7.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton7.TabIndex = 8
-        Me.RetroButton7.Text = "1"
-        Me.RetroButton7.UseItAsScrollbar = False
-        Me.RetroButton7.UseVisualStyleBackColor = False
-        Me.RetroButton7.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton8
-        '
-        Me.RetroButton8.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton8.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton8.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton8.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton8.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton8.Font = New System.Drawing.Font("Marlett", 7.8!)
-        Me.RetroButton8.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton8.Image = Nothing
-        Me.RetroButton8.Location = New System.Drawing.Point(159, 5)
-        Me.RetroButton8.Name = "RetroButton8"
-        Me.RetroButton8.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton8.TabIndex = 7
-        Me.RetroButton8.Text = "r"
-        Me.RetroButton8.UseItAsScrollbar = False
-        Me.RetroButton8.UseVisualStyleBackColor = False
-        Me.RetroButton8.WindowFrame = System.Drawing.Color.Black
         '
         'RetroWindow4
         '
@@ -819,20 +705,23 @@ Partial Class DragPreviewer
         Me.RetroWindow4.ButtonHilight = System.Drawing.Color.White
         Me.RetroWindow4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroWindow4.ButtonText = System.Drawing.Color.Black
         Me.RetroWindow4.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroWindow4.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.RetroWindow4.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroWindow4.ColorGradient = True
+        Me.RetroWindow4.ControlBox = True
         Me.RetroWindow4.Controls.Add(Me.programcontainer)
-        Me.RetroWindow4.Controls.Add(Me.RetroButton9)
         Me.RetroWindow4.Flat = False
         Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroWindow4.ForeColor = System.Drawing.Color.White
         Me.RetroWindow4.Location = New System.Drawing.Point(33, 30)
+        Me.RetroWindow4.MaximizeBox = False
         Me.RetroWindow4.Metrics_BorderWidth = 0
         Me.RetroWindow4.Metrics_CaptionHeight = 18
         Me.RetroWindow4.Metrics_CaptionWidth = 0
         Me.RetroWindow4.Metrics_PaddedBorderWidth = 0
+        Me.RetroWindow4.MinimizeBox = False
         Me.RetroWindow4.Name = "RetroWindow4"
         Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
@@ -871,6 +760,7 @@ Partial Class DragPreviewer
         Me.RetroButton12.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton12.AppearsAsPressed = False
         Me.RetroButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton12.ButtonDkShadow = System.Drawing.Color.Black
         Me.RetroButton12.ButtonHilight = System.Drawing.Color.White
@@ -889,6 +779,7 @@ Partial Class DragPreviewer
         '
         'RetroButton11
         '
+        Me.RetroButton11.AppearsAsPressed = False
         Me.RetroButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton11.ButtonDkShadow = System.Drawing.Color.Black
         Me.RetroButton11.ButtonHilight = System.Drawing.Color.White
@@ -910,6 +801,7 @@ Partial Class DragPreviewer
         '
         'RetroButton10
         '
+        Me.RetroButton10.AppearsAsPressed = False
         Me.RetroButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton10.ButtonDkShadow = System.Drawing.Color.Black
         Me.RetroButton10.ButtonHilight = System.Drawing.Color.White
@@ -929,34 +821,197 @@ Partial Class DragPreviewer
         Me.RetroButton10.UseVisualStyleBackColor = False
         Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton9
+        'tabs_preview
         '
-        Me.RetroButton9.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RetroButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton9.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton9.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton9.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton9.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton9.Font = New System.Drawing.Font("Marlett", 7.8!)
-        Me.RetroButton9.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton9.Image = Nothing
-        Me.RetroButton9.Location = New System.Drawing.Point(135, 5)
-        Me.RetroButton9.Name = "RetroButton9"
-        Me.RetroButton9.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton9.TabIndex = 3
-        Me.RetroButton9.Text = "r"
-        Me.RetroButton9.UseItAsScrollbar = False
-        Me.RetroButton9.UseVisualStyleBackColor = False
-        Me.RetroButton9.WindowFrame = System.Drawing.Color.Black
+        Me.tabs_preview.Controls.Add(Me.TabPage6)
+        Me.tabs_preview.Controls.Add(Me.TabPage7)
+        Me.tabs_preview.Location = New System.Drawing.Point(12, 13)
+        Me.tabs_preview.Name = "tabs_preview"
+        Me.tabs_preview.SelectedIndex = 0
+        Me.tabs_preview.Size = New System.Drawing.Size(528, 297)
+        Me.tabs_preview.TabIndex = 36
+        '
+        'TabPage6
+        '
+        Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.pnl_preview)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage6.Margin = New System.Windows.Forms.Padding(0)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage6.TabIndex = 0
+        Me.TabPage6.Text = "0"
+        '
+        'TabPage7
+        '
+        Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage7.Controls.Add(Me.pnl_preview_classic)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage7.Margin = New System.Windows.Forms.Padding(0)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage7.TabIndex = 1
+        Me.TabPage7.Text = "1"
+        '
+        'pnl_preview_classic
+        '
+        Me.pnl_preview_classic.BackColor = System.Drawing.Color.Black
+        Me.pnl_preview_classic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnl_preview_classic.Controls.Add(Me.ClassicWindow1)
+        Me.pnl_preview_classic.Controls.Add(Me.ClassicWindow2)
+        Me.pnl_preview_classic.Controls.Add(Me.ClassicTaskbar)
+        Me.pnl_preview_classic.Location = New System.Drawing.Point(0, 0)
+        Me.pnl_preview_classic.Name = "pnl_preview_classic"
+        Me.pnl_preview_classic.Size = New System.Drawing.Size(528, 297)
+        Me.pnl_preview_classic.TabIndex = 34
+        '
+        'ClassicWindow1
+        '
+        Me.ClassicWindow1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ClassicWindow1.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow1.ButtonHilight = System.Drawing.Color.White
+        Me.ClassicWindow1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ClassicWindow1.ButtonText = System.Drawing.Color.Black
+        Me.ClassicWindow1.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ClassicWindow1.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.ClassicWindow1.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow1.ColorGradient = True
+        Me.ClassicWindow1.ControlBox = True
+        Me.ClassicWindow1.Flat = False
+        Me.ClassicWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.ClassicWindow1.ForeColor = System.Drawing.Color.White
+        Me.ClassicWindow1.Location = New System.Drawing.Point(174, 20)
+        Me.ClassicWindow1.MaximizeBox = False
+        Me.ClassicWindow1.Metrics_BorderWidth = 0
+        Me.ClassicWindow1.Metrics_CaptionHeight = 18
+        Me.ClassicWindow1.Metrics_CaptionWidth = 0
+        Me.ClassicWindow1.Metrics_PaddedBorderWidth = 0
+        Me.ClassicWindow1.MinimizeBox = False
+        Me.ClassicWindow1.Name = "ClassicWindow1"
+        Me.ClassicWindow1.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
+        Me.ClassicWindow1.Size = New System.Drawing.Size(181, 146)
+        Me.ClassicWindow1.TabIndex = 4
+        Me.ClassicWindow1.TitlebarText = "Active App"
+        Me.ClassicWindow1.UseItAsMenu = False
+        '
+        'ClassicWindow2
+        '
+        Me.ClassicWindow2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ClassicWindow2.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow2.ButtonHilight = System.Drawing.Color.White
+        Me.ClassicWindow2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ClassicWindow2.ButtonText = System.Drawing.Color.Black
+        Me.ClassicWindow2.Color1 = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.ClassicWindow2.Color2 = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer))
+        Me.ClassicWindow2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicWindow2.ColorGradient = True
+        Me.ClassicWindow2.ControlBox = True
+        Me.ClassicWindow2.Flat = False
+        Me.ClassicWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.ClassicWindow2.ForeColor = System.Drawing.Color.White
+        Me.ClassicWindow2.Location = New System.Drawing.Point(174, 172)
+        Me.ClassicWindow2.MaximizeBox = False
+        Me.ClassicWindow2.Metrics_BorderWidth = 0
+        Me.ClassicWindow2.Metrics_CaptionHeight = 18
+        Me.ClassicWindow2.Metrics_CaptionWidth = 0
+        Me.ClassicWindow2.Metrics_PaddedBorderWidth = 0
+        Me.ClassicWindow2.MinimizeBox = False
+        Me.ClassicWindow2.Name = "ClassicWindow2"
+        Me.ClassicWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
+        Me.ClassicWindow2.Size = New System.Drawing.Size(181, 60)
+        Me.ClassicWindow2.TabIndex = 5
+        Me.ClassicWindow2.TitlebarText = "Inactive App"
+        Me.ClassicWindow2.UseItAsMenu = False
+        '
+        'ClassicTaskbar
+        '
+        Me.ClassicTaskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClassicTaskbar.ButtonHilight = System.Drawing.Color.White
+        Me.ClassicTaskbar.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ClassicTaskbar.Controls.Add(Me.RetroButton4)
+        Me.ClassicTaskbar.Controls.Add(Me.RetroButton3)
+        Me.ClassicTaskbar.Controls.Add(Me.RetroButton2)
+        Me.ClassicTaskbar.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ClassicTaskbar.Flat = False
+        Me.ClassicTaskbar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.ClassicTaskbar.ForeColor = System.Drawing.Color.Black
+        Me.ClassicTaskbar.Location = New System.Drawing.Point(0, 253)
+        Me.ClassicTaskbar.Name = "ClassicTaskbar"
+        Me.ClassicTaskbar.Size = New System.Drawing.Size(528, 44)
+        Me.ClassicTaskbar.TabIndex = 0
+        Me.ClassicTaskbar.UseItAsWin7Taskbar = True
+        '
+        'RetroButton4
+        '
+        Me.RetroButton4.AppearsAsPressed = False
+        Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RetroButton4.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton4.Image = Nothing
+        Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
+        Me.RetroButton4.Name = "RetroButton4"
+        Me.RetroButton4.Size = New System.Drawing.Size(48, 38)
+        Me.RetroButton4.TabIndex = 2
+        Me.RetroButton4.UseItAsScrollbar = False
+        Me.RetroButton4.UseVisualStyleBackColor = False
+        Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton3
+        '
+        Me.RetroButton3.AppearsAsPressed = True
+        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton3.Image = Nothing
+        Me.RetroButton3.Location = New System.Drawing.Point(63, 4)
+        Me.RetroButton3.Name = "RetroButton3"
+        Me.RetroButton3.Size = New System.Drawing.Size(48, 38)
+        Me.RetroButton3.TabIndex = 1
+        Me.RetroButton3.UseItAsScrollbar = False
+        Me.RetroButton3.UseVisualStyleBackColor = False
+        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton2
+        '
+        Me.RetroButton2.AppearsAsPressed = False
+        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton2.Image = Nothing
+        Me.RetroButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.RetroButton2.Location = New System.Drawing.Point(2, 4)
+        Me.RetroButton2.Name = "RetroButton2"
+        Me.RetroButton2.Size = New System.Drawing.Size(52, 38)
+        Me.RetroButton2.TabIndex = 0
+        Me.RetroButton2.Text = "Start"
+        Me.RetroButton2.UseItAsScrollbar = False
+        Me.RetroButton2.UseVisualStyleBackColor = False
+        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
         'DragPreviewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Fuchsia
-        Me.ClientSize = New System.Drawing.Size(901, 323)
+        Me.ClientSize = New System.Drawing.Size(904, 326)
         Me.ControlBox = False
-        Me.Controls.Add(Me.pnl_preview)
+        Me.Controls.Add(Me.tabs_preview)
         Me.Controls.Add(Me.pnlRetroPreview)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
@@ -985,26 +1040,25 @@ Partial Class DragPreviewer
         Me.RetroWindow2.ResumeLayout(False)
         Me.menucontainer0.ResumeLayout(False)
         Me.RetroPanel1.ResumeLayout(False)
-        Me.RetroWindow1.ResumeLayout(False)
         Me.RetroWindow4.ResumeLayout(False)
         Me.programcontainer.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
+        Me.tabs_preview.ResumeLayout(False)
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage7.ResumeLayout(False)
+        Me.pnl_preview_classic.ResumeLayout(False)
+        Me.ClassicTaskbar.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents RetroWindow1 As RetroWindow
-    Friend WithEvents RetroButton6 As RetroButton
-    Friend WithEvents RetroButton7 As RetroButton
-    Friend WithEvents RetroButton8 As RetroButton
-    Friend WithEvents RetroButton5 As RetroButton
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents programcontainer As Panel
     Friend WithEvents RetroPanel2 As RetroScrollBar
     Friend WithEvents RetroButton12 As RetroButton
     Friend WithEvents RetroButton11 As RetroButton
     Friend WithEvents RetroButton10 As RetroButton
-    Friend WithEvents RetroButton9 As RetroButton
     Friend WithEvents RetroTextBox1 As RetroTextBox
     Friend WithEvents menucontainer0 As Panel
     Friend WithEvents RetroPanel1 As RetroPanel
@@ -1021,7 +1075,6 @@ Partial Class DragPreviewer
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents start As XenonAcrylic
     Friend WithEvents taskbar As XenonAcrylic
-    Friend WithEvents RetroButton4 As RetroButton
     Friend WithEvents pnlRetroPreview As Panel
     Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
@@ -1036,5 +1089,14 @@ Partial Class DragPreviewer
     Friend WithEvents RetroLabel4 As RetroLabel
     Friend WithEvents RetroLabel13 As RetroLabel
     Friend WithEvents RetroWindow2 As RetroWindow
+    Friend WithEvents tabs_preview As TablessControl
+    Friend WithEvents TabPage6 As TabPage
+    Friend WithEvents TabPage7 As TabPage
+    Friend WithEvents pnl_preview_classic As Panel
+    Friend WithEvents ClassicWindow1 As RetroWindow
+    Friend WithEvents ClassicWindow2 As RetroWindow
+    Friend WithEvents ClassicTaskbar As RetroPanelRaised
+    Friend WithEvents RetroButton4 As RetroButton
     Friend WithEvents RetroButton3 As RetroButton
+    Friend WithEvents RetroButton2 As RetroButton
 End Class

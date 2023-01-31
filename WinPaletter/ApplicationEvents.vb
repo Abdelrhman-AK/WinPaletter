@@ -143,7 +143,9 @@ Namespace My
                                                                 End Sub, MethodInvoker)
         ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
                                                                      MainFrm.pnl_preview.BackgroundImage = Wallpaper
-                                                                     dragPreviewer.pnl_preview.BackgroundImage = Wallpaper
+                                                                     MainFrm.pnl_preview_classic.BackgroundImage = Wallpaper
+                                                                     DragPreviewer.pnl_preview.BackgroundImage = Wallpaper
+                                                                     DragPreviewer.pnl_preview_classic.BackgroundImage = Wallpaper
                                                                      Metrics_Fonts.pnl_preview1.BackgroundImage = Wallpaper
                                                                      Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
                                                                      Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper

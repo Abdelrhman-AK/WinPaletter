@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
-Imports System.Security.Policy
 Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -10,7 +9,7 @@ Imports WinPaletter.XenonCore
 Public Class MainFrm
     Private _Shown As Boolean = False
     Public CP, CP_Original, CP_FirstTime, CP_BeforeDragAndDrop As CP
-    Public PreviewConfig As WinVer = WinVer.Eleven
+    Public PreviewConfig As WinVer = WinVer.W11
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
@@ -31,8 +30,9 @@ Public Class MainFrm
         XenonWindow2.Active = False
 
         Select Case PreviewConfig
-            Case WinVer.Eleven
+            Case WinVer.W11
 #Region "Win11"
+                tabs_preview.SelectedIndex = 0
                 XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
 
@@ -64,19 +64,19 @@ Public Class MainFrm
                         W11_lbl1.Text = My.Lang.CP_11_StartMenu_Taskbar_AC
                         W11_lbl2.Text = My.Lang.CP_11_ACHover_Links
                         W11_lbl3.Text = My.Lang.CP_11_Lines_Toggles_Buttons
-                        W11_lbl4.Text = My.Lang.CP_Undefined
+                        W11_lbl4.Text = My.Lang.CP_11_OverflowTray
 
                         W11_pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         W11_pic2.Image = My.Resources.Mini_ACHover_Links
                         W11_pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
-                        W11_pic4.Image = My.Resources.Mini_Undefined
+                        W11_pic4.Image = My.Resources.Mini_Overflow
 
 
                     Case False   ''''''''''Light
                         W11_lbl1.Text = My.Lang.CP_11_ACHover_Links
                         W11_lbl2.Text = My.Lang.CP_11_StartMenu_AC
                         W11_lbl3.Text = My.Lang.CP_11_Taskbar
-                        W11_lbl4.Text = My.Lang.CP_11_Lines_Toggles_Buttons
+                        W11_lbl4.Text = My.Lang.CP_11_Lines_Toggles_Buttons_Overflow
 
                         W11_pic1.Image = My.Resources.Mini_ACHover_Links
                         W11_pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
@@ -158,8 +158,9 @@ Public Class MainFrm
                         Visual.FadeColor(lnk_preview, "ForeColor", lnk_preview.ForeColor, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
                 End Select
 #End Region
-            Case WinVer.Ten
+            Case WinVer.W10
 #Region "Win10"
+                tabs_preview.SelectedIndex = 0
                 XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
 
@@ -511,8 +512,10 @@ Public Class MainFrm
                 End Select
 
 #End Region
-            Case WinVer.Eight
+            Case WinVer.W8
 #Region "Win8.1"
+                tabs_preview.SelectedIndex = 0
+
                 If My.W8 And My.[Settings].Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
@@ -522,13 +525,13 @@ Public Class MainFrm
 
                 Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
-                        XenonWindow1.Win8Lite = False
-                        XenonWindow2.Win8Lite = False
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
+                        XenonWindow2.Preview = XenonWindow.Preview_Enum.W8
                         taskbar.Transparency = True
                         taskbar.BackColorAlpha = 100
                     Case CP.AeroTheme.AeroLite
-                        XenonWindow1.Win8Lite = True
-                        XenonWindow2.Win8Lite = True
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W8Lite
+                        XenonWindow2.Preview = XenonWindow.Preview_Enum.W8Lite
                         taskbar.Transparency = False
                         taskbar.BackColorAlpha = 255
                 End Select
@@ -542,7 +545,7 @@ Public Class MainFrm
                 taskbar.BackColor = [CP].Windows8.ColorizationColor
                 taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 #End Region
-            Case WinVer.Seven
+            Case WinVer.W7
 #Region "Win7"
                 If My.W7 And My.[Settings].Win7LivePreview And _Shown Then
                     RefreshDWM([CP])
@@ -550,15 +553,13 @@ Public Class MainFrm
 
                 Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
+                        tabs_preview.SelectedIndex = 0
                         start.Transparency = True
                         start.Basic = False
                         taskbar.Transparency = True
                         taskbar.Basic = False
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -569,10 +570,7 @@ Public Class MainFrm
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = True
-                            .Win7AeroOpaque = False
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -600,28 +598,24 @@ Public Class MainFrm
                             .BackColor2 = [CP].Windows7.ColorizationAfterglow
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
+
 
                     Case CP.AeroTheme.AeroOpaque
+                        tabs_preview.SelectedIndex = 0
                         start.Transparency = True
                         start.Basic = False
                         taskbar.Transparency = True
                         taskbar.Basic = False
 
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
                             .AccentColor_Inactive = [CP].Windows7.ColorizationColor
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = True
-                            .Win7Basic = False
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
                             .AccentColor_Inactive = [CP].Windows7.ColorizationColor
@@ -642,8 +636,9 @@ Public Class MainFrm
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
+
                     Case CP.AeroTheme.Basic
-#Region "Basic"
+                        tabs_preview.SelectedIndex = 0
                         taskbar.BackColor = Color.FromArgb(166, 190, 218)
                         taskbar.BackColorAlpha = 100
 
@@ -651,20 +646,14 @@ Public Class MainFrm
                         start.BackColorAlpha = 100
 
                         With XenonWindow1
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
 
                         With XenonWindow2
-                            .Win7 = True
-                            .Win7Aero = False
-                            .Win7AeroOpaque = False
-                            .Win7Basic = True
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
@@ -681,9 +670,8 @@ Public Class MainFrm
                         start.Refresh()
                         taskbar.Refresh()
 
-#End Region
-
                     Case CP.AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
 
                 End Select
 
@@ -694,11 +682,77 @@ Public Class MainFrm
         ApplyMetrics([CP], XenonWindow2)
     End Sub
 
+    Sub AdjustClassicPreview()
+        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
+        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+        RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+
+        SetToClassicWindow(ClassicWindow1, CP)
+        SetToClassicWindow(ClassicWindow2, CP, False)
+        SetClassicMetics(ClassicWindow1, CP)
+        SetClassicMetics(ClassicWindow2, CP)
+        SetToClassicButton(RetroButton2, CP)
+        SetToClassicButton(RetroButton3, CP)
+        SetToClassicButton(RetroButton4, CP)
+        SetToClassicRaisedPanel(ClassicTaskbar, CP)
+
+        ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
+        ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
+
+    End Sub
+
+    Sub SetClassicMetics([Window] As RetroWindow, [CP] As CP)
+        [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+        [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+        [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+        [Window].Font = CP.MetricsFonts.CaptionFont
+        [Window].Refresh()
+    End Sub
+
+    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
+        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Window].BackColor = [CP].Win32.ButtonFace
+        [Window].ButtonHilight = [CP].Win32.ButtonHilight
+        [Window].ButtonLight = [CP].Win32.ButtonLight
+        [Window].ButtonShadow = [CP].Win32.ButtonShadow
+
+        If Active Then
+            [Window].ColorBorder = [CP].Win32.ActiveBorder
+            [Window].ForeColor = [CP].Win32.TitleText
+            [Window].Color1 = [CP].Win32.ActiveTitle
+            [Window].Color2 = [CP].Win32.GradientActiveTitle
+        Else
+            [Window].ColorBorder = [CP].Win32.InactiveBorder
+            [Window].ForeColor = [CP].Win32.InactiveTitleText
+            [Window].Color1 = [CP].Win32.InactiveTitle
+            [Window].Color2 = [CP].Win32.GradientInactiveTitle
+        End If
+
+        [Window].ColorGradient = [CP].Win32.EnableGradient
+    End Sub
+
+    Sub SetToClassicRaisedPanel([Panel] As RetroPanelRaised, [CP] As CP)
+        [Panel].BackColor = [CP].Win32.ButtonFace
+        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ForeColor = [CP].Win32.TitleText
+    End Sub
+
+    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
+        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Button].ButtonHilight = [CP].Win32.ButtonHilight
+        [Button].ButtonLight = [CP].Win32.ButtonLight
+        [Button].ButtonShadow = [CP].Win32.ButtonShadow
+        [Button].BackColor = [CP].Win32.ButtonFace
+        [Button].ForeColor = [CP].Win32.ButtonText
+    End Sub
+
     Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
-        XenonWindow.Font = CP.WinMetrics_Fonts.CaptionFont
-        XenonWindow.Metrics_BorderWidth = CP.WinMetrics_Fonts.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = CP.WinMetrics_Fonts.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = CP.WinMetrics_Fonts.PaddedBorderWidth
+        XenonWindow.Font = CP.MetricsFonts.CaptionFont
+        XenonWindow.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
         XenonWindow.Refresh()
     End Sub
 
@@ -716,59 +770,75 @@ Public Class MainFrm
     End Sub
 
     Sub Adjust_Preview()
-        If _Shown Then My.[AnimatorNS].HideSync(pnl_preview)
-        'pnl_preview.Visible = False
 
-        Panel3.Visible = True
-        lnk_preview.Visible = True
+        If _Shown Then
+            If tabs_preview.Visible Then My.[AnimatorNS].HideSync(tabs_preview)
+        Else
+            tabs_preview.Visible = False
+        End If
 
-        start.Visible = True
-        taskbar.Visible = True
-        ActionCenter.Visible = False
-
-        XenonWindow1.Visible = True
-        XenonWindow2.Visible = True
-        XenonWindow1.Win7 = False
-        XenonWindow2.Win7 = False
-        XenonWindow1.Win8 = False
-        XenonWindow2.Win8 = False
-        XenonWindow1.Win8Lite = False
-        XenonWindow2.Win8Lite = False
-        XenonButton23.Visible = False
+        Panel3.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
+        lnk_preview.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
+        start.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
+        ActionCenter.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
+        XenonButton23.Visible = (PreviewConfig = WinVer.W7)
+        tabs_preview.SelectedIndex = If(PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic, 1, 0)
 
         Select Case PreviewConfig
-            Case WinVer.Eleven
+            Case WinVer.W11
                 ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-            Case WinVer.Ten
+                XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+
+            Case WinVer.W10
                 ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-            Case WinVer.Eight
+                XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
+
+            Case WinVer.W8
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
-            Case WinVer.Seven
+                XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+
+            Case WinVer.W7
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+
+                Select Case CP.Windows7.Theme
+                    Case AeroTheme.Aero
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.AeroOpaque
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Basic
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
+
+                End Select
+
         End Select
 
+        XenonWindow2.Preview = XenonWindow1.Preview
+
         Select Case PreviewConfig
-            Case WinVer.Eleven
+            Case WinVer.W11
                 ActionCenter.Dock = Nothing
                 ActionCenter.RoundedCorners = True
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                ActionCenter.Visible = True
                 '########################
                 taskbar.BlurPower = 12
                 '########################
                 start.RoundedCorners = True
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-                start.Visible = True
-                '########################
-                XenonWindow1.RoundedCorners = True
-                XenonWindow2.RoundedCorners = True
                 '########################
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
@@ -780,22 +850,17 @@ Public Class MainFrm
                 start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
 
 
-            Case WinVer.Ten
+            Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.RoundedCorners = False
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                ActionCenter.Visible = True
                 '########################
                 taskbar.BlurPower = 12
                 '########################
                 start.RoundedCorners = False
                 start.BlurPower = 7
                 start.NoisePower = 0.2
-                start.Visible = True
-                '########################
-                XenonWindow1.RoundedCorners = False
-                XenonWindow2.RoundedCorners = False
                 '########################
 
                 taskbar.Height = 35
@@ -804,30 +869,24 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Bottom - taskbar.Height - start.Height
 
-            Case WinVer.Eight
+            Case WinVer.W8
                 Panel3.Visible = False
                 lnk_preview.Visible = False
-
-                XenonWindow1.Active = True
-                XenonWindow2.Active = False
-                XenonWindow1.Win8 = True
-                XenonWindow2.Win8 = True
+                start.Visible = False
+                ActionCenter.Visible = False
                 taskbar.BlurPower = 0
                 taskbar.Height = 34
 
-                start.Visible = False
                 start.BlurPower = 0
                 start.Top = taskbar.Top - start.Height
                 start.Left = 0
 
-                start.Visible = False
-                taskbar.Visible = True
-                ActionCenter.Visible = False
-
-            Case WinVer.Seven
+            Case WinVer.W7
                 XenonButton23.Visible = True
                 Panel3.Visible = False
                 lnk_preview.Visible = False
+                ActionCenter.Visible = False
+
                 taskbar.BlurPower = 1
                 taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
@@ -840,25 +899,11 @@ Public Class MainFrm
                 start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
-
-                If CP.Windows7.Theme = AeroTheme.Classic Then
-                    start.Visible = False
-                    taskbar.Visible = False
-                    XenonWindow1.Visible = False
-                    XenonWindow2.Visible = False
-                    ActionCenter.Visible = False
-                Else
-                    start.Visible = True
-                    taskbar.Visible = True
-                    XenonWindow1.Visible = True
-                    XenonWindow2.Visible = True
-                    ActionCenter.Visible = False
-                End If
         End Select
 
-        If PreviewConfig = WinVer.Ten Or PreviewConfig = WinVer.Eleven Then
-            XenonWindow1.Top = start.Top - If(PreviewConfig = WinVer.Eleven, 30, 35)
-            XenonWindow1.Left = start.Right + If(PreviewConfig = WinVer.Eleven, 30, 15)
+        If PreviewConfig = WinVer.W10 Or PreviewConfig = WinVer.W11 Then
+            XenonWindow1.Top = start.Top - If(PreviewConfig = WinVer.W11, 30, 35)
+            XenonWindow1.Left = start.Right + If(PreviewConfig = WinVer.W11, 30, 15)
 
             XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
@@ -870,10 +915,16 @@ Public Class MainFrm
             XenonWindow2.Left = XenonWindow1.Left
         End If
 
-        ReValidateLivePreview(pnl_preview)
+        ReValidateLivePreview(tabs_preview)
 
-        'pnl_preview.Visible = True
-        If _Shown Then My.[AnimatorNS].Show(pnl_preview)
+        'tabs_preview.Visible = True
+
+        If _Shown Then
+            My.[AnimatorNS].ShowSync(tabs_preview)
+        Else
+            tabs_preview.Visible = True
+        End If
+
     End Sub
 
     Sub ApplyCPValues(ByVal ColorPalette As CP)
@@ -981,6 +1032,19 @@ Public Class MainFrm
         W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
         W8_personalcls_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
         W8_personalcolor_accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
+
+        W11_WinMode_Toggle.Refresh()
+        W11_AppMode_Toggle.Refresh()
+        W11_Transparency_Toggle.Refresh()
+        W11_ShowAccentOnTitlebarAndBorders_Toggle.Refresh()
+
+        W10_WinMode_Toggle.Refresh()
+        W10_AppMode_Toggle.Refresh()
+        W10_Transparency_Toggle.Refresh()
+        W10_ShowAccentOnTitlebarAndBorders_Toggle.Refresh()
+
+        W7_EnableAeroPeek_toggle.Refresh()
+        W7_AlwaysHibernateThumbnails_Toggle.Refresh()
 
         ApplyMetroStartToButton(ColorPalette)
         ApplyBackLogonUI(ColorPalette)
@@ -1172,10 +1236,10 @@ Public Class MainFrm
 
 #Region "Misc"
     Enum WinVer
-        Eleven
-        Ten
-        Eight
-        Seven
+        W11
+        W10
+        W8
+        W7
     End Enum
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
@@ -1265,9 +1329,7 @@ Public Class MainFrm
         _Shown = False
         Visible = False
         NotifyUpdates.Icon = Icon
-
         TreeView1.ImageList = My.Notifications_IL
-
         If Not My.W7 Then SetTreeViewTheme(TreeView1.Handle)
 
         ApplyDarkMode(Me)
@@ -1312,27 +1374,27 @@ Public Class MainFrm
         Select_W8.Image = My.Resources.Native8
         Select_W7.Image = My.Resources.Native7
 
-        If My.W11 Then PreviewConfig = WinVer.Eleven
-        If My.W10 Then PreviewConfig = WinVer.Ten
-        If My.W8 Then PreviewConfig = WinVer.Eight
-        If My.W7 Then PreviewConfig = WinVer.Seven
+        If My.W11 Then PreviewConfig = WinVer.W11
+        If My.W10 Then PreviewConfig = WinVer.W10
+        If My.W8 Then PreviewConfig = WinVer.W8
+        If My.W7 Then PreviewConfig = WinVer.W7
 
-        If PreviewConfig = WinVer.Eleven Then
+        If PreviewConfig = WinVer.W11 Then
             TablessControl1.SelectedIndex = 0
             XenonButton20.Image = My.Resources.add_win11
             Select_W11.Checked = True
 
-        ElseIf PreviewConfig = WinVer.Ten Then
+        ElseIf PreviewConfig = WinVer.W10 Then
             TablessControl1.SelectedIndex = 1
             XenonButton20.Image = My.Resources.add_win10
             Select_W10.Checked = True
 
-        ElseIf PreviewConfig = WinVer.Eight Then
+        ElseIf PreviewConfig = WinVer.W8 Then
             TablessControl1.SelectedIndex = 2
             XenonButton20.Image = My.Resources.add_win8
             Select_W8.Checked = True
 
-        ElseIf PreviewConfig = WinVer.Seven Then
+        ElseIf PreviewConfig = WinVer.W7 Then
             TablessControl1.SelectedIndex = 3
             XenonButton20.Image = My.Resources.add_win7
             Select_W7.Checked = True
@@ -1344,12 +1406,15 @@ Public Class MainFrm
         End If
 
         pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview_classic.BackgroundImage = My.Wallpaper
         DragPreviewer.pnl_preview.BackgroundImage = My.Wallpaper
+        DragPreviewer.pnl_preview_classic.BackgroundImage = My.Wallpaper
 
         Adjust_Preview()
         ApplyCPValues(CP)
         ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
+        AdjustClassicPreview()
 
         Visible = True
     End Sub
@@ -2182,7 +2247,7 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender}
 
-        If PreviewConfig = WinVer.Ten Then
+        If PreviewConfig = WinVer.W10 Then
             'CList.Add(taskbar) 'Start Icon Hover
         End If
 
@@ -2766,13 +2831,13 @@ Public Class MainFrm
     End Sub
 
     Sub SelectPreview()
-        If PreviewConfig = WinVer.Eleven Then
+        If PreviewConfig = WinVer.W11 Then
             TablessControl1.SelectedIndex = 0
-        ElseIf PreviewConfig = WinVer.Ten Then
+        ElseIf PreviewConfig = WinVer.W10 Then
             TablessControl1.SelectedIndex = 1
-        ElseIf PreviewConfig = WinVer.Eight Then
+        ElseIf PreviewConfig = WinVer.W8 Then
             TablessControl1.SelectedIndex = 2
-        ElseIf PreviewConfig = WinVer.Seven Then
+        ElseIf PreviewConfig = WinVer.W7 Then
             TablessControl1.SelectedIndex = 3
         Else
             TablessControl1.SelectedIndex = 0
@@ -3068,7 +3133,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        If PreviewConfig = WinVer.Eleven Or PreviewConfig = WinVer.Ten Then
+        If PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10 Then
             LogonUI.ShowDialog()
         Else
             LogonUI7.ShowDialog()
@@ -3167,7 +3232,7 @@ Public Class MainFrm
             CP = Def.Default_Windows11.Clone
         End If
 
-        Def.Dispose
+        Def.Dispose()
 
         SaveFileDialog1.FileName = Nothing
 
@@ -3213,25 +3278,25 @@ Public Class MainFrm
         ApplyLivePreviewFromCP(CP)
         ApplyDefaultCPValues()
 
-        If PreviewConfig = WinVer.Eleven Then
+        If PreviewConfig = WinVer.W11 Then
             XenonButton20.Image = My.Resources.add_win11
-        ElseIf PreviewConfig = WinVer.Ten Then
+        ElseIf PreviewConfig = WinVer.W10 Then
             XenonButton20.Image = My.Resources.add_win10
-        ElseIf PreviewConfig = WinVer.Eight Then
+        ElseIf PreviewConfig = WinVer.W8 Then
             XenonButton20.Image = My.Resources.add_win8
-        ElseIf PreviewConfig = WinVer.Seven Then
+        ElseIf PreviewConfig = WinVer.W7 Then
             XenonButton20.Image = My.Resources.add_win7
         Else
             XenonButton20.Image = My.Resources.add_win11
         End If
 
-        If PreviewConfig = WinVer.Eleven Then
+        If PreviewConfig = WinVer.W11 Then
             TablessControl1.SelectedIndex = 0
-        ElseIf PreviewConfig = WinVer.Ten Then
+        ElseIf PreviewConfig = WinVer.W10 Then
             TablessControl1.SelectedIndex = 1
-        ElseIf PreviewConfig = WinVer.Eight Then
+        ElseIf PreviewConfig = WinVer.W8 Then
             TablessControl1.SelectedIndex = 2
-        ElseIf PreviewConfig = WinVer.Seven Then
+        ElseIf PreviewConfig = WinVer.W7 Then
             TablessControl1.SelectedIndex = 3
         Else
             TablessControl1.SelectedIndex = 0
@@ -3243,21 +3308,21 @@ Public Class MainFrm
 
     Private Sub Select_W11_CheckedChanged(sender As Object) Handles Select_W11.CheckedChanged
         If _Shown And Select_W11.Checked Then
-            PreviewConfig = WinVer.Eleven
+            PreviewConfig = WinVer.W11
             Select_Preview_Version()
         End If
     End Sub
 
     Private Sub Select_W10_CheckedChanged(sender As Object) Handles Select_W10.CheckedChanged
         If _Shown And Select_W10.Checked Then
-            PreviewConfig = WinVer.Ten
+            PreviewConfig = WinVer.W10
             Select_Preview_Version()
         End If
     End Sub
 
     Private Sub Select_W8_CheckedChanged(sender As Object) Handles Select_W8.CheckedChanged
         If _Shown And Select_W8.Checked Then
-            PreviewConfig = WinVer.Eight
+            PreviewConfig = WinVer.W8
             Select_Preview_Version()
         End If
     End Sub
@@ -3270,7 +3335,7 @@ Public Class MainFrm
 
     Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
         If _Shown And Select_W7.Checked Then
-            PreviewConfig = WinVer.Seven
+            PreviewConfig = WinVer.W7
             Select_Preview_Version()
         End If
     End Sub

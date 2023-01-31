@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports Newtonsoft.Json.Linq
 
 Public Module Helpers
     Sub New()
@@ -47,6 +48,7 @@ Public Class RetroButton : Inherits Button
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Public Property UseItAsScrollbar As Boolean = False
+    Public Property AppearsAsPressed As Boolean = False
 #End Region
 
 #Region "Events"
@@ -122,36 +124,47 @@ Public Class RetroButton : Inherits Button
             G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
             G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
         Else
-            If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
-                If Not Focused Then
-                    G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
-                    G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
-                    G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
-                    G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
-                    G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
-                    G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
-                    G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                    G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
-                Else
-                    G.DrawRectangle(New Pen(ButtonDkShadow), rect)
-                    G.DrawLine(New Pen(ButtonHilight), New Point(1, 1), New Point(Width - 2, 1))
-                    G.DrawLine(New Pen(ButtonHilight), New Point(1, 2), New Point(1, Height - 2))
-                    G.DrawLine(New Pen(ButtonDkShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
-                    G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
-                    G.DrawLine(New Pen(ButtonLight), New Point(2, 2), New Point(Width - 3, 2))
-                    G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
-                    G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
-                    G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
-                    If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then
-                        G.DrawRectangle(pendash, rectdash)
-                        G.DrawRectangle(New Pen(WindowFrame), rect)
-                    End If
-                End If
-
+            If AppearsAsPressed Then
+                G.Clear(ButtonHilight)
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(0, 0), New Point(Width - 1, 0))
+                G.DrawLine(New Pen(ButtonDkShadow), New Point(0, 1), New Point(0, Height - 1))
+                G.DrawLine(New Pen(ButtonShadow), New Point(1, 1), New Point(Width - 2, 1))
+                G.DrawLine(New Pen(ButtonShadow), New Point(1, 2), New Point(1, Height - 2))
+                G.DrawLine(New Pen(ButtonHilight), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
+                G.DrawLine(New Pen(ButtonHilight), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
+                G.DrawLine(New Pen(BackColor), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                G.DrawLine(New Pen(BackColor), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
             Else
-                G.DrawRectangle(New Pen(WindowFrame), rect)
-                G.DrawRectangle(New Pen(ButtonShadow), rectinner)
-                If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+                If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
+                    If Not Focused Then
+                        G.DrawLine(New Pen(ButtonHilight), New Point(0, 0), New Point(Width - 1, 0))
+                        G.DrawLine(New Pen(ButtonHilight), New Point(0, 1), New Point(0, Height - 1))
+                        G.DrawLine(New Pen(ButtonDkShadow), New Point(0, Height - 1), New Point(Width - 1, Height - 1))
+                        G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
+                        G.DrawLine(New Pen(ButtonLight), New Point(1, 1), New Point(Width - 2, 1))
+                        G.DrawLine(New Pen(ButtonLight), New Point(1, 2), New Point(1, Height - 2))
+                        G.DrawLine(New Pen(ButtonShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                        G.DrawLine(New Pen(ButtonShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                    Else
+                        G.DrawRectangle(New Pen(ButtonDkShadow), rect)
+                        G.DrawLine(New Pen(ButtonHilight), New Point(1, 1), New Point(Width - 2, 1))
+                        G.DrawLine(New Pen(ButtonHilight), New Point(1, 2), New Point(1, Height - 2))
+                        G.DrawLine(New Pen(ButtonDkShadow), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
+                        G.DrawLine(New Pen(ButtonDkShadow), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+                        G.DrawLine(New Pen(ButtonLight), New Point(2, 2), New Point(Width - 3, 2))
+                        G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
+                        G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
+                        G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
+                        If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then
+                            G.DrawRectangle(pendash, rectdash)
+                            G.DrawRectangle(New Pen(WindowFrame), rect)
+                        End If
+                    End If
+                Else
+                    G.DrawRectangle(New Pen(WindowFrame), rect)
+                    G.DrawRectangle(New Pen(ButtonShadow), rectinner)
+                    If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+                End If
             End If
         End If
 
@@ -179,37 +192,27 @@ Public Class RetroButton : Inherits Button
                     ButtonString.Alignment = StringAlignment.Center : ButtonString.LineAlignment = StringAlignment.Near
 
                     Dim alx As Integer = CInt((Height - (Image.Height + 4 + Text.Measure(MyBase.Font).Height)) / 2)
-                    Try : If Image IsNot Nothing Then
-                            If Text = Nothing Then
-                                G.DrawImage(Me.Image, New Rectangle(imgX, imgY, Image.Width, Image.Height))
-                            Else
-                                G.DrawImage(Me.Image, New Rectangle(imgX, alx, Image.Width, Image.Height))
-                            End If
+                    If Text = Nothing Then
+                        G.DrawImage(Me.Image, New Rectangle(imgX, imgY, Image.Width, Image.Height))
+                    Else
+                        G.DrawImage(Me.Image, New Rectangle(imgX, alx, Image.Width, Image.Height))
+                    End If
 
-                        End If
-
-                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, alx + 10 + Image.Height, Width, Height), ButtonString)
-                        G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString)
-                    Catch : End Try
+                    If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, alx + 10 + Image.Height, Width, Height), ButtonString)
+                    G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString)
 
                 Case ContentAlignment.MiddleLeft
                     ButtonString.Alignment = StringAlignment.Near : ButtonString.LineAlignment = StringAlignment.Center
                     Dim alx As Integer = CInt((Width - (Image.Width + 4 + Text.Measure(MyBase.Font).Width)) / 2)
-                    Try : If Image IsNot Nothing Then
-                            G.DrawImage(Me.Image, New Rectangle(alx, imgY, Image.Width, Image.Height))
-                        End If
-
-                        If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(alx + 6 + Image.Width, 1, Width, Height), ButtonString)
-                        G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(alx + 5 + Image.Width, 0, Width, Height), ButtonString)
-                    Catch : End Try
+                    G.DrawImage(Me.Image, New Rectangle(alx, imgY - 1, Image.Width, Image.Height))
+                    If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(alx + 1 + Image.Width, 1, Width, Height), ButtonString)
+                    G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(alx + Image.Width, 0, Width, Height), ButtonString)
 
                 Case ContentAlignment.MiddleRight
-                    Try : If Image IsNot Nothing Then G.DrawImage(Me.Image, New Rectangle(5, imgY, Image.Width, Image.Height))
-                        With CenterString(Text, Font, New Rectangle(1, 1, Width - 2, Height - 2))
-                            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(6, 1, Width, Height), StringAligner(TextAlign))
-                            G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(5, 0, Width, Height), StringAligner(TextAlign))
-                        End With
-                    Catch : End Try
+                    G.DrawImage(Me.Image, New Rectangle(1, imgY - 1, Image.Width, Image.Height))
+                    If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(8, 1, Width, Height), StringAligner(TextAlign))
+                    G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(7, 0, Width, Height), StringAligner(TextAlign))
+
             End Select
         End If
 #End Region
@@ -873,7 +876,6 @@ Public Class RetroPanel : Inherits Panel
         Else
             G.DrawRectangle(New Pen(ButtonShadow), Rect)
         End If
-
     End Sub
 End Class
 Public Class RetroPanelRaised : Inherits Panel
@@ -887,6 +889,7 @@ Public Class RetroPanelRaised : Inherits Panel
     Public Property Flat As Boolean = False
     Public Property ButtonHilight As Color = Color.White
     Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property UseItAsWin7Taskbar As Boolean = False
 
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -899,15 +902,21 @@ Public Class RetroPanelRaised : Inherits Panel
         '#################################################################################
         G.Clear(BackColor)
 
-        If Not Flat Then
-            With Rect
-                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.Width - 1, .Y))
-                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.X, .Height - 1))
-                G.DrawLine(New Pen(ButtonShadow), New Point(.Width, .X), New Point(.Width, .Height))
-                G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Height), New Point(.Width, .Height))
-            End With
+        If Not UseItAsWin7Taskbar Then
+            If Not Flat Then
+                With Rect
+                    G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.Width - 1, .Y))
+                    G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y), New Point(.X, .Height - 1))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(.Width, .X), New Point(.Width, .Height))
+                    G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Height), New Point(.Width, .Height))
+                End With
+            Else
+                G.DrawRectangle(New Pen(ButtonShadow), Rect)
+            End If
         Else
-            G.DrawRectangle(New Pen(ButtonShadow), Rect)
+            With Rect
+                G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Y + 1), New Point(.X + .Width, .Y + 1))
+            End With
         End If
 
     End Sub
@@ -929,11 +938,95 @@ Public Class RetroWindow : Inherits Panel
     Public Property TitlebarText As String = "New Window"
     Public Property UseItAsMenu As Boolean = False
     Public Property Flat As Boolean = False
-    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
-    Public Property ButtonDkShadow As Color = Color.Black
-    Public Property ButtonHilight As Color = Color.White
-    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-    Public Property ButtonFace As Color = Color.FromArgb(192, 192, 192)
+
+
+    Private _ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonShadow As Color
+        Get
+            Return _ButtonShadow
+        End Get
+        Set(value As Color)
+            _ButtonShadow = value
+            _CloseBtn.ButtonShadow = value
+            _MinBtn.ButtonShadow = value
+            _MaxBtn.ButtonShadow = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _ButtonDkShadow As Color = Color.Black
+    Public Property ButtonDkShadow As Color
+        Get
+            Return _ButtonDkShadow
+        End Get
+        Set(value As Color)
+            _ButtonDkShadow = value
+            _CloseBtn.ButtonDkShadow = value
+            _MinBtn.ButtonDkShadow = value
+            _MaxBtn.ButtonDkShadow = value
+            Refresh()
+        End Set
+    End Property
+
+
+    Private _ButtonHilight As Color = Color.White
+    Public Property ButtonHilight As Color
+        Get
+            Return _ButtonHilight
+        End Get
+        Set(value As Color)
+            _ButtonHilight = value
+            _CloseBtn.ButtonHilight = value
+            _MinBtn.ButtonHilight = value
+            _MaxBtn.ButtonHilight = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _ButtonLight As Color = Color.FromArgb(192, 192, 192)
+    Public Property ButtonLight As Color
+        Get
+            Return _ButtonLight
+        End Get
+        Set(value As Color)
+            _ButtonLight = value
+            _CloseBtn.ButtonLight = value
+            _MinBtn.ButtonLight = value
+            _MaxBtn.ButtonLight = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _ButtonFace As Color = Color.FromArgb(192, 192, 192)
+    Public Property ButtonFace As Color
+        Get
+            Return _ButtonFace
+        End Get
+        Set(value As Color)
+            _ButtonFace = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _ButtonText As Color = Color.Black
+    Public Property ButtonText As Color
+        Get
+            Return _ButtonText
+        End Get
+        Set(value As Color)
+            _ButtonText = value
+            _CloseBtn.ForeColor = value
+            _MinBtn.ForeColor = value
+            _MaxBtn.ForeColor = value
+            Refresh()
+        End Set
+    End Property
+
+    Private Sub RetroWindow_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+        _CloseBtn.BackColor = BackColor
+        _MinBtn.BackColor = BackColor
+        _MaxBtn.BackColor = BackColor
+    End Sub
 
     Private _Metrics_CaptionHeight As Integer = 22
     Public Property Metrics_CaptionHeight As Integer
@@ -943,11 +1036,27 @@ Public Class RetroWindow : Inherits Panel
 
         Set(value As Integer)
             _Metrics_CaptionHeight = value
+            AdjustButtonSizes()
+            AdjustControlBoxFontsSizes()
+            AdjustPadding()
             Refresh()
         End Set
     End Property
 
+
+    Private _Metrics_CaptionWidth As Integer = 22
     Public Property Metrics_CaptionWidth As Integer
+        Get
+            Return _Metrics_CaptionWidth
+        End Get
+        Set(value As Integer)
+            _Metrics_CaptionWidth = value
+            AdjustButtonSizes()
+            AdjustLocations()
+            AdjustControlBoxFontsSizes()
+            Refresh()
+        End Set
+    End Property
 
 
     Private _Metrics_BorderWidth As Integer = 1
@@ -958,6 +1067,8 @@ Public Class RetroWindow : Inherits Panel
 
         Set(value As Integer)
             _Metrics_BorderWidth = value
+            AdjustLocations()
+            AdjustPadding()
             Refresh()
         End Set
     End Property
@@ -969,9 +1080,136 @@ Public Class RetroWindow : Inherits Panel
         End Get
         Set(value As Integer)
             _Metrics_PaddedBorderWidth = value
+            AdjustLocations()
+            AdjustPadding()
             Refresh()
         End Set
     End Property
+
+#Region "ControlBox"
+    Private ReadOnly _CloseBtn As New RetroButton With {.Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+    Private ReadOnly _MinBtn As New RetroButton With {.Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+    Private ReadOnly _MaxBtn As New RetroButton With {.Text = "0", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+
+    Private BtnHeight As Integer = Metrics_CaptionHeight + GetTitleTextHeight() - 4
+    Private BtnWidth As Integer = Metrics_CaptionWidth - 2
+
+    Private Sub RetroWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
+        _CloseBtn.Visible = _ControlBox
+        _MinBtn.Visible = _ControlBox And _MinimizeBox
+        _MaxBtn.Visible = _ControlBox And _MaximizeBox
+
+        AdjustControlBoxFontsSizes()
+        AdjustButtonSizes()
+        AdjustLocations()
+    End Sub
+
+    Private Sub RetroWindow_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        AdjustLocations()
+    End Sub
+
+
+    Private _ControlBox As Boolean = True
+    Public Property ControlBox As Boolean
+        Get
+            Return _ControlBox
+        End Get
+        Set(value As Boolean)
+            _ControlBox = value
+            _CloseBtn.Visible = value
+            _MinBtn.Visible = value And _MinimizeBox
+            _MaxBtn.Visible = value And _MaximizeBox
+            AdjustLocations()
+            Refresh()
+        End Set
+    End Property
+
+    Private _MinimizeBox As Boolean = True
+    Public Property MinimizeBox As Boolean
+        Get
+            Return _MinimizeBox
+        End Get
+        Set(value As Boolean)
+            _MinimizeBox = value
+            _MinBtn.Visible = value
+            AdjustLocations()
+            Refresh()
+        End Set
+    End Property
+
+    Private _MaximizeBox As Boolean = True
+    Public Property MaximizeBox As Boolean
+        Get
+            Return _MaximizeBox
+        End Get
+        Set(value As Boolean)
+            _MaximizeBox = value
+            _MaxBtn.Visible = value
+            AdjustLocations()
+            Refresh()
+        End Set
+    End Property
+
+    Private Sub AdjustButtonSizes()
+        BtnHeight = Math.Max(_Metrics_CaptionHeight + GetTitleTextHeight() - 4, 14)
+        BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 14)
+
+        _CloseBtn.Size = New Size(BtnWidth, BtnHeight)
+        _MinBtn.Size = New Size(BtnWidth, BtnHeight)
+        _MaxBtn.Size = New Size(BtnWidth, BtnHeight)
+        Refresh()
+    End Sub
+
+    Private Sub AdjustLocations()
+        _CloseBtn.Top = Metrics_PaddedBorderWidth + Metrics_BorderWidth + 5
+        _MinBtn.Top = _CloseBtn.Top
+        _MaxBtn.Top = _CloseBtn.Top
+
+        _CloseBtn.Left = Width - _CloseBtn.Width - _Metrics_PaddedBorderWidth - _Metrics_BorderWidth - 5
+
+        If MinimizeBox And MaximizeBox Then
+            _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width
+            _MaxBtn.Left = _MinBtn.Left - _MaxBtn.Width
+
+        ElseIf MaximizeBox Then
+            _MaxBtn.Left = _CloseBtn.Left - 2 - _MaxBtn.Width
+
+        ElseIf MinimizeBox Then
+            _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width
+
+        End If
+
+    End Sub
+
+    Private Sub RetroWindow_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
+        AdjustControlBoxFontsSizes()
+        AdjustButtonSizes()
+        AdjustLocations()
+    End Sub
+
+    Sub AdjustControlBoxFontsSizes()
+        Try
+            Dim i0, iFx As Single
+            i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth))
+            iFx = i0 / Math.Abs(Math.Min(17, 18))
+            Dim f As New Font("Marlett", 6.8 * iFx)
+            _CloseBtn.Font = f
+            _MinBtn.Font = f
+            _MaxBtn.Font = f
+        Catch
+
+        End Try
+    End Sub
+
+
+    Sub AdjustPadding()
+        Dim iP As Integer = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth
+        Dim iT As Integer = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + GetTitleTextHeight()
+        Dim _Padding As New Padding(iP, iT, iP, iP)
+        Padding = _Padding
+    End Sub
+#End Region
 
     Public Function GetTitleTextHeight()
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer

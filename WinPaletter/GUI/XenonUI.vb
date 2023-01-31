@@ -388,7 +388,6 @@ Module XenonModule
 End Module
 
 #Region "Xenon UI"
-
 Public Class XenonLinkLabel
     Inherits Windows.Forms.LinkLabel
 
@@ -4634,7 +4633,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             If Not (value = Win7Noise) Then
                 Me._Win7Noise = value
 
-                If Win7 Then
+                If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
                     Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
                 End If
 
@@ -4701,7 +4700,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        If Win7 Or Win8 Then
+        If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Or Preview = Preview_Enum.W8 Or Preview = Preview_Enum.W8Lite Then
             i = FreeMargin + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth
             iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight
 
@@ -4719,6 +4718,15 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         Padding = New Padding(i, iTop, i, i)
     End Sub
 
+    Enum Preview_Enum
+        W11
+        W10
+        W8
+        W8Lite
+        W7Aero
+        W7Opaque
+        W7Basic
+    End Enum
 
     Public Property Shadow As Boolean = True
     Public Property Radius As Integer = 5
@@ -4727,13 +4735,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     Public Property AccentColor2_Active As Color = Color.FromArgb(0, 120, 212)
     Public Property AccentColor2_Inactive As Color = Color.FromArgb(32, 32, 32)
     Public Property Active As Boolean = True
-    Public Property RoundedCorners As Boolean = False
-    Public Property Win7 As Boolean = False
-    Public Property Win8 As Boolean = False
-    Public Property Win8Lite As Boolean = False
-    Public Property Win7Aero As Boolean = False
-    Public Property Win7AeroOpaque As Boolean = False
-    Public Property Win7Basic As Boolean = False
+    Public Property Preview As Preview_Enum = XenonWindow.Preview_Enum.W11
     Public Property Win7Alpha As Integer = 100
     Public Property Win7ColorBal As Integer = 100
     Public Property Win7GlowBal As Integer = 100
@@ -4749,21 +4751,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
         DoubleBuffered = True
-
-        Dim state As Integer
-        If Not Win7 And Not Win8 Then
-            state = 0   '#### Windows 10/11
-
-        ElseIf Win8 Then
-            state = 1   '#### Windows 8.1
-
-        ElseIf Win7 Then
-            state = 2   '#### Windows 7
-
-        Else
-            state = 0   '#### Windows 10/11
-
-        End If
 
         '### Adjust Limits
         'If _Metrics_CaptionHeight < 17 Then _Metrics_CaptionHeight = 17
@@ -4786,405 +4773,295 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         G.Clear(Color.Transparent)
 
 
-
-        Select Case state
-            Case 0      '#### Windows 10/11
-
-#Region "Windows 11/10"
-
-                If RoundedCorners Then     '#### Windows 11
-                    Try
-                        G.DrawImage(AdaptedBack, RectBK)
-                    Catch
-                    End Try
-
-                    If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
-                    End If
-
-                    If DarkMode Then
-                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
-                    Else
-                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
-                    End If
-
-                    If AccentColor_Enabled Then
-                        If Active Then
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect, Radius, True)
-                        Else
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect, Radius, True)
-                        End If
-                    Else
-                        If DarkMode Then
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect, Radius, True)
-                        Else
-                            G.DrawRoundedRect(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect, Radius, True)
-                        End If
-                    End If
-
-                    If AccentColor_Enabled Then
-                        If Active Then
-                            FillSemiRect(G, New SolidBrush(AccentColor_Active), TitlebarRect, Radius)
-                            G.DrawLine(New Pen(AccentColor_Active), New Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), New Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height))
-                        Else
-                            FillSemiRect(G, New SolidBrush(AccentColor_Inactive), TitlebarRect, Radius)
-                            G.DrawLine(New Pen(AccentColor_Inactive), New Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), New Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height))
-                        End If
-                    Else
-                        FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
-                    End If
-
-                Else                       '#### Windows 10
-                    Try
-                        G.DrawImage(AdaptedBack, RectBK)
-                    Catch
-                    End Try
-
-                    If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
-                    End If
-
-                    If DarkMode Then
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect)
-                    Else
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect)
-                    End If
-
-                    If AccentColor_Enabled Then
-                        If Active Then
-                            G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect)
-                        Else
-                            G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect)
-                        End If
-                    Else
-                        If DarkMode Then
-                            G.DrawRectangle(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect)
-                        Else
-                            G.DrawRectangle(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect)
-                        End If
-                    End If
-
-                    If AccentColor_Enabled Then
-                        If Active Then
-                            G.FillRectangle(New SolidBrush(AccentColor_Active), TitlebarRect)
-                        Else
-                            G.FillRectangle(New SolidBrush(AccentColor_Inactive), TitlebarRect)
-                        End If
-                    Else
-                        G.FillRectangle(Brushes.White, TitlebarRect)
-                    End If
-
-                End If
-#End Region
-
-            Case 1      '#### Windows 8.1
-
-#Region "Windows 8.1"
-
-                Dim InnerWindow_1 As New Rectangle
-                Dim InnerWindow_2 As New Rectangle
-                Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
-                If Sum < 2 Then Sum = 2
-                TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
-                TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
-                TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
-                Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
-
-                IconRect.X += 2
-
-                With Rect
-                    InnerWindow_1 = New Rectangle(.X + Sum + If(Not Win8Lite, 2, 3), .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - If(Not Win8Lite, 4, 6), .Height - (Sum + Sum_Ttl) - If(Not Win8Lite, 5, 5))
-                    InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
-                End With
-
-                Dim CloseRectH As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 2 + If(Win8Lite, 1, 0)
-
-                Dim CloseRectW As Integer = If(Not ToolWindow, CloseRectH * 3 / 2, CloseRectH) + If(Win8Lite, 2, 0)
-
-                Dim CloseRect As New Rectangle
-
-                If Not ToolWindow Then
-
-                    If Not Win8Lite Then
-                        CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
-                    Else
-                        CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 2, Rect.Y, CloseRectW, CloseRectH)
-                    End If
-
-                Else
-                    CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
-                End If
-
-                Dim InC As Color = If(Not Win8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active.CB(0.8)))
-
-                Dim c As Color = If(Active, Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active), InC)
-
-                Dim bc As Color = Color.FromArgb(217, 217, 217)
-
+        If Preview = Preview_Enum.W11 Then
+#Region "Windows 11"
+            Try
                 G.DrawImage(AdaptedBack, RectBK)
+            Catch
+            End Try
 
-                G.FillRectangle(New SolidBrush(bc), Rect)
-                G.FillRectangle(New SolidBrush(c), Rect)
+            If Shadow And Active And Not DesignMode Then
+                G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
+            End If
 
-                G.FillRectangle(New SolidBrush(Color.White), InnerWindow_1)
+            If DarkMode Then
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
+            Else
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
+            End If
 
-                Dim CloseBtn As Image
-
-                If Not ToolWindow Then
-                    If CloseRect.Height >= 27 Then
-                        CloseBtn = My.Resources.Win8_Close_3
-                    ElseIf CloseRect.Height >= 24 Then
-                        CloseBtn = My.Resources.Win8_Close_2
-                    ElseIf CloseRect.Height >= 21 Then
-                        CloseBtn = My.Resources.Win8_Close_1
-                    Else
-                        CloseBtn = My.Resources.Win8_Close_0
-                    End If
-
+            If AccentColor_Enabled Then
+                If Active Then
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect, Radius, True)
                 Else
-                    CloseBtn = My.Resources.Win8_Close_ToolWindow
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect, Radius, True)
                 End If
-
-                If Win8Lite Then CloseBtn = CloseBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black)
-
-                If Not Win8Lite Then
-                    G.DrawRectangle(New Pen(Color.FromArgb(170, bc.CB(-0.2))), InnerWindow_1)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.2))), InnerWindow_1)
-
-                    G.SmoothingMode = SmoothingMode.HighSpeed
-                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
-                    G.SmoothingMode = SmoothingMode.AntiAlias
-
-                    G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
-
-                    G.DrawRectangle(New Pen(Color.FromArgb(200, bc.CB(-0.3))), Rect)
-                    G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.3))), Rect)
-
+            Else
+                If DarkMode Then
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect, Radius, True)
                 Else
-
-                    G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c).LightLight), New Point(InnerWindow_1.X, InnerWindow_1.Y), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y))
-
-                    G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c).LightLight), New Point(InnerWindow_1.X, InnerWindow_1.Y + InnerWindow_1.Height), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y + InnerWindow_1.Height))
-
-                    G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.Transparent)), CloseRect)
-
-                    G.SmoothingMode = SmoothingMode.HighSpeed
-                    G.DrawRectangle(New Pen(If(Active, Color.FromArgb(92, 58, 55), Color.FromArgb(93, 96, 102))), CloseRect)
-                    G.SmoothingMode = SmoothingMode.AntiAlias
-
-                    G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
-
-                    G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect, Radius, True)
                 End If
+            End If
+
+            If AccentColor_Enabled Then
+                If Active Then
+                    FillSemiRect(G, New SolidBrush(AccentColor_Active), TitlebarRect, Radius)
+                    G.DrawLine(New Pen(AccentColor_Active), New Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), New Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height))
+                Else
+                    FillSemiRect(G, New SolidBrush(AccentColor_Inactive), TitlebarRect, Radius)
+                    G.DrawLine(New Pen(AccentColor_Inactive), New Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), New Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height))
+                End If
+            Else
+                FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
+            End If
 #End Region
 
-            Case 2      '#### Windows 7
+        ElseIf Preview = Preview_Enum.W10 Then
+#Region "Windows 10"
+            Try
+                G.DrawImage(AdaptedBack, RectBK)
+            Catch
+            End Try
 
+            If Shadow And Active And Not DesignMode Then
+                G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
+            End If
+
+            If DarkMode Then
+                G.FillRectangle(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect)
+            Else
+                G.FillRectangle(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect)
+            End If
+
+            If AccentColor_Enabled Then
+                If Active Then
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Active)), Rect)
+                Else
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, AccentColor_Inactive)), Rect)
+                End If
+            Else
+                If DarkMode Then
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, 100, 100, 100)), Rect)
+                Else
+                    G.DrawRectangle(New Pen(Color.FromArgb(200, 220, 220, 220)), Rect)
+                End If
+            End If
+
+            If AccentColor_Enabled Then
+                If Active Then
+                    G.FillRectangle(New SolidBrush(AccentColor_Active), TitlebarRect)
+                Else
+                    G.FillRectangle(New SolidBrush(AccentColor_Inactive), TitlebarRect)
+                End If
+            Else
+                G.FillRectangle(Brushes.White, TitlebarRect)
+            End If
+#End Region
+
+        ElseIf Preview = Preview_Enum.W8 Or Preview = Preview_Enum.W8Lite Then
+#Region "Windows 8.1"
+            Dim InnerWindow_1 As New Rectangle
+            Dim InnerWindow_2 As New Rectangle
+            Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+            If Sum < 2 Then Sum = 2
+            TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+            TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
+            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+            Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+
+            IconRect.X += 2
+
+            With Rect
+                InnerWindow_1 = New Rectangle(.X + Sum + If(Not Preview = Preview_Enum.W8Lite, 2, 3), .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - If(Not Preview = Preview_Enum.W8Lite, 4, 6), .Height - (Sum + Sum_Ttl) - If(Not Preview = Preview_Enum.W8Lite, 5, 5))
+                InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+            End With
+
+            Dim CloseRectH As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 2 + If(Preview = Preview_Enum.W8Lite, 1, 0)
+
+            Dim CloseRectW As Integer = If(Not ToolWindow, CloseRectH * 3 / 2, CloseRectH) + If(Preview = Preview_Enum.W8Lite, 2, 0)
+
+            Dim CloseRect As New Rectangle
+
+            If Not ToolWindow Then
+
+                If Not Preview = Preview_Enum.W8Lite Then
+                    CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
+                Else
+                    CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 2, Rect.Y, CloseRectW, CloseRectH)
+                End If
+
+            Else
+                CloseRect = New Rectangle(InnerWindow_1.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH)
+            End If
+
+            Dim InC As Color = If(Not Preview = Preview_Enum.W8Lite, Color.FromArgb(235, 235, 235), Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active.CB(0.8)))
+
+            Dim c As Color = If(Active, Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active), InC)
+
+            Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+            G.DrawImage(AdaptedBack, RectBK)
+
+            G.FillRectangle(New SolidBrush(bc), Rect)
+            G.FillRectangle(New SolidBrush(c), Rect)
+
+            G.FillRectangle(New SolidBrush(Color.White), InnerWindow_1)
+
+            Dim CloseBtn As Image
+
+            If Not ToolWindow Then
+                If CloseRect.Height >= 27 Then
+                    CloseBtn = My.Resources.Win8_Close_3
+                ElseIf CloseRect.Height >= 24 Then
+                    CloseBtn = My.Resources.Win8_Close_2
+                ElseIf CloseRect.Height >= 21 Then
+                    CloseBtn = My.Resources.Win8_Close_1
+                Else
+                    CloseBtn = My.Resources.Win8_Close_0
+                End If
+
+            Else
+                CloseBtn = My.Resources.Win8_Close_ToolWindow
+            End If
+
+            If Preview = Preview_Enum.W8Lite Then CloseBtn = CloseBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black)
+
+            If Not Preview = Preview_Enum.W8Lite Then
+                G.DrawRectangle(New Pen(Color.FromArgb(170, bc.CB(-0.2))), InnerWindow_1)
+                G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.2))), InnerWindow_1)
+
+                G.SmoothingMode = SmoothingMode.HighSpeed
+                G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(199, 80, 80), Color.FromArgb(188, 188, 188))), CloseRect)
+                G.SmoothingMode = SmoothingMode.AntiAlias
+
+                G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
+
+                G.DrawRectangle(New Pen(Color.FromArgb(200, bc.CB(-0.3))), Rect)
+                G.DrawRectangle(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c.CB(-0.3))), Rect)
+
+            Else
+
+                G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c).LightLight), New Point(InnerWindow_1.X, InnerWindow_1.Y), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y))
+
+                G.DrawLine(New Pen(Color.FromArgb((Win7ColorBal / 100) * 255, c).LightLight), New Point(InnerWindow_1.X, InnerWindow_1.Y + InnerWindow_1.Height), New Point(InnerWindow_1.X + InnerWindow_1.Width, InnerWindow_1.Y + InnerWindow_1.Height))
+
+                G.FillRectangle(New SolidBrush(If(Active, Color.FromArgb(195, 90, 80), Color.Transparent)), CloseRect)
+
+                G.SmoothingMode = SmoothingMode.HighSpeed
+                G.DrawRectangle(New Pen(If(Active, Color.FromArgb(92, 58, 55), Color.FromArgb(93, 96, 102))), CloseRect)
+                G.SmoothingMode = SmoothingMode.AntiAlias
+
+                G.DrawImage(CloseBtn, New Rectangle(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2, CloseBtn.Width, CloseBtn.Height))
+
+                G.DrawRectangle(New Drawing.Pen(Color.FromArgb(47, 48, 51)), Rect)
+            End If
+#End Region
+
+        ElseIf Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
 #Region "Windows 7"
+            Dim InnerWindow_1 As New Rectangle
+            Dim InnerWindow_2 As New Rectangle
+            Dim RectSide1 As New Rectangle
+            Dim RectSide2 As New Rectangle
+            Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+            If Sum < 2 Then Sum = 2
 
-                Dim InnerWindow_1 As New Rectangle
-                Dim InnerWindow_2 As New Rectangle
-                Dim RectSide1 As New Rectangle
-                Dim RectSide2 As New Rectangle
-                Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
-                If Sum < 2 Then Sum = 2
-                TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
-                TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
-                TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
-                Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+            TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+            TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
+            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+            Dim Sum_Ttl As Integer = Sum + Metrics_CaptionHeight + TitleTextH_Sum
 
-                With Rect
-                    InnerWindow_1 = New Rectangle(.X + Sum + 1, .Y + Sum_Ttl, .Width - (Sum) * 2 - 2, .Height - (Sum + Sum_Ttl) - 2)
-                    InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+            With Rect
+                InnerWindow_1 = New Rectangle(.X + Sum + 1, .Y + Sum_Ttl, .Width - (Sum) * 2 - 2, .Height - (Sum + Sum_Ttl) - 2)
+                InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
 
-                    RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum, InnerWindow_1.Height * 0.5)
-                    RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
-                End With
+                RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum, InnerWindow_1.Height * 0.5)
+                RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
+            End With
 
 
-                If Not Win7Basic Then
+            If Preview <> Preview_Enum.W7Basic Then
 
 #Region "Aero"
-                    G.DrawImage(AdaptedBack, RectBK)
+                G.DrawImage(AdaptedBack, RectBK)
 
-                    If Shadow And Active And Not DesignMode Then
-                        G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
-                    End If
+                If Shadow And Active And Not DesignMode Then
+                    G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
+                End If
 
-                    Dim Radius As Integer = 5
+                Dim Radius As Integer = 5
 
-                    If Not Win7AeroOpaque Then
-                        Dim bk As Bitmap = AdaptedBackBlurred
+                If Not Preview = Preview_Enum.W7Opaque Then
+                    Dim bk As Bitmap = AdaptedBackBlurred
 
-                        Dim alpha As Single = 1 - Win7Alpha / 100   'ColorBlurBalance
-                        Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
-                        Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
+                    Dim alpha As Single = 1 - Win7Alpha / 100   'ColorBlurBalance
+                    Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
+                    Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
 
-                        Dim Color1 As Color = If(Active, AccentColor_Active, AccentColor_Inactive)
-                        Dim Color2 As Color = If(Active, AccentColor2_Active, AccentColor2_Inactive)
+                    Dim Color1 As Color = If(Active, AccentColor_Active, AccentColor_Inactive)
+                    Dim Color2 As Color = If(Active, AccentColor2_Active, AccentColor2_Inactive)
 
-                        G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, Not ToolWindow)
-                    Else
-
-                        If Not ToolWindow Then
-                            G.FillRoundedRect(New SolidBrush(Color.White), Rect, Radius, True)
-                            G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect, Radius, True)
-                        Else
-                            G.FillRectangle(New SolidBrush(Color.White), Rect)
-                            G.FillRectangle(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect)
-                        End If
-
-                    End If
-
-                    If Active Then
-                        G.DrawImage(My.Resources.Win7Sides, RectSide1)
-                        G.DrawImage(My.Resources.Win7Sides, RectSide2)
-
-                        Dim TitleTopW As Integer = Rect.Width * 0.6
-                        Dim TitleTopH As Integer = Rect.Height * 0.6
-
-                        G.DrawImage(My.Resources.Win7_TitleTopL, New Rectangle(Rect.X + If(ToolWindow, 0, 1), Rect.Y + If(ToolWindow, 1, 0), TitleTopW, TitleTopH))
-                        G.DrawImage(My.Resources.Win7_TitleTopR, New Rectangle(Rect.X + Rect.Width - TitleTopW, Rect.Y + If(ToolWindow, 1, 0), TitleTopW, TitleTopH))
-                    End If
-
-                    Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
-
-                    If Not ToolWindow Then
-                        G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
-                        'DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1, 1, True)
-                        G.FillRoundedRect(New SolidBrush(Color.White), InnerWindow_1, 1, True)
-                        G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2, 1, True)
-                    Else
-                        G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, 255, 255, 255)), inner)
-                        'G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1)
-                        G.FillRectangle(New SolidBrush(Color.White), InnerWindow_1)
-                        G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2)
-                    End If
-
-
-                    If Not ToolWindow Then
-                        Dim closeBtn As Image
-                        Dim CloseRect As New Rectangle
-
-                        If Active Then
-                            closeBtn = My.Resources.Win7_Close_Active
-                        Else
-                            closeBtn = My.Resources.Win7_Close_inactive
-                        End If
-
-                        CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height)
-
-                        G.DrawImage(closeBtn, CloseRect)
-
-                    Else
-
-                        Dim CloseUpperAccent1 As Color
-                        Dim CloseUpperAccent2 As Color
-                        Dim CloseLowerAccent1 As Color
-                        Dim CloseLowerAccent2 As Color
-                        Dim CloseOuterBorder As Color
-                        Dim CloseInnerBorder As Color
-
-                        If Active Then
-                            CloseUpperAccent1 = Color.FromArgb(233, 169, 156)
-                            CloseUpperAccent2 = Color.FromArgb(223, 149, 135)
-                            CloseLowerAccent1 = Color.FromArgb(184, 67, 44)
-                            CloseLowerAccent2 = Color.FromArgb(210, 127, 110)
-                            CloseOuterBorder = Color.FromArgb(67, 20, 34)
-                            CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
-                        Else
-                            CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
-                            CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
-                            CloseOuterBorder = Color.FromArgb(131, 142, 168)
-                            CloseInnerBorder = Color.FromArgb(209, 219, 229)
-                        End If
-
-                        Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
-                        Dim Btn_Width As Integer = Btn_Height
-
-                        Dim CloseRect As New Rectangle(InnerWindow_1.Right - Btn_Width - 3, Rect.Y + (Sum_Ttl - Btn_Height) / 2, Btn_Width, Btn_Height)
-
-                        If Active Then
-                            Dim Factor As Single = 0.5
-
-                            Dim UH As Single = Factor * CloseRect.Height
-                            Dim LH As Single = CloseRect.Height - UH
-                            Dim Interlapping As Single = (UH / CloseRect.Height) * 10
-
-                            Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, UH + Interlapping)
-                            Dim CloseUpperPath As New LinearGradientBrush(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical)
-
-                            Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
-                            Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
-
-                            G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, True)
-                            G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, True)
-                        Else
-                            Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
-                            G.FillRectangle(ClosePath, CloseRect)
-                        End If
-
-
-                        Dim CloseBtn As Image
-
-                        If Not ToolWindow Then
-                            If CloseRect.Height >= 22 Then
-                                CloseBtn = My.Resources.Win7_Basic_Close_2
-                            ElseIf CloseRect.Height >= 18 Then
-                                CloseBtn = My.Resources.Win7_Basic_Close_1
-                            Else
-                                CloseBtn = My.Resources.Win7_Basic_Close_0
-                            End If
-                        Else
-                            CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow
-                        End If
-
-                        Dim xW As Integer = If(CloseRect.Width Mod 2 = 0, CloseBtn.Width + 1, CloseBtn.Width)
-                        Dim xH As Integer = If(CloseRect.Height Mod 2 = 0, CloseBtn.Height + 1, CloseBtn.Height)
-
-
-                        Dim closerenderrect As New Rectangle(CloseRect.X + (CloseRect.Width - xW) / 2, CloseRect.Y + (CloseRect.Height - xH) / 2, xW, xH)
-
-                        G.DrawImage(CloseBtn, closerenderrect)
-
-                        G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
-                        G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
-
-                    End If
-
-#End Region
-
+                    G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, Not ToolWindow)
                 Else
 
-#Region "Basic"
-                    G.DrawImage(AdaptedBack, RectBK)
+                    If Not ToolWindow Then
+                        G.FillRoundedRect(New SolidBrush(Color.White), Rect, Radius, True)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect, Radius, True)
+                    Else
+                        G.FillRectangle(New SolidBrush(Color.White), Rect)
+                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * Win7Alpha / 100, If(Active, AccentColor_Active, AccentColor_Inactive))), Rect)
+                    End If
 
-                    Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
-                    TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
-                    TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
-                    TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
-                    Sum_Ttl = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+                End If
 
-                    With Rect
-                        InnerWindow_1 = New Rectangle(.X + Sum + 2, .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - 4, .Height - (Sum + Sum_Ttl) - 5)
-                        InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
-                        RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum + 1, InnerWindow_1.Height * 0.5)
-                        RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
-                    End With
+                If Active Then
+                    G.DrawImage(My.Resources.Win7Sides, RectSide1)
+                    G.DrawImage(My.Resources.Win7Sides, RectSide2)
+
+                    Dim TitleTopW As Integer = Rect.Width * 0.6
+                    Dim TitleTopH As Integer = Rect.Height * 0.6
+
+                    G.DrawImage(My.Resources.Win7_TitleTopL, New Rectangle(Rect.X + If(ToolWindow, 0, 1), Rect.Y + If(ToolWindow, 1, 0), TitleTopW, TitleTopH))
+                    G.DrawImage(My.Resources.Win7_TitleTopR, New Rectangle(Rect.X + Rect.Width - TitleTopW, Rect.Y + If(ToolWindow, 1, 0), TitleTopW, TitleTopH))
+                End If
+
+                Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
+
+                If Not ToolWindow Then
+                    G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect, Radius, True)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
+                    'DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect, Radius, True)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1, 1, True)
+                    G.FillRoundedRect(New SolidBrush(Color.White), InnerWindow_1, 1, True)
+                    G.DrawRoundedRect(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2, 1, True)
+                Else
+                    G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb(100, 255, 255, 255)), inner)
+                    'G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect)
+                    G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Light(0.2))), InnerWindow_1)
+                    G.FillRectangle(New SolidBrush(Color.White), InnerWindow_1)
+                    G.DrawRectangle(New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor.Dark(0.2))), InnerWindow_2)
+                End If
 
 
-                    Dim Titlebar_Backcolor1 As Color
-                    Dim Titlebar_Backcolor2 As Color
-                    Dim Titlebar_OuterBorder As Color
-                    Dim Titlebar_InnerBorder As Color
-                    Dim Titlebar_Turquoise As Color
-                    Dim OuterBorder As Color
+                If Not ToolWindow Then
+                    Dim closeBtn As Image
+                    Dim CloseRect As New Rectangle
+
+                    If Active Then
+                        closeBtn = My.Resources.Win7_Close_Active
+                    Else
+                        closeBtn = My.Resources.Win7_Close_inactive
+                    End If
+
+                    CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height)
+
+                    G.DrawImage(closeBtn, CloseRect)
+
+                Else
 
                     Dim CloseUpperAccent1 As Color
                     Dim CloseUpperAccent2 As Color
@@ -5194,90 +5071,26 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                     Dim CloseInnerBorder As Color
 
                     If Active Then
-                        Titlebar_Backcolor1 = Color.FromArgb(152, 180, 208)
-                        Titlebar_Backcolor2 = Color.FromArgb(186, 210, 234)
-                        Titlebar_OuterBorder = Color.FromArgb(52, 52, 52)
-                        Titlebar_InnerBorder = Color.FromArgb(255, 255, 255)
-                        Titlebar_Turquoise = Color.FromArgb(40, 207, 228)
-                        OuterBorder = Color.FromArgb(0, 0, 0)
-
                         CloseUpperAccent1 = Color.FromArgb(233, 169, 156)
                         CloseUpperAccent2 = Color.FromArgb(223, 149, 135)
                         CloseLowerAccent1 = Color.FromArgb(184, 67, 44)
                         CloseLowerAccent2 = Color.FromArgb(210, 127, 110)
                         CloseOuterBorder = Color.FromArgb(67, 20, 34)
                         CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
-
                     Else
-                        Titlebar_Backcolor1 = Color.FromArgb(191, 205, 219)
-                        Titlebar_Backcolor2 = Color.FromArgb(215, 228, 242)
-                        Titlebar_OuterBorder = Color.FromArgb(76, 76, 76)
-                        Titlebar_InnerBorder = Color.FromArgb(226, 230, 239)
-                        Titlebar_Turquoise = Color.FromArgb(226, 230, 239)
-                        OuterBorder = Color.FromArgb(76, 76, 76)
-
                         CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
                         CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
                         CloseOuterBorder = Color.FromArgb(131, 142, 168)
                         CloseInnerBorder = Color.FromArgb(209, 219, 229)
                     End If
 
-                    Dim UpperPart As New Rectangle(Rect.X, Rect.Y, Rect.Width + 1, Sum_Ttl + 4)
-
-                    G.SetClip(UpperPart)
-
-                    Dim pth_back As New LinearGradientBrush(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical)
-                    Dim pth_line As New LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical)
-
-                    '### Render Titlebar
-                    If Not ToolWindow Then
-                        G.FillRoundedRect(pth_back, Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Titlebar_OuterBorder), Rect, Radius, True)
-                        G.DrawRoundedRect(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
-                        G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
-                        G.DrawRoundedRect(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
-                    Else
-                        G.FillRectangle(pth_back, Rect)
-                        G.DrawRectangle(New Pen(Titlebar_OuterBorder), Rect)
-                        G.DrawRectangle(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
-                        G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
-                        G.DrawRectangle(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
-                    End If
-
-                    G.ResetClip()
-                    G.ExcludeClip(UpperPart)
-
-                    '### Render Rest of Window
-                    G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), Rect)
-                    G.DrawRectangle(New Pen(Titlebar_Turquoise), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
-                    G.DrawRectangle(New Pen(OuterBorder), Rect)
-                    G.DrawLine(New Pen(Titlebar_InnerBorder), New Point(Rect.X + 1, Rect.Y), New Point(Rect.X + 1, Rect.Y + Rect.Height - 2))
-                    If Active Then
-                        G.DrawImage(My.Resources.Win7Sides, RectSide1)
-                        G.DrawImage(My.Resources.Win7Sides, RectSide2)
-                    End If
-                    G.ResetClip()
-                    G.FillRectangle(Brushes.White, InnerWindow_1)
-                    G.DrawRectangle(New Pen(Color.FromArgb(186, 210, 234)), InnerWindow_1)
-                    G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
-
-                    '### Render Close Button
-                    Dim CloseRect As New Rectangle
-
                     Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
-                    Dim Btn_Width As Integer
+                    Dim Btn_Width As Integer = Btn_Height
 
-                    If Not ToolWindow Then
-                        Btn_Width = (31 / 17) * Btn_Height
-                    Else
-                        Btn_Width = Btn_Height
-                    End If
-
-                    CloseRect = New Rectangle(InnerWindow_1.Right - Btn_Width - 3, InnerWindow_1.Top - Btn_Height - 3, Btn_Width, Btn_Height)
+                    Dim CloseRect As New Rectangle(InnerWindow_1.Right - Btn_Width - 3, Rect.Y + (Sum_Ttl - Btn_Height) / 2, Btn_Width, Btn_Height)
 
                     If Active Then
-                        Dim Factor As Single = 0.45
-                        If ToolWindow Then Factor = 0.2
+                        Dim Factor As Single = 0.5
 
                         Dim UH As Single = Factor * CloseRect.Height
                         Dim LH As Single = CloseRect.Height - UH
@@ -5311,24 +5124,189 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
                         CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow
                     End If
 
+                    Dim xW As Integer = If(CloseRect.Width Mod 2 = 0, CloseBtn.Width + 1, CloseBtn.Width)
+                    Dim xH As Integer = If(CloseRect.Height Mod 2 = 0, CloseBtn.Height + 1, CloseBtn.Height)
 
-                    G.DrawImage(CloseBtn, New Point(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2 + 1, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2))
+
+                    Dim closerenderrect As New Rectangle(CloseRect.X + (CloseRect.Width - xW) / 2, CloseRect.Y + (CloseRect.Height - xH) / 2, xW, xH)
+
+                    G.DrawImage(CloseBtn, closerenderrect)
 
                     G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
                     G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
 
-                    IconRect = New Rectangle(InnerWindow_1.X + 4, CloseRect.Top + (CloseRect.Height - IconSize) / 2, IconSize, IconSize)
-
-                    LabelRect = New Rectangle(IconRect.Right + 3, CloseRect.Y, UpperPart.Width - (IconRect.Right + 4), CloseRect.Height)
-
-                    If ToolWindow Then LabelRect.X = IconRect.X
-#End Region
-
                 End If
+
 #End Region
 
-        End Select
+            Else
 
+#Region "Basic"
+                G.DrawImage(AdaptedBack, RectBK)
+
+                Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
+                TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+                TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
+                TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+                Sum_Ttl = Sum + Metrics_CaptionHeight + TitleTextH_Sum
+
+                With Rect
+                    InnerWindow_1 = New Rectangle(.X + Sum + 2, .Y + Sum_Ttl + 3, .Width - (Sum) * 2 - 4, .Height - (Sum + Sum_Ttl) - 5)
+                    InnerWindow_2 = New Rectangle(InnerWindow_1.X + 1, InnerWindow_1.Y + 1, InnerWindow_1.Width - 2, InnerWindow_1.Height - 2)
+                    RectSide1 = New Rectangle(.X + 1, InnerWindow_1.Y, Sum + 1, InnerWindow_1.Height * 0.5)
+                    RectSide2 = New Rectangle(InnerWindow_1.Right - 1, RectSide1.Y, RectSide1.Width + 1, RectSide1.Height)
+                End With
+
+
+                Dim Titlebar_Backcolor1 As Color
+                Dim Titlebar_Backcolor2 As Color
+                Dim Titlebar_OuterBorder As Color
+                Dim Titlebar_InnerBorder As Color
+                Dim Titlebar_Turquoise As Color
+                Dim OuterBorder As Color
+
+                Dim CloseUpperAccent1 As Color
+                Dim CloseUpperAccent2 As Color
+                Dim CloseLowerAccent1 As Color
+                Dim CloseLowerAccent2 As Color
+                Dim CloseOuterBorder As Color
+                Dim CloseInnerBorder As Color
+
+                If Active Then
+                    Titlebar_Backcolor1 = Color.FromArgb(152, 180, 208)
+                    Titlebar_Backcolor2 = Color.FromArgb(186, 210, 234)
+                    Titlebar_OuterBorder = Color.FromArgb(52, 52, 52)
+                    Titlebar_InnerBorder = Color.FromArgb(255, 255, 255)
+                    Titlebar_Turquoise = Color.FromArgb(40, 207, 228)
+                    OuterBorder = Color.FromArgb(0, 0, 0)
+
+                    CloseUpperAccent1 = Color.FromArgb(233, 169, 156)
+                    CloseUpperAccent2 = Color.FromArgb(223, 149, 135)
+                    CloseLowerAccent1 = Color.FromArgb(184, 67, 44)
+                    CloseLowerAccent2 = Color.FromArgb(210, 127, 110)
+                    CloseOuterBorder = Color.FromArgb(67, 20, 34)
+                    CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
+
+                Else
+                    Titlebar_Backcolor1 = Color.FromArgb(191, 205, 219)
+                    Titlebar_Backcolor2 = Color.FromArgb(215, 228, 242)
+                    Titlebar_OuterBorder = Color.FromArgb(76, 76, 76)
+                    Titlebar_InnerBorder = Color.FromArgb(226, 230, 239)
+                    Titlebar_Turquoise = Color.FromArgb(226, 230, 239)
+                    OuterBorder = Color.FromArgb(76, 76, 76)
+
+                    CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
+                    CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
+                    CloseOuterBorder = Color.FromArgb(131, 142, 168)
+                    CloseInnerBorder = Color.FromArgb(209, 219, 229)
+                End If
+
+                Dim UpperPart As New Rectangle(Rect.X, Rect.Y, Rect.Width + 1, Sum_Ttl + 4)
+
+                G.SetClip(UpperPart)
+
+                Dim pth_back As New LinearGradientBrush(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical)
+                Dim pth_line As New LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical)
+
+                '### Render Titlebar
+                If Not ToolWindow Then
+                    G.FillRoundedRect(pth_back, Rect, Radius, True)
+                    G.DrawRoundedRect(New Pen(Titlebar_OuterBorder), Rect, Radius, True)
+                    G.DrawRoundedRect(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                    G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                    G.DrawRoundedRect(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, True)
+                Else
+                    G.FillRectangle(pth_back, Rect)
+                    G.DrawRectangle(New Pen(Titlebar_OuterBorder), Rect)
+                    G.DrawRectangle(New Pen(Titlebar_InnerBorder), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                    G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                    G.DrawRectangle(New Pen(pth_line), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                End If
+
+                G.ResetClip()
+                G.ExcludeClip(UpperPart)
+
+                '### Render Rest of Window
+                G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), Rect)
+                G.DrawRectangle(New Pen(Titlebar_Turquoise), New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2))
+                G.DrawRectangle(New Pen(OuterBorder), Rect)
+                G.DrawLine(New Pen(Titlebar_InnerBorder), New Point(Rect.X + 1, Rect.Y), New Point(Rect.X + 1, Rect.Y + Rect.Height - 2))
+                If Active Then
+                    G.DrawImage(My.Resources.Win7Sides, RectSide1)
+                    G.DrawImage(My.Resources.Win7Sides, RectSide2)
+                End If
+                G.ResetClip()
+                G.FillRectangle(Brushes.White, InnerWindow_1)
+                G.DrawRectangle(New Pen(Color.FromArgb(186, 210, 234)), InnerWindow_1)
+                G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
+
+                '### Render Close Button
+                Dim CloseRect As New Rectangle
+
+                Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
+                Dim Btn_Width As Integer
+
+                If Not ToolWindow Then
+                    Btn_Width = (31 / 17) * Btn_Height
+                Else
+                    Btn_Width = Btn_Height
+                End If
+
+                CloseRect = New Rectangle(InnerWindow_1.Right - Btn_Width - 3, InnerWindow_1.Top - Btn_Height - 3, Btn_Width, Btn_Height)
+
+                If Active Then
+                    Dim Factor As Single = 0.45
+                    If ToolWindow Then Factor = 0.2
+
+                    Dim UH As Single = Factor * CloseRect.Height
+                    Dim LH As Single = CloseRect.Height - UH
+                    Dim Interlapping As Single = (UH / CloseRect.Height) * 10
+
+                    Dim CloseRectUpperHalf As New Rectangle(CloseRect.X, CloseRect.Y, CloseRect.Width, UH + Interlapping)
+                    Dim CloseUpperPath As New LinearGradientBrush(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical)
+
+                    Dim CloseRectLowerHalf As New Rectangle(CloseRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseRect.Width, LH)
+                    Dim CloseLowerPath As New LinearGradientBrush(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+
+                    G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, True)
+                    G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, True)
+                Else
+                    Dim ClosePath As New LinearGradientBrush(CloseRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical)
+                    G.FillRectangle(ClosePath, CloseRect)
+                End If
+
+
+                Dim CloseBtn As Image
+
+                If Not ToolWindow Then
+                    If CloseRect.Height >= 22 Then
+                        CloseBtn = My.Resources.Win7_Basic_Close_2
+                    ElseIf CloseRect.Height >= 18 Then
+                        CloseBtn = My.Resources.Win7_Basic_Close_1
+                    Else
+                        CloseBtn = My.Resources.Win7_Basic_Close_0
+                    End If
+                Else
+                    CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow
+                End If
+
+
+                G.DrawImage(CloseBtn, New Point(CloseRect.X + (CloseRect.Width - CloseBtn.Width) / 2 + 1, CloseRect.Y + (CloseRect.Height - CloseBtn.Height) / 2))
+
+                G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
+                G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+
+                IconRect = New Rectangle(InnerWindow_1.X + 4, CloseRect.Top + (CloseRect.Height - IconSize) / 2, IconSize, IconSize)
+
+                LabelRect = New Rectangle(IconRect.Right + 3, CloseRect.Y, UpperPart.Width - (IconRect.Right + 4), CloseRect.Height)
+
+                If ToolWindow Then LabelRect.X = IconRect.X
+#End Region
+
+            End If
+#End Region
+
+        End If
 
         Dim ForeColorX As Color
         If AccentColor_Enabled Then
@@ -5347,44 +5325,38 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         If Not ToolWindow Then G.DrawImage(If(Active, My.Resources.AppPreview, My.Resources.AppPreviewInActive), IconRect)
 
-        Select Case state
-            Case 0      '#### Windows 10/11
-                G.DrawString(Text, Font, New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+        If Preview = Preview_Enum.W11 Or Preview = Preview_Enum.W10 Then
+            G.DrawString(Text, Font, New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
 
-                If Not ToolWindow Then
-                    G.DrawString("", New Font("Segoe MDL2 Assets", 7, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
-                Else
-                    Dim XXRect As New Rectangle(Rect.X + Rect.Width - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12)
-                    G.FillRectangle(New SolidBrush(Color.FromArgb(199, 80, 80)), XXRect)
-                    G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), New Rectangle(XXRect.X + 1, XXRect.Y + 1, XXRect.Width, XXRect.Height), StringAligner(ContentAlignment.MiddleCenter))
-                End If
+            If Not ToolWindow Then
+                G.DrawString("", New Font("Segoe MDL2 Assets", 7, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
+            Else
+                Dim XXRect As New Rectangle(Rect.X + Rect.Width - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(199, 80, 80)), XXRect)
+                G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), New Rectangle(XXRect.X + 1, XXRect.Y + 1, XXRect.Width, XXRect.Height), StringAligner(ContentAlignment.MiddleCenter))
+            End If
 
-            Case 1      '#### Windows 8.1
+        ElseIf Preview = Preview_Enum.W8 Then
+            G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
 
-                If Not Win8Lite Then
-                    G.DrawString(Text, Font, New SolidBrush(Color.Black), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
-                Else
-                    If Active Then
-                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
-                    Else
-                        G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
-                    End If
-                End If
+        ElseIf Preview = Preview_Enum.W8Lite Then
+            If Active Then
+                G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.TitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+            Else
+                G.DrawString(Text, Font, New SolidBrush(MainFrm.CP.Win32.InactiveTitleText), LabelRect8, StringAligner(ContentAlignment.MiddleCenter))
+            End If
 
-            Case 2      '#### Windows 7
+        ElseIf Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Then
+            Dim LabelRectModified As Rectangle = LabelRect
+            LabelRectModified.X -= 2
+            LabelRectModified.Y -= 1
+            Dim alpha As Integer = If(Active, 120, 75)
+            G.DrawGlowString(1, Text, Me, Color.Black, Color.FromArgb(alpha, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
 
-                If Not Win7Basic Then
-                    Dim LabelRectModified As Rectangle = LabelRect
-                    LabelRectModified.X -= 2
-                    LabelRectModified.Y -= 1
-                    Dim alpha As Integer = If(Active, 120, 75)
-                    G.DrawGlowString(1, Text, Me, Color.Black, Color.FromArgb(alpha, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
-                Else
-                    G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
-                End If
+        ElseIf Preview = Preview_Enum.W7Basic Then
+            G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
 
-
-        End Select
+        End If
 
     End Sub
 
@@ -5440,6 +5412,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     End Sub
 
     Sub ProcessBack()
+        Dim Win7 As Boolean = (Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic)
         If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
             Try : AdaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat) : Catch : End Try
             Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try

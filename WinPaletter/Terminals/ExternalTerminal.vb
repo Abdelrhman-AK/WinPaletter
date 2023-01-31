@@ -47,13 +47,13 @@ Public Class ExternalTerminal
         Dim y_cmd As Object
 
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
         Else
             _Def = New CP_Defaults().Default_Windows11
@@ -1141,13 +1141,13 @@ Public Class ExternalTerminal
         End If
 
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.Eleven Then
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Ten Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Eight Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.Seven Then
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
         Else
             _Def = New CP_Defaults().Default_Windows11

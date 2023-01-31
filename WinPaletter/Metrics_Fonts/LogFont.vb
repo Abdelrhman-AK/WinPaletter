@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Text
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
@@ -145,7 +146,12 @@ Public Class LogFontHelper
         FF_DECORATIVE = (5 << 4)
     End Enum
 
-    Public Shared Function ByteToLogFont(ByVal fontBytes As Byte()) As LogFont
+End Class
+
+Module LogFontHelpers
+
+    <Extension()>
+    Public Function ToLogFont(ByVal fontBytes As Byte()) As LogFont
         Dim lOGFONT As New LogFont With {
             .lfHeight = BitConverter.ToInt32(fontBytes, 0),
             .lfWidth = 0,
@@ -171,7 +177,13 @@ Public Class LogFontHelper
         Return lOGFONT
     End Function
 
-    Public Shared Function LogFontToByte(ByVal lOGFONT As LogFont) As Byte()
+    <Extension()>
+    Public Function ToFont(ByVal fontBytes As Byte()) As Font
+        Return Font.FromLogFont(fontBytes.ToLogFont)
+    End Function
+
+    <Extension()>
+    Public Function ToByte(ByVal lOGFONT As LogFont) As Byte()
         Dim b As Byte() = New Byte(91) {}
 
         For x = 0 To 3 Step +1
@@ -204,4 +216,12 @@ Public Class LogFontHelper
 
         Return b
     End Function
-End Class
+
+    <Extension()>
+    Public Function ToByte([Font] As Font) As Byte()
+        Dim LF As New LogFont
+        [Font].ToLogFont(LF)
+        Return LF.ToByte
+    End Function
+
+End Module

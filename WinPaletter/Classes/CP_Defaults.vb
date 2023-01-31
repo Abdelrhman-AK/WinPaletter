@@ -69,7 +69,7 @@
             .W10_1909_ForceV2 = True
         End With
 
-        With [CP].WinMetrics_Fonts
+        With [CP].MetricsFonts
             .BorderWidth = 1
             .CaptionHeight = 22
             .CaptionWidth = 22
@@ -144,7 +144,7 @@
             .W10_1909_ForceV2 = My.W10_1909
         End With
 
-        With [CP].WinMetrics_Fonts
+        With [CP].MetricsFonts
             .BorderWidth = 1
             .CaptionHeight = 22
             .CaptionWidth = 22
@@ -245,7 +245,7 @@
             .W10_1909_ForceV2 = False
         End With
 
-        With [CP].WinMetrics_Fonts
+        With [CP].MetricsFonts
             .BorderWidth = 1
             .CaptionHeight = 22
             .CaptionWidth = 22
@@ -349,7 +349,7 @@
             .W10_1909_ForceV2 = False
         End With
 
-        With [CP].WinMetrics_Fonts
+        With [CP].MetricsFonts
             .BorderWidth = 1
             .CaptionHeight = 21
             .CaptionWidth = 21
