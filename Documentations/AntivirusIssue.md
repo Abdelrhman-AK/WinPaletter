@@ -4,4 +4,4 @@
 
 - Other Antiviruses (Kaspersky, Malwarebytes) found it clean.
 
-- Some browsers like Edge will prompt you that the program may harm the computer `(The program is not signed so the browser think that the program is from unknown organization and may be harmful)`. You can download it anyway.
+- Some browsers like Edge will prompt you that the program may harm the computer `(The program is not signed so the browser thinks that the program is from unknown organization and may be harmful)`. You can download it anyway.
