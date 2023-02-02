@@ -36,7 +36,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Colorizing Windows Accents.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Banner.png?raw=true)
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Sample.png?raw=true)
 
