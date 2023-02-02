@@ -418,6 +418,12 @@
     <Compile Include="Updates\Whatsnew.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WallpaperToner.Designer.vb">
+      <DependentUpon>WallpaperToner.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WallpaperToner.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Win32UI.Designer.vb">
       <DependentUpon>Win32UI.vb</DependentUpon>
     </Compile>
@@ -649,6 +655,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\Whatsnew.resx">
       <DependentUpon>Whatsnew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WallpaperToner.resx">
+      <DependentUpon>WallpaperToner.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>

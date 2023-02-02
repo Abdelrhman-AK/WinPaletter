@@ -864,6 +864,7 @@ Public Class DragPreviewer
 
         c = [CP].Win32.ButtonText
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonText = c
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                 RB.ForeColor = c
             Next

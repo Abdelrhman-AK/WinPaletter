@@ -595,9 +595,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
                     NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
-                    MsgBox(NCM.lfCaptionFont.lfFaceName)
-
-
                     'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
                     'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
                     'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
@@ -607,6 +604,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             End Sub
 
+        End Structure
+
+        Structure WallpaperTone
+            Public Enabled As Boolean
+            Public Image As String
+            Public H, S, L As Integer
         End Structure
 
         Structure LogonUI10x : Implements ICloneable
@@ -1379,6 +1382,26 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .MenuHilight = Color.FromArgb(0, 120, 215),
             .Desktop = Color.FromArgb(0, 0, 0)
             }
+
+    Public WallpaperTone_W11 As New Structures.WallpaperTone With {
+        .Enabled = False,
+        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .H = 0, .S = 50, .L = 50}
+
+    Public WallpaperTone_W10 As New Structures.WallpaperTone With {
+        .Enabled = False,
+        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .H = 0, .S = 50, .L = 50}
+
+    Public WallpaperTone_W8 As New Structures.WallpaperTone With {
+        .Enabled = False,
+        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .H = 0, .S = 50, .L = 50}
+
+    Public WallpaperTone_W7 As New Structures.WallpaperTone With {
+        .Enabled = False,
+        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .H = 0, .S = 50, .L = 50}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = True,

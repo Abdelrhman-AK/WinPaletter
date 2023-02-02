@@ -40,7 +40,6 @@ Module XenonModule
         pth.Dispose()
     End Sub
 
-
     Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
         Dim oStringFormat As New StringFormat()
         Select Case goTextAlign
@@ -146,10 +145,18 @@ Module XenonModule
                 If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
                     Return False
                 Else
-                    If My.W11 Or My.W7 Then
+                    If My.W11 Then
                         Return True
                     ElseIf My.W10 Or My.W8 Then
                         Return False
+                    ElseIf My.W7 Then
+                        Try
+                            Dim stringThemeName As New System.Text.StringBuilder(260)
+                            NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                            Return Not (String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString))
+                        Catch
+                            Return True
+                        End Try
                     Else
                         Return False
                     End If
@@ -1672,7 +1679,8 @@ Public Class XenonAnimatedBox : Inherits Panel
 
         G.Clear(GetParentColor)
 
-        If Not DesignMode Then
+        If Not DesignMode AndAlso _Focused Then
+
             If Style = ColorsStyle.SwapColors Then
                 If GetDarkMode() Then
                     C1 = [Color].Dark(0.15)
@@ -1705,6 +1713,7 @@ Public Class XenonAnimatedBox : Inherits Panel
                 G.FillRectangle(l, Rect)
                 G.FillRectangle(Noise, Rect)
             End If
+
         End If
 
     End Sub
@@ -1713,12 +1722,31 @@ Public Class XenonAnimatedBox : Inherits Panel
         If Not DesignMode Then
             Tmr.Enabled = True
             Tmr.Start()
+
+            Try : AddHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
+            Try : AddHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try
+
         Else
             Tmr.Enabled = False
             Tmr.Stop()
         End If
     End Sub
 
+    Private _Focused As Boolean = True
+
+    Sub Form_GotFocus()
+        _Focused = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Sub Form_LostFocus()
+        _Focused = False
+        Tmr.Enabled = False
+        Tmr.Stop()
+        Invalidate()
+    End Sub
 End Class
 
 <DefaultEvent("Click")>
@@ -4549,6 +4577,7 @@ Public Class XenonFakeIcon : Inherits Panel
 
         G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
+        'G.DrawRectangle(Pens.Red, New Rectangle(0, 0, Width - 1, Height - 1))
     End Sub
 
 End Class
@@ -6617,7 +6646,7 @@ Public Class XenonTerminal
 
     Dim tk As Boolean = False
 
-    Private Sub Tm_Tick(sender As Object, e As EventArgs) Handles tm.Tick
+    Private Sub Tm_Tick(sender As Object, e As EventArgs) Handles Tm.Tick
         If IsFocused Then
             If tk Then
                 tk = False
@@ -6631,8 +6660,8 @@ Public Class XenonTerminal
 
     Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         If Not DesignMode Then
-            tm.Enabled = True
-            tm.Start()
+            Tm.Enabled = True
+            Tm.Start()
 
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try
@@ -6640,8 +6669,8 @@ Public Class XenonTerminal
             ProcessBack()
             UpdateOpacityBackImageChanged()
         Else
-            tm.Enabled = False
-            tm.Stop()
+            Tm.Enabled = False
+            Tm.Stop()
         End If
     End Sub
 
@@ -6669,4 +6698,437 @@ Public Class XenonTerminal
     End Sub
 
 End Class
+
+<DefaultEvent("Scroll")>
+Public Class XenonColorBar
+    Inherits Control
+
+    Event Scroll(ByVal sender As Object)
+
+#Region "Properties"
+    Private _Minimum As Integer
+    Property Minimum() As Integer
+        Get
+            Return _Minimum
+        End Get
+        Set(ByVal value As Integer)
+            _Minimum = value
+            If value > _Value Then _Value = value
+            If value > _Maximum Then _Maximum = value
+
+            InvalidateLayout()
+        End Set
+    End Property
+
+    Private _Maximum As Integer = 100
+    Property Maximum() As Integer
+        Get
+            Return _Maximum
+        End Get
+        Set(ByVal value As Integer)
+            _Maximum = value
+            If value < _Value Then _Value = value
+            If value < _Minimum Then _Minimum = value
+            InvalidateLayout()
+        End Set
+    End Property
+
+    Private _Value As Integer
+    Property Value() As Integer
+        Get
+
+            Return _Value
+        End Get
+        Set(ByVal value As Integer)
+            If value = _Value Then Return
+
+            If value > _Maximum Then
+                value = _Maximum
+            End If
+
+            If value < _Minimum Then
+                value = _Minimum
+            End If
+
+            _Value = value
+            InvalidatePosition()
+
+            RaiseEvent Scroll(Me)
+        End Set
+    End Property
+
+    Private _SmallChange As Integer = 1
+    Public Property SmallChange() As Integer
+        Get
+            Return _SmallChange
+        End Get
+        Set(ByVal value As Integer)
+            If value < 1 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _SmallChange = value
+        End Set
+    End Property
+
+    Private _LargeChange As Integer = 10
+    Public Property LargeChange() As Integer
+        Get
+            Return _LargeChange
+        End Get
+        Set(ByVal value As Integer)
+            If value < 1 Then
+                Throw New Exception("Property value is not valid.")
+            End If
+
+            _LargeChange = value
+        End Set
+    End Property
+#End Region
+
+    Enum ModesList
+        Hue
+        Saturation
+        Light
+    End Enum
+
+    Public Property Mode As ModesList = ModesList.Hue
+    ReadOnly ButtonSize As Integer = 0
+    ReadOnly ThumbSize As Integer = 35 ' 14 minimum
+    Private LSA As Rectangle
+    Private RSA As Rectangle
+    Private Shaft As Rectangle
+    Private Thumb As Rectangle
+    Private ThumbDown As Boolean
+    Private Circle As Rectangle
+    Private _Shown As Boolean = False
+
+    Enum MouseState
+        None
+        Over
+        Down
+    End Enum
+
+#Region "Animator"
+    Dim alpha As Integer
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        If Not DesignMode Then
+
+            If State = MouseState.Over And _Shown Then
+                If alpha + Factor <= 255 Then
+                    alpha += Factor
+                ElseIf alpha + Factor > 255 Then
+                    alpha = 255
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                Threading.Thread.Sleep(1)
+                Invalidate()
+            End If
+
+            If _Shown And (Not State = MouseState.Over Or State = MouseState.Down) Then
+                If alpha - Factor >= 0 Then
+                    alpha -= Factor
+                ElseIf alpha - Factor < 0 Then
+                    alpha = 0
+                    Tmr.Enabled = False
+                    Tmr.Stop()
+                End If
+
+                Threading.Thread.Sleep(1)
+                Invalidate()
+            End If
+        End If
+    End Sub
+#End Region
+
+    Public State As MouseState = MouseState.None
+
+    Sub New()
+        SetStyle(DirectCast(139286, ControlStyles), True)
+        SetStyle(ControlStyles.Selectable, False)
+        Height = 19
+        Text = ""
+    End Sub
+
+    Dim I1 As Integer
+
+    Private _AccentColor As Color = Style.Colors.Core
+    Public Property AccentColor As Color
+        Get
+            Return _AccentColor
+        End Get
+        Set(value As Color)
+            _AccentColor = value
+            Refresh()
+        End Set
+    End Property
+
+
+    Private _H As Integer = 0
+    Public Property H As Integer
+        Get
+            Return _H
+        End Get
+        Set(value As Integer)
+            _H = value
+            Refresh()
+        End Set
+    End Property
+
+
+    Private _S As Single = 1
+    Public Property S As Single
+        Get
+            Return _S
+        End Get
+        Set(value As Single)
+            _S = value
+            Refresh()
+        End Set
+    End Property
+
+
+    Private _L As Integer = 0.5
+    Public Property L As Single
+        Get
+            Return _L
+        End Get
+        Set(value As Single)
+            _L = value
+            Refresh()
+        End Set
+    End Property
+
+    Private Color1 As Color = Color.FromArgb(255, 23, 0)
+    Private Color2 As Color = Color.FromArgb(253, 253, 0)
+    Private Color3 As Color = Color.FromArgb(58, 255, 0)
+    Private Color4 As Color = Color.FromArgb(0, 255, 240)
+    Private Color5 As Color = Color.FromArgb(0, 17, 255)
+    Private Color6 As Color = Color.FromArgb(255, 0, 212)
+    Private Color7 As Color = Color.FromArgb(255, 0, 23)
+
+    Dim cb_H As New ColorBlend() With {.Positions = {0, 1 / 6.0F, 2 / 6.0F, 3 / 6.0F, 4 / 6.0F, 5 / 6.0F, 1},
+                    .Colors = {Color1, Color2, Color3, Color4, Color5, Color6, Color7}}
+
+    Dim cb_L As New ColorBlend() With {.Positions = {0, 1 / 2.0F, 1}, .Colors = {Color.Black, _AccentColor, Color.White}}
+
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.HighQuality
+        G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+
+        G.Clear(BackColor)
+        Dim Dark As Boolean = GetDarkMode()
+        Dim c_back As Color = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
+        Dim c_btn As Color = If(Dark, Color.FromArgb(165, 165, 165), Color.FromArgb(100, 100, 100))
+
+        Dim C As Color = _AccentColor
+
+        Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
+
+        Dim back As LinearGradientBrush
+
+        Select Case Mode
+            Case ModesList.Hue
+                back = New LinearGradientBrush(middleRect, Color.Black, Color.Black, 0, False) With {.InterpolationColors = cb_H}
+                Dim HSL_ As New HSL_Structure
+                HSL_ = Color.FromArgb(0, 255, 240).ToHSL()
+                HSL_.H = (Value / Maximum) * 359
+                C = HSL_.ToRGB
+
+            Case ModesList.Saturation
+                Dim HSL_x1, HSL_x2 As New HSL_Structure
+                HSL_x1 = _AccentColor.ToHSL()
+                HSL_x2 = _AccentColor.ToHSL()
+                HSL_x1.S = 0
+                HSL_x2.S = 1
+                back = New LinearGradientBrush(middleRect, HSL_x1.ToRGB, HSL_x2.ToRGB, LinearGradientMode.Horizontal)
+                Dim HSL_ As New HSL_Structure
+                HSL_ = _AccentColor.ToHSL()
+                HSL_.S = Value / Maximum
+                C = HSL_.ToRGB
+
+            Case ModesList.Light
+                cb_L = New ColorBlend() With {.Positions = {0, 1 / 2.0F, 1}, .Colors = {Color.Black, _AccentColor, Color.White}}
+                back = New LinearGradientBrush(middleRect, Color.Black, Color.Black, 0, False) With {.InterpolationColors = cb_L}
+                Dim HSL_ As New HSL_Structure
+                HSL_ = _AccentColor.ToHSL()
+                HSL_.L = Value / Maximum
+                C = HSL_.ToRGB
+
+            Case Else
+                C = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
+                back = New LinearGradientBrush(middleRect, C, C, GradientMode.Horizontal)
+
+        End Select
+
+        G.FillRoundedRect(back, middleRect)
+
+        Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
+
+        G.FillRectangle(New SolidBrush(BackColor), New Rectangle(-1, 0, 4, Height))
+
+        G.FillRectangle(New SolidBrush(BackColor), New Rectangle(Width - 4, 0, 4, Height))
+
+        G.FillEllipse(New SolidBrush(Style.Colors.Border), Circle)
+
+        Dim smallC1 As New Rectangle(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10)
+        Dim smallC2 As New Rectangle(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8)
+
+        G.FillEllipse(New SolidBrush(C), smallC1)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(alpha, C)), smallC2)
+    End Sub
+
+    Protected Overrides Sub OnSizeChanged(e As EventArgs)
+        Height = 19
+        InvalidateLayout()
+    End Sub
+
+    Private Sub InvalidateLayout()
+        LSA = New Rectangle(0, 0, ButtonSize, Height)
+        RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
+        Shaft = New Rectangle(LSA.Right + 1 + 0.5 * Height, 0, Width - Height - 1, Height)
+        Thumb = New Rectangle(0, 1, (Value / Maximum) * Shaft.Width, Height - 3)
+        Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
+        RaiseEvent Scroll(Me)
+        InvalidatePosition()
+    End Sub
+
+    Private Sub InvalidatePosition()
+        Thumb.Width = (Value / Maximum) * Width
+        Refresh()
+    End Sub
+
+    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            State = MouseState.Down
+            Tmr.Enabled = True
+            Tmr.Start()
+
+            If Circle.Contains(e.Location) Then
+                ThumbDown = True
+                Return
+            Else
+                If e.X < Circle.X Then
+
+                    I1 = _Value - _LargeChange
+                Else
+                    I1 = _Value + _LargeChange
+                End If
+            End If
+
+            Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+
+            InvalidatePosition()
+        End If
+    End Sub
+
+    Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
+        If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
+            State = MouseState.Over
+        Else
+            If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
+        End If
+
+
+        Invalidate()
+
+        If ThumbDown Then
+            'Dim ThumbPosition As Integer = e.X '- LSA.Width - (ThumbSize \ 2)
+            'Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
+            'I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
+            'Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+
+            Value = Math.Min(Math.Max((e.X / Width) * Maximum, _Minimum), _Maximum)
+            InvalidatePosition()
+        End If
+
+        Tmr.Enabled = True
+        Tmr.Start()
+    End Sub
+
+    Private Function GetProgress() As Double
+        Return (_Value - _Minimum) / (_Maximum - _Minimum)
+    End Function
+
+    Private Sub NSVScrollBar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        ThumbDown = False
+        State = MouseState.None
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        If Thumb.Contains(MousePosition) Then
+            State = MouseState.Over
+            Invalidate()
+            Tmr.Enabled = True
+            Tmr.Start()
+        End If
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        State = MouseState.None
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub XenonScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        If e.Delta < 0 Then
+            If Value < Maximum Then
+                If e.Delta <= -240 Then Value += LargeChange Else Value += SmallChange
+            End If
+        Else
+            If Value > Minimum Then
+                If e.Delta >= 240 Then Value -= LargeChange Else Value -= SmallChange
+            End If
+        End If
+    End Sub
+
+    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+        Try
+            If Not DesignMode Then
+                AddHandler FindForm.Load, AddressOf Loaded
+                AddHandler FindForm.Shown, AddressOf Showed
+                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
+                AddHandler VisibleChanged, AddressOf RefreshColorPalette
+                AddHandler EnabledChanged, AddressOf RefreshColorPalette
+            End If
+        Catch
+        End Try
+
+        Try
+            alpha = 0
+
+        Catch
+        End Try
+    End Sub
+
+    Sub Loaded()
+        _Shown = False
+    End Sub
+
+    Sub Showed()
+        _Shown = True
+
+        Invalidate()
+    End Sub
+
+    Public Sub RefreshColorPalette()
+
+        Invalidate()
+    End Sub
+End Class
+
+
 #End Region

@@ -154,6 +154,7 @@ Public Class Localizer : Implements IDisposable
     Property OS_Win8 As String = "Windows 8.1"
     Property OS_Win7 As String = "Windows 7"
     Property OS_WinUndefined As String = "Windows 11 or Higher"
+    Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in Main Form"
     Property KillingExplorer As String = "Killing Explorer (To be restarted)"
     Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"
     Property ErrorExplorerRestart As String = "Error in restarting explorer. Re-Launch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)"
@@ -369,7 +370,6 @@ Public Class Localizer : Implements IDisposable
         End If
 
     End Sub
-
 
     Public Sub ExportJSON(File As String)
         Dim JSON_Overall As New JObject()

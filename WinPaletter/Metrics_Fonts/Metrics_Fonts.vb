@@ -8,11 +8,34 @@ Public Class Metrics_Fonts
         pnl_preview2.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        Classic_Preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        Classic_Preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+        Classic_Preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
 
         CopyCatPreview(XenonWindow1, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow1)
+        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow2)
         CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
         CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
+
+        SetToClassicWindow(RetroWindow1, MainFrm.CP)
+        SetToClassicWindow(RetroWindow2, MainFrm.CP, False)
+        SetToClassicWindow(RetroWindow3, MainFrm.CP)
+        SetToClassicWindow(RetroWindow5, MainFrm.CP)
+        SetToClassicPanel(RetroPanel1, MainFrm.CP)
+        SetToClassicButton(RetroButton1, MainFrm.CP)
+        SetToClassicButton(RetroButton2, MainFrm.CP)
+        SetToClassicButton(RetroButton3, MainFrm.CP)
+        SetToClassicButton(RetroButton10, MainFrm.CP)
+        SetToClassicButton(RetroButton11, MainFrm.CP)
+        SetToClassicButton(RetroButton12, MainFrm.CP)
+        RetroScrollBar2.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroScrollBar2.BackColor = MainFrm.CP.Win32.ButtonFace
+        RetroScrollBar1.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
+        RetroScrollBar1.BackColor = MainFrm.CP.Win32.ButtonFace
+
+        Label13.ForeColor = MainFrm.CP.Win32.ButtonText
+        Label14.ForeColor = MainFrm.CP.Win32.ButtonText
+        Refresh17BitPreference()
 
         ApplyDarkMode(Me)
         ApplyFromCP(MainFrm.CP)
@@ -22,6 +45,13 @@ Public Class Metrics_Fonts
         MainFrm.MakeItDoubleBuffered(pnl_preview3)
         MainFrm.MakeItDoubleBuffered(pnl_preview4)
 
+        MainFrm.MakeItDoubleBuffered(Classic_Preview1)
+        MainFrm.MakeItDoubleBuffered(Classic_Preview3)
+        MainFrm.MakeItDoubleBuffered(Classic_Preview4)
+        MainFrm.MakeItDoubleBuffered(tabs_preview_1)
+        MainFrm.MakeItDoubleBuffered(tabs_preview_2)
+        MainFrm.MakeItDoubleBuffered(tabs_preview_3)
+
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon1)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon2)
         MainFrm.MakeItDoubleBuffered(XenonFakeIcon3)
@@ -30,11 +60,22 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Title = "Icon 2"
         XenonFakeIcon3.Title = "Icon 3"
 
-        XenonFakeIcon1.Icon = MainFrm.Icon 'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic Then
+            tabs_preview_1.SelectedIndex = 1
+            tabs_preview_2.SelectedIndex = 1
+            tabs_preview_3.SelectedIndex = 1
+        Else
+            tabs_preview_1.SelectedIndex = 0
+            tabs_preview_2.SelectedIndex = 0
+            tabs_preview_3.SelectedIndex = 0
+        End If
+
+        XenonFakeIcon1.Icon = MainFrm.Icon                'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
         XenonFakeIcon2.Icon = My.Resources.fileextension  'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
         XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall 'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+        PictureBox36.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
 
         Dim Win7 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Aero Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Opaque Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Basic
         Dim Win8 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W8 Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W8Lite
@@ -50,7 +91,29 @@ Public Class Metrics_Fonts
         MainFrm.Visible = False
     End Sub
 
+    Sub Refresh17BitPreference()
+
+        If MainFrm.CP.Win32.EnableTheming Then
+            MenuStrip2.BackColor = MainFrm.CP.Win32.MenuBar
+            MenuStrip2.ForeColor = MainFrm.CP.Win32.HilightText
+        Else
+            MenuStrip2.BackColor = MainFrm.CP.Win32.Menu
+            MenuStrip2.ForeColor = MainFrm.CP.Win32.MenuText
+        End If
+
+    End Sub
+
+    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
+        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Button].ButtonHilight = [CP].Win32.ButtonHilight
+        [Button].ButtonLight = [CP].Win32.ButtonLight
+        [Button].ButtonShadow = [CP].Win32.ButtonShadow
+        [Button].BackColor = [CP].Win32.ButtonFace
+        [Button].ForeColor = [CP].Win32.ButtonText
+    End Sub
+
     Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
+        [ToXenonWindow].Active = [FromXenonWindow].Active
         [ToXenonWindow].AccentColor_Active = [FromXenonWindow].AccentColor_Active
         [ToXenonWindow].AccentColor2_Active = [FromXenonWindow].AccentColor2_Active
         [ToXenonWindow].AccentColor_Inactive = [FromXenonWindow].AccentColor_Inactive
@@ -68,12 +131,45 @@ Public Class Metrics_Fonts
         [ToXenonWindow].Padding = [FromXenonWindow].Padding
     End Sub
 
+    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
+        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Window].BackColor = [CP].Win32.ButtonFace
+        [Window].ButtonText = [CP].Win32.ButtonText
+        [Window].ButtonHilight = [CP].Win32.ButtonHilight
+        [Window].ButtonLight = [CP].Win32.ButtonLight
+        [Window].ButtonShadow = [CP].Win32.ButtonShadow
+
+        If Active Then
+            [Window].ColorBorder = [CP].Win32.ActiveBorder
+            [Window].ForeColor = [CP].Win32.TitleText
+            [Window].Color1 = [CP].Win32.ActiveTitle
+            [Window].Color2 = [CP].Win32.GradientActiveTitle
+        Else
+            [Window].ColorBorder = [CP].Win32.InactiveBorder
+            [Window].ForeColor = [CP].Win32.InactiveTitleText
+            [Window].Color1 = [CP].Win32.InactiveTitle
+            [Window].Color2 = [CP].Win32.GradientInactiveTitle
+        End If
+
+        [Window].ColorGradient = [CP].Win32.EnableGradient
+    End Sub
+
+    Sub SetToClassicPanel([Panel] As RetroPanel, [CP] As CP)
+        [Panel].BackColor = [CP].Win32.ButtonFace
+        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ForeColor = [CP].Win32.TitleText
+    End Sub
+
     Sub ApplyFromCP(CP As CP)
         MetricsEnabled.Checked = CP.MetricsFonts.Enabled
 
         Label1.Font = CP.MetricsFonts.CaptionFont
         XenonWindow1.Font = CP.MetricsFonts.CaptionFont
         RetroWindow1.Font = CP.MetricsFonts.CaptionFont
+        RetroWindow3.Font = CP.MetricsFonts.CaptionFont
+        RetroWindow5.Font = CP.MetricsFonts.CaptionFont
+
         Label1.Text = CP.MetricsFonts.CaptionFont.Name
 
         Label2.Font = CP.MetricsFonts.IconFont
@@ -84,18 +180,22 @@ Public Class Metrics_Fonts
 
         Label3.Font = CP.MetricsFonts.MenuFont
         MenuStrip1.Font = CP.MetricsFonts.MenuFont
+        MenuStrip2.Font = CP.MetricsFonts.MenuFont
         Label3.Text = CP.MetricsFonts.MenuFont.Name
 
         Label5.Font = CP.MetricsFonts.SmCaptionFont
         XenonWindow2.Font = CP.MetricsFonts.SmCaptionFont
+        RetroWindow2.Font = CP.MetricsFonts.SmCaptionFont
         Label5.Text = CP.MetricsFonts.SmCaptionFont.Name
 
         Label4.Font = CP.MetricsFonts.MessageFont
         msgLbl.Font = CP.MetricsFonts.MessageFont
+        Label13.Font = CP.MetricsFonts.MessageFont
         Label4.Text = CP.MetricsFonts.MessageFont.Name
 
         Label6.Font = CP.MetricsFonts.StatusFont
         statusLbl.Font = CP.MetricsFonts.StatusFont
+        Label14.Font = CP.MetricsFonts.StatusFont
         Label6.Text = CP.MetricsFonts.StatusFont.Name
 
         XenonTrackbar1.Value = CP.MetricsFonts.BorderWidth
@@ -114,16 +214,14 @@ Public Class Metrics_Fonts
         XenonTrackbar7.Value = CP.MetricsFonts.DesktopIconSize
         XenonTrackbar5.Value = CP.MetricsFonts.ShellIconSize
 
-        RetroWindow1.ButtonDkShadow = MainFrm.CP.Win32.ButtonDkShadow
-        RetroWindow1.BackColor = MainFrm.CP.Win32.ButtonFace
-        RetroWindow1.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
-        RetroWindow1.ButtonLight = MainFrm.CP.Win32.ButtonLight
-        RetroWindow1.ButtonShadow = MainFrm.CP.Win32.ButtonShadow
-        RetroWindow1.ColorBorder = MainFrm.CP.Win32.ActiveBorder
-        RetroWindow1.ForeColor = MainFrm.CP.Win32.TitleText
-        RetroWindow1.Color1 = MainFrm.CP.Win32.ActiveTitle
-        RetroWindow1.Color2 = MainFrm.CP.Win32.GradientActiveTitle
-        RetroWindow1.ColorGradient = MainFrm.CP.Win32.EnableGradient
+        RetroWindow1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        RetroWindow3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        RetroWindow5.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+
+        RetroWindow1.Refresh()
+        RetroWindow2.Refresh()
+        RetroWindow3.Refresh()
+        RetroWindow5.Refresh()
     End Sub
 
     Sub ApplyToCP(CP As CP)
@@ -160,7 +258,6 @@ Public Class Metrics_Fonts
             XenonWindow1.Font = FontDialog1.Font
             RetroWindow1.Font = FontDialog1.Font
             Label1.Text = FontDialog1.Font.Name
-
             XenonWindow1.Refresh()
             RetroWindow1.Refresh()
         End If
@@ -183,8 +280,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label3.Font = FontDialog1.Font
             MenuStrip1.Font = FontDialog1.Font
+            MenuStrip2.Font = FontDialog1.Font
             Label3.Text = FontDialog1.Font.Name
-
         End If
     End Sub
 
@@ -194,6 +291,7 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label4.Font = FontDialog1.Font
             msgLbl.Font = FontDialog1.Font
+            Label13.Font = FontDialog1.Font
             Label4.Text = FontDialog1.Font.Name
 
         End If
@@ -204,8 +302,8 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label5.Font = FontDialog1.Font
             XenonWindow2.Font = FontDialog1.Font
+            RetroWindow2.Font = FontDialog1.Font
             Label5.Text = FontDialog1.Font.Name
-
         End If
     End Sub
 
@@ -213,6 +311,7 @@ Public Class Metrics_Fonts
         FontDialog1.Font = Label6.Font
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label6.Font = FontDialog1.Font
+            Label14.Font = FontDialog1.Font
             statusLbl.Font = FontDialog1.Font
             Label6.Text = FontDialog1.Font.Name
 
@@ -245,35 +344,22 @@ Public Class Metrics_Fonts
 
         XenonWindow1.Metrics_CaptionHeight = sender.Value
         RetroWindow1.Metrics_CaptionHeight = sender.Value
+        RetroWindow3.Metrics_CaptionHeight = sender.Value
+        RetroWindow5.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
         ttl_w.Text = sender.Value
         RetroWindow1.Metrics_CaptionWidth = sender.Value
+        RetroWindow3.Metrics_CaptionWidth = sender.Value
+        RetroWindow5.Metrics_CaptionWidth = sender.Value
     End Sub
 
-
-    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
-        i_s_h.Text = sender.Value
-
-        XenonFakeIcon3.Left = (XenonFakeIcon1.Left + (80 / 100) * XenonTrackbar6.Value) * XenonFakeIcon1.Width / (48 + 18)
-
-        XenonFakeIcon3.SendToBack()
-        XenonFakeIcon1.BringToFront()
-    End Sub
-
-    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
-        i_s_v.Text = sender.Value
-
-        XenonFakeIcon2.Top = (XenonFakeIcon1.Top + (100 / 75) * XenonTrackbar4.Value) * XenonFakeIcon1.Height / (48 + 35)
-
-        XenonFakeIcon2.SendToBack()
-        XenonFakeIcon1.BringToFront()
-    End Sub
 
     Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
         m_h.Text = sender.Value
         MenuStrip1.Height = Math.Max(sender.Value, GetTitleTextHeight(MenuStrip1.Font))
+        MenuStrip2.Height = MenuStrip1.Height
     End Sub
 
     Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
@@ -284,35 +370,55 @@ Public Class Metrics_Fonts
         ttl_b.Text = sender.Value
         XenonWindow1.Metrics_BorderWidth = sender.Value
         RetroWindow1.Metrics_BorderWidth = sender.Value
+        RetroWindow2.Metrics_BorderWidth = sender.Value
+        RetroWindow3.Metrics_BorderWidth = sender.Value
+        RetroWindow5.Metrics_BorderWidth = sender.Value
     End Sub
 
     Private Sub XenonTrackbar12_Scroll(sender As Object) Handles XenonTrackbar12.Scroll
         ttl_p.Text = sender.Value
         XenonWindow1.Metrics_PaddedBorderWidth = sender.Value
         RetroWindow1.Metrics_PaddedBorderWidth = sender.Value
+        RetroWindow2.Metrics_PaddedBorderWidth = sender.Value
+        RetroWindow3.Metrics_PaddedBorderWidth = sender.Value
+        RetroWindow5.Metrics_PaddedBorderWidth = sender.Value
     End Sub
 
     Private Sub XenonTrackbar11_Scroll(sender As Object) Handles XenonTrackbar11.Scroll
         s_h.Text = sender.Value
         HScrollBar1.Height = sender.Value
+        RetroScrollBar1.Height = sender.Value
+        RetroButton1.Height = sender.Value - 1
+        RetroScrollBar1.Refresh()
     End Sub
 
     Private Sub XenonTrackbar10_Scroll(sender As Object) Handles XenonTrackbar10.Scroll
         s_w.Text = sender.Value
         VScrollBar1.Width = sender.Value
+        RetroScrollBar2.Width = sender.Value
+        RetroButton12.Width = sender.Value - 1
+        RetroScrollBar2.Refresh()
     End Sub
 
     Private Sub XenonTrackbar14_Scroll(sender As Object) Handles XenonTrackbar14.Scroll
         tw_h.Text = sender.Value
         XenonWindow2.Metrics_CaptionHeight = sender.Value
+        RetroWindow2.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub XenonTrackbar13_Scroll(sender As Object) Handles XenonTrackbar13.Scroll
         tw_w.Text = sender.Value
+        RetroWindow2.Metrics_CaptionWidth = sender.Value
     End Sub
 
     Private Sub XenonTrackbar7_Scroll(sender As Object) Handles XenonTrackbar7.Scroll
-        If XenonTrackbar7.Value < XenonTrackbar7.Minimum Or XenonTrackbar7.Value > XenonTrackbar7.Maximum Then Exit Sub
+        If XenonTrackbar7.Value < XenonTrackbar7.Minimum Then
+            XenonTrackbar7.Value = XenonTrackbar7.Minimum
+        End If
+
+        If XenonTrackbar7.Value > XenonTrackbar7.Maximum Then
+            XenonTrackbar7.Value = XenonTrackbar7.Maximum
+        End If
 
         i_d_s.Text = sender.Value
         XenonFakeIcon1.IconSize = sender.Value
@@ -322,21 +428,34 @@ Public Class Metrics_Fonts
         XenonFakeIcon1.Height = sender.Value + 35
         XenonFakeIcon2.Height = sender.Value + 35
         XenonFakeIcon3.Height = sender.Value + 35
+        XenonFakeIcon2.Top = XenonFakeIcon1.Bottom + (XenonTrackbar4.Value - 45)  '(((XenonTrackbar4.Value - 5) / 2) + 5)
 
-        If sender.Value > 64 Then
-            XenonFakeIcon1.Width = sender.Value + 18
-            XenonFakeIcon2.Width = sender.Value + 18
-            XenonFakeIcon3.Width = sender.Value + 18
-        Else
-            XenonFakeIcon1.Width = XenonTrackbar6.Value + 8
-            XenonFakeIcon2.Width = XenonTrackbar6.Value + 8
-            XenonFakeIcon3.Width = XenonTrackbar6.Value + 8
-        End If
+        XenonFakeIcon1.Width = sender.Value + 15 + XenonTrackbar6.Value / 16 '18
+        XenonFakeIcon2.Width = sender.Value + 15 + XenonTrackbar6.Value / 16
+        XenonFakeIcon3.Width = sender.Value + 15 + XenonTrackbar6.Value / 16
+        XenonFakeIcon3.Left = XenonFakeIcon1.Right + 2
 
-        XenonFakeIcon2.Top = (XenonFakeIcon1.Top + (100 / 75) * XenonTrackbar4.Value) * XenonFakeIcon1.Height / (48 + 35)
+    End Sub
 
-        XenonFakeIcon3.Left = (XenonFakeIcon1.Left + (80 / 100) * XenonTrackbar6.Value) * XenonFakeIcon1.Width / (48 + 18)
+    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
+        i_s_h.Text = sender.Value
 
+        XenonFakeIcon1.Width = XenonTrackbar7.Value + 15 + sender.Value / 16 '18
+        XenonFakeIcon2.Width = XenonTrackbar7.Value + 15 + sender.Value / 16
+        XenonFakeIcon3.Width = XenonTrackbar7.Value + 15 + sender.Value / 16
+        XenonFakeIcon3.Left = XenonFakeIcon1.Right + 2
+
+        XenonFakeIcon3.SendToBack()
+        XenonFakeIcon1.BringToFront()
+    End Sub
+
+    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
+        i_s_v.Text = sender.Value
+
+        XenonFakeIcon2.Top = XenonFakeIcon1.Bottom + (XenonTrackbar4.Value - 45)
+
+        XenonFakeIcon2.SendToBack()
+        XenonFakeIcon1.BringToFront()
     End Sub
 
 
@@ -637,14 +756,14 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonButton13_Click_2(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        If XenonWindow1.Visible Then
-            RetroWindow1.Visible = True
-            XenonWindow1.Visible = False
-            XenonWindow2.Visible = False
+        If tabs_preview_1.SelectedIndex = 0 Then
+            tabs_preview_1.SelectedIndex = 1
+            tabs_preview_2.SelectedIndex = 1
+            tabs_preview_3.SelectedIndex = 1
         Else
-            RetroWindow1.Visible = False
-            XenonWindow1.Visible = True
-            XenonWindow2.Visible = True
+            tabs_preview_1.SelectedIndex = 0
+            tabs_preview_2.SelectedIndex = 0
+            tabs_preview_3.SelectedIndex = 0
         End If
     End Sub
 

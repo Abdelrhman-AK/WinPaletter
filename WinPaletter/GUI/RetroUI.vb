@@ -1086,6 +1086,7 @@ Public Class RetroWindow : Inherits Panel
         End Set
     End Property
 
+
 #Region "ControlBox"
     Private ReadOnly _CloseBtn As New RetroButton With {.Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
     Private ReadOnly _MinBtn As New RetroButton With {.Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
@@ -1152,8 +1153,8 @@ Public Class RetroWindow : Inherits Panel
     End Property
 
     Private Sub AdjustButtonSizes()
-        BtnHeight = Math.Max(_Metrics_CaptionHeight + GetTitleTextHeight() - 4, 14)
-        BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 14)
+        BtnHeight = Math.Max(_Metrics_CaptionHeight + GetTitleTextHeight() - 4, 5)
+        BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5)
 
         _CloseBtn.Size = New Size(BtnWidth, BtnHeight)
         _MinBtn.Size = New Size(BtnWidth, BtnHeight)

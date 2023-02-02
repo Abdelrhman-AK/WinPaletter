@@ -149,6 +149,12 @@ Public Class Win32UI
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         ApplyToCP(MainFrm.CP)
+        MainFrm.SetToClassicWindow(MainFrm.ClassicWindow1, MainFrm.CP)
+        MainFrm.SetToClassicWindow(MainFrm.ClassicWindow2, MainFrm.CP, False)
+        MainFrm.SetToClassicButton(MainFrm.RetroButton2, MainFrm.CP)
+        MainFrm.SetToClassicButton(MainFrm.RetroButton3, MainFrm.CP)
+        MainFrm.SetToClassicButton(MainFrm.RetroButton4, MainFrm.CP)
+        MainFrm.SetToClassicRaisedPanel(MainFrm.ClassicTaskbar, MainFrm.CP)
         Me.Close()
     End Sub
 
@@ -418,6 +424,7 @@ Public Class Win32UI
 
             Case "btntext_pick"
                 For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+                    CList.Add(RW)
                     For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
                         CList.Add(RB)
                     Next
@@ -1211,4 +1218,5 @@ Public Class Win32UI
 
         End If
     End Sub
+
 End Class

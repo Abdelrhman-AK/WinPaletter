@@ -689,6 +689,7 @@ Public Class MainFrm
 
         SetToClassicWindow(ClassicWindow1, CP)
         SetToClassicWindow(ClassicWindow2, CP, False)
+
         SetClassicMetics(ClassicWindow1, CP)
         SetClassicMetics(ClassicWindow2, CP)
         SetToClassicButton(RetroButton2, CP)
@@ -698,7 +699,6 @@ Public Class MainFrm
 
         ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
         ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
-
     End Sub
 
     Sub SetClassicMetics([Window] As RetroWindow, [CP] As CP)
@@ -716,6 +716,7 @@ Public Class MainFrm
         [Window].ButtonHilight = [CP].Win32.ButtonHilight
         [Window].ButtonLight = [CP].Win32.ButtonLight
         [Window].ButtonShadow = [CP].Win32.ButtonShadow
+        [Window].ButtonText = [CP].Win32.ButtonText
 
         If Active Then
             [Window].ColorBorder = [CP].Win32.ActiveBorder
@@ -779,7 +780,7 @@ Public Class MainFrm
 
         Panel3.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
-        start.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
+        start.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10 Or PreviewConfig = WinVer.W7)
         ActionCenter.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         XenonButton23.Visible = (PreviewConfig = WinVer.W7)
         tabs_preview.SelectedIndex = If(PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic, 1, 0)
@@ -1232,6 +1233,22 @@ Public Class MainFrm
 
 
     End Sub
+
+    Function GetTintedWallpaper(WT As CP.Structures.WallpaperTone) As Bitmap
+        Dim HSL As New HSLFilter With {
+            .Hue = WT.H,
+            .Saturation = (WT.S - 50) * 2,
+            .Lightness = (WT.L - 50) * 2
+        }
+
+        Dim img As Bitmap
+        If Not IO.File.Exists([WT].Image) Then [WT].Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
+        Dim S As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
+        img = Image.FromStream(S).Resize(pnl_preview.Size)
+        S.Close()
+
+        Return HSL.ExecuteFilter(img)
+    End Function
 #End Region
 
 #Region "Misc"
@@ -3153,7 +3170,7 @@ Public Class MainFrm
 
     Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
-            pnl_preview.ToBitmap.Save(SaveFileDialog2.FileName)
+            tabs_preview.ToBitmap.Save(SaveFileDialog2.FileName)
         End If
     End Sub
 
@@ -3246,10 +3263,10 @@ Public Class MainFrm
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
         If XenonButton23.Text.ToLower = My.Lang.Hide.ToLower Then
-            pnl_preview.Visible = False
+            tabs_preview.Visible = False
             XenonButton23.Text = My.Lang.Show
         Else
-            pnl_preview.Visible = True
+            tabs_preview.Visible = True
             XenonButton23.Text = My.Lang.Hide
         End If
     End Sub
@@ -3304,6 +3321,22 @@ Public Class MainFrm
 
         My.AnimatorNS.Show(TablessControl1)
 
+    End Sub
+
+    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+        If PreviewConfig = WinVer.W11 Then
+            WallpaperToner.WT = CP.WallpaperTone_W11
+        ElseIf PreviewConfig = WinVer.W10 Then
+            WallpaperToner.WT = CP.WallpaperTone_W10
+        ElseIf PreviewConfig = WinVer.W8 Then
+            WallpaperToner.WT = CP.WallpaperTone_W8
+        ElseIf PreviewConfig = WinVer.W7 Then
+            WallpaperToner.WT = CP.WallpaperTone_W7
+        Else
+            WallpaperToner.WT = CP.WallpaperTone_W11
+        End If
+
+        WallpaperToner.ShowDialog()
     End Sub
 
     Private Sub Select_W11_CheckedChanged(sender As Object) Handles Select_W11.CheckedChanged

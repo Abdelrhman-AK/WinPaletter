@@ -743,6 +743,14 @@ Public Module BitmapExtensions
     End Function
 
     '''<summary>
+    '''Return Image Tinted by a color
+    '''</summary>
+    <Extension()>
+    Public Function Tint(ByVal sourceImage As Image, [Color] As Color) As Bitmap
+        Return Tint(DirectCast(sourceImage, Bitmap), [Color])
+    End Function
+
+    '''<summary>
     '''Return Bitmap Tinted by a color
     '''</summary>
     <Extension()>
@@ -830,6 +838,14 @@ Public Module BitmapExtensions
     <Extension()>
     Public Function Fade(ByVal originalImage As Image, ByVal opacity As Double) As Image
         Return Fade(DirectCast(originalImage, Bitmap), opacity)
+    End Function
+
+    '''<summary>
+    '''Return Bitmap in Grayscale
+    '''</summary>
+    <Extension()>
+    Public Function Grayscale(ByVal original As Image) As Bitmap
+        Return Grayscale(DirectCast(original, Bitmap))
     End Function
 
     '''<summary>

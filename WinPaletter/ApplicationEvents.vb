@@ -1,7 +1,10 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
 Imports System.Management
 Imports System.Net
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Security.Principal
 Imports System.Threading
 Imports AnimatorNS
@@ -150,12 +153,19 @@ Namespace My
                                                                      Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
                                                                      Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper
                                                                      Metrics_Fonts.pnl_preview4.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.Classic_Preview1.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.Classic_Preview3.BackgroundImage = Wallpaper
+                                                                     Metrics_Fonts.Classic_Preview4.BackgroundImage = Wallpaper
                                                                      MainFrm.pnl_preview.Invalidate()
-                                                                     dragPreviewer.pnl_preview.Invalidate()
+                                                                     DragPreviewer.pnl_preview.Invalidate()
+                                                                     DragPreviewer.pnl_preview_classic.Invalidate()
                                                                      Metrics_Fonts.pnl_preview1.Invalidate()
                                                                      Metrics_Fonts.pnl_preview2.Invalidate()
                                                                      Metrics_Fonts.pnl_preview3.Invalidate()
                                                                      Metrics_Fonts.pnl_preview4.Invalidate()
+                                                                     Metrics_Fonts.Classic_Preview1.Invalidate()
+                                                                     Metrics_Fonts.Classic_Preview3.Invalidate()
+                                                                     Metrics_Fonts.Classic_Preview4.Invalidate()
                                                                  End Sub, MethodInvoker)
 
         Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
@@ -647,7 +657,6 @@ Namespace My
                 ShowWhatsNew = False
             End If
 #End Region
-
 
         End Sub
 

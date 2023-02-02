@@ -2536,7 +2536,7 @@ Partial Class Win32UI
         Me.RetroWindow3.MaximizeBox = True
         Me.RetroWindow3.Metrics_BorderWidth = 0
         Me.RetroWindow3.Metrics_CaptionHeight = 18
-        Me.RetroWindow3.Metrics_CaptionWidth = 0
+        Me.RetroWindow3.Metrics_CaptionWidth = 18
         Me.RetroWindow3.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow3.MinimizeBox = True
         Me.RetroWindow3.Name = "RetroWindow3"
@@ -2605,7 +2605,7 @@ Partial Class Win32UI
         Me.RetroWindow2.MaximizeBox = True
         Me.RetroWindow2.Metrics_BorderWidth = 0
         Me.RetroWindow2.Metrics_CaptionHeight = 18
-        Me.RetroWindow2.Metrics_CaptionWidth = 0
+        Me.RetroWindow2.Metrics_CaptionWidth = 18
         Me.RetroWindow2.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow2.MinimizeBox = True
         Me.RetroWindow2.Name = "RetroWindow2"
@@ -2743,7 +2743,7 @@ Partial Class Win32UI
         Me.RetroWindow1.MaximizeBox = True
         Me.RetroWindow1.Metrics_BorderWidth = 0
         Me.RetroWindow1.Metrics_CaptionHeight = 18
-        Me.RetroWindow1.Metrics_CaptionWidth = 0
+        Me.RetroWindow1.Metrics_CaptionWidth = 18
         Me.RetroWindow1.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow1.MinimizeBox = True
         Me.RetroWindow1.Name = "RetroWindow1"
@@ -2776,7 +2776,7 @@ Partial Class Win32UI
         Me.RetroWindow4.MaximizeBox = False
         Me.RetroWindow4.Metrics_BorderWidth = 0
         Me.RetroWindow4.Metrics_CaptionHeight = 18
-        Me.RetroWindow4.Metrics_CaptionWidth = 0
+        Me.RetroWindow4.Metrics_CaptionWidth = 18
         Me.RetroWindow4.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow4.MinimizeBox = False
         Me.RetroWindow4.Name = "RetroWindow4"
