@@ -10,11 +10,13 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Mini-Store for themes                                  | :yellow_square: Postponed, May not be done                             |
+| Fonts Aliases                                          | 🔵 Will be done soon                                                  | 
+| Wallpaper's Color Tone                                 | 🔵 Will be done soon                                                  |
 | Windows Metrics & Fonts                                | :white_check_mark: Done (Beta: 1.0.6.9)                                |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
 | Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Done (Beta: 1.0.5.9, Stable: 1.0.6.0)               |
+| Mini-Store for themes                                  | :yellow_square: Postponed, May not be done                             |
 
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
 
@@ -31,12 +33,12 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 | Operation System                                       | Requirements                                                                             |
 | ------------------------------------------------------ | -----------------------------------------------------------------------------------------|
-| **Windows 7 and Windows 8.1**                          | WinPaletter Version `1.0.5.0` and **Higher** + [.NET Framework 4.7, or better 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`    |
-| **Windows 10 and Windows 11**                          | WinPaletter `Any Version` + .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
+| **Windows 7 and 8.1**                                  | WinPaletter Version `1.0.5.0` and **Higher** + [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`    |
+| **Windows 10 and 11**                                  | WinPaletter `Any Version` + .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Colorizing Windows Accents.
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Banner.png?raw=true)
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Sample.png?raw=true)
 

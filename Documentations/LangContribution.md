@@ -63,6 +63,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 - In `Information`'s part, `righttoleft` can be `"righttoleft": false` or `"righttoleft": true` (Not TRUE or True, keep it the same as explained before)
 
 - Don't remove or modify brackets (`{0}`), slashes (`\` or `/`) or quotation marks (`"`), keep them consistent with your new translation.
+    > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
 
 - Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
 
@@ -72,7 +73,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 
 # Modify contents using WinPaletter itself
 
-> Ignore this if you prefer a a code\text editor
+> Ignore this if you prefer a code\text editor
 
 1. Open WinPaletter > Settings > Language > Language Developing Tools > Create\Modify Language Files (Go) > Press on `Generate New (English) and Open it` and save JSON file as you want anywhere, or press on `Open From`. You will find the JSON file is deserialized into a tree node inside the application.
 
