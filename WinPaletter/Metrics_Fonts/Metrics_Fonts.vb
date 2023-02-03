@@ -8,6 +8,7 @@ Public Class Metrics_Fonts
         pnl_preview2.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
+
         Classic_Preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage

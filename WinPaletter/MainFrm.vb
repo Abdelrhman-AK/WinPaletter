@@ -791,20 +791,24 @@ Public Class MainFrm
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W10
                 ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W8
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W7
                 taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
@@ -827,6 +831,7 @@ Public Class MainFrm
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -3159,9 +3164,28 @@ Public Class MainFrm
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
         My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
-        pnl_preview.BackgroundImage = My.Wallpaper
+
+        Select Case PreviewConfig
+            Case WinVer.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W8
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W7
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+        End Select
+
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
+
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
+        ReValidateLivePreview(pnl_preview)
+        ReValidateLivePreview(pnl_preview_classic)
+
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
@@ -3276,11 +3300,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
-        pnl_preview.Visible = False
+        SuspendLayout()
+        'previewContainer.Visible = False
+        'TablessControl1.Visible = False
     End Sub
 
     Private Sub MainFrm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-        pnl_preview.Visible = True
+        ResumeLayout()
+        'previewContainer.Visible = True
+        'TablessControl1.Visible = True
     End Sub
 
     Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click

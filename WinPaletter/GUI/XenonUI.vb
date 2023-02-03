@@ -416,8 +416,7 @@ Public Class TablessControl
     Inherits TabControl
 
     Public Sub New()
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-        SetStyle(ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw, True)
         Me.DoubleBuffered = True
     End Sub
 
@@ -428,6 +427,7 @@ Public Class TablessControl
             MyBase.WndProc(m)
         End If
     End Sub
+
 End Class
 Public Class XenonTabControl : Inherits TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
@@ -1566,7 +1566,7 @@ End Class
 Public Class XenonGroupBox : Inherits Panel
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True) 
         DoubleBuffered = True
         Text = ""
     End Sub
@@ -4472,7 +4472,9 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         End If
     End Sub
 
+
     Sub ProcessBack()
+
         GetBack()
         BlurBack()
         'NoiseBack()
@@ -4480,7 +4482,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
     Sub GetBack()
         Try
-            adaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)
+            Dim Wallpaper As Bitmap
+            If Parent.BackgroundImage Is Nothing Then Wallpaper = My.Wallpaper Else Wallpaper = Parent.BackgroundImage
+            adaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat)
+
         Catch : End Try
 
         Try : If Transparency Then
@@ -4581,7 +4586,7 @@ Public Class XenonFakeIcon : Inherits Panel
     End Sub
 
 End Class
-Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropertyChanged
+Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 
     Private _DarkMode As Boolean = True
 
@@ -4628,7 +4633,18 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         AdjustPadding()
         Font = New Font("Segoe UI", 9)
         DoubleBuffered = True
+        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+        BackColor = Color.Transparent
     End Sub
+
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.ExStyle = cp.ExStyle Or &H20
+            Return cp
+        End Get
+    End Property
 
     Private _DropShadow As Boolean = True
     Public Event DropShadowChanged As PropertyChangedEventHandler
@@ -4775,6 +4791,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
     ReadOnly FreeMargin As Integer = 8
 
+
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -4799,16 +4816,12 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
         If ToolWindow Then LabelRect.X = IconRect.X
         Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
         Dim XRect As New Rectangle(Rect.Right - 20, Rect.Y, 20, TitlebarRect.Height)
-        G.Clear(Color.Transparent)
+
+        'G.Clear(Color.Transparent)
 
 
         If Preview = Preview_Enum.W11 Then
 #Region "Windows 11"
-            Try
-                G.DrawImage(AdaptedBack, RectBK)
-            Catch
-            End Try
-
             If Shadow And Active And Not DesignMode Then
                 G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
             End If
@@ -4848,11 +4861,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         ElseIf Preview = Preview_Enum.W10 Then
 #Region "Windows 10"
-            Try
-                G.DrawImage(AdaptedBack, RectBK)
-            Catch
-            End Try
-
             If Shadow And Active And Not DesignMode Then
                 G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
             End If
@@ -4929,8 +4937,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             Dim c As Color = If(Active, Color.FromArgb((Win7ColorBal / 100) * 255, AccentColor_Active), InC)
 
             Dim bc As Color = Color.FromArgb(217, 217, 217)
-
-            G.DrawImage(AdaptedBack, RectBK)
 
             G.FillRectangle(New SolidBrush(bc), Rect)
             G.FillRectangle(New SolidBrush(c), Rect)
@@ -5013,8 +5019,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             If Preview <> Preview_Enum.W7Basic Then
 
 #Region "Aero"
-                G.DrawImage(AdaptedBack, RectBK)
-
                 If Shadow And Active And Not DesignMode Then
                     G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
                 End If
@@ -5171,8 +5175,6 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
             Else
 
 #Region "Basic"
-                G.DrawImage(AdaptedBack, RectBK)
-
                 Sum = Metrics_BorderWidth + Metrics_PaddedBorderWidth
                 TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
                 TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
@@ -5387,6 +5389,7 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
 
         End If
 
+
     End Sub
 
     Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
@@ -5441,14 +5444,11 @@ Public Class XenonWindow : Inherits ContainerControl : Implements INotifyPropert
     End Sub
 
     Sub ProcessBack()
-        Dim Win7 As Boolean = (Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic)
-        If Win7 Or (Not Win7 And AdaptedBack Is Nothing) Then
-            Try : AdaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat) : Catch : End Try
-            Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
-            Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
-        Else
-            Try : AdaptedBack = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat) : Catch : End Try
-        End If
+        Dim Wallpaper As Bitmap
+        If Parent.BackgroundImage Is Nothing Then Wallpaper = My.Wallpaper Else Wallpaper = Parent.BackgroundImage
+        Try : AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat) : Catch : End Try
+        Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
+        Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
     End Sub
 End Class
 
@@ -5761,18 +5761,12 @@ Public Class XenonTrackbar
             If Not DesignMode Then
                 AddHandler FindForm.Load, AddressOf Loaded
                 AddHandler FindForm.Shown, AddressOf Showed
-                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                AddHandler Parent.VisibleChanged, AddressOf RefreshColorPalette
-                AddHandler Parent.EnabledChanged, AddressOf RefreshColorPalette
-                AddHandler VisibleChanged, AddressOf RefreshColorPalette
-                AddHandler EnabledChanged, AddressOf RefreshColorPalette
             End If
         Catch
         End Try
 
         Try
             alpha = 0
-
         Catch
         End Try
     End Sub
@@ -5783,14 +5777,9 @@ Public Class XenonTrackbar
 
     Sub Showed()
         _Shown = True
-
         Invalidate()
     End Sub
 
-    Public Sub RefreshColorPalette()
-
-        Invalidate()
-    End Sub
 End Class
 
 <DefaultEvent("Click")>

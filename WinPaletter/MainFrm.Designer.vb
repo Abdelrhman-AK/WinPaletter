@@ -353,12 +353,12 @@ Partial Class MainFrm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.XenonButton27 = New WinPaletter.XenonButton()
         Me.XenonButton24 = New WinPaletter.XenonButton()
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -693,6 +693,7 @@ Partial Class MainFrm
         Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow2.Active = False
+        Me.XenonWindow2.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow2.DarkMode = True
         Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -722,6 +723,7 @@ Partial Class MainFrm
         Me.XenonWindow1.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow1.Active = True
+        Me.XenonWindow1.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
@@ -4936,6 +4938,23 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Size = New System.Drawing.Size(518, 65)
         Me.XenonGroupBox3.TabIndex = 28
         '
+        'XenonButton26
+        '
+        Me.XenonButton26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton26.ForeColor = System.Drawing.Color.White
+        Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
+        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(111, Byte), Integer))
+        Me.XenonButton26.LineSize = 1
+        Me.XenonButton26.Location = New System.Drawing.Point(5, 3)
+        Me.XenonButton26.Name = "XenonButton26"
+        Me.XenonButton26.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton26.TabIndex = 30
+        Me.XenonButton26.Text = "Wallpaper Tint"
+        Me.XenonButton26.UseVisualStyleBackColor = False
+        '
         'XenonButton27
         '
         Me.XenonButton27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -5020,23 +5039,6 @@ Partial Class MainFrm
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Text = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
-        '
-        'XenonButton26
-        '
-        Me.XenonButton26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
-        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(111, Byte), Integer))
-        Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(5, 3)
-        Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(84, 59)
-        Me.XenonButton26.TabIndex = 30
-        Me.XenonButton26.Text = "Wallpaper Tint"
-        Me.XenonButton26.UseVisualStyleBackColor = False
         '
         'MainFrm
         '

@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Microsoft.Win32
 Imports Newtonsoft.Json.Linq
@@ -606,10 +607,78 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End Structure
 
-        Structure WallpaperTone
+        Structure WallpaperTone : Implements ICloneable
             Public Enabled As Boolean
             Public Image As String
             Public H, S, L As Integer
+
+            Public Shared Function Load_From_Registry(SubKey As String) As WallpaperTone
+
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WallpaperTone")
+
+                Dim r As RegistryKey = rMain
+                r.CreateSubKey(SubKey)
+                r = r.OpenSubKey(SubKey)
+
+                Dim WT As New WallpaperTone With {
+                    .Enabled = r.GetValue("Enabled", False),
+                    .Image = r.GetValue("Image", Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"),
+                    .H = r.GetValue("H", 0),
+                    .S = r.GetValue("S", 50),
+                    .L = r.GetValue("L", 50)
+                }
+
+                r.Close()
+
+                Return WT
+            End Function
+
+            Public Shared Sub Save_To_Registry(WT As WallpaperTone, SubKey As String)
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WallpaperTone")
+                Dim r As RegistryKey
+
+                r = rMain.CreateSubKey(SubKey)
+                With r
+                    .SetValue("Enabled", WT.Enabled, RegistryValueKind.QWord)
+                    .SetValue("Image", WT.Image, RegistryValueKind.String)
+                    .SetValue("H", WT.H, RegistryValueKind.QWord)
+                    .SetValue("S", WT.S, RegistryValueKind.QWord)
+                    .SetValue("L", WT.L, RegistryValueKind.QWord)
+                End With
+
+                r.Close()
+                rMain.Close()
+            End Sub
+
+            Public Sub Apply()
+                Dim HSL As New HSLFilter With {
+                        .Hue = Me.H,
+                        .Saturation = (Me.S - 50) * 2,
+                        .Lightness = (Me.L - 50) * 2
+                    }
+
+                Dim img As Bitmap
+                If Not IO.File.Exists(Image) Then Throw New IOException("Couldn't Find image")
+                Dim S As New IO.FileStream(Me.Image, IO.FileMode.Open, IO.FileAccess.Read)
+                img = System.Drawing.Image.FromStream(S)
+                S.Close()
+
+                HSL.ExecuteFilter(img).Save(Path.Combine(My.Application.appData, "TintedWallpaper.bmp"))
+
+                NativeMethods.User32.SystemParametersInfo(SPI.SPI_SETDESKWALLPAPER, 0, Path.Combine(My.Application.appData, "TintedWallpaper.bmp"), SPIF.SPIF_SENDCHANGE Or SPIF.SPIF_UPDATEINIFILE)
+            End Sub
+            Shared Operator =(First As WallpaperTone, Second As WallpaperTone) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As WallpaperTone, Second As WallpaperTone) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
         End Structure
 
         Structure LogonUI10x : Implements ICloneable
@@ -1136,6 +1205,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 [Cursor].SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
                 [Cursor].LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
                 [Cursor].LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
+
+                r.Close()
 
                 Return [Cursor]
             End Function
@@ -3522,6 +3593,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Try
 #End Region
 
+#Region "Wallpaper Tone"
+                WallpaperTone_W11 = Structures.WallpaperTone.Load_From_Registry("Win11")
+                WallpaperTone_W10 = Structures.WallpaperTone.Load_From_Registry("Win10")
+                WallpaperTone_W8 = Structures.WallpaperTone.Load_From_Registry("Win8.1")
+                WallpaperTone_W7 = Structures.WallpaperTone.Load_From_Registry("Win7")
+#End Region
+
 #Region "Terminals"
 
                 CommandPrompt = Structures.Console.Load_Console_From_Registry("", _Def.CommandPrompt)
@@ -4132,7 +4210,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 sw.Reset()
                 sw.Stop()
 
-
                 If ReportProgress Then
                     My.Saving_Exceptions.Clear()
                     [TreeView].Nodes.Clear()
@@ -4373,6 +4450,37 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     sw.Start() : sw_all.Start()
                 End Try
                 sw.Stop()
+
+
+                'Wallpaper Tint
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WallpaperTone), "info")
+                sw.Reset() : sw.Start()
+                Try
+                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
+                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10")
+                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W8, "Win8.1")
+                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7")
+
+                    If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply()
+                    If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply()
+                    If My.W8 And WallpaperTone_W8.Enabled Then WallpaperTone_W8.Apply()
+                    If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply()
+
+                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WallpaperTone_Error), "error")
+                        AddException(My.Lang.CP_WallpaperTone_Error, ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+
 
                 'Windows Terminals/Consoles
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")

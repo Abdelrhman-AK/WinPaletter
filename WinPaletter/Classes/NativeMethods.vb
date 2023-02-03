@@ -144,7 +144,9 @@ Namespace NativeMethods
         Public Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
         End Function
 
-        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByVal lpvParam As Integer, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
+
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
 
         Public Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
             Return (high << 16) Or (low And &HFFFF)

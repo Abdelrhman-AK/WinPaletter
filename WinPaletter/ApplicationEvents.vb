@@ -145,17 +145,39 @@ Namespace My
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                     MainFrm.pnl_preview.BackgroundImage = Wallpaper
-                                                                     MainFrm.pnl_preview_classic.BackgroundImage = Wallpaper
-                                                                     DragPreviewer.pnl_preview.BackgroundImage = Wallpaper
-                                                                     DragPreviewer.pnl_preview_classic.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.pnl_preview1.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.pnl_preview2.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.pnl_preview3.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.pnl_preview4.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.Classic_Preview1.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.Classic_Preview3.BackgroundImage = Wallpaper
-                                                                     Metrics_Fonts.Classic_Preview4.BackgroundImage = Wallpaper
+                                                                     Dim Wall As Bitmap
+                                                                     Try
+                                                                         If MainFrm.CP IsNot Nothing Then
+                                                                             Select Case MainFrm.PreviewConfig
+                                                                                 Case MainFrm.WinVer.W11
+                                                                                     If MainFrm.CP.WallpaperTone_W11.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W11) Else Wall = Wallpaper
+
+                                                                                 Case MainFrm.WinVer.W10
+                                                                                     If MainFrm.CP.WallpaperTone_W10.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W10) Else Wall = Wallpaper
+
+                                                                                 Case MainFrm.WinVer.W8
+                                                                                     If MainFrm.CP.WallpaperTone_W8.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W8) Else Wall = Wallpaper
+
+                                                                                 Case MainFrm.WinVer.W7
+                                                                                     If MainFrm.CP.WallpaperTone_W7.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W7) Else Wall = Wallpaper
+                                                                             End Select
+                                                                         Else
+                                                                             Wall = Wallpaper
+                                                                         End If
+                                                                     Catch
+                                                                         Wall = Wallpaper
+                                                                     End Try
+                                                                     MainFrm.pnl_preview.BackgroundImage = Wall
+                                                                     MainFrm.pnl_preview_classic.BackgroundImage = Wall
+                                                                     DragPreviewer.pnl_preview.BackgroundImage = Wall
+                                                                     DragPreviewer.pnl_preview_classic.BackgroundImage = Wall
+                                                                     Metrics_Fonts.pnl_preview1.BackgroundImage = Wall
+                                                                     Metrics_Fonts.pnl_preview2.BackgroundImage = Wall
+                                                                     Metrics_Fonts.pnl_preview3.BackgroundImage = Wall
+                                                                     Metrics_Fonts.pnl_preview4.BackgroundImage = Wall
+                                                                     Metrics_Fonts.Classic_Preview1.BackgroundImage = Wall
+                                                                     Metrics_Fonts.Classic_Preview3.BackgroundImage = Wall
+                                                                     Metrics_Fonts.Classic_Preview4.BackgroundImage = Wall
                                                                      MainFrm.pnl_preview.Invalidate()
                                                                      DragPreviewer.pnl_preview.Invalidate()
                                                                      DragPreviewer.pnl_preview_classic.Invalidate()

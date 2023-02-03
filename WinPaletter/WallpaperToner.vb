@@ -194,4 +194,10 @@ Public Class WallpaperToner
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         Me.Close()
     End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        Cursor = Cursors.WaitCursor
+        ApplyToWT().Apply()
+        Cursor = Cursors.Default
+    End Sub
 End Class
