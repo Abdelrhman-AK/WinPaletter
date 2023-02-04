@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Reflection
+﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Microsoft.Win32
 Imports Newtonsoft.Json.Linq
@@ -658,15 +657,49 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     }
 
                 Dim img As Bitmap
-                If Not IO.File.Exists(Image) Then Throw New IOException("Couldn't Find image")
+                If Not IO.File.Exists(Image) Then Throw New IO.IOException("Couldn't Find image")
                 Dim S As New IO.FileStream(Me.Image, IO.FileMode.Open, IO.FileAccess.Read)
                 img = System.Drawing.Image.FromStream(S)
                 S.Close()
 
-                HSL.ExecuteFilter(img).Save(Path.Combine(My.Application.appData, "TintedWallpaper.bmp"))
+                HSL.ExecuteFilter(img).Save(IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"))
 
-                NativeMethods.User32.SystemParametersInfo(SPI.SPI_SETDESKWALLPAPER, 0, Path.Combine(My.Application.appData, "TintedWallpaper.bmp"), SPIF.SPIF_SENDCHANGE Or SPIF.SPIF_UPDATEINIFILE)
+                NativeMethods.User32.SystemParametersInfo(SPI.SPI_SETDESKWALLPAPER, 0, IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"), SPIF.SPIF_SENDCHANGE Or SPIF.SPIF_UPDATEINIFILE)
+
+                MainFrm.Update_Wallpaper_Preview()
             End Sub
+
+            Shared Function Load_WallpaperTone_From_ListOfString(tx As List(Of String)) As WallpaperTone
+                If tx.Count > 0 Then
+                    Dim WT As New WallpaperTone With {.Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"}
+
+                    For Each lin As String In tx
+                        If lin.ToLower.StartsWith("Enabled= ".ToLower) Then WT.Enabled = lin.Remove(0, "Enabled= ".Count)
+                        If lin.ToLower.StartsWith("Image= ".ToLower) Then WT.Image = lin.Remove(0, "Image= ".Count)
+                        If lin.ToLower.StartsWith("H= ".ToLower) Then WT.H = lin.Remove(0, "H= ".Count)
+                        If lin.ToLower.StartsWith("S= ".ToLower) Then WT.S = lin.Remove(0, "S= ".Count)
+                        If lin.ToLower.StartsWith("L= ".ToLower) Then WT.L = lin.Remove(0, "L= ".Count)
+                    Next
+
+                    Return WT
+                Else
+                    Return New Structures.WallpaperTone With {
+                            .Enabled = False,
+                            .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+                            .H = 0, .S = 50, .L = 50}
+                End If
+            End Function
+
+            Shared Sub Write_WallpaperTone_To_ListOfString(Signature As String, WT As WallpaperTone, tx As List(Of String))
+                tx.Add(String.Format("<WallpaperTone_{0}>", Signature))
+                tx.Add(String.Format("*WallpaperTone_{0}_Enabled= {1}", Signature, WT.Enabled))
+                tx.Add(String.Format("*WallpaperTone_{0}_Image= {1}", Signature, WT.Image))
+                tx.Add(String.Format("*WallpaperTone_{0}_H= {1}", Signature, WT.H))
+                tx.Add(String.Format("*WallpaperTone_{0}_S= {1}", Signature, WT.S))
+                tx.Add(String.Format("*WallpaperTone_{0}_L= {1}", Signature, WT.L))
+                tx.Add(String.Format("</WallpaperTone_{0}>", Signature) & vbCrLf)
+            End Sub
+
             Shared Operator =(First As WallpaperTone, Second As WallpaperTone) As Boolean
                 Return First.Equals(Second)
             End Operator
@@ -3753,6 +3786,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim fonts As New List(Of String)
                 fonts.Clear()
 
+                Dim WT_11, WT_10, WT_8, WT_7 As New List(Of String)
+                WT_11.Clear()
+                WT_10.Clear()
+                WT_8.Clear()
+                WT_7.Clear()
+
                 '## Checks if the loaded file is an old WPTH or not
                 Dim OldWPTH As Boolean = False
                 For Each lin As String In txt
@@ -4096,6 +4135,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 #End Region
 
+#Region "Wallpaper Tone"
+                    If lin.ToLower.StartsWith("*WallpaperTone_Win11_".ToLower) Then WT_11.Add(lin.Remove(0, "*WallpaperTone_Win11_".Count))
+                    If lin.ToLower.StartsWith("*WallpaperTone_Win10_".ToLower) Then WT_10.Add(lin.Remove(0, "*WallpaperTone_Win10_".Count))
+                    If lin.ToLower.StartsWith("*WallpaperTone_Win8.1_".ToLower) Then WT_8.Add(lin.Remove(0, "*WallpaperTone_Win8.1_".Count))
+                    If lin.ToLower.StartsWith("*WallpaperTone_Win7_".ToLower) Then WT_7.Add(lin.Remove(0, "*WallpaperTone_Win7_".Count))
+#End Region
+
 #Region "Cursors"
                     If lin.ToLower.StartsWith("*Cursor_Enabled= ".ToLower) Then Cursors_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
 
@@ -4151,6 +4197,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Next
                 End If
 
+#End Region
+
+#Region "Wallpaper Tone"
+                WallpaperTone_W11 = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_11)
+                WallpaperTone_W10 = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_10)
+                WallpaperTone_W8 = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_8)
+                WallpaperTone_W7 = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_7)
 #End Region
 
 #Region "Cursors"
@@ -4928,6 +4981,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add(AddFontsToThemeFile("SmCaption", MetricsFonts.SmCaptionFont))
                 tx.Add(AddFontsToThemeFile("Status", MetricsFonts.StatusFont))
                 tx.Add("</Metrics&Fonts>" & vbCrLf)
+#End Region
+
+#Region "Wallpaper Tone"
+                Structures.WallpaperTone.Write_WallpaperTone_To_ListOfString("Win11", WallpaperTone_W11, tx)
+                Structures.WallpaperTone.Write_WallpaperTone_To_ListOfString("Win10", WallpaperTone_W10, tx)
+                Structures.WallpaperTone.Write_WallpaperTone_To_ListOfString("Win8.1", WallpaperTone_W8, tx)
+                Structures.WallpaperTone.Write_WallpaperTone_To_ListOfString("Win7", WallpaperTone_W7, tx)
 #End Region
 
 #Region "Terminals"

@@ -770,6 +770,31 @@ Public Class MainFrm
         Next
     End Sub
 
+    Public Sub Update_Wallpaper_Preview()
+        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
+
+        Select Case PreviewConfig
+            Case WinVer.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W8
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W7
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+        End Select
+
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
+
+        ApplyLivePreviewFromCP(CP)
+        ApplyCPValues(CP)
+        ReValidateLivePreview(pnl_preview)
+        ReValidateLivePreview(pnl_preview_classic)
+    End Sub
+
     Sub Adjust_Preview()
 
         If _Shown Then
@@ -1038,19 +1063,6 @@ Public Class MainFrm
         W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
         W8_personalcls_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
         W8_personalcolor_accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
-
-        W11_WinMode_Toggle.Refresh()
-        W11_AppMode_Toggle.Refresh()
-        W11_Transparency_Toggle.Refresh()
-        W11_ShowAccentOnTitlebarAndBorders_Toggle.Refresh()
-
-        W10_WinMode_Toggle.Refresh()
-        W10_AppMode_Toggle.Refresh()
-        W10_Transparency_Toggle.Refresh()
-        W10_ShowAccentOnTitlebarAndBorders_Toggle.Refresh()
-
-        W7_EnableAeroPeek_toggle.Refresh()
-        W7_AlwaysHibernateThumbnails_Toggle.Refresh()
 
         ApplyMetroStartToButton(ColorPalette)
         ApplyBackLogonUI(ColorPalette)
@@ -2992,6 +3004,8 @@ Public Class MainFrm
                 CP = New CP(CP.Mode.File, files(0))
                 ApplyCPValues(CP)
                 ApplyLivePreviewFromCP(CP)
+                Adjust_Preview()
+                AdjustClassicPreview()
             Else
                 SettingsX._External = True
                 SettingsX._File = files(0)
@@ -3163,29 +3177,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
-
-        Select Case PreviewConfig
-            Case WinVer.W11
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W10
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W8
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W7
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
-        End Select
-
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
-
-        ApplyLivePreviewFromCP(CP)
-        ApplyCPValues(CP)
-        ReValidateLivePreview(pnl_preview)
-        ReValidateLivePreview(pnl_preview_classic)
-
+        Update_Wallpaper_Preview()
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click

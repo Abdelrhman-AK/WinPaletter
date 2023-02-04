@@ -23,7 +23,7 @@ Partial Class WallpaperToner
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(WallpaperToner))
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.OpenImgDlg = New System.Windows.Forms.OpenFileDialog()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
@@ -57,8 +57,9 @@ Partial Class WallpaperToner
         Me.Label12 = New System.Windows.Forms.Label()
         Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.TintEnabled = New WinPaletter.XenonToggle()
+        Me.ToneEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,9 +71,9 @@ Partial Class WallpaperToner
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'OpenFileDialog1
+        'OpenImgDlg
         '
-        Me.OpenFileDialog1.Filter = "Images (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"
+        Me.OpenImgDlg.Filter = "Images (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"
         '
         'XenonAlertBox1
         '
@@ -348,7 +349,7 @@ Partial Class WallpaperToner
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(65, 24)
         Me.Label1.TabIndex = 120
-        Me.Label1.Text = "Light:"
+        Me.Label1.Text = "Lightness:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox2
@@ -480,7 +481,7 @@ Partial Class WallpaperToner
         Me.XenonGroupBox12.Controls.Add(Me.Label12)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
-        Me.XenonGroupBox12.Controls.Add(Me.TintEnabled)
+        Me.XenonGroupBox12.Controls.Add(Me.ToneEnabled)
         Me.XenonGroupBox12.Controls.Add(Me.PictureBox30)
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
@@ -539,23 +540,23 @@ Partial Class WallpaperToner
         Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(353, 5)
+        Me.XenonButton12.Location = New System.Drawing.Point(351, 5)
         Me.XenonButton12.Name = "XenonButton12"
         Me.XenonButton12.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton12.TabIndex = 108
         Me.XenonButton12.Text = "Default Windows"
         Me.XenonButton12.UseVisualStyleBackColor = False
         '
-        'TintEnabled
+        'ToneEnabled
         '
-        Me.TintEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TintEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.TintEnabled.Checked = False
-        Me.TintEnabled.DarkLight_Toggler = False
-        Me.TintEnabled.Location = New System.Drawing.Point(574, 9)
-        Me.TintEnabled.Name = "TintEnabled"
-        Me.TintEnabled.Size = New System.Drawing.Size(40, 20)
-        Me.TintEnabled.TabIndex = 85
+        Me.ToneEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ToneEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ToneEnabled.Checked = False
+        Me.ToneEnabled.DarkLight_Toggler = False
+        Me.ToneEnabled.Location = New System.Drawing.Point(574, 9)
+        Me.ToneEnabled.Name = "ToneEnabled"
+        Me.ToneEnabled.Size = New System.Drawing.Size(40, 20)
+        Me.ToneEnabled.TabIndex = 85
         '
         'PictureBox30
         '
@@ -567,6 +568,11 @@ Partial Class WallpaperToner
         Me.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox30.TabIndex = 83
         Me.PictureBox30.TabStop = False
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "wpt"
+        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
         'WallpaperToner
         '
@@ -609,7 +615,7 @@ Partial Class WallpaperToner
     Friend WithEvents Label12 As Label
     Friend WithEvents XenonButton11 As XenonButton
     Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents TintEnabled As XenonToggle
+    Friend WithEvents ToneEnabled As XenonToggle
     Friend WithEvents PictureBox30 As PictureBox
     Friend WithEvents previewContainer As XenonGroupBox
     Friend WithEvents pnl_preview As Panel
@@ -638,6 +644,7 @@ Partial Class WallpaperToner
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents OpenImgDlg As OpenFileDialog
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

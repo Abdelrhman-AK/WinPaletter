@@ -16,8 +16,6 @@ Public Class DragPreviewer
         Opacity = 0
         Visible = False
 
-        pnl_preview.BackgroundImage = My.Wallpaper
-
         If My.W11 Or My.W10 Then
             FormBorderStyle = FormBorderStyle.None
             BackColor = Color.Black
@@ -29,6 +27,23 @@ Public Class DragPreviewer
         End If
 
         CP = New CP(CP.Mode.File, File, True)
+
+        Select Case MainFrm.PreviewConfig
+            Case WinVer.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W8
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W7
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+        End Select
+
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
@@ -739,6 +754,10 @@ Public Class DragPreviewer
     End Sub
 
     Sub ApplyRetroPreview([CP] As CP)
+        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
+        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+        RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+
         RetroWindow1.ColorGradient = [CP].Win32.EnableGradient
         RetroWindow2.ColorGradient = [CP].Win32.EnableGradient
         RetroWindow3.ColorGradient = [CP].Win32.EnableGradient

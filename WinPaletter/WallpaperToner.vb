@@ -30,9 +30,9 @@ Public Class WallpaperToner
     End Sub
 
     Sub LoadFromWT([WT] As CP.Structures.WallpaperTone)
-        TintEnabled.Checked = [WT].Enabled
+        ToneEnabled.Checked = [WT].Enabled
         XenonTextBox1.Text = [WT].Image
-
+        If Not IO.File.Exists([WT].Image) Then [WT].Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
         Dim S As New FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
         img = Image.FromStream(S).Resize(pnl_preview.Size)
         S.Close()
@@ -44,11 +44,11 @@ Public Class WallpaperToner
 
     Function ApplyToWT() As CP.Structures.WallpaperTone
         Return New CP.Structures.WallpaperTone With {
-            .Enabled = TintEnabled.Checked,
-            .Image = XenonTextBox1.Text,
-            .H = HBar.Value,
-            .S = SBar.Value,
-            .L = LBar.Value
+        .Enabled = ToneEnabled.Checked,
+        .Image = XenonTextBox1.Text,
+        .H = HBar.Value,
+        .S = SBar.Value,
+        .L = LBar.Value
         }
     End Function
 
@@ -147,8 +147,8 @@ Public Class WallpaperToner
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenFileDialog1.FileName
+        If OpenImgDlg.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenImgDlg.FileName
         End If
     End Sub
 
@@ -183,6 +183,8 @@ Public Class WallpaperToner
                 MainFrm.CP.WallpaperTone_W8 = ApplyToWT()
             Case MainFrm.WinVer.W7
                 MainFrm.CP.WallpaperTone_W7 = ApplyToWT()
+            Case Else
+                MainFrm.CP.WallpaperTone_W11 = ApplyToWT()
 
         End Select
 
@@ -198,6 +200,84 @@ Public Class WallpaperToner
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Cursor = Cursors.WaitCursor
         ApplyToWT().Apply()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            Cursor = Cursors.WaitCursor
+
+            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+
+            Select Case MainFrm.PreviewConfig
+                Case MainFrm.WinVer.W11
+                    LoadFromWT(CPx.WallpaperTone_W11)
+                Case MainFrm.WinVer.W10
+                    LoadFromWT(CPx.WallpaperTone_W10)
+                Case MainFrm.WinVer.W8
+                    LoadFromWT(CPx.WallpaperTone_W8)
+                Case MainFrm.WinVer.W7
+                    LoadFromWT(CPx.WallpaperTone_W7)
+                Case Else
+                    LoadFromWT(CPx.WallpaperTone_W11)
+
+            End Select
+
+            CPx.Dispose()
+
+            Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        Cursor = Cursors.WaitCursor
+
+        Dim CPx As New CP(CP.Mode.Registry)
+
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                LoadFromWT(CPx.WallpaperTone_W11)
+            Case MainFrm.WinVer.W10
+                LoadFromWT(CPx.WallpaperTone_W10)
+            Case MainFrm.WinVer.W8
+                LoadFromWT(CPx.WallpaperTone_W8)
+            Case MainFrm.WinVer.W7
+                LoadFromWT(CPx.WallpaperTone_W7)
+            Case Else
+                LoadFromWT(CPx.WallpaperTone_W11)
+
+        End Select
+
+        CPx.Dispose()
+
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        Cursor = Cursors.WaitCursor
+
+        Dim CPx As CP
+
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                CPx = New CP_Defaults().Default_Windows11
+                LoadFromWT(CPx.WallpaperTone_W11)
+            Case MainFrm.WinVer.W10
+                CPx = New CP_Defaults().Default_Windows10
+                LoadFromWT(CPx.WallpaperTone_W10)
+            Case MainFrm.WinVer.W8
+                CPx = New CP_Defaults().Default_Windows8
+                LoadFromWT(CPx.WallpaperTone_W8)
+            Case MainFrm.WinVer.W7
+                CPx = New CP_Defaults().Default_Windows7
+                LoadFromWT(CPx.WallpaperTone_W7)
+            Case Else
+                CPx = New CP_Defaults().Default_Windows11
+                LoadFromWT(CPx.WallpaperTone_W11)
+        End Select
+
+        CPx.Dispose()
+
         Cursor = Cursors.Default
     End Sub
 End Class

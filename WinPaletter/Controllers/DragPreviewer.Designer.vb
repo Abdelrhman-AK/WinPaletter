@@ -150,6 +150,7 @@ Partial Class DragPreviewer
         Me.XenonWindow1.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow1.Active = True
+        Me.XenonWindow1.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow1.Controls.Add(Me.Panel5)
         Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
@@ -230,6 +231,7 @@ Partial Class DragPreviewer
         Me.XenonWindow2.AccentColor2_Active = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.XenonWindow2.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow2.Active = False
+        Me.XenonWindow2.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow2.DarkMode = True
         Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -479,7 +481,7 @@ Partial Class DragPreviewer
         Me.RetroWindow3.MaximizeBox = True
         Me.RetroWindow3.Metrics_BorderWidth = 0
         Me.RetroWindow3.Metrics_CaptionHeight = 18
-        Me.RetroWindow3.Metrics_CaptionWidth = 0
+        Me.RetroWindow3.Metrics_CaptionWidth = 18
         Me.RetroWindow3.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow3.MinimizeBox = True
         Me.RetroWindow3.Name = "RetroWindow3"
@@ -563,7 +565,7 @@ Partial Class DragPreviewer
         Me.RetroWindow2.MaximizeBox = True
         Me.RetroWindow2.Metrics_BorderWidth = 0
         Me.RetroWindow2.Metrics_CaptionHeight = 18
-        Me.RetroWindow2.Metrics_CaptionWidth = 0
+        Me.RetroWindow2.Metrics_CaptionWidth = 18
         Me.RetroWindow2.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow2.MinimizeBox = True
         Me.RetroWindow2.Name = "RetroWindow2"
@@ -686,7 +688,7 @@ Partial Class DragPreviewer
         Me.RetroWindow1.MaximizeBox = True
         Me.RetroWindow1.Metrics_BorderWidth = 0
         Me.RetroWindow1.Metrics_CaptionHeight = 18
-        Me.RetroWindow1.Metrics_CaptionWidth = 0
+        Me.RetroWindow1.Metrics_CaptionWidth = 18
         Me.RetroWindow1.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow1.MinimizeBox = True
         Me.RetroWindow1.Name = "RetroWindow1"
@@ -719,7 +721,7 @@ Partial Class DragPreviewer
         Me.RetroWindow4.MaximizeBox = False
         Me.RetroWindow4.Metrics_BorderWidth = 0
         Me.RetroWindow4.Metrics_CaptionHeight = 18
-        Me.RetroWindow4.Metrics_CaptionWidth = 0
+        Me.RetroWindow4.Metrics_CaptionWidth = 18
         Me.RetroWindow4.Metrics_PaddedBorderWidth = 0
         Me.RetroWindow4.MinimizeBox = False
         Me.RetroWindow4.Name = "RetroWindow4"
@@ -886,7 +888,7 @@ Partial Class DragPreviewer
         Me.ClassicWindow1.MaximizeBox = False
         Me.ClassicWindow1.Metrics_BorderWidth = 0
         Me.ClassicWindow1.Metrics_CaptionHeight = 18
-        Me.ClassicWindow1.Metrics_CaptionWidth = 0
+        Me.ClassicWindow1.Metrics_CaptionWidth = 18
         Me.ClassicWindow1.Metrics_PaddedBorderWidth = 0
         Me.ClassicWindow1.MinimizeBox = False
         Me.ClassicWindow1.Name = "ClassicWindow1"
@@ -917,7 +919,7 @@ Partial Class DragPreviewer
         Me.ClassicWindow2.MaximizeBox = False
         Me.ClassicWindow2.Metrics_BorderWidth = 0
         Me.ClassicWindow2.Metrics_CaptionHeight = 18
-        Me.ClassicWindow2.Metrics_CaptionWidth = 0
+        Me.ClassicWindow2.Metrics_CaptionWidth = 18
         Me.ClassicWindow2.Metrics_PaddedBorderWidth = 0
         Me.ClassicWindow2.MinimizeBox = False
         Me.ClassicWindow2.Name = "ClassicWindow2"

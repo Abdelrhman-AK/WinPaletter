@@ -631,7 +631,7 @@ Public Class XenonToggle
             CheckC.Height = DarkLight_TogglerSize
         End If
 
-        'Invalidate()
+        Invalidate()
     End Sub
     Public Event CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
 
@@ -7118,6 +7118,4 @@ Public Class XenonColorBar
         Invalidate()
     End Sub
 End Class
-
-
 #End Region

@@ -67,7 +67,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
@@ -75,9 +76,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -169,10 +168,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="My Project\app.manifest" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
@@ -339,11 +340,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb" />
     <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="Settings\SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
@@ -486,8 +483,9 @@
     <Content Include="Resources\Mini_ACHover_Links.png" />
     <Content Include="Resources\Mini_Hamburger.png" />
     <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <None Include="Resources\Mini_Overflow.png" />
+    <Content Include="Resources\Mini_Overflow.png" />
     <Content Include="Resources\Mini_PressedButton.png" />
+    <Content Include="Resources\Mini_SettingsIcons.png" />
     <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <Content Include="Resources\Mini_Taskbar.png" />
     <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
@@ -501,7 +499,7 @@
     <Content Include="Resources\notify_skip.png" />
     <Content Include="Resources\notify_success.png" />
     <Content Include="Resources\notify_time.png" />
-    <None Include="Resources\Ookii.Dialogs.WinForms.dll" />
+    <Content Include="Resources\Ookii.Dialogs.WinForms.dll" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />
@@ -514,20 +512,20 @@
     <Content Include="Resources\PS_8x8.png" />
     <Content Include="Resources\Start11_Dark.png" />
     <Content Include="Resources\Start11_Light.png" />
-    <None Include="Resources\Start7Glass.png" />
-    <None Include="Resources\Start7Basic.png" />
-    <None Include="Resources\Start7.png" />
+    <Content Include="Resources\Start7.png" />
+    <Content Include="Resources\Start7Basic.png" />
+    <Content Include="Resources\Start7Glass.png" />
     <Content Include="Resources\StartBtn_10Dark.png" />
     <Content Include="Resources\StartBtn_10Light.png" />
-    <None Include="Resources\System.Buffers.dll" />
-    <None Include="Resources\System.Memory.dll" />
-    <None Include="Resources\System.Numerics.Vectors.dll" />
-    <None Include="Resources\System.Resources.Extensions.dll" />
-    <None Include="Resources\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="Resources\System.Buffers.dll" />
+    <Content Include="Resources\System.Memory.dll" />
+    <Content Include="Resources\System.Numerics.Vectors.dll" />
+    <Content Include="Resources\System.Resources.Extensions.dll" />
+    <Content Include="Resources\System.Runtime.CompilerServices.Unsafe.dll" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
-    <None Include="Resources\Update_Dot.png" />
-    <None Include="Resources\Update.png" />
+    <Content Include="Resources\Update.png" />
+    <Content Include="Resources\Update_Dot.png" />
     <Content Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win7ORB.png" />
     <Content Include="Resources\Win7Sides.png" />
@@ -553,13 +551,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="bk.resx">
       <DependentUpon>bk.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>bk1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>BugReport1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -615,11 +609,7 @@
     <EmbeddedResource Include="Metrics_Fonts\Metrics_Fonts.resx">
       <DependentUpon>Metrics_Fonts.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </EmbeddedResource>
