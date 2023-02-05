@@ -173,6 +173,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_11_Taskbar As String = "Taskbar Color"
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"
     Property CP_11_SomePressedButtons As String = "Some Pressed Buttons"
+    Property CP_UWPBackground As String = "UWP Dialogs Background (Windows 8.1 reminants in {0})"
     Property CP_10_ACLinks As String = "Action Center Links"
     Property CP_10_TaskbarAppUnderline As String = "Taskbar App Underline"
     Property CP_10_StartMenuIconHover As String = "Start Menu Icon Hover"

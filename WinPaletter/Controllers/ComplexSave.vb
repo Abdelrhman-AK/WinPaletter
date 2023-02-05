@@ -22,8 +22,8 @@ Public Class ComplexSave
         ApplyDarkMode(Me)
 
         Dim c As Color = PictureBox1.Image.AverageColor
-        Dim c1 As Color = c.CB(If(GetDarkMode(), -0.35, 0.35))
-        Dim c2 As Color = c.CB(If(GetDarkMode(), -0.75, 0.75))
+        Dim c1 As Color = c.CB(If(GetDarkMode(), -0.5, 0.5))
+        Dim c2 As Color = c.CB(If(GetDarkMode(), -0.85, 0.85))
         Panel1.BackColor = c1
         BackColor = c2
 

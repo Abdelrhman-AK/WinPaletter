@@ -49,13 +49,13 @@ Public Class MainFrm
 
                 W11_lbl5.Text = My.Lang.CP_11_Settings
                 W11_lbl6.Text = My.Lang.CP_11_SomePressedButtons
-                W11_lbl7.Text = My.Lang.CP_Undefined
+                W11_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win11)
                 W11_lbl8.Text = My.Lang.CP_Undefined
                 W11_lbl9.Text = My.Lang.CP_Undefined
 
                 W11_pic5.Image = My.Resources.Mini_Settings_Icons
                 W11_pic6.Image = My.Resources.Mini_PressedButton
-                W11_pic7.Image = My.Resources.Mini_Undefined
+                W11_pic7.Image = My.Resources.Mini_UWPDlg
                 W11_pic8.Image = My.Resources.Mini_Undefined
                 W11_pic9.Image = My.Resources.Mini_Undefined
 
@@ -183,13 +183,13 @@ Public Class MainFrm
                         W10_lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                         W10_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
                         W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
-                        W10_lbl7.Text = My.Lang.CP_Undefined
+                        W10_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win10)
 
                         W10_pic2.Image = My.Resources.Mini_ACHover_Links
                         W10_pic3.Image = My.Resources.Mini_TaskbarApp
                         W10_pic5.Image = My.Resources.Mini_Settings_Icons
                         W10_pic6.Image = My.Resources.Native10
-                        W10_pic7.Image = My.Resources.Mini_Undefined
+                        W10_pic7.Image = My.Resources.Mini_UWPDlg
 
                         If [CP].Windows10.Transparency Then
                             W10_lbl1.Text = My.Lang.CP_10_Hamburger
@@ -225,13 +225,13 @@ Public Class MainFrm
                             W10_lbl1.Text = My.Lang.CP_10_Hamburger
                             W10_lbl4.Text = My.Lang.CP_10_StartMenu_AC
                             W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
-                            W10_lbl7.Text = My.Lang.CP_Undefined
+                            W10_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win10)
 
                             W10_pic1.Image = My.Resources.Mini_Hamburger
                             W10_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                             W10_pic5.Image = My.Resources.Mini_Settings_Icons
                             W10_pic6.Image = My.Resources.Native10
-                            W10_pic7.Image = My.Resources.Mini_Undefined
+                            W10_pic7.Image = My.Resources.Mini_UWPDlg
                             W10_pic8.Image = My.Resources.Mini_Taskbar
 
                             If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
@@ -265,11 +265,11 @@ Public Class MainFrm
                         Else
                             W10_lbl1.Text = My.Lang.CP_10_Taskbar
                             W10_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
-                            W10_lbl7.Text = My.Lang.CP_Undefined
+                            W10_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win10)
 
                             W10_pic1.Image = My.Resources.Mini_Taskbar
                             W10_pic6.Image = My.Resources.Native10
-                            W10_pic7.Image = My.Resources.Mini_Undefined
+                            W10_pic7.Image = My.Resources.Mini_UWPDlg
 
                             If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
                                 W10_lbl2.Text = My.Lang.CP_Undefined
@@ -554,6 +554,7 @@ Public Class MainFrm
                 Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
                         tabs_preview.SelectedIndex = 0
+
                         start.Transparency = True
                         start.Basic = False
                         taskbar.Transparency = True
@@ -651,7 +652,6 @@ Public Class MainFrm
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
-
                         With XenonWindow2
                             .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
@@ -662,7 +662,7 @@ Public Class MainFrm
                         start.Transparency = False
                         start.NoisePower = 0
                         taskbar.Transparency = False
-                        start.NoisePower = 0
+                        taskbar.NoisePower = 0
 
                         start.Basic = True
                         taskbar.Basic = True
@@ -674,7 +674,6 @@ Public Class MainFrm
                         tabs_preview.SelectedIndex = 1
 
                 End Select
-
 #End Region
         End Select
 
@@ -749,11 +748,11 @@ Public Class MainFrm
         [Button].ForeColor = [CP].Win32.ButtonText
     End Sub
 
-    Sub ApplyMetrics(ByVal CP As CP, XenonWindow As XenonWindow)
-        XenonWindow.Font = CP.MetricsFonts.CaptionFont
-        XenonWindow.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+    Sub ApplyMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
+        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
+        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
         XenonWindow.Refresh()
     End Sub
 
@@ -1812,7 +1811,7 @@ Public Class MainFrm
         End If
 
 
-        Dim CList As New List(Of Control) From {sender, start}
+        Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
@@ -2488,7 +2487,7 @@ Public Class MainFrm
         If W7_theme_classic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
-            'Notify(My.Lang.CP_ClassicThemeEditable, My.Resources.notify_warning, 5000)
+            tabs_preview.Refresh()
         End If
 
     End Sub
@@ -2497,6 +2496,7 @@ Public Class MainFrm
         If W7_theme_basic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Basic
             ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -2504,6 +2504,7 @@ Public Class MainFrm
         If W7_theme_aeroopaque.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
             ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -2511,6 +2512,7 @@ Public Class MainFrm
         If W7_theme_aero.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
         End If
     End Sub
 

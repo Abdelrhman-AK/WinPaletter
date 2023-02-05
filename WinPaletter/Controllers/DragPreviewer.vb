@@ -516,7 +516,7 @@ Public Class DragPreviewer
                         start.Transparency = False
                         start.NoisePower = 0
                         taskbar.Transparency = False
-                        start.NoisePower = 0
+                        taskbar.NoisePower = 0
 
                         start.Basic = True
                         taskbar.Basic = True
@@ -528,6 +528,8 @@ Public Class DragPreviewer
                     Case CP.AeroTheme.Classic
 
                 End Select
+
+                pnl_preview.Refresh()
 
                 ReValidateLivePreview(pnl_preview)
 #End Region
