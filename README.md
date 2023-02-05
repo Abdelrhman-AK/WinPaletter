@@ -10,7 +10,7 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Fonts Aliases                                          | 🔵 Will be done soon                                                  | 
+| Fonts Substitutes                                      | 🔵 Will be done soon                                                  | 
 | Wallpaper's Color Tone                                 | 🔵 Will be done soon                                                  |
 | Windows Metrics & Fonts                                | :white_check_mark: Done (Beta: 1.0.6.9)                                |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
