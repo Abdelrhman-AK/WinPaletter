@@ -574,6 +574,13 @@ Public Class XenonToggle
 
     Private _Shown As Boolean = False
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
+
     Public Property Checked As Boolean
         Get
             Return _checked
@@ -866,6 +873,13 @@ Public Class XenonRadioButton
     End Property
 
     Private _Checked As Boolean
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -1139,6 +1153,12 @@ Public Class XenonRadioImage
     Private _Checked As Boolean
     Public Property ShowText As Boolean = False
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 #End Region
 
 #Region "Events"
@@ -1328,6 +1348,12 @@ Public Class XenonCheckBox
 
     ReadOnly Radius As Integer = 5
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -1566,7 +1592,7 @@ End Class
 Public Class XenonGroupBox : Inherits Panel
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True) 
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
         Text = ""
     End Sub
@@ -1576,6 +1602,7 @@ Public Class XenonGroupBox : Inherits Panel
     <Browsable(True)>
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
     <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
 
@@ -1614,6 +1641,7 @@ Public Class XenonAnimatedBox : Inherits Panel
     <Browsable(True)>
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
     <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
 
@@ -1768,6 +1796,7 @@ Public Class XenonCP
     <Browsable(True)>
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
     <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
 #End Region
@@ -1995,6 +2024,13 @@ Public Class XenonButton : Inherits Button
     End Property
 
     Dim LineImage As Color = LineColor
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -2374,6 +2410,13 @@ Public Class XenonSeparator
         Text = ""
     End Sub
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
+
 #Region "Events"
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
@@ -2488,6 +2531,13 @@ Public Class XenonNumericUpDown
             Invalidate()
         End Set
     End Property
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 #End Region
 
 #Region "Animator"
@@ -2675,6 +2725,13 @@ Public Class XenonSeparatorVertical
         Text = ""
     End Sub
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
+
 #Region "Events"
 
     Protected Overrides Sub OnResize(e As EventArgs)
@@ -2842,6 +2899,11 @@ End Class
         End Set
     End Property
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
     <Category("Options")>
     Overrides Property Text As String
         Get
@@ -3543,6 +3605,13 @@ Public Class XenonAlertBox
     Public Property Image As Image
     Public Property CustomColor As Color
     Public Property CenterText As Boolean = False
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -5546,6 +5615,13 @@ Public Class XenonTrackbar
             _LargeChange = value
         End Set
     End Property
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 #End Region
 
     ReadOnly ButtonSize As Integer = 0
@@ -6773,6 +6849,13 @@ Public Class XenonColorBar
             _LargeChange = value
         End Set
     End Property
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = ""
 #End Region
 
     Enum ModesList

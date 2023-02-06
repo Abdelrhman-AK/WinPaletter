@@ -492,15 +492,15 @@
     <None Include="Resources\Mini_Lines_Toggles_Buttons.png" />
     <None Include="Resources\Mini_Overflow.png" />
     <None Include="Resources\Mini_SettingsIcons.png" />
-    <None Include="Resources\Mini_PressedButton.png" />
-    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <None Include="Resources\Mini_Taskbar.png" />
-    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
     <None Include="Resources\Mini_TaskbarActiveIcon.png" />
     <None Include="Resources\Mini_TaskbarApp.png" />
     <None Include="Resources\Mini_Undefined.png" />
+    <None Include="Resources\Mini_TaskbarApp.png" />
+    <None Include="Resources\Mini_Undefined.png" />
     <None Include="Resources\Mini_UWPDlg.png" />
+    <None Include="Resources\Mini_PressedButton.png" />
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
@@ -600,6 +600,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseForm1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>

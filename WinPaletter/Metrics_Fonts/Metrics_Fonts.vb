@@ -199,6 +199,10 @@ Public Class Metrics_Fonts
         Label14.Font = CP.MetricsFonts.StatusFont
         Label6.Text = CP.MetricsFonts.StatusFont.Name
 
+        XenonTextBox1.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg
+        XenonTextBox2.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg2
+        XenonTextBox3.Text = CP.MetricsFonts.FontSubstitute_SegoeUI
+
         XenonTrackbar1.Value = CP.MetricsFonts.BorderWidth
         XenonTrackbar2.Value = CP.MetricsFonts.CaptionHeight
         XenonTrackbar3.Value = CP.MetricsFonts.CaptionWidth
@@ -250,6 +254,10 @@ Public Class Metrics_Fonts
         CP.MetricsFonts.SmCaptionWidth = XenonTrackbar13.Value
         CP.MetricsFonts.DesktopIconSize = XenonTrackbar7.Value
         CP.MetricsFonts.ShellIconSize = XenonTrackbar5.Value
+
+        CP.MetricsFonts.FontSubstitute_MSShellDlg = XenonTextBox1.Text
+        CP.MetricsFonts.FontSubstitute_MSShellDlg2 = XenonTextBox2.Text
+        CP.MetricsFonts.FontSubstitute_SegoeUI = XenonTextBox3.Text
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -770,5 +778,37 @@ Public Class Metrics_Fonts
 
     Private Sub Metrics_Fonts_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         MainFrm.Visible = True
+    End Sub
+
+    Private Sub XenonButton14_Click_1(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Dim F As New Font(XenonTextBox1.Text, 9, FontStyle.Regular)
+        FontDialog2.Font = F
+        If FontDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = FontDialog2.Font.Name
+        End If
+    End Sub
+
+    Private Sub XenonButton15_Click_1(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        Dim F As New Font(XenonTextBox2.Text, 9, FontStyle.Regular)
+        FontDialog2.Font = F
+        If FontDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox2.Text = FontDialog2.Font.Name
+        End If
+    End Sub
+
+    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+        Dim F As New Font(XenonTextBox3.Text, 9, FontStyle.Regular)
+        FontDialog2.Font = F
+        If FontDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox3.Text = FontDialog2.Font.Name
+        End If
+    End Sub
+
+    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+        Dim F As New Font(XenonTextBox4.Text, 9, FontStyle.Regular)
+        FontDialog2.Font = F
+        If FontDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox4.Text = FontDialog2.Font.Name
+        End If
     End Sub
 End Class

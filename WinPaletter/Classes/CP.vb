@@ -506,6 +506,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public MessageFont As Font
             Public SmCaptionFont As Font
             Public StatusFont As Font
+            Public FontSubstitute_MSShellDlg As String
+            Public FontSubstitute_MSShellDlg2 As String
+            Public FontSubstitute_SegoeUI As String
 
             Shared Operator =(First As MetricsFonts, Second As MetricsFonts) As Boolean
                 Return First.Equals(Second)
@@ -547,6 +550,38 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
 
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String)
+
+                    If String.IsNullOrWhiteSpace(FontSubstitute_SegoeUI) Then
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "seguisb.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String)
+                    Else
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "", RegistryValueKind.String)
+                    End If
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String)
+
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
@@ -565,42 +600,42 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     anim.IMinAnimate = MinAnimate.ToInteger
 
-                    With NCM
-                        .lfCaptionFont = lfCaptionFont        'Requires LogOff
-                        .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
-                        .lfStatusFont = lfStatusFont          'Requires LogOff
-                        .lfMenuFont = lfMenuFont
-                        .lfMessageFont = lfMessageFont
+                        With NCM
+                            .lfCaptionFont = lfCaptionFont        'Requires LogOff
+                            .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
+                            .lfStatusFont = lfStatusFont          'Requires LogOff
+                            .lfMenuFont = lfMenuFont
+                            .lfMessageFont = lfMessageFont
 
-                        .iBorderWidth = BorderWidth
-                        .iScrollWidth = ScrollWidth
-                        .iScrollHeight = ScrollHeight
-                        .iCaptionWidth = CaptionWidth
-                        .iCaptionHeight = CaptionHeight
-                        .iSMCaptionWidth = SmCaptionWidth
-                        .iSMCaptionHeight = SmCaptionHeight
-                        .iMenuWidth = MenuWidth
-                        .iMenuHeight = MenuHeight
-                        .iPaddedBorderWidth = PaddedBorderWidth
-                    End With
+                            .iBorderWidth = BorderWidth
+                            .iScrollWidth = ScrollWidth
+                            .iScrollHeight = ScrollHeight
+                            .iCaptionWidth = CaptionWidth
+                            .iCaptionHeight = CaptionHeight
+                            .iSMCaptionWidth = SmCaptionWidth
+                            .iSMCaptionHeight = SmCaptionHeight
+                            .iMenuWidth = MenuWidth
+                            .iMenuHeight = MenuHeight
+                            .iPaddedBorderWidth = PaddedBorderWidth
+                        End With
 
-                    With ICO
-                        .iHorzSpacing = IconSpacing
-                        .iVertSpacing = IconVerticalSpacing
-                        .lfFont = lfIconFont
-                    End With
+                        With ICO
+                            .iHorzSpacing = IconSpacing
+                            .iVertSpacing = IconVerticalSpacing
+                            .lfFont = lfIconFont
+                        End With
 
-                    SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-                    SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
-                    SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
-                    NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
+                        SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
+                        SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
+                        SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
+                        NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                End If
+                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                    End If
 
             End Sub
 
@@ -1529,7 +1564,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .MenuFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .MessageFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .SmCaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
-                .StatusFont = New Font("Segoe UI", 9, FontStyle.Regular)}
+                .StatusFont = New Font("Segoe UI", 9, FontStyle.Regular),
+                .FontSubstitute_MSShellDlg = "Microsoft Sans Serif", .FontSubstitute_MSShellDlg2 = "Tahoma",
+                .FontSubstitute_SegoeUI = ""}
 
     Public CommandPrompt As New Structures.Console With {
                     .Enabled = False,
@@ -3624,6 +3661,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Catch
                     MetricsFonts.StatusFont = _Def.MetricsFonts.StatusFont
                 End Try
+
+                Try
+                    MetricsFonts.FontSubstitute_MSShellDlg = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", _Def.MetricsFonts.FontSubstitute_MSShellDlg)
+                Catch
+                    MetricsFonts.FontSubstitute_MSShellDlg = _Def.MetricsFonts.FontSubstitute_MSShellDlg
+                End Try
+
+                Try
+                    MetricsFonts.FontSubstitute_MSShellDlg2 = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _Def.MetricsFonts.FontSubstitute_MSShellDlg2)
+                Catch
+                    MetricsFonts.FontSubstitute_MSShellDlg2 = _Def.MetricsFonts.FontSubstitute_MSShellDlg2
+                End Try
+
+                Try
+                    MetricsFonts.FontSubstitute_SegoeUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _Def.MetricsFonts.FontSubstitute_SegoeUI)
+                Catch
+                    MetricsFonts.FontSubstitute_SegoeUI = _Def.MetricsFonts.FontSubstitute_SegoeUI
+                End Try
 #End Region
 
 #Region "Wallpaper Tone"
@@ -4113,6 +4168,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.ToLower.StartsWith("*Metrics_DesktopIconSize= ".ToLower) Then MetricsFonts.DesktopIconSize = lin.Remove(0, "*Metrics_DesktopIconSize= ".Count)
                     If lin.ToLower.StartsWith("*Metrics_ShellIconSize= ".ToLower) Then MetricsFonts.ShellIconSize = lin.Remove(0, "*Metrics_ShellIconSize= ".Count)
                     If lin.ToLower.StartsWith("*Fonts_".ToLower) Then fonts.Add(lin.Remove(0, "*Fonts_".Count))
+
+                    If lin.ToLower.StartsWith("*FontSubstitute_MSShellDlg= ".ToLower) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
+                    If lin.ToLower.StartsWith("*FontSubstitute_MSShellDlg2= ".ToLower) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
 #End Region
 
 #Region "Terminals"
@@ -4974,6 +5032,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metrics_SmCaptionWidth= " & MetricsFonts.SmCaptionWidth)
                 tx.Add("*Metrics_DesktopIconSize= " & MetricsFonts.DesktopIconSize)
                 tx.Add("*Metrics_ShellIconSize= " & MetricsFonts.ShellIconSize)
+                tx.Add("*FontSubstitute_MSShellDlg= " & MetricsFonts.FontSubstitute_MSShellDlg)
+                tx.Add("*FontSubstitute_MSShellDlg2= " & MetricsFonts.FontSubstitute_MSShellDlg2)
                 tx.Add(AddFontsToThemeFile("Caption", MetricsFonts.CaptionFont))
                 tx.Add(AddFontsToThemeFile("Icon", MetricsFonts.IconFont))
                 tx.Add(AddFontsToThemeFile("Menu", MetricsFonts.MenuFont))

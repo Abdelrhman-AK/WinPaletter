@@ -3361,6 +3361,7 @@ Public Class MainFrm
         WallpaperToner.ShowDialog()
     End Sub
 
+
     Private Sub Select_W11_CheckedChanged(sender As Object) Handles Select_W11.CheckedChanged
         If _Shown And Select_W11.Checked Then
             PreviewConfig = WinVer.W11
@@ -3394,7 +3395,19 @@ Public Class MainFrm
             Select_Preview_Version()
         End If
     End Sub
+    Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
+        Shell("logoff", AppWinStyle.Hide)
+    End Sub
 
+    Private Sub XenonButton28_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton28.MouseEnter
+        status_lbl.Text = My.Lang.LogoffNotice
+        status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
+    End Sub
+
+    Private Sub XenonButton28_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton28.MouseLeave
+        status_lbl.Text = ""
+        status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+    End Sub
 End Class
 
 
