@@ -5,6 +5,7 @@ Public Class EditInfo
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
+
         'Load_Info(MainFrm.CP)
     End Sub
 
@@ -56,4 +57,5 @@ Public Class EditInfo
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
+
 End Class

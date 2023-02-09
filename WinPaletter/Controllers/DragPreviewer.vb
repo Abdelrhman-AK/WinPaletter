@@ -50,7 +50,7 @@ Public Class DragPreviewer
         ApplyRetroPreview(CP)
         SetMetics(CP)
 
-        Acrylism.EnableBlur(Me, True)
+        Acrylism.DoEffects(Me, True)
 
         ResumeLayout()
     End Sub

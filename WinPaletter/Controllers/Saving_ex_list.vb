@@ -4,7 +4,6 @@ Public Class Saving_ex_list
         ApplyDarkMode(Me)
         Icon = BugReport.Icon
 
-        MainFrm.SetTreeViewTheme(TreeView1.Handle)
         TreeView1.ImageList = My.Notifications_IL
         TreeView1.Nodes.Clear()
 
@@ -13,7 +12,6 @@ Public Class Saving_ex_list
                 .ImageKey = "error" : .SelectedImageKey = "error"
             End With
         Next
-
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

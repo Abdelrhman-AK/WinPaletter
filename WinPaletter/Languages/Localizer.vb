@@ -154,6 +154,9 @@ Public Class Localizer : Implements IDisposable
     Property OS_Win8 As String = "Windows 8.1"
     Property OS_Win7 As String = "Windows 7"
     Property OS_WinUndefined As String = "Windows 11 or Higher"
+    Property LogoffQuestion As String = "Are you sure from Logging-off?"
+    Property LogoffAlert1 As String = "This will close all open files\applications"
+    Property LogoffAlert2 As String = "Logoff equals Sign Out in Windows 8.1/10/11"
     Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in Main Form"
     Property KillingExplorer As String = "Killing Explorer (To be restarted)"
     Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"
@@ -425,7 +428,7 @@ Public Class Localizer : Implements IDisposable
 
             For Each ctrl In GetAllControls(ins)
 
-                If Not String.IsNullOrWhiteSpace(ctrl.Text) And Not IsNumeric(ctrl.Text) And Not ctrl.Text.Count = 1 And Not ctrl.Text = ctrl.Name Then
+                If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
                     j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                 End If
 

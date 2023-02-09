@@ -32,10 +32,14 @@ Namespace NativeMethods
         Public Const CS_DROPSHADOW As Integer = &H20000
         Public Const WM_NCPAINT As Integer = &H85
 
-        Public Enum DWMATTRIB
+        Public Enum DWMATTRIB As Integer
             DWMWA_SYSTEMBACKDROP_TYPE = 38
             DWMWA_MICA_EFFECT = 1029
             DWMWA_USE_IMMERSIVE_DARK_MODE = 20
+            DWMWA_WINDOW_CORNER_PREFERENCE = 33
+            DWMWA_TEXT_COLOR = 34
+            DWMWA_CAPTION_COLOR = 35
+            DWMWA_BORDER_COLOR = 36
         End Enum
 
         Public Structure DwmBlurbehind
@@ -78,6 +82,15 @@ Namespace NativeMethods
                 DwmExtendFrameIntoClientArea(frm.Handle, mar)
             End If
         End Sub
+
+
+
+        Public Enum FormCornersType
+            [Default]
+            Rectangular
+            Round
+            SmallRound
+        End Enum
 
         Public Enum CompositionAction As Integer
             DWM_EC_DISABLECOMPOSITION = 0

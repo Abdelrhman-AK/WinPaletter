@@ -105,12 +105,10 @@ Public Class ColorPickerDlg
         Dim PrevoiusMin As Size = fr.MinimumSize
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-            My.[AnimatorNS].Hide(MainFrm.TablessControl1, True)
-            My.[AnimatorNS].Hide(MainFrm.MainToolbar, True)
-            My.[AnimatorNS].Hide(MainFrm.apply_btn, True)
-            My.[AnimatorNS].Hide(MainFrm.XenonButton4, True)
-            My.[AnimatorNS].Hide(MainFrm.XenonButton13, True)
-            My.[AnimatorNS].Hide(MainFrm.XenonButton19, True)
+
+            For Each ct In fr.Controls
+                If ct IsNot MainFrm.previewContainer Then My.[AnimatorNS].Hide(ct, True)
+            Next
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
@@ -143,12 +141,11 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             MainFrm.Width = PreviousWidth
-            My.[AnimatorNS].Show(MainFrm.TablessControl1, True)
-            My.[AnimatorNS].Show(MainFrm.MainToolbar, True)
-            My.[AnimatorNS].Show(MainFrm.apply_btn, True)
-            My.[AnimatorNS].Show(MainFrm.XenonButton4, True)
-            My.[AnimatorNS].Show(MainFrm.XenonButton13, True)
-            My.[AnimatorNS].Show(MainFrm.XenonButton19, True)
+
+            For Each ct In fr.Controls
+                If ct IsNot MainFrm.previewContainer Then My.[AnimatorNS].Show(ct, True)
+            Next
+
         End If
 
         MainFrm.MinimumSize = PrevoiusMin

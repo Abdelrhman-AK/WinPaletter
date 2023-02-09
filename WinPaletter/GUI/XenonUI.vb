@@ -2,7 +2,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonCore
@@ -562,6 +561,7 @@ Public Class XenonTabControl : Inherits TabControl
 
         Next
     End Sub
+
 End Class
 
 <DefaultEvent("CheckedChanged")>
@@ -1949,7 +1949,6 @@ Public Class XenonCP
 
 
                 Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.[Settings].Nerd_Stats_HexHash, Not (BackColor.A = 255))
-
                 Dim F As Font
 
                 If IsDefault Then
@@ -1962,10 +1961,10 @@ Public Class XenonCP
                 G.DrawString(S, F, New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
 
             End If
-
         End If
 
     End Sub
+
 
 
 End Class
@@ -2037,6 +2036,13 @@ Public Class XenonButton : Inherits Button
     End Property
 
     Dim LineImage As Color = LineColor
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -5186,10 +5192,10 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                         CloseOuterBorder = Color.FromArgb(67, 20, 34)
                         CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
                     Else
-                        CloseUpperAccent1 = Color.FromArgb(0, 189, 203, 218)
-                        CloseLowerAccent2 = Color.FromArgb(0, 205, 219, 234)
-                        CloseOuterBorder = Color.FromArgb(100, 25, 25, 25)
-                        CloseInnerBorder = Color.FromArgb(100, 131, 142, 168)
+                        CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
+                        CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
+                        CloseOuterBorder = Color.FromArgb(131, 142, 168)
+                        CloseInnerBorder = Color.FromArgb(209, 219, 229)
                     End If
 
                     Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
@@ -5241,7 +5247,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                     G.DrawImage(CloseBtn, closerenderrect)
 
                     G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
-                    G.DrawRectangle(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2))
+                    G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
 
                 End If
 
@@ -7207,12 +7213,15 @@ Public Class XenonColorBar
         Invalidate()
     End Sub
 End Class
+
 Public Class StripRenderer
     Inherits ToolStripSystemRenderer
+
     Public Sub New()
     End Sub
 
     Protected Overrides Sub OnRenderToolStripBorder(ByVal e As ToolStripRenderEventArgs)
     End Sub
 End Class
+
 #End Region

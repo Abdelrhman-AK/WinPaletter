@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -15,10 +16,6 @@ Public Class MainFrm
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
-
-    Public Shared Sub SetTreeViewTheme(ByVal treeHandle As IntPtr)
-        Uxtheme.SetWindowTheme(treeHandle, "explorer", Nothing)
-    End Sub
 
 #Region "CP Subs"
 
@@ -1363,7 +1360,6 @@ Public Class MainFrm
         Visible = False
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
-        If Not My.W7 Then SetTreeViewTheme(TreeView1.Handle)
 
         ApplyDarkMode(Me)
         MakeItDoubleBuffered(Me)
@@ -3383,6 +3379,10 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
+        BugReport.ThrowError(New Exception("Testing Error/MICA"))
+    End Sub
+
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
@@ -3396,7 +3396,9 @@ Public Class MainFrm
         End If
     End Sub
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
-        Shell("logoff", AppWinStyle.Hide)
+        If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
+            Shell("logoff", AppWinStyle.Hide)
+        End If
     End Sub
 
     Private Sub XenonButton28_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton28.MouseEnter

@@ -24,7 +24,6 @@ Public Class XeSettings
     Public Property Appearance_Accent As Color = Color.FromArgb(0, 81, 210)
     Public Property Appearance_Back As Color = Color.FromArgb(25, 25, 25)
     Public Property Appearance_Rounded As Boolean = True
-
     Public Property WhatsNewRecord As String() = {""}
     Public Property Language As Boolean = False
     Public Property Language_File As String = Nothing
@@ -45,9 +44,16 @@ Public Class XeSettings
 
     Public Property Log_ShowApplying As Boolean = True
     Public Property Log_Countdown_Enabled As Boolean = True
-    Public Property Log_Countdown As Integer = 15
+    Public Property Log_Countdown As Integer = 20
 
 #End Region
+    Public Enum BugReportBackgrounds
+        Mica
+        Tabbed
+        Acrylic_or_Aero
+        Gray
+        Disabled
+    End Enum
 
     Public Enum Nerd_Stats_Type
         HEX
@@ -99,6 +105,7 @@ Public Class XeSettings
         If Key.GetValue("Appearance_Accent", Nothing) Is Nothing Then Key.SetValue("Appearance_Accent", Color.FromArgb(0, 81, 210).ToArgb, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Back", Nothing) Is Nothing Then Key.SetValue("Appearance_Back", Color.FromArgb(25, 25, 25).ToArgb, RegistryValueKind.DWord)
         If Key.GetValue("Appearance_Rounded", Nothing) Is Nothing Then Key.SetValue("Appearance_Rounded", True, RegistryValueKind.DWord)
+        If Key.GetValue("Appearance_Win11_Mica", Nothing) Is Nothing Then Key.SetValue("Appearance_Win11_Mica", True, RegistryValueKind.DWord)
 
         If Key.GetValue("WhatsNewRecord", Nothing) Is Nothing Then Key.SetValue("WhatsNewRecord", {""}, RegistryValueKind.MultiString)
         If Key.GetValue("Language", Nothing) Is Nothing Then Key.SetValue("Language", False, RegistryValueKind.DWord)

@@ -122,6 +122,7 @@ Partial Class ColorPickerDlg
         'ColorGrid1
         '
         Me.ColorGrid1.AutoAddColors = False
+        Me.ColorGrid1.CellBorderColor = System.Drawing.Color.DimGray
         Me.ColorGrid1.CellBorderStyle = Cyotek.Windows.Forms.ColorCellBorderStyle.None
         Me.ColorGrid1.CellSize = New System.Drawing.Size(12, 13)
         Me.ColorGrid1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))

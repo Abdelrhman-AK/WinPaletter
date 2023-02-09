@@ -209,13 +209,16 @@ Public Class XenonCore
 
         Dim BackColor As Color
         Dim AccentColor As Color
+        Dim CustomR As Boolean = False
 
         If My.Settings.Appearance_Custom Then
             BackColor = My.Settings.Appearance_Back
             AccentColor = My.Settings.Appearance_Accent
+            CustomR = My.W11
         Else
             BackColor = If(DarkMode, DefaultBackColorDark, DefaultBackColorLight)
             AccentColor = DefaultAccent
+            CustomR = False
         End If
 
         If Form Is Nothing Then
@@ -224,12 +227,14 @@ Public Class XenonCore
             Try
                 For Each OFORM As Form In Application.OpenForms
                     OFORM.Visible = False
-                    If DirectCast(OFORM, Form).BackColor <> BackColor Then
-                        DirectCast(OFORM, Form).BackColor = BackColor
-                    End If
-                    User32.DarkTitlebar(DirectCast(OFORM, Form).Handle, DarkMode)
-                    EnumControls(DirectCast(OFORM, Form), DarkMode)
-                    DirectCast(OFORM, Form).Refresh()
+                    OFORM.BackColor = BackColor
+                    User32.DarkTitlebar(OFORM.Handle, DarkMode)
+                    EnumControls(OFORM, DarkMode)
+
+                    If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
+                    If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+
+                    OFORM.Refresh()
                     OFORM.Visible = True
                 Next
             Catch
@@ -239,11 +244,15 @@ Public Class XenonCore
         Else
             '####################### For Selected [Form]
 
-            If DirectCast([Form], Form).BackColor <> BackColor Then
-                DirectCast([Form], Form).BackColor = BackColor
+            If [Form].BackColor <> BackColor Then
+                [Form].BackColor = BackColor
             End If
             User32.DarkTitlebar([Form].Handle, DarkMode)
-            EnumControls(TryCast([Form], Form), DarkMode)
+            EnumControls([Form], DarkMode)
+
+            If My.W11 Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
+            If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+
             If [Form].Name = ExternalTerminal.Name Then
                 ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.1))
             End If
@@ -257,6 +266,8 @@ Public Class XenonCore
         Style = New XenonStyle(AccentColor, BackColor)
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
+        Dim ctrl_theme As CtrlTheme = If(DarkMode, CtrlTheme.DarkExplorer, CtrlTheme.Default)
+
         Dim b As Boolean = False
         If TypeOf ctrl Is RetroButton Then b = True
         If TypeOf ctrl Is RetroCheckBox Then b = True
@@ -334,6 +345,7 @@ Public Class XenonCore
             TryCast(ctrl, DataGridView).DefaultCellStyle.ForeColor = Fore
             TryCast(ctrl, DataGridView).RowTemplate.DefaultCellStyle.ForeColor = Fore
 
+
             ctrl.Invalidate()
             ctrl.Refresh()
         End If
@@ -344,6 +356,31 @@ Public Class XenonCore
                 .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
         End If
+
+        If TypeOf ctrl Is ListView Then
+            With TryCast(ctrl, ListView)
+                .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+        End If
+
+        If TypeOf ctrl Is NumericUpDown Then
+            With TryCast(ctrl, NumericUpDown)
+                .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+        End If
+
+        If TypeOf ctrl Is ComboBox Then
+            With TryCast(ctrl, ComboBox)
+                .FlatStyle = FlatStyle.Flat
+                .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+        End If
+
+        'This will make all control have a consistent dark\light mode.
+        SetTheme(ctrl.Handle, ctrl_theme)
 
         If ctrl.HasChildren Then
             For Each c As Control In ctrl.Controls
@@ -377,6 +414,31 @@ Public Class XenonCore
     End Sub
 
 
+    Public Shared Sub SetTheme(ByVal handle As IntPtr, ByVal theme As CtrlTheme)
+        'If Not My.W7 Then
+        If handle = IntPtr.Zero Then Throw New ArgumentNullException(NameOf(handle))
+
+        Select Case theme
+            Case CtrlTheme.None
+                NativeMethods.Uxtheme.SetWindowTheme(handle, "", "")
+            Case CtrlTheme.Explorer
+                NativeMethods.Uxtheme.SetWindowTheme(handle, "Explorer", Nothing)
+            Case CtrlTheme.DarkExplorer
+                NativeMethods.Uxtheme.SetWindowTheme(handle, "DarkMode_Explorer", Nothing)
+            Case CtrlTheme.[Default]
+                NativeMethods.Uxtheme.SetWindowTheme(handle, Nothing, Nothing)
+            Case Else
+                Throw New ArgumentOutOfRangeException(NameOf(theme), theme, Nothing)
+        End Select
+        'End If
+    End Sub
+
+    Public Enum CtrlTheme
+        None
+        Explorer
+        DarkExplorer
+        [Default]
+    End Enum
 
 #End Region
 
@@ -597,79 +659,107 @@ End Class
 
 Public Class Acrylism
 
-    Public Shared Sub EnableBlur(ByVal [Form] As Form, Optional ByVal Border As Boolean = True)
-        If My.W11 Or My.W10 Then
-            [Form].BackColor = Color.Black
-            [Form].Opacity = 1
-            [Form].FormBorderStyle = FormBorderStyle.None
+    Public Enum FormStyle
+        Auto
+        [Default]
+        Mica
+        Acrylic
+        Tabbed
+    End Enum
 
-            Try
-                If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True) Then
-                    Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
-                    If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
-                    Dim accentStructSize = Marshal.SizeOf(accent)
-                    Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
-                    Marshal.StructureToPtr(accent, accentPtr, False)
 
-                    Dim Data = New User32.WindowCompositionAttributeData With {
-                            .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                            .SizeOfData = accentStructSize,
-                            .Data = accentPtr
-                        }
+    Public Shared Sub DoEffects(ByVal [Form] As Form, Optional ByVal Border As Boolean = True, Optional FormStyle As FormStyle = FormStyle.Mica)
 
-                    User32.SetWindowCompositionAttribute([Form].Handle, Data)
-                    Marshal.FreeHGlobal(accentPtr)
+        Dim Transparency_W7 As Boolean
+        Try
+            Dwmapi.DwmIsCompositionEnabled(Transparency_W7)
+        Catch
+            Transparency_W7 = False
+        End Try
 
-                    'User32.DarkTitlebar([Form].Handle, XenonCore.GetDarkMode())
-                    'Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, &H3, Marshal.SizeOf(GetType(Integer)))
+        Dim Temp As Boolean
+        Dim Transparency_W11_10 As Boolean
+        Try
+            Temp = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", False)
+            Transparency_W11_10 = (My.W10 Or My.W11) AndAlso Temp
+        Catch
+            Transparency_W11_10 = False
+        End Try
 
-                Else
-                    GrayscaleMe([Form])
+        Try
+            If My.W11 AndAlso Transparency_W11_10 Then
+                If FormStyle = FormStyle.Mica Then
+                    DrawMica([Form], MicaStyle.Mica)
+
+                ElseIf FormStyle = FormStyle.Tabbed Then
+                    DrawMica([Form], MicaStyle.Tabbed)
+
+                ElseIf FormStyle = FormStyle.Acrylic Then
+                    DrawAcrylic([Form], Border)
+
                 End If
 
-            Catch
-                Try
-                    Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
-                    If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
-                    Dim accentStructSize = Marshal.SizeOf(accent)
-                    Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
-                    Marshal.StructureToPtr(accent, accentPtr, False)
+            ElseIf My.W10 AndAlso Transparency_W11_10 Then
+                    DrawAcrylic([Form], Border)
 
-                    Dim Data = New User32.WindowCompositionAttributeData With {
-                            .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                            .SizeOfData = accentStructSize,
-                            .Data = accentPtr
-                        }
+                ElseIf My.W7 AndAlso Transparency_W7 Then
+                    DrawAero([Form])
 
-                    User32.SetWindowCompositionAttribute([Form].Handle, Data)
-                    Marshal.FreeHGlobal(accentPtr)
+                Else
+                    DrawTransparentGray([Form])
 
-                Catch ex As Exception
-                    GrayscaleMe([Form])
-                End Try
-            End Try
-
-        ElseIf My.W7 Then
-
-            Dim Com As Boolean
-            NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
-
-            [Form].FormBorderStyle = FormBorderStyle.Sizable
-
-            If Com Then
-                Dwmapi.DwmExtendFrameIntoClientArea([Form].Handle, New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1})
-            Else
-                GrayscaleMe([Form])
             End If
 
-        Else
-            GrayscaleMe([Form])
+        Catch
+            DrawTransparentGray([Form])
 
-        End If
+        End Try
 
     End Sub
 
-    Shared Sub GrayscaleMe([Form] As Form)
+    Enum MicaStyle
+        Mica
+        Tabbed
+    End Enum
+
+    Shared Sub DrawAcrylic(Form As Form, Optional ByVal Border As Boolean = True)
+        Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+        If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
+        Dim accentStructSize = Marshal.SizeOf(accent)
+        Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
+        Marshal.StructureToPtr(accent, accentPtr, False)
+
+        Dim Data = New User32.WindowCompositionAttributeData With {
+                .Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                .SizeOfData = accentStructSize,
+                .Data = accentPtr
+            }
+
+        User32.SetWindowCompositionAttribute(Form.Handle, Data)
+        Marshal.FreeHGlobal(accentPtr)
+    End Sub
+
+    Shared Sub DrawMica(Form As Form, Optional Style As MicaStyle = MicaStyle.Mica)
+        Dim FS As New FormStyle
+        If Style = MicaStyle.Mica Then FS = FormStyle.Mica
+        If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
+
+        User32.DarkTitlebar(Form.Handle, True)
+        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
+        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1})
+
+        'Set Titlebar Backcolor, Forecolor and border color
+        'Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.DWMWA_CAPTION_COLOR, ColorTranslator.ToWin32(Form.BackColor), Marshal.SizeOf(GetType(Integer)))
+        'Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.DWMWA_TEXT_COLOR, ColorTranslator.ToWin32(ForeColor), Marshal.SizeOf(GetType(Integer)))
+        'Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.DWMWA_BORDER_COLOR, ColorTranslator.ToWin32(Color.Yellow), Marshal.SizeOf(GetType(Integer)))
+    End Sub
+
+    Shared Sub DrawAero(Form As Form)
+        Dim Margins As New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1}
+        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, Margins)
+    End Sub
+
+    Shared Sub DrawTransparentGray([Form] As Form)
         [Form].BackColor = Color.FromArgb(20, 20, 20)
         [Form].Opacity = 0.8
     End Sub

@@ -3,7 +3,7 @@
 Public Class Lang_JSON_Manage
     Private Sub LangJSON_Manage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        MainFrm.SetTreeViewTheme(TreeView1.Handle)
+
         Label6.Font = My.Application.ConsoleFontMedium
         TreeView1.ImageList = My.Lang_IL
 

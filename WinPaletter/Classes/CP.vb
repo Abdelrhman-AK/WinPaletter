@@ -555,8 +555,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If String.IsNullOrWhiteSpace(FontSubstitute_SegoeUI) Then
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String)
@@ -568,8 +566,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String)
                     Else
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "", RegistryValueKind.String)
@@ -5957,7 +5953,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Catch ex As Exception
 
             If MsgBox(My.Lang.CP_RestoreCursorsError, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.CP_RestoreCursorsErrorPressOK,
-                      My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.CP_RestoreCursorsTip) = MsgBoxResult.Ok Then BugReport.ThrowError(ex)
+                     "", "", "", "", My.Lang.CP_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Ok Then BugReport.ThrowError(ex)
 
         End Try
 

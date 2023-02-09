@@ -360,6 +360,7 @@ Partial Class MainFrm
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.XenonButton29 = New WinPaletter.XenonButton()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -1062,6 +1063,7 @@ Partial Class MainFrm
         Me.XenonButton15.Name = "XenonButton15"
         Me.XenonButton15.Size = New System.Drawing.Size(30, 24)
         Me.XenonButton15.TabIndex = 3
+        Me.XenonButton15.Text = Nothing
         Me.XenonButton15.UseVisualStyleBackColor = False
         '
         'Select_W11
@@ -3557,6 +3559,7 @@ Partial Class MainFrm
         Me.W8_start.Name = "W8_start"
         Me.W8_start.Size = New System.Drawing.Size(64, 64)
         Me.W8_start.TabIndex = 36
+        Me.W8_start.Text = Nothing
         Me.W8_start.UseVisualStyleBackColor = False
         '
         'Label30
@@ -3641,6 +3644,7 @@ Partial Class MainFrm
         Me.W8_logonui.Name = "W8_logonui"
         Me.W8_logonui.Size = New System.Drawing.Size(64, 64)
         Me.W8_logonui.TabIndex = 37
+        Me.W8_logonui.Text = Nothing
         Me.W8_logonui.UseVisualStyleBackColor = False
         '
         'XenonGroupBox32
@@ -3788,6 +3792,7 @@ Partial Class MainFrm
         Me.W8_ColorizationBalance_val.Name = "W8_ColorizationBalance_val"
         Me.W8_ColorizationBalance_val.Size = New System.Drawing.Size(34, 24)
         Me.W8_ColorizationBalance_val.TabIndex = 130
+        Me.W8_ColorizationBalance_val.Text = Nothing
         Me.W8_ColorizationBalance_val.UseVisualStyleBackColor = False
         '
         'W8_ColorizationBalance_bar
@@ -4071,6 +4076,7 @@ Partial Class MainFrm
         Me.W7_ColorizationGlassReflectionIntensity_val.Name = "W7_ColorizationGlassReflectionIntensity_val"
         Me.W7_ColorizationGlassReflectionIntensity_val.Size = New System.Drawing.Size(34, 20)
         Me.W7_ColorizationGlassReflectionIntensity_val.TabIndex = 132
+        Me.W7_ColorizationGlassReflectionIntensity_val.Text = Nothing
         Me.W7_ColorizationGlassReflectionIntensity_val.UseVisualStyleBackColor = False
         '
         'W7_ColorizationGlassReflectionIntensity_bar
@@ -4151,6 +4157,7 @@ Partial Class MainFrm
         Me.W7_ColorizationBlurBalance_val.Name = "W7_ColorizationBlurBalance_val"
         Me.W7_ColorizationBlurBalance_val.Size = New System.Drawing.Size(34, 20)
         Me.W7_ColorizationBlurBalance_val.TabIndex = 132
+        Me.W7_ColorizationBlurBalance_val.Text = Nothing
         Me.W7_ColorizationBlurBalance_val.UseVisualStyleBackColor = False
         '
         'W7_ColorizationBlurBalance_bar
@@ -4352,6 +4359,7 @@ Partial Class MainFrm
         Me.W7_ColorizationColorBalance_val.Name = "W7_ColorizationColorBalance_val"
         Me.W7_ColorizationColorBalance_val.Size = New System.Drawing.Size(34, 20)
         Me.W7_ColorizationColorBalance_val.TabIndex = 131
+        Me.W7_ColorizationColorBalance_val.Text = Nothing
         Me.W7_ColorizationColorBalance_val.UseVisualStyleBackColor = False
         '
         'W7_ColorizationColorBalance_bar
@@ -4431,6 +4439,7 @@ Partial Class MainFrm
         Me.W7_ColorizationAfterglowBalance_val.Name = "W7_ColorizationAfterglowBalance_val"
         Me.W7_ColorizationAfterglowBalance_val.Size = New System.Drawing.Size(34, 20)
         Me.W7_ColorizationAfterglowBalance_val.TabIndex = 132
+        Me.W7_ColorizationAfterglowBalance_val.Text = Nothing
         Me.W7_ColorizationAfterglowBalance_val.UseVisualStyleBackColor = False
         '
         'W7_ColorizationAfterglowBalance_bar
@@ -4741,6 +4750,7 @@ Partial Class MainFrm
         Me.XenonButton20.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton20.TabIndex = 22
         Me.XenonButton20.Tag = "Create New Theme File based on Native Windows"
+        Me.XenonButton20.Text = Nothing
         Me.XenonButton20.UseVisualStyleBackColor = False
         '
         'XenonButton18
@@ -4757,6 +4767,7 @@ Partial Class MainFrm
         Me.XenonButton18.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton18.TabIndex = 21
         Me.XenonButton18.Tag = "Reload First Theme"
+        Me.XenonButton18.Text = Nothing
         Me.XenonButton18.UseVisualStyleBackColor = False
         '
         'XenonButton17
@@ -4773,6 +4784,7 @@ Partial Class MainFrm
         Me.XenonButton17.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton17.TabIndex = 20
         Me.XenonButton17.Tag = "Reload Previous Theme (Similar to Undo)"
+        Me.XenonButton17.Text = Nothing
         Me.XenonButton17.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -4789,6 +4801,7 @@ Partial Class MainFrm
         Me.XenonButton12.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton12.TabIndex = 12
         Me.XenonButton12.Tag = "About"
+        Me.XenonButton12.Text = Nothing
         Me.XenonButton12.UseVisualStyleBackColor = False
         '
         'XenonButton5
@@ -4805,6 +4818,7 @@ Partial Class MainFrm
         Me.XenonButton5.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton5.TabIndex = 10
         Me.XenonButton5.Tag = "Updates"
+        Me.XenonButton5.Text = Nothing
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonButton6
@@ -4821,6 +4835,7 @@ Partial Class MainFrm
         Me.XenonButton6.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton6.TabIndex = 11
         Me.XenonButton6.Tag = "What's New"
+        Me.XenonButton6.Text = Nothing
         Me.XenonButton6.UseVisualStyleBackColor = False
         '
         'XenonButton10
@@ -4837,6 +4852,7 @@ Partial Class MainFrm
         Me.XenonButton10.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton10.TabIndex = 8
         Me.XenonButton10.Tag = "Edit Information of current Theme"
+        Me.XenonButton10.Text = Nothing
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton11
@@ -4853,6 +4869,7 @@ Partial Class MainFrm
         Me.XenonButton11.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton11.TabIndex = 9
         Me.XenonButton11.Tag = "Settings"
+        Me.XenonButton11.Text = Nothing
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonSeparatorVertical1
@@ -4889,6 +4906,7 @@ Partial Class MainFrm
         Me.XenonButton7.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton7.TabIndex = 3
         Me.XenonButton7.Tag = "Save Theme File"
+        Me.XenonButton7.Text = Nothing
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'XenonButton9
@@ -4905,6 +4923,7 @@ Partial Class MainFrm
         Me.XenonButton9.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton9.TabIndex = 4
         Me.XenonButton9.Tag = "Save Theme File as ..."
+        Me.XenonButton9.Text = Nothing
         Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'XenonButton3
@@ -4921,6 +4940,7 @@ Partial Class MainFrm
         Me.XenonButton3.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton3.TabIndex = 2
         Me.XenonButton3.Tag = "Create New Theme File based on the current applied preferences"
+        Me.XenonButton3.Text = Nothing
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -4937,6 +4957,7 @@ Partial Class MainFrm
         Me.XenonButton2.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton2.TabIndex = 2
         Me.XenonButton2.Tag = "Open a Theme File"
+        Me.XenonButton2.Text = Nothing
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
         'XenonGroupBox3
@@ -5058,6 +5079,22 @@ Partial Class MainFrm
         Me.XenonButton4.Text = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
+        'XenonButton29
+        '
+        Me.XenonButton29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton29.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton29.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton29.ForeColor = System.Drawing.Color.White
+        Me.XenonButton29.Image = Nothing
+        Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton29.LineSize = 1
+        Me.XenonButton29.Location = New System.Drawing.Point(708, 556)
+        Me.XenonButton29.Name = "XenonButton29"
+        Me.XenonButton29.Size = New System.Drawing.Size(253, 32)
+        Me.XenonButton29.TabIndex = 35
+        Me.XenonButton29.Text = "TEST MICA\ACRYLIC FOR WIN32"
+        Me.XenonButton29.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -5065,6 +5102,7 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1086, 716)
+        Me.Controls.Add(Me.XenonButton29)
         Me.Controls.Add(Me.XenonButton28)
         Me.Controls.Add(Me.previewContainer)
         Me.Controls.Add(Me.TablessControl1)
@@ -5548,4 +5586,5 @@ Partial Class MainFrm
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents XenonButton26 As XenonButton
     Friend WithEvents XenonButton28 As XenonButton
+    Friend WithEvents XenonButton29 As XenonButton
 End Class
