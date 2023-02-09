@@ -1,10 +1,8 @@
 ﻿Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Management
 Imports System.Net
 Imports System.Reflection
-Imports System.Runtime.CompilerServices
 Imports System.Security.Principal
 Imports System.Threading
 Imports AnimatorNS
@@ -319,9 +317,7 @@ Namespace My
             Dim exe As String = Assembly.GetExecutingAssembly().Location
 
             If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
-            Dim file As New IO.FileStream(appData & "\uninstall.ico", IO.FileMode.OpenOrCreate)
-            Resources.Icon_Uninstall.Save(file)
-            file.Close()
+            IO.File.WriteAllBytes(appData & "\uninstall.ico", Resources.Icon_Uninstall.ToByteArray)
 
             If Registry.CurrentUser.OpenSubKey(RegPath, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(RegPath, True)
 
@@ -625,13 +621,8 @@ Namespace My
                 If [Settings].AutoAddExt Then
                     If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
 
-                    Dim file As New IO.FileStream(appData & "\fileextension.ico", IO.FileMode.OpenOrCreate)
-                    Resources.fileextension.Save(file)
-                    file.Close()
-
-                    file = New IO.FileStream(appData & "\settingsfile.ico", IO.FileMode.OpenOrCreate)
-                    Resources.settingsfile.Save(file)
-                    file.Close()
+                    IO.File.WriteAllBytes(appData & "\fileextension.ico", Resources.fileextension.ToByteArray)
+                    IO.File.WriteAllBytes(appData & "\settingsfile.ico", Resources.settingsfile.ToByteArray)
 
                     CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
                     CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", appData & "\settingsfile.ico", Assembly.GetExecutingAssembly().Location)

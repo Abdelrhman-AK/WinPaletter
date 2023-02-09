@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.Resources
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 
 ' General Information about an assembly is controlled through the following
@@ -12,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("Abdelrhman-AK")>
 <Assembly: AssemblyProduct("WinPaletter")>
 <Assembly: AssemblyCopyright("Copyright ©  2022-2023")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("WinPaletter")>
 
 <Assembly: ComVisible(False)>
 
@@ -32,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.7.0")>
 <Assembly: AssemblyFileVersion("1.0.7.0")>
+<Assembly: NeutralResourcesLanguage("en-US")>

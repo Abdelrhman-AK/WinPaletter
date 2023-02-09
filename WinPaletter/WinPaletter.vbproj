@@ -76,6 +76,9 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -487,20 +490,18 @@
     <Content Include="Resources\LICENSE.txt" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
-    <None Include="Resources\Mini_ACHover_Links.png" />
+    <None Include="Resources\Mini_TaskbarApp.png" />
+    <None Include="Resources\Mini_TaskbarActiveIcon.png" />
+    <None Include="Resources\Mini_UWPDlg.png" />
     <None Include="Resources\Mini_Hamburger.png" />
     <None Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <None Include="Resources\Mini_Overflow.png" />
+    <None Include="Resources\Mini_PressedButton.png" />
     <None Include="Resources\Mini_SettingsIcons.png" />
+    <None Include="Resources\Mini_Undefined.png" />
+    <None Include="Resources\Mini_ACHover_Links.png" />
+    <None Include="Resources\Mini_Overflow.png" />
     <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <None Include="Resources\Mini_Taskbar.png" />
-    <None Include="Resources\Mini_TaskbarActiveIcon.png" />
-    <None Include="Resources\Mini_TaskbarApp.png" />
-    <None Include="Resources\Mini_Undefined.png" />
-    <None Include="Resources\Mini_TaskbarApp.png" />
-    <None Include="Resources\Mini_Undefined.png" />
-    <None Include="Resources\Mini_UWPDlg.png" />
-    <None Include="Resources\Mini_PressedButton.png" />
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />

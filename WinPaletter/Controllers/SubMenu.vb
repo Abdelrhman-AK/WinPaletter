@@ -100,12 +100,12 @@ Public Class SubMenu
                     Return ColorHandle.BackColor
 
                 Case My.MyApplication.MenuEvent.None
-                    Return ColorHandle.BackColor
+                    Return MainColor.DefaultColor
 
             End Select
         Else
             My.Application.ColorEvent = My.MyApplication.MenuEvent.None
-            Return Nothing
+            Return MainColor.DefaultColor 'Nothing
         End If
     End Function
 

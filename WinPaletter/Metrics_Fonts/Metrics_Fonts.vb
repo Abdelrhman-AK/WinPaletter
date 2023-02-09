@@ -4,6 +4,9 @@ Imports WinPaletter.XenonCore
 Public Class Metrics_Fonts
 
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MenuStrip1.Renderer = New StripRenderer  'Removes the inferior white line from menu strip
+        MenuStrip2.Renderer = New StripRenderer
+
         pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview2.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
@@ -23,12 +26,14 @@ Public Class Metrics_Fonts
         SetToClassicWindow(RetroWindow3, MainFrm.CP)
         SetToClassicWindow(RetroWindow5, MainFrm.CP)
         SetToClassicPanel(RetroPanel1, MainFrm.CP)
+        SetToClassicPanel(RetroPanel2, MainFrm.CP)
         SetToClassicButton(RetroButton1, MainFrm.CP)
         SetToClassicButton(RetroButton2, MainFrm.CP)
         SetToClassicButton(RetroButton3, MainFrm.CP)
         SetToClassicButton(RetroButton10, MainFrm.CP)
         SetToClassicButton(RetroButton11, MainFrm.CP)
         SetToClassicButton(RetroButton12, MainFrm.CP)
+
         RetroScrollBar2.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
         RetroScrollBar2.BackColor = MainFrm.CP.Win32.ButtonFace
         RetroScrollBar1.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
@@ -71,9 +76,9 @@ Public Class Metrics_Fonts
             tabs_preview_3.SelectedIndex = 0
         End If
 
-        XenonFakeIcon1.Icon = MainFrm.Icon                'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-        XenonFakeIcon2.Icon = My.Resources.fileextension  'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-        XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall 'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+        XenonFakeIcon1.Icon = MainFrm.Icon                  'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+        XenonFakeIcon2.Icon = My.Resources.fileextension    'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+        XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall   'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
         PictureBox35.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
         PictureBox36.Image = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
@@ -96,11 +101,12 @@ Public Class Metrics_Fonts
 
         If MainFrm.CP.Win32.EnableTheming Then
             MenuStrip2.BackColor = MainFrm.CP.Win32.MenuBar
-            MenuStrip2.ForeColor = MainFrm.CP.Win32.HilightText
         Else
             MenuStrip2.BackColor = MainFrm.CP.Win32.Menu
-            MenuStrip2.ForeColor = MainFrm.CP.Win32.MenuText
         End If
+
+        ToolStripMenuItem1.ForeColor = MainFrm.CP.Win32.MenuText
+        ToolStripMenuItem4.ForeColor = MainFrm.CP.Win32.MenuText
 
     End Sub
 
@@ -198,6 +204,7 @@ Public Class Metrics_Fonts
         statusLbl.Font = CP.MetricsFonts.StatusFont
         Label14.Font = CP.MetricsFonts.StatusFont
         Label6.Text = CP.MetricsFonts.StatusFont.Name
+        RetroPanel1.Height = Math.Max(GetTitleTextHeight(CP.MetricsFonts.StatusFont), 20)
 
         XenonTextBox1.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg
         XenonTextBox2.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg2
@@ -294,7 +301,6 @@ Public Class Metrics_Fonts
         End If
     End Sub
 
-
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         FontDialog1.Font = Label4.Font
         If FontDialog1.ShowDialog = DialogResult.OK Then
@@ -323,7 +329,7 @@ Public Class Metrics_Fonts
             Label14.Font = FontDialog1.Font
             statusLbl.Font = FontDialog1.Font
             Label6.Text = FontDialog1.Font.Name
-
+            RetroPanel1.Height = Math.Max(GetTitleTextHeight(FontDialog1.Font), 20)
         End If
     End Sub
 
@@ -369,6 +375,7 @@ Public Class Metrics_Fonts
         m_h.Text = sender.Value
         MenuStrip1.Height = Math.Max(sender.Value, GetTitleTextHeight(MenuStrip1.Font))
         MenuStrip2.Height = MenuStrip1.Height
+        RetroPanel2.Refresh()
     End Sub
 
     Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
@@ -804,11 +811,45 @@ Public Class Metrics_Fonts
         End If
     End Sub
 
-    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
-        Dim F As New Font(XenonTextBox4.Text, 9, FontStyle.Regular)
-        FontDialog2.Font = F
-        If FontDialog2.ShowDialog = DialogResult.OK Then
-            XenonTextBox4.Text = FontDialog2.Font.Name
+    Private Sub XenonButton16_Click_1(sender As Object, e As EventArgs) Handles XenonButton16.Click
+        XenonTextBox1.Text = "Microsoft Sans Serif"
+    End Sub
+
+    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+        XenonTextBox2.Text = "Tahoma"
+    End Sub
+
+    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+        XenonTextBox3.Text = ""
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+
+        If CP.IsFontInstalled(sender.Text.ToString, FontStyle.Regular) Then
+            sender.Font = New Font(sender.Text.ToString, 9, FontStyle.Regular)
+        Else
+            sender.Font = New Font("Microsoft Sans Serif", 9, FontStyle.Regular)
         End If
+
+    End Sub
+
+    Private Sub XenonTextBox2_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox2.TextChanged
+
+        If CP.IsFontInstalled(sender.Text.ToString, FontStyle.Regular) Then
+            sender.Font = New Font(sender.Text.ToString, 9, FontStyle.Regular)
+        Else
+            sender.Font = New Font("Tahoma", 9, FontStyle.Regular)
+        End If
+
+    End Sub
+
+    Private Sub XenonTextBox3_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox3.TextChanged
+
+        If CP.IsFontInstalled(sender.Text.ToString, FontStyle.Regular) Then
+            sender.Font = New Font(sender.Text.ToString, 9, FontStyle.Regular)
+        Else
+            sender.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+        End If
+
     End Sub
 End Class

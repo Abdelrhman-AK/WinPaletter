@@ -996,6 +996,26 @@ Public Module TreeViewExtensions
 
 End Module
 
+Public Module Icons
+
+    <Extension()>
+    Public Function ToByteArray(ByVal icon As System.Drawing.Icon) As Byte()
+        Using ms As New MemoryStream()
+            icon.Save(ms)
+            Return ms.ToArray()
+        End Using
+    End Function
+
+
+    <Extension()>
+    Public Function ToIcon(ByVal bytes As Byte()) As System.Drawing.Icon
+        Using ms As New MemoryStream(bytes)
+            Return New System.Drawing.Icon(ms)
+        End Using
+    End Function
+
+End Module
+
 Public Module Others
     <Extension()>
     Public Sub SetText(Ctrl As Control, text As String)

@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports WinPaletter.XenonCore
@@ -475,31 +476,42 @@ Public Class XenonTabControl : Inherits TabControl
         Dim img As Image = Nothing
 
         G.Clear(ParentColor)
+        Dim Dark As Boolean = GetDarkMode()
 
         For i = 0 To TabCount - 1
             Dim TabRect As Rectangle = GetTabRect(i)
+            Dim SideTapeH As Integer = TabRect.Height * 0.5
+            Dim SideTapeW As Integer = 3
+            Dim SideTape As Rectangle
+
+            If Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left Then
+                SideTape = New Rectangle(TabRect.X + 1, TabRect.Y + (TabRect.Height - SideTapeH) / 2, SideTapeW, SideTapeH)
+            ElseIf Alignment = TabAlignment.Top Then
+                SideTape = New Rectangle(TabRect.X + TabRect.Width * 0.125, TabRect.Y + TabRect.Height - SideTapeW - 1, TabRect.Width * 0.75, SideTapeW)
+            Else
+                SideTape = New Rectangle(TabRect.X, TabRect.Y, TabRect.Width, SideTapeW)
+            End If
 
             Try
                 If Me.ImageList IsNot Nothing Then
                     Dim ls As ImageList = ImageList
                     img = ls.Images.Item(i)
                     SelectColor = img.AverageColor
+                    SelectColor = SelectColor.Light(0.5)
                 Else
-                    SelectColor = LineColor
+                    SelectColor = If(Dark, LineColor, LineColor.LightLight)
                 End If
             Catch
-                SelectColor = LineColor
+                SelectColor = If(Dark, LineColor, LineColor.LightLight)
             End Try
 
-            If Not GetDarkMode() Then SelectColor = SelectColor.LightLight
-
             If i = SelectedIndex Then
-                G.FillRoundedRect(New SolidBrush(SelectColor), TabRect)
+                G.FillRoundedRect(New SolidBrush(ParentColor.CB(If(Dark, 0.08, -0.08))), TabRect)
                 G.FillRoundedRect(Noise, TabRect)
-                TextColor = If(SelectColor.IsDark, Color.White, Color.Black)
-            Else
-                TextColor = If(ParentColor.IsDark, Color.White, Color.Black)
+                G.FillRoundedRect(New SolidBrush(SelectColor), SideTape, 2)
             End If
+
+            TextColor = If(Dark, Color.White, Color.Black)
 
             Try
                 If Not DesignMode Then TabPages.Item(i).BackColor = ParentColor
@@ -1949,10 +1961,10 @@ Public Class XenonCP
                 G.DrawString(S, F, New SolidBrush(FC1), RectX, StringAligner(ContentAlignment.MiddleCenter))
 
             End If
+
         End If
 
     End Sub
-
 
 
 End Class
@@ -2024,13 +2036,6 @@ Public Class XenonButton : Inherits Button
     End Property
 
     Dim LineImage As Color = LineColor
-
-    <Browsable(True)>
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
-    <EditorBrowsable(EditorBrowsableState.Always)>
-    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
-    <Bindable(True)>
-    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -5180,10 +5185,10 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                         CloseOuterBorder = Color.FromArgb(67, 20, 34)
                         CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
                     Else
-                        CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
-                        CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
-                        CloseOuterBorder = Color.FromArgb(131, 142, 168)
-                        CloseInnerBorder = Color.FromArgb(209, 219, 229)
+                        CloseUpperAccent1 = Color.FromArgb(0, 189, 203, 218)
+                        CloseLowerAccent2 = Color.FromArgb(0, 205, 219, 234)
+                        CloseOuterBorder = Color.FromArgb(100, 25, 25, 25)
+                        CloseInnerBorder = Color.FromArgb(100, 131, 142, 168)
                     End If
 
                     Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
@@ -5235,7 +5240,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                     G.DrawImage(CloseBtn, closerenderrect)
 
                     G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
-                    G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+                    G.DrawRectangle(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2))
 
                 End If
 
@@ -7199,6 +7204,14 @@ Public Class XenonColorBar
     Public Sub RefreshColorPalette()
 
         Invalidate()
+    End Sub
+End Class
+Public Class StripRenderer
+    Inherits ToolStripSystemRenderer
+    Public Sub New()
+    End Sub
+
+    Protected Overrides Sub OnRenderToolStripBorder(ByVal e As ToolStripRenderEventArgs)
     End Sub
 End Class
 #End Region

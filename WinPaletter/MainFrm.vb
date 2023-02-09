@@ -2,6 +2,8 @@
 Imports System.Net
 Imports System.Reflection
 Imports System.Text
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore

@@ -600,42 +600,42 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     anim.IMinAnimate = MinAnimate.ToInteger
 
-                        With NCM
-                            .lfCaptionFont = lfCaptionFont        'Requires LogOff
-                            .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
-                            .lfStatusFont = lfStatusFont          'Requires LogOff
-                            .lfMenuFont = lfMenuFont
-                            .lfMessageFont = lfMessageFont
+                    With NCM
+                        .lfCaptionFont = lfCaptionFont        'Requires LogOff
+                        .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
+                        .lfStatusFont = lfStatusFont          'Requires LogOff
+                        .lfMenuFont = lfMenuFont
+                        .lfMessageFont = lfMessageFont
 
-                            .iBorderWidth = BorderWidth
-                            .iScrollWidth = ScrollWidth
-                            .iScrollHeight = ScrollHeight
-                            .iCaptionWidth = CaptionWidth
-                            .iCaptionHeight = CaptionHeight
-                            .iSMCaptionWidth = SmCaptionWidth
-                            .iSMCaptionHeight = SmCaptionHeight
-                            .iMenuWidth = MenuWidth
-                            .iMenuHeight = MenuHeight
-                            .iPaddedBorderWidth = PaddedBorderWidth
-                        End With
+                        .iBorderWidth = BorderWidth
+                        .iScrollWidth = ScrollWidth
+                        .iScrollHeight = ScrollHeight
+                        .iCaptionWidth = CaptionWidth
+                        .iCaptionHeight = CaptionHeight
+                        .iSMCaptionWidth = SmCaptionWidth
+                        .iSMCaptionHeight = SmCaptionHeight
+                        .iMenuWidth = MenuWidth
+                        .iMenuHeight = MenuHeight
+                        .iPaddedBorderWidth = PaddedBorderWidth
+                    End With
 
-                        With ICO
-                            .iHorzSpacing = IconSpacing
-                            .iVertSpacing = IconVerticalSpacing
-                            .lfFont = lfIconFont
-                        End With
+                    With ICO
+                        .iHorzSpacing = IconSpacing
+                        .iVertSpacing = IconVerticalSpacing
+                        .lfFont = lfIconFont
+                    End With
 
-                        SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-                        SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
-                        SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
-                        NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
+                    SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
+                    SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
+                    SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
+                    NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
-                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                        'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    End If
+                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                End If
 
             End Sub
 
@@ -2174,10 +2174,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End If
 
+        'Skips setting to registry if the values are the same
+        Try
+            If R.OpenSubKey(KeyName).GetValue(ValueName).Equals(Value) Then
+                Try
+                    If R IsNot Nothing Then
+                        R.Flush()
+                        R.Close()
+                    End If
+                Catch
+                End Try
+
+                Exit Sub
+            End If
+        Catch
+        End Try
+
         If Not LocalMacine Or (LocalMacine And My.isElevated) Then
-
             R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegType)
-
         Else
             EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
         End If
@@ -2195,64 +2209,51 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Dim regTemplate As String
 
         Dim _Value As String
+        If RegistryKeyPath.ToUpper.StartsWith("HKEY_LOCAL_MACHINE") Then RegistryKeyPath = "HKLM" & RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count)
 
+        '/v = Value Name
+        '/t = Registry Value Type (https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types)
+        '/d = Value
+        '/f = Disable prompt
         If Value IsNot Nothing Then
-
             Select Case RegType
                 Case RegistryValueKind.String
-                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=""{2}"""
+                    regTemplate = "add ""{0}"" /v ""{1}"" /t REG_SZ /d ""{2}"" /f"
                     _Value = Value.ToString
 
                 Case RegistryValueKind.DWord
-                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=dword:{2}"
+                    regTemplate = "add ""{0}"" /v ""{1}"" /t REG_DWORD /d {2} /f"
                     _Value = CInt(Value).To8Digits
 
                 Case RegistryValueKind.Binary
-                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=hex:{2}"
-                    _Value = BitConverter.ToString(Value).Replace("-", ",")
+                    regTemplate = "add ""{0}"" /v ""{1}"" /t REG_BINARY /d {2} /f"
+                    _Value = BitConverter.ToString(Value).Replace("-", "") 'BitConverter.ToString(Value).Replace("-", ",")
 
                 Case Else
-                    regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}""{1}""=""{2}"""
+                    regTemplate = "add ""{0}"" /v ""{1}"" /d ""{2}"" /f"
                     _Value = Value.ToString
 
             End Select
 
         Else
-            regTemplate = "Windows Registry Editor Version 5.00{3}{3}[{0}]{3}"
+            regTemplate = "add ""{0}"" /v ""{1}"" /d ""{2}"" /f"
             _Value = ""
+
         End If
 
-        Dim regFileContent As String = String.Format(regTemplate, RegistryKeyPath, ValueName, _Value, vbCrLf)
+        If _Value.Contains("%") Then _Value = _Value.Replace("%", "^%")
 
-        If Not IO.Directory.Exists(My.Application.appData) Then IO.Directory.CreateDirectory(My.Application.appData)
-        Dim tempreg As String = My.Application.appData & "\tempreg.reg"
-
-        Try
-            If IO.File.Exists(tempreg) Then Kill(tempreg)
-        Catch
-        End Try
-
-        IO.File.WriteAllText(tempreg, regFileContent)
-
-        Dim process As Process = Nothing
-
-        Dim processStartInfo As New ProcessStartInfo With {
+        Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
            .FileName = "reg",
            .Verb = "runas",
-           .Arguments = String.Format("import ""{0}""", tempreg),
+           .Arguments = String.Format(regTemplate, RegistryKeyPath, ValueName, _Value),
            .WindowStyle = ProcessWindowStyle.Hidden,
            .CreateNoWindow = True,
            .UseShellExecute = True
-        }
+        }}
 
-        process = Process.Start(processStartInfo)
+        process.Start()
         process.WaitForExit()
-
-        Try
-            If IO.File.Exists(tempreg) Then Kill(tempreg)
-        Catch
-        End Try
-
     End Sub
     Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
         Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
@@ -2555,7 +2556,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                                 .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
                                             End With
                                             [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                            [TreeView].Invalidate()
+                                            [TreeView].Refresh()
                                         End Sub, MethodInvoker))
             Catch
             End Try
@@ -2563,25 +2564,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Else
 
             Try
-                'With [TreeView].Nodes.Add([Text])
-                '.ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
-                'End With
-                '[TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                '[TreeView].Invalidate()
-                '[TreeView].Parent.Refresh()
-
                 [TreeView].Invoke(CType(Sub()
                                             With [TreeView].Nodes.Add([Text])
                                                 .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
                                             End With
                                             [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                            [TreeView].Invalidate()
+                                            [TreeView].Refresh()
                                         End Sub, MethodInvoker))
-
             Catch
-
             End Try
-
         End If
     End Sub
     Private Sub AddException([Label] As String, [Exception] As Exception)
@@ -5879,92 +5870,97 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     End Sub
 
     Shared Sub ResetCursorsToAero()
-        Dim R As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors", True)
-        Dim path As String = "%SystemRoot%\cursors"
+        Try
+            Dim path As String = "%SystemRoot%\Cursors"
 
-        R.SetValue("", "Windows Default", RegistryValueKind.String)
+            Dim R As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors", True)
+            R.SetValue("", "Windows Default", RegistryValueKind.String)
+            R.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
+            R.SetValue("Scheme Source", 2, RegistryValueKind.DWord)
 
-        R.SetValue("CursorBaseSize", 32, RegistryValueKind.DWord)
+            Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
+            R.SetValue("AppStarting", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
-        Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
-        R.SetValue("AppStarting", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            x = String.Format("{0}\{1}", path, "aero_arrow.cur")
+            R.SetValue("Arrow", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
-        x = String.Format("{0}\{1}", path, "aero_arrow.cur")
-        R.SetValue("Arrow", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
+            x = String.Format("")
+            R.SetValue("Crosshair", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
-        x = String.Format("")
-        R.SetValue("Crosshair", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
+            x = String.Format("{0}\{1}", path, "aero_link.cur")
+            R.SetValue("Hand", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
-        x = String.Format("{0}\{1}", path, "aero_link.cur")
-        R.SetValue("Hand", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HAND)
+            x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
+            R.SetValue("Help", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
-        x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
-        R.SetValue("Help", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_HELP)
+            x = String.Format("")
+            R.SetValue("IBeam", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
-        x = String.Format("")
-        R.SetValue("IBeam", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
+            x = String.Format("{0}\{1}", path, "aero_unavail.cur")
+            R.SetValue("No", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
-        x = String.Format("{0}\{1}", path, "aero_unavail.cur")
-        R.SetValue("No", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_NO)
+            x = String.Format("{0}\{1}", path, "aero_pen.cur")
+            R.SetValue("NWPen", x)
+            'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_)
 
-        x = String.Format("{0}\{1}", path, "aero_pen.cur")
-        R.SetValue("NWPen", x)
-        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_)
+            x = String.Format("{0}\{1}", path, "aero_person.cur")
+            R.SetValue("Person", x)
+            'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
-        x = String.Format("{0}\{1}", path, "aero_person.cur")
-        R.SetValue("Person", x)
-        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            x = String.Format("{0}\{1}", path, "aero_pin.cur")
+            R.SetValue("Pin", x)
+            'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
-        x = String.Format("{0}\{1}", path, "aero_pin.cur")
-        R.SetValue("Pin", x)
-        'NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            x = String.Format("{0}\{1}", path, "aero_move.cur")
+            R.SetValue("SizeAll", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
-        x = String.Format("{0}\{1}", path, "aero_move.cur")
-        R.SetValue("SizeAll", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+            x = String.Format("{0}\{1}", path, "aero_nesw.cur")
+            R.SetValue("SizeNESW", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
-        x = String.Format("{0}\{1}", path, "aero_nesw.cur")
-        R.SetValue("SizeNESW", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+            x = String.Format("{0}\{1}", path, "aero_ns.cur")
+            R.SetValue("SizeNS", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
-        x = String.Format("{0}\{1}", path, "aero_ns.cur")
-        R.SetValue("SizeNS", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
+            x = String.Format("{0}\{1}", path, "aero_nwse.cur")
+            R.SetValue("SizeNWSE", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
-        x = String.Format("{0}\{1}", path, "aero_nwse.cur")
-        R.SetValue("SizeNWSE", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+            x = String.Format("{0}\{1}", path, "aero_ew.cur")
+            R.SetValue("SizeWE", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
-        x = String.Format("{0}\{1}", path, "aero_ew.cur")
-        R.SetValue("SizeWE", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+            x = String.Format("{0}\{1}", path, "aero_up.cur")
+            R.SetValue("UpArrow", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
-        x = String.Format("{0}\{1}", path, "aero_up.cur")
-        R.SetValue("UpArrow", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_UP)
+            x = String.Format("{0}\{1}", path, "aero_busy.ani")
+            R.SetValue("Wait", x)
+            NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-        x = String.Format("{0}\{1}", path, "aero_busy.ani")
-        R.SetValue("Wait", x)
-        NativeMethods.User32.SetSystemCursor(NativeMethods.User32.LoadCursorFromFile(x), NativeMethods.User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
+            R.Close()
 
-        R.SetValue("Scheme Source", 2, RegistryValueKind.DWord)
+            Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
+            rx.DeleteValue("WinPaletter", False)
+            rx.Close()
 
-        R.Close()
+            SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
 
-        Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
+        Catch ex As Exception
 
-        rx.DeleteValue("WinPaletter", False)
+            If MsgBox(My.Lang.CP_RestoreCursorsError, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.CP_RestoreCursorsErrorPressOK,
+                      My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.CP_RestoreCursorsTip) = MsgBoxResult.Ok Then BugReport.ThrowError(ex)
 
-        rx.Close()
+        End Try
 
-        SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
     End Sub
 #End Region
 
