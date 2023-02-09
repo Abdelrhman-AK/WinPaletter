@@ -1949,6 +1949,7 @@ Public Class XenonCP
 
 
                 Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.[Settings].Nerd_Stats_HexHash, Not (BackColor.A = 255))
+
                 Dim F As Font
 
                 If IsDefault Then

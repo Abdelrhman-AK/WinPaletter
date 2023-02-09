@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
 Imports System.Management
 Imports System.Net
 Imports System.Reflection
@@ -670,7 +669,6 @@ Namespace My
                 ShowWhatsNew = False
             End If
 #End Region
-
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
