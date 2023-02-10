@@ -8,6 +8,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports System.Drawing.Imaging
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 
 Public Class XenonCore
 
@@ -94,25 +95,6 @@ Public Class XenonCore
             End Try
         End With
     End Sub
-    Public Shared Function LoadFromDLL(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
-        Try
-
-            If IO.File.Exists(File) Then
-                Dim hMod As IntPtr = NativeMethods.Kernel32.LoadLibraryEx(File, IntPtr.Zero, &H2)
-                Dim hRes As IntPtr = NativeMethods.Kernel32.FindResource(hMod, ResourceID, ResourceType)
-                Dim size As UInteger = NativeMethods.Kernel32.SizeofResource(hMod, hRes)
-                Dim pt As IntPtr = NativeMethods.Kernel32.LoadResource(hMod, hRes)
-                Dim bPtr As Byte() = New Byte(size - 1) {}
-                Marshal.Copy(pt, bPtr, 0, CInt(size))
-                Return Image.FromStream(New MemoryStream(bPtr))
-            Else
-                Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
-            End If
-        Catch
-            Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
-        End Try
-
-    End Function
 
     '''<summary>
     '''Indicates whether any network connection is available
@@ -228,11 +210,11 @@ Public Class XenonCore
                 For Each OFORM As Form In Application.OpenForms
                     OFORM.Visible = False
                     OFORM.BackColor = BackColor
-                    User32.DarkTitlebar(OFORM.Handle, DarkMode)
+                    DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode)
                     EnumControls(OFORM, DarkMode)
 
-                    If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
-                    If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+                    If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
+                    If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
 
                     OFORM.Refresh()
                     OFORM.Visible = True
@@ -247,11 +229,11 @@ Public Class XenonCore
             If [Form].BackColor <> BackColor Then
                 [Form].BackColor = BackColor
             End If
-            User32.DarkTitlebar([Form].Handle, DarkMode)
+            DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
             EnumControls([Form], DarkMode)
 
-            If My.W11 Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
-            If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.DWMWA_WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+            If My.W11 Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
+            If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
 
             If [Form].Name = ExternalTerminal.Name Then
                 ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.1))
@@ -413,7 +395,6 @@ Public Class XenonCore
         ctrl.Refresh()
     End Sub
 
-
     Public Shared Sub SetTheme(ByVal handle As IntPtr, ByVal theme As CtrlTheme)
         'If Not My.W7 Then
         If handle = IntPtr.Zero Then Throw New ArgumentNullException(NameOf(handle))
@@ -530,7 +511,7 @@ Public Class XenonCore
 
             If Style.HasFlag(MsgBoxStyle.Question) Then
                 icon = TaskDialogIcon.Custom
-                TD.CustomMainIcon = Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
+                TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
             End If
 
             If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
@@ -657,18 +638,16 @@ Public Class XenonCore
 #End Region
 End Class
 
-Public Class Acrylism
+''' <summary>
+''' Functions that help you draw\drop special DWM effects (Tabbed\Mica\Acrylic\Aero) on a form
+''' </summary>
+Public Module FormDWMEffects
 
-    Public Enum FormStyle
-        Auto
-        [Default]
-        Mica
-        Acrylic
-        Tabbed
-    End Enum
-
-
-    Public Shared Sub DoEffects(ByVal [Form] As Form, Optional ByVal Border As Boolean = True, Optional FormStyle As FormStyle = FormStyle.Mica)
+    ''' <summary>
+    ''' Draw effect on form depending on both user choice (Tabbed\Mica\Acrylic\Aero) and current OS
+    ''' </summary>
+    <Extension()>
+    Public Sub DrawDWMEffect(ByVal [Form] As Form, Optional ByVal Border As Boolean = True, Optional FormStyle As FormStyle = FormStyle.Mica)
 
         Dim Transparency_W7 As Boolean
         Try
@@ -689,41 +668,37 @@ Public Class Acrylism
         Try
             If My.W11 AndAlso Transparency_W11_10 Then
                 If FormStyle = FormStyle.Mica Then
-                    DrawMica([Form], MicaStyle.Mica)
+                    [Form].DrawMica(MicaStyle.Mica)
 
                 ElseIf FormStyle = FormStyle.Tabbed Then
-                    DrawMica([Form], MicaStyle.Tabbed)
+                    [Form].DrawMica(MicaStyle.Tabbed)
 
                 ElseIf FormStyle = FormStyle.Acrylic Then
-                    DrawAcrylic([Form], Border)
+                    [Form].DrawAcrylic(Border)
 
                 End If
 
             ElseIf My.W10 AndAlso Transparency_W11_10 Then
-                    DrawAcrylic([Form], Border)
+                [Form].DrawAcrylic(Border)
 
-                ElseIf My.W7 AndAlso Transparency_W7 Then
-                    DrawAero([Form])
+            ElseIf My.W7 AndAlso Transparency_W7 Then
+                [Form].DrawAero
 
-                Else
-                    DrawTransparentGray([Form])
+            Else
+                [Form].DrawTransparentGray
 
             End If
 
         Catch
-            DrawTransparentGray([Form])
+            [Form].DrawTransparentGray
 
         End Try
 
     End Sub
 
-    Enum MicaStyle
-        Mica
-        Tabbed
-    End Enum
-
-    Shared Sub DrawAcrylic(Form As Form, Optional ByVal Border As Boolean = True)
-        Dim accent = New NativeMethods.User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+    <Extension()>
+    Sub DrawAcrylic(Form As Form, Optional ByVal Border As Boolean = True)
+        Dim accent = New User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
         If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
         Dim accentStructSize = Marshal.SizeOf(accent)
         Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
@@ -739,32 +714,72 @@ Public Class Acrylism
         Marshal.FreeHGlobal(accentPtr)
     End Sub
 
-    Shared Sub DrawMica(Form As Form, Optional Style As MicaStyle = MicaStyle.Mica)
+    ''' <summary>
+    ''' Draws Mica Style (Windows 11 and Higher - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
+    ''' </summary>
+    <Extension()>
+    Sub DrawMica(Form As Form, Optional Style As MicaStyle = MicaStyle.Mica)
         Dim FS As New FormStyle
         If Style = MicaStyle.Mica Then FS = FormStyle.Mica
         If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
 
-        User32.DarkTitlebar(Form.Handle, True)
-        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
+        DLLFunc.DarkTitlebar(Form.Handle, True)
+        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
         Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1})
-
-        'Set Titlebar Backcolor, Forecolor and border color
-        'Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.DWMWA_CAPTION_COLOR, ColorTranslator.ToWin32(Form.BackColor), Marshal.SizeOf(GetType(Integer)))
-        'Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.DWMWA_TEXT_COLOR, ColorTranslator.ToWin32(ForeColor), Marshal.SizeOf(GetType(Integer)))
-        'Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.DWMWA_BORDER_COLOR, ColorTranslator.ToWin32(Color.Yellow), Marshal.SizeOf(GetType(Integer)))
     End Sub
 
-    Shared Sub DrawAero(Form As Form)
+    <Extension()>
+    Sub DrawAero(Form As Form)
         Dim Margins As New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1}
         Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, Margins)
     End Sub
 
-    Shared Sub DrawTransparentGray([Form] As Form)
-        [Form].BackColor = Color.FromArgb(20, 20, 20)
-        [Form].Opacity = 0.8
+    <Extension()>
+    Sub DrawTransparentGray([Form] As Form)
+        [Form].BackColor = Color.FromArgb(5, 5, 5)
+        [Form].Opacity = 0.5
     End Sub
 
-End Class
+    ''' <summary>
+    ''' Sets Titlebar Backcolor, Forecolor and border color (Only for Windows 11 and Higher)
+    ''' </summary>
+    <Extension()>
+    Sub DrawCustomTitlebar([Form] As Form, Optional BackColor As Color = Nothing, Optional ForeColor As Color = Nothing, Optional BorderColor As Color = Nothing)
+
+        If My.W11 Then
+            Try
+                If BackColor <> Nothing Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.CAPTION_COLOR, ColorTranslator.ToWin32(BackColor), Marshal.SizeOf(GetType(Integer)))
+            Catch
+            End Try
+
+            Try
+                If ForeColor <> Nothing Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.TEXT_COLOR, ColorTranslator.ToWin32(ForeColor), Marshal.SizeOf(GetType(Integer)))
+            Catch
+            End Try
+
+            Try
+                If BorderColor <> Nothing Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.BORDER_COLOR, ColorTranslator.ToWin32(BorderColor), Marshal.SizeOf(GetType(Integer)))
+            Catch
+            End Try
+
+        End If
+
+    End Sub
+
+    Public Enum FormStyle
+        Auto
+        [Default]
+        Mica
+        Acrylic
+        Tabbed
+    End Enum
+
+    Enum MicaStyle
+        Mica
+        Tabbed
+    End Enum
+
+End Module
 
 ' Class implementing image filter interface and base filter class.
 '

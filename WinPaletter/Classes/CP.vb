@@ -377,12 +377,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Operator
 
             Public Sub Apply()
-                Dim CWindows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows)
-
                 Select Case Theme
                     Case AeroTheme.Aero
                         NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
@@ -390,7 +388,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Case AeroTheme.AeroOpaque
                         NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
@@ -398,7 +396,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Case AeroTheme.Basic
                         NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(CWindows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
@@ -652,7 +650,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Dim WT As New WallpaperTone With {
                     .Enabled = r.GetValue("Enabled", False),
-                    .Image = r.GetValue("Image", Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"),
+                    .Image = r.GetValue("Image", My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"),
                     .H = r.GetValue("H", 0),
                     .S = r.GetValue("S", 50),
                     .L = r.GetValue("L", 50)
@@ -702,7 +700,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Shared Function Load_WallpaperTone_From_ListOfString(tx As List(Of String)) As WallpaperTone
                 If tx.Count > 0 Then
-                    Dim WT As New WallpaperTone With {.Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"}
+                    Dim WT As New WallpaperTone With {.Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"}
 
                     For Each lin As String In tx
                         If lin.ToLower.StartsWith("Enabled= ".ToLower) Then WT.Enabled = lin.Remove(0, "Enabled= ".Count)
@@ -716,7 +714,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Else
                     Return New Structures.WallpaperTone With {
                             .Enabled = False,
-                            .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+                            .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
                             .H = 0, .S = 50, .L = 50}
                 End If
             End Function
@@ -1520,22 +1518,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Public WallpaperTone_W11 As New Structures.WallpaperTone With {
         .Enabled = False,
-        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 50, .L = 50}
 
     Public WallpaperTone_W10 As New Structures.WallpaperTone With {
         .Enabled = False,
-        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 50, .L = 50}
 
     Public WallpaperTone_W8 As New Structures.WallpaperTone With {
         .Enabled = False,
-        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 50, .L = 50}
 
     Public WallpaperTone_W7 As New Structures.WallpaperTone With {
         .Enabled = False,
-        .Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg",
+        .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 50, .L = 50}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
@@ -3741,19 +3739,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim TerPreDir As String
 
                     If Not My.[Settings].Terminal_Path_Deflection Then
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerDir = My.PATH_TerminalJSON
+                        TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
                         If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                             TerDir = My.[Settings].Terminal_Stable_Path
                         Else
-                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerDir = My.PATH_TerminalJSON
                         End If
 
                         If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
                             TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
-                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
                     End If
 
@@ -4689,19 +4687,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim TerPreDir As String
 
                     If Not My.[Settings].Terminal_Path_Deflection Then
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerDir = My.PATH_TerminalJSON
+                        TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
                         If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                             TerDir = My.[Settings].Terminal_Stable_Path
                         Else
-                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerDir = My.PATH_TerminalJSON
                         End If
 
                         If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
                             TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
-                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
                     End If
 
@@ -5134,8 +5132,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If LogonUI7.Enabled Then
             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
 
-            Dim DirX As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\oobe\info\backgrounds"
-            Dim imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
+            Dim DirX As String = My.PATH_System32 & "\oobe\info\backgrounds"
 
             IO.Directory.CreateDirectory(DirX)
 
@@ -5150,7 +5147,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Case LogonUI_Modes.Default_
 
                     For i As Integer = 5031 To 5043 Step +1
-                        bmpList.Add(LoadFromDLL(imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
+                        bmpList.Add(NativeMethods.DLLFunc.GetDllRes(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                     Next
 
                 Case LogonUI_Modes.CustomImage
@@ -5244,9 +5241,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Case LogonUI_Modes.Default_
                     Dim syslock As String
                     If Not MainFrm.CP.Windows8.LockScreenSystemID = 1 And Not MainFrm.CP.Windows8.LockScreenSystemID = 3 Then
-                        syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", MainFrm.CP.Windows8.LockScreenSystemID)
+                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", MainFrm.CP.Windows8.LockScreenSystemID)
                     Else
-                        syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", MainFrm.CP.Windows8.LockScreenSystemID)
+                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", MainFrm.CP.Windows8.LockScreenSystemID)
                     End If
 
                     If IO.File.Exists(syslock) Then

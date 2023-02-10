@@ -34,8 +34,8 @@ Public Class XeSettings
     Public Property Terminal_OtherFonts As Boolean = False
 
     Public Property Terminal_Path_Deflection As Boolean = False
-    Public Property Terminal_Stable_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-    Public Property Terminal_Preview_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+    Public Property Terminal_Stable_Path As String = My.PATH_TerminalJSON
+    Public Property Terminal_Preview_Path As String = My.PATH_TerminalPreviewJSON
     Public Property CMD_OverrideUserPreferences As Boolean = True
 
     Public Property MainFormWidth As Integer = 1110
@@ -47,13 +47,6 @@ Public Class XeSettings
     Public Property Log_Countdown As Integer = 20
 
 #End Region
-    Public Enum BugReportBackgrounds
-        Mica
-        Tabbed
-        Acrylic_or_Aero
-        Gray
-        Disabled
-    End Enum
 
     Public Enum Nerd_Stats_Type
         HEX
@@ -127,8 +120,8 @@ Public Class XeSettings
         If Key.GetValue("Terminal_Bypass", Nothing) Is Nothing Then Key.SetValue("Terminal_Bypass", False, RegistryValueKind.DWord)
         If Key.GetValue("Terminal_OtherFonts", Nothing) Is Nothing Then Key.SetValue("Terminal_OtherFonts", False, RegistryValueKind.DWord)
         If Key.GetValue("Terminal_Path_Deflection", Nothing) Is Nothing Then Key.SetValue("Terminal_Path_Deflection", False, RegistryValueKind.DWord)
-        If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
-        If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json", RegistryValueKind.String)
+        If Key.GetValue("Terminal_Stable_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Stable_Path", My.PATH_TerminalJSON, RegistryValueKind.String)
+        If Key.GetValue("Terminal_Preview_Path", Nothing) Is Nothing Then Key.SetValue("Terminal_Preview_Path", My.PATH_TerminalPreviewJSON, RegistryValueKind.String)
         If Key.GetValue("CMD_OverrideUserPreferences", Nothing) Is Nothing Then Key.SetValue("CMD_OverrideUserPreferences", True, RegistryValueKind.DWord)
 
         If Key.GetValue("Log_ShowApplying", Nothing) Is Nothing Then Key.SetValue("Log_ShowApplying", True, RegistryValueKind.DWord)
@@ -169,8 +162,8 @@ Public Class XeSettings
                 Terminal_Bypass = Key.GetValue("Terminal_Bypass", False)
                 Terminal_OtherFonts = Key.GetValue("Terminal_OtherFonts", False)
                 Terminal_Path_Deflection = Key.GetValue("Terminal_Path_Deflection", False)
-                Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json")
-                Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json")
+                Terminal_Stable_Path = Key.GetValue("Terminal_Stable_Path", My.PATH_TerminalJSON)
+                Terminal_Preview_Path = Key.GetValue("Terminal_Preview_Path", My.PATH_TerminalPreviewJSON)
 
                 CMD_OverrideUserPreferences = Key.GetValue("CMD_OverrideUserPreferences", True)
 

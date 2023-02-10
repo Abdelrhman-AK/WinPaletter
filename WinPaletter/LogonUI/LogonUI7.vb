@@ -2,7 +2,6 @@
 Imports WinPaletter.XenonCore
 Public Class LogonUI7
     Private _Shown As Boolean = False
-    ReadOnly imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
     ReadOnly b As Bitmap
     Public ID As Integer
 
@@ -129,15 +128,15 @@ Public Class LogonUI7
 
         If XenonRadioButton1.Checked Then
             If My.W7 Then
-                bmpX = LoadFromDLL(imageres, 5038)
+                bmpX = NativeMethods.DLLFunc.GetDllRes(My.PATH_imageres, 5038)
             End If
 
             If My.W8 Then
                 Dim syslock As String
                 If Not ID = 1 And Not ID = 3 Then
-                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.jpg", ID)
+                    syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", ID)
                 Else
-                    syslock = String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Screen\img10{0}.png", ID)
+                    syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", ID)
                 End If
                 bmpX = Image.FromStream(New FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
             End If

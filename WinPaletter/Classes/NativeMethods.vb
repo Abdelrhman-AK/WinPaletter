@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text
 
 Namespace NativeMethods
@@ -9,15 +10,7 @@ Namespace NativeMethods
         End Sub
 
         <DllImport("dwmapi.dll")>
-        Public Shared Sub DwmEnableComposition(ByVal uCompositionAction As CompositionAction)
-        End Sub
-
-        <DllImport("dwmapi.dll")>
         Public Shared Function DwmIsCompositionEnabled(ByRef enabled As Boolean) As Integer
-        End Function
-
-        <DllImport("dwmapi.dll")>
-        Public Shared Function DwmEnableBlurBehindWindow(ByVal hWnd As IntPtr, ByRef pBlurBehind As DwmBlurbehind) As Integer
         End Function
 
         <DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
@@ -29,82 +22,27 @@ Namespace NativeMethods
         <DllImport("dwmapi.dll")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal dwAttribute As DWMATTRIB, ByRef pvAttribute As Integer, ByVal cbAttribute As Integer) As Integer
         End Function
 
-        Public Const CS_DROPSHADOW As Integer = &H20000
-        Public Const WM_NCPAINT As Integer = &H85
-
         Public Enum DWMATTRIB As Integer
-            DWMWA_SYSTEMBACKDROP_TYPE = 38
-            DWMWA_MICA_EFFECT = 1029
-            DWMWA_USE_IMMERSIVE_DARK_MODE = 20
-            DWMWA_WINDOW_CORNER_PREFERENCE = 33
-            DWMWA_TEXT_COLOR = 34
-            DWMWA_CAPTION_COLOR = 35
-            DWMWA_BORDER_COLOR = 36
+            SYSTEMBACKDROP_TYPE = 38
+            MICA_EFFECT = 1029
+            USE_IMMERSIVE_DARK_MODE = 20
+            WINDOW_CORNER_PREFERENCE = 33
+            TEXT_COLOR = 34
+            CAPTION_COLOR = 35
+            BORDER_COLOR = 36
         End Enum
-
-        Public Structure DwmBlurbehind
-            Public DwFlags As Integer
-            Public FEnable As Boolean
-            Public HRgnBlur As IntPtr
-            Public FTransitionOnMaximized As Boolean
-        End Structure
-
-        Public Shared Sub DropMica(ByVal frm As Form, ByVal yes As Boolean)
-            Dim extend As Boolean = XenonCore.GetDarkMode
-
-            If Environment.OSVersion.Version.Build >= 22523 Then
-                Dim micaValue As Integer = &H4 '&H2
-                Dim tabbedvalue As Integer = &H4
-
-                If extend Then
-                    DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, micaValue, Marshal.SizeOf(GetType(Integer)))
-                Else
-                    DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_SYSTEMBACKDROP_TYPE, tabbedvalue, Marshal.SizeOf(GetType(Integer)))
-                End If
-
-            Else
-                Dim trueValue As Integer = &H1
-                DwmSetWindowAttribute(frm.Handle, DWMATTRIB.DWMWA_MICA_EFFECT, trueValue, Marshal.SizeOf(GetType(Integer)))
-            End If
-
-            Dim DarkMode As Boolean = XenonCore.GetDarkMode
-            Dim m As New MARGINS()
-
-            If yes Then
-                DwmExtendFrameIntoClientArea(frm.Handle, m)
-            Else
-                Dim mar As New MARGINS With {
-                    .bottomHeight = 0,
-                    .leftWidth = 0,
-                    .rightWidth = 0,
-                    .topHeight = 0
-                }
-                DwmExtendFrameIntoClientArea(frm.Handle, mar)
-            End If
-        End Sub
-
-
-
         Public Enum FormCornersType
             [Default]
             Rectangular
             Round
             SmallRound
         End Enum
-
-        Public Enum CompositionAction As Integer
-            DWM_EC_DISABLECOMPOSITION = 0
-            DWM_EC_ENABLECOMPOSITION = 1
-        End Enum
-
         <StructLayout(LayoutKind.Sequential)> Public Structure MARGINS
             Public leftWidth As Integer
             Public rightWidth As Integer
             Public topHeight As Integer
             Public bottomHeight As Integer
         End Structure
-
-
         Public Structure DWM_COLORIZATION_PARAMS
             Public clrColor As Integer
             Public clrAfterGlow As Integer
@@ -115,6 +53,9 @@ Namespace NativeMethods
             Public fOpaque As Boolean
         End Structure
 
+        Public Const CS_DROPSHADOW As Integer = &H20000
+        Public Const WM_NCPAINT As Integer = &H85
+
     End Class
 
     Public Class User32
@@ -124,73 +65,64 @@ Namespace NativeMethods
         <DllImport("user32.dll")>
         Public Shared Function SetCursor(ByVal hCursor As Integer) As Integer
         End Function
-
         <DllImport("user32.dll")>
         Public Shared Function AnimateWindow(ByVal hWnd As IntPtr, ByVal time As Integer, ByVal flags As AnimateWindowFlags) As Boolean
         End Function
-
         <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
         Public Shared Function SendMessageTimeout(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As UIntPtr, ByVal lParam As IntPtr, ByVal fuFlags As SendMessageTimeoutFlags, ByVal uTimeout As UInteger, <Out> ByRef lpdwResult As UIntPtr) As IntPtr
         End Function
-
-        Declare Function SHChangeNotify Lib "Shell32.dll" (ByVal wEventID As Int32, ByVal uFlags As Int32, ByVal dwItem1 As Int32, ByVal dwItem2 As Int32) As Int32
-
-        Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
-
-        Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
-
         <DllImport("user32.dll")>
         Public Shared Function SetSystemCursor(ByVal hcur As IntPtr, ByVal id As Integer) As Boolean
         End Function
-
-        Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
-
-        <DllImport("Shell32.dll", EntryPoint:="SHDefExtractIconW")>
-        Public Shared Function SHDefExtractIconW(<MarshalAs(UnmanagedType.LPTStr)> ByVal pszIconFile As String, ByVal iIndex As Integer, ByVal uFlags As UInteger, ByRef phiconLarge As IntPtr, ByRef phiconSmall As IntPtr, ByVal nIconSize As UInteger) As Integer
-        End Function
-
         <DllImport("user32.dll", EntryPoint:="DestroyIcon")>
         Public Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
-
         <DllImport("user32.dll")>
         Public Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
         End Function
-
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
-
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
+        Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
+        Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+        Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
 
-        Public Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
-            Return (high << 16) Or (low And &HFFFF)
-        End Function
+        <StructLayout(LayoutKind.Sequential)>
+        Friend Structure AccentPolicy
+            Public AccentState As AccentState
+            Public AccentFlags As Integer
+            Public GradientColor As Integer
+            Public AnimationId As Integer
+        End Structure
+        Friend Structure WindowCompositionAttributeData
+            Public Attribute As WindowCompositionAttribute
+            Public Data As IntPtr
+            Public SizeOfData As Integer
+        End Structure
+        Public Enum WindowCompositionAttribute
+            WCA_ACCENT_POLICY = 19
+            WCA_USEDARKMODECOLORS = 26
+        End Enum
+        Friend Enum AccentState
+            ACCENT_DISABLED = 0
+            ACCENT_ENABLE_GRADIENT = 1
+            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2
+            ACCENT_ENABLE_BLURBEHIND = 3
+            ACCENT_ENABLE_TRANSPARANT = 6
+            ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
+        End Enum
 
-        Public Shared Function ExtractSmallIcon(Path As String, Optional IconIndex As Integer = 0)
-            Dim ico As Icon = Nothing
-            'Make the nIconSize value (See the Msdn documents). The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
-            'The largest size for an icon is 256.
-            Dim LargeAndSmallSize As UInteger = CUInt(MAKEICONSIZE(256, 16))
-
-            Dim hLrgIcon As IntPtr = IntPtr.Zero
-            Dim hSmlIcon As IntPtr = IntPtr.Zero
-
-            Dim result As Integer = SHDefExtractIconW(Path, IconIndex, 0, hLrgIcon, hSmlIcon, LargeAndSmallSize)
-
-            If result = 0 Then
-                If ico IsNot Nothing Then ico.Dispose()
-
-                'if the large and/or small icons where created in the unmanaged memory successfuly then create
-                'a clone of them in the managed icons and delete the icons in the unmanaged memory.
-
-                If hSmlIcon <> IntPtr.Zero Then
-                    ico = CType(Icon.FromHandle(hSmlIcon).Clone, Icon)
-                    DestroyIcon(hSmlIcon)
-                End If
-
-            End If
-
-            Return ico
-        End Function
+        <Flags>
+        Enum AnimateWindowFlags
+            AW_HOR_POSITIVE = &H0
+            AW_HOR_NEGATIVE = &H2
+            AW_VER_POSITIVE = &H4
+            AW_VER_NEGATIVE = &H8
+            AW_CENTER = &H10
+            AW_HIDE = &H10000
+            AW_ACTIVATE = &H20000
+            AW_SLIDE = &H40000
+            AW_BLEND = &H80000
+        End Enum
         Enum OCR_SYSTEM_CURSORS As Integer
 
             ' Standard arrow And small hourglass
@@ -235,64 +167,6 @@ Namespace NativeMethods
             'Hourglass
             OCR_WAIT = 32514
         End Enum
-
-        <StructLayout(LayoutKind.Sequential)>
-        Friend Structure AccentPolicy
-            Public AccentState As AccentState
-            Public AccentFlags As Integer
-            Public GradientColor As Integer
-            Public AnimationId As Integer
-        End Structure
-
-        Friend Structure WindowCompositionAttributeData
-            Public Attribute As WindowCompositionAttribute
-            Public Data As IntPtr
-            Public SizeOfData As Integer
-        End Structure
-
-        Public Enum WindowCompositionAttribute
-            WCA_ACCENT_POLICY = 19
-            WCA_USEDARKMODECOLORS = 26
-        End Enum
-
-        Friend Enum AccentState
-            ACCENT_DISABLED = 0
-            ACCENT_ENABLE_GRADIENT = 1
-            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2
-            ACCENT_ENABLE_BLURBEHIND = 3
-            ACCENT_ENABLE_TRANSPARANT = 6
-            ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
-        End Enum
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure WINDOWCOMPOSITIONATTRIBDATA
-            Public Attrib As WindowCompositionAttribute
-            Public pvData As IntPtr
-            Public cbData As Integer
-        End Structure
-
-        Public Shared Sub DarkTitlebar(ByVal hWnd As IntPtr, DarkMode As Boolean)
-
-            If Dwmapi.DwmSetWindowAttribute(hWnd, 19, If(DarkMode, 1, 0), 4) <> 0 Then Dwmapi.DwmSetWindowAttribute(hWnd, 20, If(DarkMode, 1, 0), 4)
-
-            'Exit Sub
-
-            'If IsWindows10OrGreater(18362) Then
-            'SetProp(hWnd, "UseImmersiveDarkModeColors", New IntPtr(If(DarkMode, 1, 0)))
-            'Else
-            'Dim size As Integer = Marshal.SizeOf(DarkMode)
-            'Dim ptr As IntPtr = Marshal.AllocHGlobal(size)
-            'Marshal.StructureToPtr(DarkMode, ptr, False)
-            'Dim data As WindowCompositionAttributeData = New WindowCompositionAttributeData With {
-            '.Attribute = WindowCompositionAttribute.WCA_USEDARKMODECOLORS,
-            '.Data = ptr,
-            '.SizeOfData = size
-            '}
-            'SetWindowCompositionAttribute(hWnd, data)
-            'End If
-
-        End Sub
-
         Enum SendMessageTimeoutFlags As UInteger
             SMTO_NORMAL = &H0
             SMTO_BLOCK = &H1
@@ -311,28 +185,11 @@ Namespace NativeMethods
         Public Shared HWND_BROADCAST As New IntPtr(&HFFFF)
         Public Shared MSG_TIMEOUT As Integer = 5000
         Public Shared RESULT As UIntPtr
-
-        <Flags>
-        Enum AnimateWindowFlags
-            AW_HOR_POSITIVE = &H0
-            AW_HOR_NEGATIVE = &H2
-            AW_VER_POSITIVE = &H4
-            AW_VER_NEGATIVE = &H8
-            AW_CENTER = &H10
-            AW_HIDE = &H10000
-            AW_ACTIVATE = &H20000
-            AW_SLIDE = &H40000
-            AW_BLEND = &H80000
-        End Enum
-
     End Class
 
     Public Class Kernel32
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function LoadLibraryEx(ByVal lpFileName As String, ByVal hFile As IntPtr, ByVal dwFlags As UInteger) As IntPtr
-        End Function
-        <DllImport("Kernel32.dll", EntryPoint:="LockResource")>
-        Public Shared Function LockResource(ByVal hGlobal As IntPtr) As IntPtr
         End Function
         <DllImport("kernel32.dll")>
         Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpID As Integer, ByVal lpType As String) As IntPtr
@@ -350,7 +207,6 @@ Namespace NativeMethods
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function Wow64RevertWow64FsRedirection(ByVal ptr As IntPtr) As Boolean
         End Function
-
     End Class
 
     Public Class Uxtheme
@@ -364,46 +220,30 @@ Namespace NativeMethods
 
         Public Declare Unicode Function GetCurrentThemeName Lib "uxtheme" (ByVal stringThemeName As StringBuilder, ByVal lengthThemeName As Integer, ByVal stringColorName As StringBuilder, ByVal lengthColorName As Integer, ByVal stringSizeName As StringBuilder, ByVal lengthSizeName As Integer) As Int32
 
-        <DllImport("uxtheme.dll", EntryPoint:="#135")>
-        Friend Shared Function SetPreferredAppMode(ByVal appMode As PreferredAppMode) As Integer
-        End Function
-
         <DllImport("uxtheme.dll", ExactSpelling:=True, CharSet:=CharSet.Unicode)>
         Public Shared Function SetWindowTheme(ByVal hwnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As String) As Integer
-        End Function
-
-        Friend Enum PreferredAppMode
-            [Default]
-            AllowDark
-            ForceDark
-            ForceLight
-            Max
-        End Enum
-
-        <DllImport("uxtheme.dll", EntryPoint:="#135")>
-        Friend Shared Function AllowDarkModeForApp(ByVal allow As Boolean) As Integer
-        End Function
-
-        <DllImport("uxtheme.dll", EntryPoint:="#133")>
-        Friend Shared Function AllowDarkModeForWindow(ByVal handle As IntPtr, ByVal allow As Boolean) As Integer
         End Function
     End Class
 
     Public Class Shell32
-        Public Const MAX_PATH As Integer = 260
+        <DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
+        End Sub
+        <DllImport("Shell32.dll", EntryPoint:="SHDefExtractIconW")>
+        Public Shared Function SHDefExtractIconW(<MarshalAs(UnmanagedType.LPTStr)> ByVal pszIconFile As String, ByVal iIndex As Integer, ByVal uFlags As UInteger, ByRef phiconLarge As IntPtr, ByRef phiconSmall As IntPtr, ByVal nIconSize As UInteger) As Integer
+        End Function
+        <DllImport("Shell32.dll", SetLastError:=False)>
+        Public Shared Function SHGetStockIconInfo(ByVal siid As SHSTOCKICONID, ByVal uFlags As SHGSI, ByRef psii As SHSTOCKICONINFO) As Int32
+        End Function
 
-        <Flags>
-        Public Enum SHGSI
-            ICONLOCATION = 0
-            ICON = &H100
-            SYSICONINDEX = &H4000
-            LINKOVERLAY = &H8000
-            SELECTED = &H10000
-            LARGEICON = &H0
-            SMALLICON = &H1
-            SHELLICONSIZE = &H4
-        End Enum
-
+        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
+        Public Structure SHSTOCKICONINFO
+            Public cbSize As UInt32
+            Public hIcon As IntPtr
+            Public iSysIconIndex As Int32
+            Public iIcon As Int32
+            <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)>
+            Public szPath As String
+        End Structure
         Public Enum SHSTOCKICONID
             ''' <summary>
             ''' Blank document icon (Document Of a type With no associated application).
@@ -884,31 +724,112 @@ Namespace NativeMethods
             ''' </summary>
             MAX_ICONS = 174
         End Enum
+        <Flags>
+        Public Enum SHGSI
+            ICONLOCATION = 0
+            ICON = &H100
+            SYSICONINDEX = &H4000
+            LINKOVERLAY = &H8000
+            SELECTED = &H10000
+            LARGEICON = &H0
+            SMALLICON = &H1
+            SHELLICONSIZE = &H4
+        End Enum
 
-        <DllImport("shell32.dll")> Shared Sub SHChangeNotify(ByVal wEventId As Integer, ByVal uFlags As Integer, ByVal dwItem1 As Integer, ByVal dwItem2 As Integer)
-        End Sub
-
+        Public Const MAX_PATH As Integer = 260
         Public Const SHCNE_ASSOCCHANGED = &H8000000
         Public Const SHCNF_IDLIST = 0
+    End Class
 
-        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
-        Public Structure SHSTOCKICONINFO
-            Public cbSize As UInt32
-            Public hIcon As IntPtr
-            Public iSysIconIndex As Int32
-            Public iIcon As Int32
-            <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)>
-            Public szPath As String
-        End Structure
-
-        <DllImport("Shell32.dll", SetLastError:=False)>
-        Public Shared Function SHGetStockIconInfo(ByVal siid As SHSTOCKICONID, ByVal uFlags As SHGSI, ByRef psii As SHSTOCKICONINFO) As Int32
+    ''' <summary>
+    ''' Functions not found internally in system DLLs, but uses the functions in DLLs to do something DLLs Functions cannot do alone.
+    ''' </summary>
+    Public Class DLLFunc
+#Region "User32\Shell32"
+        Private Shared Function MAKEICONSIZE(ByVal low As Integer, ByVal high As Integer) As Integer
+            Return (high << 16) Or (low And &HFFFF)
         End Function
+        Public Shared Function ExtractSmallIcon(Path As String, Optional IconIndex As Integer = 0)
+            Dim ico As Icon = Nothing
+            'Make the nIconSize value (See the Msdn documents). The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
+            'The largest size for an icon is 256.
+            Dim LargeAndSmallSize As UInteger = CUInt(MAKEICONSIZE(256, 16))
 
-        Public Shared Function GetSystemIcon(_Icon As SHSTOCKICONID, _Type As SHGSI) As Icon
-            Dim sii As New SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(SHSTOCKICONINFO))}
-            SHGetStockIconInfo(_Icon, _Type, sii)
+            Dim hLrgIcon As IntPtr = IntPtr.Zero
+            Dim hSmlIcon As IntPtr = IntPtr.Zero
+
+            Dim result As Integer = Shell32.SHDefExtractIconW(Path, IconIndex, 0, hLrgIcon, hSmlIcon, LargeAndSmallSize)
+
+            If result = 0 Then
+                If ico IsNot Nothing Then ico.Dispose()
+
+                'if the large and/or small icons where created in the unmanaged memory successfuly then create
+                'a clone of them in the managed icons and delete the icons in the unmanaged memory.
+
+                If hSmlIcon <> IntPtr.Zero Then
+                    ico = CType(Icon.FromHandle(hSmlIcon).Clone, Icon)
+                    User32.DestroyIcon(hSmlIcon)
+                End If
+
+            End If
+
+            Return ico
+        End Function
+        Public Shared Function GetSystemIcon(_Icon As Shell32.SHSTOCKICONID, _Type As Shell32.SHGSI) As Icon
+            Dim sii As New Shell32.SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(Shell32.SHSTOCKICONINFO))}
+            Shell32.SHGetStockIconInfo(_Icon, _Type, sii)
             Return Icon.FromHandle(sii.hIcon)
         End Function
+
+#End Region
+
+#Region "Kernel32"
+        Public Shared Function GetDllRes(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
+            Try
+
+                If IO.File.Exists(File) Then
+                    Dim hMod As IntPtr = Kernel32.LoadLibraryEx(File, IntPtr.Zero, &H2)
+                    Dim hRes As IntPtr = Kernel32.FindResource(hMod, ResourceID, ResourceType)
+                    Dim size As UInteger = Kernel32.SizeofResource(hMod, hRes)
+                    Dim pt As IntPtr = Kernel32.LoadResource(hMod, hRes)
+                    Dim bPtr As Byte() = New Byte(size - 1) {}
+                    Marshal.Copy(pt, bPtr, 0, CInt(size))
+                    Return Image.FromStream(New MemoryStream(bPtr))
+                Else
+                    Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
+                End If
+            Catch
+                Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
+            End Try
+
+        End Function
+
+#End Region
+
+#Region "Dwmapi"
+        Public Shared Sub DarkTitlebar(ByVal hWnd As IntPtr, DarkMode As Boolean)
+
+            If Dwmapi.DwmSetWindowAttribute(hWnd, 19, If(DarkMode, 1, 0), 4) <> 0 Then Dwmapi.DwmSetWindowAttribute(hWnd, 20, If(DarkMode, 1, 0), 4)
+
+            'Exit Sub
+
+            'If IsWindows10OrGreater(18362) Then
+            'SetProp(hWnd, "UseImmersiveDarkModeColors", New IntPtr(If(DarkMode, 1, 0)))
+            'Else
+            'Dim size As Integer = Marshal.SizeOf(DarkMode)
+            'Dim ptr As IntPtr = Marshal.AllocHGlobal(size)
+            'Marshal.StructureToPtr(DarkMode, ptr, False)
+            'Dim data As WindowCompositionAttributeData = New WindowCompositionAttributeData With {
+            '.Attribute = WindowCompositionAttribute.WCA_USEDARKMODECOLORS,
+            '.Data = ptr,
+            '.SizeOfData = size
+            '}
+            'SetWindowCompositionAttribute(hWnd, data)
+            'End If
+
+        End Sub
+#End Region
+
     End Class
+
 End Namespace

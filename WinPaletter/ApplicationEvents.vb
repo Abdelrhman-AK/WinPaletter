@@ -11,6 +11,15 @@ Imports WinPaletter.XenonCore
 
 Namespace My
     Module GlobalVariables
+
+        Public ReadOnly PATH_Windows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows")
+        Public ReadOnly PATH_System32 As String = PATH_Windows & "\System32"
+        Public ReadOnly PATH_imageres As String = PATH_System32 & "\imageres.dll"
+        Public ReadOnly PATH_Windows_UI_Immersive_dll As String = PATH_System32 & "\Windows.UI.Immersive.dll"
+        Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+        Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+        Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+
         ''' <summary>
         ''' Boolean Represents if OS is Windows 11 or not
         ''' </summary>

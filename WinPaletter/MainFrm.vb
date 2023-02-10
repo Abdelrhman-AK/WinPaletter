@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -1255,7 +1254,7 @@ Public Class MainFrm
         }
 
         Dim img As Bitmap
-        If Not IO.File.Exists([WT].Image) Then [WT].Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
+        If Not IO.File.Exists([WT].Image) Then [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
         Dim S As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
         img = Image.FromStream(S).Resize(pnl_preview.Size)
         S.Close()

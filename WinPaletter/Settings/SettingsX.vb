@@ -246,19 +246,19 @@ Public Class SettingsX
                 Dim TerPreDir As String
 
                 If Not My.[Settings].Terminal_Path_Deflection Then
-                    TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                    TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                    TerDir = My.PATH_TerminalJSON
+                    TerPreDir = My.PATH_TerminalPreviewJSON
                 Else
                     If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                         TerDir = My.[Settings].Terminal_Stable_Path
                     Else
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerDir = My.PATH_TerminalJSON
                     End If
 
                     If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
                         TerPreDir = My.[Settings].Terminal_Preview_Path
                     Else
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerPreDir = My.PATH_TerminalPreviewJSON
                     End If
                 End If
 

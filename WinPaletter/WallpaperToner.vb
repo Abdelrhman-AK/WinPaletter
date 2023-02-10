@@ -32,7 +32,7 @@ Public Class WallpaperToner
     Sub LoadFromWT([WT] As CP.Structures.WallpaperTone)
         ToneEnabled.Checked = [WT].Enabled
         XenonTextBox1.Text = [WT].Image
-        If Not IO.File.Exists([WT].Image) Then [WT].Image = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
+        If Not IO.File.Exists([WT].Image) Then [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
         Dim S As New FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
         img = Image.FromStream(S).Resize(pnl_preview.Size)
         S.Close()
@@ -143,7 +143,7 @@ Public Class WallpaperToner
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        XenonTextBox1.Text = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
+        XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -156,7 +156,7 @@ Public Class WallpaperToner
         Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
         Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
         If R1 IsNot Nothing Then R1.Close()
-        If Not IO.File.Exists(WallpaperPath) Then WallpaperPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\Web\Wallpaper\Windows\img0.jpg"
+        If Not IO.File.Exists(WallpaperPath) Then WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
         XenonTextBox1.Text = WallpaperPath
 
     End Sub

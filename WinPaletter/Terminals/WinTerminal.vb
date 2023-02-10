@@ -538,28 +538,26 @@ Public Class WinTerminal : Implements ICloneable
                 Select Case [Version]
                     Case Version.Stable
                         If Not My.[Settings].Terminal_Path_Deflection Then
-                            SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                            SettingsFile = My.PATH_TerminalJSON
                         Else
                             If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                                 SettingsFile = My.[Settings].Terminal_Stable_Path
                             Else
-                                SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                                SettingsFile = My.PATH_TerminalJSON
                             End If
                         End If
 
                     Case Version.Preview
                         If Not My.[Settings].Terminal_Path_Deflection Then
-                            SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                            SettingsFile = My.PATH_TerminalPreviewJSON
                         Else
                             If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                                 SettingsFile = My.[Settings].Terminal_Stable_Path
                             Else
-                                SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                                SettingsFile = My.PATH_TerminalPreviewJSON
                             End If
                         End If
 
-                        'Case Version.Developer
-                        'SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalDeveloper_8wekyb3d8bbwe\LocalState\settings.json"
                 End Select
 
 

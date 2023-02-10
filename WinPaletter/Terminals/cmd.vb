@@ -729,7 +729,7 @@ Public Class CMD
                 Dim prc As New Process With {.StartInfo = New ProcessStartInfo With {
                 .FileName = "cmd.exe",
                 .Verb = "runas",
-                .WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                .WorkingDirectory = My.PATH_UserProfile
                 }}
                 prc.Start()
 
@@ -737,7 +737,7 @@ Public Class CMD
                 Dim prc As New Process With {.StartInfo = New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0\powershell.exe",
                 .Verb = "runas",
-                .WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                .WorkingDirectory = My.PATH_UserProfile
                 }}
                 prc.Start()
 
@@ -745,7 +745,7 @@ Public Class CMD
                 Dim prc As New Process With {.StartInfo = New ProcessStartInfo With {
                 .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0\powershell.exe",
                 .Verb = "runas",
-                .WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                .WorkingDirectory = My.PATH_UserProfile
                 }}
                 prc.Start()
 

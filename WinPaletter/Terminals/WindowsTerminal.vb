@@ -479,11 +479,11 @@ Public Class WindowsTerminal
             Else
                 NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
                 Dim path As String = ""
-                If .commandline IsNot Nothing Then path = .commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+                If .Commandline IsNot Nothing Then path = .Commandline.Replace("%SystemRoot%", My.PATH_Windows)
                 NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
 
                 If File.Exists(path) Then
-                    XenonTerminal1.TabIcon = NativeMethods.User32.ExtractSmallIcon(path).ToBitmap
+                    XenonTerminal1.TabIcon = NativeMethods.DLLFunc.ExtractSmallIcon(path).ToBitmap
                 Else
                     XenonTerminal1.TabIcon = Nothing
                     XenonTerminal1.TabIconButItIsString = ""
@@ -957,19 +957,19 @@ Public Class WindowsTerminal
         Dim TerPreDir As String
 
         If Not My.[Settings].Terminal_Path_Deflection Then
-            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            TerDir = My.PATH_TerminalJSON
+            TerPreDir = My.PATH_TerminalPreviewJSON
         Else
             If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                 TerDir = My.[Settings].Terminal_Stable_Path
             Else
-                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                TerDir = My.PATH_TerminalJSON
             End If
 
             If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
                 TerPreDir = My.[Settings].Terminal_Preview_Path
             Else
-                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                TerPreDir = My.PATH_TerminalPreviewJSON
             End If
         End If
 
@@ -1070,19 +1070,19 @@ Public Class WindowsTerminal
                     Dim TerPreDir As String
 
                     If Not My.[Settings].Terminal_Path_Deflection Then
-                        TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                        TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                        TerDir = My.PATH_TerminalJSON
+                        TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
                         If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
                             TerDir = My.[Settings].Terminal_Stable_Path
                         Else
-                            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerDir = My.PATH_TerminalJSON
                         End If
 
                         If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
                             TerPreDir = My.[Settings].Terminal_Preview_Path
                         Else
-                            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                            TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
                     End If
 
@@ -1117,8 +1117,8 @@ Public Class WindowsTerminal
             Dim TerDir As String
             Dim TerPreDir As String
 
-            TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-            TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+            TerDir = My.PATH_TerminalJSON
+            TerPreDir = My.PATH_TerminalPreviewJSON
 
 
             If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
@@ -1138,8 +1138,8 @@ Public Class WindowsTerminal
                 Dim TerDir As String
                 Dim TerPreDir As String
 
-                TerDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-                TerPreDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+                TerDir = My.PATH_TerminalJSON
+                TerPreDir = My.PATH_TerminalPreviewJSON
 
                 If IO.File.Exists(TerDir) And _Mode = WinTerminal.Version.Stable Then
                     IO.File.Copy(TerDir, SaveJSONDlg.FileName)
@@ -1366,11 +1366,11 @@ Public Class WindowsTerminal
                         Else
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
                             Dim path As String = ""
-                            If .Commandline IsNot Nothing Then path = .Commandline.Replace("%SystemRoot%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+                            If .Commandline IsNot Nothing Then path = .Commandline.Replace("%SystemRoot%", My.PATH_Windows)
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
 
                             If File.Exists(path) Then
-                                XenonTerminal1.TabIcon = NativeMethods.User32.ExtractSmallIcon(path).ToBitmap
+                                XenonTerminal1.TabIcon = NativeMethods.DLLFunc.ExtractSmallIcon(path).ToBitmap
                             Else
                                 XenonTerminal1.TabIcon = Nothing
                                 XenonTerminal1.TabIconButItIsString = ""

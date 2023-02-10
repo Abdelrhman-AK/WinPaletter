@@ -1,7 +1,5 @@
 ﻿Imports WinPaletter.XenonCore
 Public Class Start8Selector
-    ReadOnly imageres As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\system32\imageres.dll"
-
     Private Sub Start8Selector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         LoadImagesFromDLL()

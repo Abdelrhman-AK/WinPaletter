@@ -13,8 +13,10 @@ Public Class BugReport
 
         XenonTextBox1.Font = My.Application.ConsoleFontMedium
 
-        Try : bk.Close() : Catch : End Try
-        Try : bk.Show() : Catch : End Try
+        Try : BK.Close() : Catch : End Try
+        Try : BK.Show() : Catch : End Try
+
+        DrawCustomTitlebar(c1)
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
 
@@ -42,7 +44,7 @@ Public Class BugReport
 
         ShowDialog()
 
-        bk.Close()
+        BK.Close()
 
         If DialogResult = DialogResult.Abort Then My.Application.ExitAfterException = True Else My.Application.ExitAfterException = False
 
@@ -61,7 +63,7 @@ Public Class BugReport
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         Process.Start(My.Resources.Link_Repository & "issues")
-        Try : bk.Close() : Catch : End Try
+        Try : BK.Close() : Catch : End Try
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
@@ -93,7 +95,7 @@ Public Class BugReport
 
         If IO.Directory.Exists(My.Application.appData & "\Reports") Then
             Process.Start(My.Application.appData & "\Reports")
-            Try : bk.Close() : Catch : End Try
+            Try : BK.Close() : Catch : End Try
         Else
             MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), MsgBoxStyle.Critical)
         End If

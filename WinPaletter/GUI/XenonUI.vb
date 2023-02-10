@@ -5900,7 +5900,7 @@ Public Class XenonCMD
     Public Property CustomTerminal As Boolean = False
 
     ReadOnly S1 As String = "(c) Microsoft Corporation. All rights reserved."
-    ReadOnly S2 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
+    ReadOnly S2 As String = My.PATH_System32 & ">"
     ReadOnly CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 
     Enum Raster_Sizes
@@ -6562,7 +6562,7 @@ Public Class XenonTerminal
 
         Dim s1 As String = "Console Sample"
         Dim s2 As String = "This is a selection"
-        Dim s3 As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows") & "\System32" & ">"
+        Dim s3 As String = My.PATH_System32 & ">"
 
         Dim s1X As SizeF = s1.Measure(Font) + New SizeF(5, 0)
         Dim s2X As SizeF = s2.Measure(Font) + New SizeF(2, 0)
