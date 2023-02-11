@@ -305,12 +305,11 @@ Public Class ExternalTerminal
             ExtTerminal_FontsBox.SelectedItem = "Consolas"
         End Try
 
-        If My.W10_1909 Then
-            Try
-                y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", _Def.CommandPrompt.W10_1909_CursorColor.Reverse.ToArgb)
-                ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-            Catch
-                ExtTerminal_CursorColor.BackColor = _Def.CommandPrompt.W10_1909_CursorColor
+        Try
+            y_cmd = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", _Def.CommandPrompt.W10_1909_CursorColor.Reverse.ToArgb)
+            ExtTerminal_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+        Catch
+            ExtTerminal_CursorColor.BackColor = _Def.CommandPrompt.W10_1909_CursorColor
             End Try
             ExtTerminal_PreviewCUR2.BackColor = ExtTerminal_CursorColor.BackColor
 
@@ -350,7 +349,6 @@ Public Class ExternalTerminal
             Catch
                 ExtTerminal_OpacityBar.Value = 100
             End Try
-        End If
 
         UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
         ApplyPreview()
@@ -381,14 +379,12 @@ Public Class ExternalTerminal
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", Convert.ToInt32(ExtTerminal_AccentBackgroundBar.Value.ToString("X") & ExtTerminal_AccentForegroundBar.Value.ToString("X"), 16))
             CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorSize", ExtTerminal_CursorSizeBar.Value)
 
-            If My.W10_1909 Then
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, ExtTerminal_CursorColor.BackColor.Reverse).ToArgb)
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", ExtTerminal_CursorStyle.SelectedIndex)
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "WindowAlpha", ExtTerminal_OpacityBar.Value)
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", If(ExtTerminal_EnhancedTerminal.Checked, 1, 0))
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", If(ExtTerminal_LineSelection.Checked, 1, 0))
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
-            End If
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, ExtTerminal_CursorColor.BackColor.Reverse).ToArgb)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", ExtTerminal_CursorStyle.SelectedIndex)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "WindowAlpha", ExtTerminal_OpacityBar.Value)
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", If(ExtTerminal_EnhancedTerminal.Checked, 1, 0))
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", If(ExtTerminal_LineSelection.Checked, 1, 0))
+            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
 
             CP.EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
 
@@ -550,9 +546,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_CursorStyle_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles ExtTerminal_CursorStyle.SelectedIndexChanged
-        If My.W10_1909 Then
-            ApplyCursorShape()
-        End If
+        ApplyCursorShape()
     End Sub
 
     Private Sub ExtTerminal_CursorColor_Click(sender As Object, e As EventArgs) Handles ExtTerminal_CursorColor.Click
@@ -728,7 +722,7 @@ Public Class ExternalTerminal
         ExtTerminal_PreviewCUR2.Height = all * (ExtTerminal_CursorSizeBar.Value / ExtTerminal_CursorSizeBar.Maximum)
         ExtTerminal_PreviewCUR2.Top = ExtTerminal_PreviewCUR.Height - ExtTerminal_PreviewCUR2.Height - 2
         ExtTerminal_PreviewCUR_Val.Text = ExtTerminal_CursorSizeBar.Value
-        If My.W10_1909 Then ApplyCursorShape()
+        ApplyCursorShape()
     End Sub
     Sub ApplyPreview()
 
@@ -1094,17 +1088,15 @@ Public Class ExternalTerminal
         CP.CommandPrompt.CursorSize = ExtTerminal_CursorSizeBar.Value
         If ExtTerminal_CursorSizeBar.Value > 100 Then ExtTerminal_CursorSizeBar.Value = 100
         If ExtTerminal_CursorSizeBar.Value < 20 Then ExtTerminal_CursorSizeBar.Value = 20
-        If My.W10_1909 Then
-            ExtTerminal_CursorStyle.SelectedIndex = CP.CommandPrompt.W10_1909_CursorType
-            ExtTerminal_CursorColor.BackColor = CP.CommandPrompt.W10_1909_CursorColor
-            ExtTerminal_PreviewCUR2.BackColor = CP.CommandPrompt.W10_1909_CursorColor
-            ExtTerminal_EnhancedTerminal.Checked = CP.CommandPrompt.W10_1909_ForceV2
-            ExtTerminal_OpacityBar.Value = CP.CommandPrompt.W10_1909_WindowAlpha
-            ExtTerminal_OpacityVal.Text = Fix((CP.CommandPrompt.W10_1909_WindowAlpha / 255) * 100)
-            ExtTerminal_LineSelection.Checked = CP.CommandPrompt.W10_1909_LineSelection
-            ExtTerminal_TerminalScrolling.Checked = CP.CommandPrompt.W10_1909_TerminalScrolling
-            ApplyCursorShape()
-        End If
+        ExtTerminal_CursorStyle.SelectedIndex = CP.CommandPrompt.W10_1909_CursorType
+        ExtTerminal_CursorColor.BackColor = CP.CommandPrompt.W10_1909_CursorColor
+        ExtTerminal_PreviewCUR2.BackColor = CP.CommandPrompt.W10_1909_CursorColor
+        ExtTerminal_EnhancedTerminal.Checked = CP.CommandPrompt.W10_1909_ForceV2
+        ExtTerminal_OpacityBar.Value = CP.CommandPrompt.W10_1909_WindowAlpha
+        ExtTerminal_OpacityVal.Text = Fix((CP.CommandPrompt.W10_1909_WindowAlpha / 255) * 100)
+        ExtTerminal_LineSelection.Checked = CP.CommandPrompt.W10_1909_LineSelection
+        ExtTerminal_TerminalScrolling.Checked = CP.CommandPrompt.W10_1909_TerminalScrolling
+        ApplyCursorShape()
         UpdateCurPreview()
     End Sub
 

@@ -71,6 +71,8 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Lang_Dashboard".ToLower Then Return Lang_Dashboard
         If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
         If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
+        If Name.ToLower = "WallpaperToner".ToLower Then Return WallpaperToner
+
     End Function
 
     Public allForms As New List(Of String) From {
@@ -104,7 +106,8 @@ Public Class Localizer : Implements IDisposable
                         "Lang_Add_Snippet",
                         "Lang_Dashboard",
                         "Lang_JSON_Update",
-                        "Lang_JSON_Manage"
+                        "Lang_JSON_Manage",
+                        "WallpaperToner"
                         }
 
 #Region "Language Info"
@@ -165,13 +168,11 @@ Public Class Localizer : Implements IDisposable
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
     Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
     Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
-    Property LogonUI_LockEnabled As String = "Lock Screen Enabled?"
-    Property LogonUI_Enabled As String = "Enabled?"
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
-    Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, Toggles, Buttons && Notifications Tray (Overflow)"
-    Property CP_11_OverflowTray As String = "Notifications Tray (Overflow) Background (Requires 22H2)"
+    Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, Toggles, Buttons && Taskbar Tray (Overflow)"
+    Property CP_11_OverflowTray As String = "Taskbar Tray Overflow (Requires 22H2, Accent on Taskbar Enabled)"
     Property CP_11_StartMenu_AC As String = "Start Menu && Action Center Colors"
     Property CP_11_Taskbar As String = "Taskbar Color"
     Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"

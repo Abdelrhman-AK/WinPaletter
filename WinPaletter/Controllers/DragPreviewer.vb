@@ -50,7 +50,7 @@ Public Class DragPreviewer
         ApplyRetroPreview(CP)
         SetMetics(CP)
 
-        DrawDWMEffect(True)
+        DrawDWMEffect(True, FormStyle.Acrylic)
 
         ResumeLayout()
     End Sub

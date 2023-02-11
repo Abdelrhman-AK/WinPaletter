@@ -794,7 +794,11 @@ Namespace NativeMethods
                     Dim pt As IntPtr = Kernel32.LoadResource(hMod, hRes)
                     Dim bPtr As Byte() = New Byte(size - 1) {}
                     Marshal.Copy(pt, bPtr, 0, CInt(size))
-                    Return Image.FromStream(New MemoryStream(bPtr))
+                    Dim ms As New MemoryStream(bPtr)
+                    Dim img As Image = Image.FromStream(ms)
+                    ms.Close()
+                    ms.Dispose()
+                    Return img
                 Else
                     Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
                 End If

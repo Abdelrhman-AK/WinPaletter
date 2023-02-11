@@ -13,16 +13,16 @@ Public Class LogonUI7
         ApplyPreview()
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
-            Label16.Text = My.Lang.LogonUI_LockEnabled
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
         Else
-            Label16.Text = My.Lang.LogonUI_Enabled
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
             PictureBox4.Image = My.Resources.Native7
         End If
+
+        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
     End Sub
 
     Private Sub LogonUI7_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -166,18 +166,22 @@ Public Class LogonUI7
         Dim _bmp As Bitmap
         _bmp = bmp
 
-        If XenonCheckBox8.Checked Then _bmp = _bmp.Grayscale
+        Try
+            If XenonCheckBox8.Checked Then _bmp = _bmp.Grayscale
 
-        If XenonCheckBox7.Checked Then _bmp = _bmp.Blur(XenonTrackbar1.Value)
+            If XenonCheckBox7.Checked Then _bmp = _bmp.Blur(XenonTrackbar1.Value)
 
-        If XenonCheckBox6.Checked Then
-            Select Case XenonComboBox1.SelectedIndex
-                Case 0
-                    _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
-                Case 1
-                    _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, XenonTrackbar2.Value / 100)
-            End Select
-        End If
+            If XenonCheckBox6.Checked Then
+                Select Case XenonComboBox1.SelectedIndex
+                    Case 0
+                        _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, XenonTrackbar2.Value / 100)
+                    Case 1
+                        _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, XenonTrackbar2.Value / 100)
+                End Select
+            End If
+
+        Catch
+        End Try
 
         Return _bmp
     End Function
@@ -234,8 +238,8 @@ Public Class LogonUI7
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenFileDialog1.FileName
+        If OpenImgDlg.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenImgDlg.FileName
         End If
     End Sub
 
@@ -303,5 +307,37 @@ Public Class LogonUI7
         End If
 
         ib.Dispose()
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            LoadFromCP(CPx)
+            CPx.Dispose()
+        End If
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        Dim CPx As New CP(CP.Mode.Registry)
+        LoadFromCP(CPx)
+        CPx.Dispose()
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        Dim CPx As CP
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                CPx = New CP_Defaults().Default_Windows11
+            Case MainFrm.WinVer.W10
+                CPx = New CP_Defaults().Default_Windows10
+            Case MainFrm.WinVer.W8
+                CPx = New CP_Defaults().Default_Windows8
+            Case MainFrm.WinVer.W7
+                CPx = New CP_Defaults().Default_Windows7
+            Case Else
+                CPx = New CP_Defaults().Default_Windows11
+        End Select
+        LoadFromCP(CPx)
+        CPx.Dispose()
     End Sub
 End Class

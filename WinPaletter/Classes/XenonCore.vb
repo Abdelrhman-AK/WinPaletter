@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
 Imports System.Net.NetworkInformation
 Imports System.Reflection
 Imports System.Runtime.InteropServices
@@ -161,11 +160,11 @@ Public Class XenonCore
             Else
                 Try
                     If My.[Settings].Appearance_Auto Then
-                        i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
-                        If i = 1 Then
-                            Return False
+                        If My.W11 Or My.W10 Then
+                            i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
+                            Return Not (i = 1)
                         Else
-                            Return True
+                            Return False
                         End If
                     Else
                         Return My.[Settings].Appearance_Dark
@@ -174,7 +173,7 @@ Public Class XenonCore
                     Try
                         Return My.[Settings].Appearance_Dark
                     Catch
-                        Return True
+                        Return My.W11 Or My.W10
                     End Try
                 End Try
             End If
@@ -510,6 +509,11 @@ Public Class XenonCore
             If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
 
             If Style.HasFlag(MsgBoxStyle.Question) Then
+                Try
+                    My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
+                Catch
+                End Try
+
                 icon = TaskDialogIcon.Custom
                 TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
             End If
@@ -735,9 +739,10 @@ Public Module FormDWMEffects
     End Sub
 
     <Extension()>
-    Sub DrawTransparentGray([Form] As Form)
+    Sub DrawTransparentGray([Form] As Form, Optional NoWindowBorders As Boolean = True)
         [Form].BackColor = Color.FromArgb(5, 5, 5)
         [Form].Opacity = 0.5
+        If NoWindowBorders Then Form.FormBorderStyle = FormBorderStyle.None
     End Sub
 
     ''' <summary>

@@ -331,6 +331,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentonTitlebars.ToInteger)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse.ToArgb)
+                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.ToArgb)
 
 
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse.ToArgb)
@@ -690,6 +691,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim S As New IO.FileStream(Me.Image, IO.FileMode.Open, IO.FileAccess.Read)
                 img = System.Drawing.Image.FromStream(S)
                 S.Close()
+                S.Dispose()
 
                 HSL.ExecuteFilter(img).Save(IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"))
 
@@ -1389,7 +1391,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End Structure
     End Class
-
 
 #Region "Properties"
     Public Info As New Structures.Info With {
@@ -2572,7 +2573,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Private Sub AddException([Label] As String, [Exception] As Exception)
         My.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
     End Sub
-
     Function AddFontsToThemeFile(PropName As String, Font As Font) As String
         Dim s As New List(Of String) : s.Clear()
         s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name))
@@ -2580,7 +2580,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Style", Font.Style))
         Return s.CString
     End Function
-
     Function SetToFont(PropName As String, PropValue As String, Font As Font) As Font
         Dim F As New Font(Font.Name, Font.Size, Font.Style)
 
@@ -2598,7 +2597,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return F
     End Function
-
     Function ReturnFontStyle([Value] As String) As FontStyle
 
         If Not [Value].Contains(",") Then
@@ -3375,7 +3373,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Win32UI"
                 Try
-                    Win32.EnableGradient = GetUserPreferencesMask(17)
+                    Win32.EnableTheming = GetUserPreferencesMask(17)
                 Catch
                     Win32.EnableTheming = True
                 End Try
@@ -3517,7 +3515,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Metrics & Fonts"
                 Dim rMain_M As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
-                MetricsFonts.Enabled = rMain_M.GetValue("", False)
+                MetricsFonts.Enabled = rMain_M.GetValue("", True)
                 rMain_M.Close()
 
                 Try
@@ -5941,9 +5939,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             R.Close()
 
-            Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
-            rx.DeleteValue("WinPaletter", False)
-            rx.Close()
+
+            If Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", False) IsNot Nothing Then
+                Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
+                rx.DeleteValue("WinPaletter", False)
+                rx.Close()
+            End If
+
 
             SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
 

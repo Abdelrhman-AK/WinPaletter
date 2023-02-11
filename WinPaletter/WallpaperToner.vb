@@ -280,4 +280,22 @@ Public Class WallpaperToner
 
         Cursor = Cursors.Default
     End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            Dim HSL As New HSLFilter With {
+                .Hue = HBar.Value,
+                .Saturation = (SBar.Value - 50) * 2,
+                .Lightness = (LBar.Value - 50) * 2
+            }
+
+            Dim img As Bitmap
+            If Not IO.File.Exists(XenonTextBox1.Text) Then Throw New IO.IOException("Couldn't Find image")
+            Dim S As New IO.FileStream(XenonTextBox1.Text, IO.FileMode.Open, IO.FileAccess.Read)
+            img = System.Drawing.Image.FromStream(S)
+            S.Close()
+            S.Dispose()
+            HSL.ExecuteFilter(img).Save(SaveFileDialog2.FileName)
+        End If
+    End Sub
 End Class

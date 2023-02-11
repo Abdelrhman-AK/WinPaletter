@@ -2036,13 +2036,6 @@ Public Class XenonButton : Inherits Button
     End Property
 
     Dim LineImage As Color = LineColor
-
-    <Browsable(True)>
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
-    <EditorBrowsable(EditorBrowsableState.Always)>
-    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
-    <Bindable(True)>
-    Public Overrides Property Text As String
 #End Region
 
 #Region "Events"
@@ -4655,7 +4648,9 @@ Public Class XenonFakeIcon : Inherits Panel
         Dim IconRectX As New Rectangle(IconRect.X + (IconRect.Width - _IconSize) / 2, IconRect.Y + (IconRect.Height - _IconSize) / 2, _IconSize, _IconSize)
 
         If Icon IsNot Nothing Then
-            G.DrawIcon(New Icon(Icon, _IconSize, _IconSize), IconRectX)
+            Dim ico As New Icon(Icon, _IconSize, _IconSize)
+            G.DrawIcon(ico, IconRectX)
+            ico.Dispose()
         End If
 
         G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
@@ -5192,10 +5187,10 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                         CloseOuterBorder = Color.FromArgb(67, 20, 34)
                         CloseInnerBorder = Color.FromArgb(100, 255, 255, 255)
                     Else
-                        CloseUpperAccent1 = Color.FromArgb(189, 203, 218)
-                        CloseLowerAccent2 = Color.FromArgb(205, 219, 234)
+                        CloseUpperAccent1 = Color.FromArgb(50, 189, 203, 218)
+                        CloseLowerAccent2 = Color.FromArgb(50, 205, 219, 234)
                         CloseOuterBorder = Color.FromArgb(131, 142, 168)
-                        CloseInnerBorder = Color.FromArgb(209, 219, 229)
+                        CloseInnerBorder = Color.FromArgb(50, 209, 219, 229)
                     End If
 
                     Dim Btn_Height As Integer = Metrics_CaptionHeight + TitleTextH_Sum - 5
@@ -5247,7 +5242,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                     G.DrawImage(CloseBtn, closerenderrect)
 
                     G.DrawRoundedRect(New Pen(CloseOuterBorder), CloseRect, 1, True)
-                    G.DrawRoundedRect(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2), 1, True)
+                    G.DrawRectangle(New Pen(CloseInnerBorder), New Rectangle(CloseRect.X + 1, CloseRect.Y + 1, CloseRect.Width - 2, CloseRect.Height - 2))
 
                 End If
 
@@ -5947,9 +5942,9 @@ Public Class XenonCMD
 
         If Not Raster Then
             If Not PowerShell Then
-                F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+                F = New Font(Font.Name, If(Font.SizeInPoints * 0.57 <= 0, 1, CSng(Font.Size * 0.57)), Font.Style)
             Else
-                F = New Font(Font.Name, If(Font.Size * 0.6 <= 0, 1, CSng(Font.Size * 0.6)), Font.Style)
+                F = New Font(Font.Name, If(Font.SizeInPoints * 0.57 <= 0, 1, CSng(Font.Size * 0.57)), Font.Style)
             End If
         End If
 

@@ -1,4 +1,6 @@
-﻿Imports WinPaletter.NativeMethods
+﻿Imports System.Drawing.Drawing2D
+Imports System.Windows.Interop
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -95,6 +97,8 @@ Public Class Metrics_Fonts
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
         MainFrm.Visible = False
+
+
     End Sub
 
     Sub Refresh17BitPreference()
@@ -234,6 +238,46 @@ Public Class Metrics_Fonts
         RetroWindow2.Refresh()
         RetroWindow3.Refresh()
         RetroWindow5.Refresh()
+
+        Dim theme As CtrlTheme, statusBackColor, StatusForeColor As Color
+
+        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+
+            If CP.Windows11.AppMode_Light Then
+                theme = CtrlTheme.Default
+                StatusForeColor = Color.Black
+                statusBackColor = Color.White
+            Else
+                theme = CtrlTheme.DarkExplorer
+                StatusForeColor = Color.White
+                statusBackColor = Color.FromArgb(28, 28, 28)
+            End If
+
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+
+            If CP.Windows10.AppMode_Light Then
+                theme = CtrlTheme.Default
+                StatusForeColor = Color.Black
+                statusBackColor = Color.White
+            Else
+                theme = CtrlTheme.DarkExplorer
+                StatusForeColor = Color.White
+                statusBackColor = Color.FromArgb(28, 28, 28)
+            End If
+
+        Else
+            StatusForeColor = Color.Black
+            statusBackColor = Color.White
+            theme = CtrlTheme.Default
+        End If
+
+        SetTheme(MenuStrip1.Handle, theme)
+        SetTheme(VScrollBar1.Handle, theme)
+        SetTheme(HScrollBar1.Handle, theme)
+        SetTheme(StatusStrip1.Handle, theme)
+
+        statusLbl.ForeColor = StatusForeColor
+        StatusStrip1.BackColor = statusBackColor
     End Sub
 
     Sub ApplyToCP(CP As CP)

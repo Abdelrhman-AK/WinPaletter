@@ -60,6 +60,8 @@ Partial Class WallpaperToner
         Me.ToneEnabled = New WinPaletter.XenonToggle()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,6 +91,7 @@ Partial Class WallpaperToner
         Me.XenonAlertBox1.Size = New System.Drawing.Size(619, 27)
         Me.XenonAlertBox1.TabIndex = 206
         Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = Nothing
         '
         'XenonButton10
         '
@@ -431,6 +434,7 @@ Partial Class WallpaperToner
         'previewContainer
         '
         Me.previewContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.previewContainer.Controls.Add(Me.XenonButton4)
         Me.previewContainer.Controls.Add(Me.pnl_preview)
         Me.previewContainer.Controls.Add(Me.PictureBox41)
         Me.previewContainer.Controls.Add(Me.Label19)
@@ -574,6 +578,27 @@ Partial Class WallpaperToner
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
+        'XenonButton4
+        '
+        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton4.ForeColor = System.Drawing.Color.White
+        Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
+        Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonButton4.LineSize = 1
+        Me.XenonButton4.Location = New System.Drawing.Point(513, 9)
+        Me.XenonButton4.Name = "XenonButton4"
+        Me.XenonButton4.Size = New System.Drawing.Size(99, 23)
+        Me.XenonButton4.TabIndex = 5
+        Me.XenonButton4.Text = "Save as ..."
+        Me.XenonButton4.UseVisualStyleBackColor = False
+        '
+        'SaveFileDialog2
+        '
+        Me.SaveFileDialog2.DefaultExt = "wpt"
+        Me.SaveFileDialog2.Filter = "PNG File|*.png"
+        '
         'WallpaperToner
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -647,4 +672,6 @@ Partial Class WallpaperToner
     Friend WithEvents OpenImgDlg As OpenFileDialog
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents SaveFileDialog2 As SaveFileDialog
 End Class

@@ -1000,18 +1000,23 @@ Public Module Icons
 
     <Extension()>
     Public Function ToByteArray(ByVal icon As System.Drawing.Icon) As Byte()
-        Using ms As New MemoryStream()
-            icon.Save(ms)
-            Return ms.ToArray()
-        End Using
+        Dim ms As New MemoryStream()
+        icon.Save(ms)
+        Dim b As Byte() = ms.ToArray()
+        ms.Close()
+        ms.Dispose()
+        Return ms.ToArray()
     End Function
 
 
     <Extension()>
     Public Function ToIcon(ByVal bytes As Byte()) As System.Drawing.Icon
-        Using ms As New MemoryStream(bytes)
-            Return New System.Drawing.Icon(ms)
-        End Using
+        Dim ms As New MemoryStream(bytes)
+        Dim ico As New Icon(ms)
+        ms.Close()
+        ms.Dispose()
+        Return ico
+        ico.Dispose()
     End Function
 
 End Module

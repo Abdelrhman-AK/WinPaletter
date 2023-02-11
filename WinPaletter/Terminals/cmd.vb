@@ -194,7 +194,7 @@ Public Class CMD
         CMD_PreviewCUR2.Height = all * (CMD_CursorSizeBar.Value / CMD_CursorSizeBar.Maximum)
         CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2
         CMD_PreviewCUR_Val.Text = CMD_CursorSizeBar.Value
-        If My.W10_1909 Then ApplyCursorShape()
+        ApplyCursorShape()
     End Sub
     Sub ApplyPreview()
         XenonCMD1.CMD_ColorTable00 = ColorTable00.BackColor
@@ -545,17 +545,17 @@ Public Class CMD
         [Console].CursorSize = CMD_CursorSizeBar.Value
         If CMD_CursorSizeBar.Value > 100 Then CMD_CursorSizeBar.Value = 100
         If CMD_CursorSizeBar.Value < 20 Then CMD_CursorSizeBar.Value = 20
-        If My.W10_1909 Then
-            CMD_CursorStyle.SelectedIndex = [Console].W10_1909_CursorType
-            CMD_CursorColor.BackColor = [Console].W10_1909_CursorColor
-            CMD_PreviewCUR2.BackColor = [Console].W10_1909_CursorColor
-            CMD_EnhancedTerminal.Checked = [Console].W10_1909_ForceV2
-            CMD_OpacityBar.Value = [Console].W10_1909_WindowAlpha
-            CMD_OpacityVal.Text = Fix(([Console].W10_1909_WindowAlpha / 255) * 100)
-            CMD_LineSelection.Checked = [Console].W10_1909_LineSelection
-            CMD_TerminalScrolling.Checked = [Console].W10_1909_TerminalScrolling
-            ApplyCursorShape()
-        End If
+
+        CMD_CursorStyle.SelectedIndex = [Console].W10_1909_CursorType
+        CMD_CursorColor.BackColor = [Console].W10_1909_CursorColor
+        CMD_PreviewCUR2.BackColor = [Console].W10_1909_CursorColor
+        CMD_EnhancedTerminal.Checked = [Console].W10_1909_ForceV2
+        CMD_OpacityBar.Value = [Console].W10_1909_WindowAlpha
+        CMD_OpacityVal.Text = Fix(([Console].W10_1909_WindowAlpha / 255) * 100)
+        CMD_LineSelection.Checked = [Console].W10_1909_LineSelection
+        CMD_TerminalScrolling.Checked = [Console].W10_1909_TerminalScrolling
+        ApplyCursorShape()
+
         UpdateCurPreview()
 
     End Sub
@@ -636,14 +636,12 @@ Public Class CMD
             [Console].CursorSize = CMD_CursorSizeBar.Value
         End If
 
-        If My.W10_1909 Then
-            [Console].W10_1909_CursorColor = CMD_CursorColor.BackColor
-            [Console].W10_1909_CursorType = CMD_CursorStyle.SelectedIndex
-            [Console].W10_1909_ForceV2 = CMD_EnhancedTerminal.Checked
-            [Console].W10_1909_WindowAlpha = CMD_OpacityBar.Value
-            [Console].W10_1909_LineSelection = CMD_LineSelection.Checked
-            [Console].W10_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
-        End If
+        [Console].W10_1909_CursorColor = CMD_CursorColor.BackColor
+        [Console].W10_1909_CursorType = CMD_CursorStyle.SelectedIndex
+        [Console].W10_1909_ForceV2 = CMD_EnhancedTerminal.Checked
+        [Console].W10_1909_WindowAlpha = CMD_OpacityBar.Value
+        [Console].W10_1909_LineSelection = CMD_LineSelection.Checked
+        [Console].W10_1909_TerminalScrolling = CMD_TerminalScrolling.Checked
 
         Select Case [Edition]
             Case Edition.CMD
@@ -799,9 +797,7 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_CursorStyle_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles CMD_CursorStyle.SelectedIndexChanged
-        If My.W10_1909 Then
-            ApplyCursorShape()
-        End If
+        ApplyCursorShape()
     End Sub
 
     Private Sub CMD_CursorColor_Click(sender As Object, e As EventArgs) Handles CMD_CursorColor.Click
