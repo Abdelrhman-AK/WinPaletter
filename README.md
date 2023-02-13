@@ -10,9 +10,9 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Fonts Substitutes                                      | 🔵 Will be done soon                                                  | 
-| Wallpaper's Color Tone                                 | 🔵 Will be done soon                                                  |
-| Windows Metrics & Fonts                                | :white_check_mark: Done (Beta: 1.0.6.9)                                |
+| Fonts Substitutes                                      | :white_check_mark: Done (Version 1.0.7.0)                              | 
+| Wallpaper's Color Tone                                 | :white_check_mark: Done (Version 1.0.7.0)                              |
+| Windows Metrics & Fonts                                | :white_check_mark: Done (Beta: 1.0.6.9, Stable: 1.0.7.0)               |
 | Extended Support to Windows 7 and 8.1                  | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
 | Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Done (Beta: 1.0.5.9, Stable: 1.0.6.0)               |
@@ -53,6 +53,16 @@
  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Metrics.png?raw=true)
 
 - `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
+- Fonts Substitutes: You can substitute some system fonts "MS Shell Dlg" and "Segoe UI" to give your Windows a different look. (Please read its instructions in Metrics & Fonts > Fonts Substitutes)
+
+---
+
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WallpaperTone.png?raw=true) Wallpaper Tone:
+
+ ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/WT.png?raw=true)
+ 
+- For sure you saw some stock Windows wallpapers with different colors, you can now create your own wallpapers with the color you want.
+- This is dependent on modification of image's HSL (Hue\Saturation\Lightness) and this isn't professional as much as advanced images editors (Paint.NET\GIMP\Photoshop\...)
 
 ---
 
