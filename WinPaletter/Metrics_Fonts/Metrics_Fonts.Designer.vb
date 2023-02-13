@@ -3093,7 +3093,7 @@ Partial Class Metrics_Fonts
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage11.Size = New System.Drawing.Size(958, 439)
         Me.TabPage11.TabIndex = 5
-        Me.TabPage11.Text = "Fonts Substitues"
+        Me.TabPage11.Text = "Fonts Substitutes"
         '
         'XenonGroupBox16
         '
@@ -3146,7 +3146,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox9.TabIndex = 223
         Me.XenonAlertBox9.TabStop = False
         Me.XenonAlertBox9.Text = "Only Start Menu of Windows 10 cannot be changed. It will stay with ""Segoe UI"" eve" &
-    "n if it is substituded correctly"
+    "n if it is substituted correctly"
         '
         'XenonAlertBox7
         '

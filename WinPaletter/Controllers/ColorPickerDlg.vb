@@ -106,14 +106,20 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
 
-            For Each ct In fr.Controls
-                If ct IsNot MainFrm.previewContainer Then My.[AnimatorNS].Hide(ct, True)
+            MainFrm.previewContainer.Visible = False
+            MainFrm.SuspendLayout()
+
+            For Each ct As Control In fr.Controls
+                If ct IsNot MainFrm.previewContainer Then ct.Visible = False
             Next
 
             PreviousWidth = MainFrm.Width
             DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
             MainFrm.MinimumSize = Size.Empty
             MainFrm.Width = DestinatedWidth
+
+            MainFrm.ResumeLayout()
+            MainFrm.previewContainer.Visible = True
         End If
 
         Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
@@ -140,11 +146,17 @@ Public Class ColorPickerDlg
         RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
+            MainFrm.previewContainer.Visible = False
+            MainFrm.SuspendLayout()
+
             MainFrm.Width = PreviousWidth
 
-            For Each ct In fr.Controls
-                If ct IsNot MainFrm.previewContainer Then My.[AnimatorNS].Show(ct, True)
+            For Each ct As Control In fr.Controls
+                If ct IsNot MainFrm.previewContainer Then ct.Visible = True
             Next
+
+            MainFrm.ResumeLayout()
+            MainFrm.previewContainer.Visible = True
 
         End If
 

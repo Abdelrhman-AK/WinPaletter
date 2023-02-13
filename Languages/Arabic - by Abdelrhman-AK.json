@@ -1,13 +1,26 @@
 {
   "Information": {
     "name": "Abdelrhman-AK",
-    "translationversion": "1.0",
+    "translationversion": "1.1",
     "lang": "العربية (Arabic)",
     "langcode": "ع (AR-EG)",
-    "appver": "1.0.6.9",
+    "appver": "1.0.7.0",
     "righttoleft": "True"
   },
   "Global Strings": {
+    "logoffquestion": "هل أنت متأكد من تسجيل الخروج؟",
+    "logoffalert1": "هذا سيغلق جميع الملفات و التطبيقات المفتوحة",
+    "logoffalert2": "\"Logoff\" يعادل \"Sign out\" فى ويندوز 8.1/10/11",
+    "wallpapertone_notice": "هذا لنظام {0}. لتغيير تفضيلات نظام آخر غير المعاينة فى النافذة الرئيسية",
+    "cp_11_lines_toggles_buttons_overflow": "خطوط و مقابس و أزرار و صندوق الاشعارات",
+    "cp_11_overflowtray": "صندوق الاشعارات (يتطلب 22H2 و اللون مفعل على شريط المهام)",
+    "cp_uwpbackground": "خلفية نوافذ UWP (بقايا ويندوز 8.1 فى {0})",
+    "cp_applying_wallpapertone": "جار تطبيق تلوين الخلفية",
+    "cp_wallpapertone_error": "حدث خطأ أثناء تلوين الخلفية",
+    "cp_restorecursorserror": "حدث خطأ أثناء استعادة مؤشرات الفأرة للنسق الافتراضى Aero. على أية حال الغاء التثبيت سيستمر",
+    "cp_restorecursorserrorpressok": "الضغط على موافق سيظهر تفاصيل الخطأ",
+    "cp_restorecursorstip": "لو أردت استعادة النسق الافتراضى لمؤشر الفأرة، اذهب الى لوحة التحكم > الفأرة > مؤشرات",
+    "logoffnotice": "هذا سيسجل الخروج من الويندوز. من فضلك قم بحفظ الملفات المفتوحة قبل تسجيل الخروج.",
     "cancel": "الغاء",
     "close": "اغلاق",
     "retry": "اعد المحاولة",
@@ -215,29 +228,31 @@
     "cp_applyingcursors": "جار تطبيق مؤشرات الفأرة ..."
   },
   "Forms Strings": {
-    "DragPreviewer": {
-      "Text": "معاينة",
+    "BK": "Text",
+    "WallpaperToner": {
+      "Text": "تلوين الخلفية",
       "Controls": {
-        "Label8.Text": "هذه ايقونة اعدادات",
-        "lnk_preview.Text": "معاينة رابط اعدادات",
-        "XenonWindow1.Text": "معاينة تطبيق",
-        "XenonWindow2.Text": "تطبيق غير فعال",
-        "RetroLabel9.Text": "عنصر مُعطل",
-        "RetroLabel5.Text": "عنصر نشط بالمؤشر",
-        "RetroLabel6.Text": "عنصر قائمة",
-        "RetroButton1.Text": "موافق",
-        "RetroLabel4.Text": "نص رسالة",
-        "RetroLabel3.Text": "محدد",
-        "RetroLabel2.Text": "مُعطل",
-        "RetroLabel1.Text": "عادى",
-        "RetroTextBox1.Text": "نص نافذة",
-        "RetroLabel13.Text": "هذا تلميح",
-        "RetroWindow1.Text": "نافذة جديدة"
+        "XenonButton3.Text": "الافتراضى",
+        "XenonButton2.Text": "الحالى",
+        "Label3.Text": "صورة:",
+        "Label2.Text": "التشبع:",
+        "Label1.Text": "الاضاءة:",
+        "Label8.Text": "درجة اللون:",
+        "XenonButton4.Text": "حفظ كـ ...",
+        "Label19.Text": "معاينة",
+        "XenonButton9.Text": "المٌطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
+        "XenonButton10.Text": "تطبيق سريع",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للثيم الحالى"
       }
     },
     "About": {
       "Text": "عن",
       "Controls": {
+        "XenonLinkLabel2.Text": "تلوين الصورة (HSL) بواسطة ميران يوان (مستخدمة فى تلوين الخلفية)",
         "XenonLinkLabel1.Text": "تصميم النوافذ العصرية بواسطة Ookii.Dialogs.WinForms",
         "Label17.Text": "WinPaletter",
         "Label1.Text": "بواسطة عبدالرحمن أ.ق.",
@@ -327,6 +342,27 @@
         "XenonButton3.Text": "إلغاء",
         "XenonButton2.Text": "إغلاق",
         "XenonButton1.Text": "إبدأ"
+      }
+    },
+    "DragPreviewer": {
+      "Text": "معاينة",
+      "Controls": {
+        "RetroButton2.Text": "Start",
+        "Label8.Text": "هذه ايقونة اعدادات",
+        "lnk_preview.Text": "معاينة رابط اعدادات",
+        "XenonWindow1.Text": "معاينة تطبيق",
+        "XenonWindow2.Text": "تطبيق غير فعال",
+        "RetroLabel9.Text": "عنصر مُعطل",
+        "RetroLabel5.Text": "عنصر نشط بالمؤشر",
+        "RetroLabel6.Text": "عنصر قائمة",
+        "RetroButton1.Text": "موافق",
+        "RetroLabel4.Text": "نص رسالة",
+        "RetroLabel3.Text": "محدد",
+        "RetroLabel2.Text": "مُعطل",
+        "RetroLabel1.Text": "عادى",
+        "RetroTextBox1.Text": "نص نافذة",
+        "RetroLabel13.Text": "هذا تلميح",
+        "RetroWindow1.Text": "نافذة جديدة"
       }
     },
     "Saving_ex_list": {
@@ -459,6 +495,10 @@
     "LogonUI": {
       "Text": "شاشة تسجيل الدخول",
       "Controls": {
+        "XenonButton9.Text": "المطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
         "Label20.Text": "شاشة القفل",
         "Label18.Text": "خلفية شاشة التسجيل",
         "Label16.Text": "تأثير زجاج أكريلك",
@@ -470,6 +510,10 @@
     "LogonUI7": {
       "Text": "واجهة تسجيل الدخول",
       "Controls": {
+        "XenonButton9.Text": "المطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
         "XenonCheckBox6.Text": "تشويش",
         "XenonCheckBox7.Text": "ضبابى",
         "XenonCheckBox8.Text": "رمادى",
@@ -505,6 +549,9 @@
     "MainFrm": {
       "Text": "WinPaletter",
       "Controls": {
+        "RetroButton2.Text": "ابدأ",
+        "XenonButton26.Text": "تلوين الخلفية",
+        "XenonButton28.Text": "تسجيل خروج",
         "XenonButton25.Text": "اقف المؤقت",
         "TabPage1.Text": "W11",
         "TabPage2.Text": "W10",
@@ -590,11 +637,11 @@
         "XenonButton9.Tag": "حفظ ملف الثيم كـ ...",
         "XenonButton3.Tag": "إنشاء ملف ثيم (لوحة ألوان) جديدة",
         "XenonButton2.Tag": "فتح ملف ثيم",
-        "XenonButton27.Text": "مقاسات, خطوط",
+        "XenonButton27.Text": "مقاس/خط",
         "XenonButton24.Text": "منفذى الأوامر ...",
         "XenonButton21.Text": "المؤشرات",
         "XenonButton16.Text": "شاشة تسجيل الدخول",
-        "XenonButton4.Text": "عناصر كلاسيك",
+        "XenonButton4.Text": "ألوان كلاسيك",
         "XenonButton19.Text": "أعد تشغيل المتصفح",
         "apply_btn.Text": "طبق",
         "XenonButton13.Text": "إلغاء"
@@ -603,6 +650,21 @@
     "Metrics_Fonts": {
       "Text": "مقاسات و خطوط",
       "Controls": {
+        "Label14.Text": "شريط الحالة",
+        "Label13.Text": "هذا نص معروض كرسالة",
+        "XenonAlertBox9.Text": "قائمة ابدأ فى ويندوز 10 لا يمكن تغيير خطها. ستبقى هى على خط \"Segoe UI\" حتى لو تم الاستبدال بصورة صحيحة",
+        "XenonAlertBox7.Text": "للعودة للوضع الافتراضى فى ويندوز 7/8.1: اضغط على ازرار الاستعادة بالأسفل ثم طبق الثيم ثم قم بتسجيل الخروج ثم عد للبرنامج و اضغط على \"ويندوز افتراضى\" بالأعلى ثم طبق ثم قم بتسجيل الخروج",
+        "XenonAlertBox8.Text": "لابد أن تكون حذراً فى ويندوز 11 لأن تغيير خط \"Segoe UI\" سيسبب عدم استقرار فى قائمة ابدأ و البحث (بسبب خطأ فى الويندوز نفسه)",
+        "XenonButton17.Text": "...",
+        "XenonAlertBox6.Text": "لابد أن تسخل الخروج و الدخول للتطبق تأثير التبديل",
+        "Label28.Text": "Segoe UI",
+        "XenonButton15.Text": "...",
+        "Label15.Text": "بدائل الخطوط:",
+        "XenonButton14.Text": "...",
+        "XenonAlertBox5.Text": "بعض التطبيقات و عناصر فى لوحة التحكم تستخدم خط \"MS Shell Dlg\". توجد حيلة بسجل الويندوز تقوم باستبدال هذه الخطوط بخطوط اخرى. هذه الخطوط مستبدلة مسبقاً بـ\"Microsoft Sans Serif\" و \"Tahoma\". تبديلات أخرى للخطوط ممكن تجربتها و تنفيذها مستقبلاً",
+        "Label23.Text": "MS Shell Dlg",
+        "Label25.Text": "MS Shell Dlg 2",
+        "TabPage11.Text": "بدائل الخطوط",
         "XenonAlertBox3.Text": "تغيير هذه الخطوط يتطلب تسجيل الخروج و الدخول",
         "XenonAlertBox4.Text": "تغيير خط الحالة يتطلب تسجيل الخروج و الدخول",
         "XenonButton9.Text": "الوضع المُطبق الحالى",
@@ -984,6 +1046,7 @@
     "Updates": {
       "Text": "تحديثات",
       "Controls": {
+        "Label17.Text": "تحديثات",
         "LinkLabel3.Text": "ما الجديد؟",
         "XenonRadioButton2.Text": "حفظ التحميل كـ...",
         "XenonRadioButton3.Text": "قم فقط بالتحميل من المتصفح",
@@ -1011,7 +1074,7 @@
       }
     },
     "Win32UI": {
-      "Text": "عناصر كلاسيك",
+      "Text": "الوان كلاسيك",
       "Controls": {
         "Label16.Text": "استخدم تفضيلات المستخدم:",
         "Label30.Text": "شريط عنوان متدرج للتطبيقات الكلاسيكية",

@@ -506,6 +506,12 @@
   <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>253, 18</value>
   </metadata>
+  <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>253, 18</value>
+  </metadata>
+  <metadata name="MenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>510, 18</value>
+  </metadata>
   <metadata name="MenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>510, 18</value>
   </metadata>
@@ -606,6 +612,9 @@
         3Z8OY+/SibaktVjbTwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>136, 18</value>
+  </metadata>
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>136, 18</value>
   </metadata>
@@ -852,7 +861,7 @@
 </value>
   </data>
   <data name="XenonAlertBox5.Text" xml:space="preserve">
-    <value>Some applications &amp; Control Panel applets use "MS Shell Dlg" font. There is a registry trick that substitues these fonts by other fonts. They are originally substituded by "Microsoft Sans Serif" and "Tahoma". Other fonts substitutions may be tested and implemented in the feature</value>
+    <value>Some applications &amp; Control Panel applets use "MS Shell Dlg" font. There is a registry trick that substitutes these fonts by other fonts. They are originally substituted by "Microsoft Sans Serif" and "Tahoma". Other fonts substitutions may be tested and implemented in the feature</value>
   </data>
   <data name="PictureBox42.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

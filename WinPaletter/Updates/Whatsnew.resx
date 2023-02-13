@@ -196,12 +196,12 @@
 
 • Fixed issue occurs during reading Metrics from Registry (Fixed bug from 1.0.6.9)
 
-• Fonts Substitutes: You can substitue some system fonts "MS Shell Dlg" and "Segoe UI" to give your Windows a different look. Please read its instructions in Metrics &amp;&amp; Fonts &gt; Fonts Substitutes</value>
+• Fonts Substitutes: You can substitute some system fonts "MS Shell Dlg" and "Segoe UI" to give your Windows a different look. Please read its instructions in Metrics &amp;&amp; Fonts &gt; Fonts Substitutes</value>
   </data>
   <data name="PictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAA2EAAACbCAIAAABkjwSKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAA/7JJREFUeF68/WdgVNW+P/6fcwRCaCoIKDVTUyC9VwKE3jshIYX03gkdBHvvhd57
+        vAAADrwBlbxySQAA/7JJREFUeF68/WdgVNW+P/6fcwRCaCoIKDVTUyC9VwKE3jshIYX03gkdBHvvhd57
         SUhogr0LCiodPEclE065957r73v/z/+fttbeM0kQ1HuXb7dr9uyZzOz95OVnrbXnT09Qe7Lj9pRqT5va
         M6b2LLXnqD1vai+Y2oum9pJqL5vaK23aq9R0x9xea9Neb6+90V57s4MmT7s3eaP2mvxhU5MP117jb6Sb
         fGdqci6oyQl68UU5a9TkbD7/PJxePtXQ5NSrJlfl6aflUlGT69de44vO7XFTe8y9rXNva9eu7f7nzt0o
@@ -3816,7 +3816,7 @@
   <data name="Label23.Text" xml:space="preserve">
     <value>• There were some undefined colors, now new 2 items are defined\known: 
 
-1) Background of UWP Dialogs Reminants from Windows 8.1 in Windows 10/11
+1) Background of UWP Dialogs Remnants from Windows 8.1 in Windows 10/11
 2) Taskbar Tray Overflow Background (Windows 11 22H2 with accent enabled in taskbar)</value>
   </data>
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -7350,6 +7350,8 @@
   </data>
   <data name="Label25.Text" xml:space="preserve">
     <value>• Name of "Win32UI" changed into "Classic Colors"
+
+• New 3 colors schemes in Classic Colors (Win32UI): Luna Fullback Blue, Silver and Olive Green
 
 • Fixed error in Classic Colors that caused not setting flat menus.
 

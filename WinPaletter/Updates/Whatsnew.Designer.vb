@@ -65,12 +65,12 @@ Partial Class Whatsnew
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
+        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -206,7 +206,7 @@ Partial Class Whatsnew
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(6, 48)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(655, 255)
+        Me.Label6.Size = New System.Drawing.Size(655, 318)
         Me.Label6.TabIndex = 28
         Me.Label6.Text = resources.GetString("Label6.Text")
         '
@@ -606,6 +606,41 @@ Partial Class Whatsnew
         Me.Label18.Text = "Improvements && Fixes #3"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'TabPage12
+        '
+        Me.TabPage12.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage12.Controls.Add(Me.Label25)
+        Me.TabPage12.Controls.Add(Me.Label26)
+        Me.TabPage12.Location = New System.Drawing.Point(154, 4)
+        Me.TabPage12.Name = "TabPage12"
+        Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage12.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage12.TabIndex = 16
+        Me.TabPage12.Text = "Improvements & Fixes #4"
+        '
+        'Label25
+        '
+        Me.Label25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(6, 62)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(653, 291)
+        Me.Label25.TabIndex = 38
+        Me.Label25.Text = resources.GetString("Label25.Text")
+        '
+        'Label26
+        '
+        Me.Label26.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label26.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Crimson
+        Me.Label26.Location = New System.Drawing.Point(3, 3)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(661, 45)
+        Me.Label26.TabIndex = 37
+        Me.Label26.Text = "Improvements && Fixes #4"
+        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'XenonButton3
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -654,41 +689,6 @@ Partial Class Whatsnew
         Me.XenonButton1.TabIndex = 1
         Me.XenonButton1.Text = "Next"
         Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'TabPage12
-        '
-        Me.TabPage12.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage12.Controls.Add(Me.Label25)
-        Me.TabPage12.Controls.Add(Me.Label26)
-        Me.TabPage12.Location = New System.Drawing.Point(154, 4)
-        Me.TabPage12.Name = "TabPage12"
-        Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage12.Size = New System.Drawing.Size(667, 369)
-        Me.TabPage12.TabIndex = 16
-        Me.TabPage12.Text = "Improvements & Fixes #4"
-        '
-        'Label25
-        '
-        Me.Label25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(6, 62)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(653, 263)
-        Me.Label25.TabIndex = 38
-        Me.Label25.Text = resources.GetString("Label25.Text")
-        '
-        'Label26
-        '
-        Me.Label26.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label26.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.ForeColor = System.Drawing.Color.Crimson
-        Me.Label26.Location = New System.Drawing.Point(3, 3)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(661, 45)
-        Me.Label26.TabIndex = 37
-        Me.Label26.Text = "Improvements && Fixes #4"
-        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Whatsnew
         '
