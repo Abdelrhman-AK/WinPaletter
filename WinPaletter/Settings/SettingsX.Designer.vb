@@ -2293,6 +2293,7 @@ Partial Class SettingsX
         '
         'XenonButton4
         '
+        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
@@ -2309,6 +2310,7 @@ Partial Class SettingsX
         '
         'XenonButton3
         '
+        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White

@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports WinPaletter.Metrics
 
 Namespace NativeMethods
     Public Class Dwmapi
@@ -80,11 +81,472 @@ Namespace NativeMethods
         <DllImport("user32.dll")>
         Public Shared Function SetSysColors(ByVal cElements As Integer, ByVal lpaElements As Integer(), ByVal lpaRgbValues As UInteger()) As Boolean
         End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As NONCLIENTMETRICS, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As LogFontStr, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ICONMETRICS, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As Integer, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As Boolean, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Boolean, ByRef lpvParam As Integer, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32", CharSet:=CharSet.Auto)>
+        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ANIMATIONINFO, ByVal fuWinIni As SPIF) As Integer
+        End Function
+
+        <DllImport("user32.dll", SetLastError:=True)>
+        Public Shared Function SystemParametersInfo(ByVal uiAction As Integer, ByVal uiParam As UInteger, ByVal pvParam As IntPtr, ByVal fWinIni As SPIF) As Boolean
+        End Function
+
+        <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+        Public Shared Function SystemParametersInfo(ByVal uiAction As UInteger, ByVal uiParam As UInteger, ByVal pvParam As String, ByVal fWinIni As SPIF) As Boolean
+        End Function
+
+        <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+        Public Shared Function SystemParametersInfo(ByVal uiAction As UInteger, ByVal uiParam As UInteger, ByVal pvParam As StringBuilder, ByVal fWinIni As SPIF) As Boolean
+        End Function
+
+        ''' <summary>
+        ''' SPI: System-wide parameter - Used in SystemParametersInfo function
+        ''' </summary>
+        Public Class SPI
+            Enum Icons
+                ''' <summary>
+                ''' <b>Sets or retrieves the width, in pixels, of an icon cell. The system uses this rectangle to arrange icons in large icon view.</b>
+                ''' <br></br>
+                ''' <br></br> • To set this value, set uiParam to the new value and set pvParam to null. You cannot set this value to less than SM_CXICON.
+                ''' <br></br> • To retrieve this value, pvParam must point to an integer that receives the current value.
+                ''' </summary>
+                ICONHORIZONTALSPACING = &HD
+
+                ''' <summary>
+                ''' <b>Sets or retrieves the height, in pixels, of an icon cell.</b>
+                ''' <br></br>
+                ''' <br></br> • To set this value, set uiParam to the new value and set pvParam to null. You cannot set this value to less than SM_CYICON.
+                ''' <br></br> • To retrieve this value, pvParam must point to an integer that receives the current value.
+                ''' </summary>
+                ICONVERTICALSPACING = &H18
+
+                ''' <summary>
+                ''' <b>Retrieves the logical font information for the current icon-title font.</b>
+                ''' <br></br>
+                ''' <br></br> • The uiParam parameter specifies the size of a LOGFONT structure.
+                ''' <br></br> • The pvParam parameter must point to the LOGFONT structure to fill in.
+                ''' </summary>
+                GETICONTITLELOGFONT = &H1F
+
+                ''' <summary>
+                ''' <b>Sets the font that is used for icon titles.</b>
+                ''' <br></br>
+                ''' <br></br> • The uiParam parameter specifies the size of a LOGFONT structure.
+                ''' <br></br> • The pvParam parameter must point to a LOGFONT structure.
+                ''' </summary>
+                SETICONTITLELOGFONT = &H22
+
+                ''' <summary>
+                ''' <b>Retrieves the metrics associated with icons.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to an ICONMETRICS structure that receives the information.
+                ''' <br></br> • Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS).
+                ''' </summary>
+                GETICONMETRICS = &H2D
+
+                ''' <summary>
+                ''' <b>Sets the metrics associated with icons.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to an ICONMETRICS structure that contains the new parameters. 
+                ''' <br></br> • Set the cbSize member of this structure and the uiParam parameter to sizeof(ICONMETRICS).
+                ''' </summary>
+                SETICONMETRICS = &H2E
+
+                ''' <summary>
+                ''' <b>Reloads the system icons.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the uiParam parameter to zero.
+                ''' <br></br> • Set the pvParam parameter to null.
+                ''' </summary>
+                SETICONS = &H58
+
+            End Enum
+
+            Enum Desktop
+                ''' <summary>
+                ''' <b>Sets the desktop wallpaper.</b>
+                ''' <br></br>
+                ''' <br></br> • The value of the pvParam parameter determines the new wallpaper. 
+                ''' <br></br> • To specify a wallpaper bitmap, set pvParam to point to a null-terminated string containing the name of a bitmap file. Setting pvParam to "" removes the wallpaper.
+                ''' <br></br> • Setting pvParam to SETWALLPAPER_DEFAULT or null reverts to the default wallpaper.
+                ''' </summary>
+                SETDESKWALLPAPER = &H14
+
+                ''' <summary>
+                ''' <b>Sets the current desktop pattern by causing Windows to read the Pattern= setting from the WIN.INI file.</b>
+                ''' </summary>
+                SETDESKPATTERN = &H15
+            End Enum
+
+            Enum Metrics
+                ''' <summary>
+                ''' <b>Retrieves the metrics associated with the nonclient area of nonminimized windows.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a NONCLIENTMETRICS structure that receives the information. Set the cbSize member of this structure.
+                ''' <br></br> • The uiParam parameter to sizeof(NONCLIENTMETRICS).
+                ''' </summary>
+                GETNONCLIENTMETRICS = &H29
+
+                ''' <summary>
+                ''' <b>Sets the metrics associated with the nonclient area of nonminimized windows.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a NONCLIENTMETRICS structure that contains the new parameters. 
+                ''' <br></br> • Set the cbSize member of this structure and the uiParam parameter to sizeof(NONCLIENTMETRICS). Also, the lfHeight member of the LOGFONT structure must be a negative value.
+                ''' </summary>
+                SETNONCLIENTMETRICS = &H2A
+            End Enum
+
+            Enum Cursors
+                ''' <summary>
+                ''' <b>Reloads the system cursors.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the uiParam parameter to zero.
+                ''' <br></br> • Set the pvParam parameter to null.
+                ''' </summary>
+                SETCURSORS = &H57
+
+                ''' <summary>
+                ''' <b>Determines whether the cursor has a shadow around it.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives True if the shadow is enabled, False if it is disabled.
+                ''' <br></br> • This effect appears only if the system has a color depth of more than 256 colors.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value Is not supported.</i>
+                ''' </summary>
+                GETCURSORSHADOW = &H101A
+
+                ''' <summary>
+                ''' <b>Enables or disables a shadow around the cursor.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter is a BOOL variable. Set pvParam to 1 to enable the shadow or 0 to disable the shadow.
+                ''' <br></br> • This effect appears only if the system has a color depth of more than 256 colors.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETCURSORSHADOW = &H101B
+            End Enum
+
+            Enum FontSmoothing
+                ''' <summary>
+                ''' <b>Sets the contrast value used in ClearType smoothing.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter points to a int that holds the contrast value.
+                ''' <br></br> • Valid contrast values are from 1000 to 2200. The default value is 1400.
+                ''' <br></br> • When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise, SystemParametersInfo fails.
+                ''' <br></br> • SPI_SETFONTSMOOTHINGTYPE must also be set to FE_FONTSMOOTHINGCLEARTYPE.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SPI_SETFONTSMOOTHINGCONTRAST = &H200D
+
+                ''' <summary>
+                ''' <b>Sets the font smoothing type.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter points to a int that contains either FE_FONTSMOOTHINGSTANDARD,
+                ''' <br></br> • if standard anti-aliasing is used, or FE_FONTSMOOTHINGCLEARTYPE, if ClearType is used. The default is FE_FONTSMOOTHINGSTANDARD.
+                ''' <br></br> • When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise, SystemParametersInfo fails.
+                ''' </summary>
+                SPI_SETFONTSMOOTHINGTYPE = &H200B
+
+                ''' <summary>
+                ''' <b>Retrieves a contrast value that is used in ClearType™ smoothing.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a int that receives the information.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SPI_GETFONTSMOOTHINGCONTRAST = &H200C
+
+                ''' <summary>
+                ''' <i>(!) Not implemented.</i>
+                ''' </summary>
+                SPI_GETFONTSMOOTHINGORIENTATION = &H2012
+
+                ''' <summary>
+                ''' <i>(!) Not implemented.</i>
+                ''' </summary>
+                SPI_SETFONTSMOOTHINGORIENTATION = &H2013
+            End Enum
+
+            Enum Titlebars
+                ''' <summary>
+                ''' <b>Determines whether the gradient effect for window title bars is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE for enabled, or FALSE for disabled.
+                ''' <br></br> • For more information about the gradient effect, see the GetSysColor function.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETGRADIENTCAPTIONS = &H1008
+
+                ''' <summary>
+                ''' <b>Enables or disables the gradient effect for window title bars.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter to 1 to enable it, or 0 to disable it.
+                ''' <br></br> • The gradient effect is possible only if the system has a color depth of more than 256 colors.
+                ''' <br></br> • For more information about the gradient effect, see the GetSysColor function.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETGRADIENTCAPTIONS = &H1009
+            End Enum
+
+            Enum Effects
+                ''' <summary>
+                ''' <b>Retrieves the animation effects associated with user actions.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to an ANIMATIONINFO structure that receives the information. 
+                ''' <br></br> • Set the cbSize member of this structure.
+                ''' <br></br> • Set the uiParam parameter to sizeof(ANIMATIONINFO).
+                ''' </summary>
+                GETANIMATION = &H48
+
+                ''' <summary>
+                ''' <b>Sets the animation effects associated with user actions.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to an ANIMATIONINFO structure that contains the new parameters.
+                ''' <br></br> • Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO).
+                ''' </summary>
+                SETANIMATION = &H49
+
+                ''' <summary>
+                ''' <b>Determines whether the menu animation feature is enabled. This master switch must be on to enable menu animation effects.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if animation is enabled and FALSE if it is disabled.
+                ''' <br></br> • If animation is enabled, GETMENUFADE indicates whether menus use fade or slide animation.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETMENUANIMATION = &H1002
+
+                ''' <summary>
+                ''' <b>Enables or disables menu animation. This master switch must be on for any menu animation to occur.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter is a BOOL variable; set pvParam to 1 to enable animation and 0 to disable animation.
+                ''' <br></br> • If animation is enabled, GETMENUFADE indicates whether menus use fade or slide animation.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETMENUANIMATION = &H1003
+
+                ''' <summary>
+                ''' <b>Determines whether the slide-open effect for combo boxes is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE for enabled, or FALSE for disabled.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETCOMBOBOXANIMATION = &H1004
+
+                ''' <summary>
+                ''' <b>Enables or disables the slide-open effect for combo boxes.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter to 1 to enable the gradient effect, or 0 to disable it.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETCOMBOBOXANIMATION = &H1005
+
+                ''' <summary>
+                ''' <b>Determines whether the smooth-scrolling effect for list boxes is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE for enabled, or FALSE for disabled.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETLISTBOXSMOOTHSCROLLING = &H1006
+
+                ''' <summary>
+                ''' <b>Enables or disables the smooth-scrolling effect for list boxes.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter to 1 to enable the smooth-scrolling effect, or 0 to disable it.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETLISTBOXSMOOTHSCROLLING = &H1007
+
+                ''' <summary>
+                ''' <b>Determines whether menu fade animation is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE when fade animation is enabled and FALSE when it is disabled.
+                ''' <br></br> • If fade animation is disabled, menus use slide animation. This flag is ignored unless menu animation is enabled, which you can do using the SETMENUANIMATION flag.
+                ''' <br></br> • For more information, see AnimateWindow.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETMENUFADE = &H1012
+
+                ''' <summary>
+                ''' <b>Enables or disables menu fade animation.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to 1 to enable the menu fade effect or 0 to disable it (i.e. use slide animation).
+                ''' <br></br> • If fade animation is disabled, menus use slide animation. he The menu fade effect is possible only if the system has a color depth of more than 256 colors.
+                ''' <br></br> • This flag is ignored unless SPI_MENUANIMATION is also set.
+                ''' <br></br> • For more information, see AnimateWindow.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETMENUFADE = &H1013
+
+                ''' <summary>
+                ''' <b>Determines whether the selection fade effect is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if enabled or FALSE if disabled.
+                ''' <br></br> • The selection fade effect causes the menu item selected by the user to remain on the screen briefly while fading out after the menu is dismissed.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETSELECTIONFADE = &H1014
+
+                ''' <summary>
+                ''' <b>The selection fade effect causes the menu item selected by the user to remain on the screen briefly while fading out after the menu is dismissed. The selection fade effect is possible only if the system has a color depth of more than 256 colors.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to 1 to enable the selection fade effect or 0 to disable it.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETSELECTIONFADE = &H1015
+
+                ''' <summary>
+                ''' <b>Determines whether ToolTip animation is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if enabled or FALSE if disabled.
+                ''' <br></br> • If ToolTip animation is enabled, GETTOOLTIPFADE indicates whether ToolTips use fade or slide animation.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETTOOLTIPANIMATION = &H1016
+
+                ''' <summary>
+                ''' <b>Sets ToolTip animation if enabled or not.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to 1 to enable ToolTip animation or 0 to disable it. If enabled, you can use SETTOOLTIPFADE to specify fade or slide animation.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETTOOLTIPANIMATION = &H1017
+
+                ''' <summary>
+                ''' <b>If SETTOOLTIPANIMATION is enabled, GETTOOLTIPFADE indicates whether ToolTip animation uses a fade effect or a slide effect.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE for fade animation or FALSE for slide animation.
+                ''' <br></br> • For more information on slide and fade effects, see AnimateWindow.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETTOOLTIPFADE = &H1018
+
+                ''' <summary>
+                ''' <b>If the SETTOOLTIPANIMATION flag is enabled, use SETTOOLTIPFADE to indicate whether ToolTip animation uses a fade effect or a slide effect.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE for fade animation or FALSE for slide animation. The tooltip fade effect is possible only if the system has a color depth of more than 256 colors.
+                ''' <br></br> • For more information on the slide and fade effects, see the AnimateWindow function.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETTOOLTIPFADE = &H1019
+
+
+                ''' <summary>
+                ''' <b>Determines whether native User menus have flat menu appearance.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that returns TRUE if the flat menu appearance is set, or FALSE otherwise.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETFLATMENU = &H1022
+
+                ''' <summary>
+                ''' <b>Enables or disables flat menu appearance for native User menus.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to 1 to enable flat menu appearance or 0 to disable it.
+                ''' <br></br> • When enabled, the menu bar uses COLOR_MENUBAR for the menubar background, COLOR_MENU for the menu-popup background, COLOR_MENUHILIGHT for the fill of the current menu selection, and COLOR_HILIGHT for the outline of the current menu selection.
+                ''' <br></br> • If disabled, menus are drawn using the same metrics and colors as in Windows 2000 and earlier.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETFLATMENU = &H1023
+
+                ''' <summary>
+                ''' <b>Determines whether the drop shadow effect is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that returns TRUE if enabled or FALSE if disabled.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETDROPSHADOW = &H1024
+
+                ''' <summary>
+                ''' <b>Enables or disables the drop shadow effect.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to 1 to enable the drop shadow effect or 0 to disable it.
+                ''' <br></br> • You must also have CS_DROPSHADOW in the window class style.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETDROPSHADOW = &H1025
+
+                ''' <summary>
+                ''' <b>Determines whether UI effects are enabled or disabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if all UI effects are enabled, or FALSE if they are disabled.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETUIEFFECTS = &H103E
+
+                ''' <summary>
+                ''' <b>Enables or disables UI effects.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter to 1 to enable all UI effects or 0 to disable all UI effects.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETUIEFFECTS = &H103F
+            End Enum
+
+        End Class
+
+        <Flags>
+        Enum SPIF
+            None = &H0
+            UpdateINIFile = &H1                 ' Writes the new system-wide parameter setting to the user profile.
+            SendChange = &H2                    ' Broadcasts the WM_SETTINGCHANGE message after updating the user profile.
+            SendWinINIChange = SendChange       ' Same as SENDCHANGE.
+        End Enum
+
+
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
+
         Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
         Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
         Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
+
 
         <StructLayout(LayoutKind.Sequential)>
         Friend Structure AccentPolicy
@@ -739,6 +1201,86 @@ Namespace NativeMethods
         Public Const MAX_PATH As Integer = 260
         Public Const SHCNE_ASSOCCHANGED = &H8000000
         Public Const SHCNF_IDLIST = 0
+    End Class
+
+    Public Class GDI32
+        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
+        Public Shared Function GetTextMetrics(ByVal hdc As IntPtr, <Out> ByRef lptm As TEXTMETRICW) As Boolean
+        End Function
+        <DllImport("gdi32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+        Public Shared Function DeleteObject(ByVal hObject As IntPtr) As Boolean
+        End Function
+        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
+        Public Shared Function SelectObject(ByVal hdc As IntPtr, ByVal hgdiObj As IntPtr) As IntPtr
+        End Function
+
+        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
+        Public Structure TEXTMETRICW
+            Public tmHeight As Integer
+            Public tmAscent As Integer
+            Public tmDescent As Integer
+            Public tmInternalLeading As Integer
+            Public tmExternalLeading As Integer
+            Public tmAveCharWidth As Integer
+            Public tmMaxCharWidth As Integer
+            Public tmWeight As Integer
+            Public tmOverhang As Integer
+            Public tmDigitizedAspectX As Integer
+            Public tmDigitizedAspectY As Integer
+            Public tmFirstChar As UShort
+            Public tmLastChar As UShort
+            Public tmDefaultChar As UShort
+            Public tmBreakChar As UShort
+            Public tmItalic As Byte
+            Public tmUnderlined As Byte
+            Public tmStruckOut As Byte
+            Public tmPitchAndFamily As Byte
+            Public tmCharSet As Byte
+        End Structure
+
+        Public Shared Iterator Function GetFixedWidthFonts(ByVal dc As IDeviceContext) As IEnumerable(Of FontFamily)
+            Dim hDC As IntPtr = dc.GetHdc()
+
+            For Each oFontFamily As System.Drawing.FontFamily In System.Drawing.FontFamily.Families
+
+                Try
+                    If oFontFamily.IsStyleAvailable(FontStyle.Regular) Then
+                        Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
+                            Dim hFont As IntPtr = IntPtr.Zero
+                            Dim hFontDefault As IntPtr = IntPtr.Zero
+
+                            Try
+                                Dim oTextMetric As TEXTMETRICW
+                                hFont = oFont.ToHfont()
+                                hFontDefault = SelectObject(hDC, hFont)
+
+                                If GetTextMetrics(hDC, oTextMetric) Then
+
+                                    If (oTextMetric.tmPitchAndFamily And 1) = 0 Then
+                                        Yield oFontFamily
+                                    End If
+                                End If
+
+                            Finally
+
+                                If hFontDefault <> IntPtr.Zero Then
+                                    SelectObject(hDC, hFontDefault)
+                                End If
+
+                                If hFont <> IntPtr.Zero Then
+                                    DeleteObject(hFont)
+                                End If
+
+                            End Try
+                        End Using
+                    End If
+                Catch
+
+                End Try
+            Next
+
+            dc.ReleaseHdc()
+        End Function
     End Class
 
     ''' <summary>

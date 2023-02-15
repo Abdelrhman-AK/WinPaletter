@@ -530,14 +530,24 @@ Namespace My
                 Next
             End If
 
-            FontsList.Clear()
-            FontsFixedList.Clear()
-            For Each [font] As FontFamily In FontFamily.Families
-                FontsList.Add([font].Name)
-            Next
-            For Each xx In Windows.Media.Fonts.SystemTypefaces.GroupBy(Function(x) x.FontFamily.ToString()).[Select](Function(grp) grp.First()).Where(Function(x) New Windows.Media.FormattedText("Hl", Globalization.CultureInfo.InvariantCulture, Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width = New Windows.Media.FormattedText("HH", Globalization.CultureInfo.InvariantCulture, System.Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width).ToList()
-                FontsFixedList.Add(xx.FontFamily.Source.Split("#")(0))
-            Next
+            FontsList = FontFamily.Families.[Select](Function(f) f.Name).ToList()
+            Try
+                FontsFixedList = Windows.Media.Fonts.SystemTypefaces.GroupBy(Function(x) x.FontFamily.ToString()).[Select](Function(grp) grp.First()).Where(Function(x) New Windows.Media.FormattedText("Hl", Globalization.CultureInfo.InvariantCulture, Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width = New Windows.Media.FormattedText("HH", Globalization.CultureInfo.InvariantCulture, System.Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width).[Select](Function(f) f.FontFamily.Source.Split("#")(0)).ToList()
+            Catch
+                Try
+                    Dim B As New Bitmap(30, 30)
+                    Dim G As Graphics = Graphics.FromImage(B)
+                    FontsFixedList.Clear()
+                    FontsFixedList = NativeMethods.GDI32.GetFixedWidthFonts(G).[Select](Function(f) f.Name).ToList()
+                    B.Dispose()
+                    G.Dispose()
+                Catch ex As Exception
+                    If MsgBox(My.Lang.MonospacedFontsError, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.MonospacedFontsError2 & vbCrLf & vbCrLf & My.Lang.CP_RestoreCursorsErrorPressOK) = MsgBoxResult.Ok Then
+                        BugReport.ThrowError(ex)
+                    End If
+                End Try
+
+            End Try
 
             ApplyDarkMode()
 
@@ -572,7 +582,6 @@ Namespace My
             Else
                 Lang.LoadInternal()
             End If
-
 
             ExternalLink = False
             ExternalLink_File = ""
@@ -628,7 +637,13 @@ Namespace My
 
             Wallpaper = GetWallpaper().Resize(528, 297)
 
-            Monitor()
+            Try
+                Monitor()
+            Catch ex As Exception
+                If MsgBox(My.Lang.MonitorIssue, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.MonitorIssue2 & vbCrLf & My.Lang.CP_RestoreCursorsErrorPressOK) = MsgBoxResult.Ok Then
+                    BugReport.ThrowError(ex)
+                End If
+            End Try
 
             Try
                 If [Settings].AutoAddExt Then
@@ -891,7 +906,6 @@ Namespace My
             BugReport.ThrowError(e.Exception)
             e.ExitApplication = ExitAfterException
             If ExitAfterException Then Process.GetCurrentProcess.Kill()
-
         End Sub
 
         Private Sub Domain_UnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs) Handles Domain.UnhandledException

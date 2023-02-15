@@ -4,6 +4,7 @@ Imports Microsoft.Win32
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
+Imports WinPaletter.NativeMethods.User32
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -240,8 +241,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, EnableTheming), RegistryValueKind.Binary)
                 My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, EnableGradient), RegistryValueKind.Binary)
 
-                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETFLATMENU, 0, EnableTheming.ToInteger, 0)
-                NativeMethods.User32.SystemParametersInfo(Metrics.SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient.ToInteger, 0)
+                NativeMethods.User32.SystemParametersInfo(SPI.Effects.SETFLATMENU, 0, EnableTheming.ToInteger, 0)
+                NativeMethods.User32.SystemParametersInfo(SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient.ToInteger, 0)
 
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
@@ -531,9 +532,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
                     Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
 
-                    SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
-                    SystemParametersInfo(SPI.SPI_GETANIMATION, anim.cbSize, anim, SPIF.None)
-                    SystemParametersInfo(SPI.SPI_GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
+                    SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
+                    SystemParametersInfo(SPI.Effects.GETANIMATION, anim.cbSize, anim, SPIF.None)
+                    SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
                     Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
                     Dim lfIconFont As New LogFont : IconFont.ToLogFont(lfIconFont)
@@ -620,9 +621,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         .lfFont = lfIconFont
                     End With
 
-                    SystemParametersInfo(SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SPIF_SENDCHANGE)
-                    SystemParametersInfo(SPI.SPI_SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SPIF_SENDCHANGE)
-                    SystemParametersInfo(SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SPIF_SENDCHANGE)
+                    SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SendChange)
                     NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
                     'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
@@ -695,7 +696,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 HSL.ExecuteFilter(img).Save(IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"))
 
-                NativeMethods.User32.SystemParametersInfo(SPI.SPI_SETDESKWALLPAPER, 0, IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"), SPIF.SPIF_SENDCHANGE Or SPIF.SPIF_UPDATEINIFILE)
+                NativeMethods.User32.SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp"), SPIF.SendChange Or SPIF.UpdateINIFile)
 
                 MainFrm.Update_Wallpaper_Preview()
             End Sub
@@ -5857,7 +5858,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         rMain.SetValue("Scheme Source", 1, RegistryValueKind.DWord)
         rMain.Close()
 
-        SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
+        SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.SendChange)
     End Sub
 
     Shared Sub ResetCursorsToAero()
@@ -5947,7 +5948,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
 
 
-            SystemParametersInfo(SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE Or SPIF.SPIF_SENDCHANGE)
+            SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.SendChange)
 
         Catch ex As Exception
 

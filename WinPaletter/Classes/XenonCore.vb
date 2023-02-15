@@ -513,12 +513,12 @@ Public Class XenonCore
                     My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
                 Catch
                 End Try
-
                 icon = TaskDialogIcon.Custom
                 TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
             End If
 
             If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
+
             If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
 
             TD.MainIcon = icon
