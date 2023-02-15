@@ -35,8 +35,8 @@ Public Class BugReport
 
         Label3.Text = My.Application.Info.Version.ToString
 
-        XenonTextBox1.Text = String.Format("• {0}:", My.Lang.Bug_ErrorMessage) & vbCrLf & "   " & ex.Message & vbCrLf & vbCrLf &
-                             String.Format("• {0}:", My.Lang.Bug_StackTrace) & vbCrLf & ex.StackTrace '.Replace("   at ", "     - ").Trim
+        XenonTextBox1.Text = "Error.Message = " & """" & ex.Message & """" & vbCrLf & vbCrLf &
+                             "Error.StackTrace = {" & vbCrLf & ex.StackTrace & "}"
 
         If Not IO.Directory.Exists(My.Application.appData & "\Reports") Then IO.Directory.CreateDirectory(My.Application.appData & "\Reports")
 
@@ -79,14 +79,18 @@ Public Class BugReport
     Function GetDetails() As String
         Dim SB As New StringBuilder
         SB.Clear()
-        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Bug_Date, Now.ToLongDateString & " - " & Now.ToLongTimeString))
-        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Bug_OS, Label2.Text))
-        SB.AppendLine(String.Format("• {0}: {1}", My.Lang.Version_Str, Label3.Text))
-        SB.AppendLine("--------")
+        SB.AppendLine("```vbnet")
+        SB.AppendLine("'General Information")
+        SB.AppendLine("'-----------------------------------------------------------")
+        SB.AppendLine(String.Format("Report.Date = ""{0}""", Now.ToLongDateString & " " & Now.ToLongTimeString))
+        SB.AppendLine(String.Format("OS = ""{0}""", Label2.Text))
+        SB.AppendLine(String.Format("WinPaletter.Version = ""{0}""", Label3.Text))
         SB.AppendLine()
 
-        SB.AppendLine(XenonTextBox1.Text)
-        SB.AppendLine()
+        SB.AppendLine("'Exception Error Details")
+        SB.AppendLine("'-----------------------------------------------------------")
+        SB.AppendLine(XenonTextBox1.Text.Replace(vbCrLf & "Error.StackTrace = {", "Error.StackTrace = {"))
+        SB.AppendLine("```")
 
         Return SB.ToString
     End Function
