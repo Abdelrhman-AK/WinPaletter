@@ -1445,12 +1445,6 @@ Public Class MainFrm
         AdjustClassicPreview()
 
         Visible = True
-
-        Try
-            Kill("naho.exe")
-        Catch ex As Exception
-            BugReport.ThrowError(ex)
-        End Try
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
