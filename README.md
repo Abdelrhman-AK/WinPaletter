@@ -93,7 +93,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Mechanism.png?raw=true) Credits
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
 
 - Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
 
