@@ -15,5 +15,5 @@ Write your idea here in brief.
 - Microsoft Documentations
 - Another unmentioned source
 
-## **Write here extra unmentioned information:**
-*placeholder*
+## **Additional context**
+Add any other unmentioned context here
