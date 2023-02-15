@@ -76,7 +76,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Windows Schemes:
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Colors:
 
 - You will see perfect results if you force classic theme for Windows 11\10\8.1 (i.e All Windows elements will be colorized).
 - Windows 7 has a classic theme, so it is can be modified without using external tools to enable classic theme 
@@ -89,20 +89,35 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Cursor.png?raw=true) Colorize your cursors, even the animated loading circles!
 
-- This feature debut is in version 1.0.4.0
-
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Cursors.png?raw=true)
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Mechanism.png?raw=true) Idea of the program
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
 
-- The Accent colors are stored in the Windows registry, one of them is stored as an array, and the others are stored singly in keys' values, and this is complex for a normal user. This program eases changing Windows elements' colors freely (i.e. You won't select one color as in Settings) and also save this to a theme file to apply it later or for sharing it.
+- Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
 
-- You can change the colors by 3 methods\controllers:
-  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/ColorsPicking.png?raw=true)
+- [Icons by Pichon](https://icons8.com/app/windows)
 
-- Colorizing Modern Windows Elements (UWP/WinUI3) Inspired by [u/aveyo](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well) and [u/Egg-Tricky](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent) in Reddit.
+- [Color Picking Controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
+
+- [Image to Palette Mechanism by ColorThief; KSemenenko](https://github.com/KSemenenko/ColorThief)
+
+- [Animation for Controls by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
+
+- [Bitmaps to Cursors Conversion Mechanism by Evan Olds](https://github.com/evanolds/AnimCur)
+
+- [JetBrainsMono Font for Nerd Color Info](https://github.com/JetBrains/JetBrainsMono)
+
+- [Handling JSON Files by Newtonsoft JSON; James Newton-King](https://github.com/JamesNK/Newtonsoft.Json)
+
+- [Modern Dialogs Design by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
+
+- [Changing Image HSL Filter by Miran Uhan (Used in Wallpaper Tone Changer)](https://www.codeproject.com/Articles/19077/Hue-Saturation-Lightness-Filter)
+
+- [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
+Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
+
 
 ---
 
