@@ -416,7 +416,7 @@ Partial Class About
         Me.LinkLabel10.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel10.TabIndex = 33
         Me.LinkLabel10.TabStop = True
-        Me.LinkLabel10.Text = "Handling Windows Terminal JSON Settings by Newtonsoft JSON; James Newton-King"
+        Me.LinkLabel10.Text = "Handling JSON Files by Newtonsoft JSON; James Newton-King"
         Me.LinkLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox11
