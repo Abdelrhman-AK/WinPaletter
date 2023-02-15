@@ -76,7 +76,7 @@
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Windows Schemes:
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Classic.png?raw=true) Classic Colors:
 
 - You will see perfect results if you force classic theme for Windows 11\10\8.1 (i.e All Windows elements will be colorized).
 - Windows 7 has a classic theme, so it is can be modified without using external tools to enable classic theme 
@@ -88,8 +88,6 @@
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Win32UINotice.png?raw=true)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Cursor.png?raw=true) Colorize your cursors, even the animated loading circles!
-
-- This feature debut is in version 1.0.4.0
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Cursors.png?raw=true)
 
