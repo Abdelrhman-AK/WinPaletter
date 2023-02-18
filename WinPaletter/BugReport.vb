@@ -7,11 +7,12 @@ Public Class BugReport
         Dim c As Color = PictureBox1.Image.AverageColor
         Dim c1 As Color = c.CB(If(GetDarkMode(), -0.35, 0.35))
         Dim c2 As Color = c.CB(If(GetDarkMode(), -0.75, 0.75))
+        XenonTreeView1.BackColor = c2
 
         Panel1.BackColor = c1
         BackColor = c2
 
-        XenonTextBox1.Font = My.Application.ConsoleFontMedium
+        XenonTreeView1.Font = My.Application.ConsoleFontMedium
 
         Try : BK.Close() : Catch : End Try
         Try : BK.Show() : Catch : End Try
@@ -19,10 +20,53 @@ Public Class BugReport
         DrawCustomTitlebar(c1)
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
-
     End Sub
 
-    Public Sub ThrowError(ex As Exception)
+    Sub AddData(str As String, Exception As Exception, [Treeview] As TreeView)
+
+        Try
+            With [Treeview].Nodes.Add(str & " Data").Nodes
+                If Exception.Data.Keys.Count > 0 Then
+                    For Each x As DictionaryEntry In Exception.Data
+                        .Add(String.Format("{0} = {1}", x.Key.ToString, x.Value.ToString))
+                    Next
+                Else
+                    .Add("There is no included data in " & str)
+                End If
+
+            End With
+        Catch
+        End Try
+    End Sub
+
+    Sub AddException(str As String, Exception As Exception, [Treeview] As TreeView)
+
+        Try
+            If Not String.IsNullOrWhiteSpace(Exception.Message) Then
+
+                [Treeview].Nodes.Add(str & " Message").Nodes.Add(Exception.Message)
+
+                Dim n As TreeNode = [Treeview].Nodes.Add(str & " StackTrace")
+
+                For Each x In Exception.StackTrace.CList
+                    n.Nodes.Add(x)
+                Next
+
+                AddData(str, Exception, [Treeview])
+
+                [Treeview].Nodes.Add(str & " Target Sub\Function").Nodes.Add(Exception.TargetSite.Name & " @ " & Exception.Source)
+                [Treeview].Nodes.Add(str & " Assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName)
+                [Treeview].Nodes.Add(str & " Assembly's File").Nodes.Add(Exception.TargetSite.Module.Assembly.Location)
+                [Treeview].Nodes.Add(str & " HRESULT").Nodes.Add(Exception.HResult)
+                If Not String.IsNullOrWhiteSpace(Exception.HelpLink) Then [Treeview].Nodes.Add(str & " Microsoft Help Link").Nodes.Add(Exception.HelpLink)
+
+            End If
+
+        Catch
+        End Try
+    End Sub
+
+    Public Sub ThrowError(Exception As Exception)
 
         Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
         Dim sy As String = "." & Microsoft.Win32.Registry.GetValue(CV, "UBR", 0).ToString
@@ -35,8 +79,15 @@ Public Class BugReport
 
         Label3.Text = My.Application.Info.Version.ToString
 
-        XenonTextBox1.Text = "Error.Message = " & """" & ex.Message & """" & vbCrLf & vbCrLf &
-                             "Error.StackTrace = {" & vbCrLf & ex.StackTrace & "}"
+        Dim IE As String = ""
+
+        XenonTreeView1.Nodes.Clear()
+        AddException("Exception", Exception, XenonTreeView1)
+        Dim x As Exception = Exception.InnerException
+        AddException("Inner Exception", x, XenonTreeView1)
+        'AddException("Base Exception", Exception.GetBaseException, XenonTreeView1)
+
+        XenonTreeView1.ExpandAll()
 
         If Not IO.Directory.Exists(My.Application.appData & "\Reports") Then IO.Directory.CreateDirectory(My.Application.appData & "\Reports")
 
@@ -49,6 +100,7 @@ Public Class BugReport
         If DialogResult = DialogResult.Abort Then My.Application.ExitAfterException = True Else My.Application.ExitAfterException = False
 
     End Sub
+
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         DialogResult = DialogResult.Abort
@@ -87,9 +139,26 @@ Public Class BugReport
         SB.AppendLine(String.Format("WinPaletter.Version = ""{0}""", Label3.Text))
         SB.AppendLine()
 
-        SB.AppendLine("'Exception Error Details")
+        SB.AppendLine("'Error Details")
         SB.AppendLine("'-----------------------------------------------------------")
-        SB.AppendLine(XenonTextBox1.Text.Replace(vbCrLf & "Error.StackTrace = {", "Error.StackTrace = {"))
+
+        For Each x As TreeNode In XenonTreeView1.Nodes
+            Dim prop As String = x.Text.Replace(" ", ".").Replace("'s", "").Replace("\", "_")
+
+            If x.Nodes.Count = 1 Then
+                SB.AppendLine(prop & " = """ & x.Nodes.Item(0).Text & """")
+            Else
+                SB.AppendLine(prop & " = {")
+
+                For Each y As TreeNode In x.Nodes
+                    SB.AppendLine(y.Text)
+                Next
+
+                SB.AppendLine("         }")
+            End If
+
+        Next
+
         SB.AppendLine("```")
 
         Return SB.ToString

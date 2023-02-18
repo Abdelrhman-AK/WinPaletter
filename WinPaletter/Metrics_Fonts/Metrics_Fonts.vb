@@ -82,8 +82,13 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Icon = My.Resources.fileextension    'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
         XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall   'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
-        PictureBox35.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
-        PictureBox36.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+        If My.WXP Then
+            PictureBox35.Image = SystemIcons.Information.ToBitmap
+            PictureBox36.Image = SystemIcons.Information.ToBitmap
+        Else
+            PictureBox35.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+            PictureBox36.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+        End If
 
         Dim Win7 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Aero Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Opaque Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Basic
         Dim Win8 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W8 Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W8Lite
@@ -592,227 +597,73 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles ttl_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton13_Click_1(sender As Object, e As EventArgs) Handles ttl_w.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles ttl_b.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles ttl_p.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum) : XenonTrackbar12.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar12.Maximum), XenonTrackbar12.Minimum) : XenonTrackbar12.Value = Val(sender.Text)
     End Sub
 
     Private Sub Tw_h_Click(sender As Object, e As EventArgs) Handles tw_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar14.Maximum), XenonTrackbar14.Minimum) : XenonTrackbar14.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar14.Maximum), XenonTrackbar14.Minimum) : XenonTrackbar14.Value = Val(sender.Text)
     End Sub
 
     Private Sub Tw_w_Click(sender As Object, e As EventArgs) Handles tw_w.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar13.Maximum), XenonTrackbar13.Minimum) : XenonTrackbar13.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar13.Maximum), XenonTrackbar13.Minimum) : XenonTrackbar13.Value = Val(sender.Text)
     End Sub
 
     Private Sub I_s_v_Click(sender As Object, e As EventArgs) Handles i_s_v.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
     End Sub
 
     Private Sub I_s_h_Click(sender As Object, e As EventArgs) Handles i_s_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
     End Sub
 
     Private Sub I_d_s_Click(sender As Object, e As EventArgs) Handles i_d_s.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar7.Maximum), XenonTrackbar7.Minimum) : XenonTrackbar7.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar7.Maximum), XenonTrackbar7.Minimum) : XenonTrackbar7.Value = Val(sender.Text)
     End Sub
 
     Private Sub I_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
     End Sub
 
     Private Sub Mh_Click(sender As Object, e As EventArgs) Handles m_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar9.Maximum), XenonTrackbar9.Minimum) : XenonTrackbar9.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar9.Maximum), XenonTrackbar9.Minimum) : XenonTrackbar9.Value = Val(sender.Text)
     End Sub
 
     Private Sub Mw_Click(sender As Object, e As EventArgs) Handles m_w.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar8.Maximum), XenonTrackbar8.Minimum) : XenonTrackbar8.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar8.Maximum), XenonTrackbar8.Minimum) : XenonTrackbar8.Value = Val(sender.Text)
     End Sub
 
     Private Sub Sh_Click(sender As Object, e As EventArgs) Handles s_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar11.Maximum), XenonTrackbar11.Minimum) : XenonTrackbar11.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar11.Maximum), XenonTrackbar11.Minimum) : XenonTrackbar11.Value = Val(sender.Text)
     End Sub
 
     Private Sub Sw_Click(sender As Object, e As EventArgs) Handles s_w.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton13_Click_2(sender As Object, e As EventArgs) Handles XenonButton13.Click

@@ -911,50 +911,17 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_FontSizeVal_Click(sender As Object, e As EventArgs) Handles CMD_FontSizeVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum) : CMD_FontSizeBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_FontSizeBar.Maximum), CMD_FontSizeBar.Minimum) : CMD_FontSizeBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub CMD_PreviewCUR_Val_Click(sender As Object, e As EventArgs) Handles CMD_PreviewCUR_Val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum) : CMD_CursorSizeBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_CursorSizeBar.Maximum), CMD_CursorSizeBar.Minimum) : CMD_CursorSizeBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub CMD_OpacityVal_Click(sender As Object, e As EventArgs) Handles CMD_OpacityVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum) : CMD_OpacityBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum) : CMD_OpacityBar.Value = Val(sender.Text)
     End Sub
 End Class

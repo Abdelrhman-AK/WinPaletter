@@ -969,7 +969,10 @@ Public Module Paths
 
         Dim F As FontFamily
 
-        If My.W7 Then
+        If My.WXP Then
+            F = New FontFamily("Tahoma")
+
+        ElseIf My.W7 Or My.WVista Then
             F = New FontFamily("Segoe UI")
         Else
             F = New FontFamily("Segoe UI Black")

@@ -119,8 +119,8 @@ Public Class XenonCore
         For Each ni As NetworkInterface In NetworkInterface.GetAllNetworkInterfaces()
             If (ni.OperationalStatus <> OperationalStatus.Up) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Loopback) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Tunnel) Then Continue For
             If ni.Speed < minimumSpeed Then Continue For
-            If (ni.Description.IndexOf("virtual", StringComparison.OrdinalIgnoreCase) >= 0) OrElse (ni.Name.IndexOf("virtual", StringComparison.OrdinalIgnoreCase) >= 0) Then Continue For
-            If ni.Description.Equals("Microsoft Loopback Adapter", StringComparison.OrdinalIgnoreCase) Then Continue For
+            If (ni.Description.IndexOf("virtual", My._strIgnore) >= 0) OrElse (ni.Name.IndexOf("virtual", My._strIgnore) >= 0) Then Continue For
+            If ni.Description.Equals("Microsoft Loopback Adapter", My._strIgnore) Then Continue For
             Return True
         Next
 
@@ -149,7 +149,6 @@ Public Class XenonCore
 
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
-
         If My.Settings.Appearance_Custom Then
             Return My.Settings.Appearance_Custom_Dark
         Else
@@ -297,41 +296,7 @@ Public Class XenonCore
             DirectCast(ctrl, XenonLinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
         End If
 
-        If TypeOf ctrl Is DataGridView Then
-            Dim ColumnBack As Color
-            Dim Fore As Color
-            Dim CellBack As Color
-
-            Select Case DarkMode
-                Case True
-                    ColumnBack = Color.FromArgb(60, 60, 60)
-                    Fore = Color.White
-                    CellBack = ctrl.Parent.BackColor
-                Case False
-                    ColumnBack = Color.FromArgb(150, 150, 150)
-                    Fore = Color.Black
-                    CellBack = ctrl.Parent.BackColor
-            End Select
-
-            For Each Row As DataGridViewRow In TryCast(ctrl, DataGridView).Rows
-                Row.DefaultCellStyle.ForeColor = Fore
-            Next
-
-            TryCast(ctrl, DataGridView).ColumnHeadersDefaultCellStyle.BackColor = ColumnBack
-            TryCast(ctrl, DataGridView).ColumnHeadersDefaultCellStyle.ForeColor = Fore
-            TryCast(ctrl, DataGridView).BackColor = ctrl.Parent.BackColor
-            TryCast(ctrl, DataGridView).BackgroundColor = ctrl.Parent.BackColor
-            TryCast(ctrl, DataGridView).DefaultCellStyle.BackColor = CellBack
-            TryCast(ctrl, DataGridView).ForeColor = Fore
-            TryCast(ctrl, DataGridView).DefaultCellStyle.ForeColor = Fore
-            TryCast(ctrl, DataGridView).RowTemplate.DefaultCellStyle.ForeColor = Fore
-
-
-            ctrl.Invalidate()
-            ctrl.Refresh()
-        End If
-
-        If TypeOf ctrl Is TreeView Then
+        If TypeOf ctrl Is TreeView Or TypeOf ctrl Is XenonTreeView Then
             With TryCast(ctrl, TreeView)
                 .BackColor = ctrl.Parent.BackColor
                 .ForeColor = If(DarkMode, Color.White, Color.Black)
@@ -461,10 +426,12 @@ Public Class XenonCore
                                             Optional FooterCustomIcon As Icon = Nothing, Optional RequireElevation As Boolean = False) As MsgBoxResult
 
         Try
+            If My.WXP Then Throw New Exception("Modern Dialogs are not implemented for Windows XP")
+
             TD = New TaskDialog With {
                     .EnableHyperlinks = True,
                     .RightToLeft = My.Lang.RightToLeft,
-                    .ButtonStyle = TaskDialogButtonStyle.CommandLinksNoIcon,
+                    .ButtonStyle = TaskDialogButtonStyle.Standard,
                     .Content = ConvertToLink(SubMessage),
                     .FooterIcon = FooterIcon}
 
@@ -478,12 +445,12 @@ Public Class XenonCore
 
             TD.CustomFooterIcon = FooterCustomIcon
 
-            Dim okButton As New TaskDialogButton(ButtonType.Ok) With {.Text = My.Lang.OK, .ElevationRequired = RequireElevation}
-            Dim yesButton As New TaskDialogButton(ButtonType.Yes) With {.Text = My.Lang.Yes, .ElevationRequired = RequireElevation}
-            Dim noButton As New TaskDialogButton(ButtonType.No) With {.Text = My.Lang.No}
-            Dim cancelButton As New TaskDialogButton(ButtonType.Cancel) With {.Text = My.Lang.Cancel}
-            Dim retryButton As New TaskDialogButton(ButtonType.Retry) With {.Text = My.Lang.Retry, .ElevationRequired = RequireElevation}
-            Dim closeButton As New TaskDialogButton(ButtonType.Close) With {.Text = My.Lang.Close}
+            Dim okButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.OK, .ElevationRequired = RequireElevation}
+            Dim yesButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Yes, .ElevationRequired = RequireElevation}
+            Dim noButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.No}
+            Dim cancelButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Cancel}
+            Dim retryButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Retry, .ElevationRequired = RequireElevation}
+            Dim closeButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Close}
             Dim customButton As New TaskDialogButton(ButtonType.Custom)
             Dim icon As TaskDialogIcon
 
@@ -514,6 +481,7 @@ Public Class XenonCore
                 Catch
                 End Try
                 icon = TaskDialogIcon.Custom
+
                 TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
             End If
 
@@ -555,9 +523,13 @@ Public Class XenonCore
             Return result
 
         Catch
-            Return Interaction.MsgBox(Message, Style, SubMessage)
-        End Try
+            Dim SM As String = If(Not String.IsNullOrWhiteSpace(SubMessage), vbCrLf & vbCrLf & SubMessage, "")
+            Dim ED As String = If(Not String.IsNullOrWhiteSpace(ExpandedDetails), vbCrLf & vbCrLf & ExpandedDetails, "")
+            Dim Fo As String = If(Not String.IsNullOrWhiteSpace(Footer), vbCrLf & vbCrLf & Footer, "")
+            Dim T As String = If(Not String.IsNullOrWhiteSpace(DialogTitle), DialogTitle, My.Application.Info.Title)
 
+            Return Interaction.MsgBox(Message & SM & ED & Fo, Style, T)
+        End Try
     End Function
 
 #Region "MsgBox Functions Branches"
@@ -637,6 +609,37 @@ Public Class XenonCore
     End Sub
 #End Region
 
+#End Region
+
+#Region "InputBox"
+    Public Shared Function InputBox(Instruction As String, Optional Value As String = "", Optional Notice As String = "", Optional Title As String = "") As String
+
+        Try
+            If My.WXP Then Throw New Exception("Modern Dialogs are not implemented for Windows XP")
+
+            Dim ib As New InputDialog With {
+                    .MainInstruction = Instruction,
+                    .Input = Value,
+                    .Content = Notice,
+                    .WindowTitle = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
+                   }
+
+            If ib.ShowDialog() = DialogResult.OK Then
+                Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = Value
+                ib.Dispose()
+                Return response
+            Else
+                ib.Dispose()
+                Return Value
+            End If
+
+        Catch
+            Dim N As String = If(Not String.IsNullOrWhiteSpace(Notice), vbCrLf & vbCrLf & Notice, "")
+            Dim T As String = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
+
+            Return Interaction.InputBox(Instruction & N, T, Value)
+        End Try
+    End Function
 #End Region
 
 #End Region

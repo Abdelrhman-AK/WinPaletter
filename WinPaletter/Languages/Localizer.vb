@@ -151,6 +151,8 @@ Public Class Localizer : Implements IDisposable
     Property OS_Win10 As String = "Windows 10"
     Property OS_Win8 As String = "Windows 8.1"
     Property OS_Win7 As String = "Windows 7"
+    Property OS_WinVista As String = "Windows Vista"
+    Property OS_WinXP As String = "Windows XP"
     Property OS_WinUndefined As String = "Windows 11 or Higher"
     Property MonospacedFontsError As String = "Error occured during loading list of Fixed\Monospaced fonts. Anyway, loading will continue without this list."
     Property MonospacedFontsError2 As String = "WinPaletter already used a second method after failure of the first one, but unfortunately both have failed."

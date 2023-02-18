@@ -1152,50 +1152,17 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_FontSizeVal_Click(sender As Object, e As EventArgs) Handles ExtTerminal_FontSizeVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_FontSizeBar.Maximum), ExtTerminal_FontSizeBar.Minimum) : ExtTerminal_FontSizeBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_FontSizeBar.Maximum), ExtTerminal_FontSizeBar.Minimum) : ExtTerminal_FontSizeBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub ExtTerminal_PreviewCUR_Val_Click(sender As Object, e As EventArgs) Handles ExtTerminal_PreviewCUR_Val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_CursorSizeBar.Maximum), ExtTerminal_CursorSizeBar.Minimum) : ExtTerminal_CursorSizeBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_CursorSizeBar.Maximum), ExtTerminal_CursorSizeBar.Minimum) : ExtTerminal_CursorSizeBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub ExtTerminal_OpacityVal_Click(sender As Object, e As EventArgs) Handles ExtTerminal_OpacityVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum) : ExtTerminal_OpacityBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum) : ExtTerminal_OpacityBar.Value = Val(sender.Text)
     End Sub
 End Class

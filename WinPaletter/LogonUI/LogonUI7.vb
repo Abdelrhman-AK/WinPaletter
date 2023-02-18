@@ -278,35 +278,13 @@ Public Class LogonUI7
     End Sub
 
     Private Sub ttl_h_Click(sender As Object, e As EventArgs) Handles ttl_h.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click

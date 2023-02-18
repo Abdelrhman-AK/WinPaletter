@@ -19,16 +19,22 @@ Namespace My
         Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 11 or not
+        ''' Boolean Represents if OS is Windows XP
         ''' </summary>
-        Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
+        Public ReadOnly WXP As Boolean = Computer.Info.OSFullName.ToLower.Contains("xp")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 10 or not
+        ''' Boolean Represents if OS is Windows Vista
         ''' </summary>
-        Public ReadOnly W10 As Boolean = Computer.Info.OSFullName.Contains("10")
+        Public ReadOnly WVista As Boolean = Computer.Info.OSFullName.ToLower.Contains("vista")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 7 or not
+        ''' </summary>
+        Public ReadOnly W7 As Boolean = Computer.Info.OSFullName.Contains("7")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 8/8.1 or not
@@ -36,9 +42,14 @@ Namespace My
         Public ReadOnly W8 As Boolean = Computer.Info.OSFullName.Contains("8")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 7 or not
+        ''' Boolean Represents if OS is Windows 10 or not
         ''' </summary>
-        Public ReadOnly W7 As Boolean = Computer.Info.OSFullName.Contains("7")
+        Public ReadOnly W10 As Boolean = Computer.Info.OSFullName.Contains("10")
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows 11 or not
+        ''' </summary>
+        Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
@@ -171,6 +182,12 @@ Namespace My
 
                                                                                         Case MainFrm.WinVer.W7
                                                                                             If MainFrm.CP.WallpaperTone_W7.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W7) Else Wall = Wallpaper
+
+                                                                                        Case MainFrm.WinVer.WVista
+                                                                                            If MainFrm.CP.WallpaperTone_WVista.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_WVista) Else Wall = Wallpaper
+
+                                                                                        Case MainFrm.WinVer.WXP
+                                                                                            If MainFrm.CP.WallpaperTone_WXP.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_WXP) Else Wall = Wallpaper
                                                                                     End Select
                                                                                 Else
                                                                                     Wall = Wallpaper
@@ -432,25 +449,27 @@ Namespace My
             Dim valueName As String
             Dim Base As String
 
-            KeyPath = "Control Panel\Desktop"
-            valueName = "Wallpaper"
-            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query1 = New WqlEventQuery(Base)
-            WallMon_Watcher1 = New ManagementEventWatcher(query1)
+            If Not My.WXP Then
+                KeyPath = "Control Panel\Desktop"
+                valueName = "Wallpaper"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query1 = New WqlEventQuery(Base)
+                WallMon_Watcher1 = New ManagementEventWatcher(query1)
 
-            KeyPath = "Control Panel\Colors"
-            valueName = "Background"
-            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-            Dim query2 = New WqlEventQuery(Base)
-            WallMon_Watcher2 = New ManagementEventWatcher(query2)
+                KeyPath = "Control Panel\Colors"
+                valueName = "Background"
+                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+                Dim query2 = New WqlEventQuery(Base)
+                WallMon_Watcher2 = New ManagementEventWatcher(query2)
 
-            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
-            WallMon_Watcher1.Start()
+                AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+                WallMon_Watcher1.Start()
 
-            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
-            WallMon_Watcher2.Start()
+                AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+                WallMon_Watcher2.Start()
+            End If
 
-            If Not W7 And Not W8 Then
+            If My.W10 OrElse My.W11 Then
                 KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
                 valueName = "BackgroundType"
                 Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
@@ -470,12 +489,15 @@ Namespace My
                 WallMon_Watcher4.Start()
 
             Else
-                AddHandler SystemEvents.UserPreferenceChanged, AddressOf Win7_8_UserPreferenceChanged
+                AddHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
             End If
 
         End Sub
-        Public Sub Win7_8_UserPreferenceChanged(ByVal sender As Object, ByVal e As UserPreferenceChangedEventArgs)
-            If e.Category = UserPreferenceCategory.Desktop Then Wallpaper_Changed()
+        Public Sub OldWinPreferenceChanged(ByVal sender As Object, ByVal e As UserPreferenceChangedEventArgs)
+            Try
+                If e.Category = UserPreferenceCategory.Desktop Or e.Category = UserPreferenceCategory.Color Then Wallpaper_Changed()
+            Catch
+            End Try
         End Sub
         Sub DarkMode_Changed()
             Invoke(UpdateDarkModeInvoker)
@@ -488,16 +510,18 @@ Namespace My
 
 #Region "   Application Startup and Shutdown Subs"
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            Try
-                WallMon_Watcher1.Stop()
-                WallMon_Watcher2.Stop()
+            If Not My.WXP Then
+                Try
+                    WallMon_Watcher1.Stop()
+                    WallMon_Watcher2.Stop()
 
-                If Not W7 And Not W8 Then
-                    WallMon_Watcher3.Stop()
-                    WallMon_Watcher4.Stop()
-                End If
-            Catch
-            End Try
+                    If Not W7 And Not W8 Then
+                        WallMon_Watcher3.Stop()
+                        WallMon_Watcher4.Stop()
+                    End If
+                Catch
+                End Try
+            End If
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
@@ -637,13 +661,17 @@ Namespace My
 
             Wallpaper = GetWallpaper().Resize(528, 297)
 
-            Try
-                Monitor()
-            Catch ex As Exception
-                If MsgBox(My.Lang.MonitorIssue, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.MonitorIssue2 & vbCrLf & My.Lang.CP_RestoreCursorsErrorPressOK) = MsgBoxResult.Ok Then
-                    BugReport.ThrowError(ex)
-                End If
-            End Try
+            If Not My.WXP Then
+                Try
+                    Monitor()
+                Catch ex As Exception
+                    If MsgBox(My.Lang.MonitorIssue, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.MonitorIssue2 & vbCrLf & My.Lang.CP_RestoreCursorsErrorPressOK) = MsgBoxResult.Ok Then
+                        BugReport.ThrowError(ex)
+                    End If
+                End Try
+            Else
+                AddHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
+            End If
 
             Try
                 If [Settings].AutoAddExt Then
@@ -862,7 +890,6 @@ Namespace My
 
 #Region "   Domain (External Resources) and Exceptions Handling"
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
-
             Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(Resources.Animator)
             Catch : End Try
 

@@ -83,44 +83,24 @@ Namespace NativeMethods
         End Function
 
         <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As NONCLIENTMETRICS, ByVal fuWinIni As SPIF) As Integer
+        Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As NONCLIENTMETRICS, fuWinIni As SPIF) As Integer
         End Function
 
         <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As LogFontStr, ByVal fuWinIni As SPIF) As Integer
+        Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As ICONMETRICS, fuWinIni As SPIF) As Integer
         End Function
 
         <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ICONMETRICS, ByVal fuWinIni As SPIF) As Integer
+        Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As Integer, fuWinIni As SPIF) As Integer
         End Function
 
         <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As Integer, ByVal fuWinIni As SPIF) As Integer
+        Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As ANIMATIONINFO, fuWinIni As SPIF) As Integer
         End Function
 
-        <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As Boolean, ByVal fuWinIni As SPIF) As Integer
-        End Function
-
-        <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Boolean, ByRef lpvParam As Integer, ByVal fuWinIni As SPIF) As Integer
-        End Function
-
-        <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(ByVal uAction As Integer, ByVal uParam As Integer, ByRef lpvParam As ANIMATIONINFO, ByVal fuWinIni As SPIF) As Integer
-        End Function
-
-        <DllImport("user32.dll", SetLastError:=True)>
-        Public Shared Function SystemParametersInfo(ByVal uiAction As Integer, ByVal uiParam As UInteger, ByVal pvParam As IntPtr, ByVal fWinIni As SPIF) As Boolean
-        End Function
-
-        <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
-        Public Shared Function SystemParametersInfo(ByVal uiAction As UInteger, ByVal uiParam As UInteger, ByVal pvParam As String, ByVal fWinIni As SPIF) As Boolean
-        End Function
-
-        <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
-        Public Shared Function SystemParametersInfo(ByVal uiAction As UInteger, ByVal uiParam As UInteger, ByVal pvParam As StringBuilder, ByVal fWinIni As SPIF) As Boolean
-        End Function
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
 
         ''' <summary>
         ''' SPI: System-wide parameter - Used in SystemParametersInfo function
@@ -538,15 +518,9 @@ Namespace NativeMethods
             SendWinINIChange = SendChange       ' Same as SENDCHANGE.
         End Enum
 
-
-        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
-        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
-        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
-
         Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer
         Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
         Declare Function LoadCursorFromFile Lib "user32.dll" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As IntPtr
-
 
         <StructLayout(LayoutKind.Sequential)>
         Friend Structure AccentPolicy

@@ -24,6 +24,10 @@ Public Class WallpaperToner
                 XenonAlertBox1.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win8)
             Case MainFrm.WinVer.W7
                 XenonAlertBox1.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win7)
+            Case MainFrm.WinVer.WVista
+                XenonAlertBox1.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinVista)
+            Case MainFrm.WinVer.WXP
+                XenonAlertBox1.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinXP)
             Case Else
                 XenonAlertBox1.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinUndefined)
         End Select
@@ -32,7 +36,21 @@ Public Class WallpaperToner
     Sub LoadFromWT([WT] As CP.Structures.WallpaperTone)
         ToneEnabled.Checked = [WT].Enabled
         XenonTextBox1.Text = [WT].Image
-        If Not IO.File.Exists([WT].Image) Then [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+
+        If Not IO.File.Exists([WT].Image) Then
+            If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+            Else
+                [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+            End If
+        End If
+
+        If Not IO.File.Exists([WT].Image) Then
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            [WT].Image = R1.GetValue("Wallpaper").ToString()
+            If R1 IsNot Nothing Then R1.Close()
+        End If
+
         Dim S As New FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
         img = Image.FromStream(S).Resize(pnl_preview.Size)
         S.Close()
@@ -90,52 +108,18 @@ Public Class WallpaperToner
     End Sub
 
     Private Sub HB_Click(sender As Object, e As EventArgs) Handles HB.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-                .MainInstruction = My.Lang.InputValue,
-                .Input = sender.text,
-                .Content = My.Lang.ItMustBeNumerical,
-                .WindowTitle = "WinPaletter"
-               }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), HBar.Maximum), HBar.Minimum) : HBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
-
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), HBar.Maximum), HBar.Minimum) : HBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub SB_Click(sender As Object, e As EventArgs) Handles SB.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-        .MainInstruction = My.Lang.InputValue,
-        .Input = sender.text,
-        .Content = My.Lang.ItMustBeNumerical,
-        .WindowTitle = "WinPaletter"
-       }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), SBar.Maximum), SBar.Minimum) : SBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), SBar.Maximum), SBar.Minimum) : SBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub LB_Click(sender As Object, e As EventArgs) Handles LB.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-        .MainInstruction = My.Lang.InputValue,
-        .Input = sender.text,
-        .Content = My.Lang.ItMustBeNumerical,
-        .WindowTitle = "WinPaletter"
-       }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), LBar.Maximum), LBar.Minimum) : LBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), LBar.Maximum), LBar.Minimum) : LBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub WallpaperTinter_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -143,7 +127,17 @@ Public Class WallpaperToner
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+        If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+        Else
+            XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+        End If
+
+        If Not IO.File.Exists(XenonTextBox1.Text) Then
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            XenonTextBox1.Text = R1.GetValue("Wallpaper").ToString()
+            If R1 IsNot Nothing Then R1.Close()
+        End If
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -156,7 +150,15 @@ Public Class WallpaperToner
         Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
         Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
         If R1 IsNot Nothing Then R1.Close()
-        If Not IO.File.Exists(WallpaperPath) Then WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+
+        If Not IO.File.Exists(WallpaperPath) Then
+            If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+            Else
+                WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+            End If
+        End If
+
         XenonTextBox1.Text = WallpaperPath
 
     End Sub
@@ -183,6 +185,10 @@ Public Class WallpaperToner
                 MainFrm.CP.WallpaperTone_W8 = ApplyToWT()
             Case MainFrm.WinVer.W7
                 MainFrm.CP.WallpaperTone_W7 = ApplyToWT()
+            Case MainFrm.WinVer.WVista
+                MainFrm.CP.WallpaperTone_WVista = ApplyToWT()
+            Case MainFrm.WinVer.WXP
+                MainFrm.CP.WallpaperTone_WXP = ApplyToWT()
             Case Else
                 MainFrm.CP.WallpaperTone_W11 = ApplyToWT()
 
@@ -271,6 +277,15 @@ Public Class WallpaperToner
             Case MainFrm.WinVer.W7
                 CPx = New CP_Defaults().Default_Windows7
                 LoadFromWT(CPx.WallpaperTone_W7)
+
+            Case MainFrm.WinVer.WVista
+                CPx = New CP_Defaults().Default_Windows7
+                LoadFromWT(CPx.WallpaperTone_WVista)
+
+            Case MainFrm.WinVer.W7
+                CPx = New CP_Defaults().Default_Windows7
+                LoadFromWT(CPx.WallpaperTone_WXP)
+
             Case Else
                 CPx = New CP_Defaults().Default_Windows11
                 LoadFromWT(CPx.WallpaperTone_W11)

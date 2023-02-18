@@ -1164,7 +1164,7 @@ Public Class WindowsTerminal
                     Dim ls_stable As New List(Of String)
                     ls_stable.Clear()
                     For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.ToLower.StartsWith("terminal.") Then ls_stable.Add(lin)
+                        If lin.StartsWith("terminal.", My._strIgnore) Then ls_stable.Add(lin)
                     Next
                     _Terminal = New WinTerminal(ls_stable.CString, WinTerminal.Mode.WinPaletterFile)
                     Load_FromTerminal()
@@ -1174,7 +1174,7 @@ Public Class WindowsTerminal
                     Dim ls_preview As New List(Of String)
                     ls_preview.Clear()
                     For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.ToLower.StartsWith("terminalpreview.") Then ls_preview.Add(lin)
+                        If lin.StartsWith("terminalpreview.", My._strIgnore) Then ls_preview.Add(lin)
                     Next
                     _Terminal = New WinTerminal(ls_preview.CString, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
                     Load_FromTerminal()
@@ -1529,66 +1529,22 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub TerFontSizeVal_Click(sender As Object, e As EventArgs) Handles TerFontSizeVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum) : TerFontSizeBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), TerFontSizeBar.Maximum), TerFontSizeBar.Minimum) : TerFontSizeBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub TerCursorHeightVal_Click(sender As Object, e As EventArgs) Handles TerCursorHeightVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum) : TerCursorHeightBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), TerCursorHeightBar.Maximum), TerCursorHeightBar.Minimum) : TerCursorHeightBar.Value = Val(sender.Text)
     End Sub
 
     Private Sub TerImageOpacityVal_Click(sender As Object, e As EventArgs) Handles TerImageOpacityVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum) : TerImageOpacity.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), TerImageOpacity.Maximum), TerImageOpacity.Minimum) : TerImageOpacity.Value = Val(sender.Text)
     End Sub
 
     Private Sub TerOpacityVal_Click(sender As Object, e As EventArgs) Handles TerOpacityVal.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
     End Sub
 End Class

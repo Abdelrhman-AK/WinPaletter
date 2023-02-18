@@ -149,7 +149,7 @@ Module XenonModule
                         Return True
                     ElseIf My.W10 Or My.W8 Then
                         Return False
-                    ElseIf My.W7 Then
+                    ElseIf My.W7 OrElse My.WXP OrElse My.WVista Then
                         Try
                             Dim stringThemeName As New System.Text.StringBuilder(260)
                             NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
@@ -395,6 +395,18 @@ Module XenonModule
 End Module
 
 #Region "Xenon UI"
+Public Class XenonTreeView
+    Inherits TreeView
+
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Dim parms As CreateParams = MyBase.CreateParams
+            parms.Style = parms.Style Or &H80
+            Return parms
+        End Get
+    End Property
+End Class
+
 Public Class XenonLinkLabel
     Inherits Windows.Forms.LinkLabel
 
@@ -465,7 +477,9 @@ Public Class XenonTabControl : Inherits TabControl
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+
         DoubleBuffered = True
 
         Dim SelectColor As Color
@@ -1055,7 +1069,7 @@ Public Class XenonRadioButton
 
             G = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
-            G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+            G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
             DoubleBuffered = True
 
             '################################################################################# Customizer
@@ -1289,7 +1303,7 @@ Public Class XenonRadioImage
 
             G = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
-            G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+            G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
             DoubleBuffered = True
 
             Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -1521,7 +1535,7 @@ Public Class XenonCheckBox
 
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
-            G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+            G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
             DoubleBuffered = True
 
             '################################################################################# Customizer
@@ -1930,7 +1944,7 @@ Public Class XenonCP
 
         If Not DesignMode Then
             If My.[Settings].Nerd_Stats And Not ForceNoNerd Then
-                G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
                 Dim IsDefault As Boolean = (BackColor = DefaultColor)
                 Dim FC0 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
                 Dim FC1 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
@@ -2246,7 +2260,7 @@ Public Class XenonButton : Inherits Button
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -2681,7 +2695,7 @@ Public Class XenonNumericUpDown
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
         Dim RTL As Boolean = (RightToLeft = 1)
 
@@ -3282,7 +3296,7 @@ Public Class XenonComboBox : Inherits ComboBox
         e.DrawBackground()
 
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
-        e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        e.Graphics.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
 
         If BackColor.IsDark Then
             If ForeColor <> Color.White Then ForeColor = Color.White
@@ -3486,7 +3500,7 @@ Public Class XenonComboBox : Inherits ComboBox
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
 
         If GetDarkMode() Then ForeColor = Color.White Else ForeColor = Color.Black
@@ -3649,7 +3663,7 @@ Public Class XenonAlertBox
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
         Dim RTL As Boolean = (RightToLeft = 1)
         Dim DM As Boolean = GetDarkMode()
@@ -4634,7 +4648,7 @@ Public Class XenonFakeIcon : Inherits Panel
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighQuality
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
 
         Dim IconRect As New Rectangle(0, 0, Width - 1, Height - 30)
@@ -4871,7 +4885,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
 
         '### Adjust Limits
@@ -5919,7 +5933,7 @@ Public Class XenonCMD
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
 
         DoubleBuffered = True
 
@@ -6504,7 +6518,7 @@ Public Class XenonTerminal
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
 
         DoubleBuffered = True
 

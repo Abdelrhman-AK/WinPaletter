@@ -34,6 +34,8 @@ Partial Class MainFrm
         Me.NotifyUpdates = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.XenonButton28 = New WinPaletter.XenonButton()
         Me.previewContainer = New WinPaletter.XenonGroupBox()
+        Me.Select_WXP = New WinPaletter.XenonRadioImage()
+        Me.Select_WVista = New WinPaletter.XenonRadioImage()
         Me.tabs_preview = New WinPaletter.TablessControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.pnl_preview = New System.Windows.Forms.Panel()
@@ -325,6 +327,8 @@ Partial Class MainFrm
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
         Me.Label27 = New System.Windows.Forms.Label()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonButton22 = New WinPaletter.XenonButton()
@@ -354,6 +358,8 @@ Partial Class MainFrm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton29 = New WinPaletter.XenonButton()
+        Me.Label61 = New System.Windows.Forms.Label()
         Me.XenonButton26 = New WinPaletter.XenonButton()
         Me.XenonButton27 = New WinPaletter.XenonButton()
         Me.XenonButton24 = New WinPaletter.XenonButton()
@@ -545,6 +551,8 @@ Partial Class MainFrm
         '
         Me.previewContainer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.previewContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.previewContainer.Controls.Add(Me.Select_WXP)
+        Me.previewContainer.Controls.Add(Me.Select_WVista)
         Me.previewContainer.Controls.Add(Me.tabs_preview)
         Me.previewContainer.Controls.Add(Me.Select_W7)
         Me.previewContainer.Controls.Add(Me.XenonButton23)
@@ -562,6 +570,32 @@ Partial Class MainFrm
         Me.previewContainer.Padding = New System.Windows.Forms.Padding(1)
         Me.previewContainer.Size = New System.Drawing.Size(536, 406)
         Me.previewContainer.TabIndex = 14
+        '
+        'Select_WXP
+        '
+        Me.Select_WXP.Checked = False
+        Me.Select_WXP.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Select_WXP.ForeColor = System.Drawing.Color.White
+        Me.Select_WXP.Image = Nothing
+        Me.Select_WXP.Location = New System.Drawing.Point(133, 359)
+        Me.Select_WXP.Name = "Select_WXP"
+        Me.Select_WXP.ShowText = False
+        Me.Select_WXP.Size = New System.Drawing.Size(40, 40)
+        Me.Select_WXP.TabIndex = 37
+        Me.Select_WXP.Tag = "Change the preview to Windows XP"
+        '
+        'Select_WVista
+        '
+        Me.Select_WVista.Checked = False
+        Me.Select_WVista.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Select_WVista.ForeColor = System.Drawing.Color.White
+        Me.Select_WVista.Image = Nothing
+        Me.Select_WVista.Location = New System.Drawing.Point(179, 359)
+        Me.Select_WVista.Name = "Select_WVista"
+        Me.Select_WVista.ShowText = False
+        Me.Select_WVista.Size = New System.Drawing.Size(40, 40)
+        Me.Select_WVista.TabIndex = 36
+        Me.Select_WVista.Tag = "Change the preview to Windows Vista"
         '
         'tabs_preview
         '
@@ -982,7 +1016,7 @@ Partial Class MainFrm
         Me.Select_W7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W7.ForeColor = System.Drawing.Color.White
         Me.Select_W7.Image = Nothing
-        Me.Select_W7.Location = New System.Drawing.Point(179, 359)
+        Me.Select_W7.Location = New System.Drawing.Point(225, 359)
         Me.Select_W7.Name = "Select_W7"
         Me.Select_W7.ShowText = False
         Me.Select_W7.Size = New System.Drawing.Size(40, 40)
@@ -1010,7 +1044,7 @@ Partial Class MainFrm
         Me.Select_W8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W8.ForeColor = System.Drawing.Color.White
         Me.Select_W8.Image = Nothing
-        Me.Select_W8.Location = New System.Drawing.Point(225, 359)
+        Me.Select_W8.Location = New System.Drawing.Point(271, 359)
         Me.Select_W8.Name = "Select_W8"
         Me.Select_W8.ShowText = False
         Me.Select_W8.Size = New System.Drawing.Size(40, 40)
@@ -1041,7 +1075,7 @@ Partial Class MainFrm
         Me.Select_W10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W10.ForeColor = System.Drawing.Color.White
         Me.Select_W10.Image = Nothing
-        Me.Select_W10.Location = New System.Drawing.Point(271, 359)
+        Me.Select_W10.Location = New System.Drawing.Point(317, 359)
         Me.Select_W10.Name = "Select_W10"
         Me.Select_W10.ShowText = False
         Me.Select_W10.Size = New System.Drawing.Size(40, 40)
@@ -1070,7 +1104,7 @@ Partial Class MainFrm
         Me.Select_W11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W11.ForeColor = System.Drawing.Color.White
         Me.Select_W11.Image = Nothing
-        Me.Select_W11.Location = New System.Drawing.Point(317, 359)
+        Me.Select_W11.Location = New System.Drawing.Point(363, 359)
         Me.Select_W11.Name = "Select_W11"
         Me.Select_W11.ShowText = False
         Me.Select_W11.Size = New System.Drawing.Size(40, 40)
@@ -1124,6 +1158,8 @@ Partial Class MainFrm
         Me.TablessControl1.Controls.Add(Me.TabPage2)
         Me.TablessControl1.Controls.Add(Me.TabPage3)
         Me.TablessControl1.Controls.Add(Me.TabPage4)
+        Me.TablessControl1.Controls.Add(Me.TabPage8)
+        Me.TablessControl1.Controls.Add(Me.TabPage9)
         Me.TablessControl1.Controls.Add(Me.TabPage5)
         Me.TablessControl1.Location = New System.Drawing.Point(11, 74)
         Me.TablessControl1.Name = "TablessControl1"
@@ -1207,6 +1243,7 @@ Partial Class MainFrm
         '
         'W11_pic9
         '
+        Me.W11_pic9.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic9.Image = CType(resources.GetObject("W11_pic9.Image"), System.Drawing.Image)
         Me.W11_pic9.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic9.Name = "W11_pic9"
@@ -1273,6 +1310,7 @@ Partial Class MainFrm
         '
         'W11_pic8
         '
+        Me.W11_pic8.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic8.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic8.Name = "W11_pic8"
         Me.W11_pic8.Size = New System.Drawing.Size(24, 24)
@@ -1338,6 +1376,7 @@ Partial Class MainFrm
         '
         'W11_pic7
         '
+        Me.W11_pic7.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic7.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic7.Name = "W11_pic7"
         Me.W11_pic7.Size = New System.Drawing.Size(24, 24)
@@ -1403,6 +1442,7 @@ Partial Class MainFrm
         '
         'W11_pic4
         '
+        Me.W11_pic4.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic4.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic4.Name = "W11_pic4"
         Me.W11_pic4.Size = New System.Drawing.Size(24, 24)
@@ -1439,6 +1479,7 @@ Partial Class MainFrm
         '
         'PictureBox10
         '
+        Me.PictureBox10.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
         Me.PictureBox10.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox10.Name = "PictureBox10"
@@ -1478,6 +1519,7 @@ Partial Class MainFrm
         '
         'W11_pic6
         '
+        Me.W11_pic6.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic6.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic6.Name = "W11_pic6"
         Me.W11_pic6.Size = New System.Drawing.Size(24, 24)
@@ -1543,6 +1585,7 @@ Partial Class MainFrm
         '
         'W11_pic1
         '
+        Me.W11_pic1.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic1.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic1.Name = "W11_pic1"
         Me.W11_pic1.Size = New System.Drawing.Size(24, 24)
@@ -1608,6 +1651,7 @@ Partial Class MainFrm
         '
         'W11_pic3
         '
+        Me.W11_pic3.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic3.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic3.Name = "W11_pic3"
         Me.W11_pic3.Size = New System.Drawing.Size(24, 24)
@@ -1646,6 +1690,7 @@ Partial Class MainFrm
         '
         Me.Label10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.BackColor = System.Drawing.Color.Transparent
         Me.Label10.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label10.Location = New System.Drawing.Point(40, 3)
         Me.Label10.Name = "Label10"
@@ -1698,6 +1743,7 @@ Partial Class MainFrm
         '
         'W11_pic2
         '
+        Me.W11_pic2.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic2.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic2.Name = "W11_pic2"
         Me.W11_pic2.Size = New System.Drawing.Size(24, 24)
@@ -1750,6 +1796,7 @@ Partial Class MainFrm
         '
         'W11_pic5
         '
+        Me.W11_pic5.BackColor = System.Drawing.Color.Transparent
         Me.W11_pic5.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic5.Name = "W11_pic5"
         Me.W11_pic5.Size = New System.Drawing.Size(24, 24)
@@ -1864,6 +1911,7 @@ Partial Class MainFrm
         '
         'PictureBox19
         '
+        Me.PictureBox19.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox19.Image = CType(resources.GetObject("PictureBox19.Image"), System.Drawing.Image)
         Me.PictureBox19.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox19.Name = "PictureBox19"
@@ -1902,6 +1950,7 @@ Partial Class MainFrm
         '
         'PictureBox2
         '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.Location = New System.Drawing.Point(2, 2)
@@ -1963,6 +2012,7 @@ Partial Class MainFrm
         '
         'PictureBox18
         '
+        Me.PictureBox18.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox18.Image = CType(resources.GetObject("PictureBox18.Image"), System.Drawing.Image)
         Me.PictureBox18.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox18.Name = "PictureBox18"
@@ -2000,6 +2050,7 @@ Partial Class MainFrm
         '
         'PictureBox20
         '
+        Me.PictureBox20.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox20.Image = CType(resources.GetObject("PictureBox20.Image"), System.Drawing.Image)
         Me.PictureBox20.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox20.Name = "PictureBox20"
@@ -2035,6 +2086,7 @@ Partial Class MainFrm
         '
         'PictureBox17
         '
+        Me.PictureBox17.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox17.Image = CType(resources.GetObject("PictureBox17.Image"), System.Drawing.Image)
         Me.PictureBox17.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox17.Name = "PictureBox17"
@@ -2047,6 +2099,7 @@ Partial Class MainFrm
         '
         Me.Label17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label17.BackColor = System.Drawing.Color.Transparent
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label17.Location = New System.Drawing.Point(38, 3)
         Me.Label17.Name = "Label17"
@@ -2151,6 +2204,7 @@ Partial Class MainFrm
         '
         'PictureBox1
         '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
@@ -2163,6 +2217,7 @@ Partial Class MainFrm
         '
         Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label1.Location = New System.Drawing.Point(40, 3)
         Me.Label1.Name = "Label1"
@@ -2187,6 +2242,7 @@ Partial Class MainFrm
         '
         'PictureBox5
         '
+        Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
         Me.PictureBox5.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox5.Name = "PictureBox5"
@@ -2298,6 +2354,7 @@ Partial Class MainFrm
         '
         'W10_pic9
         '
+        Me.W10_pic9.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic9.Image = CType(resources.GetObject("W10_pic9.Image"), System.Drawing.Image)
         Me.W10_pic9.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic9.Name = "W10_pic9"
@@ -2364,6 +2421,7 @@ Partial Class MainFrm
         '
         'W10_pic8
         '
+        Me.W10_pic8.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic8.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic8.Name = "W10_pic8"
         Me.W10_pic8.Size = New System.Drawing.Size(24, 24)
@@ -2429,6 +2487,7 @@ Partial Class MainFrm
         '
         'W10_pic7
         '
+        Me.W10_pic7.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic7.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic7.Name = "W10_pic7"
         Me.W10_pic7.Size = New System.Drawing.Size(24, 24)
@@ -2494,6 +2553,7 @@ Partial Class MainFrm
         '
         'W10_pic4
         '
+        Me.W10_pic4.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic4.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic4.Name = "W10_pic4"
         Me.W10_pic4.Size = New System.Drawing.Size(24, 24)
@@ -2530,6 +2590,7 @@ Partial Class MainFrm
         '
         'PictureBox7
         '
+        Me.PictureBox7.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox7.Image = CType(resources.GetObject("PictureBox7.Image"), System.Drawing.Image)
         Me.PictureBox7.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox7.Name = "PictureBox7"
@@ -2569,6 +2630,7 @@ Partial Class MainFrm
         '
         'W10_pic6
         '
+        Me.W10_pic6.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic6.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic6.Name = "W10_pic6"
         Me.W10_pic6.Size = New System.Drawing.Size(24, 24)
@@ -2634,6 +2696,7 @@ Partial Class MainFrm
         '
         'W10_pic1
         '
+        Me.W10_pic1.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic1.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic1.Name = "W10_pic1"
         Me.W10_pic1.Size = New System.Drawing.Size(24, 24)
@@ -2699,6 +2762,7 @@ Partial Class MainFrm
         '
         'W10_pic3
         '
+        Me.W10_pic3.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic3.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic3.Name = "W10_pic3"
         Me.W10_pic3.Size = New System.Drawing.Size(24, 24)
@@ -2737,6 +2801,7 @@ Partial Class MainFrm
         '
         Me.Label49.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label49.BackColor = System.Drawing.Color.Transparent
         Me.Label49.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label49.Location = New System.Drawing.Point(40, 3)
         Me.Label49.Name = "Label49"
@@ -2789,6 +2854,7 @@ Partial Class MainFrm
         '
         'W10_pic2
         '
+        Me.W10_pic2.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic2.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic2.Name = "W10_pic2"
         Me.W10_pic2.Size = New System.Drawing.Size(24, 24)
@@ -2841,6 +2907,7 @@ Partial Class MainFrm
         '
         'W10_pic5
         '
+        Me.W10_pic5.BackColor = System.Drawing.Color.Transparent
         Me.W10_pic5.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic5.Name = "W10_pic5"
         Me.W10_pic5.Size = New System.Drawing.Size(24, 24)
@@ -2972,6 +3039,7 @@ Partial Class MainFrm
         '
         'PictureBox16
         '
+        Me.PictureBox16.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox16.Image = CType(resources.GetObject("PictureBox16.Image"), System.Drawing.Image)
         Me.PictureBox16.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox16.Name = "PictureBox16"
@@ -3010,6 +3078,7 @@ Partial Class MainFrm
         '
         'PictureBox22
         '
+        Me.PictureBox22.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.PictureBox22.Image = CType(resources.GetObject("PictureBox22.Image"), System.Drawing.Image)
         Me.PictureBox22.Location = New System.Drawing.Point(2, 2)
@@ -3071,6 +3140,7 @@ Partial Class MainFrm
         '
         'PictureBox26
         '
+        Me.PictureBox26.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox26.Image = CType(resources.GetObject("PictureBox26.Image"), System.Drawing.Image)
         Me.PictureBox26.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox26.Name = "PictureBox26"
@@ -3108,6 +3178,7 @@ Partial Class MainFrm
         '
         'PictureBox27
         '
+        Me.PictureBox27.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
         Me.PictureBox27.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox27.Name = "PictureBox27"
@@ -3143,6 +3214,7 @@ Partial Class MainFrm
         '
         'PictureBox31
         '
+        Me.PictureBox31.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
         Me.PictureBox31.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox31.Name = "PictureBox31"
@@ -3155,6 +3227,7 @@ Partial Class MainFrm
         '
         Me.Label56.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label56.BackColor = System.Drawing.Color.Transparent
         Me.Label56.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label56.Location = New System.Drawing.Point(38, 3)
         Me.Label56.Name = "Label56"
@@ -3222,6 +3295,7 @@ Partial Class MainFrm
         '
         'PictureBox33
         '
+        Me.PictureBox33.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox33.Image = CType(resources.GetObject("PictureBox33.Image"), System.Drawing.Image)
         Me.PictureBox33.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox33.Name = "PictureBox33"
@@ -3259,6 +3333,7 @@ Partial Class MainFrm
         '
         'PictureBox34
         '
+        Me.PictureBox34.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
         Me.PictureBox34.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox34.Name = "PictureBox34"
@@ -3271,6 +3346,7 @@ Partial Class MainFrm
         '
         Me.Label58.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label58.BackColor = System.Drawing.Color.Transparent
         Me.Label58.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label58.Location = New System.Drawing.Point(40, 3)
         Me.Label58.Name = "Label58"
@@ -3295,6 +3371,7 @@ Partial Class MainFrm
         '
         'PictureBox35
         '
+        Me.PictureBox35.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
         Me.PictureBox35.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox35.Name = "PictureBox35"
@@ -3370,6 +3447,7 @@ Partial Class MainFrm
         '
         'PictureBox15
         '
+        Me.PictureBox15.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
         Me.PictureBox15.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox15.Name = "PictureBox15"
@@ -3382,6 +3460,7 @@ Partial Class MainFrm
         '
         Me.Label22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label22.Location = New System.Drawing.Point(44, 3)
         Me.Label22.Name = "Label22"
@@ -3406,6 +3485,7 @@ Partial Class MainFrm
         '
         'PictureBox9
         '
+        Me.PictureBox9.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
         Me.PictureBox9.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox9.Name = "PictureBox9"
@@ -3456,6 +3536,7 @@ Partial Class MainFrm
         '
         'PictureBox23
         '
+        Me.PictureBox23.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox23.Image = CType(resources.GetObject("PictureBox23.Image"), System.Drawing.Image)
         Me.PictureBox23.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox23.Name = "PictureBox23"
@@ -3597,6 +3678,7 @@ Partial Class MainFrm
         '
         'PictureBox37
         '
+        Me.PictureBox37.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox37.Image = CType(resources.GetObject("PictureBox37.Image"), System.Drawing.Image)
         Me.PictureBox37.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox37.Name = "PictureBox37"
@@ -3609,6 +3691,7 @@ Partial Class MainFrm
         '
         Me.Label40.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label40.BackColor = System.Drawing.Color.Transparent
         Me.Label40.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label40.Location = New System.Drawing.Point(44, 3)
         Me.Label40.Name = "Label40"
@@ -3675,6 +3758,7 @@ Partial Class MainFrm
         '
         'PictureBox28
         '
+        Me.PictureBox28.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox28.Image = CType(resources.GetObject("PictureBox28.Image"), System.Drawing.Image)
         Me.PictureBox28.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox28.Name = "PictureBox28"
@@ -3725,6 +3809,7 @@ Partial Class MainFrm
         '
         'PictureBox29
         '
+        Me.PictureBox29.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox29.Image = CType(resources.GetObject("PictureBox29.Image"), System.Drawing.Image)
         Me.PictureBox29.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox29.Name = "PictureBox29"
@@ -3806,6 +3891,7 @@ Partial Class MainFrm
         '
         'PictureBox30
         '
+        Me.PictureBox30.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
         Me.PictureBox30.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox30.Name = "PictureBox30"
@@ -3842,6 +3928,7 @@ Partial Class MainFrm
         '
         'PictureBox32
         '
+        Me.PictureBox32.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox32.Image = CType(resources.GetObject("PictureBox32.Image"), System.Drawing.Image)
         Me.PictureBox32.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox32.Name = "PictureBox32"
@@ -3854,6 +3941,7 @@ Partial Class MainFrm
         '
         Me.Label41.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label41.BackColor = System.Drawing.Color.Transparent
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label41.Location = New System.Drawing.Point(44, 3)
         Me.Label41.Name = "Label41"
@@ -3921,6 +4009,7 @@ Partial Class MainFrm
         '
         'PictureBox13
         '
+        Me.PictureBox13.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
         Me.PictureBox13.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox13.Name = "PictureBox13"
@@ -3945,6 +4034,7 @@ Partial Class MainFrm
         '
         Me.Label28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label28.BackColor = System.Drawing.Color.Transparent
         Me.Label28.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label28.Location = New System.Drawing.Point(44, 3)
         Me.Label28.Name = "Label28"
@@ -4091,6 +4181,7 @@ Partial Class MainFrm
         '
         Me.PictureBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox24.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox24.Image = CType(resources.GetObject("PictureBox24.Image"), System.Drawing.Image)
         Me.PictureBox24.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox24.Name = "PictureBox24"
@@ -4115,6 +4206,7 @@ Partial Class MainFrm
         '
         'PictureBox39
         '
+        Me.PictureBox39.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox39.Image = CType(resources.GetObject("PictureBox39.Image"), System.Drawing.Image)
         Me.PictureBox39.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox39.Name = "PictureBox39"
@@ -4171,6 +4263,7 @@ Partial Class MainFrm
         '
         Me.PictureBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox8.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), System.Drawing.Image)
         Me.PictureBox8.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox8.Name = "PictureBox8"
@@ -4197,6 +4290,7 @@ Partial Class MainFrm
         '
         Me.Label38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label38.BackColor = System.Drawing.Color.Transparent
         Me.Label38.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label38.Location = New System.Drawing.Point(44, 3)
         Me.Label38.Name = "Label38"
@@ -4234,6 +4328,7 @@ Partial Class MainFrm
         '
         Me.PictureBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox4.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
         Me.PictureBox4.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox4.Name = "PictureBox4"
@@ -4285,6 +4380,7 @@ Partial Class MainFrm
         '
         Me.PictureBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
         Me.PictureBox3.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox3.Name = "PictureBox3"
@@ -4370,6 +4466,7 @@ Partial Class MainFrm
         '
         'PictureBox12
         '
+        Me.PictureBox12.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
         Me.PictureBox12.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox12.Name = "PictureBox12"
@@ -4461,6 +4558,7 @@ Partial Class MainFrm
         '
         'PictureBox14
         '
+        Me.PictureBox14.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
         Me.PictureBox14.Location = New System.Drawing.Point(3, 2)
         Me.PictureBox14.Name = "PictureBox14"
@@ -4483,6 +4581,7 @@ Partial Class MainFrm
         '
         'PictureBox25
         '
+        Me.PictureBox25.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox25.Image = CType(resources.GetObject("PictureBox25.Image"), System.Drawing.Image)
         Me.PictureBox25.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox25.Name = "PictureBox25"
@@ -4495,6 +4594,7 @@ Partial Class MainFrm
         '
         Me.Label27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label27.BackColor = System.Drawing.Color.Transparent
         Me.Label27.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label27.Location = New System.Drawing.Point(44, 3)
         Me.Label27.Name = "Label27"
@@ -4502,6 +4602,26 @@ Partial Class MainFrm
         Me.Label27.TabIndex = 0
         Me.Label27.Text = "Main Colors"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TabPage8
+        '
+        Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage8.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage8.Name = "TabPage8"
+        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage8.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage8.TabIndex = 5
+        Me.TabPage8.Text = "WVista"
+        '
+        'TabPage9
+        '
+        Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage9.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage9.TabIndex = 6
+        Me.TabPage9.Text = "WXP"
         '
         'TabPage5
         '
@@ -4634,6 +4754,7 @@ Partial Class MainFrm
         '
         Me.Label60.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label60.BackColor = System.Drawing.Color.Transparent
         Me.Label60.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label60.Location = New System.Drawing.Point(47, 6)
         Me.Label60.Name = "Label60"
@@ -4644,6 +4765,7 @@ Partial Class MainFrm
         '
         'PictureBox36
         '
+        Me.PictureBox36.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox36.Image = CType(resources.GetObject("PictureBox36.Image"), System.Drawing.Image)
         Me.PictureBox36.Location = New System.Drawing.Point(6, 6)
         Me.PictureBox36.Name = "PictureBox36"
@@ -4944,6 +5066,8 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton29)
+        Me.XenonGroupBox3.Controls.Add(Me.Label61)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton26)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton27)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton24)
@@ -4953,8 +5077,38 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 639)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
-        Me.XenonGroupBox3.Size = New System.Drawing.Size(524, 65)
+        Me.XenonGroupBox3.Size = New System.Drawing.Size(524, 66)
         Me.XenonGroupBox3.TabIndex = 28
+        '
+        'XenonButton29
+        '
+        Me.XenonButton29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton29.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton29.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton29.ForeColor = System.Drawing.Color.White
+        Me.XenonButton29.Image = CType(resources.GetObject("XenonButton29.Image"), System.Drawing.Image)
+        Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(111, Byte), Integer))
+        Me.XenonButton29.LineSize = 1
+        Me.XenonButton29.Location = New System.Drawing.Point(200, 3)
+        Me.XenonButton29.Name = "XenonButton29"
+        Me.XenonButton29.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton29.TabIndex = 32
+        Me.XenonButton29.Tag = "Windows Effects"
+        Me.XenonButton29.UseVisualStyleBackColor = False
+        '
+        'Label61
+        '
+        Me.Label61.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label61.BackColor = System.Drawing.Color.Transparent
+        Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label61.Location = New System.Drawing.Point(4, 4)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(190, 58)
+        Me.Label61.TabIndex = 31
+        Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton26
         '
@@ -4966,11 +5120,11 @@ Partial Class MainFrm
         Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
         Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(111, Byte), Integer))
         Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(4, 3)
+        Me.XenonButton26.Location = New System.Drawing.Point(246, 3)
         Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(91, 59)
+        Me.XenonButton26.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton26.TabIndex = 30
-        Me.XenonButton26.Text = "Wallpaper Tone"
+        Me.XenonButton26.Tag = "Wallpaper Tone"
         Me.XenonButton26.UseVisualStyleBackColor = False
         '
         'XenonButton27
@@ -4983,11 +5137,11 @@ Partial Class MainFrm
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
         Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.XenonButton27.LineSize = 1
-        Me.XenonButton27.Location = New System.Drawing.Point(96, 3)
+        Me.XenonButton27.Location = New System.Drawing.Point(292, 3)
         Me.XenonButton27.Name = "XenonButton27"
-        Me.XenonButton27.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton27.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton27.TabIndex = 29
-        Me.XenonButton27.Text = "Metrics, Fonts"
+        Me.XenonButton27.Tag = "Metrics and Fonts"
         Me.XenonButton27.UseVisualStyleBackColor = False
         '
         'XenonButton24
@@ -5000,11 +5154,11 @@ Partial Class MainFrm
         Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
         Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(181, 3)
+        Me.XenonButton24.Location = New System.Drawing.Point(338, 3)
         Me.XenonButton24.Name = "XenonButton24"
-        Me.XenonButton24.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton24.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton24.TabIndex = 28
-        Me.XenonButton24.Text = "Terminals ..."
+        Me.XenonButton24.Tag = "Terminals ..."
         Me.XenonButton24.UseVisualStyleBackColor = False
         '
         'XenonButton21
@@ -5017,11 +5171,11 @@ Partial Class MainFrm
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
         Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
         Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(266, 3)
+        Me.XenonButton21.Location = New System.Drawing.Point(384, 3)
         Me.XenonButton21.Name = "XenonButton21"
-        Me.XenonButton21.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton21.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton21.TabIndex = 27
-        Me.XenonButton21.Text = "Cursors"
+        Me.XenonButton21.Tag = "Cursors"
         Me.XenonButton21.UseVisualStyleBackColor = False
         '
         'XenonButton16
@@ -5034,11 +5188,11 @@ Partial Class MainFrm
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(436, 3)
+        Me.XenonButton16.Location = New System.Drawing.Point(476, 3)
         Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton16.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton16.TabIndex = 26
-        Me.XenonButton16.Text = "LogonUI"
+        Me.XenonButton16.Tag = "LogonUI"
         Me.XenonButton16.UseVisualStyleBackColor = False
         '
         'XenonButton4
@@ -5051,11 +5205,11 @@ Partial Class MainFrm
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(81, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(351, 3)
+        Me.XenonButton4.Location = New System.Drawing.Point(430, 3)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(84, 59)
+        Me.XenonButton4.Size = New System.Drawing.Size(45, 60)
         Me.XenonButton4.TabIndex = 25
-        Me.XenonButton4.Text = "Classic Colors"
+        Me.XenonButton4.Tag = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'MainFrm
@@ -5548,4 +5702,10 @@ Partial Class MainFrm
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents XenonButton26 As XenonButton
     Friend WithEvents XenonButton28 As XenonButton
+    Friend WithEvents Label61 As Label
+    Friend WithEvents XenonButton29 As XenonButton
+    Friend WithEvents Select_WXP As XenonRadioImage
+    Friend WithEvents Select_WVista As XenonRadioImage
+    Friend WithEvents TabPage8 As TabPage
+    Friend WithEvents TabPage9 As TabPage
 End Class

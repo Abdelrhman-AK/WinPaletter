@@ -153,6 +153,26 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property add_winvista() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("add_winvista", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property add_winxp() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("add_winxp", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property AeroGlass() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("AeroGlass", resourceCulture)
@@ -831,6 +851,26 @@ Namespace My.Resources
         Public ReadOnly Property Native8() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Native8", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property NativeVista() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("NativeVista", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property NativeXP() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("NativeXP", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

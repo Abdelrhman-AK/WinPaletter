@@ -459,6 +459,8 @@
     <Content Include="Resources\add_win11.png" />
     <Content Include="Resources\add_win7.png" />
     <Content Include="Resources\add_win8.png" />
+    <None Include="Resources\add_winvista.png" />
+    <None Include="Resources\add_winxp.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\BasicTaskbar.png" />
@@ -487,7 +489,7 @@
     <Content Include="Resources\GaussianBlurOpaque.png" />
     <Content Include="Resources\icons8_command_line.ico" />
     <Content Include="Resources\icons8_PowerShell.ico" />
-    <Content Include="Resources\Icon_Uninstall.ico" />
+    <None Include="Resources\Icon_Uninstall.ico" />
     <Content Include="Resources\LangNode_JSON.png" />
     <Content Include="Resources\LangNode_Main.png" />
     <Content Include="Resources\LangNode_Value.png" />
@@ -509,12 +511,14 @@
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />
+    <None Include="Resources\NativeXP.png" />
+    <None Include="Resources\NativeVista.png" />
     <Content Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\notify_administrator.png" />
     <Content Include="Resources\notify_skip.png" />
     <Content Include="Resources\notify_success.png" />
     <Content Include="Resources\notify_time.png" />
-    <Content Include="Resources\Ookii.Dialogs.WinForms.dll" />
+    <EmbeddedResource Include="Resources\Ookii.Dialogs.WinForms.dll" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />

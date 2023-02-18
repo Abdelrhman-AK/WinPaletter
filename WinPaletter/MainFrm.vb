@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Reflection
+Imports System.Resources
 Imports System.Text
+Imports Ookii.Dialogs.WinForms
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
@@ -780,6 +782,12 @@ Public Class MainFrm
 
             Case WinVer.W7
                 If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WVista
+                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WXP
+                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
         End Select
 
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
@@ -847,6 +855,12 @@ Public Class MainFrm
                         tabs_preview.SelectedIndex = 1
 
                 End Select
+
+            Case WinVer.WVista
+                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WXP
+                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
 
         End Select
 
@@ -1269,6 +1283,8 @@ Public Class MainFrm
         W10
         W8
         W7
+        WVista
+        WXP
     End Enum
 
     Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
@@ -1297,6 +1313,14 @@ Public Class MainFrm
 
     Sub EraseHint()
         status_lbl.Text = ""
+    End Sub
+
+    Sub UpdateHint_Dashboard(Sender As Object, e As EventArgs)
+        Label61.Text = Sender.Tag
+    End Sub
+
+    Sub EraseHint_Dashboard()
+        Label61.Text = ""
     End Sub
 
 #End Region
@@ -1360,52 +1384,35 @@ Public Class MainFrm
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
 
-        ApplyDarkMode(Me)
-        MakeItDoubleBuffered(Me)
-        MakeItDoubleBuffered(TreeView1)
-        MakeItDoubleBuffered(TablessControl1)
-
         Me.Size = New Size(My.[Settings].MainFormWidth, My.[Settings].MainFormHeight)
         Me.WindowState = My.[Settings].MainFormStatus
 
-        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
-            AddHandler btn.MouseEnter, AddressOf UpdateHint
-            AddHandler btn.Enter, AddressOf UpdateHint
-            AddHandler btn.MouseLeave, AddressOf EraseHint
-            AddHandler btn.Leave, AddressOf EraseHint
-        Next
-
-        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
-            AddHandler btn.MouseEnter, AddressOf UpdateHint
-            AddHandler btn.Enter, AddressOf UpdateHint
-            AddHandler btn.MouseLeave, AddressOf EraseHint
-            AddHandler btn.Leave, AddressOf EraseHint
-        Next
+        If My.W11 Then PreviewConfig = WinVer.W11
+        If My.W10 Then PreviewConfig = WinVer.W10
+        If My.W8 Then PreviewConfig = WinVer.W8
+        If My.W7 Then PreviewConfig = WinVer.W7
+        If My.WVista Then PreviewConfig = WinVer.WVista
+        If My.WXP Then PreviewConfig = WinVer.WXP
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
-            CP_Original = CP.Clone 'New CP(CP.Mode.Registry)
-            CP_FirstTime = CP.Clone 'New CP(CP.Mode.Registry)
         Else
             CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_Original = CP.Clone 'New CP(CP.Mode.File, My.Application.ExternalLink_File)
-            CP_FirstTime = CP.Clone 'New CP(CP.Mode.File, My.Application.ExternalLink_File)
-
             OpenFileDialog1.FileName = My.Application.ExternalLink_File
             SaveFileDialog1.FileName = My.Application.ExternalLink_File
             My.Application.ExternalLink = False
             My.Application.ExternalLink_File = ""
         End If
 
+        CP_Original = CP.Clone
+        CP_FirstTime = CP.Clone
+
         Select_W11.Image = My.Resources.Native11
         Select_W10.Image = My.Resources.Native10
         Select_W8.Image = My.Resources.Native8
         Select_W7.Image = My.Resources.Native7
-
-        If My.W11 Then PreviewConfig = WinVer.W11
-        If My.W10 Then PreviewConfig = WinVer.W10
-        If My.W8 Then PreviewConfig = WinVer.W8
-        If My.W7 Then PreviewConfig = WinVer.W7
+        Select_WVista.Image = My.Resources.NativeVista
+        Select_WXP.Image = My.Resources.NativeXP
 
         If PreviewConfig = WinVer.W11 Then
             TablessControl1.SelectedIndex = 0
@@ -1427,16 +1434,26 @@ Public Class MainFrm
             XenonButton20.Image = My.Resources.add_win7
             Select_W7.Checked = True
 
+        ElseIf PreviewConfig = WinVer.WVista Then
+            TablessControl1.SelectedIndex = 4
+            XenonButton20.Image = My.Resources.add_winvista
+            Select_WVista.Checked = True
+
+        ElseIf PreviewConfig = WinVer.WXP Then
+            TablessControl1.SelectedIndex = 5
+            XenonButton20.Image = My.Resources.add_winxp
+            Select_WXP.Checked = True
+
         Else
             TablessControl1.SelectedIndex = 0
             XenonButton20.Image = My.Resources.add_win11
             Select_W11.Checked = True
         End If
 
-        pnl_preview.BackgroundImage = My.Wallpaper
-        pnl_preview_classic.BackgroundImage = My.Wallpaper
-        DragPreviewer.pnl_preview.BackgroundImage = My.Wallpaper
-        DragPreviewer.pnl_preview_classic.BackgroundImage = My.Wallpaper
+        ApplyDarkMode(Me)
+        MakeItDoubleBuffered(Me)
+        MakeItDoubleBuffered(TreeView1)
+        MakeItDoubleBuffered(TablessControl1)
 
         Adjust_Preview()
         ApplyCPValues(CP)
@@ -1449,6 +1466,27 @@ Public Class MainFrm
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
+
+        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
+        Next
+
+        For Each btn As XenonButton In XenonGroupBox3.Controls.OfType(Of XenonButton)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
+            AddHandler btn.Enter, AddressOf UpdateHint_Dashboard
+            AddHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
+            AddHandler btn.Leave, AddressOf EraseHint_Dashboard
+        Next
+
+        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
+            AddHandler btn.MouseEnter, AddressOf UpdateHint
+            AddHandler btn.Enter, AddressOf UpdateHint
+            AddHandler btn.MouseLeave, AddressOf EraseHint
+            AddHandler btn.Leave, AddressOf EraseHint
+        Next
 
         If My.[Settings].AutoUpdatesChecking Then AutoUpdatesCheck()
 
@@ -2519,69 +2557,23 @@ Public Class MainFrm
         End If
     End Sub
     Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
-
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum) : W7_ColorizationColorBalance_bar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
-
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum) : W7_ColorizationColorBalance_bar.Value = Val(sender.Text)
     End Sub
 
     Private Sub W7_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglowBalance_val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum) : W7_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum) : W7_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
     End Sub
 
     Private Sub W7_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationBlurBalance_val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum) : W7_ColorizationBlurBalance_bar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
-    End Sub
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum) : W7_ColorizationBlurBalance_bar.Value = Val(sender.Text)
+      End Sub
 
     Private Sub W7_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationGlassReflectionIntensity_val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum) : W7_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum) : W7_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
     End Sub
 
 #End Region
@@ -2724,19 +2716,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub W8_ColorizationBalance_val_Click(sender As Object, e As EventArgs) Handles W8_ColorizationBalance_val.Click
-        Dim ib As New Ookii.Dialogs.WinForms.InputDialog With {
-            .MainInstruction = My.Lang.InputValue,
-            .Input = sender.text,
-            .Content = My.Lang.ItMustBeNumerical,
-            .WindowTitle = "WinPaletter"
-           }
-
-        If ib.ShowDialog() = DialogResult.OK Then
-            Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = sender.Text
-            sender.Text = Math.Max(Math.Min(Val(response), W8_ColorizationBalance_bar.Maximum), W8_ColorizationBalance_bar.Minimum) : W8_ColorizationBalance_bar.Value = Val(sender.Text)
-        End If
-
-        ib.Dispose()
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W8_ColorizationBalance_bar.Maximum), W8_ColorizationBalance_bar.Minimum) : W8_ColorizationBalance_bar.Value = Val(sender.Text)
     End Sub
 
     Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
@@ -3320,6 +3301,10 @@ Public Class MainFrm
             XenonButton20.Image = My.Resources.add_win8
         ElseIf PreviewConfig = WinVer.W7 Then
             XenonButton20.Image = My.Resources.add_win7
+        ElseIf PreviewConfig = WinVer.WVista Then
+            XenonButton20.Image = My.Resources.add_winvista
+        ElseIf PreviewConfig = WinVer.WXP Then
+            XenonButton20.Image = My.Resources.add_winxp
         Else
             XenonButton20.Image = My.Resources.add_win11
         End If
@@ -3332,6 +3317,10 @@ Public Class MainFrm
             TablessControl1.SelectedIndex = 2
         ElseIf PreviewConfig = WinVer.W7 Then
             TablessControl1.SelectedIndex = 3
+        ElseIf PreviewConfig = WinVer.WVista Then
+            TablessControl1.SelectedIndex = 4
+        ElseIf PreviewConfig = WinVer.WXP Then
+            TablessControl1.SelectedIndex = 5
         Else
             TablessControl1.SelectedIndex = 0
         End If
@@ -3349,6 +3338,10 @@ Public Class MainFrm
             WallpaperToner.WT = CP.WallpaperTone_W8
         ElseIf PreviewConfig = WinVer.W7 Then
             WallpaperToner.WT = CP.WallpaperTone_W7
+        ElseIf PreviewConfig = WinVer.WVista Then
+            WallpaperToner.WT = CP.WallpaperTone_WVista
+        ElseIf PreviewConfig = WinVer.WXP Then
+            WallpaperToner.WT = CP.WallpaperTone_WXP
         Else
             WallpaperToner.WT = CP.WallpaperTone_W11
         End If
@@ -3378,6 +3371,24 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
+        'Effects.ShowDialog()
+    End Sub
+
+    Private Sub Select_WVista_CheckedChanged(sender As Object) Handles Select_WVista.CheckedChanged
+        If _Shown And Select_WVista.Checked Then
+            PreviewConfig = WinVer.WVista
+            Select_Preview_Version()
+        End If
+    End Sub
+
+    Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
+        If _Shown And Select_WXP.Checked Then
+            PreviewConfig = WinVer.WXP
+            Select_Preview_Version()
+        End If
+    End Sub
+
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
@@ -3392,10 +3403,10 @@ Public Class MainFrm
     End Sub
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
-
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
             Shell("logoff", AppWinStyle.Hide)
         End If
+
     End Sub
 
     Private Sub XenonButton28_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton28.MouseEnter

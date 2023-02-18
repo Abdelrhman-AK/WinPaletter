@@ -32,10 +32,10 @@ Partial Class BugReport
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonTreeView1 = New WinPaletter.XenonTreeView()
         Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
@@ -62,7 +62,7 @@ Partial Class BugReport
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(629, 59)
+        Me.Panel1.Size = New System.Drawing.Size(715, 59)
         Me.Panel1.TabIndex = 110
         '
         'PictureBox1
@@ -83,7 +83,7 @@ Partial Class BugReport
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(53, 12)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(564, 35)
+        Me.Label7.Size = New System.Drawing.Size(650, 35)
         Me.Label7.TabIndex = 85
         Me.Label7.Text = "There is an exception error. Please Try again or report this in GitHub issues."
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -101,7 +101,7 @@ Partial Class BugReport
         Me.XenonButton5.Image = Nothing
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(320, 350)
+        Me.XenonButton5.Location = New System.Drawing.Point(406, 429)
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(91, 34)
         Me.XenonButton5.TabIndex = 120
@@ -117,7 +117,7 @@ Partial Class BugReport
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(215, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(417, 350)
+        Me.XenonButton2.Location = New System.Drawing.Point(503, 429)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(116, 34)
         Me.XenonButton2.TabIndex = 117
@@ -133,7 +133,7 @@ Partial Class BugReport
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.Green
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(539, 350)
+        Me.XenonButton1.Location = New System.Drawing.Point(625, 429)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(78, 34)
         Me.XenonButton1.TabIndex = 116
@@ -144,9 +144,9 @@ Partial Class BugReport
         '
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 343)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 422)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(605, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(691, 1)
         Me.XenonSeparator1.TabIndex = 115
         Me.XenonSeparator1.TabStop = False
         Me.XenonSeparator1.Text = "XenonSeparator1"
@@ -157,16 +157,29 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox3.Controls.Add(Me.XenonTreeView1)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton3)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonTextBox1)
         Me.XenonGroupBox3.Controls.Add(Me.Label4)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 135)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
-        Me.XenonGroupBox3.Size = New System.Drawing.Size(605, 202)
+        Me.XenonGroupBox3.Size = New System.Drawing.Size(691, 281)
         Me.XenonGroupBox3.TabIndex = 114
+        '
+        'XenonTreeView1
+        '
+        Me.XenonTreeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.XenonTreeView1.Indent = 15
+        Me.XenonTreeView1.ItemHeight = 20
+        Me.XenonTreeView1.Location = New System.Drawing.Point(3, 32)
+        Me.XenonTreeView1.Name = "XenonTreeView1"
+        Me.XenonTreeView1.Size = New System.Drawing.Size(684, 246)
+        Me.XenonTreeView1.TabIndex = 122
         '
         'XenonButton6
         '
@@ -177,7 +190,7 @@ Partial Class BugReport
         Me.XenonButton6.Image = Nothing
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(501, 5)
+        Me.XenonButton6.Location = New System.Drawing.Point(587, 5)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(100, 24)
         Me.XenonButton6.TabIndex = 121
@@ -193,7 +206,7 @@ Partial Class BugReport
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(389, 5)
+        Me.XenonButton4.Location = New System.Drawing.Point(475, 5)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(110, 24)
         Me.XenonButton4.TabIndex = 119
@@ -209,32 +222,12 @@ Partial Class BugReport
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(307, 5)
+        Me.XenonButton3.Location = New System.Drawing.Point(393, 5)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(80, 24)
         Me.XenonButton3.TabIndex = 118
         Me.XenonButton3.Text = "Copy Details"
         Me.XenonButton3.UseVisualStyleBackColor = False
-        '
-        'XenonTextBox1
-        '
-        Me.XenonTextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
-        Me.XenonTextBox1.Location = New System.Drawing.Point(3, 33)
-        Me.XenonTextBox1.MaxLength = 32767
-        Me.XenonTextBox1.Multiline = True
-        Me.XenonTextBox1.Name = "XenonTextBox1"
-        Me.XenonTextBox1.ReadOnly = True
-        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.Vertical
-        Me.XenonTextBox1.Size = New System.Drawing.Size(599, 166)
-        Me.XenonTextBox1.TabIndex = 113
-        Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.XenonTextBox1.UseSystemPasswordChar = False
-        Me.XenonTextBox1.WordWrap = True
         '
         'Label4
         '
@@ -244,7 +237,7 @@ Partial Class BugReport
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(33, 5)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(259, 24)
+        Me.Label4.Size = New System.Drawing.Size(345, 24)
         Me.Label4.TabIndex = 86
         Me.Label4.Text = "Error Details:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -272,7 +265,7 @@ Partial Class BugReport
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 71)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(605, 58)
+        Me.XenonGroupBox1.Size = New System.Drawing.Size(691, 58)
         Me.XenonGroupBox1.TabIndex = 111
         '
         'Label3
@@ -283,7 +276,7 @@ Partial Class BugReport
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(159, 30)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(443, 24)
+        Me.Label3.Size = New System.Drawing.Size(529, 24)
         Me.Label3.TabIndex = 90
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -316,7 +309,7 @@ Partial Class BugReport
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(159, 3)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(443, 24)
+        Me.Label2.Size = New System.Drawing.Size(529, 24)
         Me.Label2.TabIndex = 87
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -346,7 +339,7 @@ Partial Class BugReport
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(629, 396)
+        Me.ClientSize = New System.Drawing.Size(715, 475)
         Me.Controls.Add(Me.XenonButton5)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
@@ -384,7 +377,6 @@ Partial Class BugReport
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonTextBox1 As XenonTextBox
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox4 As PictureBox
@@ -399,4 +391,5 @@ Partial Class BugReport
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents XenonButton6 As XenonButton
+    Friend WithEvents XenonTreeView1 As XenonTreeView
 End Class

@@ -799,37 +799,23 @@ Public Module BitmapExtensions
     '''</summary>
     <Extension()>
     Public Function Fade(ByVal originalBitmap As Bitmap, ByVal opacity As Double) As Bitmap
-        Const bytesPerPixel As Integer = 4
-        If opacity > 1 Then opacity = 1
-        If opacity < 0 Then opacity = 0
+        Try
+            Dim bmp As Bitmap = New Bitmap(originalBitmap.Width, originalBitmap.Height)
 
-        'If (originalImage.PixelFormat And PixelFormat.Indexed) = PixelFormat.Indexed Then
-        'Return originalImage
-        'End If
+            Using gfx As Graphics = Graphics.FromImage(bmp)
+                Dim matrix As ColorMatrix = New ColorMatrix With {
+                    .Matrix33 = opacity
+                }
+                Dim attributes As ImageAttributes = New ImageAttributes()
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.[Default], ColorAdjustType.Bitmap)
+                gfx.DrawImage(originalBitmap, New Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes)
+            End Using
 
-        Dim bmp As Bitmap = CType(originalBitmap.Clone(), Bitmap)
-        Dim pxf As PixelFormat = PixelFormat.Format32bppArgb
-        Dim rect As New Rectangle(0, 0, bmp.Width, bmp.Height)
-        Dim bmpData As BitmapData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf)
-        Dim ptr As IntPtr = bmpData.Scan0
-        Dim numBytes As Integer = bmp.Width * bmp.Height * bytesPerPixel
-        Dim argbValues As Byte() = New Byte(numBytes - 1) {}
-        System.Runtime.InteropServices.Marshal.Copy(ptr, argbValues, 0, numBytes)
-        Dim counter As Integer = 0
-
-        While counter < argbValues.Length
-            'If argbValues(counter + bytesPerPixel - 1) <> 0 Then Exit While
-            Dim pos As Integer = 0
-            pos += 1
-            pos += 1
-            pos += 1
-            argbValues(counter + pos) = CByte((argbValues(counter + pos) * opacity))
-            counter += bytesPerPixel
-        End While
-
-        Marshal.Copy(argbValues, 0, ptr, numBytes)
-        bmp.UnlockBits(bmpData)
-        Return bmp
+            Return bmp
+        Catch ex As Exception
+            BugReport.ThrowError(ex)
+            Return Nothing
+        End Try
     End Function
 
     '''<summary>
