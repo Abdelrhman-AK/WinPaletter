@@ -244,6 +244,9 @@
   <data name="darkmode_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Toggles\darkmode_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Devcorp_Controls_VisualStyles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Devcorp.Controls.VisualStyles.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fileextension" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Icons\fileextension.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -306,6 +309,21 @@
   </data>
   <data name="LogonUI8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LogonUI8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="luna" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\luna.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Luna_StartBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Luna_StartBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Luna_Start_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Luna_Start_Blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Luna_Start_OliveGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Luna_Start_OliveGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Luna_Start_Silver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Luna_Start_Silver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Mini_ACHover_Links" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Mini_ACHover_Links.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -97,6 +97,10 @@
       <HintPath>..\References\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Devcorp.Controls.VisualStyles">
+      <HintPath>..\References\Devcorp.Controls.VisualStyles.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,6 +121,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
@@ -184,6 +189,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
+    <None Include="Resources\luna.zip" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
@@ -262,12 +268,14 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Luna.vb" />
     <Compile Include="GUI\RetroUI.Designer.vb">
       <DependentUpon>RetroUI.vb</DependentUpon>
     </Compile>
     <Compile Include="GUI\RetroUI.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\VisualStylesRes.vb" />
     <Compile Include="GUI\XenonStyle.vb" />
     <Compile Include="GUI\XenonUI.Designer.vb">
       <DependentUpon>XenonUI.vb</DependentUpon>
@@ -463,6 +471,7 @@
     <None Include="Resources\add_winxp.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
+    <None Include="Resources\Animator.dll" />
     <Content Include="Resources\BasicTaskbar.png" />
     <Content Include="Resources\CMD_10x18.png" />
     <Content Include="Resources\CMD_10x18_P.png" />
@@ -485,6 +494,7 @@
     <Content Include="Resources\CMD_8x8.png" />
     <Content Include="Resources\CMD_8x8_P.png" />
     <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
+    <None Include="Resources\Devcorp.Controls.VisualStyles.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
     <Content Include="Resources\icons8_command_line.ico" />
@@ -508,6 +518,10 @@
     <None Include="Resources\Mini_Overflow.png" />
     <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <None Include="Resources\Mini_Taskbar.png" />
+    <None Include="Resources\Luna_StartBtn.png" />
+    <None Include="Resources\Luna_Start_Blue.png" />
+    <None Include="Resources\Luna_Start_OliveGreen.png" />
+    <None Include="Resources\Luna_Start_Silver.png" />
     <Content Include="Resources\Native10.png" />
     <Content Include="Resources\Native7.png" />
     <Content Include="Resources\Native8.png" />

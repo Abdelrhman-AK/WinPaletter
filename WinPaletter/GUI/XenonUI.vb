@@ -4155,6 +4155,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         Ten
         Eight
         Seven
+        Vista
+        XP
     End Enum
 
     Sub New()
@@ -4219,11 +4221,11 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
         G.Clear(Color.Transparent)
 
         Try
-            If RoundedCorners Or UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.DrawImage(adaptedBack, RRect)
+            If RoundedCorners Or UseItAsTaskbar_Version = TaskbarVersion.Eight Or UseItAsTaskbar_Version = TaskbarVersion.XP Then G.DrawImage(adaptedBack, RRect)
         Catch : End Try
 
         Try
-            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then
+            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight And Not UseItAsTaskbar_Version = TaskbarVersion.XP Then
                 If RoundedCorners Then
                     G.FillRoundedImg(adaptedBackBlurred, RRect, Radius, True)
                 Else
@@ -4268,6 +4270,8 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                     G.FillRoundedImg(My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
                 End If
 
+            ElseIf UseItAsTaskbar_Version = TaskbarVersion.XP Then
+                G.DrawImage(My.LunaRes.Start, Rect)
             Else
 
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
@@ -4360,7 +4364,10 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             End If
 
             If Borders Then G.DrawRectangle(New Pen(Color.FromArgb(150, 76, 76, 76)), Rect)
+
         End If
+
+
 
         If UseItAsTaskbar Then
             Select Case UseItAsTaskbar_Version
@@ -4535,6 +4542,20 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
                     G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
 
+
+                Case TaskbarVersion.XP
+                    Try
+                        Dim sm As SmoothingMode = G.SmoothingMode
+                        G.SmoothingMode = SmoothingMode.HighSpeed
+
+                        Dim res_msstyles As New VisualStylesRes(My.VS)
+                        res_msstyles.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
+                        G.DrawImage(My.LunaRes.StartBtn, New Rectangle(0, 0, My.LunaRes.StartBtn.Width, Rect.Height - 1))
+
+                        G.SmoothingMode = sm
+                    Catch
+
+                    End Try
             End Select
         End If
 
@@ -4861,6 +4882,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         W7Aero
         W7Opaque
         W7Basic
+        WXP
     End Enum
 
     Public Property Shadow As Boolean = True
@@ -5084,7 +5106,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 #End Region
 
         ElseIf Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
-#Region "Windows 7"
+#Region "Windows 7\Vista"
             Dim InnerWindow_1 As New Rectangle
             Dim InnerWindow_2 As New Rectangle
             Dim RectSide1 As New Rectangle
@@ -5427,6 +5449,46 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
             End If
 #End Region
 
+        ElseIf Preview = Preview_Enum.WXP Then
+#Region "Windows XP"
+            Dim sm As SmoothingMode = G.SmoothingMode
+            G.SmoothingMode = SmoothingMode.HighSpeed
+                Dim res As New VisualStylesRes(My.VS)
+
+                TitlebarRect = New Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + 5)
+
+            Dim innerRect As New Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Rect.Width - 2, Rect.Height - TitlebarRect.Height - 1)
+
+            G.FillRectangle(New SolidBrush(res.Colors.Btnface), innerRect)
+
+                res.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
+
+                Dim LE As New Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Math.Max(4, Metrics_BorderWidth) + 2)
+
+                Dim RE As New Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth) - 1, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2)
+
+                Dim BE As New Rectangle(Rect.X, Rect.Y + Rect.Height - Math.Max(4, Metrics_BorderWidth), Rect.Width - 1, Math.Max(4, Metrics_BorderWidth) + 1)
+
+                Dim CloseBtn_W As Integer = TitleTextH_Sum + _Metrics_CaptionHeight - 4
+                Dim CB As New Rectangle(Rect.X + Rect.Width - CloseBtn_W - RE.Width - 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W)
+
+                If Not ToolWindow Then
+                    LabelRect = New Rectangle(Rect.X + LE.Width + 20, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
+                Else
+                    LabelRect = New Rectangle(Rect.X + LE.Width + 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
+                End If
+
+                IconRect = New Rectangle(Rect.X + LE.Width + 2, LabelRect.Y + 2, 14, 14)
+
+                res.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
+                res.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow)
+                res.Draw(G, RE, VisualStylesRes.Element.RightEdge, Active, ToolWindow)
+                res.Draw(G, BE, VisualStylesRes.Element.BottomEdge, Active, ToolWindow)
+                res.Draw(G, CB, VisualStylesRes.Element.CloseButton, Active, ToolWindow)
+
+            G.SmoothingMode = sm
+#End Region
+
         End If
 
         Dim ForeColorX As Color
@@ -5476,6 +5538,10 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 
         ElseIf Preview = Preview_Enum.W7Basic Then
             G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
+
+        ElseIf Preview = Preview_Enum.WXP Then
+            G.DrawString(Text, Font, New SolidBrush(Color.Black), New Rectangle(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), StringAligner(ContentAlignment.MiddleLeft))
+            G.DrawString(Text, Font, New SolidBrush(Color.White), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
 
         End If
 

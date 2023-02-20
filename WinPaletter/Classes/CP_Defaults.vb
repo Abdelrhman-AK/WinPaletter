@@ -373,6 +373,210 @@
         Return [CP]
     End Function
 
+    Public Function Default_WindowsVista() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows Vista (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].Windows8
+            .ColorizationColor = Color.FromArgb(246, 195, 74)
+            .ColorizationColorBalance = 78
+            .PersonalColors_Background = Color.FromArgb(30, 0, 84)
+            .PersonalColors_Accent = Color.FromArgb(72, 29, 178)
+            .StartColor = Color.FromArgb(30, 0, 84)
+            .AccentColor = Color.FromArgb(72, 29, 178)
+            .Start = 0
+            .Theme = CP.AeroTheme.Aero
+            .LogonUI = 0
+            .NoLockScreen = False
+            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenSystemID = 0
+        End With
+
+        With [CP].Windows7
+            .ColorizationColor = Color.FromArgb(116, 184, 252)
+            .ColorizationAfterglow = Color.FromArgb(116, 184, 252)
+            .ColorizationColorBalance = 8
+            .ColorizationAfterglowBalance = 43
+            .ColorizationBlurBalance = 49
+            .ColorizationGlassReflectionIntensity = 0
+            .EnableAeroPeek = True
+            .AlwaysHibernateThumbnails = False
+            .Theme = CP.AeroTheme.Aero
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].MetricsFonts
+            .BorderWidth = 1
+            .CaptionHeight = 21
+            .CaptionWidth = 21
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 17
+            .SmCaptionWidth = 17
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
+    Public Function Default_WindowsXP() As CP
+        Dim [CP] As New CP(CP.Mode.Empty)
+
+        With [CP].Info
+            .PaletteName = "Windows XP (Initial)"
+            .PaletteDescription = "Initial; Like first time after Windows Setup"
+            .PaletteVersion = "1.0.0.0"
+            .Author = "Microsoft"
+            .AuthorSocialMediaLink = "www.microsoft.com"
+            .AppVersion = My.Application.Info.Version.ToString
+        End With
+
+        With [CP].Windows8
+            .ColorizationColor = Color.FromArgb(246, 195, 74)
+            .ColorizationColorBalance = 78
+            .PersonalColors_Background = Color.FromArgb(30, 0, 84)
+            .PersonalColors_Accent = Color.FromArgb(72, 29, 178)
+            .StartColor = Color.FromArgb(30, 0, 84)
+            .AccentColor = Color.FromArgb(72, 29, 178)
+            .Start = 0
+            .Theme = CP.AeroTheme.Aero
+            .LogonUI = 0
+            .NoLockScreen = False
+            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenSystemID = 0
+        End With
+
+        With [CP].Windows7
+            .ColorizationColor = Color.FromArgb(116, 184, 252)
+            .ColorizationAfterglow = Color.FromArgb(116, 184, 252)
+            .ColorizationColorBalance = 8
+            .ColorizationAfterglowBalance = 43
+            .ColorizationBlurBalance = 49
+            .ColorizationGlassReflectionIntensity = 0
+            .EnableAeroPeek = True
+            .AlwaysHibernateThumbnails = False
+            .Theme = CP.AeroTheme.Aero
+        End With
+
+        With [CP].CommandPrompt
+            .ColorTable05 = Color.FromArgb(136, 23, 152)
+            .ColorTable06 = Color.FromArgb(193, 156, 0)
+            .PopupBackground = 15
+            .PopupForeground = 5
+            .ScreenColorsForeground = 7
+            .ScreenColorsBackground = 0
+            .FaceName = "Consolas"
+            .FontSize = 18 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx86
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].PowerShellx64
+            .ColorTable05 = Color.FromArgb(1, 36, 86)
+            .ColorTable06 = Color.FromArgb(238, 237, 240)
+            .PopupBackground = 15
+            .PopupForeground = 3
+            .ScreenColorsForeground = 6
+            .ScreenColorsBackground = 5
+            .FaceName = "Consolas"
+            .FontSize = 14 * 65536
+            .FontRaster = True
+            .W10_1909_ForceV2 = False
+        End With
+
+        With [CP].MetricsFonts
+            .BorderWidth = 1
+            .CaptionHeight = 21
+            .CaptionWidth = 21
+            .IconSpacing = 75
+            .IconVerticalSpacing = 75
+            .MenuHeight = 19
+            .MenuWidth = 19
+            .MinAnimate = True
+            .PaddedBorderWidth = 4
+            .ScrollHeight = 17
+            .ScrollWidth = 17
+            .SmCaptionHeight = 17
+            .SmCaptionWidth = 17
+            .DesktopIconSize = 48
+            .ShellIconSize = 32
+        End With
+
+        [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        Return [CP]
+    End Function
+
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
 

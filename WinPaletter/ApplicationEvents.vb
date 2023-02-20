@@ -8,6 +8,7 @@ Imports AnimatorNS
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports System.IO.Compression
 
 Namespace My
     Module GlobalVariables
@@ -20,6 +21,9 @@ Namespace My
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
+
+        Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+        Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows XP
@@ -704,6 +708,18 @@ Namespace My
 
             If My.W7 Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
+            If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then
+                IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
+            Else
+                IO.Directory.Delete(appData & "\VisualStyles\Luna", True)
+                IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
+            End If
+            IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
+            ZipFile.ExtractToDirectory(appData & "\VisualStyles\Luna\Luna.zip", appData & "\VisualStyles\Luna")
+            IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+
+            'If My.WXP Then IO.File.WriteAllBytes("Devcorp.Controls.VisualStyles.dll", Resources.Devcorp_Controls_VisualStyles)
+
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
@@ -922,6 +938,10 @@ Namespace My
 
             Try : If e.Name.ToUpper.Contains("System.Runtime.CompilerServices.Unsafe".ToUpper) Then Return Assembly.Load(Resources.System_Runtime_CompilerServices_Unsafe)
             Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("Devcorp.Controls.VisualStyles".ToUpper) Then Return Assembly.Load(Resources.Devcorp_Controls_VisualStyles)
+            Catch : End Try
+
         End Function
 
         Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)

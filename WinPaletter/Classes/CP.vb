@@ -5,6 +5,8 @@ Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods.User32
+Imports System.IO
+Imports Devcorp.Controls.VisualStyles
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -67,6 +69,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         File
         Empty
     End Enum
+
+    Enum WinXPTheme
+        LunaBlue
+        LunaOliveGreen
+        LunaSilver
+        Classic
+        Custom
+    End Enum
+
 
 #End Region
 
@@ -459,10 +470,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Select Case Theme
                         Case AeroTheme.Aero
                             NativeMethods.Uxtheme.EnableTheming(1)
-                            NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
                         Case AeroTheme.AeroLite
                             NativeMethods.Uxtheme.EnableTheming(1)
-                            NativeMethods.Uxtheme.SetSystemVisualStyle("C:\WINDOWS\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
                     End Select
                 Catch
                 End Try
@@ -481,6 +492,56 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & PersonalColors_Accent.HEX(False), RegistryValueKind.String)
             End Sub
 
+        End Structure
+
+        Structure WindowsXP : Implements ICloneable
+
+            Public VisualStyle As WinXPTheme
+            Public CustomVS As String
+            Public CustomColor As String
+
+            Sub Apply()
+                Try
+                    Select Case VisualStyle
+                        Case WinXPTheme.LunaBlue
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
+
+                        Case WinXPTheme.LunaOliveGreen
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
+
+                        Case WinXPTheme.LunaSilver
+                            NativeMethods.Uxtheme.EnableTheming(1)
+                            NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
+
+                        Case WinXPTheme.Classic
+                            NativeMethods.Uxtheme.EnableTheming(0)
+
+                        Case WinXPTheme.Custom
+
+                            If File.Exists(CustomVS) AndAlso (Path.GetExtension(CustomVS) = ".theme" Or Path.GetExtension(CustomVS) = ".msstyles") Then
+                                NativeMethods.Uxtheme.EnableTheming(1)
+                                NativeMethods.Uxtheme.SetSystemVisualStyle(CustomVS, CustomColor, "NormalSize", 0)
+                            End If
+
+                    End Select
+                Catch
+                End Try
+            End Sub
+
+
+            Shared Operator =(First As WindowsXP, Second As WindowsXP) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As WindowsXP, Second As WindowsXP) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Throw New NotImplementedException()
+            End Function
         End Structure
 
         Structure MetricsFonts : Implements ICloneable
@@ -1468,6 +1529,20 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Public LogonUI10x As New Structures.LogonUI10x With {
         .DisableAcrylicBackgroundOnLogon = False, .DisableLogonBackgroundImage = False, .NoLockScreen = False}
 
+    Public Windows8 As New Structures.Windows8 With {
+                    .ColorizationColor = Color.FromArgb(246, 195, 74),
+                    .ColorizationColorBalance = 78,
+                    .Start = 0,
+                    .StartColor = Color.FromArgb(30, 0, 84),
+                    .AccentColor = Color.FromArgb(72, 29, 178),
+                    .Theme = AeroTheme.Aero,
+                    .LogonUI = 0,
+                    .PersonalColors_Background = Color.FromArgb(30, 0, 84),
+                    .PersonalColors_Accent = Color.FromArgb(72, 29, 178),
+                    .NoLockScreen = False,
+                    .LockScreenType = LogonUI_Modes.Default_,
+                    .LockScreenSystemID = 0}
+
     Public Windows7 As New Structures.Windows7 With {
             .ColorizationColor = Color.FromArgb(116, 184, 252),
             .ColorizationAfterglow = Color.FromArgb(116, 184, 252),
@@ -1490,19 +1565,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .AlwaysHibernateThumbnails = False,
             .Theme = CP.AeroTheme.Aero}
 
-    Public Windows8 As New Structures.Windows8 With {
-                    .ColorizationColor = Color.FromArgb(246, 195, 74),
-                    .ColorizationColorBalance = 78,
-                    .Start = 0,
-                    .StartColor = Color.FromArgb(30, 0, 84),
-                    .AccentColor = Color.FromArgb(72, 29, 178),
-                    .Theme = AeroTheme.Aero,
-                    .LogonUI = 0,
-                    .PersonalColors_Background = Color.FromArgb(30, 0, 84),
-                    .PersonalColors_Accent = Color.FromArgb(72, 29, 178),
-                    .NoLockScreen = False,
-                    .LockScreenType = LogonUI_Modes.Default_,
-                    .LockScreenSystemID = 0}
+    Public WindowsXP As New Structures.WindowsXP With {
+        .VisualStyle = WinXPTheme.LunaBlue,
+        .CustomColor = "NormalColor",
+        .CustomVS = My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles"}
 
     Public LogonUI7 As New Structures.LogonUI7 With {
                     .Enabled = False,
@@ -3229,6 +3295,50 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 #End Region
 
+#Region "Windows XP"
+
+                If My.WXP Then
+                    Dim vsName As New Text.StringBuilder(260)
+                    Dim colorName As New Text.StringBuilder(260)
+                    Dim sizeName As New Text.StringBuilder(260)
+
+                    NativeMethods.Uxtheme.GetCurrentThemeName(vsName, 260, colorName, 260, sizeName, 260)
+
+                    If vsName.ToString.ToLower = My.PATH_Windows.ToLower & "\resources\Themes\Luna\Luna.msstyles".ToLower Then
+                        If colorName.ToString.ToLower = "normalcolor" Then
+                            WindowsXP.VisualStyle = WinXPTheme.LunaBlue
+                        ElseIf colorName.ToString.ToLower = "homestead" Then
+                            WindowsXP.VisualStyle = WinXPTheme.LunaOliveGreen
+                        ElseIf colorName.ToString.ToLower = "metallic" Then
+                            WindowsXP.VisualStyle = WinXPTheme.LunaSilver
+                        Else
+                            WindowsXP.VisualStyle = WinXPTheme.LunaBlue
+                        End If
+
+                        WindowsXP.CustomVS = vsName.ToString
+                        WindowsXP.CustomColor = colorName.ToString
+
+                    ElseIf File.Exists(vsName.ToString) AndAlso (Path.GetExtension(vsName.ToString) = ".theme" Or Path.GetExtension(vsName.ToString) = ".msstyles") Then
+                        WindowsXP.VisualStyle = WinXPTheme.Custom
+                        WindowsXP.CustomVS = vsName.ToString
+                        WindowsXP.CustomColor = colorName.ToString
+
+                    Else
+                        WindowsXP.VisualStyle = WinXPTheme.Custom
+                        WindowsXP.CustomVS = ""
+                        WindowsXP.CustomColor = ""
+
+                    End If
+
+                Else
+                    WindowsXP.VisualStyle = _Def.WindowsXP.VisualStyle
+                    WindowsXP.CustomVS = _Def.WindowsXP.CustomVS
+                    WindowsXP.CustomColor = _Def.WindowsXP.CustomColor
+
+                End If
+
+#End Region
+
 #Region "LogonUI"
                 If My.W10 Or My.W11 Then
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
@@ -4555,6 +4665,27 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End Try
                     sw.Stop()
 
+                End If
+
+                If My.WXP Then
+                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WinXP), "info")
+                    sw.Reset() : sw.Start()
+                    Try
+                        WindowsXP.Apply()
+                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
+                    Catch ex As Exception
+                        sw.Stop() : sw_all.Stop()
+                        _ErrorHappened = True
+                        If ReportProgress Then
+                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WXP_Error), "error")
+                            AddException(My.Lang.CP_WXP_Error, ex)
+                        Else
+                            BugReport.ThrowError(ex)
+                        End If
+
+                        sw.Start() : sw_all.Start()
+                    End Try
+                    sw.Stop()
                 End If
 
                 If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win32UI), "info")
@@ -6031,6 +6162,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If Windows8 <> DirectCast(obj, CP).Windows8 Then _Equals = False
         If Windows7 <> DirectCast(obj, CP).Windows7 Then _Equals = False
         If WindowsVista <> DirectCast(obj, CP).WindowsVista Then _Equals = False
+        If WindowsXP <> DirectCast(obj, CP).WindowsXP Then _Equals = False
         If LogonUI7 <> DirectCast(obj, CP).LogonUI7 Then _Equals = False
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
