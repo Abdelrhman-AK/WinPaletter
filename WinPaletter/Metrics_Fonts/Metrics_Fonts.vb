@@ -68,7 +68,11 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Title = "Icon 2"
         XenonFakeIcon3.Title = "Icon 3"
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic Then
+        Dim condition0 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic
+        Dim condition1 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.AeroTheme.Classic
+        Dim condition2 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WXP AndAlso MainFrm.CP.WindowsXP.VisualStyle = CP.WinXPTheme.Classic
+
+        If condition0 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1
             tabs_preview_2.SelectedIndex = 1
             tabs_preview_3.SelectedIndex = 1
@@ -226,7 +230,6 @@ Public Class Metrics_Fonts
         XenonTrackbar4.Value = CP.MetricsFonts.IconVerticalSpacing
         XenonTrackbar9.Value = CP.MetricsFonts.MenuHeight
         XenonTrackbar8.Value = CP.MetricsFonts.MenuWidth
-        XenonToggle1.Checked = CP.MetricsFonts.MinAnimate
         XenonTrackbar12.Value = CP.MetricsFonts.PaddedBorderWidth
         XenonTrackbar11.Value = CP.MetricsFonts.ScrollHeight
         XenonTrackbar10.Value = CP.MetricsFonts.ScrollWidth
@@ -302,7 +305,6 @@ Public Class Metrics_Fonts
         CP.MetricsFonts.IconVerticalSpacing = XenonTrackbar4.Value
         CP.MetricsFonts.MenuHeight = XenonTrackbar9.Value
         CP.MetricsFonts.MenuWidth = XenonTrackbar8.Value
-        CP.MetricsFonts.MinAnimate = XenonToggle1.Checked
         CP.MetricsFonts.PaddedBorderWidth = XenonTrackbar12.Value
         CP.MetricsFonts.ScrollHeight = XenonTrackbar11.Value
         CP.MetricsFonts.ScrollWidth = XenonTrackbar10.Value
@@ -588,6 +590,10 @@ Public Class Metrics_Fonts
             _Def = New CP_Defaults().Default_Windows8
         ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+            _Def = New CP_Defaults().Default_WindowsVista
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
         End If

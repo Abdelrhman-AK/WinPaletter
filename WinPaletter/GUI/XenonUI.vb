@@ -2755,7 +2755,7 @@ Public Class XenonSeparatorVertical
 
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
-        Size = New Size(2, Height)
+        Size = New Size(1, Height)
     End Sub
 
 #End Region

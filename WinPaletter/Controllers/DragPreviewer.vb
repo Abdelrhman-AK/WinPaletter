@@ -41,6 +41,12 @@ Public Class DragPreviewer
             Case WinVer.W7
                 If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
 
+            Case WinVer.WVista
+                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WXP
+                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
+
         End Select
 
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage

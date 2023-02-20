@@ -91,16 +91,12 @@ Namespace NativeMethods
         End Function
 
         <DllImport("user32", CharSet:=CharSet.Auto)>
-        Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As Integer, fuWinIni As SPIF) As Integer
-        End Function
-
-        <DllImport("user32", CharSet:=CharSet.Auto)>
         Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As ANIMATIONINFO, fuWinIni As SPIF) As Integer
         End Function
 
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
-        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Boolean, fuWinIni As Integer) As Integer
 
         ''' <summary>
         ''' SPI: System-wide parameter - Used in SystemParametersInfo function

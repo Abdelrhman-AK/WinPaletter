@@ -208,12 +208,6 @@ Partial Class Metrics_Fonts
         Me.Label14 = New System.Windows.Forms.Label()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.Label36 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox11 = New WinPaletter.XenonGroupBox()
-        Me.PictureBox31 = New System.Windows.Forms.PictureBox()
-        Me.XenonToggle1 = New WinPaletter.XenonToggle()
-        Me.PictureBox32 = New System.Windows.Forms.PictureBox()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label55 = New System.Windows.Forms.Label()
         Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
         Me.s_w = New WinPaletter.XenonButton()
         Me.s_h = New WinPaletter.XenonButton()
@@ -342,9 +336,6 @@ Partial Class Metrics_Fonts
         Me.RetroScrollBar1.SuspendLayout()
         Me.RetroPanel1.SuspendLayout()
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox11.SuspendLayout()
-        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox10.SuspendLayout()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2270,7 +2261,6 @@ Partial Class Metrics_Fonts
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage5.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox15)
-        Me.TabPage5.Controls.Add(Me.XenonGroupBox11)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox10)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox9)
         Me.TabPage5.Location = New System.Drawing.Point(124, 4)
@@ -2745,72 +2735,6 @@ Partial Class Metrics_Fonts
         Me.Label36.TabIndex = 3
         Me.Label36.Text = "Preview"
         Me.Label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox11
-        '
-        Me.XenonGroupBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox11.Controls.Add(Me.PictureBox31)
-        Me.XenonGroupBox11.Controls.Add(Me.XenonToggle1)
-        Me.XenonGroupBox11.Controls.Add(Me.PictureBox32)
-        Me.XenonGroupBox11.Controls.Add(Me.Label20)
-        Me.XenonGroupBox11.Controls.Add(Me.Label55)
-        Me.XenonGroupBox11.Location = New System.Drawing.Point(6, 271)
-        Me.XenonGroupBox11.Name = "XenonGroupBox11"
-        Me.XenonGroupBox11.Size = New System.Drawing.Size(402, 75)
-        Me.XenonGroupBox11.TabIndex = 138
-        '
-        'PictureBox31
-        '
-        Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
-        Me.PictureBox31.Location = New System.Drawing.Point(17, 44)
-        Me.PictureBox31.Name = "PictureBox31"
-        Me.PictureBox31.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox31.TabIndex = 117
-        Me.PictureBox31.TabStop = False
-        '
-        'XenonToggle1
-        '
-        Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonToggle1.Checked = False
-        Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(354, 44)
-        Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
-        Me.XenonToggle1.TabIndex = 128
-        '
-        'PictureBox32
-        '
-        Me.PictureBox32.Image = CType(resources.GetObject("PictureBox32.Image"), System.Drawing.Image)
-        Me.PictureBox32.Location = New System.Drawing.Point(6, 7)
-        Me.PictureBox32.Name = "PictureBox32"
-        Me.PictureBox32.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox32.TabIndex = 83
-        Me.PictureBox32.TabStop = False
-        '
-        'Label20
-        '
-        Me.Label20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label20.BackColor = System.Drawing.Color.Transparent
-        Me.Label20.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(47, 7)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(348, 31)
-        Me.Label20.TabIndex = 84
-        Me.Label20.Text = "Others:"
-        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label55
-        '
-        Me.Label55.Location = New System.Drawing.Point(47, 44)
-        Me.Label55.Name = "Label55"
-        Me.Label55.Size = New System.Drawing.Size(179, 24)
-        Me.Label55.TabIndex = 86
-        Me.Label55.Text = "Window Transition Animations"
-        Me.Label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox10
         '
@@ -3654,9 +3578,6 @@ Partial Class Metrics_Fonts
         Me.RetroScrollBar1.ResumeLayout(False)
         Me.RetroPanel1.ResumeLayout(False)
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox11.ResumeLayout(False)
-        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox10.ResumeLayout(False)
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3717,7 +3638,6 @@ Partial Class Metrics_Fonts
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents TabPage5 As TabPage
-    Friend WithEvents XenonToggle1 As XenonToggle
     Friend WithEvents XenonTrackbar7 As XenonTrackbar
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents XenonGroupBox4 As XenonGroupBox
@@ -3764,11 +3684,6 @@ Partial Class Metrics_Fonts
     Friend WithEvents Label21 As Label
     Friend WithEvents Label46 As Label
     Friend WithEvents Label47 As Label
-    Friend WithEvents XenonGroupBox11 As XenonGroupBox
-    Friend WithEvents PictureBox31 As PictureBox
-    Friend WithEvents PictureBox32 As PictureBox
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Label55 As Label
     Friend WithEvents XenonGroupBox10 As XenonGroupBox
     Friend WithEvents PictureBox27 As PictureBox
     Friend WithEvents PictureBox28 As PictureBox

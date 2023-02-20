@@ -673,6 +673,7 @@ Public Class MainFrm
 #End Region
 
             Case WinVer.WXP
+#Region "Windows XP"
 
                 Select Case [CP].WindowsXP.VisualStyle
                     Case WinXPTheme.LunaBlue
@@ -691,28 +692,23 @@ Public Class MainFrm
                         My.LunaRes = New Luna(Luna.ColorStyles.Silver)
 
                     Case WinXPTheme.Custom
+                        If File.Exists([CP].WindowsXP.CustomVS) Then
 
-                        Try
-                            If File.Exists([CP].WindowsXP.CustomVS) Then
+                            If Path.GetExtension([CP].WindowsXP.CustomVS) = ".theme" Then
 
-                                If Path.GetExtension([CP].WindowsXP.CustomVS) = ".theme" Then
+                                My.VS = [CP].WindowsXP.CustomVS
 
-                                    My.VS = [CP].WindowsXP.CustomVS
+                            ElseIf Path.GetExtension([CP].WindowsXP.CustomVS) = ".msstyles" Then
 
-                                ElseIf Path.GetExtension([CP].WindowsXP.CustomVS) = ".msstyles" Then
-
-                                    My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                                    File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", [CP].WindowsXP.CustomVS, vbCrLf, [CP].WindowsXP.CustomColor))
-
-                                End If
+                                My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                                File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", [CP].WindowsXP.CustomVS, vbCrLf, [CP].WindowsXP.CustomColor))
 
                             End If
 
-                            My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+                        End If
 
-                        Catch ex As Exception
-                            Throw ex
-                        End Try
+                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+
 
                     Case WinXPTheme.Classic
 
@@ -721,6 +717,7 @@ Public Class MainFrm
 
                 start.Refresh()
                 taskbar.Refresh()
+#End Region
         End Select
 
         ApplyMetrics([CP], XenonWindow1)
@@ -2516,165 +2513,6 @@ Public Class MainFrm
 
 #End Region
 
-#Region "Windows 7"
-    Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-            sender,
-            start,
-            taskbar,
-            XenonWindow1,
-            XenonWindow2
-        }
-
-        Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub W7_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglow_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationAfterglow = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-            sender,
-            start,
-            taskbar,
-            XenonWindow1,
-            XenonWindow2
-        }
-
-        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
-    Private Sub W7_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_EnableAeroPeek_toggle.CheckedChanged
-        If _Shown Then CP.Windows7.EnableAeroPeek = W7_EnableAeroPeek_toggle.Checked
-    End Sub
-
-    Private Sub W7_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_AlwaysHibernateThumbnails_Toggle.CheckedChanged
-        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = W7_AlwaysHibernateThumbnails_Toggle.Checked
-    End Sub
-
-    Private Sub W7_ColorizationColorBalance_bar_Scroll(sender As Object) Handles W7_ColorizationColorBalance_bar.Scroll
-        If _Shown Then
-            W7_ColorizationColorBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub W7_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles W7_ColorizationBlurBalance_bar.Scroll
-        If _Shown Then
-            W7_ColorizationBlurBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub W7_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles W7_ColorizationGlassReflectionIntensity_bar.Scroll
-        If _Shown Then
-            W7_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
-        If W7_theme_classic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Classic
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-
-    End Sub
-
-    Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
-        If W7_theme_basic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Basic
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
-        If W7_theme_aeroopaque.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
-        If W7_theme_aero.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub W7_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles W7_ColorizationAfterglowBalance_bar.Scroll
-        If _Shown Then
-            W7_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-    Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum) : W7_ColorizationColorBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub W7_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglowBalance_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum) : W7_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub W7_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationBlurBalance_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum) : W7_ColorizationBlurBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub W7_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationGlassReflectionIntensity_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum) : W7_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
-    End Sub
-
-#End Region
-
 #Region "Windows 8.1"
     Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W8_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
@@ -2842,6 +2680,411 @@ Public Class MainFrm
     End Sub
 #End Region
 
+#Region "Windows 7"
+    Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows7.ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W7_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglow_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.Windows7.ColorizationAfterglow = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub W7_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_EnableAeroPeek_toggle.CheckedChanged
+        If _Shown Then CP.Windows7.EnableAeroPeek = W7_EnableAeroPeek_toggle.Checked
+    End Sub
+
+    Private Sub W7_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_AlwaysHibernateThumbnails_Toggle.CheckedChanged
+        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = W7_AlwaysHibernateThumbnails_Toggle.Checked
+    End Sub
+
+    Private Sub W7_ColorizationColorBalance_bar_Scroll(sender As Object) Handles W7_ColorizationColorBalance_bar.Scroll
+        If _Shown Then
+            W7_ColorizationColorBalance_val.Text = sender.Value.ToString()
+            CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles W7_ColorizationBlurBalance_bar.Scroll
+        If _Shown Then
+            W7_ColorizationBlurBalance_val.Text = sender.Value.ToString()
+            CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles W7_ColorizationGlassReflectionIntensity_bar.Scroll
+        If _Shown Then
+            W7_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
+            CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
+        If W7_theme_classic.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Classic
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+
+    End Sub
+
+    Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
+        If W7_theme_basic.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Basic
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
+        If W7_theme_aeroopaque.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
+        If W7_theme_aero.Checked Then
+            CP.Windows7.Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub W7_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles W7_ColorizationAfterglowBalance_bar.Scroll
+        If _Shown Then
+            W7_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
+            CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+    Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationColorBalance_bar.Maximum), W7_ColorizationColorBalance_bar.Minimum) : W7_ColorizationColorBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglowBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationAfterglowBalance_bar.Maximum), W7_ColorizationAfterglowBalance_bar.Minimum) : W7_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationBlurBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationBlurBalance_bar.Maximum), W7_ColorizationBlurBalance_bar.Minimum) : W7_ColorizationBlurBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub W7_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationGlassReflectionIntensity_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), W7_ColorizationGlassReflectionIntensity_bar.Maximum), W7_ColorizationGlassReflectionIntensity_bar.Minimum) : W7_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
+    End Sub
+
+#End Region
+
+#Region "Windows Vista"
+    Private Sub WVista_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColor_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.WindowsVista.ColorizationColor = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.WindowsVista.ColorizationColor = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub WVista_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationAfterglow_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                CP.WindowsVista.ColorizationAfterglow = sender.BackColor
+                ApplyLivePreviewFromCP(CP)
+            End If
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {
+            sender,
+            start,
+            taskbar,
+            XenonWindow1,
+            XenonWindow2
+        }
+
+        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
+
+        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
+
+        CP.WindowsVista.ColorizationAfterglow = Color.FromArgb(255, C)
+
+        ApplyLivePreviewFromCP(CP)
+
+        sender.backcolor = C
+        sender.invalidate
+
+        CList.Clear()
+    End Sub
+
+    Private Sub WVista_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WVista_EnableAeroPeek_toggle.CheckedChanged
+        If _Shown Then CP.WindowsVista.EnableAeroPeek = WVista_EnableAeroPeek_toggle.Checked
+    End Sub
+
+    Private Sub WVista_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WVista_AlwaysHibernateThumbnails_Toggle.CheckedChanged
+        If _Shown Then CP.WindowsVista.AlwaysHibernateThumbnails = WVista_AlwaysHibernateThumbnails_Toggle.Checked
+    End Sub
+
+    Private Sub WVista_ColorizationColorBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationColorBalance_bar.Scroll
+        If _Shown Then
+            WVista_ColorizationColorBalance_val.Text = sender.Value.ToString()
+            CP.WindowsVista.ColorizationColorBalance = WVista_ColorizationColorBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub WVista_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationBlurBalance_bar.Scroll
+        If _Shown Then
+            WVista_ColorizationBlurBalance_val.Text = sender.Value.ToString()
+            CP.WindowsVista.ColorizationBlurBalance = WVista_ColorizationBlurBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub WVista_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles WVista_ColorizationGlassReflectionIntensity_bar.Scroll
+        If _Shown Then
+            WVista_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
+            CP.WindowsVista.ColorizationGlassReflectionIntensity = WVista_ColorizationGlassReflectionIntensity_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub WVista_theme_classic_CheckedChanged(sender As Object) Handles WVista_theme_classic.CheckedChanged
+        If WVista_theme_classic.Checked Then
+            CP.WindowsVista.Theme = CP.AeroTheme.Classic
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+
+    End Sub
+
+    Private Sub WVista_theme_basic_CheckedChanged(sender As Object) Handles WVista_theme_basic.CheckedChanged
+        If WVista_theme_basic.Checked Then
+            CP.WindowsVista.Theme = CP.AeroTheme.Basic
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WVista_theme_aeroopaque_CheckedChanged(sender As Object) Handles WVista_theme_aeroopaque.CheckedChanged
+        If WVista_theme_aeroopaque.Checked Then
+            CP.WindowsVista.Theme = CP.AeroTheme.AeroOpaque
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WVista_theme_Vista_CheckedChanged(sender As Object) Handles WVista_theme_aero.CheckedChanged
+        If WVista_theme_aero.Checked Then
+            CP.WindowsVista.Theme = CP.AeroTheme.Aero
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WVista_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationAfterglowBalance_bar.Scroll
+        If _Shown Then
+            WVista_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
+            CP.WindowsVista.ColorizationAfterglowBalance = WVista_ColorizationAfterglowBalance_bar.Value
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+    Private Sub WVista_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColorBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationColorBalance_bar.Maximum), WVista_ColorizationColorBalance_bar.Minimum) : WVista_ColorizationColorBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub WVista_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationAfterglowBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationAfterglowBalance_bar.Maximum), WVista_ColorizationAfterglowBalance_bar.Minimum) : WVista_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub WVista_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationBlurBalance_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationBlurBalance_bar.Maximum), WVista_ColorizationBlurBalance_bar.Minimum) : WVista_ColorizationBlurBalance_bar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub WVista_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationGlassReflectionIntensity_val.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationGlassReflectionIntensity_bar.Maximum), WVista_ColorizationGlassReflectionIntensity_bar.Minimum) : WVista_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
+    End Sub
+
+#End Region
+
+#Region "Windows XP"
+    Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
+        If WXP_Luna_Blue.Checked Then
+            CP.WindowsXP.VisualStyle = WinXPTheme.LunaBlue
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
+        If WXP_Luna_OliveGreen.Checked Then
+            CP.WindowsXP.VisualStyle = WinXPTheme.LunaOliveGreen
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
+        If WXP_Luna_Silver.Checked Then
+            CP.WindowsXP.VisualStyle = WinXPTheme.LunaSilver
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
+        If WXP_CustomTheme.Checked Then
+            CP.WindowsXP.VisualStyle = WinXPTheme.Custom
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
+        If WXP_Classic.Checked Then
+            CP.WindowsXP.VisualStyle = WinXPTheme.Classic
+            ApplyLivePreviewFromCP(CP)
+            tabs_preview.Refresh()
+        End If
+    End Sub
+
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+        Dim theme As String = ""
+
+        If Path.GetExtension(XenonTextBox1.Text) = ".theme" Then
+            theme = XenonTextBox1.Text
+
+        ElseIf Path.GetExtension(XenonTextBox1.Text) = ".msstyles" Then
+            theme = My.Application.appData & "\VisualStyles\Luna\custom.theme"
+            File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+
+        End If
+
+        CP.WindowsXP.CustomVS = XenonTextBox1.Text
+
+        If File.Exists(XenonTextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
+            Dim vs As New VisualStyleFile(theme)
+            XenonComboBox1.Items.Clear()
+
+            Try
+                For Each x In vs.ColorSchemes
+                    XenonComboBox1.Items.Add(x.Name)
+                Next
+            Catch
+
+            End Try
+
+            If XenonComboBox1.Items.Count > 0 Then XenonComboBox1.SelectedIndex = 0
+
+            If WXP_CustomTheme.Checked Then ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub XenonButton30_Click(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        If OpenFileDialog2.ShowDialog = DialogResult.OK Then
+            XenonTextBox1.Text = OpenFileDialog2.FileName
+        End If
+    End Sub
+
+    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+        If _Shown AndAlso WXP_CustomTheme.Checked Then
+            CP.WindowsXP.CustomColor = XenonComboBox1.SelectedItem
+            ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+#End Region
+
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Apply_Theme()
     End Sub
@@ -2890,6 +3133,7 @@ Public Class MainFrm
                 Timer1.Start()
             End If
         End If
+
     End Sub
 
     Private ellapsedSecs As Integer = 0
@@ -2948,6 +3192,10 @@ Public Class MainFrm
             TablessControl1.SelectedIndex = 2
         ElseIf PreviewConfig = WinVer.W7 Then
             TablessControl1.SelectedIndex = 3
+        ElseIf PreviewConfig = WinVer.WVista Then
+            TablessControl1.SelectedIndex = 4
+        ElseIf PreviewConfig = WinVer.WXP Then
+            TablessControl1.SelectedIndex = 5
         Else
             TablessControl1.SelectedIndex = 0
         End If
@@ -3090,7 +3338,6 @@ Public Class MainFrm
 
     End Sub
 #End Region
-
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
@@ -3468,8 +3715,11 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
-        'Effects.ShowDialog()
+    Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
+        If _Shown And Select_W7.Checked Then
+            PreviewConfig = WinVer.W7
+            Select_Preview_Version()
+        End If
     End Sub
 
     Private Sub Select_WVista_CheckedChanged(sender As Object) Handles Select_WVista.CheckedChanged
@@ -3486,90 +3736,10 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
-        If WXP_Luna_Blue.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaBlue
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
+    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
+        WinEffecter.ShowDialog()
     End Sub
 
-    Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
-        If WXP_Luna_OliveGreen.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaOliveGreen
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
-        If WXP_Luna_Silver.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaSilver
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
-        If WXP_CustomTheme.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.Custom
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
-        If WXP_Classic.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.Classic
-            ApplyLivePreviewFromCP(CP)
-            tabs_preview.Refresh()
-        End If
-    End Sub
-
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
-        Dim theme As String = ""
-
-        If Path.GetExtension(XenonTextBox1.Text) = ".theme" Then
-            theme = XenonTextBox1.Text
-
-        ElseIf Path.GetExtension(XenonTextBox1.Text) = ".msstyles" Then
-            theme = My.Application.appData & "\VisualStyles\Luna\custom.theme"
-            File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
-
-        End If
-
-        CP.WindowsXP.CustomVS = XenonTextBox1.Text
-
-        If File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
-            Dim vs As New VisualStyleFile(theme)
-            XenonComboBox1.Items.Clear()
-
-            Try
-                For Each x In vs.ColorSchemes
-                    XenonComboBox1.Items.Add(x.Name)
-                Next
-            Catch
-
-            End Try
-
-            If XenonComboBox1.Items.Count > 0 Then XenonComboBox1.SelectedIndex = 0
-
-            If WXP_CustomTheme.Checked Then ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub XenonButton30_Click(sender As Object, e As EventArgs) Handles XenonButton30.Click
-        If OpenFileDialog2.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenFileDialog2.FileName
-        End If
-    End Sub
-
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
-        If _Shown AndAlso WXP_CustomTheme.Checked Then
-            CP.WindowsXP.CustomColor = XenonComboBox1.SelectedItem
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         log_lbl.Text = ""
@@ -3577,12 +3747,6 @@ Public Class MainFrm
         Timer1.Stop()
     End Sub
 
-    Private Sub Select_W7_CheckedChanged(sender As Object) Handles Select_W7.CheckedChanged
-        If _Shown And Select_W7.Checked Then
-            PreviewConfig = WinVer.W7
-            Select_Preview_Version()
-        End If
-    End Sub
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then

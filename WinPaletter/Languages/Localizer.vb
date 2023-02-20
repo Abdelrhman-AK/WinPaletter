@@ -72,7 +72,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
         If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
         If Name.ToLower = "WallpaperToner".ToLower Then Return WallpaperToner
-
+        If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
     End Function
 
     Public allForms As New List(Of String) From {
@@ -107,7 +107,8 @@ Public Class Localizer : Implements IDisposable
                         "Lang_Dashboard",
                         "Lang_JSON_Update",
                         "Lang_JSON_Manage",
-                        "WallpaperToner"
+                        "WallpaperToner",
+                        "WinEffecter"
                         }
 
 #Region "Language Info"
@@ -212,6 +213,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_LogonUI7 As String = "Applying Windows 7 LogonUI"
     Property CP_Applying_LogonUI8 As String = "Applying Windows 8.1 Lock Screen"
     Property CP_Applying_Win32UI As String = "Applying Win32UI (Classic Windows Elements)"
+    Property CP_Applying_WinEffects As String = "Applying Windows Effects"
     Property CP_Applying_WallpaperTone As String = "Applying Wallpaper Tone"
     Property CP_Applying_CMD As String = "Applying Command Prompt"
     Property CP_Applying_Metrics As String = "Applying Windows Metrics and Fonts"
@@ -242,6 +244,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_PS32_Error As String = "Error occured while applying PowerShell x86"
     Property CP_PS64_Error As String = "Error occured while applying PowerShell x64"
     Property CP_WIN32UI_Error As String = "Error occured while applying Win32UI"
+    Property CP_WinEffects_Error As String = "Error occured while applying Windows Effects"
     Property CP_WallpaperTone_Error As String = "Error occured while applying Wallpaper Tone"
     Property CP_LogonUI10_Error As String = "Error occured while applying Windows 10 LogonUI"
     Property CP_LogonUI11_Error As String = "Error occured while applying Windows 11 LogonUI"

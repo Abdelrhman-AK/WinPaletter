@@ -118,6 +118,8 @@ Partial Class CursorsStudio
         Me.IBeam = New WinPaletter.CursorControl()
         Me.Cross = New WinPaletter.CursorControl()
         Me.XenonButton11 = New WinPaletter.XenonButton()
+        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
         Me.XenonGroupBox13.SuspendLayout()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
@@ -144,6 +146,7 @@ Partial Class CursorsStudio
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Timer1
@@ -957,7 +960,7 @@ Partial Class CursorsStudio
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = CType(resources.GetObject("XenonAlertBox1.Image"), System.Drawing.Image)
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 562)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 591)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(632, 47)
         Me.XenonAlertBox1.TabIndex = 72
@@ -974,7 +977,7 @@ Partial Class CursorsStudio
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(196, 629)
+        Me.XenonButton3.Location = New System.Drawing.Point(196, 647)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(91, 35)
         Me.XenonButton3.TabIndex = 66
@@ -991,7 +994,7 @@ Partial Class CursorsStudio
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(423, 629)
+        Me.XenonButton4.Location = New System.Drawing.Point(423, 647)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(221, 35)
         Me.XenonButton4.TabIndex = 65
@@ -1759,19 +1762,45 @@ Partial Class CursorsStudio
         Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(293, 629)
+        Me.XenonButton11.Location = New System.Drawing.Point(293, 647)
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(124, 35)
         Me.XenonButton11.TabIndex = 82
         Me.XenonButton11.Text = "Quick Apply"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
+        'PictureBox9
+        '
+        Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
+        Me.PictureBox9.Location = New System.Drawing.Point(15, 561)
+        Me.PictureBox9.Name = "PictureBox9"
+        Me.PictureBox9.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox9.TabIndex = 84
+        Me.PictureBox9.TabStop = False
+        '
+        'XenonCheckBox9
+        '
+        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox9.Checked = False
+        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox9.Location = New System.Drawing.Point(45, 561)
+        Me.XenonCheckBox9.Name = "XenonCheckBox9"
+        Me.XenonCheckBox9.Size = New System.Drawing.Size(288, 24)
+        Me.XenonCheckBox9.TabIndex = 83
+        Me.XenonCheckBox9.Text = "Make Cursors have a shadow"
+        '
         'CursorsStudio
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(657, 676)
+        Me.ClientSize = New System.Drawing.Size(657, 694)
+        Me.Controls.Add(Me.PictureBox9)
+        Me.Controls.Add(Me.XenonCheckBox9)
         Me.Controls.Add(Me.XenonButton11)
         Me.Controls.Add(Me.XenonGroupBox13)
         Me.Controls.Add(Me.XenonGroupBox12)
@@ -1818,6 +1847,7 @@ Partial Class CursorsStudio
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel1.ResumeLayout(False)
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1915,4 +1945,6 @@ Partial Class CursorsStudio
     Friend WithEvents XenonButton10 As XenonButton
     Friend WithEvents PictureBox20 As PictureBox
     Friend WithEvents XenonButton11 As XenonButton
+    Friend WithEvents PictureBox9 As PictureBox
+    Friend WithEvents XenonCheckBox9 As XenonCheckBox
 End Class

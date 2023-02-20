@@ -51,8 +51,8 @@ Public Class ColorPickerDlg
         ColorGrid1.Visible = False
     End Sub
 
-    ReadOnly Ls As List(Of Control)
-    ReadOnly Fls As List(Of Form)
+    ReadOnly Ls As New List(Of Control)
+    ReadOnly Fls As New List(Of Form)
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
         Fls.Clear()

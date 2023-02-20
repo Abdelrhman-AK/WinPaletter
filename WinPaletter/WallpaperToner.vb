@@ -224,6 +224,10 @@ Public Class WallpaperToner
                     LoadFromWT(CPx.WallpaperTone_W8)
                 Case MainFrm.WinVer.W7
                     LoadFromWT(CPx.WallpaperTone_W7)
+                Case MainFrm.WinVer.WVista
+                    LoadFromWT(CPx.WallpaperTone_WVista)
+                Case MainFrm.WinVer.WXP
+                    LoadFromWT(CPx.WallpaperTone_WXP)
                 Case Else
                     LoadFromWT(CPx.WallpaperTone_W11)
 
@@ -249,6 +253,10 @@ Public Class WallpaperToner
                 LoadFromWT(CPx.WallpaperTone_W8)
             Case MainFrm.WinVer.W7
                 LoadFromWT(CPx.WallpaperTone_W7)
+            Case MainFrm.WinVer.WVista
+                LoadFromWT(CPx.WallpaperTone_WVista)
+            Case MainFrm.WinVer.WXP
+                LoadFromWT(CPx.WallpaperTone_WXP)
             Case Else
                 LoadFromWT(CPx.WallpaperTone_W11)
 
@@ -277,15 +285,12 @@ Public Class WallpaperToner
             Case MainFrm.WinVer.W7
                 CPx = New CP_Defaults().Default_Windows7
                 LoadFromWT(CPx.WallpaperTone_W7)
-
             Case MainFrm.WinVer.WVista
-                CPx = New CP_Defaults().Default_Windows7
+                CPx = New CP_Defaults().Default_WindowsVista
                 LoadFromWT(CPx.WallpaperTone_WVista)
-
-            Case MainFrm.WinVer.W7
-                CPx = New CP_Defaults().Default_Windows7
+            Case MainFrm.WinVer.WXP
+                CPx = New CP_Defaults().Default_WindowsXP
                 LoadFromWT(CPx.WallpaperTone_WXP)
-
             Case Else
                 CPx = New CP_Defaults().Default_Windows11
                 LoadFromWT(CPx.WallpaperTone_W11)

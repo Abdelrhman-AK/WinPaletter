@@ -55,6 +55,10 @@ Public Class ExternalTerminal
             _Def = New CP_Defaults().Default_Windows8
         ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+            _Def = New CP_Defaults().Default_WindowsVista
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
         End If
@@ -1141,6 +1145,10 @@ Public Class ExternalTerminal
             _Def = New CP_Defaults().Default_Windows8
         ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             _Def = New CP_Defaults().Default_Windows7
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+            _Def = New CP_Defaults().Default_WindowsVista
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
         End If

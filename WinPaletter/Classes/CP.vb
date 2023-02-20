@@ -6,7 +6,6 @@ Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods.User32
 Imports System.IO
-Imports Devcorp.Controls.VisualStyles
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -69,7 +68,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         File
         Empty
     End Enum
-
     Enum WinXPTheme
         LunaBlue
         LunaOliveGreen
@@ -77,7 +75,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Classic
         Custom
     End Enum
-
+    Enum MenuAnimType
+        Fade
+        Scroll
+    End Enum
 
 #End Region
 
@@ -540,7 +541,58 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Operator
 
             Public Function Clone() As Object Implements ICloneable.Clone
-                Throw New NotImplementedException()
+                Return MemberwiseClone()
+            End Function
+        End Structure
+
+        Structure WinEffects : Implements ICloneable
+            Public Enabled As Boolean
+
+            Public WindowAnimation As Boolean
+            Public WindowShadow As Boolean
+            Public WindowUIEffects As Boolean
+
+            Public MenuAnimation As Boolean
+            Public MenuFade As MenuAnimType
+            Public MenuSelectionFade As Boolean
+
+            Public ComboboxAnimation As Boolean
+            Public ListBoxSmoothScrolling As Boolean
+
+            Public TooltipAnimation As Boolean
+            Public TooltipFade As MenuAnimType
+
+            Sub Apply()
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
+                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
+                rMain.Close()
+
+                If Enabled Then
+                    Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim), .IMinAnimate = WindowAnimation.ToInteger}
+                    SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, If(MenuFade = MenuAnimType.Fade, 1, 0), SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, If(TooltipFade = MenuAnimType.Fade, 1, 0), SPIF.SendChange)
+                End If
+
+            End Sub
+
+            Shared Operator =(First As WinEffects, Second As WinEffects) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As WinEffects, Second As WinEffects) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
             End Function
         End Structure
 
@@ -553,7 +605,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public IconVerticalSpacing As Integer
             Public MenuHeight As Integer
             Public MenuWidth As Integer
-            Public MinAnimate As Boolean
             Public PaddedBorderWidth As Integer
             Public ScrollHeight As Integer
             Public ScrollWidth As Integer
@@ -590,11 +641,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If Enabled Then
                     Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
-                    Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
                     Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
-
                     SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
-                    SystemParametersInfo(SPI.Effects.GETANIMATION, anim.cbSize, anim, SPIF.None)
                     SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
                     Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
@@ -646,7 +694,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", MinAnimate.ToInteger, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
@@ -654,8 +701,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
-
-                    anim.IMinAnimate = MinAnimate.ToInteger
 
                     With NCM
                         .lfCaptionFont = lfCaptionFont        'Requires LogOff
@@ -683,7 +728,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End With
 
                     SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETANIMATION, Marshal.SizeOf(anim), anim, SPIF.SendChange)
                     SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SendChange)
                     NativeMethods.User32.SendMessageTimeout(NativeMethods.User32.HWND_BROADCAST, NativeMethods.User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), NativeMethods.User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, NativeMethods.User32.MSG_TIMEOUT, NativeMethods.User32.RESULT)
 
@@ -1649,6 +1693,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp",
         .H = 0, .S = 50, .L = 50}
 
+    Public WindowsEffects As New Structures.WinEffects With {
+        .Enabled = True,
+        .WindowAnimation = True,
+        .WindowShadow = True,
+        .WindowUIEffects = True,
+        .MenuAnimation = True,
+        .MenuSelectionFade = True,
+        .MenuFade = MenuAnimType.Fade,
+        .ComboboxAnimation = True,
+        .ListBoxSmoothScrolling = True,
+        .TooltipAnimation = True,
+        .TooltipFade = MenuAnimType.Fade}
+
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = True,
                 .BorderWidth = 1,
@@ -1658,7 +1715,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .IconVerticalSpacing = 75,
                 .MenuHeight = 19,
                 .MenuWidth = 19,
-                .MinAnimate = True,
                 .PaddedBorderWidth = 4,
                 .ScrollHeight = 19,
                 .ScrollWidth = 19,
@@ -1781,7 +1837,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Public TerminalPreview As New WinTerminal("", WinTerminal.Mode.Empty)
 
-    Public Cursors_Enabled As Boolean = False
+    Public Cursor_Enabled As Boolean = False
+
+    Public Cursor_Shadow As Boolean = False
 
     Public Cursor_Arrow As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -2819,6 +2877,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     _Def = New CP_Defaults().Default_Windows8
                 ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
                     _Def = New CP_Defaults().Default_Windows7
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                    _Def = New CP_Defaults().Default_WindowsVista
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                    _Def = New CP_Defaults().Default_WindowsXP
                 Else
                     _Def = New CP_Defaults().Default_Windows11
                 End If
@@ -3339,6 +3401,122 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
+#Region "Windows Effects"
+                With WindowsEffects
+                    Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
+                    .Enabled = rMain_WE.GetValue("", True)
+                    rMain_WE.Close()
+
+                    Dim i As Boolean
+                    Dim x As Integer
+
+                    Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETANIMATION, anim.cbSize, anim, SPIF.None) = 1 Then
+                            .WindowAnimation = anim.IMinAnimate.ToBoolean
+                        Else
+                            .WindowAnimation = _Def.WindowsEffects.WindowAnimation
+                        End If
+                    Catch
+                        .WindowAnimation = _Def.WindowsEffects.WindowAnimation
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETDROPSHADOW, 0, i, SPIF.None) = 1 Then
+                            .WindowShadow = i
+                        Else
+                            .WindowShadow = _Def.WindowsEffects.WindowShadow
+                        End If
+                    Catch
+                        .WindowShadow = _Def.WindowsEffects.WindowShadow
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETUIEFFECTS, 0, i, SPIF.None) = 1 Then
+                            .WindowUIEffects = i
+                        Else
+                            .WindowUIEffects = _Def.WindowsEffects.WindowUIEffects
+                        End If
+                    Catch
+                        .WindowUIEffects = _Def.WindowsEffects.WindowUIEffects
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETMENUANIMATION, 0, i, SPIF.None) = 1 Then
+                            .MenuAnimation = i
+                        Else
+                            .MenuAnimation = _Def.WindowsEffects.MenuAnimation
+                        End If
+                    Catch
+                        .MenuAnimation = _Def.WindowsEffects.MenuAnimation
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETMENUFADE, 0, x, SPIF.None) = 1 Then
+                            .MenuFade = If(x = 1, MenuAnimType.Fade, MenuAnimType.Scroll)
+                        Else
+                            .MenuFade = _Def.WindowsEffects.MenuFade
+                        End If
+                    Catch
+                        .MenuFade = _Def.WindowsEffects.MenuFade
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETSELECTIONFADE, 0, i, SPIF.None) Then
+                            .MenuSelectionFade = i
+                        Else
+                            .MenuSelectionFade = _Def.WindowsEffects.MenuSelectionFade
+                        End If
+                    Catch
+                        .MenuSelectionFade = _Def.WindowsEffects.MenuSelectionFade
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETCOMBOBOXANIMATION, 0, i, SPIF.None) Then
+                            .ComboboxAnimation = i
+                        Else
+                            .ComboboxAnimation = _Def.WindowsEffects.ComboboxAnimation
+                        End If
+                    Catch
+                        .ComboboxAnimation = _Def.WindowsEffects.ComboboxAnimation
+                    End Try
+
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETLISTBOXSMOOTHSCROLLING, 0, i, SPIF.None) Then
+                            .ListBoxSmoothScrolling = i
+                        Else
+                            .ListBoxSmoothScrolling = _Def.WindowsEffects.ListBoxSmoothScrolling
+                        End If
+                    Catch
+                        .ListBoxSmoothScrolling = _Def.WindowsEffects.ListBoxSmoothScrolling
+                    End Try
+
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETTOOLTIPANIMATION, 0, i, SPIF.None) Then
+                            .TooltipAnimation = i
+                        Else
+                            .TooltipAnimation = _Def.WindowsEffects.TooltipAnimation
+                        End If
+                    Catch
+                        .TooltipAnimation = _Def.WindowsEffects.TooltipAnimation
+                    End Try
+
+                    Try
+                        If SystemParametersInfo(SPI.Effects.GETTOOLTIPFADE, 0, x, SPIF.None) Then
+                            .TooltipFade = If(x = 1, MenuAnimType.Fade, MenuAnimType.Scroll)
+                        Else
+                            .TooltipFade = _Def.WindowsEffects.TooltipFade
+                        End If
+                    Catch
+                        .TooltipFade = _Def.WindowsEffects.TooltipFade
+                    End Try
+
+                End With
+#End Region
+
 #Region "LogonUI"
                 If My.W10 Or My.W11 Then
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
@@ -3718,12 +3896,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Try
 
                 Try
-                    MetricsFonts.MinAnimate = CInt(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MinAnimate", _Def.MetricsFonts.MinAnimate.ToInteger)).ToBoolean
-                Catch
-                    MetricsFonts.MinAnimate = _Def.MetricsFonts.MinAnimate
-                End Try
-
-                Try
                     MetricsFonts.PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", _Def.MetricsFonts.PaddedBorderWidth * -15) / -15
                 Catch
                     MetricsFonts.PaddedBorderWidth = _Def.MetricsFonts.PaddedBorderWidth
@@ -3934,8 +4106,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Cursors"
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-                Cursors_Enabled = rMain.GetValue("", False)
+                Cursor_Enabled = rMain.GetValue("", False)
                 rMain.Close()
+
+                Dim ii As Boolean
+                Try
+                    If SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, ii, SPIF.None) = 1 Then
+                        Cursor_Shadow = ii
+                    Else
+                        Cursor_Shadow = _Def.Cursor_Shadow
+                    End If
+                Catch
+                    Cursor_Shadow = _Def.Cursor_Shadow
+                End Try
 
                 Cursor_Arrow = Structures.Cursor.Load_Cursor_From_Registry("Arrow")
                 Cursor_Help = Structures.Cursor.Load_Cursor_From_Registry("Help")
@@ -4294,6 +4477,20 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Win32UI_Desktop= ", My._strIgnore) Then Win32.Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
 #End Region
 
+#Region "Windows Effects"
+                    If lin.StartsWith("*WinEffects_Enabled= ", My._strIgnore) Then WindowsEffects.Enabled = lin.Remove(0, "*WinEffects_Enabled= ".Count)
+                    If lin.StartsWith("*WinEffects_WindowAnimation= ", My._strIgnore) Then WindowsEffects.WindowAnimation = lin.Remove(0, "*WinEffects_WindowAnimation= ".Count)
+                    If lin.StartsWith("*WinEffects_WindowShadow= ", My._strIgnore) Then WindowsEffects.WindowShadow = lin.Remove(0, "*WinEffects_WindowShadow= ".Count)
+                    If lin.StartsWith("*WinEffects_WindowUIEffects= ", My._strIgnore) Then WindowsEffects.WindowUIEffects = lin.Remove(0, "*WinEffects_WindowUIEffects= ".Count)
+                    If lin.StartsWith("*WinEffects_MenuAnimation= ", My._strIgnore) Then WindowsEffects.MenuAnimation = lin.Remove(0, "*WinEffects_MenuAnimation= ".Count)
+                    If lin.StartsWith("*WinEffects_MenuFade= ", My._strIgnore) Then WindowsEffects.MenuFade = lin.Remove(0, "*WinEffects_MenuFade= ".Count)
+                    If lin.StartsWith("*WinEffects_MenuSelectionFade= ", My._strIgnore) Then WindowsEffects.MenuSelectionFade = lin.Remove(0, "*WinEffects_MenuSelectionFade= ".Count)
+                    If lin.StartsWith("*WinEffects_ComboBoxAnimation= ", My._strIgnore) Then WindowsEffects.ComboboxAnimation = lin.Remove(0, "*WinEffects_ComboBoxAnimation= ".Count)
+                    If lin.StartsWith("*WinEffects_ListboxSmoothScrolling= ", My._strIgnore) Then WindowsEffects.ListBoxSmoothScrolling = lin.Remove(0, "*WinEffects_ListboxSmoothScrolling= ".Count)
+                    If lin.StartsWith("*WinEffects_TooltipAnimation= ", My._strIgnore) Then WindowsEffects.TooltipAnimation = lin.Remove(0, "*WinEffects_TooltipAnimation= ".Count)
+                    If lin.StartsWith("*WinEffects_TooltipFade= ", My._strIgnore) Then WindowsEffects.TooltipFade = lin.Remove(0, "*WinEffects_TooltipFade= ".Count)
+#End Region
+
 #Region "Metrics & Fonts"
                     If lin.StartsWith("*MetricsFonts_Enabled= ", My._strIgnore) Then MetricsFonts.Enabled = lin.Remove(0, "*MetricsFonts_Enabled= ".Count)
                     If lin.StartsWith("*Metrics_BorderWidth= ", My._strIgnore) Then MetricsFonts.BorderWidth = lin.Remove(0, "*Metrics_BorderWidth= ".Count)
@@ -4303,7 +4500,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Metrics_IconVerticalSpacing= ", My._strIgnore) Then MetricsFonts.IconVerticalSpacing = lin.Remove(0, "*Metrics_IconVerticalSpacing= ".Count)
                     If lin.StartsWith("*Metrics_MenuHeight= ", My._strIgnore) Then MetricsFonts.MenuHeight = lin.Remove(0, "*Metrics_MenuHeight= ".Count)
                     If lin.StartsWith("*Metrics_MenuWidth= ", My._strIgnore) Then MetricsFonts.MenuWidth = lin.Remove(0, "*Metrics_MenuWidth= ".Count)
-                    If lin.StartsWith("*Metrics_MinAnimate= ", My._strIgnore) Then MetricsFonts.MinAnimate = lin.Remove(0, "*Metrics_MinAnimate= ".Count)
                     If lin.StartsWith("*Metrics_PaddedBorderWidth= ", My._strIgnore) Then MetricsFonts.PaddedBorderWidth = lin.Remove(0, "*Metrics_PaddedBorderWidth= ".Count)
                     If lin.StartsWith("*Metrics_ScrollHeight= ", My._strIgnore) Then MetricsFonts.ScrollHeight = lin.Remove(0, "*Metrics_ScrollHeight= ".Count)
                     If lin.StartsWith("*Metrics_ScrollWidth= ", My._strIgnore) Then MetricsFonts.ScrollWidth = lin.Remove(0, "*Metrics_ScrollWidth= ".Count)
@@ -4315,6 +4511,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If lin.StartsWith("*FontSubstitute_MSShellDlg= ", My._strIgnore) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
                     If lin.StartsWith("*FontSubstitute_MSShellDlg2= ", My._strIgnore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
+                    If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._strIgnore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
 #End Region
 
 #Region "Terminals"
@@ -4347,7 +4544,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
 #Region "Cursors"
-                    If lin.StartsWith("*Cursor_Enabled= ", My._strIgnore) Then Cursors_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
+                    If lin.StartsWith("*Cursor_Enabled= ", My._strIgnore) Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
+                    If lin.StartsWith("*Cursor_Shadow= ", My._strIgnore) Then Cursor_Shadow = lin.Remove(0, "*Cursor_Shadow= ".Count)
 
                     If lin.StartsWith("*Cursor_Arrow_", My._strIgnore) Then CUR_Arrow_List.Add(lin.Remove(0, "*Cursor_Arrow_".Count))
                     If lin.StartsWith("*Cursor_Help_", My._strIgnore) Then CUR_Help_List.Add(lin.Remove(0, "*Cursor_Help_".Count))
@@ -4483,6 +4681,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         OS = My.Lang.OS_Win8
                     ElseIf My.W7 Then
                         OS = My.Lang.OS_Win7
+                    ElseIf My.WVista Then
+                        OS = My.Lang.OS_WinVista
+                    ElseIf My.WXP Then
+                        OS = My.Lang.OS_WinXP
                     Else
                         OS = My.Lang.OS_WinUndefined
                     End If
@@ -4699,6 +4901,25 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If ReportProgress Then
                         AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WIN32UI_Error), "error")
                         AddException(My.Lang.CP_WIN32UI_Error, ex)
+                    Else
+                        BugReport.ThrowError(ex)
+                    End If
+
+                    sw.Start() : sw_all.Start()
+                End Try
+                sw.Stop()
+
+                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WinEffects), "info")
+                sw.Reset() : sw.Start()
+                Try
+                    WindowsEffects.Apply()
+                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
+                Catch ex As Exception
+                    sw.Stop() : sw_all.Stop()
+                    _ErrorHappened = True
+                    If ReportProgress Then
+                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WinEffects_Error), "error")
+                        AddException(My.Lang.CP_WinEffects_Error, ex)
                     Else
                         BugReport.ThrowError(ex)
                     End If
@@ -4958,7 +5179,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 sw.Stop()
 
                 If ReportProgress Then
-                    If Cursors_Enabled Then
+                    If Cursor_Enabled Then
                         '### Leave it empty
                     Else
                         AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Cursors), "skip")
@@ -4967,7 +5188,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 sw.Reset() : sw.Start()
                 Try
                     Apply_Cursors([TreeView])
-                    If ReportProgress And Cursors_Enabled Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_Time_Cursors, sw.ElapsedMilliseconds / 1000)), "time")
+                    If ReportProgress And Cursor_Enabled Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_Time_Cursors, sw.ElapsedMilliseconds / 1000)), "time")
                 Catch ex As Exception
                     sw.Stop() : sw_all.Stop()
                     _ErrorHappened = True
@@ -5188,6 +5409,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("</Win32UI>")
 #End Region
 
+#Region "Windows Effects"
+                tx.Add(vbCrLf & "<WindowsEffects>")
+                tx.Add("*WinEffects_Enabled= " & WindowsEffects.Enabled)
+                tx.Add("*WinEffects_WindowAnimation= " & WindowsEffects.WindowAnimation)
+                tx.Add("*WinEffects_WindowShadow= " & WindowsEffects.WindowShadow)
+                tx.Add("*WinEffects_WindowUIEffects= " & WindowsEffects.WindowUIEffects)
+                tx.Add("*WinEffects_MenuAnimation= " & WindowsEffects.MenuAnimation)
+                tx.Add("*WinEffects_MenuFade= " & WindowsEffects.MenuFade)
+                tx.Add("*WinEffects_MenuSelectionFade= " & WindowsEffects.MenuSelectionFade)
+                tx.Add("*WinEffects_ComboBoxAnimation= " & WindowsEffects.ComboboxAnimation)
+                tx.Add("*WinEffects_ListboxSmoothScrolling= " & WindowsEffects.ListBoxSmoothScrolling)
+                tx.Add("*WinEffects_TooltipAnimation= " & WindowsEffects.TooltipAnimation)
+                tx.Add("*WinEffects_TooltipFade= " & WindowsEffects.TooltipFade)
+                tx.Add("</WindowsEffects>" & vbCrLf)
+#End Region
+
 #Region "Metrics & Fonts"
                 tx.Add(vbCrLf & "<Metrics&Fonts>")
                 tx.Add("*MetricsFonts_Enabled= " & MetricsFonts.Enabled)
@@ -5198,7 +5435,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metrics_IconVerticalSpacing= " & MetricsFonts.IconVerticalSpacing)
                 tx.Add("*Metrics_MenuHeight= " & MetricsFonts.MenuHeight)
                 tx.Add("*Metrics_MenuWidth= " & MetricsFonts.MenuWidth)
-                tx.Add("*Metrics_MinAnimate= " & MetricsFonts.MinAnimate)
                 tx.Add("*Metrics_PaddedBorderWidth= " & MetricsFonts.PaddedBorderWidth)
                 tx.Add("*Metrics_ScrollHeight= " & MetricsFonts.ScrollHeight)
                 tx.Add("*Metrics_ScrollWidth= " & MetricsFonts.ScrollWidth)
@@ -5208,6 +5444,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metrics_ShellIconSize= " & MetricsFonts.ShellIconSize)
                 tx.Add("*FontSubstitute_MSShellDlg= " & MetricsFonts.FontSubstitute_MSShellDlg)
                 tx.Add("*FontSubstitute_MSShellDlg2= " & MetricsFonts.FontSubstitute_MSShellDlg2)
+                tx.Add("*FontSubstitute_SegoeUI= " & MetricsFonts.FontSubstitute_SegoeUI)
                 tx.Add(AddFontsToThemeFile("Caption", MetricsFonts.CaptionFont))
                 tx.Add(AddFontsToThemeFile("Icon", MetricsFonts.IconFont))
                 tx.Add(AddFontsToThemeFile("Menu", MetricsFonts.MenuFont))
@@ -5246,7 +5483,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Cursors"
                 tx.Add(vbCrLf & "<Cursors>")
-                tx.Add("*Cursor_Enabled= " & Cursors_Enabled)
+                tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
+                tx.Add("*Cursor_Shadow= " & Cursor_Shadow)
                 Structures.Cursor.Write_Cursors_To_ListOfString("Arrow", Cursor_Arrow, tx)
                 Structures.Cursor.Write_Cursors_To_ListOfString("Help", Cursor_Help, tx)
                 Structures.Cursor.Write_Cursors_To_ListOfString("AppLoading", Cursor_AppLoading, tx)
@@ -5492,16 +5730,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-        rMain.SetValue("", Cursors_Enabled, RegistryValueKind.DWord)
+        rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
         rMain.Close()
 
-        If Cursors_Enabled Then
+        If Cursor_Enabled Then
             Dim sw As New Stopwatch
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
 
             sw.Reset()
             sw.Start()
 
+            SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.SendChange)
             Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
             Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help)
             Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading)
@@ -6165,6 +6404,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WindowsXP <> DirectCast(obj, CP).WindowsXP Then _Equals = False
         If LogonUI7 <> DirectCast(obj, CP).LogonUI7 Then _Equals = False
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
+        If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
@@ -6173,7 +6413,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WallpaperTone_WVista <> DirectCast(obj, CP).WallpaperTone_WVista Then _Equals = False
         If WallpaperTone_WXP <> DirectCast(obj, CP).WallpaperTone_WXP Then _Equals = False
 
-        If Cursors_Enabled <> DirectCast(obj, CP).Cursors_Enabled Then _Equals = False
+        If Cursor_Enabled <> DirectCast(obj, CP).Cursor_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False
         If Cursor_Help <> DirectCast(obj, CP).Cursor_Help Then _Equals = False
         If Cursor_AppLoading <> DirectCast(obj, CP).Cursor_AppLoading Then _Equals = False

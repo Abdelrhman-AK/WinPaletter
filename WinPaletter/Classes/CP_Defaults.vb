@@ -77,7 +77,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -89,6 +88,7 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].Cursor_Shadow = False
 
         Return [CP]
     End Function
@@ -152,7 +152,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -164,6 +163,8 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+
+        [CP].Cursor_Shadow = False
 
         Return [CP]
     End Function
@@ -253,7 +254,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -267,6 +267,7 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].Cursor_Shadow = False
 
         Return [CP]
     End Function
@@ -357,7 +358,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -369,6 +369,7 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].Cursor_Shadow = True
 
         Return [CP]
     End Function
@@ -459,7 +460,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -471,6 +471,7 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].Cursor_Shadow = True
 
         Return [CP]
     End Function
@@ -561,7 +562,6 @@
             .IconVerticalSpacing = 75
             .MenuHeight = 19
             .MenuWidth = 19
-            .MinAnimate = True
             .PaddedBorderWidth = 4
             .ScrollHeight = 17
             .ScrollWidth = 17
@@ -573,6 +573,7 @@
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
+        [CP].Cursor_Shadow = True
 
         Return [CP]
     End Function

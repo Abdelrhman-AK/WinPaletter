@@ -451,12 +451,21 @@
     <Compile Include="Win7_8\Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WinEffecter.Designer.vb">
+      <DependentUpon>WinEffecter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WinEffecter.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <EmbeddedResource Include="WinEffecter.resx">
+      <DependentUpon>WinEffecter.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application1.Designer.vb</LastGenOutput>

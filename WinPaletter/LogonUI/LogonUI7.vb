@@ -312,6 +312,10 @@ Public Class LogonUI7
                 CPx = New CP_Defaults().Default_Windows8
             Case MainFrm.WinVer.W7
                 CPx = New CP_Defaults().Default_Windows7
+            Case MainFrm.WinVer.WVista
+                CPx = New CP_Defaults().Default_WindowsVista
+            Case MainFrm.WinVer.WXP
+                CPx = New CP_Defaults().Default_WindowsXP
             Case Else
                 CPx = New CP_Defaults().Default_Windows11
         End Select
