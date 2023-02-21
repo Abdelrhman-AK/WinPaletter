@@ -25,7 +25,11 @@ Public Class Uninstall
         If XenonCheckBox2.Checked Then
             If IO.Directory.Exists(My.Application.appData) Then
                 IO.Directory.Delete(My.Application.appData, True)
-                CP.ResetCursorsToAero()
+                If Not My.WXP Then
+                    CP.ResetCursorsToAero()
+                Else
+                    CP.ResetCursorsToNone_XP()
+                End If
             End If
         End If
 
@@ -49,6 +53,10 @@ Public Class Uninstall
                 _Def = New CP_Defaults().Default_Windows8
             ElseIf My.W7 = MainFrm.WinVer.W7 Then
                 _Def = New CP_Defaults().Default_Windows7
+            ElseIf My.W7 = MainFrm.WinVer.WVista Then
+                _Def = New CP_Defaults().Default_WindowsVista
+            ElseIf My.W7 = MainFrm.WinVer.WXP Then
+                _Def = New CP_Defaults().Default_WindowsXP
             Else
                 _Def = New CP_Defaults().Default_Windows11
             End If

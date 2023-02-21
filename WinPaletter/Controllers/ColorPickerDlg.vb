@@ -696,6 +696,10 @@ Public Class ColorPickerDlg
                 Case 3
                     GetColorsFromPalette(New CP_Defaults().Default_Windows8)
                 Case 4
+                    GetColorsFromPalette(New CP_Defaults().Default_WindowsVista)
+                Case 5
+                    GetColorsFromPalette(New CP_Defaults().Default_WindowsXP)
+                Case 6
                     GetColorsFromPalette(New CP_Defaults().Default_Windows7)
                 Case Else
                     GetColorsFromPalette(MainFrm.CP)

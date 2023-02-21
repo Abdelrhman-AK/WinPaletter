@@ -11,6 +11,7 @@ Public Class LogonUI7
         _Shown = False
         LoadFromCP(MainFrm.CP)
         ApplyPreview()
+        Icon = LogonUI.Icon
 
         If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
             XenonButton3.Visible = True

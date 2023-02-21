@@ -5,7 +5,7 @@ Public Class XeSettings
     Public Property LicenseAccepted As Boolean = False
     Public Property AutoAddExt As Boolean = True
     Public Property AutoApplyCursors As Boolean = True
-    Public Property ResetCursorsToAero As Boolean = False
+    Public Property ResetCursorsToAero As Boolean = My.WXP
     Public Property DragAndDropPreview As Boolean = True
     Public Property OpeningPreviewInApp_or_AppliesIt As Boolean = True
     Public Property AutoRestartExplorer As Boolean = True
@@ -79,7 +79,7 @@ Public Class XeSettings
         If Key.GetValue("OpeningPreviewInApp_or_AppliesIt", Nothing) Is Nothing Then Key.SetValue("OpeningPreviewInApp_or_AppliesIt", True, RegistryValueKind.DWord)
         If Key.GetValue("AutoRestartExplorer", Nothing) Is Nothing Then Key.SetValue("AutoRestartExplorer", True, RegistryValueKind.DWord)
         If Key.GetValue("AutoApplyCursors", Nothing) Is Nothing Then Key.SetValue("AutoApplyCursors", True, RegistryValueKind.DWord)
-        If Key.GetValue("ResetCursorsToAero", Nothing) Is Nothing Then Key.SetValue("ResetCursorsToAero", False, RegistryValueKind.DWord)
+        If Key.GetValue("ResetCursorsToAero", Nothing) Is Nothing Then Key.SetValue("ResetCursorsToAero", My.WXP, RegistryValueKind.DWord)
         If Key.GetValue("CustomPreviewConfig_Enabled", Nothing) Is Nothing Then Key.SetValue("CustomPreviewConfig_Enabled", False, RegistryValueKind.DWord)
         If Key.GetValue("ShowLogWhileSaving", Nothing) Is Nothing Then Key.SetValue("ShowLogWhileSaving", False, RegistryValueKind.DWord)
         If Key.GetValue("ComplexSaveResult", Nothing) Is Nothing Then Key.SetValue("ComplexSaveResult", "2.1", RegistryValueKind.String)
@@ -142,7 +142,7 @@ Public Class XeSettings
 
                 AutoAddExt = Key.GetValue("AutoAddExt", True)
                 AutoApplyCursors = Key.GetValue("AutoApplyCursors", True)
-                ResetCursorsToAero = Key.GetValue("ResetCursorsToAero", False)
+                ResetCursorsToAero = Key.GetValue("ResetCursorsToAero", My.WXP)
 
                 DragAndDropPreview = Key.GetValue("DragAndDropPreview", True)
                 OpeningPreviewInApp_or_AppliesIt = Key.GetValue("OpeningPreviewInApp_or_AppliesIt", True)

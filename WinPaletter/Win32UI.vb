@@ -10,7 +10,6 @@ Public Class Win32UI
         XenonComboBox1.PopulateThemes
         RevalidateEverything(pnl_preview)
         XenonComboBox1.SelectedIndex = 0
-        XenonComboBox2.SelectedIndex = 0
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
@@ -72,6 +71,10 @@ Public Class Win32UI
             DefCP = New CP_Defaults().Default_Windows8
         ElseIf My.W7 Then
             DefCP = New CP_Defaults().Default_Windows7
+        ElseIf My.WVista Then
+            DefCP = New CP_Defaults().Default_WindowsVista
+        ElseIf My.WXP Then
+            DefCP = New CP_Defaults().Default_WindowsXP
         Else
             DefCP = New CP_Defaults().Default_Windows11
         End If
@@ -1175,34 +1178,20 @@ Public Class Win32UI
             s.Add(String.Format("[MasterThemeSelector]"))
             s.Add(String.Format("MTSM=DABJDKT"))
 
-            If XenonComboBox2.SelectedIndex = 1 Then
-                s.Add("")
-                s.Add("[CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\DefaultIcon]")
-                s.Add("full=C:\WINDOWS\System32\shell32.dll,32")
-                s.Add("empty=C:\WINDOWS\System32\shell32.dll,31")
-                s.Add("")
+            s.Add("")
+            s.Add("[Control Panel\Desktop]")
+            s.Add("Wallpaper=")
+            s.Add("TileWallpaper=0")
+            s.Add("WallpaperStyle=10")
+            s.Add("Pattern=")
+            s.Add("")
 
-                s.Add("[Metrics]")
-                s.Add("IconMetrics=76 0 0 0 75 0 0 0 75 0 0 0 1 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0  ")
-                s.Add("NonclientMetrics=84 1 0 0 1 0 0 0 13 0 0 0 13 0 0 0 18 0 0 0 18 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 15 0 0 0 15 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 18 0 0 0 18 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0  ")
-                s.Add("")
-
-            ElseIf XenonComboBox2.SelectedIndex = 2 Then
-                s.Add("")
-                s.Add("[Control Panel\Desktop]")
-                s.Add("Wallpaper=")
-                s.Add("TileWallpaper=0")
-                s.Add("WallpaperStyle=10")
-                s.Add("Pattern=")
-                s.Add("")
-
-                s.Add("[VisualStyles]")
-                s.Add("Path=")
-                s.Add("ColorStyle=@themeui.dll,-854")
-                s.Add("Size=@themeui.dll,-2019")
-                s.Add("Transparency=0")
-                s.Add("")
-            End If
+            s.Add("[VisualStyles]")
+            s.Add("Path=")
+            s.Add("ColorStyle=@themeui.dll,-854")
+            s.Add("Size=@themeui.dll,-2019")
+            s.Add("Transparency=0")
+            s.Add("")
 
             Try
                 IO.File.WriteAllText(SaveFileDialog2.FileName, s.CString)

@@ -377,7 +377,9 @@ Partial Class MainFrm
         Me.PictureBox50 = New System.Windows.Forms.PictureBox()
         Me.Label81 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.Label83 = New System.Windows.Forms.Label()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.Label82 = New System.Windows.Forms.Label()
         Me.XenonGroupBox48 = New WinPaletter.XenonGroupBox()
         Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
@@ -1053,13 +1055,15 @@ Partial Class MainFrm
         '
         'RetroButton4
         '
+        Me.RetroButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton4.AppearsAsPressed = False
         Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
         Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
         Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton4.ForeColor = System.Drawing.Color.Black
         Me.RetroButton4.Image = Nothing
         Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
@@ -1072,6 +1076,8 @@ Partial Class MainFrm
         '
         'RetroButton3
         '
+        Me.RetroButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton3.AppearsAsPressed = True
         Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
@@ -1091,6 +1097,8 @@ Partial Class MainFrm
         '
         'RetroButton2
         '
+        Me.RetroButton2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton2.AppearsAsPressed = False
         Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
@@ -5367,7 +5375,9 @@ Partial Class MainFrm
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.Label83)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox2)
+        Me.TabPage9.Controls.Add(Me.Label82)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox48)
         Me.TabPage9.Controls.Add(Me.XenonGroupBox47)
         Me.TabPage9.Location = New System.Drawing.Point(4, 24)
@@ -5376,10 +5386,25 @@ Partial Class MainFrm
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
+        'Label83
+        '
+        Me.Label83.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label83.AutoEllipsis = True
+        Me.Label83.BackColor = System.Drawing.Color.Transparent
+        Me.Label83.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label83.Location = New System.Drawing.Point(8, 304)
+        Me.Label83.Name = "Label83"
+        Me.Label83.Size = New System.Drawing.Size(508, 63)
+        Me.Label83.TabIndex = 46
+        Me.Label83.Text = "** If classic theme is enabled and you open WinPaletter, the preview won't work f" &
+    "or other themes due to some limitations in Visual Styles Previewer. Apply anothe" &
+    "r theme first then try again."
+        '
         'XenonAlertBox2
         '
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
@@ -5387,7 +5412,7 @@ Partial Class MainFrm
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(3, 260)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(3, 465)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(513, 64)
         Me.XenonAlertBox2.TabIndex = 48
@@ -5395,6 +5420,19 @@ Partial Class MainFrm
         Me.XenonAlertBox2.Text = "WinPaletter on Windows XP maybe unstable, you might always face crashes on applyi" &
     "ng an external theme or face other errors." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Please read its documentation at Git" &
     "Hub."
+        '
+        'Label82
+        '
+        Me.Label82.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label82.AutoEllipsis = True
+        Me.Label82.BackColor = System.Drawing.Color.Transparent
+        Me.Label82.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label82.Location = New System.Drawing.Point(8, 266)
+        Me.Label82.Name = "Label82"
+        Me.Label82.Size = New System.Drawing.Size(508, 35)
+        Me.Label82.TabIndex = 45
+        Me.Label82.Text = "* External Theme\Visual Styles require a UX-Theme-Patched Windows"
         '
         'XenonGroupBox48
         '
@@ -5410,7 +5448,7 @@ Partial Class MainFrm
         Me.XenonGroupBox48.Controls.Add(Me.Label69)
         Me.XenonGroupBox48.Controls.Add(Me.Label67)
         Me.XenonGroupBox48.Controls.Add(Me.XenonTextBox1)
-        Me.XenonGroupBox48.Location = New System.Drawing.Point(3, 152)
+        Me.XenonGroupBox48.Location = New System.Drawing.Point(3, 151)
         Me.XenonGroupBox48.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox48.Name = "XenonGroupBox48"
         Me.XenonGroupBox48.Padding = New System.Windows.Forms.Padding(1)
@@ -6909,4 +6947,6 @@ Partial Class MainFrm
     Friend WithEvents Label81 As Label
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
+    Friend WithEvents Label83 As Label
+    Friend WithEvents Label82 As Label
 End Class

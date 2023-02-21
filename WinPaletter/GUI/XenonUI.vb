@@ -4548,8 +4548,7 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                         Dim sm As SmoothingMode = G.SmoothingMode
                         G.SmoothingMode = SmoothingMode.HighSpeed
 
-                        Dim res_msstyles As New VisualStylesRes(My.VS)
-                        res_msstyles.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
+                        My.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
                         G.DrawImage(My.LunaRes.StartBtn, New Rectangle(0, 0, My.LunaRes.StartBtn.Width, Rect.Height - 1))
 
                         G.SmoothingMode = sm
@@ -5453,38 +5452,34 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 #Region "Windows XP"
             Dim sm As SmoothingMode = G.SmoothingMode
             G.SmoothingMode = SmoothingMode.HighSpeed
-                Dim res As New VisualStylesRes(My.VS)
 
-                TitlebarRect = New Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + 5)
+            TitlebarRect = New Rectangle(Rect.X, Rect.Y, Rect.Width, TitleTextH_Sum + _Metrics_BorderWidth + _Metrics_CaptionHeight + 5)
 
             Dim innerRect As New Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Rect.Width - 2, Rect.Height - TitlebarRect.Height - 1)
 
-            G.FillRectangle(New SolidBrush(res.Colors.Btnface), innerRect)
+            G.FillRectangle(New SolidBrush(My.resVS.Colors.Btnface), innerRect)
 
-                res.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
+            My.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
 
-                Dim LE As New Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Math.Max(4, Metrics_BorderWidth) + 2)
+            Dim LE As New Rectangle(Rect.X, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Math.Max(4, Metrics_BorderWidth) + 2)
+            Dim RE As New Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth) - 1, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2)
+            Dim BE As New Rectangle(Rect.X, Rect.Y + Rect.Height - Math.Max(4, Metrics_BorderWidth), Rect.Width - 1, Math.Max(4, Metrics_BorderWidth) + 1)
+            Dim CloseBtn_W As Integer = TitleTextH_Sum + _Metrics_CaptionHeight - 4
+            Dim CB As New Rectangle(Rect.X + Rect.Width - CloseBtn_W - RE.Width - 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W)
 
-                Dim RE As New Rectangle(Rect.X + Rect.Width - Math.Max(4, Metrics_BorderWidth) - 1, Rect.Y + TitlebarRect.Height - 1, Math.Max(4, Metrics_BorderWidth), Rect.Height - TitlebarRect.Height - Metrics_BorderWidth + 2)
+            If Not ToolWindow Then
+                LabelRect = New Rectangle(Rect.X + LE.Width + 20, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
+            Else
+                LabelRect = New Rectangle(Rect.X + LE.Width + 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
+            End If
 
-                Dim BE As New Rectangle(Rect.X, Rect.Y + Rect.Height - Math.Max(4, Metrics_BorderWidth), Rect.Width - 1, Math.Max(4, Metrics_BorderWidth) + 1)
+            IconRect = New Rectangle(Rect.X + LE.Width + 2, LabelRect.Y + 2, 14, 14)
 
-                Dim CloseBtn_W As Integer = TitleTextH_Sum + _Metrics_CaptionHeight - 4
-                Dim CB As New Rectangle(Rect.X + Rect.Width - CloseBtn_W - RE.Width - 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, CloseBtn_W, CloseBtn_W)
-
-                If Not ToolWindow Then
-                    LabelRect = New Rectangle(Rect.X + LE.Width + 20, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
-                Else
-                    LabelRect = New Rectangle(Rect.X + LE.Width + 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
-                End If
-
-                IconRect = New Rectangle(Rect.X + LE.Width + 2, LabelRect.Y + 2, 14, 14)
-
-                res.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
-                res.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow)
-                res.Draw(G, RE, VisualStylesRes.Element.RightEdge, Active, ToolWindow)
-                res.Draw(G, BE, VisualStylesRes.Element.BottomEdge, Active, ToolWindow)
-                res.Draw(G, CB, VisualStylesRes.Element.CloseButton, Active, ToolWindow)
+            My.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
+            My.resVS.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow)
+            My.resVS.Draw(G, RE, VisualStylesRes.Element.RightEdge, Active, ToolWindow)
+            My.resVS.Draw(G, BE, VisualStylesRes.Element.BottomEdge, Active, ToolWindow)
+            My.resVS.Draw(G, CB, VisualStylesRes.Element.CloseButton, Active, ToolWindow)
 
             G.SmoothingMode = sm
 #End Region

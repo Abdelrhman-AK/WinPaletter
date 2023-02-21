@@ -230,7 +230,7 @@ Partial Class LogonUI
         Me.PictureBox6.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox6.TabIndex = 1
         Me.PictureBox6.TabStop = False
         '

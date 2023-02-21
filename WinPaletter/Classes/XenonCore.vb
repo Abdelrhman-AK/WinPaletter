@@ -75,6 +75,7 @@ Public Class XenonCore
     End Sub
     Public Shared Sub RestartExplorer(Optional [TreeView] As TreeView = Nothing)
         With My.Application
+
             Try
                 If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.KillingExplorer), "info")
                 Dim sw As New Stopwatch
@@ -92,6 +93,7 @@ Public Class XenonCore
                     My.Saving_Exceptions.Add(New Tuple(Of String, Exception)(My.Lang.ErrorExplorerRestart, ex))
                 End If
             End Try
+
         End With
     End Sub
 

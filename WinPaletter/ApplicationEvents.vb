@@ -23,6 +23,7 @@ Namespace My
         Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
 
         Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+        Public resVS As VisualStylesRes
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
         ''' <summary>
@@ -227,7 +228,7 @@ Namespace My
         Public curPath As String = appData & "\Cursors"
         Public ReadOnly processKiller As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
-                            .Verb = "runas",
+                            .Verb = If(Not WXP, "runas", ""),
                             .Arguments = "/F /IM explorer.exe",
                             .WindowStyle = ProcessWindowStyle.Hidden,
                             .UseShellExecute = True}
@@ -235,7 +236,7 @@ Namespace My
         Public ReadOnly processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = explorerPath,
                             .Arguments = "",
-                            .Verb = If(Not W8, "runas", ""),
+                            .Verb = If(Not W8 And Not WXP, "runas", ""),
                             .WindowStyle = ProcessWindowStyle.Normal,
                             .UseShellExecute = True}
                            }
@@ -379,7 +380,11 @@ Namespace My
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
             If IO.Directory.Exists(Application.appData) Then
                 IO.Directory.Delete(Application.appData, True)
-                CP.ResetCursorsToAero()
+                If Not My.WXP Then
+                    CP.ResetCursorsToAero()
+                Else
+                    CP.ResetCursorsToNone_XP()
+                End If
             End If
 
             Dim guidText As String = Application.Info.ProductName

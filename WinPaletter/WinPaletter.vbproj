@@ -338,6 +338,12 @@
     <Compile Include="LogonUI\LogonUI8_Pics.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogonUI\LogonUIXP.Designer.vb">
+      <DependentUpon>LogonUIXP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUIXP.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainFrm.Designer.vb">
       <DependentUpon>MainFrm.vb</DependentUpon>
     </Compile>
@@ -463,6 +469,9 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
+      <DependentUpon>LogonUIXP.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinEffecter.resx">
       <DependentUpon>WinEffecter.vb</DependentUpon>
     </EmbeddedResource>

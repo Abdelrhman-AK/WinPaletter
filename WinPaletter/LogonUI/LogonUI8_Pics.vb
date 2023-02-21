@@ -1,6 +1,9 @@
-﻿Public Class LogonUI8_Pics
+﻿Imports WinPaletter.XenonCore
+Public Class LogonUI8_Pics
     Private Sub LogonUI8_Pics_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.DialogResult = DialogResult.None
+        ApplyDarkMode(Me)
+        Icon = LogonUI.Icon
 
         img0.Image = My.WinRes.MetroLock_0
         img1.Image = My.WinRes.MetroLock_1

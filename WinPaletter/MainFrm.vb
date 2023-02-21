@@ -671,49 +671,9 @@ Public Class MainFrm
 
                 End Select
 #End Region
-
             Case WinVer.WXP
-#Region "Windows XP"
+#Region "WinXP"
 
-                Select Case [CP].WindowsXP.VisualStyle
-                    Case WinXPTheme.LunaBlue
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
-                        My.LunaRes = New Luna(Luna.ColorStyles.Blue)
-
-                    Case WinXPTheme.LunaOliveGreen
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
-                        My.LunaRes = New Luna(Luna.ColorStyles.OliveGreen)
-
-                    Case WinXPTheme.LunaSilver
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
-                        My.LunaRes = New Luna(Luna.ColorStyles.Silver)
-
-                    Case WinXPTheme.Custom
-                        If File.Exists([CP].WindowsXP.CustomVS) Then
-
-                            If Path.GetExtension([CP].WindowsXP.CustomVS) = ".theme" Then
-
-                                My.VS = [CP].WindowsXP.CustomVS
-
-                            ElseIf Path.GetExtension([CP].WindowsXP.CustomVS) = ".msstyles" Then
-
-                                My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                                File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", [CP].WindowsXP.CustomVS, vbCrLf, [CP].WindowsXP.CustomColor))
-
-                            End If
-
-                        End If
-
-                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
-
-
-                    Case WinXPTheme.Classic
-
-
-                End Select
 
                 start.Refresh()
                 taskbar.Refresh()
@@ -725,10 +685,6 @@ Public Class MainFrm
     End Sub
 
     Sub AdjustClassicPreview()
-        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
-        RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
-
         SetToClassicWindow(ClassicWindow1, CP)
         SetToClassicWindow(ClassicWindow2, CP, False)
 
@@ -843,12 +799,14 @@ Public Class MainFrm
         ReValidateLivePreview(pnl_preview_classic)
     End Sub
 
-    Sub Adjust_Preview()
+    Sub Adjust_Preview(Optional AnimateThePreview As Boolean = True)
 
-        If _Shown Then
-            If tabs_preview.Visible Then My.[AnimatorNS].HideSync(tabs_preview)
-        Else
-            tabs_preview.Visible = False
+        If AnimateThePreview Then
+            If _Shown Then
+                If tabs_preview.Visible Then My.[AnimatorNS].HideSync(tabs_preview)
+            Else
+                tabs_preview.Visible = False
+            End If
         End If
 
         Panel3.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
@@ -856,7 +814,9 @@ Public Class MainFrm
         start.Visible = (Not PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         XenonButton23.Visible = (PreviewConfig = WinVer.W7)
-        tabs_preview.SelectedIndex = If(PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic, 1, 0)
+        Dim condition0 As Boolean = PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
+        Dim condition1 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -930,6 +890,46 @@ Public Class MainFrm
                 start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.XP
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.WXP
                 If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+                Select Case CP.WindowsXP.Theme
+                    Case WinXPTheme.LunaBlue
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Blue)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.LunaOliveGreen
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.OliveGreen)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.LunaSilver
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Silver)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.Custom
+                        If File.Exists(CP.WindowsXP.ThemeFile) Then
+                            If Path.GetExtension(CP.WindowsXP.ThemeFile) = ".theme" Then
+                                My.VS = CP.WindowsXP.ThemeFile
+                            ElseIf Path.GetExtension(CP.WindowsXP.ThemeFile) = ".msstyles" Then
+                                My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                                File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", CP.WindowsXP.ThemeFile, vbCrLf, CP.WindowsXP.ColorScheme))
+                            End If
+                        End If
+                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.Classic
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                End Select
+
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
@@ -1007,6 +1007,20 @@ Public Class MainFrm
                 start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = 44
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
+                RetroButton3.Width = 48
+                RetroButton4.Width = 48
+                RetroButton3.Text = ""
+                RetroButton4.Text = ""
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
 
             Case WinVer.WXP
                 taskbar.Height = 30
@@ -1014,6 +1028,21 @@ Public Class MainFrm
                 start.Height = 190
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = taskbar.Height
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton3.Width = 140
+                RetroButton4.Width = 140
+                RetroButton3.Text = ClassicWindow1.TitlebarText
+                RetroButton4.Text = ClassicWindow2.TitlebarText
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+
         End Select
 
         If PreviewConfig = WinVer.W10 Or PreviewConfig = WinVer.W11 Then
@@ -1032,26 +1061,26 @@ Public Class MainFrm
 
         ReValidateLivePreview(tabs_preview)
 
-        'tabs_preview.Visible = True
+        If AnimateThePreview Then
+            'tabs_preview.Visible = True
 
-        If _Shown Then
-            My.[AnimatorNS].ShowSync(tabs_preview)
-        Else
-            tabs_preview.Visible = True
+            If _Shown Then
+                My.[AnimatorNS].ShowSync(tabs_preview)
+            Else
+                tabs_preview.Visible = True
+            End If
         End If
-
     End Sub
 
-    Sub ApplyCPValues(ByVal ColorPalette As CP)
-        themename_lbl.Text = String.Format("{0} ({1})", CP.Info.PaletteName, CP.Info.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, CP.Info.Author)
+    Sub ApplyCPValues([CP] As CP)
+        themename_lbl.Text = String.Format("{0} ({1})", Me.[CP].Info.PaletteName, Me.[CP].Info.PaletteVersion)
+        author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, Me.[CP].Info.Author)
 
-        W11_WinMode_Toggle.Checked = Not ColorPalette.Windows11.WinMode_Light
-        W11_AppMode_Toggle.Checked = Not ColorPalette.Windows11.AppMode_Light
-        W11_Transparency_Toggle.Checked = ColorPalette.Windows11.Transparency
-        W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows11.ApplyAccentonTitlebars
-
-        Select Case ColorPalette.Windows11.ApplyAccentonTaskbar
+        W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
+        W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
+        W11_Transparency_Toggle.Checked = [CP].Windows11.Transparency
+        W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows11.ApplyAccentonTitlebars
+        Select Case [CP].Windows11.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
                 W11_Accent_None.Checked = True
 
@@ -1062,25 +1091,23 @@ Public Class MainFrm
                 W11_Accent_Taskbar.Checked = True
 
         End Select
+        W11_ActiveTitlebar_pick.BackColor = [CP].Windows11.Titlebar_Active
+        W11_InactiveTitlebar_pick.BackColor = [CP].Windows11.Titlebar_Inactive
+        W11_Color_Index5.BackColor = [CP].Windows11.StartMenu_Accent
+        W11_Color_Index4.BackColor = [CP].Windows11.Color_Index2
+        W11_Color_Index6.BackColor = [CP].Windows11.Color_Index6
+        W11_Color_Index1.BackColor = [CP].Windows11.Color_Index1
+        W11_Color_Index2.BackColor = [CP].Windows11.Color_Index4
+        W11_TaskbarFrontAndFoldersOnStart_pick.BackColor = [CP].Windows11.Color_Index5
+        W11_Color_Index0.BackColor = [CP].Windows11.Color_Index0
+        W11_Color_Index3.BackColor = [CP].Windows11.Color_Index3
+        W11_Color_Index7.BackColor = [CP].Windows11.Color_Index7
 
-        W11_ActiveTitlebar_pick.BackColor = ColorPalette.Windows11.Titlebar_Active
-        W11_InactiveTitlebar_pick.BackColor = ColorPalette.Windows11.Titlebar_Inactive
-        W11_Color_Index5.BackColor = ColorPalette.Windows11.StartMenu_Accent
-        W11_Color_Index4.BackColor = ColorPalette.Windows11.Color_Index2
-        W11_Color_Index6.BackColor = ColorPalette.Windows11.Color_Index6
-        W11_Color_Index1.BackColor = ColorPalette.Windows11.Color_Index1
-        W11_Color_Index2.BackColor = ColorPalette.Windows11.Color_Index4
-        W11_TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows11.Color_Index5
-        W11_Color_Index0.BackColor = ColorPalette.Windows11.Color_Index0
-        W11_Color_Index3.BackColor = ColorPalette.Windows11.Color_Index3
-        W11_Color_Index7.BackColor = ColorPalette.Windows11.Color_Index7
-
-        W10_WinMode_Toggle.Checked = Not ColorPalette.Windows10.WinMode_Light
-        W10_AppMode_Toggle.Checked = Not ColorPalette.Windows10.AppMode_Light
-        W10_Transparency_Toggle.Checked = ColorPalette.Windows10.Transparency
-        W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = ColorPalette.Windows10.ApplyAccentonTitlebars
-
-        Select Case ColorPalette.Windows10.ApplyAccentonTaskbar
+        W10_WinMode_Toggle.Checked = Not [CP].Windows10.WinMode_Light
+        W10_AppMode_Toggle.Checked = Not [CP].Windows10.AppMode_Light
+        W10_Transparency_Toggle.Checked = [CP].Windows10.Transparency
+        W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentonTitlebars
+        Select Case [CP].Windows10.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
                 W10_Accent_None.Checked = True
 
@@ -1090,32 +1117,46 @@ Public Class MainFrm
             Case ApplyAccentonTaskbar_Level.Taskbar
                 W10_Accent_Taskbar.Checked = True
         End Select
+        W10_ActiveTitlebar_pick.BackColor = [CP].Windows10.Titlebar_Active
+        W10_InactiveTitlebar_pick.BackColor = [CP].Windows10.Titlebar_Inactive
+        W10_Color_Index5.BackColor = [CP].Windows10.StartMenu_Accent
+        W10_Color_Index4.BackColor = [CP].Windows10.Color_Index2
+        W10_Color_Index6.BackColor = [CP].Windows10.Color_Index6
+        W10_Color_Index1.BackColor = [CP].Windows10.Color_Index1
+        W10_Color_Index2.BackColor = [CP].Windows10.Color_Index4
+        W10_TaskbarFrontAndFoldersOnStart_pick.BackColor = [CP].Windows10.Color_Index5
+        W10_Color_Index0.BackColor = [CP].Windows10.Color_Index0
+        W10_Color_Index3.BackColor = [CP].Windows10.Color_Index3
+        W10_Color_Index7.BackColor = [CP].Windows10.Color_Index7
 
-        W10_ActiveTitlebar_pick.BackColor = ColorPalette.Windows10.Titlebar_Active
-        W10_InactiveTitlebar_pick.BackColor = ColorPalette.Windows10.Titlebar_Inactive
-        W10_Color_Index5.BackColor = ColorPalette.Windows10.StartMenu_Accent
-        W10_Color_Index4.BackColor = ColorPalette.Windows10.Color_Index2
-        W10_Color_Index6.BackColor = ColorPalette.Windows10.Color_Index6
-        W10_Color_Index1.BackColor = ColorPalette.Windows10.Color_Index1
-        W10_Color_Index2.BackColor = ColorPalette.Windows10.Color_Index4
-        W10_TaskbarFrontAndFoldersOnStart_pick.BackColor = ColorPalette.Windows10.Color_Index5
-        W10_Color_Index0.BackColor = ColorPalette.Windows10.Color_Index0
-        W10_Color_Index3.BackColor = ColorPalette.Windows10.Color_Index3
-        W10_Color_Index7.BackColor = ColorPalette.Windows10.Color_Index7
+        Select Case [CP].Windows8.Theme
+            Case CP.AeroTheme.Aero
+                W8_theme_aero.Checked = True
 
-        W7_ColorizationColor_pick.BackColor = ColorPalette.Windows7.ColorizationColor
-        W7_ColorizationAfterglow_pick.BackColor = ColorPalette.Windows7.ColorizationAfterglow
-        W7_ColorizationColorBalance_bar.Value = ColorPalette.Windows7.ColorizationColorBalance
-        W7_ColorizationAfterglowBalance_bar.Value = ColorPalette.Windows7.ColorizationAfterglowBalance
-        W7_ColorizationBlurBalance_bar.Value = ColorPalette.Windows7.ColorizationBlurBalance
-        W7_ColorizationGlassReflectionIntensity_bar.Value = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
-        W7_ColorizationColorBalance_val.Text = ColorPalette.Windows7.ColorizationColorBalance
-        W7_ColorizationAfterglowBalance_val.Text = ColorPalette.Windows7.ColorizationAfterglowBalance
-        W7_ColorizationBlurBalance_val.Text = ColorPalette.Windows7.ColorizationBlurBalance
-        W7_ColorizationGlassReflectionIntensity_val.Text = ColorPalette.Windows7.ColorizationGlassReflectionIntensity
-        W7_EnableAeroPeek_toggle.Checked = ColorPalette.Windows7.EnableAeroPeek
-        W7_AlwaysHibernateThumbnails_Toggle.Checked = ColorPalette.Windows7.AlwaysHibernateThumbnails
-        Select Case ColorPalette.Windows7.Theme
+            Case CP.AeroTheme.AeroLite
+                W8_theme_aerolite.Checked = True
+        End Select
+        W8_ColorizationColor_pick.BackColor = [CP].Windows8.ColorizationColor
+        W8_ColorizationBalance_bar.Value = [CP].Windows8.ColorizationColorBalance
+        W8_ColorizationBalance_val.Text = [CP].Windows8.ColorizationColorBalance
+        W8_start_pick.BackColor = [CP].Windows8.StartColor
+        W8_accent_pick.BackColor = [CP].Windows8.AccentColor
+        W8_personalcls_background_pick.BackColor = [CP].Windows8.PersonalColors_Background
+        W8_personalcolor_accent_pick.BackColor = [CP].Windows8.PersonalColors_Accent
+
+        W7_ColorizationColor_pick.BackColor = [CP].Windows7.ColorizationColor
+        W7_ColorizationAfterglow_pick.BackColor = [CP].Windows7.ColorizationAfterglow
+        W7_ColorizationColorBalance_bar.Value = [CP].Windows7.ColorizationColorBalance
+        W7_ColorizationAfterglowBalance_bar.Value = [CP].Windows7.ColorizationAfterglowBalance
+        W7_ColorizationBlurBalance_bar.Value = [CP].Windows7.ColorizationBlurBalance
+        W7_ColorizationGlassReflectionIntensity_bar.Value = [CP].Windows7.ColorizationGlassReflectionIntensity
+        W7_ColorizationColorBalance_val.Text = [CP].Windows7.ColorizationColorBalance
+        W7_ColorizationAfterglowBalance_val.Text = [CP].Windows7.ColorizationAfterglowBalance
+        W7_ColorizationBlurBalance_val.Text = [CP].Windows7.ColorizationBlurBalance
+        W7_ColorizationGlassReflectionIntensity_val.Text = [CP].Windows7.ColorizationGlassReflectionIntensity
+        W7_EnableAeroPeek_toggle.Checked = [CP].Windows7.EnableAeroPeek
+        W7_AlwaysHibernateThumbnails_Toggle.Checked = [CP].Windows7.AlwaysHibernateThumbnails
+        Select Case [CP].Windows7.Theme
             Case CP.AeroTheme.Aero
                 W7_theme_aero.Checked = True
 
@@ -1129,22 +1170,33 @@ Public Class MainFrm
                 W7_theme_classic.Checked = True
         End Select
 
-        Select Case ColorPalette.Windows8.Theme
+        WVista_ColorizationColor_pick.BackColor = [CP].WindowsVista.ColorizationColor
+        WVista_ColorizationAfterglow_pick.BackColor = [CP].WindowsVista.ColorizationAfterglow
+        WVista_ColorizationColorBalance_bar.Value = [CP].WindowsVista.ColorizationColorBalance
+        WVista_ColorizationAfterglowBalance_bar.Value = [CP].WindowsVista.ColorizationAfterglowBalance
+        WVista_ColorizationBlurBalance_bar.Value = [CP].WindowsVista.ColorizationBlurBalance
+        WVista_ColorizationGlassReflectionIntensity_bar.Value = [CP].WindowsVista.ColorizationGlassReflectionIntensity
+        WVista_ColorizationColorBalance_val.Text = [CP].WindowsVista.ColorizationColorBalance
+        WVista_ColorizationAfterglowBalance_val.Text = [CP].WindowsVista.ColorizationAfterglowBalance
+        WVista_ColorizationBlurBalance_val.Text = [CP].WindowsVista.ColorizationBlurBalance
+        WVista_ColorizationGlassReflectionIntensity_val.Text = [CP].WindowsVista.ColorizationGlassReflectionIntensity
+        WVista_EnableAeroPeek_toggle.Checked = [CP].WindowsVista.EnableAeroPeek
+        WVista_AlwaysHibernateThumbnails_Toggle.Checked = [CP].WindowsVista.AlwaysHibernateThumbnails
+        Select Case [CP].WindowsVista.Theme
             Case CP.AeroTheme.Aero
-                W8_theme_aero.Checked = True
+                WVista_theme_aero.Checked = True
 
-            Case CP.AeroTheme.AeroLite
-                W8_theme_aerolite.Checked = True
+            Case CP.AeroTheme.AeroOpaque
+                WVista_theme_aeroopaque.Checked = True
+
+            Case CP.AeroTheme.Basic
+                WVista_theme_basic.Checked = True
+
+            Case CP.AeroTheme.Classic
+                WVista_theme_classic.Checked = True
         End Select
-        W8_ColorizationColor_pick.BackColor = ColorPalette.Windows8.ColorizationColor
-        W8_ColorizationBalance_bar.Value = ColorPalette.Windows8.ColorizationColorBalance
-        W8_ColorizationBalance_val.Text = ColorPalette.Windows8.ColorizationColorBalance
-        W8_start_pick.BackColor = ColorPalette.Windows8.StartColor
-        W8_accent_pick.BackColor = ColorPalette.Windows8.AccentColor
-        W8_personalcls_background_pick.BackColor = ColorPalette.Windows8.PersonalColors_Background
-        W8_personalcolor_accent_pick.BackColor = ColorPalette.Windows8.PersonalColors_Accent
 
-        Select Case ColorPalette.WindowsXP.VisualStyle
+        Select Case [CP].WindowsXP.Theme
             Case CP.WinXPTheme.LunaBlue
                 WXP_Luna_Blue.Checked = True
 
@@ -1157,14 +1209,15 @@ Public Class MainFrm
             Case CP.WinXPTheme.Custom
                 WXP_CustomTheme.Checked = True
 
-            Case CP.WinXPTheme.Custom
+            Case CP.WinXPTheme.Classic
                 WXP_Classic.Checked = True
 
         End Select
-        XenonTextBox1.Text = ColorPalette.WindowsXP.CustomVS
+        XenonTextBox1.Text = [CP].WindowsXP.ThemeFile
+        If XenonComboBox1.Items.Contains([CP].WindowsXP.ColorScheme) Then XenonComboBox1.SelectedItem = [CP].WindowsXP.ColorScheme
 
-        ApplyMetroStartToButton(ColorPalette)
-        ApplyBackLogonUI(ColorPalette)
+        ApplyMetroStartToButton([CP])
+        ApplyBackLogonUI([CP])
     End Sub
 
     Sub ApplyDefaultCPValues()
@@ -1178,6 +1231,10 @@ Public Class MainFrm
             DefCP = New CP_Defaults().Default_Windows8
         ElseIf My.W7 Then
             DefCP = New CP_Defaults().Default_Windows7
+        ElseIf My.WVista Then
+            DefCP = New CP_Defaults().Default_WindowsVista
+        ElseIf My.WXP Then
+            DefCP = New CP_Defaults().Default_WindowsXP
         Else
             DefCP = New CP_Defaults().Default_Windows11
         End If
@@ -1206,13 +1263,17 @@ Public Class MainFrm
         W10_Color_Index3.DefaultColor = DefCP.Windows10.Color_Index3
         W10_Color_Index7.DefaultColor = DefCP.Windows10.Color_Index7
 
-        W7_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
-        W7_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
         W8_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
         W8_start_pick.DefaultColor = DefCP.Windows8.StartColor
         W8_accent_pick.DefaultColor = DefCP.Windows8.AccentColor
         W8_personalcls_background_pick.DefaultColor = DefCP.Windows8.PersonalColors_Background
         W8_personalcolor_accent_pick.DefaultColor = DefCP.Windows8.PersonalColors_Accent
+
+        W7_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
+        W7_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
+
+        WVista_ColorizationColor_pick.DefaultColor = DefCP.WindowsVista.ColorizationColor
+        WVista_ColorizationAfterglow_pick.DefaultColor = DefCP.WindowsVista.ColorizationAfterglow
 
         CP.Dispose()
     End Sub
@@ -1358,7 +1419,16 @@ Public Class MainFrm
         }
 
         Dim img As Bitmap
-        If Not IO.File.Exists([WT].Image) Then [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+
+
+        If Not IO.File.Exists([WT].Image) Then
+            If My.WXP Then
+                [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+            Else
+                [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+            End If
+        End If
+
         Dim S As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
         img = Image.FromStream(S).Resize(pnl_preview.Size)
         S.Close()
@@ -1483,10 +1553,6 @@ Public Class MainFrm
         If My.W7 Then PreviewConfig = WinVer.W7
         If My.WVista Then PreviewConfig = WinVer.WVista
         If My.WXP Then PreviewConfig = WinVer.WXP
-
-        ''''''''
-        PreviewConfig = WinVer.WXP
-        ''''''''
 
         If Not My.Application.ExternalLink Then
             CP = New CP(CP.Mode.Registry)
@@ -3001,40 +3067,40 @@ Public Class MainFrm
 #Region "Windows XP"
     Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
         If WXP_Luna_Blue.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaBlue
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.Theme = WinXPTheme.LunaBlue
+            Adjust_Preview()
             tabs_preview.Refresh()
         End If
     End Sub
 
     Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
         If WXP_Luna_OliveGreen.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaOliveGreen
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.Theme = WinXPTheme.LunaOliveGreen
+            Adjust_Preview()
             tabs_preview.Refresh()
         End If
     End Sub
 
     Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
         If WXP_Luna_Silver.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.LunaSilver
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.Theme = WinXPTheme.LunaSilver
+            Adjust_Preview()
             tabs_preview.Refresh()
         End If
     End Sub
 
     Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
         If WXP_CustomTheme.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.Custom
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.Theme = WinXPTheme.Custom
+            Adjust_Preview()
             tabs_preview.Refresh()
         End If
     End Sub
 
     Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
         If WXP_Classic.Checked Then
-            CP.WindowsXP.VisualStyle = WinXPTheme.Classic
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.Theme = WinXPTheme.Classic
+            Adjust_Preview()
             tabs_preview.Refresh()
         End If
     End Sub
@@ -3051,7 +3117,7 @@ Public Class MainFrm
 
         End If
 
-        CP.WindowsXP.CustomVS = XenonTextBox1.Text
+        CP.WindowsXP.ThemeFile = XenonTextBox1.Text
 
         If File.Exists(XenonTextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
             Dim vs As New VisualStyleFile(theme)
@@ -3067,7 +3133,7 @@ Public Class MainFrm
 
             If XenonComboBox1.Items.Count > 0 Then XenonComboBox1.SelectedIndex = 0
 
-            If WXP_CustomTheme.Checked Then ApplyLivePreviewFromCP(CP)
+            If WXP_CustomTheme.Checked Then Adjust_Preview(False)
         End If
     End Sub
 
@@ -3079,8 +3145,8 @@ Public Class MainFrm
 
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
         If _Shown AndAlso WXP_CustomTheme.Checked Then
-            CP.WindowsXP.CustomColor = XenonComboBox1.SelectedItem
-            ApplyLivePreviewFromCP(CP)
+            CP.WindowsXP.ColorScheme = XenonComboBox1.SelectedItem
+            Adjust_Preview(False)
         End If
     End Sub
 #End Region
@@ -3493,8 +3559,12 @@ Public Class MainFrm
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         If PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10 Then
             LogonUI.ShowDialog()
-        Else
+        ElseIf PreviewConfig = WinVer.W8 Or PreviewConfig = WinVer.W7 Or PreviewConfig = WinVer.WVista Then
             LogonUI7.ShowDialog()
+        ElseIf PreviewConfig = WinVer.WXP Then
+            LogonUIXP.ShowDialog()
+        Else
+            LogonUI.ShowDialog()
         End If
     End Sub
 
@@ -3583,6 +3653,10 @@ Public Class MainFrm
             CP = Def.Default_Windows8.Clone
         ElseIf My.W7 Then
             CP = Def.Default_Windows7.Clone
+        ElseIf My.WVista Then
+            CP = Def.Default_WindowsVista.Clone
+        ElseIf My.WXP Then
+            CP = Def.Default_WindowsXP.Clone
         Else
             CP = Def.Default_Windows11.Clone
         End If

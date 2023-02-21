@@ -1,41 +1,34 @@
 ﻿Imports WinPaletter.XenonCore
-
-Public Class WinEffecter
-    Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+Public Class LogonUIXP
+    Private Sub LogonUIXP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        Icon = LogonUI.Icon
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(MainFrm.CP)
     End Sub
 
     Sub ApplyFromCP(CP As CP)
-        With CP.WindowsEffects
-            EffectsEnabled.Checked = .Enabled
-            XenonCheckBox1.Checked = .WindowAnimation
-            XenonCheckBox2.Checked = .WindowShadow
-            XenonCheckBox3.Checked = .WindowUIEffects
-            XenonCheckBox6.Checked = .MenuAnimation
-            If .MenuFade = CP.MenuAnimType.Fade Then XenonComboBox1.SelectedIndex = 0 Else XenonComboBox1.SelectedIndex = 1
-            XenonCheckBox5.Checked = .MenuSelectionFade
-            XenonCheckBox8.Checked = .ComboboxAnimation
-            XenonCheckBox7.Checked = .ListBoxSmoothScrolling
-            XenonCheckBox9.Checked = .TooltipAnimation
-            If .TooltipFade = CP.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
+        With CP.LogonUIXP
+            XenonToggle1.Checked = .Enabled
+            Select Case .Mode
+                Case CP.LogonUIXP_Modes.Default
+                    XenonRadioImage1.Checked = True
+                Case CP.LogonUIXP_Modes.Win2000
+                    XenonRadioImage2.Checked = True
+                Case Else
+                    XenonRadioImage1.Checked = True
+            End Select
+            color_pick.BackColor = .BackColor
+            XenonCheckBox1.Checked = .ShowMoreOptions
         End With
     End Sub
 
     Sub ApplyToCP(CP As CP)
-        With CP.WindowsEffects
-            .Enabled = EffectsEnabled.Checked
-            .WindowAnimation = XenonCheckBox1.Checked
-            .WindowShadow = XenonCheckBox2.Checked
-            .WindowUIEffects = XenonCheckBox3.Checked
-            .MenuAnimation = XenonCheckBox6.Checked
-            If XenonComboBox1.SelectedIndex = 0 Then .MenuFade = CP.MenuAnimType.Fade Else .MenuFade = CP.MenuAnimType.Scroll
-            .MenuSelectionFade = XenonCheckBox5.Checked
-            .ComboboxAnimation = XenonCheckBox8.Checked
-            .ListBoxSmoothScrolling = XenonCheckBox7.Checked
-            .TooltipAnimation = XenonCheckBox9.Checked
-            If XenonComboBox2.SelectedIndex = 0 Then .TooltipAnimation = CP.MenuAnimType.Fade Else .TooltipAnimation = CP.MenuAnimType.Scroll
+        With CP.LogonUIXP
+            .Enabled = XenonToggle1.Checked
+            If XenonRadioImage1.Checked Then .Mode = CP.LogonUIXP_Modes.Default Else .Mode = CP.LogonUIXP_Modes.Win2000
+            .BackColor = color_pick.BackColor
+            .ShowMoreOptions = XenonCheckBox1.Checked
         End With
     End Sub
 
@@ -83,7 +76,7 @@ Public Class WinEffecter
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.Mode.Registry)
         ApplyToCP(CPx)
-        CPx.WindowsEffects.Apply()
+        CPx.LogonUIXP.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
@@ -91,5 +84,18 @@ Public Class WinEffecter
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
         Me.Close()
+    End Sub
+
+    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+            SubMenu.ShowMenu(sender)
+            Exit Sub
+        End If
+
+        Dim CList As New List(Of Control) From {sender}
+        Dim C As Color = ColorPickerDlg.Pick(CList)
+        sender.BackColor = Color.FromArgb(255, C)
+        CList.Clear()
+
     End Sub
 End Class

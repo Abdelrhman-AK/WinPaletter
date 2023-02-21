@@ -70,7 +70,7 @@ Public Class Metrics_Fonts
 
         Dim condition0 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic
         Dim condition1 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.AeroTheme.Classic
-        Dim condition2 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WXP AndAlso MainFrm.CP.WindowsXP.VisualStyle = CP.WinXPTheme.Classic
+        Dim condition2 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.WinXPTheme.Classic
 
         If condition0 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1

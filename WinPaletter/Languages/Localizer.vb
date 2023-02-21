@@ -73,6 +73,8 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
         If Name.ToLower = "WallpaperToner".ToLower Then Return WallpaperToner
         If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
+        If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
+
     End Function
 
     Public allForms As New List(Of String) From {
@@ -108,7 +110,8 @@ Public Class Localizer : Implements IDisposable
                         "Lang_JSON_Update",
                         "Lang_JSON_Manage",
                         "WallpaperToner",
-                        "WinEffecter"
+                        "WinEffecter",
+                        "LogonUIXP"
                         }
 
 #Region "Language Info"
@@ -206,11 +209,14 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_Win11 As String = "Applying Windows 11 Scheme"
     Property CP_Applying_Win10 As String = "Applying Windows 10 Scheme"
     Property CP_Applying_Win7 As String = "Applying Windows 7 Colors"
+    Property CP_Applying_WinVista As String = "Applying Windows Vista Colors"
     Property CP_Applying_Win8 As String = "Applying Windows 8.1 Colors"
     Property CP_Applying_WinXP As String = "Applying Windows XP Theme"
     Property CP_Applying_LogonUI11 As String = "Applying Windows 11 LogonUI"
     Property CP_Applying_LogonUI10 As String = "Applying Windows 10 LogonUI"
     Property CP_Applying_LogonUI7 As String = "Applying Windows 7 LogonUI"
+    Property CP_Applying_LogonUIVista As String = "Applying Windows Vista LogonUI"
+    Property CP_Applying_LogonUIXP As String = "Applying Windows XP LogonUI"
     Property CP_Applying_LogonUI8 As String = "Applying Windows 8.1 Lock Screen"
     Property CP_Applying_Win32UI As String = "Applying Win32UI (Classic Windows Elements)"
     Property CP_Applying_WinEffects As String = "Applying Windows Effects"
@@ -249,10 +255,13 @@ Public Class Localizer : Implements IDisposable
     Property CP_LogonUI10_Error As String = "Error occured while applying Windows 10 LogonUI"
     Property CP_LogonUI11_Error As String = "Error occured while applying Windows 11 LogonUI"
     Property CP_LogonUI7_Error As String = "Error occured while applying Windows 7 LogonUI"
+    Property CP_LogonUIVista_Error As String = "Error occured while applying Windows Vista LogonUI"
+    Property CP_LogonUIXP_Error As String = "Error occured while applying Windows XP LogonUI"
     Property CP_LogonUI8_Error As String = "Error occured while applying Windows 8.1 Lock Screen"
     Property CP_W10_Error As String = "Error occured while applying Windows 10 Scheme"
     Property CP_W11_Error As String = "Error occured while applying Windows 11 Scheme"
     Property CP_W7_Error As String = "Error occured while applying Windows 7 Colors"
+    Property CP_WVista_Error As String = "Error occured while applying Windows Vista Colors"
     Property CP_W8_Error As String = "Error occured while applying Windows 8.1 Colors"
     Property CP_WXP_Error As String = "Error occured while applying Windows XP Theme"
     Property CP_Error_Cursors As String = "Error occured while applying Windows Cursors"

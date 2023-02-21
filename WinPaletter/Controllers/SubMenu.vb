@@ -328,6 +328,10 @@ Public Class SubMenu
                     GetColorsFromPalette(New CP_Defaults().Default_Windows8)
                 Case 4
                     GetColorsFromPalette(New CP_Defaults().Default_Windows7)
+                Case 5
+                    GetColorsFromPalette(New CP_Defaults().Default_WindowsVista)
+                Case 6
+                    GetColorsFromPalette(New CP_Defaults().Default_WindowsXP)
                 Case Else
                     GetColorsFromPalette(MainFrm.CP)
             End Select
